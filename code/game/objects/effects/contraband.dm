@@ -145,21 +145,21 @@
 			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 
-	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>"	)
+	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>" )
 
 	var/obj/structure/sign/poster/D = P.poster_structure
 
 	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
 	D.forceMove(src)
-	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
+	qdel(P) //delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	if(do_after(user, PLACE_SPEED, target=src))
 		if(!D || QDELETED(D))
 			return
 
-		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
 			to_chat(user, "<span class='notice'>You place the poster!</span>")
 			return
 

@@ -35,11 +35,11 @@
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	///Whether the welding tool is on or off.
 	var/welding = FALSE
-	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	var/status = TRUE //Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
+	var/max_fuel = 20 //The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
-	var/burned_fuel_for = 0	//when fuel was last removed
+	var/burned_fuel_for = 0 //when fuel was last removed
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 

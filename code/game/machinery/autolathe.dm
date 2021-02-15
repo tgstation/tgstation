@@ -1,6 +1,6 @@
-#define AUTOLATHE_MAIN_MENU		1
-#define AUTOLATHE_CATEGORY_MENU	2
-#define AUTOLATHE_SEARCH_MENU	3
+#define AUTOLATHE_MAIN_MENU 1
+#define AUTOLATHE_CATEGORY_MENU 2
+#define AUTOLATHE_SEARCH_MENU 3
 
 /obj/machinery/autolathe
 	name = "autolathe"
@@ -408,7 +408,7 @@
 				disabled = FALSE
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
-	if(machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

@@ -1,7 +1,7 @@
 
 #define GASMINER_POWER_NONE 0
 #define GASMINER_POWER_STATIC 1
-#define GASMINER_POWER_MOLES 2	//Scaled from here on down.
+#define GASMINER_POWER_MOLES 2 //Scaled from here on down.
 #define GASMINER_POWER_KPA 3
 #define GASMINER_POWER_FULLSCALE 4
 
@@ -22,7 +22,7 @@
 	var/active = TRUE
 	var/power_draw = 0
 	var/power_draw_static = 2000
-	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
+	var/power_draw_dynamic_mol_coeff = 5 //DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
@@ -31,7 +31,7 @@
 
 /obj/machinery/atmospherics/miner/Initialize()
 	. = ..()
-	set_active(active)				//Force overlay update.
+	set_active(active) //Force overlay update.
 
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	. = ..()

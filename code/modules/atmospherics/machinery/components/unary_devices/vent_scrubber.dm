@@ -1,5 +1,5 @@
-#define SIPHONING	0
-#define SCRUBBING	1
+#define SIPHONING 0
+#define SCRUBBING 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map-3"
@@ -203,13 +203,13 @@
 	return TRUE
 
 //There is no easy way for an object to be notified of changes to atmos can pass flags
-//	So we check every machinery process (2 seconds)
+// So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
 	if(widenet)
 		check_turfs()
 
 //we populate a list of turfs with nonatmos-blocked cardinal turfs AND
-//	diagonal turfs that can share atmos with *both* of the cardinal turfs
+// diagonal turfs that can share atmos with *both* of the cardinal turfs
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
 	adjacent_turfs.Cut()

@@ -69,7 +69,7 @@
 	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
 	. += "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>"
 
-/obj/structure/ai_core/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
+/obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
 		return FALSE
 	if(!safety_checks)

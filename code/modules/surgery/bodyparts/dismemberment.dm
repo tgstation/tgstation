@@ -137,12 +137,12 @@
 	phantom_owner.update_body()
 	phantom_owner.update_hair()
 
-	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!Tsec) // Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
 	if(is_pseudopart)
-		drop_organs(phantom_owner)	//Psuedoparts shouldn't have organs, but just in case
+		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 		return
 
@@ -199,7 +199,7 @@
 	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	Remove(C)	//Changeling brain concerns are now handled in Remove
+	Remove(C) //Changeling brain concerns are now handled in Remove
 	forceMove(LB)
 	LB.brain = src
 	if(brainmob)

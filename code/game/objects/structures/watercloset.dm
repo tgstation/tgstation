@@ -5,10 +5,10 @@
 	icon_state = "toilet00"
 	density = FALSE
 	anchored = TRUE
-	var/open = FALSE			//if the lid is up
-	var/cistern = 0			//if the cistern bit is open
-	var/w_items = 0			//the combined w_class of all the items in the cistern
-	var/mob/living/swirlie = null	//the mob being given a swirlie
+	var/open = FALSE //if the lid is up
+	var/cistern = 0 //if the cistern bit is open
+	var/w_items = 0 //the combined w_class of all the items in the cistern
+	var/mob/living/swirlie = null //the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
 	var/buildstackamount = 1
 
@@ -239,7 +239,7 @@
 
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
-	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
+	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~" //thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	inhand_icon_state = "rubberducky"
@@ -478,7 +478,7 @@
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. This one seems to be infinite!"
 	anchored = TRUE
-	var/busy = FALSE 	//Something's being washed at the moment
+	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
 
 /obj/structure/water_source/attack_hand(mob/living/user)
@@ -593,7 +593,7 @@
 	return ..()
 
 
-/obj/structure/water_source/puddle	//splishy splashy ^_^
+/obj/structure/water_source/puddle //splishy splashy ^_^
 	name = "puddle"
 	desc = "A puddle used for washing one's hands and face."
 	icon_state = "puddle"

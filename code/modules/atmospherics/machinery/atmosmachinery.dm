@@ -12,7 +12,7 @@
 
 /obj/machinery/atmospherics
 	anchored = TRUE
-	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
+	move_resist = INFINITY //Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = AREA_USAGE_ENVIRON

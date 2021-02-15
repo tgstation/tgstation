@@ -24,9 +24,9 @@
 	var/created_name = null
 
 	//Vars to help with the icon's name
-	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = FALSE		//Whether or not this creates a secure windoor
-	var/state = "01"	//How far the door assembly has progressed
+	var/facing = "l" //Does the windoor open to the left or right?
+	var/secure = FALSE //Whether or not this creates a secure windoor
+	var/state = "01" //How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/New(loc, set_dir)

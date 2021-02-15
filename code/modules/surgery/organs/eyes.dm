@@ -8,9 +8,9 @@
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
-	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
-	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD	//threshold at 30
-	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD	//threshold at 20
+	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD //half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
+	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD //threshold at 30
+	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD //threshold at 20
 
 	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
 	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
@@ -29,7 +29,7 @@
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
 	var/no_glasses
-	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+	var/damaged = FALSE //damaged indicates that our eyes are undergoing some level of negative effect
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
@@ -261,7 +261,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
 	current_color_string = newcolor
 	eye_color = RGB2EYECOLORSTRING(current_color_string)
-	if(!QDELETED(owner) && ishuman(owner))		//Other carbon mobs don't have eye color.
+	if(!QDELETED(owner) && ishuman(owner)) //Other carbon mobs don't have eye color.
 		owner.dna.species.handle_body(owner)
 
 /obj/item/organ/eyes/robotic/glow/proc/cycle_mob_overlay()

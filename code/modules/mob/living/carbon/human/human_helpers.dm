@@ -47,12 +47,12 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face		//Likewise for hats
+		return if_no_face //Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name ) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -74,7 +74,7 @@
 		if(card_slot?.stored_card)
 			. = card_slot.stored_card.registered_name
 	if(!.)
-		. = if_no_id	//to prevent null-names making the mob unclickable
+		. = if_no_id //to prevent null-names making the mob unclickable
 	return
 
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)

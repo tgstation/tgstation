@@ -170,7 +170,7 @@
 		say("Recording started.")
 		update_sound()
 		update_appearance()
-		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
+		var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		while(recording && used < max)
 			mytape.used_capacity += 1 SECONDS
@@ -224,7 +224,7 @@
 	update_sound()
 	say("Playback started.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
-	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
+	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used <= max, sleep(playsleepseconds))
 		if(!mytape)

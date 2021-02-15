@@ -28,13 +28,13 @@
 	/// How much it currently costs to use the kiosk.
 	var/active_price = 15           //Change by using a multitool on the board.
 	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
-	var/pandemonium = FALSE			//AKA: Emag mode.
+	var/pandemonium = FALSE //AKA: Emag mode.
 
 	/// Shows whether the kiosk is being used to scan someone and what it's being used for.
 	var/scan_active = NONE
 
 	/// Do we have someone paying to use this?
-	var/paying_customer = FALSE		//Ticked yes if passing inuse()
+	var/paying_customer = FALSE //Ticked yes if passing inuse()
 
 	/// Who's pockets are we sifting through when we're used?
 	var/datum/bank_account/account  //payer's account.
@@ -252,7 +252,7 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
+	if(altPatient.reagents.reagent_list.len) //Chemical Analysis details.
 		for(var/r in altPatient.reagents.reagent_list)
 			var/datum/reagent/reagent = r
 			if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
@@ -321,10 +321,10 @@
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
-	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001)		//To break this down for easy reading, all health values are rounded to the .001 place
-	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001)		//then a random number is added, which is multiplied by chaos modifier.
-	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001)		//That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
-	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001)	//It's not the cleanest but it does make for a colorful window.
+	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001) //To break this down for easy reading, all health values are rounded to the .001 place
+	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001) //then a random number is added, which is multiplied by chaos modifier.
+	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001) //That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
+	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001) //It's not the cleanest but it does make for a colorful window.
 	data["clone_health"] = round(clone_loss+(chaos_modifier * (rand(1,30))),0.001)
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))

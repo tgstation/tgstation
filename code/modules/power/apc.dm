@@ -120,8 +120,8 @@
 	var/area/area
 	var/areastring = null
 	var/obj/item/stock_parts/cell/cell
-	var/start_charge = 90				// initial cell charge %
-	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
+	var/start_charge = 90 // initial cell charge %
+	var/cell_type = /obj/item/stock_parts/cell/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = APC_COVER_CLOSED
 	var/shorted = FALSE
 	var/lighting = APC_CHANNEL_AUTO_ON
@@ -141,7 +141,7 @@
 	var/lastused_environ = 0
 	var/lastused_total = 0
 	var/main_status = 0
-	powernet = FALSE		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
+	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/has_electronics = APC_ELECTRONICS_MISSING // 0 - none, 1 - plugged in, 2 - secured by screwdriver
@@ -220,7 +220,7 @@
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
 		setDir(ndir)
-	tdir = dir		// to fix Vars bug
+	tdir = dir // to fix Vars bug
 	setDir(SOUTH)
 
 	switch(tdir)
@@ -289,7 +289,7 @@
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
 		cell = new cell_type
-		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
+		cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 
 	var/area/A = loc.loc
 
@@ -585,7 +585,7 @@
 	if(issilicon(user) && get_dist(src,user)>1)
 		return attack_hand(user)
 
-	if	(istype(W, /obj/item/stock_parts/cell) && opened)
+	if (istype(W, /obj/item/stock_parts/cell) && opened)
 		if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 			return
@@ -1114,7 +1114,7 @@
 	if(!is_station_level(z))
 		return
 	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
+	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY? //IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
@@ -1257,22 +1257,22 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > lastused_total)		// if power excess recharge the cell
+		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE)		// add the load used to recharge the cell
+			add_load(cellused/GLOB.CELLRATE) // add the load used to recharge the cell
 
 
-		else		// no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
-				add_load(excess)		// so draw what we can from the grid
+		else // no excess, and not enough per-apc
+			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess) //recharge with what we can
+				add_load(excess) // so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
-			else	// not enough power available to run the last tick!
+			else // not enough power available to run the last tick!
 				charging = APC_NOT_CHARGING
 				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
@@ -1314,14 +1314,14 @@
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
+			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
 				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
 				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
-				charging = APC_NOT_CHARGING		// stop charging
+				charging = APC_NOT_CHARGING // stop charging
 				chargecount = 0
 
 		// show cell as fully charged if so

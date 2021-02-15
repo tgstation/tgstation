@@ -538,19 +538,19 @@ What a mess.*/
 
 				//Medical Record
 				var/datum/data/record/M = new /datum/data/record()
-				M.fields["id"]			= active1.fields["id"]
-				M.fields["name"]		= active1.fields["name"]
-				M.fields["blood_type"]	= "?"
-				M.fields["b_dna"]		= "?????"
-				M.fields["mi_dis"]		= "None"
-				M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-				M.fields["ma_dis"]		= "None"
-				M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-				M.fields["alg"]			= "None"
-				M.fields["alg_d"]		= "No allergies have been detected in this patient."
-				M.fields["cdi"]			= "None"
-				M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-				M.fields["notes"]		= "No notes."
+				M.fields["id"] = active1.fields["id"]
+				M.fields["name"] = active1.fields["name"]
+				M.fields["blood_type"] = "?"
+				M.fields["b_dna"] = "?????"
+				M.fields["mi_dis"] = "None"
+				M.fields["mi_dis_d"] = "No minor disabilities have been declared."
+				M.fields["ma_dis"] = "None"
+				M.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
+				M.fields["alg"] = "None"
+				M.fields["alg_d"] = "No allergies have been detected in this patient."
+				M.fields["cdi"] = "None"
+				M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
+				M.fields["notes"] = "No notes."
 				GLOB.data_core.medical += M
 
 

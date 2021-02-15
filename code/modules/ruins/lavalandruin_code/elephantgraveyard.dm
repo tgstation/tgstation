@@ -67,7 +67,7 @@
 		new /obj/item/stack/sheet/bone(src, 1)
 
 //***Oil well puddles.
-/obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
+/obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
@@ -144,7 +144,7 @@
 			new /obj/item/storage/book/bible/booze(src)
 		if(5)
 			new /obj/item/clothing/neck/stethoscope(src)
-			new	/obj/item/scalpel(src)
+			new /obj/item/scalpel(src)
 			new /obj/item/hemostat(src)
 
 		if(6)

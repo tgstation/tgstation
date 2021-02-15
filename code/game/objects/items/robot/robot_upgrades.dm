@@ -11,7 +11,7 @@
 	var/installed = FALSE
 	var/require_model = FALSE
 	var/list/model_type = null
-	///	Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
+	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
 	var/list/model_flags = NONE
 	// if true, is not stored in the robot to be ejected
 	// if model is reset

@@ -45,8 +45,8 @@
 	var/open = FALSE//Maint panel
 	var/locked = TRUE
 	var/hacked = FALSE //Used to differentiate between being hacked by silicons and emagged by humans.
-	var/text_hack = ""		//Custom text returned to a silicon upon hacking a bot.
-	var/text_dehack = "" 	//Text shown when resetting a bots hacked status to normal.
+	var/text_hack = "" //Custom text returned to a silicon upon hacking a bot.
+	var/text_dehack = "" //Text shown when resetting a bots hacked status to normal.
 	var/text_dehack_fail = "" //Shown when a silicon tries to reset a bot emagged with the emag item, which cannot be reset.
 	var/declare_message = "" //What the bot will display to the HUD user.
 	var/frustration = 0 //Used by some bots for tracking failures to reach their target.
@@ -63,18 +63,18 @@
 	var/radio_key = null //which channels can the bot listen to
 	var/radio_channel = RADIO_CHANNEL_COMMON //The bot's default radio channel
 	var/auto_patrol = 0// set to make bot automatically patrol
-	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
-	var/turf/summon_target	// The turf of a user summoning a bot.
-	var/new_destination		// pending new destination (waiting for beacon response)
-	var/destination			// destination description tag
-	var/next_destination	// the next destination in the patrol route
-	var/shuffle = FALSE		// If we should shuffle our adjacency checking
+	var/turf/patrol_target // this is turf to navigate to (location of beacon)
+	var/turf/summon_target // The turf of a user summoning a bot.
+	var/new_destination // pending new destination (waiting for beacon response)
+	var/destination // destination description tag
+	var/next_destination // the next destination in the patrol route
+	var/shuffle = FALSE // If we should shuffle our adjacency checking
 
-	var/blockcount = 0		//number of times retried a blocked path
-	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
+	var/blockcount = 0 //number of times retried a blocked path
+	var/awaiting_beacon = 0 // count of pticks awaiting a beacon response
 
-	var/nearest_beacon			// the nearest beacon's tag
-	var/turf/nearest_beacon_loc	// the nearest beacon's location
+	var/nearest_beacon // the nearest beacon's tag
+	var/turf/nearest_beacon_loc // the nearest beacon's location
 
 	var/beacon_freq = FREQ_NAV_BEACON
 	var/model = "" //The type of bot it is.
@@ -282,10 +282,10 @@
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
-		if(BOT_RESPONDING)	//Called by the AI.
+		if(BOT_RESPONDING) //Called by the AI.
 			call_mode()
 			return
-		if(BOT_SUMMON)		//Called by PDA
+		if(BOT_SUMMON) //Called by PDA
 			bot_summon()
 			return
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
@@ -456,13 +456,13 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	if(!T)
 		return
 	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
-	if(shuffle)	//If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
+	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
 		adjacent = shuffle(adjacent)
 		shuffle = FALSE
 	for(var/scan in adjacent)//Let's see if there's something right next to us first!
-		if(check_bot(scan))	//Is there another bot there? Then let's just skip it
+		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
 			continue
-		if(isturf(scan_type))	//If we're lookeing for a turf we can just run the checks directly!
+		if(isturf(scan_type)) //If we're lookeing for a turf we can just run the checks directly!
 			var/final_result = checkscan(scan,scan_type,old_target)
 			if(final_result)
 				return final_result
@@ -493,8 +493,8 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/turf/T = get_turf(targ)
 	if(T)
 		for(var/C in T.contents)
-			if(istype(C,type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-				return TRUE	//Let's abort if we find a bot so we dont have to keep rechecking
+			if(istype(C,type) && (C != src)) //Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+				return TRUE //Let's abort if we find a bot so we dont have to keep rechecking
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
@@ -640,14 +640,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(patrol_target) // has patrol target
 		INVOKE_ASYNC(src, .proc/target_patrol)
-	else					// no patrol target, so need a new one
+	else // no patrol target, so need a new one
 		speak("Engaging patrol mode.")
 		find_patrol_target()
 		tries++
 	return
 
 /mob/living/simple_animal/bot/proc/target_patrol()
-	calc_path()		// Find a route to it
+	calc_path() // Find a route to it
 	if(!path.len)
 		patrol_target = null
 		return
@@ -656,26 +656,26 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/patrol_step()
 
-	if(client)		// In use by player, don't actually move.
+	if(client) // In use by player, don't actually move.
 		return
 
-	if(loc == patrol_target)		// reached target
+	if(loc == patrol_target) // reached target
 		//Find the next beacon matching the target.
 		if(!get_next_patrol_target())
 			find_patrol_target() //If it fails, look for the nearest one instead.
 		return
 
-	else if(path.len > 0 && patrol_target)		// valid path
+	else if(path.len > 0 && patrol_target) // valid path
 		if(path[1] == loc)
 			increment_path()
 			return
 
 
-		var/moved = bot_move(patrol_target)//step_towards(src, next)	// attempt to move
+		var/moved = bot_move(patrol_target)//step_towards(src, next) // attempt to move
 		if(!moved) //Couldn't proceed the next step of the path BOT_STEP_MAX_RETRIES times
 			addtimer(CALLBACK(src, .proc/patrol_step_not_moved), 2)
 
-	else	// no path, so calculate new one
+	else // no path, so calculate new one
 		mode = BOT_START_PATROL
 
 /mob/living/simple_animal/bot/proc/patrol_step_not_moved()
@@ -732,7 +732,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	// process control input
 	switch(command)
 		if("patroloff")
-			bot_reset() //HOLD IT!!	//OBJECTION!!
+			bot_reset() //HOLD IT!! //OBJECTION!!
 			auto_patrol = FALSE
 
 		if("patrolon")
@@ -794,23 +794,23 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/summon_step()
 
-	if(client)		// In use by player, don't actually move.
+	if(client) // In use by player, don't actually move.
 		return
 
-	if(loc == summon_target)		// Arrived to summon location.
+	if(loc == summon_target) // Arrived to summon location.
 		bot_reset()
 		return
 
-	else if(path.len > 0 && summon_target)		//Proper path acquired!
+	else if(path.len > 0 && summon_target) //Proper path acquired!
 		if(path[1] == loc)
 			increment_path()
 			return
 
-		var/moved = bot_move(summon_target, 3)	// Move attempt
+		var/moved = bot_move(summon_target, 3) // Move attempt
 		if(!moved)
 			addtimer(CALLBACK(src, .proc/summon_step_not_moved), 2)
 
-	else	// no path, so calculate new one
+	else // no path, so calculate new one
 		calc_summon_path()
 
 /mob/living/simple_animal/bot/proc/summon_step_not_moved()

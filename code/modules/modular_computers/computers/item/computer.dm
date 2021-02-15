@@ -11,13 +11,13 @@
 	max_integrity = 100
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 
-	var/enabled = 0											// Whether the computer is turned on.
-	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
-	var/device_theme = "ntos"								// Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
-	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
-	var/hardware_flag = 0									// A flag that describes this device type
+	var/enabled = 0 // Whether the computer is turned on.
+	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
+	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
+	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
+	var/hardware_flag = 0 // A flag that describes this device type
 	var/last_power_usage = 0
-	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
+	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
 	///Looping sound for when the computer is on
@@ -25,19 +25,19 @@
 	///Whether or not this modular computer uses the looping sound
 	var/looping_sound = TRUE
 
-	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
-	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	var/base_active_power_usage = 50 // Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	var/base_idle_power_usage = 5 // Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
-	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
-	var/icon_state_powered = null							// Icon state when the computer is turned on.
-	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
-	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
-	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
+	var/icon_state_unpowered = null // Icon state when the computer is turned off.
+	var/icon_state_powered = null // Icon state when the computer is turned on.
+	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
+	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
+	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
+	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	/// List of "connection ports" in this computer and the components with which they are plugged
 	var/list/all_components = list()
@@ -46,11 +46,11 @@
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
-	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
-	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
-	var/comp_light_luminosity = 3				//The brightness of that light
-	var/comp_light_color			//The color of that light
+	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
+	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
+	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
+	var/comp_light_luminosity = 3 //The brightness of that light
+	var/comp_light_color //The color of that light
 
 
 /obj/item/modular_computer/Initialize()

@@ -100,7 +100,7 @@
 	 *  is projected to have no member and cause GC problems.
 	 *  We have to do this because components don't qdel pipelines
 	 *  while pipes must and will happily wreck and rebuild everything
-	 *	again every time they are qdeleted.
+	 * again every time they are qdeleted.
 	 */
 	if(!length(reference.other_atmosmch) && !length(reference.members))
 		if(QDESTROYING(reference))

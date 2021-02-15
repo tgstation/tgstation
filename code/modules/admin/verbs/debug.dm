@@ -748,7 +748,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Clear Dynamic Transit") // If...
 	log_admin("[key_name(src)] cleared dynamic transit space.")
-	SSmapping.wipe_reservations()				//this goes after it's logged, incase something horrible happens.
+	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
 
 /client/proc/toggle_medal_disable()
 	set category = "Debug"
@@ -815,9 +815,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = "Shows tracked profiling info from code lines that support it"
 
 	var/sortlist = list(
-		"Avg time"		=	/proc/cmp_profile_avg_time_dsc,
-		"Total Time"	=	/proc/cmp_profile_time_dsc,
-		"Call Count"	=	/proc/cmp_profile_count_dsc
+		"Avg time" = /proc/cmp_profile_avg_time_dsc,
+		"Total Time" = /proc/cmp_profile_time_dsc,
+		"Call Count" = /proc/cmp_profile_count_dsc
 	)
 	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
 	if (!sort)
