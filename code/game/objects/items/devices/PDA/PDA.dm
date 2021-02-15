@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
 	else
-		inserted_item =	new /obj/item/pen(src)
+		inserted_item = new /obj/item/pen(src)
 	update_appearance()
 
 /obj/item/pda/equipped(mob/user, slot)

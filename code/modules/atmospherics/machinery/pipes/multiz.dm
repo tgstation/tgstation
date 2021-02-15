@@ -33,7 +33,7 @@
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/pipe/multiz/update_layer()
-	return	// Noop because we're moving this to /obj/machinery/atmospherics/pipe
+	return // Noop because we're moving this to /obj/machinery/atmospherics/pipe
 
 /obj/machinery/atmospherics/pipe/multiz/update_overlays()
 	. = ..()

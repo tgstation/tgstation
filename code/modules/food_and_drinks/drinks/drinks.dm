@@ -462,7 +462,7 @@
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		foodtype = NONE	/// Why are food types on the _container_? TODO: move these to the reagents
+		foodtype = NONE /// Why are food types on the _container_? TODO: move these to the reagents
 		return
 
 	switch(reagents.get_master_reagent_id())

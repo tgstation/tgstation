@@ -2,13 +2,13 @@
 //For a fee that is. Comes in 4 flavors of medical scan.
 
 /// Shows if the machine is being used for a general scan.
-#define KIOSK_SCANNING_GENERAL	(1<<0)
-///
-#define KIOSK_SCANNING_SYMPTOMS	(1<<1)
-///
-#define KIOSK_SCANNING_NEURORAD	(1<<2)
-///
-#define KIOSK_SCANNING_REAGENTS	(1<<3)
+#define KIOSK_SCANNING_GENERAL (1<<0)
+/// Shows if the machine is being used for a disease scan.
+#define KIOSK_SCANNING_SYMPTOMS (1<<1)
+/// Shows if the machine is being used for a radiation/brain trauma scan.
+#define KIOSK_SCANNING_NEURORAD (1<<2)
+/// Shows if the machine is being used for a reagent scan.
+#define KIOSK_SCANNING_REAGENTS (1<<3)
 
 
 
@@ -344,10 +344,10 @@
 	data["addict_list"] = addict_list
 	data["hallucinating_status"] = hallucination_status
 
-	data["active_status_1"] = scan_active & KIOSK_SCANNING_GENERAL	// General Scan Check
-	data["active_status_2"] = scan_active & KIOSK_SCANNING_SYMPTOMS	// Symptom Scan Check
-	data["active_status_3"] = scan_active & KIOSK_SCANNING_NEURORAD	// Radio-Neuro Scan Check
-	data["active_status_4"] = scan_active & KIOSK_SCANNING_REAGENTS	// Reagents/hallucination Scan Check
+	data["active_status_1"] = scan_active & KIOSK_SCANNING_GENERAL // General Scan Check
+	data["active_status_2"] = scan_active & KIOSK_SCANNING_SYMPTOMS // Symptom Scan Check
+	data["active_status_3"] = scan_active & KIOSK_SCANNING_NEURORAD // Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active & KIOSK_SCANNING_REAGENTS // Reagents/hallucination Scan Check
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)

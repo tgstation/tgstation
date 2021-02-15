@@ -28,7 +28,7 @@
 	if(!difference)
 		return
 
-	if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
+	if(difference < 0 && LAZYLEN(stack_overlays)) //amount < stack_overlays, remove excess.
 		if(LAZYLEN(stack_overlays)-difference <= 0)
 			stack_overlays = null
 			return
