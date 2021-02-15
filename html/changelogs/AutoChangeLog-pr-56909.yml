@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Lavaland and icebox can no longer cause infinite fires in rare edgecases"

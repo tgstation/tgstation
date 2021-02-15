@@ -1,0 +1,10 @@
+author: "LordVollkorn"
+delete-after: True
+changes: 
+  - code_imp: "The Portable Chemical Mixer has been improved. Don't know where to efficiently put all your bottles of pure precursor chemicals and medicines? Fridges and floors littered with half-filled beakers? Just print the portable chemical mixer at the medbay lathe, no anomaly core needed!
+tweak: It now displays pH-values.
+tweak: It can dispense smaller amounts (1u).
+tweak: It can now also be loaded with bottles, plastic bottles and condiment bottles.
+tweak: It can be opened and closed with CTRL+left click.
+tweak: It's inventory (beakers and bottles) can be accessed with a simple left click now when on the belt (when its opened).
+tweak: It's UI has been resized  to make it easier to visually skim through the chemicals in it's list."

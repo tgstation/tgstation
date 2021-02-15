@@ -36,7 +36,7 @@
 	var/ancestor_name
 	/// The number of times Pun Pun has died since he was last gibbed
 	var/ancestor_chain = 1
-	var/relic_hat	//Note: these two are paths
+	var/relic_hat //Note: these two are paths
 	var/relic_mask
 	var/memory_saved = FALSE
 
@@ -81,10 +81,10 @@
 /mob/living/carbon/human/species/monkey/punpun/proc/Read_Memory()
 	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
-		S["ancestor_name"]	>> ancestor_name
+		S["ancestor_name"] >> ancestor_name
 		S["ancestor_chain"] >> ancestor_chain
-		S["relic_hat"]		>> relic_hat
-		S["relic_mask"]		>> relic_mask
+		S["relic_hat"] >> relic_hat
+		S["relic_mask"] >> relic_mask
 		fdel("data/npc_saves/Punpun.sav")
 	else
 		var/json_file = file("data/npc_saves/Punpun.json")

@@ -4,14 +4,14 @@
 #define POPUP_ANIM_TIME 5
 #define POPDOWN_ANIM_TIME 5 //Be sure to change the icon animation at the same time or it'll look bad
 
-#define TURRET_FLAG_SHOOT_ALL_REACT		(1<<0)	// The turret gets pissed off and shoots at people nearby (unless they have sec access!)
-#define TURRET_FLAG_AUTH_WEAPONS		(1<<1)	// Checks if it can shoot people that have a weapon they aren't authorized to have
-#define TURRET_FLAG_SHOOT_CRIMINALS		(1<<2)	// Checks if it can shoot people that are wanted
-#define TURRET_FLAG_SHOOT_ALL 			(1<<3)  // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
-#define TURRET_FLAG_SHOOT_ANOMALOUS 	(1<<4)  // Checks if it can shoot at unidentified lifeforms (ie xenos)
-#define TURRET_FLAG_SHOOT_UNSHIELDED	(1<<5)	// Checks if it can shoot people that aren't mindshielded and who arent heads
-#define TURRET_FLAG_SHOOT_BORGS			(1<<6)	// checks if it can shoot cyborgs
-#define TURRET_FLAG_SHOOT_HEADS			(1<<7)	// checks if it can shoot at heads of staff
+#define TURRET_FLAG_SHOOT_ALL_REACT (1<<0) // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
+#define TURRET_FLAG_AUTH_WEAPONS (1<<1) // Checks if it can shoot people that have a weapon they aren't authorized to have
+#define TURRET_FLAG_SHOOT_CRIMINALS (1<<2) // Checks if it can shoot people that are wanted
+#define TURRET_FLAG_SHOOT_ALL (1<<3)  // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
+#define TURRET_FLAG_SHOOT_ANOMALOUS (1<<4)  // Checks if it can shoot at unidentified lifeforms (ie xenos)
+#define TURRET_FLAG_SHOOT_UNSHIELDED (1<<5) // Checks if it can shoot people that aren't mindshielded and who arent heads
+#define TURRET_FLAG_SHOOT_BORGS (1<<6) // checks if it can shoot cyborgs
+#define TURRET_FLAG_SHOOT_HEADS (1<<7) // checks if it can shoot at heads of staff
 
 DEFINE_BITFIELD(turret_flags, list(
 	"TURRET_FLAG_SHOOT_ALL_REACT" = TURRET_FLAG_SHOOT_ALL_REACT,
@@ -29,15 +29,15 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	layer = OBJ_LAYER
-	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
+	invisibility = INVISIBILITY_OBSERVER //the turret is invisible if it's inside its cover
 	density = TRUE
 	desc = "A covered turret that shoots at its enemies."
-	use_power = IDLE_POWER_USE				//this turret uses and requires power
-	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
-	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
+	use_power = IDLE_POWER_USE //this turret uses and requires power
+	idle_power_usage = 50 //when inactive, this turret takes up constant 50 Equipment power
+	active_power_usage = 300 //when active, this turret takes up constant 300 Equipment power
 	req_access = list(ACCESS_SECURITY) /// Only people with Security access
-	power_channel = AREA_USAGE_EQUIP	//drains power from the EQUIPMENT channel
-	max_integrity = 160		//the turret's health
+	power_channel = AREA_USAGE_EQUIP //drains power from the EQUIPMENT channel
+	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	base_icon_state = "standard"
@@ -401,18 +401,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(.)
 		power_change()
 		invisibility = 0
-		spark_system.start()	//creates some sparks because they look cool
-		qdel(cover)	//deletes the cover - no need on keeping it there!
+		spark_system.start() //creates some sparks because they look cool
+		qdel(cover) //deletes the cover - no need on keeping it there!
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	if(cover == null && anchored)	//if it has no cover and is anchored
-		if(machine_stat & BROKEN)	//if the turret is borked
-			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
+	if(cover == null && anchored) //if it has no cover and is anchored
+		if(machine_stat & BROKEN) //if the turret is borked
+			qdel(cover) //delete its cover, assuming it has one. Workaround for a pesky little bug
 		else
 			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
-				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
+				cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
+				cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
 
 	if(!on || (machine_stat & (NOPOWER|BROKEN)))
 		return PROCESS_KILL
@@ -498,7 +498,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(target(M))
 			return 1
 
-/obj/machinery/porta_turret/proc/popUp()	//pops the turret up
+/obj/machinery/porta_turret/proc/popUp() //pops the turret up
 	if(!anchored)
 		return
 	if(raising || raised)
@@ -516,7 +516,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	raised = 1
 	layer = MOB_LAYER
 
-/obj/machinery/porta_turret/proc/popDown()	//pops the turret down
+/obj/machinery/porta_turret/proc/popDown() //pops the turret down
 	if(raising || !raised)
 		return
 	if(machine_stat & BROKEN)
@@ -534,17 +534,17 @@ DEFINE_BITFIELD(turret_flags, list(
 	update_icon()
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
-	var/threatcount = 0	//the integer returned
+	var/threatcount = 0 //the integer returned
 
 	if(obj_flags & EMAGGED)
-		return 10	//if emagged, always return 10.
+		return 10 //if emagged, always return 10.
 
 	if((turret_flags & (TURRET_FLAG_SHOOT_ALL | TURRET_FLAG_SHOOT_ALL_REACT)) && !allowed(perp))
 		//if the turret has been attacked or is angry, target all non-sec people
 		if(!allowed(perp))
 			return 10
 
-	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS)	//check for weapon authorization
+	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS) //check for weapon authorization
 		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
 
 			if(allowed(perp)) //if the perp has security access, return 0
@@ -555,7 +555,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			if(istype(perp.belt, /obj/item/gun) || istype(perp.belt, /obj/item/melee/baton))
 				threatcount += 2
 
-	if(turret_flags & TURRET_FLAG_SHOOT_CRIMINALS)	//if the turret can check the records, check if they are set to *Arrest* on records
+	if(turret_flags & TURRET_FLAG_SHOOT_CRIMINALS) //if the turret can check the records, check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(!R || (R.fields["criminal"] == "*Arrest*"))
@@ -578,7 +578,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
-		popUp()				//pop the turret up if it's not already up.
+		popUp() //pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
 		return 1
@@ -588,7 +588,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 
-	if(!(obj_flags & EMAGGED))	//if it hasn't been emagged, cooldown before shooting again
+	if(!(obj_flags & EMAGGED)) //if it hasn't been emagged, cooldown before shooting again
 		if(last_fired + shot_delay > world.time)
 			return
 		last_fired = world.time
@@ -927,7 +927,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if (issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
+	if ( get_dist(src, user) == 0 ) // trying to unlock the interface
 		if (allowed(usr))
 			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
@@ -1093,8 +1093,8 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/lasertag/assess_perp(mob/living/carbon/human/perp)
 	. = 0
-	if(team_color == "blue")	//Lasertag turrets target the opposing team, how great is that? -Sieve
-		. = 0		//But does not target anyone else
+	if(team_color == "blue") //Lasertag turrets target the opposing team, how great is that? -Sieve
+		. = 0 //But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			. += 4
 		if(perp.is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))

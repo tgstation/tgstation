@@ -16,16 +16,16 @@
 	var/mob_gender = null
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
-	var/instant = FALSE	//fires on New
+	var/instant = FALSE //fires on New
 	var/short_desc = "The mapper forgot to set this!"
 	var/flavour_text = ""
 	var/important_info = ""
 	var/faction = null
-	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
-	var/random = FALSE		//Don't set a name or gender, just go random
+	var/permanent = FALSE //If true, the spawner will not disappear upon running out of uses.
+	var/random = FALSE //Don't set a name or gender, just go random
 	var/antagonist_type
 	var/objectives = null
-	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
+	var/uses = 1 //how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	var/burn_damage = 0
@@ -143,14 +143,14 @@
 /obj/effect/mob_spawn/human
 	mob_type = /mob/living/carbon/human
 	//Human specific stuff.
-	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
-	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
+	var/datum/outfit/outfit = /datum/outfit //If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
 	var/disable_sensors = TRUE
 	//All of these only affect the ID that the outfit has placed in the ID slot
-	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
-	var/id_access_list = null	//Allows you to manually add access to an ID card.
+	var/id_job = null //Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
+	var/id_access = null //This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
+	var/id_access_list = null //Allows you to manually add access to an ID card.
 	assignedrole = "Ghost Role"
 
 	var/husk = null
@@ -293,7 +293,7 @@
 	qdel(src)
 
 /obj/effect/mob_spawn/slime
-	mob_type = 	/mob/living/simple_animal/slime
+	mob_type = /mob/living/simple_animal/slime
 	var/mobcolour = "grey"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor

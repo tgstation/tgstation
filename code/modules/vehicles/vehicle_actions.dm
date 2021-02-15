@@ -12,13 +12,13 @@
 /obj/vehicle/proc/initialize_passenger_action_type(actiontype)
 	autogrant_actions_passenger += actiontype
 	for(var/i in occupants)
-		grant_passenger_actions(i)	//refresh
+		grant_passenger_actions(i) //refresh
 
 /obj/vehicle/proc/initialize_controller_action_type(actiontype, control_flag)
 	LAZYINITLIST(autogrant_actions_controller["[control_flag]"])
 	autogrant_actions_controller["[control_flag]"] += actiontype
 	for(var/i in occupants)
-		grant_controller_actions(i)	//refresh
+		grant_controller_actions(i) //refresh
 
 /obj/vehicle/proc/grant_action_type_to_mob(actiontype, mob/m)
 	if(isnull(LAZYACCESS(occupants, m)) || !actiontype)

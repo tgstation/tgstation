@@ -185,7 +185,7 @@ GLOBAL_PROTECT(exp_to_update)
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
 			to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
-	else if(minutes)	//Let "refresh" checks go through
+	else if(minutes) //Let "refresh" checks go through
 		return
 
 	for(var/jtype in play_records)
@@ -220,6 +220,6 @@ GLOBAL_PROTECT(exp_to_update)
 	if(flags_read.NextRow())
 		prefs.db_flags = text2num(flags_read.item[1])
 	else if(isnull(prefs.db_flags))
-		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
+		prefs.db_flags = 0 //This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE
