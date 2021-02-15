@@ -2176,8 +2176,8 @@
 	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/gun/ballistic/automatic/toy/pistol,
-					/obj/item/gun/ballistic/automatic/toy/pistol,
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/toy,
+					/obj/item/gun/ballistic/automatic/pistol/toy,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"

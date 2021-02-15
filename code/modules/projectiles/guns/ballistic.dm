@@ -153,6 +153,10 @@
 		. += MA
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
+	
+	if(gun_flags & TOY_FIREARM_OVERLAY)
+		. += "[icon_state]_toy"
+
 	if (magazine && !internal_magazine)
 		if (special_mags)
 			. += "[icon_state]_mag_[initial(magazine.icon_state)]"
@@ -176,7 +180,6 @@
 					capacity_number = 20
 			if (capacity_number)
 				. += "[icon_state]_mag_[capacity_number]"
-
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
