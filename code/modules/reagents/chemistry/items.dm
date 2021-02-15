@@ -281,8 +281,8 @@
 	var/obj/item/reagent_containers/attached_beaker
 
 /obj/item/thermometer/Destroy()
-	. = ..()
 	QDEL_NULL(attached_beaker) //I have no idea how you can destroy this, but not the beaker, but here we go
+	return ..()
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
