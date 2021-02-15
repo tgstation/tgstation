@@ -223,7 +223,7 @@
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : cached_reagent, amount)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(cached_reagent) ? reagent : cached_reagent, amount)
 
 			return TRUE
 	return FALSE
@@ -284,7 +284,7 @@
 			if(reagent.type == reagent_type)
 				matches = 1
 		else
-			if(istype((reagent, reagent_type))
+			if(istype(reagent, reagent_type))
 				matches = 1
 		// We found a match, proceed to remove the reagent. Keep looping, we might find other reagents of the same type.
 		if(matches)
@@ -323,9 +323,9 @@
 /// Remove every reagent except this one
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(reagent.type != reagent)
-			del_reagent(reagent.type)
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		if(cached_reagent.type != reagent)
+			del_reagent(cached_reagent.type)
 			update_total()
 
 /// Removes all reagents
