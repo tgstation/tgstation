@@ -424,6 +424,11 @@
 	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
 	icon_state = "poster47"
 
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth
+	name = "The Big Gas Giant Truth"
+	desc = "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
+	icon_state = "poster48"
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
@@ -614,5 +619,11 @@
 	name = "Dick Gumshue"
 	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
 	icon_state = "poster36_legit"
+
+/obj/structure/sign/poster/official/there_is_no_gas_giant
+	name = "There Is No Gas Giant"
+	desc = "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
+	// And yet people still believe...
+	icon_state = "poster37_legit"
 
 #undef PLACE_SPEED
