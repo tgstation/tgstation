@@ -172,7 +172,6 @@
 	l_pocket = /obj/item/lighter
 	head = /obj/item/clothing/head/crown
 	id_trim = /datum/id_trim/pirate/silverscale/captain
-	scale_assignment = "Silver Scale VIP"
 
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
