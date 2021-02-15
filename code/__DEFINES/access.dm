@@ -268,7 +268,7 @@
  * If a PDA is not in this list, it cannot be painted using the PDA & ID Painter.
  * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
  */
- #define PDA_PAINTING_REGIONS list( \
+#define PDA_PAINTING_REGIONS list( \
 	/obj/item/pda = list(REGION_GENERAL), \
 	/obj/item/pda/clown = list(REGION_GENERAL), \
 	/obj/item/pda/mime = list(REGION_GENERAL), \
