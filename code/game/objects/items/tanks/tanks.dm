@@ -287,7 +287,7 @@
 		leaking = TRUE
 		if(obj_integrity > 0) // So we don't play the alerts while we are exploding or rupturing.
 			visible_message("<span class='warning'>[src] springs a leak!</span>")
-			playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
+			playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
 /// Handles rupturing and fragmenting
