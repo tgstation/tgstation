@@ -650,17 +650,16 @@
 	var/datum/reagent/eigenstate/eigen = holder.has_reagent(/datum/reagent/eigenstate)
 	if(!eigen)
 		return
-	var/datum/reagent/blood = holder.has_reagent(/datum/reagent/blood)
-	if(!blood)
-		return
 	var/turf/open/location = get_turf(holder.my_atom)
 	if(location)
 		eigen.location_created = location
 		eigen.data["location_created"] = location
+	var/datum/reagent/blood = holder.has_reagent(/datum/reagent/blood)
+	if(blood)
 		eigen.creator = blood.data["donor"]
 		eigen.data["creator"] = eigen.creator
-		do_sparks(5,FALSE,location)
-		playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
+	do_sparks(5,FALSE,location)
+	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
 
 /datum/chemical_reaction/eigenstate/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()

@@ -40,29 +40,34 @@
 	location_created = data["location_created"]
 	creator = data["creator"]
 
+/datum/reagent/eigenstate/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(!(methods & INGEST))
+		return
+	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
+		do_sparks(5,FALSE,living_mob)
+		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_sparks(5,FALSE,living_mob)
+
 //Main functions
 /datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
 	. = ..()
 	//make hologram at return point
 	eigenstate = new (living_mob.loc)
-	eigenstate.appearance = living_mob.appearance
+	eigenstate.appearance = creator ? creator.appearance : living_mob.appearance //Blood lets you set your eigenstate icon
 	eigenstate.alpha = 170
 	eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	eigenstate.anchored = 1//So space wind cannot drag it.
-	eigenstate.name = "[living_mob]'s' eigenstate"//If someone decides to right click.
+	eigenstate.name = "[creator ? creator.appearance : living_mob.appearance]'s' eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
-	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
-		if(!creator || !(creator == living_mob))//Abuse please go
-			return
-		do_sparks(5,FALSE,living_mob)
-		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
-		do_sparks(5,FALSE,living_mob)
 
+/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/M)
+	. = ..()
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
 
@@ -198,8 +203,12 @@
 		if(prob(1))//low chance of the alternative reality returning to monkey
 			var/obj/item/organ/tail/monkey/monkey_tail = new (human_mob.loc)
 			monkey_tail.Insert(human_mob)
-		human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
-		human_mob.dna?.species?.randomize_active_underwear(human_mob)
+		if(!creator)
+			human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
+			human_mob.dna?.species?.randomize_active_underwear(human_mob)
+		else
+			human_mob.appearance = creator.appearance
+			human_mob.name = creator.name
 
 
 	if(prob(20))
