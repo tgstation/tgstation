@@ -8,9 +8,9 @@
  *
  * Arguments:
  * * packet_data - Either a list() or a /datum/netdata.  If its netdata, the other args are ignored
- * * target_id - 	Target hardware id or network_id for this packet. If we are a network id, then its
+ * * target_id - Target hardware id or network_id for this packet. If we are a network id, then its
 					broadcasted to that network.
- * * passkey - 	Authentication for the packet.  If the target doesn't authenticate the packet is dropped
+ * * passkey - Authentication for the packet.  If the target doesn't authenticate the packet is dropped
  */
 /datum/proc/ntnet_send(packet_data, target_id = null, passkey = null)
 	var/datum/netdata/data = packet_data
@@ -43,11 +43,11 @@
  *
  */
 /datum/component/ntnet_interface
-	var/hardware_id = null				// text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
-	var/id_tag = null  					// named tag, mainly used to look up mapping objects
-	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
+	var/hardware_id = null // text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
+	var/id_tag = null // named tag, mainly used to look up mapping objects
+	var/datum/ntnet/network = null // network we are on, we MUST be on a network or there is no point in this component
 	var/list/registered_sockets = list()// list of ports opened up on devices
-	var/list/alias = list() 			// if we live in more than one network branch
+	var/list/alias = list() // if we live in more than one network branch
 
 /**
  * Initialize for the interface

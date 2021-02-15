@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Ethereals now always take 1.25x as much brute damage as humans do, instead of 1.25x-1.75x as much brute damage (depending on their charge level) as humans do."
+  - bugfix: "The special alert message for reaching 0 charge as an ethereal now actually appears."

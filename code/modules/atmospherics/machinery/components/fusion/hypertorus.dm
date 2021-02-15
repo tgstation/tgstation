@@ -1,51 +1,51 @@
 ///Max amount of radiation that can be emitted per reaction cycle
-#define FUSION_RAD_MAX						5000
+#define FUSION_RAD_MAX 5000
 ///Maximum instability before the reaction goes endothermic
 #define FUSION_INSTABILITY_ENDOTHERMALITY   4
 ///Maximum reachable fusion temperature
-#define FUSION_MAXIMUM_TEMPERATURE			1e8
+#define FUSION_MAXIMUM_TEMPERATURE 1e8
 ///Speed of light, in m/s
-#define LIGHT_SPEED 						299792458
+#define LIGHT_SPEED 299792458
 ///Calculation between the plank constant and the lambda of the lightwave
-#define PLANCK_LIGHT_CONSTANT 				2e-16
+#define PLANCK_LIGHT_CONSTANT 2e-16
 ///Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
-#define CALCULATED_H2RADIUS 				120e-4
+#define CALCULATED_H2RADIUS 120e-4
 ///Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
-#define CALCULATED_TRITRADIUS 				230e-3
+#define CALCULATED_TRITRADIUS 230e-3
 ///Power conduction in the void, used to calculate the efficiency of the reaction
-#define VOID_CONDUCTION 					1e-2
+#define VOID_CONDUCTION 1e-2
 ///Max reaction point per reaction cycle
-#define MAX_FUSION_RESEARCH 				1000
+#define MAX_FUSION_RESEARCH 1000
 ///Min amount of allowed heat change
-#define MIN_HEAT_VARIATION 					-1e5
+#define MIN_HEAT_VARIATION -1e5
 ///Max amount of allowed heat change
-#define MAX_HEAT_VARIATION 					1e5
+#define MAX_HEAT_VARIATION 1e5
 ///Max mole consumption per reaction cycle
-#define MAX_FUEL_USAGE 				36
+#define MAX_FUEL_USAGE 36
 ///Mole count required (tritium/hydrogen) to start a fusion reaction
-#define FUSION_MOLE_THRESHOLD				25
+#define FUSION_MOLE_THRESHOLD 25
 ///Used to reduce the gas_power to a more useful amount
-#define INSTABILITY_GAS_POWER_FACTOR 		0.003
+#define INSTABILITY_GAS_POWER_FACTOR 0.003
 ///Used to calculate the toroidal_size for the instability
-#define TOROID_VOLUME_BREAKEVEN				1000
+#define TOROID_VOLUME_BREAKEVEN 1000
 ///Constant used when calculating the chance of emitting a radioactive particle
-#define PARTICLE_CHANCE_CONSTANT 			(-20000000)
+#define PARTICLE_CHANCE_CONSTANT (-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY			0.15
+#define METALLIC_VOID_CONDUCTIVITY 0.15
 ///Conduction of heat near the external cooling loop
-#define HIGH_EFFICIENCY_CONDUCTIVITY 		0.95
+#define HIGH_EFFICIENCY_CONDUCTIVITY 0.95
 ///Sets the range of the hallucinations
-#define HALLUCINATION_RANGE(P) 				(min(7, round(abs(P) ** 0.25)))
+#define HALLUCINATION_RANGE(P) (min(7, round(abs(P) ** 0.25)))
 ///Sets the minimum amount of power the machine uses
-#define MIN_POWER_USAGE						50000
+#define MIN_POWER_USAGE 50000
 
-#define DAMAGE_CAP_MULTIPLIER				0.005
+#define DAMAGE_CAP_MULTIPLIER 0.005
 
 //If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
-#define HYPERTORUS_MELTING_PERCENT 		5
-#define HYPERTORUS_EMERGENCY_PERCENT 	25
-#define HYPERTORUS_DANGER_PERCENT 		50
-#define HYPERTORUS_WARNING_PERCENT 		100
+#define HYPERTORUS_MELTING_PERCENT 5
+#define HYPERTORUS_EMERGENCY_PERCENT 25
+#define HYPERTORUS_DANGER_PERCENT 50
+#define HYPERTORUS_WARNING_PERCENT 100
 
 #define WARNING_TIME_DELAY 60
 ///to prevent accent sounds from layering
@@ -848,7 +848,7 @@
 	 *Modifiers
 	 */
 	///Those are the scaled gases that gets consumed and releases energy or help increase that energy
-	var/positive_modifiers = 	scaled_hydrogen + \
+	var/positive_modifiers = scaled_hydrogen + \
 								scaled_tritium + \
 								scaled_m_nitrogen * 0.35 + \
 								scaled_m_co2 * 0.55 + \
@@ -857,14 +857,14 @@
 								scaled_m_antinoblium * 10 - \
 								scaled_m_hypernoblium * 10 //Hypernob decreases the amount of energy
 	///Those are the scaled gases that gets produced and consumes energy or help decrease that energy
-	var/negative_modifiers = 	scaled_helium + \
+	var/negative_modifiers = scaled_helium + \
 								scaled_m_h2o * 0.75 + \
 								scaled_m_no2 * 0.15 + \
 								scaled_m_healium * 0.45 + \
 								scaled_m_freon * 1.15 - \
 								scaled_m_antinoblium * 10
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
-	var/power_modifier = clamp(	scaled_tritium * 1.05 + \
+	var/power_modifier = clamp( scaled_tritium * 1.05 + \
 								scaled_m_oxygen * 0.55 + \
 								scaled_m_co2 * 0.95 + \
 								scaled_m_no2 * 1.45 + \
@@ -875,7 +875,7 @@
 								scaled_m_freon * 0.75, \
 								0.25, 100)
 	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
-	var/heat_modifier = clamp(	scaled_hydrogen * 1.15 + \
+	var/heat_modifier = clamp( scaled_hydrogen * 1.15 + \
 								scaled_helium * 1.05 + \
 								scaled_m_plasma * 1.25 - \
 								scaled_m_nitrogen * 0.75 - \
@@ -883,7 +883,7 @@
 								scaled_m_freon * 0.95, \
 								0.25, 100)
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
-	var/radiation_modifier = clamp(	scaled_helium * 0.55 - \
+	var/radiation_modifier = clamp( scaled_helium * 0.55 - \
 									scaled_m_freon * 1.15 - \
 									scaled_m_nitrogen * 0.45 - \
 									scaled_m_plasma * 0.95 + \
@@ -1326,7 +1326,7 @@
 			var/gas = gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				connected_core.filter_type = gas
-				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
+				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 

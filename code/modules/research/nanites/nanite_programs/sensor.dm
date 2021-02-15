@@ -296,7 +296,7 @@
 	if(species)
 		if(is_species(host_mob, species))
 			species_match = TRUE
-	else	//this is the check for the "Other" option
+	else //this is the check for the "Other" option
 		species_match = TRUE
 		for(var/name in allowed_species)
 			var/species_other = allowed_species[name]

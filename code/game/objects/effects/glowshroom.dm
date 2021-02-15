@@ -49,7 +49,7 @@
 	. += "This is a [generation]\th generation [name]!"
 
 /**
- *	Creates a new glowshroom structure.
+ * Creates a new glowshroom structure.
  *
  * Arguments:
  * * newseed - Seed of the shroom
@@ -169,7 +169,7 @@
 				continue
 
 			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
-			if(QDELETED(src))	//Decay can end us
+			if(QDELETED(src)) //Decay can end us
 				return
 			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
 			child.generation = generation + 1
@@ -250,11 +250,3 @@
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
 	return TRUE
-
-/obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
-	if (istype(I, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = I
-		to_chat(user, plant_analyzer.scan_plant(myseed))
-		return
-
-	return ..() // Attack normally

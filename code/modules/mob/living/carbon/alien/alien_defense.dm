@@ -49,11 +49,11 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M, modifiers)
 	. = ..()
-	if(.)	//to allow surgery to return properly.
+	if(.) //to allow surgery to return properly.
 		return FALSE
 
 	if(M.combat_mode)
-		if(modifiers && modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
 		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)

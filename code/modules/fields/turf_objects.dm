@@ -69,7 +69,7 @@
 		return parent.field_edge_uncrossed(AM, src)
 	return TRUE
 
-/proc/is_turf_in_field(turf/T, datum/proximity_monitor/advanced/F)	//Looking for ways to optimize this!
+/proc/is_turf_in_field(turf/T, datum/proximity_monitor/advanced/F) //Looking for ways to optimize this!
 	for(var/obj/effect/abstract/proximity_checker/advanced/O in T)
 		if(istype(O, /obj/effect/abstract/proximity_checker/advanced/field_edge))
 			if(O.parent == F)
