@@ -40,7 +40,7 @@
 	location_created = data["location_created"]
 	creator = data["creator"]
 
-/datum/reagent/eigenstate/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+/datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
 	if(!(methods & INGEST))
 		return
@@ -66,7 +66,7 @@
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
 
-/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/M)
+/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
 	. = ..()
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
@@ -194,6 +194,7 @@
 		living_mob.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 		log_game("FERMICHEM: [living_mob] ckey: [living_mob.key] has become an alternative universe version of themselves.")
 		//new you new stuff
+		SSquirks.randomise_quirks(living_mob)
 		living_mob.reagents.remove_all(1000)
 		var/datum/component/mood/mood = living_mob.GetComponent(/datum/component/mood)
 		mood.remove_temp_moods() //New you, new moods.
@@ -240,3 +241,10 @@
 	first.visible_message("The lockers' eigenstates spilt and merge, linking each of their contents together.")
 
 //eigenstate END
+
+/datum/reagent/test
+	name = "testchem"
+
+/datum/reagent/test/on_mob_add(mob/living/L, amount)
+	. = ..()
+	SSquirks.randomise_quirks(L)

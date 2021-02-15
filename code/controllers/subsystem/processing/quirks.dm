@@ -65,3 +65,64 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	// Assign wayfinding pinpointer granting quirk if they're new
 	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/needswayfinder))
 		user.add_quirk(/datum/quirk/needswayfinder, TRUE)
+
+/datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user, bonus_points = 0)
+	var/list/quirk_list = subtypesof(/datum/quirk)
+	var/bonus_quirks = max((length(user.roundstart_quirks) + rand(-3,3)), 3)
+	var/added_quirk_count
+	var/list/quirks_to_add = list()
+	var/loop_preventer = 10
+	var/good_count = 0
+	var/score
+	//Create a random list of stuff to start with
+	while(bonus_quirks < added_quirk_count)
+		if(!loop_preventer)//Lets not get stuck
+			break
+		var/datum/quirk/quirk = pick(quirk_list)
+		if((quirk.name in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+			loop_preventer--
+			continue
+		if(quirk.value > 0)
+			good_count++
+		score += quirk.value
+		quirks_to_add += quirk
+		added_quirk_count++
+
+	//But lets make sure we're balanced
+	loop_preventer = 10
+	while(score > 0)
+		if(!loop_preventer)//Lets not get stuck
+			break
+		var/datum/quirk/quirk = pick(quirk_list)
+		if((quirk.name in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+			loop_preventer--
+			continue
+		if(!quirk.value > 0)
+			loop_preventer--
+			continue
+		good_count++
+		score += quirk.value
+		quirks_to_add += quirk
+	//And have benefits too
+	loop_preventer = 10
+	while(score < 0 && good_count <= 6)
+		if(!loop_preventer)//Lets not get stuck
+			break
+		var/datum/quirk/quirk = pick(quirk_list)
+		if((quirk.name in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+			loop_preventer--
+			continue
+		if(!quirk.value > 0)
+			loop_preventer--
+			continue
+		good_count++
+		score += quirk.value
+		quirks_to_add += quirk
+
+	for(var/datum/quirk/quirk as anything in user.roundstart_quirks)
+		if(quirk in quirks_to_add)//Don't delete ones we keep
+			continue
+		user.remove_quirk(quirk)
+
+	for(var/datum/quirk/quirk as anything in quirks_to_add)
+		user.add_quirk(quirk)
