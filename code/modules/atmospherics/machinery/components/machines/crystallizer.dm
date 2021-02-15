@@ -15,10 +15,8 @@
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF
 
-	///Save the icon state for the machine to be used in update_icon()
-	var/icon_state_off = "crystallizer-off"
-	var/icon_state_on = "crystallizer-on"
-	var/icon_state_open = "crystallizer-open"
+	///Base icon state for the machine to be used in update_icon()
+	var/base_icon_state = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
 	///Var that controls how much gas gets injected
@@ -36,8 +34,7 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
 	. = ..()
-	internal = new
-	internal.volume = 2000
+	internal = new(2000)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
@@ -50,7 +47,8 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/default_change_direction_wrench(mob/user, obj/item/I)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
@@ -85,11 +83,11 @@
 	cut_overlays()
 
 	if(panel_open)
-		icon_state = icon_state_open
+		icon_state = "[base_icon_state]-open"
 	else if(on && is_operational)
-		icon_state = icon_state_on
+		icon_state = "[base_icon_state]-on"
 	else
-		icon_state = icon_state_off
+		icon_state = "[base_icon_state]-off"
 
 	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
 	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
@@ -233,7 +231,7 @@
 		var/amount_produced = recipe[META_RECIPE_PRODUCTS][path]
 		for(var/i in 1 to amount_produced)
 			var/obj/creation = new path(get_step(src, SOUTH))
-			creation.name = "[quality_control] " + creation.name
+			creation.name = "[quality_control] [creation.name]"
 			if(istype(creation, /obj/machinery/power/supermatter_crystal/shard))
 				investigate_log("has been created in the crystallizer.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
@@ -252,8 +250,7 @@
 	var/data = list()
 	data["on"] = on
 
-	data["recipe_types"] = list()
-	data["recipe_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !recipe_type))
+	data["recipe_types"] = list("name" = "Nothing", "path" = "", "selected" = !recipe_type)
 	for(var/path in GLOB.gas_recipe_meta)
 		var/list/recipe = GLOB.gas_recipe_meta[path]
 		if(recipe[META_RECIPE_MACHINE_TYPE] != "Crystallizer")
@@ -280,7 +277,7 @@
 		requirements = list("Select a recipe to see the requirements")
 	else
 		var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
-		requirements += list("To create [recipe[META_RECIPE_NAME]] you will need:")
+		requirements = list("To create [recipe[META_RECIPE_NAME]] you will need:")
 		for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
 			var/datum/gas/gas_required = gas_type
 			var/amount_consumed = recipe[META_RECIPE_REQUIREMENTS][gas_type]

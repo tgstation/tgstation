@@ -37,15 +37,24 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	return ""
 
 /datum/gas_recipe
+	///Id of the recipe for easy identification in the code
 	var/id = ""
+	///What machine the recipe is for
 	var/machine_type = ""
+	///Displayed name of the recipe
 	var/name = ""
+	///Minimum temperature for the recipe
 	var/min_temp = TCMB
+	///Maximum temperature for the recipe
 	var/max_temp = INFINITY
+	///Type of reaction (either endothermic or exothermic)
 	var/reaction_type = ""
+	///Amount of energy released/consumed by the reaction (always positive)
 	var/energy_release = 0
-	var/list/requirements = new/list()
-	var/list/products = new/list()
+	///Gas required for the recipe to work
+	var/list/requirements = list()
+	///Products made from the machine
+	var/list/products = list()
 
 /datum/gas_recipe/crystallizer
 	machine_type = "Crystallizer"
