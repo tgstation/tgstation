@@ -11,6 +11,10 @@
 	var/datum/bank_account/payments_acc
 	///The person who tagged this will receive the sale value multiplied by this number.
 	var/cut_multiplier = 0.5
+	///Maximum value for cut_multiplier.
+	var/cut_max = 0.5
+	///Minimum value for cut_multiplier.
+	var/cut_min = 0.01
 
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -55,8 +59,8 @@
 		if("resetid")
 			payments_acc = null
 		if("setsplit")
-			var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
-			cut_multiplier = potential_cut ? clamp(round(potential_cut, 1), 1, 50) / 100 : initial(cut_multiplier)
+			var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
+			cut_multiplier = potential_cut ? clamp(round(potential_cut/100, cut_min), cut_min, cut_max) : initial(cut_multiplier)
 		if("print")
 			if(!printer)
 				to_chat(usr, "<span class='notice'>Hardware error: A printer is required to print barcodes.</span>")
