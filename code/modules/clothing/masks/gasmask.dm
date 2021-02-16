@@ -75,6 +75,7 @@
 	icon_state = "gas_emergency"
 	inhand_icon_state = "gas_emergency"
 	max_filters = 1
+	flags_cover = MASKCOVERSMOUTH
 
 /obj/item/gas_filter
 	name = "atmospheric gas filter"
