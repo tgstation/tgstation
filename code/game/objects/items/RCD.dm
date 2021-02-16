@@ -348,7 +348,14 @@ RLD
 		if("WEST")
 			computer_dir = 8
 
-/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
+/**
+ * Customizes RCD's airlock settings based on user's choices
+ *
+ * Arguments:
+ * * user The mob that is choosing airlock settings
+ * * custom_anchor Custom anchor for radial menus. If set, removes proximity restrictions from the menus
+ */
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user, custom_anchor)
 	if(!user)
 		return
 
@@ -394,13 +401,13 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/airlockcat = show_radial_menu(user, custom_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = custom_anchor ? FALSE : TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, custom_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = custom_anchor ? FALSE : TRUE, tooltips = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -443,7 +450,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, custom_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = custom_anchor ? FALSE : TRUE, tooltips = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
