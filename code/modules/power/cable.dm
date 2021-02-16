@@ -701,7 +701,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/attack_robot(mob/user)
 	attack_hand(user)
 
-/obj/structure/cable/multilayer/attack_hand(mob/living/user)
+/obj/structure/cable/multilayer/attack_hand(mob/living/user, list/modifiers)
 	if(!user)
 		return
 	if(!GLOB.hub_radial_layer_list)

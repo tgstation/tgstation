@@ -778,7 +778,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 
 
-/obj/machinery/newscaster/attack_paw(mob/living/user)
+/obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	else

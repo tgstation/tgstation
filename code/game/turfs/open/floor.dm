@@ -109,8 +109,8 @@
 	. = ..()
 	update_visuals()
 
-/turf/open/floor/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
