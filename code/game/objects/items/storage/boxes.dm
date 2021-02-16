@@ -119,7 +119,7 @@
 	desc = "A box with the bare essentials of ensuring the survival of you and others."
 	icon_state = "internals"
 	illustration = "emergencytank"
-	var/mask_type = /obj/item/clothing/mask/gas/atmos/emergency
+	var/mask_type = /obj/item/clothing/mask/gas
 	var/internal_type = null
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 	var/filter_type = /obj/item/gas_filter
