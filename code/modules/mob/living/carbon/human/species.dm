@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					oldorgan = null //now deleted
 			else
 				oldorgan.before_organ_replacement(neworgan)
-				oldorgan.Remove(C, special = TRUE, organ_init = TRUE)
+				oldorgan.Remove(C,TRUE)
 				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
 
 
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			oldorgan.setOrganDamage(0)
 		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
-			neworgan.Insert(C, special = TRUE, drop_if_replaced = FALSE, organ_init = TRUE)
+			neworgan.Insert(C, TRUE, FALSE)
 
 		if(!used_neworgan)
 			qdel(neworgan)
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				continue
 			var/obj/item/organ/I = C.getorgan(mutantorgan)
 			if(I)
-				I.Remove(C, organ_init = TRUE)
+				I.Remove(C)
 				QDEL_NULL(I)
 
 	for(var/organ_path in mutant_organs)
@@ -336,7 +336,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(C, special = TRUE, drop_if_replaced = FALSE, organ_init = TRUE)
+			replacement.Insert(C, TRUE, FALSE)
 
 /**
  * Proc called when a carbon becomes this species.
@@ -2045,8 +2045,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// If we don't have a set tail, don't bother adding moodlets
 	if(!mutant_organs.len)
 		return
-	if(!(locate(/obj/item/organ/tail) in mutant_organs))
-		return
 
 	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
 	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
@@ -2067,8 +2065,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 	// If we don't have a set tail, don't add moodlets
 	if(!mutant_organs.len)
-		return
-	if(!(locate(/obj/item/organ/tail) in mutant_organs))
 		return
 
 	if(found_tail.type in mutant_organs)

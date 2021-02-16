@@ -44,17 +44,16 @@
  * Insert the organ into the select mob.
  *
  * M - the mob who will get our organ
- * special - for auto-surgeons and such, to prevent dying from having organs removed
+ * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
- * organ_init - if this organ is being inserted on initialization / species gain vs in game (ex - via surgery)
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, organ_init = FALSE)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, TRUE, organ_init)
+		replaced.Remove(M, TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -75,10 +74,9 @@
  * Remove the organ from the select mob.
  *
  * M - the mob who owns our organ, that we're removing the organ from.
- * special - for auto-surgeons and such, to prevent dying from having organs removed
- * organ_init - if this organ is being removed on initialization / species gain vs in game (ex - via surgery)
+ * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, organ_init = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
 	owner = null
 	if(M)
 		M.internal_organs -= src
