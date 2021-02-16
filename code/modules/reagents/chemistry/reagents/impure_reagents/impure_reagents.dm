@@ -8,18 +8,33 @@
 	name = "Impure reagent"
 	description = "Impure reagents are created by either ingesting reagents - which will then split them, or some can be created as the result in a reaction."
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
-	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
+	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
 	impure_chem = null
 	inverse_chem = null
 	failed_chem = null
-	can_synth = FALSE //Protected by default
+	metabolization_rate = 0.1 * REM //default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
+
+//Basically just so people don't forget to adjust metabolization_rate
+/datum/reagent/inverse
+	name = "Inverse chem"
+	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
+	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
+	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
+	impure_chem = null
+	inverse_chem = null
+	failed_chem = null
 
 ////START SUBTYPES
 
 ///We don't want these to hide - they're helpful!
 /datum/reagent/impurity/healing
 	name = "Healing impure reagent"
+	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
+	chemical_flags = REAGENT_DONOTSPLIT
+
+/datum/reagent/inverse/healing
+	name = "Healing inverse reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 
@@ -63,25 +78,26 @@
 ////////////////////MEDICINES///////////////////////////
 
 //Catch all failed reaction for medicines - supposed to be non punishing
-/datum/reagent/impurity/medicine_failure
-	name = "Insolvent medicine precipitate"
+/datum/reagent/impure/healing/medicine_failure
+	name = "Insolvent medicinal precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 1 * REM//This is fast
 	can_synth = TRUE
+	ph = 11
 
 //Random healing of the 4 main groups
-/datum/reagent/impurity/medicine_failure/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/healing/medicine_failure/on_mob_life(mob/living/carbon/C)
 	. = ..()
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			C.adjustBruteLoss(-1)
+			C.adjustBruteLoss(-0.5)
 		if("burn")
-			C.adjustFireLoss(-1)
+			C.adjustFireLoss(-0.5)
 		if("tox")
-			C.adjustToxLoss(-1)
+			C.adjustToxLoss(-0.5)
 		if("oxy")
-			C.adjustOxyLoss(-1)
+			C.adjustOxyLoss(-0.5)
 
 ////// C2 medications
 //// Helbital
@@ -91,6 +107,7 @@
 	name = "Helgrasp"
 	description = "This rare and forbidden concoction is thought to bring you closer to the grasp of the Norse goddess Hel."
 	metabolization_rate = 1 //This is fast
+	ph = 14
 
 //Warns you about the impenting hands
 /datum/reagent/impurity/helgrasp/on_mob_add(mob/living/L, amount)
@@ -112,8 +129,6 @@
 	hand.preparePixelProjectile(owner, spawn_turf)
 	hand.fire()
 
-//Should I make it so that OD on this literally drags you to hell (lavaland)?
-
 ////libital
 
 //Impure
@@ -124,6 +139,7 @@
 	description = "Temporarilly interferes a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
 	can_synth = TRUE
+	ph = 13.5
 
 /datum/reagent/impurity/libitoil/on_mob_add(mob/living/L, amount)
 	. = ..()
@@ -151,6 +167,7 @@
 	reagent_state = SOLID
 	color = "#b3ff00"
 	overdose_threshold = 10
+	ph = 1
 
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 4  * REAGENTS_METABOLISM
@@ -162,6 +179,7 @@
 	nutriment_factor = -10 * REAGENTS_METABOLISM
 	brute_heal = -1.5 //I halved it because I was concerned it might be too strong at 4 damage a tick.
 	burn_heal = -0.5
+	ph = 2.1
 
 ////Lenturi
 
@@ -170,7 +188,6 @@
 	name = "lentslurri"//This is a really bad name please replace
 	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong."
 	addiction_threshold = 7.5 //30u of 0.75 purity
-	metabolization_rate = 0.25 * REM //25% as fast so 0.75 is normal function
 
 /datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/M)
 	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
@@ -193,16 +210,17 @@
 		to_chat(M, "<span class='notice'>Your muscles feel normal again.</span>")
 
 //failed
-/datum/reagent/impure/ichiyuri
+/datum/reagent/impurity/ichiyuri
 	name = "Ichiyuri"
 	description = "Prolonged exposure to this chemical can cause an overwhelming urge to itch oneself."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
 	var/spammer = 0
+	ph = 1.7
 
 //Just the removed itching mechanism - omage to it's origins.
-/datum/reagent/impure/ichiyuri/on_mob_life(mob/living/carbon/M)
+/datum/reagent/impurity/ichiyuri/on_mob_life(mob/living/carbon/M)
 	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
 		if(spammer < world.time)
 			to_chat(M,"<span class='warning'>You can't help but itch yourself.</span>")
@@ -217,28 +235,142 @@
 
 ////Aiuri
 
+//impure
+/datum/reagent/impurity/aiuri
+	name = "Aivime"
+	description = "This reagent is known to interfere with the eyesight of a patient."
+	ph = 3.1
+	//blurriness at the start of taking the med
+	var/cached_blurriness
+
+/datum/reagent/impurity/aiuri/on_mob_add(mob/living/owner, amount)
+	. = ..()
+	cached_blurriness = owner.eye_blurry
+	owner.set_blurriness(((creation_purity*10)*(volume/metabolization_rate)) + cached_blurriness)
+
+/datum/reagent/impurity/aiuri/on_mob_delete(mob/living/owner, amount)
+	. = ..()
+	if(owner.eye_blurry <= cached_blurriness)
+		return
+	owner.set_blurriness(cached_blurriness)
+
+////Hercuri
+
 //inverse
-/datum/reagent/impurity/Aburi
-	//sweat?
+/datum/reagent/impurity/hercuri
+	name = "Herignis"
+	description = "This reagent causes a dramatic raise in a patient's body temperature."
+	ph = 0.8
+
+/datum/reagent/impurity/hercuri/on_mob_life(mob/living/carbon/owner)
+	. = ..()
+	var/heating = rand(creation_purity*10, creation_purity*30)
+	owner.reagents?.chem_temp +=((heating*REM)
+	M.adjust_bodytemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
+	if(ishuman(M))
+		var/mob/living/carbon/human/humi = M
+		humi.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
 
 
-	new /datum/hallucination/fire(C, TRUE)
-	C.adjust
+/datum/reagent/impurity/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
+	. = ..()
+	if(!(methods & VAPOR))
+		return
+	exposed_mob.adjust_bodytemperature((reac_volume*creation_purity) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+
+
+/datum/reagent/inverse/healing/tirimol
+	name = "Super Melatonin"//It's melatonin, but super!
+	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
+	ph = 12.5 //sleeping is a basic need of all lifeforms
+	var/cached_reagent_list = list()
+
+//Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
+/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner)
+	switch(current_cycle)
+		if(1 to 10)//same delay as chloral hydrate
+			if(prob(50))
+				owner.emote("yawn")
+		if(10 to INFINITY)
+			M.Sleeping(40)
+			. = 1
+			if(owner.IsSleeping() && !cached_reagent_list)
+				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+					if(istype(reagent, /datum/reagent/medicine))
+						if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
+							continue
+						reagent.creation_purity *= 1.25
+						cached_reagent_list += reagent
+
+			else if(!owner.IsSleeping() && cached_reagent_list)
+				for(var/datum/reagent/reagent as anything in cached_reagent_list)
+					if(!reagent)
+						continue
+					reagent.creation_purity *= 0.8
+				cached_reagent_list = list()
+	..()
+
+/datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/owner)
+	if(owner.IsSleeping())
+		owner.visible_message("<span class='notice'>[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!</span>")//small way of letting people know the supersnooze is ended
+	..()
+
+//seiver
+////Inverse
+//Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
+/datum/reagent/inverse/technetium
+	name = "Technetium 99"
+	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Has a very low metabolism rate and will irradiate the patient when present, purging is recommended after use."
+	metabolization_rate = 0.01 * REM
+	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
+
+/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner)
+	M.radiation += creation_purity
+
+//Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
+/datum/reagent/inverse/healing/syriniver
+	name = "please name me"
+	description = "I'm sleepy"
+
+/datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/living_mob)
+	if(!(iscarbon(living_mob))
+		return ..()
+	var/mob/living/carbon/owner = living_mob
+	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+		if(!(istype(reagent, /datum/reagent/medicine))
+			continue
+		if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
+			continue
+		reagent.creation_purity *= 0.8
+		cached_reagent_list += reagent
+	..()
+
+/datum/reagent/inverse/healing/syriniver/on_mob_delete(mob/living/living_mob)
+	if(!(iscarbon(living_mob))
+		return ..()
+	var/mob/living/carbon/owner = living_mob
+	if(!cached_reagent_list)
+		return ..()
+	for(var/datum/reagent/reagent as anything in cached_reagent_list)
+		if(!reagent)
+			continue
+		reagent.creation_purity *= 1.25
+	QDELLNULL(cached_reagent_list)
+
 
 ////Multiver
-
 //Inverse
-
 //Reaction product when between 0.2 and 0.35 purity.
-/datum/reagent/impurity/healing/monover
+/datum/reagent/inverse/healing/monover
 	name = "Monover"
 	description = "A toxin treating reagent, that only is effective if it's the only reagent present in the patient."
+	ph = 0.5
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
-/datum/reagent/medicine/c2/monover/on_mob_life(mob/living/carbon/M)
+/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/M)
 	if(M.reagents.reagent_list > 1)
 		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustToxLoss((-2*REM)*creation_purity, 0)
 	..()
 	return TRUE

@@ -341,15 +341,16 @@
 		clear_products(holder)
 
 //Pushes everything out, and damages mobs with 10 brute damage.
-/datum/chemical_reaction/proc/explode_shockwave(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/proc/explode_shockwave(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3, damage = 5, sound_and_text = TRUE)
 	var/turf/this_turf = get_turf(holder.my_atom)
-	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
-	playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
+	if(sound_and_text)
+		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
+		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
-	for(var/atom/movable/movey in orange(3, this_turf))
-		if(isliving(movey))
+	for(var/atom/movable/movey as anything in orange(range, this_turf))
+		if(isliving(movey) && damage)
 			var/mob/living/live = movey
-			live.apply_damage(5)//Since this can be called multiple times
+			live.apply_damage(damage)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
 		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
@@ -402,9 +403,9 @@
 	debug_world("X: [equilibrium.explosion_data["x"]], Y: [equilibrium.explosion_data["x"]]")
 
 /*
- * Creates a square of fire in a fire_range radius, 
- * fire_range = 0 will be on the exact spot of the holder, 
- * fire_range = 1 or more will be additional tiles around the holder. Every tile will be heated this way.	
+ * Creates a square of fire in a fire_range radius,
+ * fire_range = 0 will be on the exact spot of the holder,
+ * fire_range = 1 or more will be additional tiles around the holder. Every tile will be heated this way.
  * How clf3 works, you know!
  */
 /datum/chemical_reaction/proc/explode_fire_square(datum/reagents/holder, datum/equilibrium/equilibrium, fire_range = 1)
@@ -412,36 +413,42 @@
 	if(fire_range == 0)
 		new /obj/effect/hotspot(T)
 		return
-	for(var/turf/turf in range(fire_range,T))
+	for(var/turf/turf as anything in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
 
 ///////////END FIRE BASED EXPLOSIONS
 
-//Clears the beaker of the reagents only
-/datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)
+/*
+* Freezes in a circle around the holder location
+* Arguments:
+* * temp - the temperature to set the air to
+* * radius - the range of the effect
+* * freeze_duration - how long the icey spots remain for
+*/
+/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 5)
+	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
+		if(!(istype(any_turf, /turf/open)))
+			continue
+		var/turf/open/open_turf = I
+		open_turf.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = freeze_duration/2, freeze_duration = 5)
+		open_turf.temperature = temp
+
+///Clears the beaker of the reagents only
+///if volume is not set, it will remove all of the reactant
+/datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = 1000)
 	if(!holder)
 		return FALSE
-	for(var/datum/reagent/reagent as anything in holder.reagent_list)
-		if(!(reagent.type in required_reagents))
-			continue
-		if(!volume)
-			holder.remove_reagent(reagent.type, reagent.volume)
-		else
-			holder.remove_reagent(reagent.type, volume)
+	for(var/reagent in required_reagents)
+		reagent.remove_reagent(reagent, volume)
 
-//Clears the beaker of the product only
+///Clears the beaker of the product only
 /datum/chemical_reaction/proc/clear_products(datum/reagents/holder, volume = null)
 	if(!holder)
 		return FALSE
-	for(var/datum/reagent/reagent as anything in holder.reagent_list)
-		if(!(reagent.type in results))
-			continue
-		if(!volume)
-			holder.remove_reagent(reagent.type, reagent.volume)
-		else
-			holder.remove_reagent(reagent.type, volume)
+	for(var/reagent in results)
 
-//Clears the beaker of ALL reagents inside
+
+///Clears the beaker of ALL reagents inside
 /datum/chemical_reaction/proc/clear_reagents(datum/reagents/holder, volume = null)
 	if(!holder)
 		return FALSE
@@ -449,3 +456,45 @@
 		volume = holder.total_volume
 	holder.remove_all(volume)
 
+/*
+* "Attacks" all mobs within range with a specified reagent
+* Will be blocked if they're wearing proper protective equipment unless disabled
+* Arguments
+* * reagent - the reagent typepath that will be added
+* * vol - how much will be added
+* * range - the range that this will affect mobs for
+* * ignore_mask - if masks block the effect, making this true will affect someone regardless
+* * ignore_eyes - if glasses block the effect, making this true will affect someone regardless
+*/
+/datum/chemical_reaction/proc/explode_attack_chem(datum/reagents/holder, datum/equilibrium/equilibrium, /datum/reagent/reagent, vol, range = 2, ignore_mask = FALSE, ignore_eyes = FALSE)
+	for(var/atom/movable/movey as anything in orange(range, get_turf(holder.my_atom)))
+		if(!(iscarbon(movey))
+			continue
+		var/mob/living/carbon/target = movey
+		if(target.has_smoke_protection() && !ignore_mask)
+			continue
+		if(target.get_eye_protection() && !ignore_eyes)
+			continue
+		to_chat(M, "The [holder] launches some of it's contents at you!")
+		M.reagents.add_reagent(reagent, vol)
+
+
+/*
+* Applys a cooldown to the reaction
+* Returns false if time is below required, true if it's above required
+* Time is kept in eqilibrium data
+*
+* Arguments:
+* * seconds - the amount of time in server seconds to delay between true returns, will ceiling to the nearest 0.25
+* * id - a string phrase so that multiple cooldowns can be applied if needed
+*/
+/datum/chemical_reaction/proc/off_cooldown(datum/reagents/holder, datum/equilibrium/equilibrium, seconds = 1, id = "default")
+	id = id+"_cooldown"
+	if(isnull(equilibrium.data[id]))
+		equilibrium.data[id] = 0
+		return TRUE//first time we know we can go
+	equilibrium.data[id] += equilibrium.time_deficit ? 0.5 : 0.25 //sync to lag compensator
+	if(equilibrium.data[id] >= seconds)
+		equilibrium.data[id] = 0
+		return TRUE
+	return FALSE

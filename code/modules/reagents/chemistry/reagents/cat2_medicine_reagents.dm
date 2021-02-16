@@ -4,7 +4,7 @@
 	metabolization_rate = 0.2
 	impure_chem = null //Very few of these have impure effects, they're all baked in by creation_purity
 	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
-	creation_purity = REAGENT_STANDARD_PUIRTY//All sources by default are 0.75 - reactions are primed to resolve to 0.8 with no intervention for these.
+	creation_purity = REAGENT_STANDARD_PUIRTY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
 	purity = REAGENT_STANDARD_PUIRTY
 	failed_chem = /datum/reagent/impurity/medicine_failure
 
@@ -156,8 +156,9 @@
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
+	ph = 4.7
 	impure_chem = /datum/reagent/impurity/lentslurri
-	failed_chem = /datum/reagent/impure/ichiyuri //I do hope cobby won't take this personally
+	failed_chem = /datum/reagent/impurity/ichiyuri //I do hope cobby won't take this personally
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 
@@ -183,6 +184,7 @@
 	color = "#8C93FF"
 	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
 	var/message_cd = 0
+	impure_chem = /datum/reagent/impurity/aiuri //blurriness
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss((-2*REM)*normalise_creation_purity())
@@ -240,12 +242,14 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
+	inverse_chem_val = 0.35
+	inverse_chem = /datum/reagent/inverse/healing/tirimol
 
 /datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
 	if(!overdosed)
 		oxycalc = min(oxycalc,M.getOxyLoss()+0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	M.adjustOxyLoss(-oxycalc, 0)
+	M.adjustOxyLoss(-(oxycalc*normalise_creation_purity()), 0)
 	M.adjustToxLoss(oxycalc/CONVERMOL_RATIO, 0)
 	if(prob(current_cycle) && M.losebreath)
 		M.losebreath--
@@ -266,7 +270,7 @@
 	var/drowsycd = 0
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-3)
+	M.adjustOxyLoss(-3*normalise_creation_purity())
 	M.adjustStaminaLoss(2)
 	if(drowsycd && (world.time > drowsycd))
 		M.drowsyness += 10
@@ -288,6 +292,8 @@
 	name = "Seiver"
 	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/technetium
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/M)
 	. = ..()
@@ -301,7 +307,7 @@
 	//you're hot
 	var/toxcalc = min(round((chemtemp-1000)/175+5,0.1),5) //max 5 tox healing a tick
 	if(toxcalc > 0)
-		M.adjustToxLoss(toxcalc*-1)
+		M.adjustToxLoss((toxcalc*-1)*normalise_creation_purity())
 		healypoints += toxcalc
 
 	//and you're cold
@@ -312,7 +318,7 @@
 			M.radiation = round(M.radiation * 0.75)
 		else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
 			M.radiation = round(M.radiation * 0.9)
-		M.radiation -= radcalc
+		M.radiation -= (radcalc*normalise_creation_purity())
 		healypoints += (radcalc/5)
 
 
@@ -370,11 +376,11 @@
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM)*normalise_creation_purity(), 0)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return
-	conversion_amount = trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = (trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/c2/syriniver, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, conversion_amount)
 	..()
@@ -397,7 +403,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/c2/musiver //MUScles
+/datum/reagent/medicine/c2/musiver //MUScles //This is always purity 1
 	name = "Musiver"
 	description = "The active metabolite of syriniver. Causes muscle weakness on overdose"
 	reagent_state = LIQUID
