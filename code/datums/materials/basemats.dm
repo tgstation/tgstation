@@ -502,7 +502,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "zaukerite"
 	desc = "A light absorbing crystal"
 	color = COLOR_ALMOST_BLACK
-	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
 	value_per_unit = 0.45
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, RAD = 1.75, FIRE = 0.1, ACID = 1)
