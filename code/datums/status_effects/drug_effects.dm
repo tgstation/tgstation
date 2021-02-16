@@ -11,7 +11,7 @@
 /atom/movable/screen/alert/status_effect/woozy
 	name = "Woozy"
 	desc = "You feel a bit slower than usual, it seems doing things with your hands takes longer than it usually does"
-	icon_state = "frozen"
+	icon_state = "woozy"
 
 
 /datum/status_effect/high_blood_pressure
@@ -33,14 +33,13 @@
 /atom/movable/screen/alert/status_effect/high_blood_pressure
 	name = "High blood pressure"
 	desc = "This stuff is driving my blood pressure up the wall...I'll probably bleed like crazy."
-	icon_state = "frozen"
+	icon_state = "highbloodpressure"
 
 
 
 /datum/status_effect/seizure
 	id = "seizure"
 	tick_interval = -1
-
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/seizure
 
@@ -58,4 +57,4 @@
 /atom/movable/screen/alert/status_effect/seizure
 	name = "Seizure"
 	desc = "FJOIWEHUWQEFGYUWDGHUIWHUIDWEHUIFDUWGYSXQHUIODSDBNJKVBNKDML <--- his is you right now"
-	icon_state = "frozen"
+	icon_state = "paralysis"
