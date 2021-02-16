@@ -146,7 +146,7 @@ export const RecipeLookup = (props, context) => {
               color="transparent"
               textColor="white"
               tooltipPosition="right"
-              content={recipe.inversePurity}
+              content={`<${(recipe.inversePurity*100)}%`}
               tooltip="If your purity is below this it will 100% convert into the product's associated Inverse reagent on consumption." />
           </LabeledList.Item>
           <LabeledList.Item label="Minimum purity">
@@ -154,7 +154,7 @@ export const RecipeLookup = (props, context) => {
               color="transparent"
               tooltipPosition="right"
               textColor="white"
-              content={recipe.minPurity}
+              content={`<${(recipe.minPurity*100)}%`}
               tooltip="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent." />
           </LabeledList.Item>
         </LabeledList>
