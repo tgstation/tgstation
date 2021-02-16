@@ -192,7 +192,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///called when an IV is attached
-/obj/machinery/iv_drip/proc/attach_IV(mob/living/target, mob/usr)
+/obj/machinery/iv_drip/proc/attach_iv(mob/living/target, mob/user)
 	usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")
 	var/datum/reagents/container = get_reagent_holder()
 	log_combat(usr, target, "attached", src, "containing: ([container.log_list()])")
@@ -204,17 +204,14 @@
 	SEND_SIGNAL(src, COMSIG_IV_ATTACH, target)
 
 ///Called when an iv is detached. doesnt include chat stuff because there's multiple options and its better handled by the caller
-/obj/machinery/iv_drip/proc/detach_IV()
+/obj/machinery/iv_drip/proc/detach_iv()
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 
 	attached = null
 	update_icon()
 
 /obj/machinery/iv_drip/proc/get_reagent_holder()
-	if(use_internal_storage)
-		return reagents
-	else if(beaker)
-		return beaker.reagents
+	return use_internal_storage ? reagents : beaker?.reagents
 
 /obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
