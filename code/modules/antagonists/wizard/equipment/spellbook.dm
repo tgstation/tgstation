@@ -97,6 +97,7 @@
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
 			user.mind.spell_list.Remove(aspell)
+			name = initial(name)
 			log_spellbook("[key_name(user)] refunded [src] for [cost * (spell_levels+1)] points")
 			qdel(S)
 			return cost * (spell_levels+1)
@@ -777,7 +778,7 @@ hands_state
 					if(entry.limit)
 						entry.limit--
 					uses -= entry.cost
-			return TRUE //update!
+			update_static_data(wizard) //update statics!
 		if("refund")
 			var/datum/spellbook_entry/entry = locate(params["spellref"]) in entries
 			if(entry?.refundable)
@@ -786,7 +787,7 @@ hands_state
 					if(!isnull(entry.limit))
 						entry.limit += result
 					uses += result
-			return TRUE //update!
+			update_static_data(wizard) //update statics!
 	//actions that are only available if you have full spell points
 	if(uses < initial(uses))
 		to_chat(wizard, "<span class='warning'>You need to have all your spell points to do this!</span>")
@@ -794,10 +795,10 @@ hands_state
 	switch(action)
 		if("semirandomize")
 			semirandomize(wizard)
-			return TRUE //update!
+			update_static_data(wizard) //update statics!
 		if("randomize")
 			randomize(wizard)
-			return TRUE //update!
+			update_static_data(wizard) //update statics!
 		else //some loadout
 			wizard_loadout(wizard, action)
 
