@@ -95,7 +95,7 @@
 		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
 
 	// Crash if the pipeline that we are supposed to be connected to doesnt have members and machineries. 
-	// How does it even connect in the first place, right?
+	// How does it even not get removed in the first place, right?
 
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline
@@ -109,12 +109,10 @@
 		if(QDESTROYING(reference))
 			for (var/i in 1 to parents.len)
 				if (parents[i] == reference)
+					parents[i] = null
 					CRASH("nullifyPipenet() called on qdeleting [reference] indexed on parents\[[i]\]")
 					parents[i] = null
 		qdel(reference)
-
-		// Early return to avoid problems down the line.
-		return
 
 	// Deletes any reference of the atmos machinery as listed in the other_atmosmch list from the pipeine.
 	reference.other_atmosmch -= src
@@ -128,6 +126,12 @@
 
 /obj/machinery/atmospherics/components/returnPipenetAirs(datum/pipeline/reference)
 	var/list/returned_air = list()
+	// We return a list filled with a single null entry if we dont have a proper parents list.
+	// This will get picked up by addMachineryMember to call a stack_trace.
+	if (!parents || !length(parents))
+		returned_air += null
+		return returned_air
+
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)
 			returned_air += airs[i]
