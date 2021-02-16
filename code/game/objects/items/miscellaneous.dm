@@ -289,6 +289,14 @@
 	new /obj/item/kitchen/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
 
+/obj/item/storage/box/hero/hev
+	name = "Anomalous Materials Handler - 2XXX"
+	desc = "Stolen from a place you shouldn't know about. Perfect for non-standard specimens."
+
+/obj/item/storage/box/hero/hev/PopulateContents()
+	new /obj/item/clothing/suit/space/hardsuit/hev(src)
+	new /obj/item/geiger_counter(src)
+
 /obj/item/choice_beacon/augments
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"

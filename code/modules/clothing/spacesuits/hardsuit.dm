@@ -202,7 +202,7 @@
 		if (user.stat < UNCONSCIOUS && prob(10))
 			user.emote("scream")
 	//HEV
-/obj/item/clothing/head/helmet/space/hardsuit/HEV
+/obj/item/clothing/head/helmet/space/hardsuit/hev
 	name = "HEV Mark IV Helmet"
 	desc = "A special helmet designed for work in hazardous environments. Has radiation shielding."
 	icon_state = "hardsuit0-HEV"
@@ -211,13 +211,13 @@
 	hardsuit_type = "HEV"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/space/hardsuit/HEV
+/obj/item/clothing/suit/space/hardsuit/hev
 	name = "HEV Mark IV"
 	desc = "A special suit that protects against hazardous environments. Has radiation shielding."
 	icon_state = "HEV"
 	inhand_icon_state = "HEV"
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 75, "wound" = 10)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/HEV
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/hev
 	resistance_flags = FIRE_PROOF
 
 	//Engineering
