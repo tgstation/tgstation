@@ -611,6 +611,8 @@
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return TRUE
 
+#undef MINIMUM_THREAT_FOR_RITUALS
+
 /obj/item/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
