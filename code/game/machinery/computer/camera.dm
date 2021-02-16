@@ -271,7 +271,7 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
