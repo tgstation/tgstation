@@ -591,7 +591,13 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-
+/datum/design/gas_filter
+	name = "Gas filter"
+	id = "gas_filter"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 100)
+	build_path = /obj/item/gas_filter
+	category = list("Equipment")
 
 /////////////////////////////////////////
 /////////////////Tape////////////////////

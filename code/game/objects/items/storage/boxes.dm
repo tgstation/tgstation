@@ -119,19 +119,24 @@
 	desc = "A box with the bare essentials of ensuring the survival of you and others."
 	icon_state = "internals"
 	illustration = "emergencytank"
-	var/mask_type = /obj/item/clothing/mask/breath
-	var/internal_type = /obj/item/tank/internals/emergency_oxygen
+	var/mask_type = /obj/item/clothing/mask/gas/atmos/emergency
+	var/internal_type = null
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	var/filter_type = /obj/item/gas_filter
 
 /obj/item/storage/box/survival/PopulateContents()
 	new mask_type(src)
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
-	if(!isplasmaman(loc))
-		new internal_type(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+	if(!isnull(internal_type))
+		if(!isplasmaman(loc))
+			new internal_type(src)
+		else
+			new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(!isnull(filter_type))
+		new filter_type(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
@@ -144,6 +149,7 @@
 // Mining survival box
 /obj/item/storage/box/survival/mining
 	mask_type = /obj/item/clothing/mask/gas/explorer
+	internal_type = /obj/item/tank/internals/emergency_oxygen
 
 /obj/item/storage/box/survival/mining/PopulateContents()
 	..()
@@ -1327,7 +1333,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
-		
+
 /obj/item/storage/box/emergencytank
 	name = "emergency oxygen tank box"
 	desc = "A box of emergency oxygen tanks."
@@ -1337,7 +1343,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/tank/internals/emergency_oxygen(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
-		
+
 /obj/item/storage/box/engitank
 	name = "extended-capacity emergency oxygen tank box"
 	desc = "A box of extended-capacity emergency oxygen tanks."
