@@ -22,11 +22,6 @@ const hasReagentType = (currentReagents, reagent) => {
   return false;
 };
 
-const getReaction = (id) =>{
-  master_reaction_list.filter(reaction => (
-  reaction.id == id
-  ))};
-
 export const Reagents = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -122,7 +117,9 @@ export const Reagents = (props, context) => {
                         onClick={() => act('search_recipe')} />
                     </>
                   )}>
-                  <RecipeLookup recipe={reagent_mode_recipe} bookmarkedReactions={bookmarkedReactions}/>
+                  <RecipeLookup
+                    recipe={reagent_mode_recipe}
+                    bookmarkedReactions={bookmarkedReactions} />
                 </Section>
               </Stack.Item>
               <Stack.Item grow basis={0}>
@@ -360,18 +357,18 @@ export const Reagents = (props, context) => {
                             content={null}
                             disabled={bookmarkedReactions.has(reaction)
                               ? true : false}
-                            onClick={() => {addBookmark(reaction); act('update_ui')}} />
+                            onClick={() => { addBookmark(reaction); act('update_ui'); }} />
                         </Table.Cell>
                       </>
                     </Table.Row>
                   ))
                 ) || (
                   bookmarkArray.map(reaction => (
-                    <Table.Row key={reaction.id}>
+                    <Table.Row className="candystripe" key={reaction.id}>
                       <>
                         <Table.Cell bold color="label">
                           <Button
-                            mt={1.2}
+                            mt={0.5}
                             key={reaction.id}
                             icon="flask"
                             color="purple"

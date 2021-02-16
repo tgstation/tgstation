@@ -12,10 +12,10 @@ export const RecipeLookup = (props, context) => {
     );
   }
 
-  const getReaction = (id) =>{
+  const getReaction = id => {
     return data.master_reaction_list.filter(reaction => (
-    reaction.id == id
-    ))};
+      reaction.id === id
+    )); };
 
   const addBookmark = bookmark => {
     bookmarkedReactions.add(bookmark);
@@ -41,16 +41,16 @@ export const RecipeLookup = (props, context) => {
           onClick={() => act('increment_index', {
             id: recipe.name,
           })} />
-          {bookmarkedReactions && (
-            <Button
-              key={recipe.id}
-              icon="book"
-              color="green"
-              content={null}
-              disabled={bookmarkedReactions.has(getReaction(recipe.id)[0])
-                ? true : false}
-              onClick={() => {addBookmark(getReaction(recipe.id)[0]); act('update_ui')}} />
-            )}
+        {bookmarkedReactions && (
+          <Button
+            key={recipe.id}
+            icon="book"
+            color="green"
+            content={null}
+            disabled={bookmarkedReactions.has(getReaction(recipe.id)[0])
+              ? true : false}
+            onClick={() => { addBookmark(getReaction(recipe.id)[0]); act('update_ui'); }} />
+        )}
       </LabeledList.Item>
       {recipe.products && (
         <LabeledList.Item bold label="Products">
