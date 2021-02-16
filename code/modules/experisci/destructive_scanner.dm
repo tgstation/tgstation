@@ -9,6 +9,7 @@
 	icon = 'icons/obj/machines/experisci.dmi'
 	icon_state = "tube_closed"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
+	layer = MOB_LAYER
 	var/scanning = FALSE
 
 /obj/machinery/destructive_scanner/Initialize()
@@ -75,6 +76,9 @@
 			continue
 		scanned_atoms += movable_atom
 		movable_atom.forceMove(this_turf)
+		if(isliving(movable_atom))
+			var/mob/living/fucked_up_thing = movable_atom
+			fucked_up_thing.gib()
 
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, scanned_atoms)
 
