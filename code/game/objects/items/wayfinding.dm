@@ -112,7 +112,7 @@
 
 	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
 
-	for(var/obj/item/pinpointer/wayfinding/WP in user.GetAllContents())
+	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.GetAllContents())
 		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>You already have a pinpointer!</span>")
 		return
@@ -120,8 +120,8 @@
 	var/msg
 	var/dispense = TRUE
 	var/pnpts_found = 0
-	for(var/obj/item/pinpointer/wayfinding/WP in view(9, src))
-		point_at(WP)
+	for(var/obj/item/pinpointer/wayfinding/found_pinpointer in view(9, src))
+		point_at(found_pinpointer)
 		pnpts_found++
 
 	if(pnpts_found)
@@ -162,21 +162,19 @@
 		return ..()
 
 	if(istype(I, /obj/item/pinpointer/wayfinding))
-		var/obj/item/pinpointer/wayfinding/WP = I
+		var/obj/item/pinpointer/wayfinding/attacking_pinpointer = I
 
 		var/itsmypinpointer = TRUE
-		if(WP.owner != user.real_name)
+		if(attacking_pinpointer.owner != user.real_name)
 			itsmypinpointer = FALSE
 
 		var/is_a_thing = "are [refund_amt] credit\s."
-		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !WP.roundstart)
+		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !attacking_pinpointer.roundstart)
 			synth_acc._adjust_money(-refund_amt)
 			var/obj/item/holochip/holochip = new (user.loc)
 			holochip.credits = refund_amt
 			holochip.name = "[holochip.credits] credit holochip"
-			if(ishuman(user))
-				var/mob/living/carbon/human/customer = user
-				customer.put_in_hands(holochip)
+			user.put_in_hands(holochip)
 		else if(!itsmypinpointer)
 			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
 			new costume(user.loc)
@@ -194,8 +192,8 @@
 		if(!itsmypinpointer)
 			the_pinpointer = "that pinpointer"
 
-		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
-		qdel(WP)
+		to_chat(user, "<span class='notice'>You put [attacking_pinpointer] in the return slot.</span>")
+		qdel(attacking_pinpointer)
 
 		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
@@ -208,7 +206,7 @@
 		//Any other type of pinpointer can make it throw up.
 		if(COOLDOWN_FINISHED(src, next_spew_tick))
 			I.forceMove(loc)
-			visible_message("<span class='warning'>\The [src] smartly rejects [I].</span>")
+			visible_message("<span class='warning'>[src] smartly rejects [I].</span>")
 			say("BLEURRRRGH!")
 			I.throw_at(user, 2, 3)
 			COOLDOWN_START(src, next_spew_tick, COOLDOWN_SPEW)
