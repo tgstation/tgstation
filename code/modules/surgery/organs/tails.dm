@@ -21,7 +21,7 @@
 	desc = "A severed cat tail. Who's wagging now?"
 	tail_type = "Cat"
 
-/obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		var/default_part = H.dna.species.mutant_bodyparts["tail_human"]
@@ -29,7 +29,7 @@
 			H.dna.features["tail_human"] = H.dna.species.mutant_bodyparts["tail_human"] = tail_type
 			H.update_body()
 
-/obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H, special = FALSE)
 	..()
 	if(istype(H))
 		H.dna.features["tail_human"] = "None"
@@ -48,7 +48,7 @@
 	. = ..()
 	color = "#"+ random_color()
 
-/obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		// Checks here are necessary so it wouldn't overwrite the tail of a lizard it spawned in
@@ -61,7 +61,7 @@
 			H.dna.features["spines"] = H.dna.species.mutant_bodyparts["spines"] = spines
 		H.update_body()
 
-/obj/item/organ/tail/lizard/Remove(mob/living/carbon/human/H, special = 0)
+/obj/item/organ/tail/lizard/Remove(mob/living/carbon/human/H, special = FALSE)
 	..()
 	if(istype(H))
 		H.dna.species.mutant_bodyparts -= "tail_lizard"
@@ -87,7 +87,7 @@
 	tail_type = "Monkey"
 	icon_state = "severedmonkeytail"
 
-/obj/item/organ/tail/monkey/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/tail/monkey/Insert(mob/living/carbon/human/H, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		if(!("tail_monkey" in H.dna.species.mutant_bodyparts))
@@ -95,7 +95,7 @@
 			H.dna.features["tail_monkey"] = tail_type
 			H.update_body()
 
-/obj/item/organ/tail/monkey/Remove(mob/living/carbon/human/H, special = 0)
+/obj/item/organ/tail/monkey/Remove(mob/living/carbon/human/H, special = FALSE)
 	..()
 	if(istype(H))
 		H.dna.features["tail_monkey"] = "None"

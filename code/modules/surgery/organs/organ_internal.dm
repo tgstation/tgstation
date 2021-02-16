@@ -53,7 +53,7 @@
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, TRUE)
+		replaced.Remove(M, special = TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -91,6 +91,7 @@
 	SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src)
 
 	START_PROCESSING(SSobj, src)
+
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
