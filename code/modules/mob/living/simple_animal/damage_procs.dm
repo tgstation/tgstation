@@ -1,4 +1,3 @@
-
 /**
  * Adjusts the health of a simple mob by a set amount
  *
