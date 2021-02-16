@@ -152,7 +152,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
+	volume = 1.5 //Around 5 minutes of air
 
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
@@ -169,7 +169,7 @@
 	worn_icon_state = "emergency_engi"
 	tank_holder_icon_state = "holder_emergency_engi"
 	worn_icon = null
-	volume = 6 // should last 24 minutes if full
+	volume = 3 // should last 14 minutes if full
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
@@ -179,7 +179,7 @@
 	icon_state = "emergency_double"
 	worn_icon_state = "emergency_engi"
 	tank_holder_icon_state = "holder_emergency_engi"
-	volume = 12 //If it's double of the above, shouldn't it be double the volume??
+	volume = 6 //If it's double of the above, shouldn't it be double the volume??
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return
