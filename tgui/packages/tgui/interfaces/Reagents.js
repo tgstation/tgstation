@@ -4,6 +4,7 @@ import { Window } from '../layouts';
 import { map } from 'common/collections';
 import { RecipeLookup } from './common/RecipeLookup';
 import { ReagentLookup } from './common/ReagentLookup';
+import { logger } from '../logging';
 
 /* functions */
 
@@ -20,6 +21,11 @@ const hasReagentType = (currentReagents, reagent) => {
   }
   return false;
 };
+
+const getReaction = (id) =>{
+  master_reaction_list.filter(reaction => (
+  reaction.id == id
+  ))};
 
 export const Reagents = (props, context) => {
   const { act, data } = useBackend(context);
@@ -116,7 +122,7 @@ export const Reagents = (props, context) => {
                         onClick={() => act('search_recipe')} />
                     </>
                   )}>
-                  <RecipeLookup recipe={reagent_mode_recipe} />
+                  <RecipeLookup recipe={reagent_mode_recipe} bookmarkedReactions={bookmarkedReactions}/>
                 </Section>
               </Stack.Item>
               <Stack.Item grow basis={0}>
@@ -286,6 +292,7 @@ export const Reagents = (props, context) => {
                   <Button
                     content="Filter by reagents in beaker"
                     icon="search"
+                    disabled={bookmarkMode}
                     color={reagentFilter ? "green" : "red"}
                     onClick={() => setReagentFilter(!reagentFilter)} />
                   <Button
@@ -312,11 +319,11 @@ export const Reagents = (props, context) => {
                 </Table.Row>
                 {!bookmarkMode && (
                   visibleReactions.map(reaction => (
-                    <Table.Row key={reaction.id}>
+                    <Table.Row className="candystripe" key={reaction.id}>
                       <>
                         <Table.Cell bold color="label">
                           <Button
-                            mt={1.2}
+                            mt={0.5}
                             key={reaction.id}
                             icon="flask"
                             color="purple"
@@ -331,6 +338,7 @@ export const Reagents = (props, context) => {
                               mt={0.1}
                               key={reactant.id}
                               icon="vial"
+                              textColor="white"
                               color={hasReagentType(currentReagents, reactant.id) ? "green" : "default"}
                               content={reactant.name}
                               onClick={() => act('reagent_click', {
@@ -352,7 +360,7 @@ export const Reagents = (props, context) => {
                             content={null}
                             disabled={bookmarkedReactions.has(reaction)
                               ? true : false}
-                            onClick={() => addBookmark(reaction)} />
+                            onClick={() => {addBookmark(reaction); act('update_ui')}} />
                         </Table.Cell>
                       </>
                     </Table.Row>

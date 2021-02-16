@@ -2,8 +2,8 @@ import { Box, LabeledList, Chart, Flex, Button, Icon } from '../../components';
 import { useBackend } from '../../backend';
 
 export const RecipeLookup = (props, context) => {
-  const { recipe } = props;
-  const { act } = useBackend(context);
+  const { recipe, bookmarkedReactions } = props;
+  const { act, data } = useBackend(context);
   if (!recipe) {
     return (
       <Box>
@@ -11,6 +11,15 @@ export const RecipeLookup = (props, context) => {
       </Box>
     );
   }
+
+  const getReaction = (id) =>{
+    return data.master_reaction_list.filter(reaction => (
+    reaction.id == id
+    ))};
+
+  const addBookmark = bookmark => {
+    bookmarkedReactions.add(bookmark);
+  };
 
   return (
     <LabeledList labelBold>
@@ -32,6 +41,16 @@ export const RecipeLookup = (props, context) => {
           onClick={() => act('increment_index', {
             id: recipe.name,
           })} />
+          {bookmarkedReactions && (
+            <Button
+              key={recipe.id}
+              icon="book"
+              color="green"
+              content={null}
+              disabled={bookmarkedReactions.has(getReaction(recipe.id)[0])
+                ? true : false}
+              onClick={() => {addBookmark(getReaction(recipe.id)[0]); act('update_ui')}} />
+            )}
       </LabeledList.Item>
       {recipe.products && (
         <LabeledList.Item bold label="Products">

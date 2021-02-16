@@ -1701,7 +1701,7 @@
 			has_product = FALSE
 			var/list/names = splittext("[reaction.type]", "/")
 			var/product_name = names[names.len]
-			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = 1, "subReactIndex" = 1)
+			data["reagent_mode_recipe"] = list("name" = product_name, "id" = reaction.type, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = 1, "subReactIndex" = 1)
 
 		//If we do have a product then we find it
 		else
@@ -1723,7 +1723,7 @@
 					ui_reaction_index = i //update our index
 					break
 				i += 1
-			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reaction_length, "subReactIndex" = ui_reaction_index)
+			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "id" = reaction.type, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reaction_length, "subReactIndex" = ui_reaction_index)
 
 		//Results sweep
 		var/has_reagent = "default"
@@ -1875,91 +1875,71 @@
 			return TRUE
 		if("toggle_tag_brute")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BRUTE
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_burn")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BURN
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_toxin")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_TOXIN
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_oxy")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_OXY
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_clone")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_CLONE
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_healing")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_HEALING
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_damaging")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DAMAGING
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_explosive")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_EXPLOSIVE
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_other")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_OTHER
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_easy")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_EASY
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_moderate")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_MODERATE
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_hard")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_HARD
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_organ")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_ORGAN
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_drink")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DRINK
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_food")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_FOOD
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_dangerous")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DANGEROUS
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_slime")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_SLIME
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_drug")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DRUG
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_unique")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_UNIQUE
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_chemical")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_CHEMICAL
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_plant")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_PLANT
-			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_competitive")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_COMPETITIVE
-			SStgui.update_uis(src)
+			return TRUE
+		if("update_ui")
 			return TRUE
 
 
