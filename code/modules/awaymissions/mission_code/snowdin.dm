@@ -193,7 +193,7 @@
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
-				continue	//YOU'RE FLYING OVER IT
+				continue //YOU'RE FLYING OVER IT
 			if("snow" in L.weather_immunities)
 				continue
 
@@ -250,7 +250,7 @@
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
 
-///////////	papers
+/////////// papers
 
 
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing

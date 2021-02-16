@@ -45,7 +45,7 @@
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
-	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
+	var/structure_piercing = 2 //Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
@@ -215,7 +215,7 @@
 	last_process = world.time
 
 /obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
-	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated()) //Doesn't work if you're not holding it!
 		if(automatic_cleanup)
 			stop_aiming()
 			set_user(null)
@@ -368,11 +368,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15) //Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15) //Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -409,13 +409,13 @@
 	name = "particle beam"
 	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
-	damage = 0				//Handled manually.
+	damage = 0 //Handled manually.
 	damage_type = BURN
 	flag = ENERGY
 	range = 150
 	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
-	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
+	var/structure_pierce_amount = 0 //All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
 	var/structure_pierce = 0
 	var/do_pierce = TRUE
@@ -436,10 +436,10 @@
 	if(!epicenter)
 		return
 	new /obj/effect/temp_visual/explosion/fast(epicenter)
-	for(var/mob/living/L in range(aoe_mob_range, epicenter))		//handle aoe mob damage
+	for(var/mob/living/L in range(aoe_mob_range, epicenter)) //handle aoe mob damage
 		L.adjustFireLoss(aoe_mob_damage)
 		to_chat(L, "<span class='userdanger'>\The [src] sears you!</span>")
-	for(var/turf/T in range(aoe_fire_range, epicenter))		//handle aoe fire
+	for(var/turf/T in range(aoe_fire_range, epicenter)) //handle aoe fire
 		if(prob(aoe_fire_chance))
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
@@ -455,12 +455,12 @@
 			else
 				SSexplosions.medturf += A
 		++wall_pierce
-		return PROJECTILE_PIERCE_PHASE			// yeah this gun is a snowflakey piece of garbage
+		return PROJECTILE_PIERCE_PHASE // yeah this gun is a snowflakey piece of garbage
 	if(isobj(A) && (structure_pierce < structure_pierce_amount))
 		++structure_pierce
 		var/obj/O = A
 		O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
-		return PROJECTILE_PIERCE_PHASE			// ditto and this could be refactored to on_hit honestly
+		return PROJECTILE_PIERCE_PHASE // ditto and this could be refactored to on_hit honestly
 	return ..()
 
 /obj/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)

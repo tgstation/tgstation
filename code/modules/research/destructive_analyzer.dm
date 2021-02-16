@@ -133,7 +133,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	popup.set_content(ui_deconstruct())
 	popup.open()
 
-/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct()		//Legacy code
+/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct() //Legacy code
 	var/list/l = list()
 	if(!loaded_item)
 		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"

@@ -21,10 +21,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud
 	var/mob/mymob
 
-	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
-	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
-	var/inventory_shown = FALSE		//Equipped item inventory
-	var/hotkey_ui_hidden = FALSE	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/hud_shown = TRUE //Used for the HUD toggle (F12)
+	var/hud_version = HUD_STYLE_STANDARD //Current displayed version of the HUD
+	var/inventory_shown = FALSE //Equipped item inventory
+	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/atom/movable/screen/ling/chems/lingchemdisplay
 	var/atom/movable/screen/ling/sting/lingstingdisplay
@@ -51,6 +51,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
 	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
+	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
+
 
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = FALSE
@@ -81,6 +84,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/atom/movable/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
+
+	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
+		var/atom/movable/plane_master_controller/controller_instance = new mytype(src)
+		plane_master_controllers[controller_instance.name] = controller_instance
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
@@ -115,6 +122,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	combo_display = null
 
 	QDEL_LIST_ASSOC_VAL(plane_masters)
+	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
 	QDEL_LIST(screenoverlays)
 	mymob = null
 
@@ -139,14 +147,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
-	if(!display_hud_version)	//If 0 or blank, display the next hud version
+	if(!display_hud_version) //If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
-	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
+	if(display_hud_version > HUD_VERSIONS) //If the requested version number is greater than the available versions, reset back to the first version
 		display_hud_version = 1
 
 	switch(display_hud_version)
-		if(HUD_STYLE_STANDARD)	//Default HUD
-			hud_shown = TRUE	//Governs behavior of other procs
+		if(HUD_STYLE_STANDARD) //Default HUD
+			hud_shown = TRUE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen += static_inventory
 			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
@@ -161,8 +169,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 
-		if(HUD_STYLE_REDUCED)	//Reduced HUD
-			hud_shown = FALSE	//Governs behavior of other procs
+		if(HUD_STYLE_REDUCED) //Reduced HUD
+			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
@@ -178,11 +186,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				if(hand)
 					screenmob.client.screen += hand
 			if(action_intent)
-				screenmob.client.screen += action_intent		//we want the intent switcher visible
-				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+				screenmob.client.screen += action_intent //we want the intent switcher visible
+				action_intent.screen_loc = ui_acti_alt //move this to the alternative position, where zone_select usually is.
 
-		if(HUD_STYLE_NOHUD)	//No HUD
-			hud_shown = FALSE	//Governs behavior of other procs
+		if(HUD_STYLE_NOHUD) //No HUD
+			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)

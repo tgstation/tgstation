@@ -6,7 +6,7 @@
 	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
 
 	puncher.set_combat_mode(TRUE)
-	victim.attack_hand(puncher, list("right" = FALSE))
+	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
 
@@ -82,7 +82,7 @@
 
 	// First disarm, world should now look like:
 	// Attacker --> Empty space --> Victim --> Wall
-	victim.attack_hand(attacker, list("right" = TRUE))
+	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
 
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_bottom_left.x + 2, "Victim wasn't moved back after being pushed")
 	TEST_ASSERT(!victim.has_status_effect(STATUS_EFFECT_KNOCKDOWN), "Victim was knocked down despite not being against a wall")
@@ -91,7 +91,7 @@
 	attacker.forceMove(get_step(attacker, EAST))
 
 	// Second disarm, victim was against wall and should be down
-	victim.attack_hand(attacker, list("right" = TRUE))
+	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
 
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_bottom_left.x + 2, "Victim was moved after being pushed against a wall")
 	TEST_ASSERT(victim.has_status_effect(STATUS_EFFECT_KNOCKDOWN), "Victim was not knocked down after being pushed against a wall")

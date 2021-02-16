@@ -104,6 +104,9 @@
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
+		if(isliving(A) && overmind && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
+			overmind.blobstrain.attack_living(A)
+			continue // Don't smack them twice though
 		A.blob_act(src)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
@@ -147,6 +150,9 @@
 	for(var/atom/A in T)
 		if(!A.CanPass(src, T)) //is anything in the turf impassable
 			make_blob = FALSE
+		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
+			overmind.blobstrain.attack_living(A)
+			continue // Don't smack them twice though
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
@@ -333,10 +339,10 @@
 		desc = "A thick wall of lifeless tendrils."
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
 
-/obj/structure/blob/special	// Generic type for nodes/factories/cores/resource
+/obj/structure/blob/special // Generic type for nodes/factories/cores/resource
 	// Core and node vars: claiming, pulsing and expanding
 	/// The radius inside which (previously dead) blob tiles are 'claimed' again by the pulsing overmind. Very rarely used.
-	var/claim_range	= 0
+	var/claim_range = 0
 	/// The radius inside which blobs are pulsed by this overmind. Does stuff like expanding, making blob spores from factories, make resources from nodes etc.
 	var/pulse_range = 0
 	/// The radius up to which this special structure naturally grows normal blobs.
@@ -345,7 +351,7 @@
 	// Spore production vars: for core, factories, and nodes (with strains)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 0 
-	var/list/spores	= list()
+	var/list/spores = list()
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 
@@ -355,7 +361,7 @@
 	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
 	var/reflector_reinforce_range = 0
 
-/obj/structure/blob/special/proc/reinforce_area(delta_time)	// Used by cores and nodes to upgrade their surroundings
+/obj/structure/blob/special/proc/reinforce_area(delta_time) // Used by cores and nodes to upgrade their surroundings
 	if(strong_reinforce_range)
 		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
 			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))

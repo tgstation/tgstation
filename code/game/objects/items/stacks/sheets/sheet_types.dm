@@ -402,67 +402,67 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 /*
  * Cardboard
  */
-GLOBAL_LIST_INIT(cardboard_recipes, list (														\
-	new/datum/stack_recipe("box", /obj/item/storage/box),										\
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3),				\
-	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg),				\
+GLOBAL_LIST_INIT(cardboard_recipes, list ( \
+	new/datum/stack_recipe("box", /obj/item/storage/box), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5),					\
-	null,																						\
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
+	null, \
 
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
-	new/datum/stack_recipe("folder", /obj/item/folder),											\
-	null,																						\
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
+	new/datum/stack_recipe("folder", /obj/item/folder), \
+	null, \
 	//TO-DO: Find a proper way to just change the illustration on the box. Code isn't the issue, input is.
 	new/datum/stack_recipe_list("fancy boxes", list(
-		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
-		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
-		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
-		new /datum/stack_recipe("donk-pockets spicy box", /obj/item/storage/box/donkpockets/donkpocketspicy),			\
-		new /datum/stack_recipe("donk-pockets teriyaki box", /obj/item/storage/box/donkpockets/donkpocketteriyaki),		\
-		new /datum/stack_recipe("donk-pockets pizza box", /obj/item/storage/box/donkpockets/donkpocketpizza),			\
-		new /datum/stack_recipe("donk-pockets berry box", /obj/item/storage/box/donkpockets/donkpocketberry),			\
-		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk),				\
+		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), \
+		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), \
+		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets), \
+		new /datum/stack_recipe("donk-pockets spicy box", /obj/item/storage/box/donkpockets/donkpocketspicy), \
+		new /datum/stack_recipe("donk-pockets teriyaki box", /obj/item/storage/box/donkpockets/donkpocketteriyaki), \
+		new /datum/stack_recipe("donk-pockets pizza box", /obj/item/storage/box/donkpockets/donkpocketpizza), \
+		new /datum/stack_recipe("donk-pockets berry box", /obj/item/storage/box/donkpockets/donkpocketberry), \
+		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk), \
 		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),
-		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box),			\
-		null,																					\
+		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box), \
+		null, \
 
-		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
-		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot),		\
-		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag),			\
-		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs),				\
-		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
-		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
-		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
-		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas),							\
-		null,																					\
+		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
+		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
+		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
+		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs), \
+		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes), \
+		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs), \
+		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids), \
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas), \
+		null, \
 
-		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles),			\
-		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers),					\
-		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
-		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
-		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
-		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
-		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
-		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens),					\
-		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank),	\
-		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank),	\
-		null,																					\
+		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles), \
+		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers), \
+		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes), \
+		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves), \
+		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks), \
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags), \
+		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses), \
+		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens), \
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank), \
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank), \
+		null, \
 
-		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
-		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer),					\
-		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
-		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
-		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
-		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
-		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival), \
+		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer), \
+		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks), \
+		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes), \
+		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs), \
+		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed), \
+		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps), \
 		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box)
 		)),
 
-	null,																						\
+	null, \
 ))
 
-/obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
+/obj/item/stack/sheet/cardboard //BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
@@ -528,6 +528,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	novariants = TRUE
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 	material_type = /datum/material/runedmetal
+	has_unique_girder = TRUE
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -564,6 +565,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20), \
 	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
 	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
 	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
@@ -571,8 +573,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 ))
 
-/obj/item/stack/tile/bronze
-	name = "brass"
+/obj/item/stack/sheet/bronze
+	name = "bronze"
 	desc = "On closer inspection, what appears to be wholly-unsuitable-for-building brass is actually more structurally stable bronze."
 	singular_name = "bronze sheet"
 	icon_state = "sheet-brass"
@@ -582,19 +584,21 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	sheettype = "bronze"
 	force = 5
 	throwforce = 10
 	max_amount = 50
 	throw_speed = 1
 	throw_range = 3
-	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
-	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
-	merge_type = /obj/item/stack/tile/bronze
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/copper = 12) //we have no "tin" reagent so this is the closest thing
+	merge_type = /obj/item/stack/sheet/bronze
 	tableVariant = /obj/structure/table/bronze
 	material_type = /datum/material/bronze
+	walltype = /turf/closed/wall/mineral/bronze
+	has_unique_girder = TRUE
 
-/obj/item/stack/tile/bronze/get_main_recipes()
+/obj/item/stack/sheet/bronze/get_main_recipes()
 	. = ..()
 	. += GLOB.bronze_recipes
 
