@@ -17,7 +17,7 @@
 	var/turn_connects = TRUE
 	///The layer on which we connect. Don't add multiple. If you want multiple layer connects for some reason you can just add multiple components with different layers
 	var/ducting_layer = DUCT_LAYER_DEFAULT
-	//In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
+	///In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
 	var/recipient_reagents_holder
 	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
 	var/methods

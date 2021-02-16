@@ -1,6 +1,6 @@
 #define IV_TAKING 0
 #define IV_INJECTING 1
-
+///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Right-Click to change the transfer rate."
@@ -8,8 +8,11 @@
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	///Who are we sticking our needle in?
 	var/mob/living/carbon/attached
+	///Are we donating or injecting?
 	var/mode = IV_INJECTING
+	///whether we feed slower
 	var/dripfeed = FALSE
 	///Internal beaker
 	var/obj/item/reagent_containers/beaker
@@ -96,7 +99,7 @@
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(get_reagent_holder())
-			attach_IV(target, usr)
+			attach_iv(target, usr)
 		else
 			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
@@ -132,7 +135,7 @@
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
 		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
-		detach_IV()
+		detach_iv()
 		return PROCESS_KILL
 
 	var/datum/reagents/target_reagents = get_reagent_holder()
@@ -175,7 +178,7 @@
 		return
 	if(attached)
 		visible_message("<span class='notice'>[attached] is detached from [src].</span>")
-		detach_IV()
+		detach_iv()
 		return
 	else if(beaker)
 		eject_beaker(user)
@@ -284,6 +287,7 @@
 /obj/machinery/iv_drip/saline/toggle_mode()
 	return
 
+///modified IV that can be anchored and takes plumbing in- and output
 /obj/machinery/iv_drip/plumbing
 	name = "automated IV drip"
 	desc = "A modified IV drip with plumbing connects. Reagents received from the connect are injected directly into their bloodstream, blood that is drawn goes to the internal storage and then into the ducting."
@@ -296,8 +300,9 @@
 	. = ..()
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-	AddComponent(/datum/component/plumbing/IV_drip, anchored)
+	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 
+///Check if we can be rotated for the rotation component
 /obj/machinery/iv_drip/plumbing/proc/can_be_rotated(mob/user,rotation_type)
 	return !anchored
 
