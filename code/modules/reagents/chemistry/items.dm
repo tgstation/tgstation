@@ -277,20 +277,20 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	grind_results = list(/datum/reagent/mercury = 5)
-	///The beaker that this object is attached to, so we know where we are when it's added to something.
-	var/obj/item/reagent_containers/attached_beaker
+	///The reagents datum that this object is attached to, so we know where we are when it's added to something.
+	var/datum/reagents/attached_to_reagents
 
 /obj/item/thermometer/Destroy()
-	QDEL_NULL(attached_beaker) //I have no idea how you can destroy this, but not the beaker, but here we go
+	QDEL_NULL(attached_to_reagents) //I have no idea how you can destroy this, but not the beaker, but here we go
 	return ..()
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(is_reagent_container(target))
-		attached_beaker = target
+	if(target.reagents)
 		if(!user.transferItemToLoc(src, target))
 			return
-		to_chat(user, "<span class='notice'>You add the [src] to the [attached_beaker].</span>")
+		attached_to_reagents = target.reagents
+		to_chat(user, "<span class='notice'>You add the [src] to the [target].</span>")
 		ui_interact(usr, null)
 
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
@@ -312,18 +312,18 @@
 	return GLOB.physical_state
 
 /obj/item/thermometer/ui_data(mob/user)
-	if(!attached_beaker)
+	if(!attached_to_reagents)
 		ui_close(user)
 	var/data = list()
-	data["Temperature"] = round(attached_beaker.reagents.chem_temp)
+	data["Temperature"] = round(attached_to_reagents.chem_temp)
 	return data
 
 /obj/item/thermometer/proc/remove_thermometer(mob/target)
 	try_put_in_hand(src, target)
-	attached_beaker = null
+	attached_to_reagents = null
 
 /obj/item/thermometer/proc/try_put_in_hand(obj/object, mob/living/user)
-	to_chat(user, "<span class='notice'>You remove the [src] from the [attached_beaker].</span>")
+	to_chat(user, "<span class='notice'>You remove the [src] from the [attached_to_reagents.my_atom].</span>")
 	if(!issilicon(user) && in_range(src.loc, user))
 		user.put_in_hands(object)
 	else
