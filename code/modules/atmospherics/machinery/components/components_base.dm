@@ -107,7 +107,7 @@
 	// Cleans pipenet up
 	if(!length(reference.other_atmosmch) && !length(reference.members))
 		if(QDESTROYING(reference))
-			CRASH("nullifyPipenet() called on qdeleting [reference] indexed on parents\[[i]\]")
+			CRASH("nullifyPipenet() called on qdeleting [reference]")
 		qdel(reference)
 
 	/**
