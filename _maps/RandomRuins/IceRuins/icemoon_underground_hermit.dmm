@@ -122,7 +122,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Si" = (
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "UL" = (

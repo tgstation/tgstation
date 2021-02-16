@@ -804,7 +804,7 @@
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/central)
 "bW" = (
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -3005,7 +3005,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gf" = (
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12985,7 +12985,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yl" = (
 /obj/structure/alien/weeds,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
@@ -13053,7 +13053,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yt" = (
 /obj/structure/alien/weeds,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";

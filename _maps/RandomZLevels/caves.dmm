@@ -960,7 +960,7 @@
 	},
 /area/awaymission/caves/research)
 "cY" = (
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1695,7 +1695,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fv" = (
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

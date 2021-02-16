@@ -296,7 +296,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bg" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bh" = (
@@ -346,7 +346,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bo" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
@@ -754,7 +754,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "ci" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cj" = (
@@ -772,7 +772,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cl" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 1;
 	icon_state = "trails_1";
@@ -928,7 +928,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cM" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1007,7 +1007,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "da" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
@@ -1157,7 +1157,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dt" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "du" = (
@@ -1203,7 +1203,7 @@
 	name = "dried blood trail"
 	},
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dz" = (
@@ -1333,7 +1333,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dP" = (
 /obj/structure/alien/weeds/creature,
-/obj/structure/glowshroom/single,
+/obj/structure/glowshroom,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 8;
 	icon_state = "trails_1";
