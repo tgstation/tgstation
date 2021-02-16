@@ -57,7 +57,7 @@
 	. = ..()
 	density = FALSE
 
-/obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user)
+/obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
 	power_cell.update_icon()

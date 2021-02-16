@@ -17,8 +17,8 @@
 
 	var/used = 0
 
-/obj/item/dnainjector/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/dnainjector/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))

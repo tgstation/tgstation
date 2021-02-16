@@ -37,7 +37,7 @@
 	if(user.Adjacent(src))
 		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
 
-/obj/machinery/dish_drive/attack_hand(mob/living/user)
+/obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
 	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, "<span class='warning'>There's nothing in [src]!</span>")
 		return

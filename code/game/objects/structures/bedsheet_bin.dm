@@ -363,10 +363,10 @@ LINEN BINS
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
-/obj/structure/bedsheetbin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/bedsheetbin/attack_hand(mob/user)
+/obj/structure/bedsheetbin/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

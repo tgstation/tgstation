@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	requires_activation = FALSE
 	..()
 
-/turf/attack_hand(mob/user)
+/turf/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

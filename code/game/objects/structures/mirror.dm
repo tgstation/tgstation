@@ -14,7 +14,7 @@
 	if(icon_state == "mirror_broke" && !broken)
 		obj_break(null, mapload)
 
-/obj/structure/mirror/attack_hand(mob/user)
+/obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -122,7 +122,7 @@
 			choosable_races += initial(S.id)
 	..()
 
-/obj/structure/mirror/magic/attack_hand(mob/user)
+/obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

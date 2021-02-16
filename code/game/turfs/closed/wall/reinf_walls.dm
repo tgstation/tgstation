@@ -38,17 +38,17 @@
 	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/iron(src, 2)
 
-/turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(!M.environment_smash)
+/turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(!user.environment_smash)
 		return
-	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS)
+	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
+		to_chat(user, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
 /turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()

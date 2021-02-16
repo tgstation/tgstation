@@ -60,10 +60,10 @@
 		after_detach_tank()
 	qdel(src)
 
-/obj/structure/tank_holder/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/tank_holder/attack_hand(mob/user)
+/obj/structure/tank_holder/attack_hand(mob/user, list/modifiers)
 	if(!tank)
 		return ..()
 	if(!Adjacent(user) || issilicon(user))

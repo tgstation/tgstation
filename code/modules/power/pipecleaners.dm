@@ -257,7 +257,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	name = "pipe cleaner [amount < 3 ? "piece" : "coil"]"
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user)
+/obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

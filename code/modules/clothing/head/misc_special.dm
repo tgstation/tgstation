@@ -359,7 +359,7 @@
 	if(target.stat < UNCONSCIOUS)
 		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
-/obj/item/clothing/head/foilhat/attack_hand(mob/user)
+/obj/item/clothing/head/foilhat/attack_hand(mob/user, list/modifiers)
 	if(!warped && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)

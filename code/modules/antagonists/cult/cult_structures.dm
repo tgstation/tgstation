@@ -46,16 +46,16 @@
 		return "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>"
 	return ..()
 
-/obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/artificer))
+/obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(istype(user, /mob/living/simple_animal/hostile/construct/artificer))
 		if(obj_integrity < max_integrity)
-			M.changeNext_move(CLICK_CD_MELEE)
+			user.changeNext_move(CLICK_CD_MELEE)
 			obj_integrity = min(max_integrity, obj_integrity + 5)
-			Beam(M, icon_state="sendbeam", time=4)
-			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
+			Beam(user, icon_state="sendbeam", time=4)
+			user.visible_message("<span class='danger'>[user] repairs \the <b>[src]</b>.</span>", \
 				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
 		else
-			to_chat(M, "<span class='cult'>You cannot repair [src], as [p_theyre()] undamaged!</span>")
+			to_chat(user, "<span class='cult'>You cannot repair [src], as [p_theyre()] undamaged!</span>")
 	else
 		..()
 
@@ -89,7 +89,7 @@
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
-/obj/structure/destructible/cult/talisman/attack_hand(mob/living/user)
+/obj/structure/destructible/cult/talisman/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -133,7 +133,7 @@
 	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
-/obj/structure/destructible/cult/forge/attack_hand(mob/living/user)
+/obj/structure/destructible/cult/forge/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -254,7 +254,7 @@
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
-/obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
+/obj/structure/destructible/cult/tome/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

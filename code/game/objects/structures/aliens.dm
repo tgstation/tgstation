@@ -109,8 +109,8 @@
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
-/obj/structure/alien/resin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 ///Used in the big derelict ruin exclusively.
 /obj/structure/alien/resin/membrane/creature
@@ -299,13 +299,13 @@
 		if(BURST)
 			icon_state = "[base_icon]_hatched"
 
-/obj/structure/alien/egg/attack_paw(mob/living/user)
-	return attack_hand(user)
+/obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
-	return attack_hand(user)
+/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_hand(mob/living/user)
+/obj/structure/alien/egg/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

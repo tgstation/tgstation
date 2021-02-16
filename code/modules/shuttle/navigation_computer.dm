@@ -58,7 +58,7 @@
 	else
 		QDEL_NULL(my_port)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user, list/modifiers)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
 		return

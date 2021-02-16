@@ -76,7 +76,7 @@
 			M.temporarilyRemoveItemFromInventory(noz, TRUE)
 		noz.forceMove(src)
 
-/obj/item/watertank/attack_hand(mob/user)
+/obj/item/watertank/attack_hand(mob/user, list/modifiers)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)
 		toggle_mister(user)
 	else

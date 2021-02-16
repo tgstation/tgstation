@@ -11,7 +11,7 @@
 	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	var/point_return = 0 
+	var/point_return = 0
 	max_integrity = 30
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	/// how much health this blob regens when pulsed
@@ -22,12 +22,12 @@
 	COOLDOWN_DECLARE(heal_timestamp)
 	/// Multiplies brute damage by this
 	var/brute_resist = BLOB_BRUTE_RESIST
-	/// Multiplies burn damage by this 
-	var/fire_resist = BLOB_FIRE_RESIST 
+	/// Multiplies burn damage by this
+	var/fire_resist = BLOB_FIRE_RESIST
 	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
-	var/atmosblock = FALSE 
+	var/atmosblock = FALSE
 	var/mob/camera/blob/overmind
 
 
@@ -232,8 +232,8 @@
 							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 
-/obj/structure/blob/attack_animal(mob/living/simple_animal/M)
-	if(ROLE_BLOB in M.faction) //sorry, but you can't kill the blob as a blobbernaut
+/obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(ROLE_BLOB in user.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	..()
 
@@ -350,14 +350,14 @@
 
 	// Spore production vars: for core, factories, and nodes (with strains)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
-	var/max_spores = 0 
+	var/max_spores = 0
 	var/list/spores = list()
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 
 	// Area reinforcement vars: used by cores and nodes, for strains to modify
 	/// Range this blob free upgrades to strong blobs at: for the core, and for strains
-	var/strong_reinforce_range = 0 
+	var/strong_reinforce_range = 0
 	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
 	var/reflector_reinforce_range = 0
 

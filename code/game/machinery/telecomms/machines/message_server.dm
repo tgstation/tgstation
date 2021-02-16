@@ -21,7 +21,7 @@
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
-/obj/machinery/blackbox_recorder/attack_hand(mob/living/user)
+/obj/machinery/blackbox_recorder/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(stored)
 		stored.forceMove(drop_location())
