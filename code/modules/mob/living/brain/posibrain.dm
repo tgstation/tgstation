@@ -5,6 +5,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
+	base_icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/ask_role = "" ///Can be set to tell ghosts what the brain will be used for
 	var/next_ask ///World time tick when ghost polling will be available again
@@ -191,14 +192,15 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 
 /obj/item/mmi/posibrain/update_icon_state()
+	. = ..()
 	if(searching)
-		icon_state = "[initial(icon_state)]-searching"
-		return ..()
+		icon_state = "[base_icon_state]-searching"
+		return
 	if(brainmob?.key)
-		icon_state = "[initial(icon_state)]-occupied"
-		return ..()
-	icon_state = initial(icon_state)
-	return ..()
+		icon_state = "[base_icon_state]-occupied"
+		return
+	icon_state = "[base_icon_state]"
+	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return

@@ -39,7 +39,6 @@
 	if(I.tool_behaviour == TOOL_WRENCH && !parent_turret.on)
 		if(parent_turret.raised)
 			return
-
 		if(!parent_turret.anchored)
 			parent_turret.set_anchored(TRUE)
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
@@ -51,21 +50,24 @@
 			parent_turret.invisibility = INVISIBILITY_MAXIMUM
 			parent_turret.update_appearance()
 			qdel(src)
+		return
 
-	else if(I.GetID())
+	if(I.GetID())
 		if(parent_turret.allowed(user))
 			parent_turret.locked = !parent_turret.locked
 			to_chat(user, "<span class='notice'>Controls are now [parent_turret.locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(I.tool_behaviour == TOOL_MULTITOOL && !parent_turret.locked)
+		return
+
+	if(I.tool_behaviour == TOOL_MULTITOOL && !parent_turret.locked)
 		if(!multitool_check_buffer(user, I))
 			return
 		var/obj/item/multitool/M = I
 		M.buffer = parent_turret
 		to_chat(user, "<span class='notice'>You add [parent_turret] to multitool buffer.</span>")
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
 	parent_turret.attacked_by(I, user)

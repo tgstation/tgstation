@@ -3,6 +3,7 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_off"
+	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/braintype = "Cyborg"
 	var/obj/item/radio/radio = null //Let's give it a radio.
@@ -33,12 +34,9 @@
 
 /obj/item/mmi/update_icon_state()
 	if(!brain)
-		icon_state = "mmi_off"
+		icon_state = "[base_icon_state]_off"
 		return ..()
-	if(istype(brain, /obj/item/organ/brain/alien))
-		icon_state = "mmi_brain_alien"
-		return ..()
-	icon_state = "mmi_brain"
+	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
 	return ..()
 
 /obj/item/mmi/update_overlays()
@@ -48,7 +46,8 @@
 /obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
 		. += "mmi_alive"
-	else if(brain)
+		return
+	if(brain)
 		. += "mmi_dead"
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)

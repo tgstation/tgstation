@@ -710,7 +710,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	installation = null
 	always_up = TRUE
 	use_power = NO_POWER_USE
-	has_cover = TRUE
+	has_cover = FALSE
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
 	uses_stored = FALSE
@@ -819,7 +819,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	max_integrity = 260
 	always_up = TRUE
 	use_power = NO_POWER_USE
-	has_cover = 0
+	has_cover = FALSE
 	scan_range = 9
 	stun_projectile = /obj/projectile/beam/laser
 	lethal_projectile = /obj/projectile/beam/laser

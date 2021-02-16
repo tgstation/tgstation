@@ -333,7 +333,7 @@
 	if(waterlevel <= 10)
 		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3")
 	if(reagents.total_volume <= 2)
-		overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3")
+		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3")
 	if(plant_health <= (myseed.endurance / 2))
 		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3")
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
