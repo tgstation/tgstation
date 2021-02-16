@@ -1344,6 +1344,7 @@
 #include "code\game\objects\structures\crates_lockers\crates.dm"
 #include "code\game\objects\structures\crates_lockers\closets\bodybag.dm"
 #include "code\game\objects\structures\crates_lockers\closets\cardboardbox.dm"
+#include "code\game\objects\structures\crates_lockers\closets\fitness.dm"
 #include "code\game\objects\structures\crates_lockers\closets\gimmick.dm"
 #include "code\game\objects\structures\crates_lockers\closets\infinite.dm"
 #include "code\game\objects\structures\crates_lockers\closets\job_closets.dm"
