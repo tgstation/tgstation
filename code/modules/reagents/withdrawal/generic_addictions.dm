@@ -1,11 +1,11 @@
 ///Opiods
 /datum/addiction/opiods
 	name = "opiod"
-	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some opiods...", "It aches all over...I need some opiods!")
+	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some pain relief...", "It aches all over...I need some opiods!")
 
 /datum/addiction/opiods/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
 	. = ..()
-	if(prob(40))
+	if(prob(20))
 		affected_carbon.emote("yawn")
 
 /datum/addiction/opiods/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
@@ -14,8 +14,8 @@
 
 /datum/addiction/opiods/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
 	. = ..()
-	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED)
-		affected_carbon.adjust_disgust(5)
+	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED && prob(15))
+		affected_carbon.adjust_disgust(25)
 
 
 /datum/addiction/opiods/lose_addiction(datum/mind/victim_mind)
@@ -49,7 +49,7 @@
 ///Alcohol
 /datum/addiction/alcohol
 	name = "alcohol"
-	withdrawal_stage_messages = list("I could use a drink...", "I hope the bar is still open...", "God I need a drink!")
+	withdrawal_stage_messages = list("I could use a drink...", "Maybe the bar is still open?..", "God I need a drink!")
 
 /datum/addiction/alcohol/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -57,19 +57,19 @@
 
 /datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.Jitter(10)
+	affected_carbon.Jitter(20)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 
 /datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.Jitter(10)
+	affected_carbon.Jitter(30)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
-	if(prob(5)) // Once every 40 seconds in theory
+	if(prob(8))
 		affected_carbon.apply_status_effect(STATUS_EFFECT_SEIZURE)
 
 /datum/addiction/hallucinogens
 	name = "hallucinogen"
-	withdrawal_stage_messages = list("I feel so empty...", "I havn't seen the little elves in so long...", "I need to see the beautiful colors again!!")
+	withdrawal_stage_messages = list("I feel so empty...", "I wonder what the machine elves are up to?..", "I need to see the beautiful colors again!!")
 
 /datum/addiction/hallucinogens/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -126,8 +126,8 @@
 	var/lums = T.get_lumcount()
 	if(lums >= 0.4)
 		SEND_SIGNAL(affected_human, COMSIG_ADD_MOOD_EVENT, "too_bright", /datum/mood_event/bright_light)
-		affected_human.Dizzy(20)
-		affected_human.add_confusion(20)
+		affected_human.dizziness = min(40, affected_human.dizziness + 3)
+		affected_human.add_confusion(3)
 	else
 		SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "too_bright")
 

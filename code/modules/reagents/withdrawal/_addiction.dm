@@ -76,7 +76,7 @@
 			withdrawal_stage_1_process(affected_carbon)
 		if(WITHDRAWAL_STAGE2_START_CYCLE to WITHDRAWAL_STAGE2_END_CYCLE)
 			withdrawal_stage_2_process(affected_carbon)
-		if(WITHDRAWAL_STAGE3_START_CYCLE to WITHDRAWAL_STAGE3_END_CYCLE)
+		if(WITHDRAWAL_STAGE3_START_CYCLE to INFINITY)
 			withdrawal_stage_3_process(affected_carbon)
 
 	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!
@@ -96,12 +96,12 @@
 
 /// Called when addiction is in stage 1 every process
 /datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
-	if(prob(30))
+	if(prob(10))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[1]]</span>")
 
 /// Called when addiction is in stage 2 every process
 /datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
-	if(prob(30))
+	if(prob(20))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 
 
