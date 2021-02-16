@@ -1,6 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - refactor: "The light eater is now a component"
-  - balance: "The light eater's esoteric effects can be dispelled if you sacrifice the armblade"
-  - rscadd: "The light eater has some additional flavortext"
