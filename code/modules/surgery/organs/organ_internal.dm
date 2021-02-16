@@ -46,9 +46,9 @@
  * M - the mob who will get our organ
  * special - for auto-surgeons and such, to prevent dying from having organs removed
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
- * organ_init - if this organ is being inserted on initialization / species gain vs in game (ex - via surgery)
+ * organ_init - if this organ is being inserted on initialization / species gain (ORGAN_MODIFIED_ON_INIT) vs in game (ex - via surgery) (ORGAN_MODIFIED_ON_RUNTIME)
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, organ_init = FALSE)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, organ_init = ORGAN_MODIFIED_ON_RUNTIME)
 	if(!iscarbon(M) || owner == M)
 		return
 
@@ -78,7 +78,7 @@
  * special - for auto-surgeons and such, to prevent dying from having organs removed
  * organ_init - if this organ is being removed on initialization / species gain vs in game (ex - via surgery)
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, organ_init = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, organ_init = ORGAN_MODIFIED_ON_RUNTIME)
 	owner = null
 	if(M)
 		M.internal_organs -= src
