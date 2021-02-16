@@ -124,7 +124,7 @@
 			icon_state = "[base_icon_state]_standby"
 	return ..()
 
-/obj/machinery/airlock_sensor/attack_hand(mob/user)
+/obj/machinery/airlock_sensor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

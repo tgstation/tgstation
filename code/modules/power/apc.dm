@@ -830,7 +830,7 @@
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user, params)
+/obj/machinery/power/apc/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -839,7 +839,6 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		var/list/modifiers = params2list(params)
 		if(H.combat_mode && E.drain_time < world.time)
 			if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Disarm
 				if(cell.charge == cell.maxcharge)

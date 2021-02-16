@@ -5,19 +5,21 @@
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE //Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
-	if (!isnull(l_power))
-		light_power = l_power
 
-	if (!isnull(l_range))
-		light_range = l_range
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
 
-	if (l_color != NONSENSICAL_VALUE)
-		light_color = l_color
+	if(!isnull(l_power))
+		set_light_power(l_power)
+
+	if(!isnull(l_range))
+		set_light_range(l_range)
+
+	if(l_color != NONSENSICAL_VALUE)
+		set_light_color(l_color)
 
 	if(!isnull(l_on))
-		light_on = l_on
-
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
+		set_light_on(l_on)
 
 	update_light()
 
@@ -112,42 +114,52 @@
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _range, _power, _color, _duration)
 	return mob_light_obj
 
-
-/atom/proc/set_light_range(new_range)
-	if(new_range == light_range)
-		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range)
-	. = light_range
-	light_range = new_range
-
-
+/// Setter for the light power of this atom.
 /atom/proc/set_light_power(new_power)
 	if(new_power == light_power)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
 	. = light_power
 	light_power = new_power
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_POWER, .)
 
+/// Setter for the light range of this atom.
+/atom/proc/set_light_range(new_range)
+	if(new_range == light_range)
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+	. = light_range
+	light_range = new_range
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .)
 
+/// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
 	if(new_color == light_color)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
 	. = light_color
 	light_color = new_color
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
 
-
+/// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
 	if(new_value == light_on)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
 	. = light_on
 	light_on = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
 
-
+/// Setter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)
 	if(new_value == light_flags)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
 	. = light_flags
 	light_flags = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)

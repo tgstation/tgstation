@@ -107,22 +107,22 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
-/obj/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
+/obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(!user.melee_damage_upper && !user.obj_damage)
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return FALSE
 	else
 		var/play_soundeffect = TRUE
-		if(M.environment_smash)
+		if(user.environment_smash)
 			play_soundeffect = FALSE
-		if(M.obj_damage)
-			. = attack_generic(M, M.obj_damage, M.melee_damage_type, MELEE, play_soundeffect, M.armour_penetration)
+		if(user.obj_damage)
+			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		else
-			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, MELEE, play_soundeffect, M.armour_penetration)
+			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 

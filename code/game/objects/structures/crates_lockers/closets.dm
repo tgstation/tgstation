@@ -364,7 +364,7 @@
 	container_resist_act(user)
 
 
-/obj/structure/closet/attack_hand(mob/living/user)
+/obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -375,8 +375,8 @@
 		togglelock(user)
 
 
-/obj/structure/closet/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/closet/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/closet/attack_robot(mob/user)
 	if(user.Adjacent(src))

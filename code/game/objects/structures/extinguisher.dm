@@ -74,7 +74,7 @@
 		return ..()
 
 
-/obj/structure/extinguisher_cabinet/attack_hand(mob/user)
+/obj/structure/extinguisher_cabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -105,8 +105,8 @@
 	toggle_cabinet(user)
 
 
-/obj/structure/extinguisher_cabinet/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/extinguisher_cabinet/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))

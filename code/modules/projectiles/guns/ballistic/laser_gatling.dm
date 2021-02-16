@@ -30,7 +30,7 @@
 	overheat = max(0, overheat - heat_diffusion * delta_time)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/minigunpack/attack_hand(mob/living/carbon/user)
+/obj/item/minigunpack/attack_hand(mob/living/carbon/user, list/modifiers)
 	if(src.loc == user)
 		if(!armed)
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)

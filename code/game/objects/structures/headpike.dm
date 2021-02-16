@@ -68,7 +68,7 @@
 		spear = null
 	return ..()
 
-/obj/structure/headpike/attack_hand(mob/user)
+/obj/structure/headpike/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

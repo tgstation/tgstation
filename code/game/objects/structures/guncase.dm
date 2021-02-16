@@ -50,7 +50,7 @@
 	else
 		return ..()
 
-/obj/structure/guncase/attack_hand(mob/user)
+/obj/structure/guncase/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

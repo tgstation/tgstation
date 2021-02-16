@@ -77,7 +77,7 @@
 		attached_device.Crossed(AM)
 
 //Triggers mousetraps
-/obj/item/transfer_valve/attack_hand()
+/obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

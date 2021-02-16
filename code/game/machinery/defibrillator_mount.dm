@@ -65,7 +65,7 @@
 		return defib.get_cell()
 
 //defib interaction
-/obj/machinery/defibrillator_mount/attack_hand(mob/living/user)
+/obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
 	if(!defib)
 		to_chat(user, "<span class='warning'>There's no defibrillator unit loaded!</span>")
 		return

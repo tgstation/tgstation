@@ -28,7 +28,7 @@
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
 
-/obj/structure/life_candle/attack_hand(mob/user)
+/obj/structure/life_candle/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
