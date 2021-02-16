@@ -5212,7 +5212,7 @@
 "cnR" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/obj/structure/window/reinforced{dir = 8},/turf/open/floor/plasteel/grimy,/area/library)
 "cnS" = (/obj/structure/table/wood,/obj/item/storage/fancy/donut_box,/turf/open/floor/plasteel/grimy,/area/library)
 "cnT" = (/obj/structure/table/wood,/obj/item/folder,/obj/item/pen,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,/turf/open/floor/plasteel/grimy,/area/library)
-"cnU" = (/obj/structure/table/wood,/turf/open/floor/plasteel/grimy,/area/library)
+"cnU" = (/obj/structure/table/wood,/obj/item/britevidence/foxglove{pixel_y = 7},/turf/open/floor/plasteel/grimy,/area/library)
 "cnV" = (/obj/structure/table/wood,/obj/item/camera_film{pixel_x = 3; pixel_y = 3},/obj/item/camera_film,/obj/machinery/firealarm{dir = 8; pixel_x = 24},/turf/open/floor/plasteel/grimy,/area/library)
 "cnW" = (/obj/structure/bed,/obj/machinery/newscaster{pixel_x = -32},/obj/item/bedsheet/hop,/turf/open/floor/plasteel/grimy,/area/crew_quarters/heads/hop)
 "cnX" = (/obj/machinery/light_switch{pixel_x = 26; pixel_y = 26},/obj/effect/landmark/start/head_of_personnel,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/plasteel/grimy,/area/crew_quarters/heads/hop)

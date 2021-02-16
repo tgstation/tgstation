@@ -543,6 +543,10 @@
 	name = "Pigtails 3"
 	icon_state = "hair_pigtails2"
 
+/datum/sprite_accessory/hair/pigtail3
+	name = "Pigtails (Messy)"
+	icon_state = "hair_fuckedup"
+
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"
@@ -1142,6 +1146,12 @@
 /datum/sprite_accessory/underwear/female_kinky
 	name = "Ladies' Kinky"
 	icon_state = "female_kinky"
+	gender = FEMALE
+	use_static = TRUE
+
+/datum/sprite_accessory/underwear/female_stitched
+	name = "Stitched up"
+	icon_state = "female_stitched"
 	gender = FEMALE
 	use_static = TRUE
 

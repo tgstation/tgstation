@@ -85,6 +85,12 @@ export const MESSAGE_TYPES = [
     selector: '.ooc, .adminooc',
   },
   {
+    type: MESSAGE_TYPE_LOOC,
+    name: 'LOOC',
+    description: 'Stinky LOOC messages',
+    selector: '.looc',
+  },
+  {
     type: MESSAGE_TYPE_ADMINPM,
     name: 'Admin PMs',
     description: 'Messages to/from admins (adminhelp)',

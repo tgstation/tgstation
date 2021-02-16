@@ -172,3 +172,8 @@
 	name = "yellow soul jar"
 	desc = "A jar with a soul submerged in yellow liquid. It looks oddly familiar."
 	icon_state = "soul5"
+
+/obj/item/britevidence/foxglove
+	name = "potted foxglove"
+	desc = "The bell-like petals are poisonous to anything that hasn't evolved to interact with them. They remind you of someone you used to know."
+	icon_state = "flower"

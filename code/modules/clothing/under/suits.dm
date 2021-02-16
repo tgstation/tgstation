@@ -260,3 +260,9 @@
 	icon_state = "red_suit_fem"
 	inhand_icon_state = "red_suit_fem"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/under/suit/servant
+	name = "servant's suit"
+	desc = "A suit for those under Her heel. Red really isn't your color."
+	icon_state = "servantsuit"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
