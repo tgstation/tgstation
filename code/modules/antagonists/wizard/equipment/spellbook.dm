@@ -765,18 +765,10 @@ hands_state
 	. = ..()
 	if(.)
 		return
-	//curse you, oddly ambiguous usrrrrrrrrr!!
-	var/mob/living/carbon/human/wizard
-	if(istype(usr, /client))
-		var/client/wizard_client = usr
-		wizard = wizard_client.mob
-	else
-		wizard = usr
+	var/mob/living/carbon/human/wizard = usr
 	if(!istype(wizard))
 		to_chat(wizard, "<span class='warning'>The book doesn't seem to listen to lower life forms.</span>")
 		return
-	to_chat(world, action)
-	to_chat(world, english_list(params))
 	switch(action)
 		if("purchase")
 			var/datum/spellbook_entry/entry = locate(params["spellref"]) in entries
@@ -815,7 +807,7 @@ hands_state
 		if(LOADOUT_CLASSIC) //(Fireball>2, MM>2, Smite>2, Jauntx2>4) = 10
 			wanted_spell_names = list("Fireball" = 1, "Magic Missile" = 1, "Smite" = 1, "Ethereal Jaunt" = 2)
 		if(LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx3>3, Mutate>2, Force Wall>1, Blink>2) = 10
-			wanted_spell_names = list("Mjolnir" = 1, "Summon Item" = 3, "Mutate" = 2, "Force Wall" = 1, "Blink" = 1)
+			wanted_spell_names = list("Mjolnir" = 1, "Summon Item" = 3, "Mutate" = 1, "Force Wall" = 1, "Blink" = 1)
 		if(LOADOUT_WIZARMY) //(Soulstones>2, Staff of Change>2, A Necromantic Stone>2, Teleport>2, Ethereal Jaunt>2) = 10
 			wanted_spell_names = list("Soulstone Shard Kit" = 1, "Staff of Change" = 1, "A Necromantic Stone" = 1, "Teleport" = 1, "Ethereal Jaunt" = 1)
 		if(LOADOUT_SOULTAP) //(Soul Tap>1, Smite>2, Flesh to Stone>2, Mindswap>2, Knock>1, Teleport>2) = 10
@@ -826,16 +818,18 @@ hands_state
 			if(!(entry.name in wanted_spell_names))
 				continue
 			if(entry?.CanBuy(wizard,src))
-				for(var/i in 0 to wanted_spell_names[entry.name])
+				for(var/i in 1 to wanted_spell_names[entry.name])
 					entry.Buy(wizard,src)
 					if(entry.limit)
 						entry.limit--
 					uses -= entry.cost
 				entry.refundable = FALSE //once you go loading out, you never go back
+				wanted_spell_names -= entry.name
 				continue
-			failed = TRUE//we went through the entire loop without finding what we wanted, sound the alarm!
+			if(wanted_spell_names.len)
+				failed = TRUE//we went through the entire loop without finding what we wanted, sound the alarm!
 	if(failed)
-		stack_trace("Wizard Loadout \"[loadout]\" could not find the spells to buy in the spellbook.")
+		stack_trace("Wizard Loadout \"[loadout]\" could not find valid spells to buy in the spellbook. Either you input a name that doesn't exist, or you overspent")
 	if(uses)
 		stack_trace("Wizard Loadout \"[loadout]\" does not use 10 wizard spell slots. Stop scamming players out.")
 
