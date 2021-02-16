@@ -251,9 +251,9 @@
 	return
 
 /**
- * Called by addMachineryMember() in datum_pipeline.dm, returns the gas_mixture of the network the device is connected to
+ * Called by addMachineryMember() in datum_pipeline.dm, returns a list of gas_mixtures and assigns them into other_airs (by addMachineryMember) to allow pressure redistribution for the machineries.
  */
-/obj/machinery/atmospherics/proc/returnPipenetAir()
+/obj/machinery/atmospherics/proc/returnPipenetAirs()
 	return
 
 /**

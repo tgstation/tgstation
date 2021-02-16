@@ -90,11 +90,13 @@
 			P.build_pipeline(src)
 
 /obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
+	// Crash when we call a null pipenet here. Pretty straightforward.
 	if(!reference)
 		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
-	var/i = parents.Find(reference)
-	reference.other_airs -= airs[i]
-	reference.other_atmosmch -= src
+
+	// Crash if the pipeline that we are supposed to be connected to doesnt have members and machineries. 
+	// How does it even connect in the first place, right?
+
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline
 	 *  is projected to have no member and cause GC problems.
@@ -102,14 +104,29 @@
 	 *  while pipes must and will happily wreck and rebuild everything
 	 *	again every time they are qdeleted.
 	 */
+
 	if(!length(reference.other_atmosmch) && !length(reference.members))
 		if(QDESTROYING(reference))
-			parents[i] = null
-			CRASH("nullifyPipenet() called on qdeleting [reference] indexed on parents\[[i]\]")
+			for (var/i in 1 to parents.len)
+				if (parents[i] == reference)
+					CRASH("nullifyPipenet() called on qdeleting [reference] indexed on parents\[[i]\]")
+					parents[i] = null
 		qdel(reference)
-	parents[i] = null
 
-/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
+		// Early return to avoid problems down the line.
+		return
+
+	// Deletes any reference of the atmos machinery as listed in the other_atmosmch list from the pipeine.
+	reference.other_atmosmch -= src
+
+	// Disconnect each air mixtures from the other_airs list in the pipeline. 
+	// Also nullifies the specific entry in the parents list. This is mainly used when a machinery is rotated.
+	for (var/i in 1 to parents.len)
+		if (parents[i] == reference)
+			reference.other_airs -= airs[i]
+			parents[i] = null
+
+/obj/machinery/atmospherics/components/returnPipenetAirs(datum/pipeline/reference)
 	var/list/returned_air = list()
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)

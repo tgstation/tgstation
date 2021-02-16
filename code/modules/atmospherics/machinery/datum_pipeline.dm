@@ -83,10 +83,19 @@
 
 	air.volume = volume
 
+	/**
+	 *  For a machinery to properly "connect" to a pipenet and share gasses, 
+	 *  the pipenet needs to acknowledge a gas mixture as it's member.
+	 *  This is currently handled by the other_airs list in the pipeline datum.
+	 *  
+	 *	Other_airs itself is populated by gas mixtures through the parents list that each machineries have.
+	 *	This parents list is populated when a machinery calls update_parents and is then added into the queue by the controller.
+	 */
+
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/considered_component)
 	other_atmosmch |= considered_component
-	var/list/returned_airs = considered_component.returnPipenetAir(src)
-	if (!returned_airs.len)
+	var/list/returned_airs = considered_component.returnPipenetAirs(src)
+	if (!length(returned_airs) || (null in returned_airs))
 		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [considered_component] \
 		which is of type [considered_component.type]. Nearby: ([considered_component.x], [considered_component.y], [considered_component.z])")
 	other_airs |= returned_airs
