@@ -56,5 +56,5 @@
 
 /atom/movable/screen/alert/status_effect/seizure
 	name = "Seizure"
-	desc = "FJOIWEHUWQEFGYUWDGHUIWHUIDWEHUIFDUWGYSXQHUIODSDBNJKVBNKDML <--- his is you right now"
+	desc = "FJOIWEHUWQEFGYUWDGHUIWHUIDWEHUIFDUWGYSXQHUIODSDBNJKVBNKDML <--- this is you right now"
 	icon_state = "paralysis"
