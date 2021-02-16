@@ -1,3 +1,5 @@
+#define MINING_MESSAGE_COOLDOWN 20
+
 /**********************Mineral deposits**************************/
 
 /turf/closed/mineral //wall piece
@@ -83,21 +85,20 @@
 		return attack_hand(user)
 
 /turf/closed/mineral/attack_hand(mob/user)
-	if(weak_turf)
-		var/turf/T = user.loc
-		if (!isturf(T))
-			return
-		if(last_act + 20 > world.time)//prevents message spam
-			return
-		last_act = world.time
-		to_chat(user, "<span class='notice'>You start pulling out pieces of rock with your hands...</span>")
-
-		if(do_after(user, 15 SECONDS, target = src))
-			if(ismineralturf(src))
-				to_chat(user, "<span class='notice'>You finish pulling apart the rock.</span>")
-				gets_drilled(user, FALSE)
-	else
-		. = ..()
+	if(!weak_turf)
+		return ..()
+	var/turf/user_turf = user.loc
+	if (!isturf(user_turf))
+		return
+	if(last_act + MINING_MESSAGE_COOLDOWN > world.time)//prevents message spam
+		return
+	last_act = world.time
+	to_chat(user, "<span class='notice'>You start pulling out pieces of [src] with your hands...</span>")
+	if(!do_after(user, 15 SECONDS, target = src))
+		return
+	if(ismineralturf(src))
+		to_chat(user, "<span class='notice'>You finish pulling apart [src].</span>")
+		gets_drilled(user)
 
 /turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
 	if (mineralType && (mineralAmt > 0))

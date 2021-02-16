@@ -58,10 +58,8 @@
 	if(teleport_distance <= 0)
 		return ..()
 	var/list/possible_ends = view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc)
-	for(var/turf/T in possible_ends)
-		if(isopenturf(T))
-			continue
-		possible_ends -= T
+	for(var/turf/closed/turf_to_remove in possible_ends)
+		possible_ends -= turf_to_remove
 	if(!possible_ends.len)
 		return ..()
 	var/turf/end = pick(possible_ends)

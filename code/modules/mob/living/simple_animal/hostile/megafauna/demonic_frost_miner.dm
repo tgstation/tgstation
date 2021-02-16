@@ -54,8 +54,8 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
 	. = ..()
-	for(var/obj/structure/frost_miner_prism/P in GLOB.frost_miner_prisms)
-		P.set_prism_light(LIGHT_COLOR_BLUE, 5)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
 	AddComponent(/datum/component/knockback, 7, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 50)
 
@@ -82,7 +82,7 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
-	projectile_speed_multiplier = 1 - enraged * 0.5 // idk why i nerfed this in testing but its better this way
+	projectile_speed_multiplier = 1 - enraged * 0.5
 	SetRecoveryTime(100, 100)
 
 	if(client)
@@ -257,8 +257,8 @@ Difficulty: Extremely Hard
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
-	for(var/obj/structure/frost_miner_prism/P in GLOB.frost_miner_prisms)
-		P.set_prism_light(LIGHT_COLOR_PURPLE, 5)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)
 	SLEEP_CHECK_DEATH(8)
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
@@ -272,8 +272,8 @@ Difficulty: Extremely Hard
 		return
 	var/turf/T = get_turf(src)
 	var/loot = rand(1, 3)
-	for(var/obj/structure/frost_miner_prism/P in GLOB.frost_miner_prisms)
-		P.set_prism_light(COLOR_GRAY, 1)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(COLOR_GRAY, 1)
 	switch(loot)
 		if(1)
 			new /obj/item/resurrection_crystal(T)
@@ -394,7 +394,7 @@ Difficulty: Extremely Hard
 /datum/status_effect/ice_block_talisman/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	. = ..()
+	return ..()
 
 /atom/movable/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"
