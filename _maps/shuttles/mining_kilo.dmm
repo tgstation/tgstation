@@ -98,7 +98,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -112,7 +111,6 @@
 /obj/structure/table,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 22
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -140,7 +138,7 @@
 	name = "Mining Shuttle Cockpit"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "t" = (
 /obj/item/clothing/suit/hazardvest{
@@ -175,7 +173,6 @@
 	},
 /obj/structure/closet/crate/internals,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 1
 	},
 /obj/machinery/airalarm{
@@ -186,11 +183,9 @@
 /area/shuttle/mining/large)
 "u" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 4
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -207,18 +202,15 @@
 /area/shuttle/mining/large)
 "w" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 1
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "x" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -227,7 +219,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -250,7 +241,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold-2";
 	dir = 4
 	},
 /obj/structure/cable,
@@ -258,7 +248,6 @@
 /area/shuttle/mining/large)
 "B" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 8
 	},
 /obj/structure/cable,
@@ -339,7 +328,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
 	dir = 1
 	},
 /turf/open/floor/plating,

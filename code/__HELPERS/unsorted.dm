@@ -147,25 +147,25 @@ Turf and target are separate in case you want to teleport some distance from a t
  * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
  */
 /proc/getline(atom/M,atom/N)
-	var/px=M.x		//starting x
+	var/px=M.x //starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
-	var/dx=N.x-px	//x distance
+	var/dx=N.x-px //x distance
 	var/dy=N.y-py
 	var/dxabs = abs(dx)//Absolute value of x distance
 	var/dyabs = abs(dy)
-	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdx = SIGN(dx) //Sign of x distance (+ or -)
 	var/sdy = SIGN(dy)
-	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
-	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
-	var/j			//Generic integer for counting
-	if(dxabs>=dyabs)	//x distance is greater than y
+	var/x=dxabs>>1 //Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1 //Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j //Generic integer for counting
+	if(dxabs>=dyabs) //x distance is greater than y
 		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
 			y+=dyabs
-			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+			if(y>=dxabs) //Every dyabs steps, step once in y direction
 				y-=dxabs
 				py+=sdy
-			px+=sdx		//Step on in x direction
+			px+=sdx //Step on in x direction
 			line+=locate(px,py,M.z)//Add the turf to the list
 	else
 		for(j=0;j<dyabs;j++)
@@ -248,10 +248,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
+		var/name = avoid_assoc_duplicate_keys(M.name, namecounts) + M.get_realname_string()
 
-		if(M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
 		if(M.stat == DEAD && specify_dead_role)
 			if(isobserver(M))
 				name += " \[ghost\]"
@@ -287,8 +285,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/dead/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/slime/M in sortmob)
 		moblist.Add(M)
@@ -418,30 +414,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/*
-	Gets all contents of contents and returns them all in a list.
-*/
 
-/atom/proc/GetAllContents(T, ignore_flag_1)
+///Returns the src and all recursive contents as a list.
+/atom/proc/GetAllContents()
+	. = list(src)
+	var/i = 0
+	while(i < length(.))
+		var/atom/A = .[++i]
+		. += A.contents
+
+///identical to getallcontents but returns a list of atoms of the type passed in the argument.
+/atom/proc/get_all_contents_type(type)
 	var/list/processing_list = list(src)
-	if(T)
-		. = list()
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-			//This is also why we don't need to check against assembled as we go along
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-				if(istype(A,T))
-					. += A
-	else
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-		return processing_list
+	. = list()
+	while(length(processing_list))
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		processing_list += A.contents
+		if(istype(A, type))
+			. += A
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
 	if(!length(ignore_typecache))
@@ -727,7 +718,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			living_player_count += 1
 	return living_player_count
 
-/proc/randomColor(mode = 0)	//if 1 it doesn't pick white, black or gray
+/proc/randomColor(mode = 0) //if 1 it doesn't pick white, black or gray
 	switch(mode)
 		if(0)
 			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
@@ -997,9 +988,9 @@ rough example of the "cone" made by the 3 dirs checked
 	if (length(turfs))
 		return pick(turfs)
 
-/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
+/proc/get_safe_random_station_turf(list/areas_to_pick_from = GLOB.the_station_areas) //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
-		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/list/L = get_area_turfs(pick(areas_to_pick_from))
 		var/turf/target
 		while (L.len && !target)
 			var/I = rand(1, L.len)
@@ -1205,24 +1196,36 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define FOR_DVIEW_END GLOB.dview_mob.loc = null
 
-//can a window be here, or is there a window blocking it?
-/proc/valid_window_location(turf/T, dir_to_check)
-	if(!T)
+/**
+ * Checks whether the target turf is in a valid state to accept a directional window
+ * or other directional pseudo-dense object such as railings.
+ *
+ * Returns FALSE if the target turf cannot accept a directional window or railing.
+ * Returns TRUE otherwise.
+ *
+ * Arguments:
+ * * dest_turf - The destination turf to check for existing windows and railings
+ * * test_dir - The prospective dir of some atom you'd like to put on this turf.
+ * * is_fulltile - Whether the thing you're attempting to move to this turf takes up the entire tile or whether it supports multiple movable atoms on its tile.
+ */
+/proc/valid_window_location(turf/dest_turf, test_dir, is_fulltile = FALSE)
+	if(!dest_turf)
 		return FALSE
-	for(var/obj/O in T)
-		if(istype(O, /obj/machinery/door/window) && (O.dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR))
-			return FALSE
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			if(W.ini_dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR)
+	for(var/obj/turf_content in dest_turf)
+		if(istype(turf_content, /obj/machinery/door/window))
+			if((turf_content.dir == test_dir) || is_fulltile)
 				return FALSE
-		if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+		if(istype(turf_content, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/windoor_assembly = turf_content
+			if(windoor_assembly.dir == test_dir || is_fulltile)
 				return FALSE
-		if(istype(O, /obj/structure/railing))
-			var/obj/structure/railing/rail = O
-			if(rail.ini_dir == dir_to_check || rail.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+		if(istype(turf_content, /obj/structure/window))
+			var/obj/structure/window/window_structure = turf_content
+			if(window_structure.dir == test_dir || window_structure.fulltile || is_fulltile)
+				return FALSE
+		if(istype(turf_content, /obj/structure/railing))
+			var/obj/structure/railing/rail = turf_content
+			if(rail.dir == test_dir || is_fulltile)
 				return FALSE
 	return TRUE
 
@@ -1252,12 +1255,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //in constant time and memory!
 /proc/BitCount(bitfield)
 	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
-	temp = ((temp + (temp>>3))&29127) % 63	//070707
+	temp = ((temp + (temp>>3))&29127) % 63 //070707
 	return temp
 
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
-//	(But may make a nice salt to one)
+// (But may make a nice salt to one)
 /proc/GUID()
 	var/const/GUID_VERSION = "b"
 	var/const/GUID_VARIANT = "d"
@@ -1311,12 +1314,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return
 	var/datum/D = list_or_datum
 	if(IsAdminAdvancedProcCall())
-		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+		D.vv_edit_var(var_name, var_value) //same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
 
-#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
-#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+#define TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
 
 ///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
 /proc/___TraitAdd(target,trait,source)
@@ -1432,15 +1435,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
-
-
-/proc/num2sign(numeric)
-	if(numeric > 0)
-		return 1
-	else if(numeric < 0)
-		return -1
-	else
-		return 0
 
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE

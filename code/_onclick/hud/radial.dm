@@ -51,9 +51,18 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		parent.finished = TRUE
 
 /datum/radial_menu
-	var/list/choices = list() //List of choice id's
-	var/list/choices_icons = list() //choice_id -> icon
-	var/list/choices_values = list() //choice_id -> choice
+	/// List of choice IDs
+	var/list/choices = list()
+
+	/// choice_id -> icon
+	var/list/choices_icons = list()
+
+	/// choice_id -> choice
+	var/list/choices_values = list()
+
+	/// choice_id -> /datum/radial_menu_choice
+	var/list/choice_datums = list()
+
 	var/list/page_data = list() //list of choices per page
 
 
@@ -188,6 +197,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	E.alpha = 255
 	E.mouse_opacity = MOUSE_OPACITY_ICON
 	E.cut_overlays()
+	E.vis_contents.Cut()
 	if(choice_id == NEXT_PAGE_ID)
 		E.name = "Next Page"
 		E.next_page = TRUE
@@ -206,6 +216,12 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.next_page = FALSE
 		if(choices_icons[choice_id])
 			E.add_overlay(choices_icons[choice_id])
+		if (choice_datums[choice_id])
+			var/datum/radial_menu_choice/choice_datum = choice_datums[choice_id]
+			if (choice_datum.info)
+				var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
+				info_button.layer = ABOVE_HUD_LAYER
+				E.vis_contents += info_button
 
 /datum/radial_menu/New()
 	close_button = new
@@ -234,11 +250,17 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/I = extract_image(new_choices[E])
 			if(I)
 				choices_icons[id] = I
+
+			if (istype(new_choices[E], /datum/radial_menu_choice))
+				choice_datums[id] = new_choices[E]
 	setup_menu(use_tooltips)
 
+/datum/radial_menu/proc/extract_image(to_extract_from)
+	if (istype(to_extract_from, /datum/radial_menu_choice))
+		var/datum/radial_menu_choice/choice = to_extract_from
+		to_extract_from = choice.image
 
-/datum/radial_menu/proc/extract_image(E)
-	var/mutable_appearance/MA = new /mutable_appearance(E)
+	var/mutable_appearance/MA = new /mutable_appearance(to_extract_from)
 	if(MA)
 		MA.layer = ABOVE_HUD_LAYER
 		MA.appearance_flags |= RESET_TRANSFORM
@@ -321,3 +343,15 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		if(!custom_check.Invoke())
 			return
 	return answer
+
+/// Can be provided to choices in radial menus if you want to provide more information
+/datum/radial_menu_choice
+	/// Required -- what to display for this button
+	var/image
+
+	/// If provided, will display an info button that will put this text in your chat
+	var/info
+
+/datum/radial_menu_choice/Destroy(force, ...)
+	. = ..()
+	QDEL_NULL(image)

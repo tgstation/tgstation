@@ -4,7 +4,7 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	if(message)
@@ -14,7 +14,7 @@
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	whisper(message)
@@ -28,7 +28,7 @@
 	set name = "Me"
 	set category = "IC"
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -41,7 +41,7 @@
 	var/name = real_name
 	var/alt_name = ""
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -122,8 +122,9 @@
 			mods[WHISPER_MODE] = MODE_WHISPER
 		else if(key == "%" && !mods[MODE_SING])
 			mods[MODE_SING] = TRUE
-		else if(key == ";" && !mods[MODE_HEADSET] && stat == CONSCIOUS)
-			mods[MODE_HEADSET] = TRUE
+		else if(key == ";" && !mods[MODE_HEADSET])
+			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
+				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = lowertext(message[1 + length(key)])
 			mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]

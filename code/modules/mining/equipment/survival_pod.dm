@@ -175,7 +175,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -227,7 +227,7 @@
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
 	density = TRUE
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
 
@@ -258,8 +258,11 @@
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 
+/obj/structure/fans/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 //Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"

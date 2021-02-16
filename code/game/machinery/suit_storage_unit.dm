@@ -202,7 +202,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_inventory_contents()
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
@@ -518,7 +518,7 @@
 
 	return ..()
 
-/*	ref tg-git issue #45036
+/* ref tg-git issue #45036
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */

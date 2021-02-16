@@ -10,10 +10,11 @@
 	max_integrity = 250
 	integrity_failure = 0.1
 	custom_materials = list(/datum/material/iron = 2000)
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	layer = OBJ_LAYER
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-	layer = OBJ_LAYER
+
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
@@ -23,8 +24,10 @@
 
 /obj/structure/chair/Initialize()
 	. = ..()
-	if(!anchored)	//why would you put these on the shuttle?
+	if(!anchored) //why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+	if(prob(0.2))
+		name = "tactical [name]"
 
 /obj/structure/chair/ComponentInitialize()
 	. = ..()
@@ -50,7 +53,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -63,8 +66,8 @@
 				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
-/obj/structure/chair/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/chair/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/chair/narsie_act()
 	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
@@ -251,7 +254,7 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
-/obj/structure/chair/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+/obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
 
 /obj/structure/chair/stool/bar
@@ -320,7 +323,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 

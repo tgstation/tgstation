@@ -4,6 +4,8 @@
 		"platymuus.dm-langclient",
 		"EditorConfig.EditorConfig",
 		"arcanis.vscode-zipfs",
-		"dbaeumer.vscode-eslint"
+		"dbaeumer.vscode-eslint",
+		"stylemistake.auto-comment-blocks",
+		"Donkie.vscode-tgstation-test-adapter"
 	]
 }

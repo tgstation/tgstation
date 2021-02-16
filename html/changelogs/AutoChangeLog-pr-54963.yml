@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "jitteriness, melee attack animations and resting/standing up should no longer momentarily remove the floating movement type."

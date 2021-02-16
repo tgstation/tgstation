@@ -22,7 +22,7 @@
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/wallframe/picture/attack_hand(mob/user)
+/obj/item/wallframe/picture/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -142,7 +142,7 @@
 
 	..()
 
-/obj/structure/sign/picture_frame/attack_hand(mob/user)
+/obj/structure/sign/picture_frame/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -165,3 +165,22 @@
 			I.forceMove(F)
 		F.update_icon()
 	qdel(src)
+
+
+/obj/structure/sign/picture_frame/showroom
+	name = "distinguished crew display"
+	desc = "A photo frame to commemorate crewmembers that distinguished themselves in the line of duty. WARNING: unauthorized tampering will be severely punished."
+	can_decon = FALSE
+
+//persistent frames, make sure the same ID doesn't appear more than once per map
+/obj/structure/sign/picture_frame/showroom/one
+	persistence_id = "frame_showroom1"
+
+/obj/structure/sign/picture_frame/showroom/two
+	persistence_id = "frame_showroom2"
+
+/obj/structure/sign/picture_frame/showroom/three
+	persistence_id = "frame_showroom3"
+
+/obj/structure/sign/picture_frame/showroom/four
+	persistence_id = "frame_showroom4"

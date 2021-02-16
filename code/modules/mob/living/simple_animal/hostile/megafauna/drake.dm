@@ -207,21 +207,27 @@
 	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)
+	var/list/mobs_with_clients = list()
 	while(amount > 0)
 		var/list/empty = indestructible_turfs.Copy() // can't place safe turfs on turfs that weren't changed to be open
-		var/any_attack = 0
+		var/any_attack = FALSE
 		for(var/turf/T in turfs)
 			for(var/mob/living/L in T.contents)
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
-					any_attack = 1
+					any_attack = TRUE
+					mobs_with_clients |= L
 			for(var/obj/vehicle/sealed/mecha/M in T.contents)
 				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
-				any_attack = 1
-		if(!any_attack)
+				any_attack = TRUE
+		if(!any_attack) // nothing to attack in the arena, time for enraged attack if we still have a cliented target.
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
 				qdel(D)
-			return FALSE // nothing to attack in the arena time for enraged attack if we still have a target
+			for(var/a in mobs_with_clients)
+				var/mob/living/L = a
+				if(!QDELETED(L) && L.client)
+					return FALSE
+			return TRUE
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -238,12 +244,12 @@
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
-	light_range = 10
+	set_light_range(10)
 	SLEEP_CHECK_DEATH(10) // run.
 	mass_fire(20, 15, 3)
 	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	light_range = initial(light_range)
+	set_light_range(initial(light_range))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)

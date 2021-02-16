@@ -69,7 +69,7 @@
  */
 /obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(isGlass && !custom_materials)
-		set_custom_materials(list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5))
+		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
@@ -126,7 +126,7 @@
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
 		return
-	if(QDELING(src) || !target)		//Invalid loc
+	if(QDELING(src) || !target) //Invalid loc
 		return
 	if(bartender_check(target) && ranged)
 		return
@@ -211,8 +211,8 @@
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
-//	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
-//	Formatting is the same as food.
+// rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
+// Formatting is the same as food.
 
 /obj/item/reagent_containers/food/drinks/coffee
 	name = "robust coffee"
@@ -238,18 +238,16 @@
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
 	list_reagents  = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
 
-/obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
+/obj/item/reagent_containers/food/drinks/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
 	desc = "A drink served in a classy mug."
 	icon_state = "tea"
 	inhand_icon_state = "coffee"
 	spillable = TRUE
 
-/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
-	if(reagents.total_volume)
-		icon_state = "tea"
-	else
-		icon_state = "tea_empty"
+/obj/item/reagent_containers/food/drinks/mug/update_icon_state()
+	. = ..()
+	icon_state = reagents.total_volume ? "tea" : "tea_empty"
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
@@ -347,11 +345,11 @@
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
+/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/living/user, def_zone)
 	if(!target)
 		return
 
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		if(cap_on && reagents.total_volume && istype(target))
 			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 			return
@@ -361,8 +359,8 @@
 	if(!cap_on)
 		SplashReagents(target)
 
-/obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/user, proximity)
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
+/obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 		return
 
@@ -450,17 +448,75 @@
 	spillable = TRUE
 	isGlass = FALSE
 
-/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change(changetype)
-	if(reagents.total_volume)
-		icon_state = "water_cup"
-	else
-		icon_state = "water_cup_e"
+/obj/item/reagent_containers/food/drinks/sillycup/update_icon_state()
+	. = ..()
+	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
+
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
+	. = ..()
+	if(!length(reagents.reagent_list))
+		name = "small carton"
+		desc = "A small carton, intended for holding drinks."
+		foodtype = NONE
+		return
+
+	switch(reagents.get_master_reagent_id()) // - [] TODO: Unshitcode this. Right now I'm just passing through and this really needs it's own dedicated PR.
+		if(/datum/reagent/consumable/orangejuice)
+			name = "orange juice box" // I know this shouldn't be here, but I really don't have the time to fix this right now. Blame the last guy
+			desc = "A great source of vitamins. Stay healthy!" // Ditto
+			foodtype = FRUIT | BREAKFAST // Ditto
+		if(/datum/reagent/consumable/milk)
+			name = "carton of milk"
+			desc = "An excellent source of calcium for growing space explorers."
+			foodtype = DAIRY | BREAKFAST
+		if(/datum/reagent/consumable/applejuice)
+			name = "apple juice box"
+			desc = "Sweet apple juice. Don't be late for school!"
+			foodtype = FRUIT
+		if(/datum/reagent/consumable/grapejuice)
+			name = "grape juice box"
+			desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
+			foodtype = FRUIT
+		if(/datum/reagent/consumable/pineapplejuice)
+			name = "pineapple juice box"
+			desc = "Why would you even want this?"
+			foodtype = FRUIT | PINEAPPLE
+		if(/datum/reagent/consumable/milk/chocolate_milk)
+			name = "carton of chocolate milk"
+			desc = "Milk for cool kids!"
+			foodtype = SUGAR
+		if(/datum/reagent/consumable/ethanol/eggnog)
+			name = "carton of eggnog"
+			desc = "For enjoying the most wonderful time of the year."
+			foodtype = MEAT
+
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_icon_state()
+	. = ..()
+	if(!length(reagents.reagent_list))
+		icon_state = "juicebox"
+		return
+
+	switch(reagents.get_master_reagent_id()) // Thanks to update_name not existing we need to do this whole switch twice
+		if(/datum/reagent/consumable/orangejuice)
+			icon_state = "orangebox"
+		if(/datum/reagent/consumable/milk)
+			icon_state = "milkbox"
+		if(/datum/reagent/consumable/applejuice)
+			icon_state = "juicebox"
+		if(/datum/reagent/consumable/grapejuice)
+			icon_state = "grapebox"
+		if(/datum/reagent/consumable/pineapplejuice)
+			icon_state = "pineapplebox"
+		if(/datum/reagent/consumable/milk/chocolate_milk)
+			icon_state = "chocolatebox"
+		if(/datum/reagent/consumable/ethanol/eggnog)
+			icon_state = "nog2"
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -478,50 +534,6 @@
 	transfer_fingerprints_to(B)
 	qdel(src)
 	target.Bumped(B)
-
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
-	if (reagents.reagent_list.len)
-		switch(reagents.get_master_reagent_id())
-			if(/datum/reagent/consumable/orangejuice)
-				icon_state = "orangebox"
-				name = "orange juice box"
-				desc = "A great source of vitamins. Stay healthy!"
-				foodtype = FRUIT | BREAKFAST
-			if(/datum/reagent/consumable/milk)
-				icon_state = "milkbox"
-				name = "carton of milk"
-				desc = "An excellent source of calcium for growing space explorers."
-				foodtype = DAIRY | BREAKFAST
-			if(/datum/reagent/consumable/applejuice)
-				icon_state = "juicebox"
-				name = "apple juice box"
-				desc = "Sweet apple juice. Don't be late for school!"
-				foodtype = FRUIT
-			if(/datum/reagent/consumable/grapejuice)
-				icon_state = "grapebox"
-				name = "grape juice box"
-				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
-				foodtype = FRUIT
-			if(/datum/reagent/consumable/pineapplejuice)
-				icon_state = "pineapplebox"
-				name = "pineapple juice box"
-				desc = "Why would you even want this?"
-				foodtype = FRUIT | PINEAPPLE
-			if(/datum/reagent/consumable/milk/chocolate_milk)
-				icon_state = "chocolatebox"
-				name = "carton of chocolate milk"
-				desc = "Milk for cool kids!"
-				foodtype = SUGAR
-			if(/datum/reagent/consumable/ethanol/eggnog)
-				icon_state = "nog2"
-				name = "carton of eggnog"
-				desc = "For enjoying the most wonderful time of the year."
-				foodtype = MEAT
-	else
-		icon_state = "juicebox"
-		name = "small carton"
-		desc = "A small carton, intended for holding drinks."
-
 
 /obj/item/reagent_containers/food/drinks/colocup
 	name = "colo cup"
@@ -548,8 +560,8 @@
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
-//	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
-//	icon states.
+// itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
+// icon states.
 
 /obj/item/reagent_containers/food/drinks/shaker
 	name = "shaker"
@@ -628,8 +640,8 @@
 	sleep(20) //dramatic pause
 	return TOXLOSS
 
-/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
-	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
+/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/living/user)
+	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
 			user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		else

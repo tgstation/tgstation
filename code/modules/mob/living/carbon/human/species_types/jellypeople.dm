@@ -5,7 +5,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
-	inherent_traits = list(TRAIT_TOXINLOVER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_TOXINLOVER)
 	mutantlungs = /obj/item/organ/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
@@ -361,24 +361,24 @@
 		return FALSE
 	var/datum/species/jelly/slime/SS = H.dna.species
 
-	if(QDELETED(dupe)) 					//Is there a body?
+	if(QDELETED(dupe)) //Is there a body?
 		SS.bodies -= dupe
 		return FALSE
 
-	if(!isslimeperson(dupe)) 			//Is it a slimeperson?
+	if(!isslimeperson(dupe)) //Is it a slimeperson?
 		SS.bodies -= dupe
 		return FALSE
 
-	if(dupe.stat == DEAD) 				//Is it alive?
+	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(dupe.stat != CONSCIOUS) 			//Is it awake?
+	if(dupe.stat != CONSCIOUS) //Is it awake?
 		return FALSE
 
-	if(dupe.mind && dupe.mind.active) 	//Is it unoccupied?
+	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
 		return FALSE
 
-	if(!(dupe in SS.bodies))			//Do we actually own it?
+	if(!(dupe in SS.bodies)) //Do we actually own it?
 		return FALSE
 
 	return TRUE

@@ -83,7 +83,7 @@
 		if(9)
 			msg += "<span class='nicegreen'>I love life!</span>\n"
 
-	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
+	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
@@ -193,6 +193,15 @@
 		if(9)
 			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
+
+	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
+	// mood runtime, so 50% average uptime across the hour.
+	if(HAS_TRAIT(parent, TRAIT_DEPRESSION) && DT_PROB(0.416, delta_time))
+		add_event(null, "depression_mild", /datum/mood_event/depression_mild)
+
+	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
+		add_event(null, "jolly", /datum/mood_event/jolly)
+
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -366,7 +375,7 @@
 	SIGNAL_HANDLER
 
 	update_beauty(A)
-	if(A.mood_bonus)
+	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")

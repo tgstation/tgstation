@@ -4,7 +4,6 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
-	ventcrawler = VENTCRAWLER_ALWAYS
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
@@ -31,6 +30,9 @@
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
+
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	. = ..()
 
@@ -72,7 +74,7 @@
 
 /mob/living/carbon/alien/get_status_tab_items()
 	. = ..()
-	. += "Intent: [a_intent]"
+	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
@@ -131,7 +133,7 @@ Des: Removes all infected images from the alien.
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)
-	return ((I && istype(I, /obj/item/clothing/mask/facehugger)) || (ISADVANCEDTOOLUSER(src) && ..()))
+	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /mob/living/carbon/alien/on_lying_down(new_lying_angle)
 	. = ..()

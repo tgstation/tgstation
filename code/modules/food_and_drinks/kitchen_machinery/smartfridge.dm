@@ -65,7 +65,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
+/obj/machinery/smartfridge/attackby(obj/item/O, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 		cut_overlays()
 		if(panel_open)
@@ -125,7 +125,7 @@
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
 				return FALSE
 
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>\The [src] smartly refuses [O].</span>")
 		updateUsrDialog()
 		return FALSE
@@ -179,9 +179,9 @@
 
 		var/atom/movable/O = I
 		if (!QDELETED(O))
-			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
-			if (listofitems[md5name])				// which is fixed in a version we cannot use due to ie8 incompatibility
-				listofitems[md5name]["amount"]++	// The good news is, #30519 made smartfridge UIs non-auto-updating
+			var/md5name = md5(O.name) // This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
+			if (listofitems[md5name]) // which is fixed in a version we cannot use due to ie8 incompatibility
+				listofitems[md5name]["amount"]++ // The good news is, #30519 made smartfridge UIs non-auto-updating
 			else
 				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
@@ -259,7 +259,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = null
 	circuit = null
@@ -397,13 +397,29 @@
 /obj/machinery/smartfridge/extract/preloaded
 	initial_contents = list(/obj/item/slime_scanner = 2)
 
+// -------------------------------------
+// Cytology Petri Dish Smartfridge
+// -------------------------------------
+/obj/machinery/smartfridge/petri
+	name = "smart petri dish storage"
+	desc = "A refrigerated storage unit for petri dishes."
+	base_build_path = /obj/machinery/smartfridge/petri
+
+/obj/machinery/smartfridge/petri/accept_check(obj/item/O)
+	if(istype(O, /obj/item/petri_dish))
+		return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/petri/preloaded
+	initial_contents = list(/obj/item/petri_dish = 5)
+
 // -------------------------
 // Organ Surgery Smartfridge
 // -------------------------
 /obj/machinery/smartfridge/organ
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
-	max_n_of_items = 20	//vastly lower to prevent processing too long
+	max_n_of_items = 20 //vastly lower to prevent processing too long
 	base_build_path = /obj/machinery/smartfridge/organ
 	var/repair_rate = 0
 
@@ -414,7 +430,7 @@
 
 /obj/machinery/smartfridge/organ/load(obj/item/O)
 	. = ..()
-	if(!.)	//if the item loads, clear can_decompose
+	if(!.) //if the item loads, clear can_decompose
 		return
 	if(isorgan(O))
 		var/obj/item/organ/organ = O

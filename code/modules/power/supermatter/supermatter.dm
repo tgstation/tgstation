@@ -111,7 +111,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
@@ -317,7 +317,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	SSair.start_processing_machine(src)
 	countdown = new(src)
 	countdown.start()
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.listening = 0
@@ -340,7 +340,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
 	SSair.stop_processing_machine(src)
 	QDEL_NULL(radio)
-	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
@@ -351,10 +350,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
-	if (istype(user, /mob/living/carbon))
-		var/mob/living/carbon/C = user
-		if (!istype(C.glasses, /obj/item/clothing/glasses/meson) && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
-			. += "<span class='danger'>You get headaches just from looking at it.</span>"
+	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
+		. += "<span class='danger'>You get headaches just from looking at it.</span>"
 
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/T = get_turf(src)
@@ -702,16 +700,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 		if(produces_gas)
+			removed.garbage_collect()
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
-	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-		if(l.mind?.assigned_role == "Psychologist")
+	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
+		// Someone (generally a Psychologist), when looking at the SM
+		// within hallucination range makes it easier to manage.
+		if(HAS_TRAIT(l, TRAIT_SUPERMATTER_SOOTHER) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER)))
 			toAdd = 0.05
 			psy_overlay = TRUE
-		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
+		// If they can see it without being immune (mesons, Psychologist)
+		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)
@@ -868,20 +870,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
-/obj/machinery/power/supermatter_crystal/attack_paw(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_paw(mob/user, list/modifiers)
 	dust_mob(user, cause = "monkey attack")
 
-/obj/machinery/power/supermatter_crystal/attack_alien(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_alien(mob/user, list/modifiers)
 	dust_mob(user, cause = "alien attack")
 
-/obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/S)
+/obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	var/murder
-	if(!S.melee_damage_upper && !S.melee_damage_lower)
-		murder = S.friendly_verb_continuous
+	if(!user.melee_damage_upper && !user.melee_damage_lower)
+		murder = user.friendly_verb_continuous
 	else
-		murder = S.attack_verb_continuous
-	dust_mob(S, \
-	"<span class='danger'>[S] unwisely [murder] [src], and [S.p_their()] body burns brilliantly before flashing into ash!</span>", \
+		murder = user.attack_verb_continuous
+	dust_mob(user, \
+	"<span class='danger'>[user] unwisely [murder] [src], and [user.p_their()] body burns brilliantly before flashing into ash!</span>", \
 	"<span class='userdanger'>You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.</span>", \
 	"simple animal attack")
 
@@ -892,7 +894,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_ai(mob/user)
 	return
 
-/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user)
+/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -932,7 +934,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			Consume(dust_arm)
 			qdel(W)
 			return
-		if(cig.lit || user.a_intent != INTENT_HELP)
+		if(cig.lit || user.combat_mode)
 			user.visible_message("<span class='danger'>A hideous sound echoes as [W] is ashed out on contact with \the [src]. That didn't seem like a good idea...</span>")
 			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(W)
@@ -1184,7 +1186,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Do the animation to zap to it from here
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
 			LAZYSET(targets_hit, target, TRUE)
-		zapstart.Beam(target, icon_state=zap_icon, time=5)
+		zapstart.Beam(target, icon_state=zap_icon, time = 5)
 		var/zapdir = get_dir(zapstart, target)
 		if(zapdir)
 			. = zapdir

@@ -7,7 +7,7 @@ Clicking on a windoor rather then bumping into it will keep it open, you can cli
 You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
 You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
 Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
-Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded too, but this takes a lot of fuel.
+Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
 If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
 You can grab someone by clicking on them with the grab intent, then upgrade the grab by clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
@@ -52,8 +52,10 @@ As a Medical Doctor, you can point your penlight at people to create a medical h
 As a Medical Doctor, you can extract implants by holding an empty implant case in your offhand while performing the extraction step.
 As a Medical Doctor, you can deal with patients who have absurd amounts of wounds by putting them in cryo. This will slowly treat all of their wounds simultaneously, but is much slower than direct treatment.
 As a Medical Doctor, Critical Slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
-As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds regeneration! Perfect for drained patients!
+As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds blood regeneration! Perfect for drained patients!
+As a Medical Doctor, almost every type of wound can be treated at least temporarily with gauze. When in doubt, wrap it up!
 As a Paramedic, your UV penlight can be used to stem infections in burn wounds! Just target the infected limb and use it on the patient.
+As a Paramedic, embedded objects in a patient can be safely extracted by targeting the affected limb and using a hemostat on the patient.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
 As a Chemist, you will be expected to supply crew with certain chemicals. For example, clonexadone and mannitol for the cryo tubes, unstable mutagen and saltpetre for botany as well as healing pills and patches for the front desk.
@@ -75,14 +77,14 @@ As a Scientist, you can generate research points by letting the tachyon-doppler 
 As a Scientist, getting drunk just enough will speed up research. Skol!
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
-As a Roboticist, you can reset a cyborg's module by cutting and mending the reset wire with a wire cutter.
+As a Roboticist, you can reset a cyborg's model by cutting and mending the reset wire with a wire cutter.
 As a Roboticist, you can greatly help out Shaft Miners by building a Clarke equipped with a hydraulic clamp and plasma cutter. The mech is ash storm proof and can even walk across lava!
 As a Roboticist, you can augment people with cyborg limbs. Augmented limbs can easily be repaired with cables and welders.
 As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them, they aren't wearing agent IDs and aren't using digital camouflage as changelings.
 As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
 As the AI, you can take pictures with your camera and upload them to newscasters.
 As the AI, you can use CTRL + 1-9 to set a location hotkey for your camera, allowing you to save the location and jump to it at will. Tilde and zero will return you to the last spot you jumped from, and the numpad numbers act as aliases to the regular number keys.
-As a Cyborg, choose your module carefully, as only cutting and mending your reset wire will let you repick it. If possible, refrain from choosing a module until a situation that requires one occurs.
+As a Cyborg, choose your model carefully, as only cutting and mending your reset wire will let you repick it. If possible, refrain from choosing a model until a situation that requires one occurs.
 As a Cyborg, you are immune to most forms of stunning, and excel at almost everything far better than humans. However, flashes can easily stunlock you and you cannot do any precision work as you lack hands.
 As a Cyborg, you are impervious to fires and heat. If you are rogue, you can release plasma fires everywhere and walk through them without a care in the world!
 As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armory or a traitor with an EMP kit can kill you in seconds.
@@ -108,7 +110,7 @@ As an Engineer, you can use radiation collectors to generate research points. Lo
 As an Engineer, don't underestimate the humble P.A.C.M.A.N. generators. With upgraded parts, a couple units working in tandem are sufficient to take over for an exploded engine or shattered solars.
 As an Engineer, your departmental protolathe and circuit printer can manufacture the necessary circuit boards and components to build just about anything. Make extra medical machinery everywhere! Build a gibber for security! Set up an array of emitters pointing down the hall! The possibilities are endless!
 As an Engineer, you can pry open secure storage blast doors by disabling the engine room APC's main breaker. This is obviously a bad idea if the engine is running.
-As an Engineer, your RCD can be reloaded with metal, glass or plasteel sheets instead of just compressed matter cartridges.
+As an Engineer, your RCD can be reloaded with iron, glass or plasteel sheets instead of just compressed matter cartridges.
 As an Engineer, the Supermatter Monitoring Program on modular computers give you a detailed report on the Supermatter's condition, and the contents of the air inside of the chamber, allowing you to both diagnose and monitor programs from afar!
 As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
@@ -241,9 +243,6 @@ As a Morph, you can talk while disguised, but your words have a chance of being 
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
-As a Devil, you gain power for every three souls you control, however you also become more obvious.
-As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
-At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth.
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
 As a Security Officer, remember that you can attach a sec-lite to your disabler or your helmet!
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
@@ -255,6 +254,7 @@ You can light a cigar on a supermatter crystal.
 Using sticky tape on items can make them stick to people and walls! Be careful, grenades might stick to your hand during the moment of truth!
 In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
 Wearing riot armor makes you significantly more effective at performing tackle takedowns, but will use extra stamina with each leap! It will also significantly protect you from other tackles!
-Epipens contain a powerful coagulant that drastically reduces bleeding on all bleeding wounds. If you don't have time to properly treat someone with lots of slashes or piercings, stick them with a pen to buy some time!
+Standard epipens contain a potent coagulant that not only slow bloodloss, but also help clot whichever of your wounds is bleeding the most! If you're suffering multiple bad bleeding wounds, make sure to seek out additional treatment ASAP!
 Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
 If you're bleeding, you can apply pressure to the limb by grabbing yourself while targeting the bleeding limb. This will slow you down and take up a hand, but it'll slow down how fast you lose blood. Note this won't help the bleeding clot any faster.
+Laying down will help slow down bloodloss. Death will halt it entirely.

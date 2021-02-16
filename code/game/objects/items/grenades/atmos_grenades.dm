@@ -70,7 +70,7 @@
 			floor_loc.MakeSlippery(TURF_WET_PERMAFROST, (5 / distance_from_center) MINUTES)
 		if(floor_loc.air.gases[/datum/gas/plasma])
 			floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.5 / distance_from_center
-		floor_loc.air_update_turf()
+		floor_loc.air_update_turf(FALSE, FALSE)
 		for(var/mob/living/carbon/live_mob in turf_loc)
 			live_mob.adjustStaminaLoss(stamina_damage / distance_from_center)
 			live_mob.adjust_bodytemperature(-150 / distance_from_center)
@@ -86,7 +86,7 @@
 		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
 		floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];o2=[o2_gas_amount / distance_from_center];TEMP=273")
-		floor_loc.air_update_turf()
+		floor_loc.air_update_turf(FALSE, FALSE)
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/zauker_crystal/detonate(mob/living/lanced_by)

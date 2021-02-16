@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, Dropdown, Grid, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -94,7 +93,7 @@ export const NaniteDelays = (props, context) => {
             })} />
         </LabeledList.Item>
         {!!data.can_trigger && (
-          <Fragment>
+          <>
             <LabeledList.Item label="Trigger Repeat Timer">
               <NumberInput
                 value={data.timer_trigger}
@@ -117,7 +116,7 @@ export const NaniteDelays = (props, context) => {
                   delay: value,
                 })} />
             </LabeledList.Item>
-          </Fragment>
+          </>
         )}
       </LabeledList>
     </Section>
@@ -229,8 +228,7 @@ export const NaniteProgrammer = (props, context) => {
   return (
     <Window
       width={420}
-      height={550}
-      resizable>
+      height={550}>
       <Window.Content scrollable>
         <NaniteProgrammerContent />
       </Window.Content>
@@ -294,14 +292,14 @@ export const NaniteProgrammerContent = (props, context) => {
                 {use_rate}
               </LabeledList.Item>
               {!!can_trigger && (
-                <Fragment>
+                <>
                   <LabeledList.Item label="Trigger Cost">
                     {trigger_cost}
                   </LabeledList.Item>
                   <LabeledList.Item label="Trigger Cooldown">
                     {trigger_cooldown}
                   </LabeledList.Item>
-                </Fragment>
+                </>
               )}
             </LabeledList>
           </Grid.Column>

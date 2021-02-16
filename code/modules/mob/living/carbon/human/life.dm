@@ -6,17 +6,17 @@
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
 // Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
-#define THERMAL_PROTECTION_HEAD			0.3
-#define THERMAL_PROTECTION_CHEST		0.15
-#define THERMAL_PROTECTION_GROIN		0.15
-#define THERMAL_PROTECTION_LEG_LEFT		0.075
-#define THERMAL_PROTECTION_LEG_RIGHT	0.075
-#define THERMAL_PROTECTION_FOOT_LEFT	0.025
-#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
-#define THERMAL_PROTECTION_ARM_LEFT		0.075
-#define THERMAL_PROTECTION_ARM_RIGHT	0.075
-#define THERMAL_PROTECTION_HAND_LEFT	0.025
-#define THERMAL_PROTECTION_HAND_RIGHT	0.025
+#define THERMAL_PROTECTION_HEAD 0.3
+#define THERMAL_PROTECTION_CHEST 0.15
+#define THERMAL_PROTECTION_GROIN 0.15
+#define THERMAL_PROTECTION_LEG_LEFT 0.075
+#define THERMAL_PROTECTION_LEG_RIGHT 0.075
+#define THERMAL_PROTECTION_FOOT_LEFT 0.025
+#define THERMAL_PROTECTION_FOOT_RIGHT 0.025
+#define THERMAL_PROTECTION_ARM_LEFT 0.075
+#define THERMAL_PROTECTION_ARM_RIGHT 0.075
+#define THERMAL_PROTECTION_HAND_LEFT 0.025
+#define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
 /mob/living/carbon/human/Life()
 	if (notransform)
@@ -55,11 +55,16 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
-		var/obj/item/clothing/CS = wear_suit
-		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
-			return ONE_ATMOSPHERE
+	var/chest_covered = FALSE
+	var/head_covered = FALSE
+	for(var/obj/item/clothing/equipped in get_equipped_items())
+		if((equipped.body_parts_covered & CHEST) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+			chest_covered = TRUE
+		if((equipped.body_parts_covered & HEAD) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+			head_covered = TRUE
+
+	if(chest_covered && head_covered)
+		return ONE_ATMOSPHERE
 	return pressure
 
 

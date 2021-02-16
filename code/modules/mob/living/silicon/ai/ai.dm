@@ -20,7 +20,7 @@
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH
-	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
+	combat_mode = TRUE //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
 	hud_type = /datum/hud/ai
@@ -53,14 +53,14 @@
 	var/datum/module_picker/malf_picker
 	var/list/datum/ai_module/current_modules = list()
 	var/can_dominate_mechs = FALSE
-	var/shunted = FALSE	//1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
+	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 
-	var/control_disabled = FALSE	// Set to 1 to stop AI from interacting via Click()
-	var/malfhacking = FALSE		// More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	var/malf_cooldown = 0		//Cooldown var for malf modules, stores a worldtime + cooldown
+	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
+	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
 	var/obj/machinery/power/apc/malfhack
-	var/explosive = FALSE		//does the AI explode when it dies?
+	var/explosive = FALSE //does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent
 	var/camera_light_on = FALSE
@@ -70,11 +70,11 @@
 
 	var/last_paper_seen = null
 	var/can_shunt = TRUE
-	var/last_announcement = "" 		// For AI VOX, if enabled
+	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = FALSE		//Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0		//time of next call bot command
-	var/apc_override = FALSE		//hack for letting the AI use its APC even when visionless
+	var/waypoint_mode = FALSE //Waypoint mode is for selecting a turf via clicking.
+	var/call_bot_cooldown = 0 //time of next call bot command
+	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
@@ -160,8 +160,7 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		add_verb(src, list(/mob/living/silicon/ai/proc/ai_network_change, \
-		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
+		add_verb(src, list(/mob/living/silicon/ai/proc/ai_network_change, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/botcall, /mob/living/silicon/ai/proc/control_integrated_radio, \
 		/mob/living/silicon/ai/proc/set_automatic_say_channel))
 
@@ -210,6 +209,7 @@
 	Bot = null
 	controlled_mech = null
 	linked_core = null
+	apc_override = null
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
@@ -278,9 +278,9 @@
 			robot_status = "OFFLINE"
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
-		//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
+		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
 		. += text("[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
-		Module: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]")
+		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]")
 	. += text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]") //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_alerts()
@@ -391,8 +391,19 @@
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
-	if(usr != src || incapacitated())
+	if(usr != src)
 		return
+
+	if(href_list["emergencyAPC"]) //This check comes before incapacitated() because the only time it would be useful is when we have no power.
+		if(!apc_override)
+			to_chat(src, "<span class='notice'>APC backdoor is no longer available.</span>")
+			return
+		apc_override.ui_interact(src)
+		return
+
+	if(incapacitated())
+		return
+
 	if (href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
@@ -536,7 +547,7 @@
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
-				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag)	//I'm not fixing this shit...
+				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag) //I'm not fixing this shit...
 				foo = 1
 			queueAlarm(text ("--- [] alarm detected in []! ([])", class, A.name, dat2), class)
 		else
@@ -608,29 +619,7 @@
 	to_chat(src, "<span class='notice'>Switched to the \"[uppertext(network)]\" camera network.</span>")
 //End of code by Mord_Sith
 
-/mob/living/silicon/ai/proc/ai_statuschange()
-	set category = "AI Commands"
-	set name = "AI Status"
-
-	if(incapacitated())
-		return
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in sortList(ai_emotions)
-	for (var/each in GLOB.ai_status_displays) //change status of displays
-		var/obj/machinery/status_display/ai/M = each
-		M.emotion = emote
-		M.update()
-	if (emote == "Friend Computer")
-		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
-		if(!frequency)
-			return
-
-		var/datum/signal/status_signal = new(list("command" = "friendcomputer"))
-		frequency.post_signal(src, status_signal)
-	return
-
-//I am the icon meister. Bow fefore me.	//>fefore
+//I am the icon meister. Bow fefore me. //>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
 	set name = "Change Hologram"
 	set desc = "Change the default hologram available to AI to something else."
@@ -796,7 +785,7 @@
 		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
-		radio_enabled = FALSE 	//No talking on the built-in radio for you either!
+		radio_enabled = FALSE //No talking on the built-in radio for you either!
 		forceMove(card)
 		card.AI = src
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
@@ -812,7 +801,7 @@
 	if(isturf(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || apc_override
+		return ((GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)

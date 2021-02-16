@@ -19,7 +19,9 @@
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
+	ph = 8.4
 	color = "#DB90C6"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > M.get_body_temp_normal(apply_change=FALSE))
@@ -38,7 +40,6 @@
 	name = "Adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#E0BB00" //golden for the gods
-	can_synth = FALSE
 	taste_description = "badmins"
 
 // The best stuff there is. For testing/debugging.
@@ -53,7 +54,7 @@
 		switch(rand(100))
 			if(66  to 100)
 				mytray.mutatespecie()
-			if(33	to 65)
+			if(33 to 65)
 				mytray.mutateweed()
 			if(1   to 32)
 				mytray.mutatepest(user)
@@ -109,6 +110,8 @@
 	name = "Synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
 	color = "#FF00FF"
+	ph = 4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
@@ -129,6 +132,8 @@
 	name = "Diphen-Synaptizine"
 	description = "Reduces drowsiness, hallucinations, and Histamine from body."
 	color = "#EC536D" // rgb: 236, 83, 109
+	ph = 5.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
@@ -146,7 +151,9 @@
 	name = "Cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
-	taste_description = "sludge"
+	taste_description = "blue"
+	ph = 11
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
 	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
@@ -175,6 +182,7 @@
 	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
 	color = "#3D3DC6"
 	taste_description = "muscle"
+	ph = 13
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/M)
@@ -190,6 +198,8 @@
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
+	ph = 12
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -222,7 +232,9 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
+	ph = 12.2
 	taste_description = "fish"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -253,6 +265,8 @@
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with. Also reduces infection in serious burns."
 	color = "#E1F2E6"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	ph = 8.1
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
@@ -263,6 +277,8 @@
 	color = "#1E8BFF"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
+	ph = 10.7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 25)
@@ -287,14 +303,16 @@
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
 	var/last_added = 0
-	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
+	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10 //So that normal blood regeneration can continue with salglu active
 	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
+	ph = 5.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(last_added)
 		M.blood_volume -= last_added
 		last_added = 0
-	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
+	if(M.blood_volume < maximum_reachable) //Can only up to double your effective blood level.
 		var/amount_to_add = min(M.blood_volume, volume*5)
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
@@ -326,6 +344,8 @@
 	reagent_state = LIQUID
 	color = "#6D6374"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	ph = 2.6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/C)
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
@@ -367,6 +387,8 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	var/healing = 0.5
+	ph = 2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-healing*REM, 0)
@@ -389,6 +411,7 @@
 	description = "A less environmentally friendly and somewhat weaker variant of omnizine."
 	color = "#d8c7b7"
 	healing = 0.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -397,6 +420,8 @@
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
+	ph = 1.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/M)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
@@ -412,6 +437,8 @@
 	reagent_state = LIQUID
 	color = "#BAA15D"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
+	ph = 12 //It's a reducing agent
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/M)
 	if(M.radiation > 0)
@@ -424,6 +451,8 @@
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	ph = 1 //One of the best buffers, NEVERMIND!
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
@@ -441,6 +470,8 @@
 	color = "#D2D2D2"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
+	ph = 2.1
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() > 25)
@@ -462,6 +493,8 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	ph = 2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
 	M.adjustOxyLoss(-3*REM, 0)
@@ -478,6 +511,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
+	ph = 12
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
@@ -571,6 +606,8 @@
 	reagent_state = LIQUID
 	color = "#64FFE6"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	ph = 11.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -587,6 +624,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
+	ph = 8.96
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
@@ -656,6 +695,8 @@
 	color = "#404040" //oculine is dark grey, inacusiate is light grey
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
+	ph = 10
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
@@ -680,6 +721,8 @@
 	name = "Inacusiate"
 	description = "Rapidly repairs damage to the patient's ears to cure deafness, assuming the source of said deafness isn't from genetic mutations, chronic deafness, or a total defecit of ears." //by "chronic" deafness, we mean people with the "deaf" quirk
 	color = "#606060" // ditto
+	ph = 2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
@@ -693,6 +736,8 @@
 	color = "#1D3535" //slightly more blue, like epinephrine
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
+	ph = 12
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
 	if(M.health <= M.crit_threshold)
@@ -721,6 +766,8 @@
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	ph = 10.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/carbon/M)
 	..()
@@ -769,6 +816,8 @@
 	metabolization_rate = 1.25 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 	harmful = TRUE
+	ph = 0.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 // FEED ME SEYMOUR
@@ -810,6 +859,8 @@
 	name = "Mannitol"
 	description = "Efficiently restores brain damage."
 	color = "#A0A0A0" //mannitol is light grey, neurine is lighter grey
+	ph = 10.4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
@@ -828,6 +879,7 @@
 	name = "Neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#C0C0C0" //ditto
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
@@ -841,6 +893,8 @@
 	description = "Removes jitteriness and restores genetic defects."
 	color = "#5096C8"
 	taste_description = "acid"
+	ph = 2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = 0
@@ -854,6 +908,8 @@
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
 	taste_description = "raw egg"
+	ph = 4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
 	M.dizziness = 0
@@ -874,6 +930,8 @@
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
+	ph = 8.7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
@@ -910,6 +968,8 @@
 	reagent_state = LIQUID
 	color = "#FFFFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	ph = 6.7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
 	if(M.AdjustSleeping(-20))
@@ -924,6 +984,8 @@
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
 	color = "#A4D8D8"
+	ph = 8.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/M)
 	if(M.losebreath >= 5)
@@ -936,6 +998,7 @@
 	reagent_state = LIQUID
 	color = "#CC23FF"
 	taste_description = "jelly"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -961,6 +1024,8 @@
 	reagent_state = SOLID
 	color = "#555555"
 	overdose_threshold = 30
+	ph = 11
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
@@ -985,6 +1050,8 @@
 	color = "#FFAF00"
 	metabolization_rate = 0.4 //Math is based on specific metab rate so we want this to be static AKA if define or medicine metab rate changes, we want this to stay until we can rework calculations.
 	overdose_threshold = 25
+	ph = 11
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	if(current_cycle <= 25) //10u has to be processed before u get into THE FUN ZONE
@@ -1036,6 +1103,8 @@
 	reagent_state = LIQUID
 	color = "#27870a"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	ph = 4.3
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
@@ -1057,6 +1126,7 @@
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C1151D"
 	overdose_threshold = 30
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	..()
@@ -1090,6 +1160,7 @@
 	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#AE151D"
 	metabolization_rate = 1
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
@@ -1109,6 +1180,7 @@
 	description = "A medication utilized to treat ailing livers."
 	color = "#FF3542"
 	self_consuming = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/higadrite/on_mob_metabolize(mob/living/M)
 	. = ..()
@@ -1123,6 +1195,7 @@
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
 	color = "#000000"
 	self_consuming = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
 	..()
@@ -1137,6 +1210,7 @@
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/L)
 	. = ..()
@@ -1155,6 +1229,8 @@
 	overdose_threshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
 	taste_description = "salt" // it actually does taste salty
 	var/overdose_progress = 0 // to track overdose progress
+	ph = 7.89
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/modafinil/on_mob_metabolize(mob/living/M)
 	ADD_TRAIT(M, TRAIT_SLEEPIMMUNE, type)
@@ -1217,6 +1293,8 @@
 	color = "#07E79E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	ph = 9.12
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/psicodine/on_mob_metabolize(mob/living/L)
 	..()
@@ -1250,6 +1328,7 @@
 	reagent_state = SOLID
 	color = "#FFBE00"
 	overdose_threshold = 10
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 2  * REAGENTS_METABOLISM
@@ -1265,6 +1344,7 @@
 	reagent_state = SOLID
 	color = "#FFFFD0"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
@@ -1279,6 +1359,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 50
 	taste_description = "numbing bitterness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
 	. = ..()
@@ -1306,6 +1387,7 @@
 	reagent_state = LIQUID
 	overdose_threshold = 50
 	metabolization_rate = 0.2 //same as C2s
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
 	var/healamount = min(-0.5 + round(0.01 * (M.getBruteLoss() + M.getFireLoss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
@@ -1320,38 +1402,6 @@
 	M.adjustToxLoss(0.2 * REM, 0) //Only really deadly if you eat over 100u
 	..()
 
-/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.
-	name = "Experimental Stimulants"
-	description = "Experimental Stimulants designed to get you away from trouble."
-	reagent_state = LIQUID
-	color = "#F5F5F5"
-
-/datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M)
-	..()
-	if(prob(30) && iscarbon(M))
-		var/obj/item/I = M.get_active_held_item()
-		if(I && M.dropItemToGround(I))
-			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
-	M.adjustStaminaLoss(-10, 0)
-	M.Jitter(10)
-	M.Dizzy(15)
-
-/datum/reagent/medicine/badstims/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
-	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-
-/datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
-	..()
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
-	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	L.Dizzy(0)
-	L.Jitter(0)
-
 // helps bleeding wounds clot faster
 /datum/reagent/medicine/coagulant
 	name = "Sanguirite"
@@ -1360,26 +1410,42 @@
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
-	/// How much base clotting we do per bleeding wound, multiplied by the below number for each bleeding wound
-	var/clot_rate = 0.25
-	/// If we have multiple bleeding wounds, we count the number of bleeding wounds, then multiply the clot rate by this^(n) before applying it to each cut, so more cuts = less clotting per cut (though still more total clotting)
-	var/clot_coeff_per_wound = 0.75
+	/// The bloodiest wound that the patient has will have its blood_flow reduced by this much each tick
+	var/clot_rate = 0.3
+	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
+	var/passive_bleed_modifier = 0.7
+	/// For tracking when we tell the person we're no longer bleeding
+	var/was_working
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
+	ADD_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+	return ..()
+
+/datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+	return ..()
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(!M.blood_volume || !M.all_wounds)
 		return
 
-	var/effective_clot_rate = clot_rate
+	var/datum/wound/bloodiest_wound
 
 	for(var/i in M.all_wounds)
 		var/datum/wound/iter_wound = i
 		if(iter_wound.blood_flow)
-			effective_clot_rate *= clot_coeff_per_wound
+			if(iter_wound.blood_flow > bloodiest_wound?.blood_flow)
+				bloodiest_wound = iter_wound
 
-	for(var/i in M.all_wounds)
-		var/datum/wound/iter_wound = i
-		iter_wound.blood_flow = max(0, iter_wound.blood_flow - effective_clot_rate)
+	if(bloodiest_wound)
+		if(!was_working)
+			to_chat(M, "<span class='green'>You can feel your flowing blood start thickening!</span>")
+			was_working = TRUE
+		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - clot_rate)
+	else if(was_working)
+		was_working = FALSE
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/M)
 	. = ..()
@@ -1402,13 +1468,31 @@
 			var/obj/item/organ/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
 			our_heart.applyOrganDamage(1)
 
+/datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
+	if(!ishuman(M))
+		return
+
+	var/mob/living/carbon/human/blood_boy = M
+	blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
+
+/datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
+	if(was_working)
+		to_chat(M, "<span class='warning'>The medicine thickening your blood loses its effect!</span>")
+	if(!ishuman(M))
+		return
+
+	var/mob/living/carbon/human/blood_boy = M
+	blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
+
 // i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
 /datum/reagent/medicine/coagulant/banana_peel
 	name = "Pulped Banana Peel"
 	description = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#50531a" // rgb: 175, 175, 0
 	taste_description = "horribly stringy, bitter pulp"
 	glass_name = "glass of banana peel pulp"
 	glass_desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
-	metabolization_rate = REAGENTS_METABOLISM
-	clot_coeff_per_wound = 0.6
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	clot_rate = 0.2
+	passive_bleed_modifier = 0.8
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -34,7 +34,7 @@
 	var/locked = FALSE //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/datum/effect_system/spark_spread/spark_system
-	var/real_explosion_block	//ignore this, just use explosion_block
+	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
@@ -63,7 +63,7 @@
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -88,6 +88,7 @@
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
@@ -120,7 +121,7 @@
 		if(isliving(AM))
 			var/mob/living/M = AM
 			if(world.time - M.last_bumped <= 10)
-				return	//Can bump-open one airlock per second. This is to prevent shock spam.
+				return //Can bump-open one airlock per second. This is to prevent shock spam.
 			M.last_bumped = world.time
 			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null))
 				return
@@ -143,7 +144,8 @@
 /obj/machinery/door/Move()
 	var/turf/T = loc
 	. = ..()
-	move_update_air(T)
+	if(density) //Gotta be closed my friend
+		move_update_air(T)
 
 /obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -165,9 +167,8 @@
 			open()
 		else
 			do_animate("deny")
-	return
 
-/obj/machinery/door/attack_hand(mob/user)
+/obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -212,11 +213,15 @@
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
 
+/// Called when the user right-clicks on the door with a welding tool.
+/obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
+	return
+
 /obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
-/obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
+/obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
+	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I
@@ -224,12 +229,18 @@
 		try_to_crowbar(I, user, forced_open)
 		return TRUE
 	else if(I.tool_behaviour == TOOL_WELDER)
-		try_to_weld(I, user)
+		try_to_weld(I, user, params)
 		return TRUE
-	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
+	else if(!(I.item_flags & NOBLUDGEON) && !user.combat_mode)
 		try_to_activate_door(user)
 		return TRUE
 	return ..()
+
+/obj/machinery/door/attackby_secondary(obj/item/weapon, mob/user, params)
+	if (weapon.tool_behaviour == TOOL_WELDER)
+		try_to_weld_secondary(weapon, user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -303,7 +314,7 @@
 	update_icon()
 	set_opacity(0)
 	operating = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
@@ -333,7 +344,7 @@
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
 
 	if(!can_crush)
@@ -360,9 +371,6 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Paralyze(100)
-		else if(ismonkey(L)) //For monkeys
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.Paralyze(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)

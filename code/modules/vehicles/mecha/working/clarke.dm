@@ -3,6 +3,7 @@
 	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
 	name = "\improper Clarke"
 	icon_state = "clarke"
+	base_icon_state = "clarke"
 	max_temperature = 65000
 	max_integrity = 200
 	movedelay = 1.25
@@ -15,6 +16,7 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS
+	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize()
 	. = ..()

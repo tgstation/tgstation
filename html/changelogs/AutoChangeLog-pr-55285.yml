@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscdel: "removed atmos SM room"
-  - rscadd: "added atmos testing facility"
-  - rscadd: "added SM to replace the hole left by singulo/tesla engines"

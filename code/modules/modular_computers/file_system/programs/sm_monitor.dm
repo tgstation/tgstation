@@ -1,6 +1,7 @@
 /datum/computer_file/program/supermatter_monitor
 	filename = "ntcims"
 	filedesc = "NT CIMS"
+	category = PROGRAM_CATEGORY_ENGI
 	ui_header = "smmon_0.gif"
 	program_icon_state = "smmon_0"
 	extended_desc = "Crystal Integrity Monitoring System, connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
@@ -12,7 +13,7 @@
 	alert_able = TRUE
 	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
-	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.
+	var/obj/machinery/power/supermatter_crystal/active // Currently selected supermatter crystal.
 
 /datum/computer_file/program/supermatter_monitor/Destroy()
 	clear_signals()

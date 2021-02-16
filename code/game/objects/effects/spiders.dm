@@ -7,6 +7,10 @@
 	density = FALSE
 	max_integrity = 15
 
+/obj/structure/spider/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
@@ -20,9 +24,11 @@
 				damage_amount *= 0.25
 	. = ..()
 
-/obj/structure/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/spider/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
 	var/genetic = FALSE
@@ -90,12 +96,8 @@
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
-	. = ..()
-	GLOB.poi_list |= src
-
-/obj/structure/spider/eggcluster/Destroy()
-	. = ..()
-	GLOB.poi_list.Remove(src)
+	AddElement(/datum/element/point_of_interest)
+	return ..()
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time

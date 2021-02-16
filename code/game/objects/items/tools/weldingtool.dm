@@ -35,11 +35,11 @@
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	///Whether the welding tool is on or off.
 	var/welding = FALSE
-	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	var/status = TRUE //Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
+	var/max_fuel = 20 //The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
-	var/burned_fuel_for = 0	//when fuel was last removed
+	var/burned_fuel_for = 0 //when fuel was last removed
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 
@@ -113,13 +113,13 @@
 	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
-/obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
+/obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/living/user)
 	if(!istype(H))
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
+	if(affecting && affecting.status == BODYPART_ROBOTIC && !user.combat_mode)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",

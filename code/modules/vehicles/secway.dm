@@ -7,19 +7,13 @@
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
-
 
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/food/grown/banana/eddie_murphy
-	///When jammed with a banana, the secway will make a stalling sound. This stores the last time it made a sound to prevent spam.
-	var/stall_cooldown
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1.75
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/secway)
 
 /obj/vehicle/ridden/secway/obj_break()
 	START_PROCESSING(SSobj, src)
@@ -34,8 +28,8 @@
 	smoke.set_up(0, src)
 	smoke.start()
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
+	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
 				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
@@ -54,7 +48,7 @@
 		return TRUE
 	return ..()
 
-/obj/vehicle/ridden/secway/attack_hand(mob/living/user)
+/obj/vehicle/ridden/secway/attack_hand(mob/living/user, list/modifiers)
 	if(eddie_murphy)                                                       // v lol
 		user.visible_message("<span class='warning'>[user] begins cleaning [eddie_murphy] out of [src].</span>", "<span class='warning'>You begin cleaning [eddie_murphy] out of [src]...</span>")
 		if(do_after(user, 60, target = src))
@@ -62,15 +56,6 @@
 			eddie_murphy.forceMove(drop_location())
 			eddie_murphy = null
 		return
-	return ..()
-
-/obj/vehicle/ridden/secway/driver_move(mob/living/user, direction)
-	if(is_key(inserted_key) && eddie_murphy)
-		if(stall_cooldown + 10 < world.time)
-			visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
-			playsound(src, 'sound/effects/stall.ogg', 70)
-			stall_cooldown = world.time
-		return FALSE
 	return ..()
 
 /obj/vehicle/ridden/secway/examine(mob/user)

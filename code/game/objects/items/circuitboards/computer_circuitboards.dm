@@ -14,37 +14,10 @@
 	name = "Bluespace Artillery Controls (Computer Board)"
 	build_path = /obj/machinery/computer/bsa_control
 
-/obj/item/circuitboard/computer/card
-	name = "ID Console (Computer Board)"
-	icon_state = "command"
-	build_path = /obj/machinery/computer/card
-
-/obj/item/circuitboard/computer/card/centcom
-	name = "CentCom ID Console (Computer Board)"
-	build_path = /obj/machinery/computer/card/centcom
-
-/obj/item/circuitboard/computer/card/minor
-	name = "Department Management Console (Computer Board)"
-	build_path = /obj/machinery/computer/card/minor
-	var/target_dept = 1
-	var/list/dept_list = list("General","Security","Medical","Science","Engineering")
-
-/obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		target_dept = (target_dept == dept_list.len) ? 1 : (target_dept + 1)
-		to_chat(user, "<span class='notice'>You set the board to \"[dept_list[target_dept]]\".</span>")
-	else
-		return ..()
-
-/obj/item/circuitboard/computer/card/minor/examine(user)
-	..()
-	to_chat(user, "<span class='notice'>Currently set to \"[dept_list[target_dept]]\".</span>")
-
-
 //obj/item/circuitboard/computer/shield
-//	name = "Shield Control (Computer Board)"
-//	icon_state = "command"
-//	build_path = /obj/machinery/computer/stationshield
+// name = "Shield Control (Computer Board)"
+// icon_state = "command"
+// build_path = /obj/machinery/computer/stationshield
 
 //Engineering
 
@@ -173,9 +146,19 @@
 	build_path = /obj/machinery/computer/auxiliary_base
 
 /obj/item/circuitboard/computer/base_construction
-	name = "circuit board (Aux Mining Base Construction Console)"
+	name = "circuit board (Generic Base Construction Console)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction
+
+/obj/item/circuitboard/computer/base_construction/aux
+	name = "circuit board (Aux Mining Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/aux
+
+/obj/item/circuitboard/computer/base_construction/centcom
+	name = "circuit board (Centcom Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/centcom
 
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"

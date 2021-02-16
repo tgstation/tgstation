@@ -17,8 +17,8 @@
 	var/ignore_flags = NONE
 	var/infinite = FALSE
 
-/obj/item/reagent_containers/hypospray/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	inject(M, user)
@@ -38,7 +38,7 @@
 	var/contained = english_list(injected)
 	log_combat(user, M, "attempted to inject", src, "([contained])")
 
-	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
+	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
@@ -210,7 +210,7 @@
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
-	if(reagents.total_volume > 30)
+	if(reagents.total_volume >= volume)
 		icon_state = initial(icon_state)
 	else if (reagents.total_volume > 0)
 		icon_state = "[initial(icon_state)]1"

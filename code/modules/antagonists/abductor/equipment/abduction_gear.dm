@@ -758,7 +758,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alienhelmet"
 	inhand_icon_state = "alienhelmet"
 	blockTracking = TRUE
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 // Operating Table / Beds / Lockers
 
@@ -800,7 +800,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		var/obj/item/stack/sheet/P = I
 		if(P.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one sheet of silver to do	this!</span>")
+			to_chat(user, "<span class='warning'>You need one sheet of silver to do this!</span>")
 			return
 		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))

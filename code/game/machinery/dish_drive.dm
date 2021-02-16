@@ -37,7 +37,7 @@
 	if(user.Adjacent(src))
 		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
 
-/obj/machinery/dish_drive/attack_hand(mob/living/user)
+/obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
 	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, "<span class='warning'>There's nothing in [src]!</span>")
 		return
@@ -49,7 +49,7 @@
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
-	if(is_type_in_list(I, collectable_items) && user.a_intent != INTENT_HARM)
+	if(is_type_in_list(I, collectable_items) && !user.combat_mode)
 		if(!user.transferItemToLoc(I, src))
 			return
 		LAZYADD(dish_drive_contents, I)

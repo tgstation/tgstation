@@ -20,7 +20,7 @@
 	var/list/tile_reskin_types
 
 
-/obj/item/stack/tile/Initialize(mapload, amount)
+/obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
@@ -67,10 +67,10 @@
 				qdel(src)
 				return
 
-			if (mineralType == "metal")
-				var/obj/item/stack/sheet/metal/new_item = new(user.loc)
-				user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with the welding tool.</span>", \
-					"<span class='notice'>You shaped [src] into metal with the welding tool.</span>", \
+			if (mineralType == "iron")
+				var/obj/item/stack/sheet/iron/new_item = new(user.loc)
+				user.visible_message("<span class='notice'>[user.name] shaped [src] into iron with the welding tool.</span>", \
+					"<span class='notice'>You shaped [src] into iron with the welding tool.</span>", \
 					"<span class='hear'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
@@ -93,6 +93,11 @@
 					user.put_in_hands(new_item)
 	else
 		return ..()
+
+/obj/item/stack/tile/proc/place_tile(turf/open/T)
+	if(!turf_type || !use(1))
+		return
+	. = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -383,7 +388,7 @@
 	merge_type = /obj/item/stack/tile/pod/dark
 
 //Plasteel (normal)
-/obj/item/stack/tile/plasteel
+/obj/item/stack/tile/iron
 	name = "floor tile"
 	singular_name = "floor tile"
 	desc = "The ground you walk on."
@@ -393,14 +398,14 @@
 	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
-	turf_type = /turf/open/floor/plasteel
-	mineralType = "metal"
+	turf_type = /turf/open/floor/iron
+	mineralType = "iron"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
 	cost = 125
-	source = /datum/robot_energy_storage/metal
-	merge_type = /obj/item/stack/tile/plasteel
+	source = /datum/robot_energy_storage/iron
+	merge_type = /obj/item/stack/tile/iron
 
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
@@ -421,6 +426,11 @@
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
 
+/obj/item/stack/tile/material/place_tile(turf/open/T)
+	. = ..()
+	var/turf/open/floor/material/F = .
+	F?.set_custom_materials(mats_per_unit)
+
 /obj/item/stack/tile/eighties
 	name = "retro tile"
 	singular_name = "retro floor tile"
@@ -431,3 +441,12 @@
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15
+
+/obj/item/stack/tile/bronze
+	name = "bronze tile"
+	singular_name = "bronze floor tile"
+	desc = "A clangy tile made of high-quality bronze. Clockwork construction techniques allow the clanging to be minimized."
+	icon_state = "tile_brass"
+	turf_type = /turf/open/floor/bronze
+	mats_per_unit = list(/datum/material/bronze=500)
+	merge_type = /obj/item/stack/tile/bronze

@@ -6,7 +6,6 @@
 
 /obj/item/clothing/under/color/jumpskirt
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -24,7 +23,7 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/clothing/under/color/jumpskirt/random
-	icon_state = "random_jumpsuit"		//Skirt variant needed
+	icon_state = "random_jumpsuit" //Skirt variant needed
 
 /obj/item/clothing/under/color/jumpskirt/random/Initialize()
 	..()
@@ -69,6 +68,8 @@
 /obj/item/clothing/under/color/grey/ancient
 	name = "ancient jumpsuit"
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
+	icon_state = "grey_ancient"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"

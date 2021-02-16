@@ -1,6 +1,7 @@
 /datum/component/squeak
 	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
 	var/list/override_squeak_sounds
+	var/mob/holder
 
 	var/squeak_chance = 100
 	var/volume = 30
@@ -27,7 +28,6 @@
 	if(ismovable(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
-		RegisterSignal(parent, COMSIG_ITEM_WEARERCROSSED, .proc/play_squeak_crossed)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
@@ -38,6 +38,10 @@
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 		else if(isstructure(parent))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/use_squeak)
+
+	if(istype(parent, /obj/item/organ/liver))
+		// Liver squeaking is depending on them functioning like a clown's liver
+		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy_metabolism_removal)
 
 	override_squeak_sounds = custom_sounds
 	if(chance_override)
@@ -96,12 +100,23 @@
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	RegisterSignal(equipper, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
+	holder = equipper
+	RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
+	RegisterSignal(holder, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
+	RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
+	UnregisterSignal(holder, COMSIG_MOVABLE_CROSSED)
+	UnregisterSignal(holder, COMSIG_MOVABLE_DISPOSING)
+	holder = null
+
+///just gets rid of the reference to holder in the case that theyre qdeleted
+/datum/component/squeak/proc/holder_deleted(datum/source, datum/possible_holder)
+	SIGNAL_HANDLER
+	if(possible_holder == holder)
+		holder = null
 
 // Disposal pipes related shit
 /datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/holder, obj/machinery/disposal/source)
@@ -116,3 +131,8 @@
 	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
 	if(old_dir != new_dir)
 		play_squeak()
+
+/datum/component/squeak/proc/on_comedy_metabolism_removal(datum/source, trait)
+	SIGNAL_HANDLER
+
+	qdel(src)

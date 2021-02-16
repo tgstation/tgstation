@@ -25,7 +25,7 @@
 	. = ..()
 	if(. && !(movement_type & FLOATING)) //floating is easy
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
+			set_nutrition(NUTRITION_LEVEL_FED - 1) //just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
 			adjust_nutrition(-(HUNGER_FACTOR/10))
 			if(m_intent == MOVE_INTENT_RUN)
@@ -59,18 +59,16 @@
 		if(!usable_legs && !(movement_type & (FLYING | FLOATING)))
 			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
-/// Called when movement_type trait is added to the mob.
-/mob/living/carbon/on_movement_type_trait_gain(datum/source, trait)
-	var/old_movetype = movement_type
+/mob/living/carbon/on_movement_type_flag_enabled(datum/source, flag)
 	. = ..()
-	if((trait == TRAIT_MOVE_FLOATING || trait == TRAIT_MOVE_FLYING) && !(old_movetype & (FLYING | FLOATING)))
+	if(flag & (FLYING | FLOATING) && (movement_type & (FLYING | FLOATING) == flag))
 		remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
-/mob/living/carbon/on_movement_type_trait_loss(datum/source, trait)
+/mob/living/carbon/on_movement_type_flag_disabled(datum/source, flag)
 	. = ..()
-	if((trait == TRAIT_MOVE_FLOATING || trait == TRAIT_MOVE_FLYING) && !(movement_type & (FLYING | FLOATING)))
+	if(flag & (FLYING | FLOATING) && !(movement_type & (FLYING | FLOATING)))
 		var/limbless_slowdown = 0
 		if(usable_legs < default_num_legs)
 			limbless_slowdown += (default_num_legs - usable_legs) * 3

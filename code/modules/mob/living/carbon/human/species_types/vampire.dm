@@ -3,7 +3,7 @@
 	id = "vampire"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
@@ -53,7 +53,7 @@
 			H.shape.dust() //make sure we're killing the bat if you are out of blood, if you don't it creates weird situations where the bat is alive but the caster is dusted.
 		C.dust()
 	var/area/A = get_area(C)
-	if(istype(A, /area/chapel))
+	if(istype(A, /area/service/chapel))
 		to_chat(C, "<span class='warning'>You don't belong here!</span>")
 		C.adjustFireLoss(20)
 		C.adjust_fire_stacks(6)

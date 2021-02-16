@@ -11,9 +11,11 @@
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
+	///Max range this atom can be thrown via telekinesis
+	var/tk_throw_range = 1
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
-	var/datum/language_holder/language_holder	// Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
+	var/datum/language_holder/language_holder // Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -31,28 +33,17 @@
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
+	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
-	var/list/acted_explosions	//for explosion dodging
-	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	var/list/acted_explosions //for explosion dodging
+	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
 	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
-	  * Should be added/removed through the ADD_MOVE_TRAIT and REMOVE_TRAIT (and variant) macros.
+	  * I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.
 	  */
 	var/movement_type = GROUND
-	/// Whether the movable has movement_type signals registered or not. See the ADD_MOVE_TRAIT macro on __DEFINES/traits.dm
-	var/has_movement_type_signals = FALSE
-	/// Whether the movable is floating, not floating or is queued for update.
-	var/floating_anim_status = NO_FLOATING_ANIM
-	/**
-	  * Stores the timer id for the floating anim update.
-	  * Used to avoid the timed event from being overridden by others that would run sooner.
-	  */
-	var/floating_halt_timerid
-	/// Stores the timer id for the next half of the floating anim loop
-	var/floating_anim_timerid
 
 	var/atom/movable/pulling
 	var/grab_state = 0
@@ -77,6 +68,9 @@
 	var/list/affected_dynamic_lights
 	///Highest-intensity light affecting us, which determines our visibility.
 	var/affecting_dynamic_lumi = 0
+
+	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
+	var/set_dir_on_move = TRUE
 
 
 /atom/movable/Initialize(mapload)
@@ -108,7 +102,7 @@
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
 		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
 			CanAtmosPass = ATMOS_PASS_YES
-			air_update_turf(TRUE)
+			air_update_turf(TRUE, FALSE)
 		loc.handle_atom_del(src)
 
 	if(opacity)
@@ -191,7 +185,7 @@
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
 	var/static/list/careful_edits = list("bound_x" = TRUE, "bound_y" = TRUE, "bound_width" = TRUE, "bound_height" = TRUE)
 	if(banned_edits[var_name])
-		return FALSE	//PLEASE no.
+		return FALSE //PLEASE no.
 	if((careful_edits[var_name]) && (var_value % world.icon_size) != 0)
 		return FALSE
 
@@ -227,15 +221,6 @@
 			. = TRUE
 		if(NAMEOF(src, glide_size))
 			set_glide_size(var_value)
-			. = TRUE
-		if(NAMEOF(src, floating_anim_status))
-			if(var_value != floating_anim_status)
-				switch(var_value)
-					if(HAS_FLOATING_ANIM)
-						floating_anim_status = HAS_FLOATING_ANIM
-						do_floating_anim()
-					else
-						halt_floating_anim(var_value)
 			. = TRUE
 
 	if(!isnull(.))
@@ -338,7 +323,7 @@
 		if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()
 			return
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
 
@@ -361,7 +346,9 @@
 
 	if(!direct)
 		direct = get_dir(src, newloc)
-	setDir(direct)
+
+	if(set_dir_on_move)
+		setDir(direct)
 
 	if(!loc.Exit(src, newloc))
 		return
@@ -461,7 +448,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!.)
+				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
 				else if (!inertia_moving)
 					inertia_next_move = world.time + inertia_move_delay
@@ -494,7 +481,9 @@
 		set_glide_size(glide_size_override)
 
 	last_move = direct
-	setDir(direct)
+
+	if(set_dir_on_move)
+		setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
 
@@ -619,23 +608,6 @@
 	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
-
-/// Called when movement_type trait is added to the mob.
-/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
-	SIGNAL_HANDLER
-	var/old_movement_type = movement_type
-	movement_type |= GLOB.movement_type_trait_to_flag[trait]
-	if(!(old_movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING))
-		floating_anim_check()
-
-/// Called when a movement_type trait is removed from the mob.
-/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
-	SIGNAL_HANDLER
-	var/flag = GLOB.movement_type_trait_to_flag[trait]
-	if(!(initial(movement_type) & flag))
-		movement_type &= ~(GLOB.movement_type_trait_to_flag[trait])
-		if(trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING && !(movement_type & (FLOATING|FLYING)))
-			halt_floating_anim(NO_FLOATING_ANIM)
 
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -774,8 +746,8 @@
 
 	if(pulledby)
 		pulledby.stop_pulling()
-
-	halt_floating_anim(NO_FLOATING_ANIM, animate = !spin)
+	if (quickstart && (throwing || SSthrowing.state == SS_RUNNING)) //Avoid stack overflow edgecases.
+		quickstart = FALSE
 	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
@@ -863,7 +835,6 @@
 
 	if(A == src)
 		return //don't do an animation if attacking self
-	halt_floating_anim(animate = FALSE)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/turn_dir = 1
@@ -884,8 +855,8 @@
 
 	var/matrix/initial_transform = matrix(transform)
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -939,43 +910,8 @@
 	acted_explosions += ex_id
 	return TRUE
 
-///The bouncing animation loop that stops once halt_floating_anim is called.
-/atom/movable/proc/do_floating_anim(shift = 2)
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		animate(src, pixel_y = pixel_y + shift, time = 1 SECONDS)
-		floating_anim_timerid = addtimer(CALLBACK(src, .proc/do_floating_anim, -shift), 1.1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
-
-///Restarts the floating animation if conditions are met.
-/atom/movable/proc/floating_anim_check(timed = FALSE)
-	if(timed)
-		floating_halt_timerid = null
-	if(floating_anim_status == HAS_FLOATING_ANIM || floating_anim_status == NEVER_FLOATING_ANIM || floating_halt_timerid)
-		return
-	if(throwing || !(movement_type & (FLOATING|FLYING)))
-		floating_anim_status = NO_FLOATING_ANIM
-	else
-		floating_anim_status = HAS_FLOATING_ANIM
-		do_floating_anim()
-
-/// Stops the floating anim. If the update arg is TRUE, floating_anim_check(TRUE) will be a invoked after a set time indicated by the timer arg.
-/atom/movable/proc/halt_floating_anim(new_status = UPDATE_FLOATING_ANIM, timer = 1 SECONDS, animate = TRUE)
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		if(animate)
-			animate(src, pixel_y = base_pixel_y, time = 1 SECONDS)
-		else
-			pixel_y = base_pixel_y
-	if(new_status == UPDATE_FLOATING_ANIM)
-		if(!floating_halt_timerid || timeleft(floating_halt_timerid) < timer)
-			floating_halt_timerid = addtimer(CALLBACK(src, .proc/floating_anim_check, TRUE), timer, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_NO_HASH_WAIT)
-	else if(floating_anim_timerid)
-		deltimer(floating_anim_timerid)
-		floating_anim_timerid = null
-
-	if(floating_anim_status != NEVER_FLOATING_ANIM)
-		floating_anim_status = new_status
-
-/* 	Language procs
-*	Unless you are doing something very specific, these are the ones you want to use.
+/* Language procs
+* Unless you are doing something very specific, these are the ones you want to use.
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
@@ -1100,7 +1036,43 @@
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
+/**
+ * Adds the deadchat_plays component to this atom with simple movement commands.
+ *
+ * Returns the component added.
+ * Arguments:
+ * * mode - Either ANARCHY_MODE or DEMOCRACY_MODE passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ * * cooldown - The cooldown between command inputs passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ */
+/atom/movable/proc/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	return AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown)
 
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
+
+/atom/movable/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
+		if(alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", "Allow", "Cancel") == "Cancel")
+			return
+
+		// Alert is async, so quick sanity check to make sure we should still be doing this.
+		if(QDELETED(src))
+			return
+
+		// This should never happen, but if it does it should not be silent.
+		if(deadchat_plays() == COMPONENT_INCOMPATIBLE)
+			to_chat(usr, "<span class='warning'>Deadchat control not compatible with [src].</span>")
+			CRASH("deadchat_control component incompatible with object of type: [type]")
+
+		to_chat(usr, "<span class='notice'>Deadchat now control [src].</span>")
+		log_admin("[key_name(usr)] has added deadchat control to [src]")
+		message_admins("<span class='notice'>[key_name(usr)] has added deadchat control to [src]</span>")
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
@@ -1133,3 +1105,11 @@
 	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
 	animate(I, alpha = 0, transform = matrix(), time = 1)
+
+/**
+* A wrapper for setDir that should only be able to fail by living mobs.
+*
+* Called from [/atom/movable/proc/keyLoop], this exists to be overwritten by living mobs with a check to see if we're actually alive enough to change directions
+*/
+/atom/movable/proc/keybind_face_direction(direction)
+	setDir(direction)

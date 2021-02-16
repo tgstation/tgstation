@@ -33,7 +33,7 @@
 	attack_verb_simple = "preach to"
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
 	throw_message = "doesn't affect the purity of"
-	speed = 4
+	speed = 2
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/demon_dies.ogg'
@@ -164,7 +164,7 @@
 	icon_state = "herald"
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_directionalshot()
-	ranged_cooldown = world.time + 50
+	ranged_cooldown = world.time + 3 SECONDS
 	if(!is_mirror)
 		icon_state = "herald_enraged"
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
@@ -182,7 +182,7 @@
 	shoot_projectile(target_turf, angle_to_target, TRUE, FALSE)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_mirror()
-	ranged_cooldown = world.time + 40
+	ranged_cooldown = world.time + 4 SECONDS
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	if(my_mirror != null)
 		qdel(my_mirror)
@@ -201,7 +201,7 @@
 	icon_aggro = "herald_mirror"
 	deathmessage = "shatters violently!"
 	deathsound = 'sound/effects/glassbr1.ogg'
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	del_on_death = TRUE
 	is_mirror = TRUE
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/my_master = null
@@ -218,7 +218,7 @@
 /obj/projectile/herald
 	name ="death bolt"
 	icon_state= "chronobolt"
-	damage = 15
+	damage = 20
 	armour_penetration = 60
 	speed = 2
 	eyeblur = 0

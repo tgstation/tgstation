@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return sorttext(a.ckey, b.ckey)
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return initial(b.init_order) - initial(a.init_order)	//uses initial() so it can be used on types
+	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return sorttext(b.name, a.name)
@@ -93,8 +93,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return A.totalResistance() - B.totalResistance()
 
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
-	var/a_sign = num2sign(initial(A.value) * -1)
-	var/b_sign = num2sign(initial(B.value) * -1)
+	var/a_sign = SIGN(initial(A.value) * -1)
+	var/b_sign = SIGN(initial(B.value) * -1)
 
 	// Neutral traits go last.
 	if(a_sign == 0)

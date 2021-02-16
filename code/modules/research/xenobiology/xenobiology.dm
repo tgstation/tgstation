@@ -135,7 +135,7 @@
 			user.visible_message("<span class='warning'>[user] starts shaking violently!</span>","<span class='warning'>Your [name] starts pulsing violently...</span>")
 			if(do_after(user, 50, target = user))
 				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
-				if(user.a_intent != INTENT_HARM)
+				if(!user.combat_mode)
 					S.faction |= "neutral"
 				else
 					S.faction |= "slime"
@@ -187,7 +187,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/obj/item/stack/sheet/metal/O = new(null, 5)
+			var/obj/item/stack/sheet/iron/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -872,6 +872,7 @@
 	if(!proximity)
 		return
 	if(!istype(C))
+		// applying this to vehicles is handled in the ridable element, see [/datum/element/ridable/proc/check_potion]
 		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
 	if(isitem(C))
@@ -880,16 +881,6 @@
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
 		I.slowdown = 0
-
-	if(istype(C, /obj/vehicle))
-		var/obj/vehicle/V = C
-		var/datum/component/riding/R = V.GetComponent(/datum/component/riding)
-		if(R)
-			var/vehicle_speed_mod = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
-			if(R.vehicle_move_delay <= vehicle_speed_mod)
-				to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
-				return ..()
-			R.vehicle_move_delay = vehicle_speed_mod
 
 	to_chat(user, "<span class='notice'>You slather the red gunk over the [C], making it faster.</span>")
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

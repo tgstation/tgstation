@@ -2,6 +2,14 @@
 #define DEEPFRYER_COOKTIME 60
 #define DEEPFRYER_BURNTIME 120
 
+GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
+	/obj/item/reagent_containers/glass,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/reagent_containers/food/condiment,
+	/obj/item/storage,
+	/obj/item/small_delivery,
+	/obj/item/his_grace)))
+
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -12,26 +20,20 @@
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/deep_fryer
-	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
+	var/obj/item/food/deepfryholder/frying //What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.025 //How much cooking oil is used per second
 	var/fry_speed = 1 //How quickly we fry food
 	var/frying_fried //If the object has been fried; used for messages
 	var/frying_burnt //If the object has been burnt
-	var/static/list/deepfry_blacklisted_items = typecacheof(list(
-		/obj/item/screwdriver,
-		/obj/item/crowbar,
-		/obj/item/wrench,
-		/obj/item/wirecutters,
-		/obj/item/multitool,
-		/obj/item/weldingtool,
-		/obj/item/reagent_containers/glass,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/food/condiment,
-		/obj/item/storage,
-		/obj/item/small_delivery,
-		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
+	var/static/list/deepfry_blacklisted_items = typecacheof(list(
+	/obj/item/screwdriver,
+	/obj/item/crowbar,
+	/obj/item/wrench,
+	/obj/item/wirecutters,
+	/obj/item/multitool,
+	/obj/item/weldingtool))
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
@@ -73,10 +75,10 @@
 		return
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || is_type_in_typecache(I, GLOB.oilfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
@@ -105,7 +107,7 @@
 /obj/machinery/deepfryer/attack_ai(mob/user)
 	return
 
-/obj/machinery/deepfryer/attack_hand(mob/user)
+/obj/machinery/deepfryer/attack_hand(mob/living/user, list/modifiers)
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
@@ -120,7 +122,7 @@
 			frying_burnt = FALSE
 			fry_loop.stop()
 			return
-	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
+	else if(user.pulling && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
@@ -129,7 +131,8 @@
 		reagents.expose(C, TOUCH)
 		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
 		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
-		reagents.remove_any((reagents.total_volume/2))
+		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
+			reagents.remove_any((reagents.total_volume/2))
 		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()

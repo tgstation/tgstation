@@ -8,6 +8,8 @@
 
 		handle_status_effects()
 
+		handle_traits()
+
 		if(malfhack?.aidisabled)
 			deltimer(malfhacking)
 			// This proc handles cleanup of screen notifications and
@@ -144,9 +146,9 @@
 				sleep(50)
 				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
 				sleep(2)
-				apc_override = 1
-				theAPC.ui_interact(src)
-				apc_override = 0
+				to_chat(src, "<A HREF=?src=[REF(src)];emergencyAPC=[TRUE]>APC ready for connection.</A>")
+				apc_override = theAPC
+				apc_override.ui_interact(src)
 				setAiRestorePowerRoutine(POWER_RESTORATION_APC_FOUND)
 		sleep(50)
 		theAPC = null
@@ -155,10 +157,13 @@
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored.</span>")
+			if(apc_override)
+				to_chat(src, "<span class='notice'>APC backdoor has been closed.</span>") //Fluff for why we have to hack every time.
 		else
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
 		setAiRestorePowerRoutine(POWER_RESTORATION_OFF)
 		set_blindness(0)
+		apc_override = null
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()

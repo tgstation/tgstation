@@ -107,8 +107,8 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/living/user)
+	if(!user.combat_mode)
 		. = 1
 		if(!is_insertion_ready(user))
 			return
@@ -149,7 +149,7 @@
 					res += str
 				else if(SSresearch.science_tech.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N.id])	//JOY OF DISCOVERY!
+				if(SSresearch.science_tech.visible_nodes[N.id]) //JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output
@@ -194,7 +194,7 @@
 			use_power(750)
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
-				var/picked = pickweight(nodes)		//This should work.
+				var/picked = pickweight(nodes) //This should work.
 				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
@@ -373,7 +373,7 @@
 					heat_capacity = 1
 				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
@@ -419,7 +419,7 @@
 					heat_capacity = 1
 				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))

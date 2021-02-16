@@ -165,24 +165,23 @@
 
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
-	var/list/new_access = list()
-	var/obj/item/current_item
-	current_item = host_mob.get_active_held_item()
-	if(current_item)
-		new_access += current_item.GetAccess()
-	current_item = host_mob.get_inactive_held_item()
-	if(current_item)
-		new_access += current_item.GetAccess()
+	var/list/potential_items = list()
+
+	potential_items += host_mob.get_active_held_item()
+	potential_items += host_mob.get_inactive_held_item()
+	potential_items += host_mob.pulling
+
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		current_item = H.wear_id
-		if(current_item)
-			new_access += current_item.GetAccess()
+		potential_items += H.wear_id
 	else if(isanimal(host_mob))
 		var/mob/living/simple_animal/A = host_mob
-		current_item = A.access_card
-		if(current_item)
-			new_access += current_item.GetAccess()
+		potential_items += A.access_card
+
+	var/list/new_access = list()
+	for(var/obj/item/I in potential_items)
+		new_access += I.GetAccess()
+
 	access = new_access
 
 /datum/nanite_program/spreading
@@ -267,16 +266,14 @@
 /datum/nanite_program/dermal_button/register_extra_settings()
 	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(1, 1, 9999)
 	extra_settings[NES_BUTTON_NAME] = new /datum/nanite_extra_setting/text("Button")
-	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("one","two","three","four","five","plus","minus","power"))
-	extra_settings[NES_COLOR] = new /datum/nanite_extra_setting/type("green", list("green","red","yellow","blue"))
+	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("blank","one","two","three","four","five","plus","minus","exclamation","question","cross","info","heart","skull","brain","brain_damage","injection","blood","shield","reaction","network","power","radioactive","electricity","magnetism","scan","repair","id","wireless","say","sleep","bomb"))
 
 /datum/nanite_program/dermal_button/enable_passive_effect()
 	. = ..()
 	var/datum/nanite_extra_setting/bn_name = extra_settings[NES_BUTTON_NAME]
 	var/datum/nanite_extra_setting/bn_icon = extra_settings[NES_ICON]
-	var/datum/nanite_extra_setting/bn_color = extra_settings[NES_COLOR]
 	if(!button)
-		button = new(src, bn_name.get_value(), bn_icon.get_value(), bn_color.get_value())
+		button = new(src, bn_name.get_value(), bn_icon.get_value())
 	button.target = host_mob
 	button.Grant(host_mob)
 
@@ -300,14 +297,14 @@
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
-	button_icon_state = "power_green"
+	button_icon_state = "nanite_power"
 	var/datum/nanite_program/dermal_button/program
 
-/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
+/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon)
 	..()
 	program = _program
 	name = _name
-	button_icon_state = "[_icon]_[_color]"
+	button_icon_state = "nanite_[_icon]"
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()

@@ -166,13 +166,14 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 		S.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
-		if(S.environment == SOUND_ENVIRONMENT_NONE)
-			if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
-				S.environment = sound_environment_override
-			else
-				var/area/A = get_area(src)
-				if(A.sound_environment != SOUND_ENVIRONMENT_NONE)
-					S.environment = A.sound_environment
+		// Sounds can't have their own environment. A sound's environment will be:
+		// 1. the mob's
+		// 2. the area's (defaults to SOUND_ENVRIONMENT_NONE)
+		if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
+			S.environment = sound_environment_override
+		else
+			var/area/A = get_area(src)
+			S.environment = A.sound_environment
 
 		if(use_reverb && S.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
 			S.echo[3] = 0 //Room setting, 0 means normal reverb
@@ -236,7 +237,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 			if ("pageturn")
 				soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 			if ("ricochet")
-				soundin = pick(	'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+				soundin = pick( 'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
 			if ("terminal_type")
 				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
 								'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \

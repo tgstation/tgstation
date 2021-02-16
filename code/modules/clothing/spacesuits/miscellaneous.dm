@@ -131,28 +131,23 @@ Contains:
 
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
-	name = "pirate hat"
-	desc = "Yarr."
-	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	name = "modified EVA helmet"
+	desc = "A modified helmet to allow space pirates to intimidate their customers whilst staying safe from the void. Comes with some additional protection."
+	icon_state = "spacepirate"
+	inhand_icon_state = "spacepiratehelmet"
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
-	flags_inv = HIDEHAIR
 	strip_delay = 40
 	equip_delay_other = 20
-	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
-	name = "pirate bandana"
-	icon_state = "bandana"
-	inhand_icon_state = "bandana"
+	icon_state = "spacebandana"
+	inhand_icon_state = "spacepiratehelmet"
 
 /obj/item/clothing/suit/space/pirate
-	name = "pirate coat"
-	desc = "Yarr."
-	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	name = "modified EVA suit"
+	desc = "A modified suit to allow space pirates to board shuttles and stations while avoiding the maw of the void. Comes with additional protection, and is lighter to move in."
+	icon_state = "spacepirate"
 	w_class = WEIGHT_CLASS_NORMAL
-	flags_inv = 0
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
 	slowdown = 0
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
@@ -315,7 +310,7 @@ Contains:
 	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
 	icon_state = "carp_helm"
 	inhand_icon_state = "syndicate"
-	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 60, ACID = 75)	//As whimpy as a space carp
+	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 60, ACID = 75) //As whimpy as a space carp
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0 //luminosity when on
 	actions_types = list()
@@ -330,9 +325,9 @@ Contains:
 	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
 	icon_state = "carp_suit"
 	inhand_icon_state = "space_suit_syndicate"
-	slowdown = 0	//Space carp magic, never stop believing
+	slowdown = 0 //Space carp magic, never stop believing
 	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon)	//I'm giving you a hint here
+	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
@@ -392,7 +387,7 @@ Contains:
 	inhand_icon_state = "hardsuit-berserker"
 	slowdown = 0
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/berserker
-	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/transforming/cleaving_saw)
@@ -421,7 +416,7 @@ Contains:
 	icon_state = "hardsuit0-berserker"
 	inhand_icon_state = "hardsuit0-berserker"
 	hardsuit_type = "berserker"
-	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF

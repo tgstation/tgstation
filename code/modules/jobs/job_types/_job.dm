@@ -3,8 +3,8 @@
 	var/title = "NOPE"
 
 	//Job access. The use of minimal_access or access is determined by a config setting: config.jobs_have_minimal_access
-	var/list/minimal_access = list()		//Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
-	var/list/access = list()				//Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
+	var/list/minimal_access = list() //Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
+	var/list/access = list() //Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
 
 	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
 	var/list/skills
@@ -61,9 +61,15 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
+	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
+	var/list/liver_traits = null
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	var/bounty_types = CIV_JOB_BASIC
+
+	/// Should this job be allowed to be picked for the bureaucratic error event?
+	var/allow_bureaucratic_error = TRUE
 
 /datum/job/New()
 	. = ..()
@@ -83,16 +89,23 @@
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, H, M, latejoin)
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+
+	var/obj/item/organ/liver/liver = H.getorganslot(ORGAN_SLOT_LIVER)
+
+	if(liver)
+		for(var/t in liver_traits)
+			ADD_TRAIT(liver, t, JOB_TRAIT)
 
 	var/list/roundstart_experience
 
 	if(!ishuman(H))
 		return
 
-	if(!config)	//Needed for robots.
+	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
 
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
@@ -109,7 +122,7 @@
 	if(head_announce)
 		announce_head(H, head_announce)
 
-/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H)		//Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
+/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H) //Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
 	return FALSE
 
 //Used for a special check of whether to allow a client to latejoin as this job.
@@ -146,7 +159,7 @@
 		announce(H)
 
 /datum/job/proc/get_access()
-	if(!config)	//Needed for robots.
+	if(!config) //Needed for robots.
 		return src.minimal_access.Copy()
 
 	. = list()
@@ -167,7 +180,7 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0)
-		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+		return TRUE //Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
 
@@ -230,8 +243,6 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
-	var/skillchip_path = null
-
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backpack)
 		if(GBACKPACK)
@@ -291,18 +302,6 @@
 	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-	// Insert the skillchip associated with this job into the target.
-	if(skillchip_path && istype(H))
-		var/obj/item/skillchip/skillchip_instance = new skillchip_path()
-		var/implant_msg = H.implant_skillchip(skillchip_instance)
-		if(implant_msg)
-			stack_trace("Failed to implant [H] with [skillchip_instance], on job [src]. Failure message: [implant_msg]")
-			qdel(skillchip_instance)
-			return
-
-		var/activate_msg = skillchip_instance.try_activate_skillchip(TRUE, TRUE)
-		if(activate_msg)
-			CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
@@ -310,8 +309,6 @@
 	types += backpack
 	types += satchel
 	types += duffelbag
-	if(skillchip_path)
-		types += skillchip_path
 	return types
 
 //Warden and regular officers add this result to their get_access()

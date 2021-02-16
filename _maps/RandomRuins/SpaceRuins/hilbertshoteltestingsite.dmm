@@ -18,18 +18,18 @@
 	name = "displacement turret";
 	stun_projectile = /obj/projectile/magic/teleport
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "f" = (
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "g" = (
 /obj/structure/table/glass,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -40,7 +40,7 @@
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -49,25 +49,25 @@
 /obj/item/bodybag/bluespace{
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "j" = (
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/iron/stairs/left,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "k" = (
-/turf/open/floor/plasteel/stairs/medium,
+/turf/open/floor/iron/stairs/medium,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "l" = (
-/turf/open/floor/plasteel/stairs/right,
+/turf/open/floor/iron/stairs/right,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "m" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/syringe/bluespace{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -76,17 +76,17 @@
 /obj/item/stock_parts/matter_bin/bluespace{
 	pixel_y = 7
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "o" = (
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "p" = (
 /obj/structure/table/glass,
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -95,7 +95,7 @@
 /obj/item/raw_anomaly_core/bluespace{
 	pixel_y = 7
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -104,7 +104,7 @@
 /obj/item/reagent_containers/glass/beaker/bluespace{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -116,7 +116,7 @@
 /obj/item/stock_parts/subspace/transmitter{
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -124,7 +124,7 @@
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/hilbertshotel
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "u" = (
 /obj/structure/table/glass,
@@ -132,7 +132,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -141,21 +141,21 @@
 /obj/item/stock_parts/subspace/amplifier{
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "w" = (
 /obj/item/paper/crumpled/docslogs,
 /obj/item/pen,
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "x" = (
 /obj/structure/table/glass,
 /obj/item/assembly/signaler{
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -164,7 +164,7 @@
 /obj/item/slimecross/industrial/bluespace{
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
@@ -174,55 +174,55 @@
 	req_access = 207
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "A" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "B" = (
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "C" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "D" = (
 /obj/item/kirbyplants/random,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "E" = (
 /obj/structure/chair/office,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "F" = (
 /obj/machinery/door/window/eastleft,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "G" = (
 /obj/structure/table/reinforced,
 /obj/item/pen,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "H" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled/robertsworkjournal,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "I" = (
 /obj/machinery/door/airlock/highsecurity{
 	req_access = 207
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "J" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "K" = (
-/turf/open/floor/plasteel/stairs/right{
+/turf/open/floor/iron/stairs/right{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
@@ -231,17 +231,17 @@
 /obj/item/bag_of_holding_inert{
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "U" = (
-/turf/open/floor/plasteel/stairs/medium{
+/turf/open/floor/iron/stairs/medium{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "X" = (
-/turf/open/floor/plasteel/stairs/left{
+/turf/open/floor/iron/stairs/left{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)

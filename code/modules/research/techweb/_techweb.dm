@@ -55,7 +55,7 @@
 	id = "ADMIN"
 	organization = "CentCom"
 
-/datum/techweb/admin/New()	//All unlocked.
+/datum/techweb/admin/New() //All unlocked.
 	. = ..()
 	for(var/i in SSresearch.techweb_nodes)
 		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
@@ -64,19 +64,19 @@
 		research_points[i] = INFINITY
 	hidden_nodes = list()
 
-/datum/techweb/science	//Global science techweb for RND consoles.
+/datum/techweb/science //Global science techweb for RND consoles.
 	id = "SCIENCE"
 	organization = "Nanotrasen"
 
-/datum/techweb/bepis	//Should contain only 1 BEPIS tech selected at random.
+/datum/techweb/bepis //Should contain only 1 BEPIS tech selected at random.
 	id = "EXPERIMENTAL"
 	organization = "Nanotrasen R&D"
 
 /datum/techweb/bepis/New(remove_tech = TRUE)
 	. = ..()
-	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
+	var/bepis_id = pick(SSresearch.techweb_nodes_experimental) //To add a new tech to the BEPIS, add the ID to this pick list.
 	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
-	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
+	hidden_nodes -= BN.id //Has to be removed from hidden nodes
 	research_node(BN, TRUE, FALSE, FALSE)
 	update_node_status(BN)
 	if(remove_tech)
@@ -143,12 +143,12 @@
 		l[i] = amount
 	modify_point_list(l)
 
-/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE) //Adds any missing research to theirs.
 	if(unlock_hidden)
 		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
 			if(!hidden_nodes[i])
-				receiver.hidden_nodes -= i		//We can see it so let them see it too.
+				receiver.hidden_nodes -= i //We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
@@ -166,7 +166,7 @@
 	returned.hidden_nodes = hidden_nodes.Copy()
 	return returned
 
-/datum/techweb/proc/get_visible_nodes()			//The way this is set up is shit but whatever.
+/datum/techweb/proc/get_visible_nodes() //The way this is set up is shit but whatever.
 	return visible_nodes - hidden_nodes
 
 /datum/techweb/proc/get_available_nodes()
@@ -274,7 +274,7 @@
 			return FALSE
 	if(auto_adjust_cost)
 		remove_point_list(node.get_price(src))
-	researched_nodes[node.id] = TRUE				//Add to our researched list
+	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(id)
@@ -304,7 +304,7 @@
 	if(!istype(node))
 		return FALSE
 	researched_nodes -= node.id
-	recalculate_nodes(TRUE)				//Fully rebuild the tree.
+	recalculate_nodes(TRUE) //Fully rebuild the tree.
 
 /datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
 	if(!istype(N) || !ispath(itempath))
@@ -351,7 +351,7 @@
 	researched_nodes -= node.id
 	available_nodes -= node.id
 	visible_nodes -= node.id
-	if(hidden_nodes[node.id])	//Hidden.
+	if(hidden_nodes[node.id]) //Hidden.
 		return
 	if(researched)
 		researched_nodes[node.id] = TRUE
@@ -411,8 +411,8 @@
 
 /datum/techweb/specialized/autounlocking
 	var/design_autounlock_buildtypes = NONE
-	var/design_autounlock_categories = list("initial")		//if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
-	var/node_autounlock_ids = list()				//autounlock nodes of this type.
+	var/design_autounlock_categories = list("initial") //if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
+	var/node_autounlock_ids = list() //autounlock nodes of this type.
 
 /datum/techweb/specialized/autounlocking/New()
 	..()

@@ -37,7 +37,7 @@
 	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
 		return
 
-	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
+	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING)) //ear damage can be repaired from the failing condition
 		organ_flags &= ~ORGAN_FAILING
 
 	if((organ_flags & ORGAN_FAILING))
@@ -106,14 +106,14 @@
 /obj/item/organ/ears/cybernetic
 	name = "cybernetic ears"
 	icon_state = "ears-c"
-	desc = "a basic cybernetic designed to mimic the operation of ears."
+	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/ears/cybernetic/upgraded
 	name = "upgraded cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
+	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
 	damage_multiplier = 0.5
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)

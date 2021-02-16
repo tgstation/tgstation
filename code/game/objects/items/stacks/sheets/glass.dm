@@ -1,8 +1,8 @@
 /* Glass stack types
  * Contains:
- *		Glass sheets
- *		Reinforced glass sheets
- *		Glass shards - TODO: Move this into code/game/object/item/weapons
+ * Glass sheets
+ * Reinforced glass sheets
+ * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
 /*
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/cyborg
 	mats_per_unit = null
 	cost = 250
-	source = /datum/robot_energy_storage/metal
+	source = /datum/robot_energy_storage/iron
 
 	/// What energy storage this draws glass from as a robot module.
 	var/datum/robot_energy_storage/glasource = /datum/robot_energy_storage/glass
@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/caltrop, force)
+	AddElement(/datum/element/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, 150, 65)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
@@ -314,11 +314,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
-	else if(ismonkey(user))
-		var/mob/living/carbon/monkey/M = user
-		if(!HAS_TRAIT(M, TRAIT_PIERCEIMMUNE))
-			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
-			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/lightreplacer))

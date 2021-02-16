@@ -1,18 +1,18 @@
 /*
- *	These absorb the functionality of the plant bag, ore satchel, etc.
- *	They use the use_to_pickup, quick_gather, and quick_empty functions
- *	that were already defined in weapon/storage, but which had been
- *	re-implemented in other classes.
+ * These absorb the functionality of the plant bag, ore satchel, etc.
+ * They use the use_to_pickup, quick_gather, and quick_empty functions
+ * that were already defined in weapon/storage, but which had been
+ * re-implemented in other classes.
  *
- *	Contains:
- *		Trash Bag
- *		Mining Satchel
- *		Plant Bag
- *		Sheet Snatcher
- *		Book Bag
+ * Contains:
+ * Trash Bag
+ * Mining Satchel
+ * Plant Bag
+ * Sheet Snatcher
+ * Book Bag
  *      Biowaste Bag
  *
- *	-Sayu
+ * -Sayu
  */
 
 //  Generic non-item
@@ -324,11 +324,17 @@
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/storage/fancy,
+		/obj/item/storage/box/gum,
+		/obj/item/storage/box/matches,
 		/obj/item/food,
-		/obj/item/kitchen/knife,
-		/obj/item/kitchen/rollingpin,
-		/obj/item/kitchen/fork,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
+		/obj/item/trash,
+		/obj/item/lighter,
+		/obj/item/rollingpaper,
+		/obj/item/kitchen,
+		/obj/item/organ,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	STR.insert_preposition = "on"
 	STR.max_items = 7
 
@@ -346,7 +352,7 @@
 	else
 		playsound(M, 'sound/items/trayhit2.ogg', 50, TRUE)
 
-	if(ishuman(M) || ismonkey(M))
+	if(ishuman(M))
 		if(prob(10))
 			M.Paralyze(40)
 	update_icon()
@@ -380,7 +386,7 @@
 	desc = "A cheap metal tray to pile today's meal onto."
 
 /*
- *	Chemistry bag
+ * Chemistry bag
  */
 
 /obj/item/storage/bag/chemistry
@@ -437,7 +443,9 @@
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,
-		/obj/item/bodypart
+		/obj/item/bodypart,
+		/obj/item/petri_dish,
+		/obj/item/swab
 		))
 
 /*

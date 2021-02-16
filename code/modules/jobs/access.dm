@@ -7,7 +7,7 @@
 	if(issilicon(M))
 		if(ispAI(M))
 			return FALSE
-		return TRUE	//AI can do whatever it wants
+		return TRUE //AI can do whatever it wants
 	if(isAdminGhostAI(M))
 		//Access can't stop the abuse
 		return TRUE
@@ -18,7 +18,7 @@
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
 			return TRUE
-	else if(ismonkey(M) || isalienadult(M))
+	else if(isalienadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(check_access(george.get_active_held_item()))
@@ -90,8 +90,17 @@
 		return FALSE
 	return TRUE
 
-/obj/proc/check_access_ntnet(datum/netdata/data)
-	return check_access_list(data.passkey)
+/*
+ * Checks if this packet can access this device
+ *
+ * Normally just checks the access list however you can override it for
+ * hacking proposes or if wires are cut
+ *
+ * Arguments:
+ * * passkey - passkey from the datum/netdata packet
+ */
+/obj/proc/check_access_ntnet(list/passkey)
+	return check_access_list(passkey)
 
 /proc/get_centcom_access(job)
 	switch(job)

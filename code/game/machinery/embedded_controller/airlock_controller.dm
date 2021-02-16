@@ -1,9 +1,9 @@
 //States for airlock_control
-#define AIRLOCK_STATE_INOPEN		-2
-#define AIRLOCK_STATE_PRESSURIZE	-1
-#define AIRLOCK_STATE_CLOSED		0
-#define AIRLOCK_STATE_DEPRESSURIZE	1
-#define AIRLOCK_STATE_OUTOPEN		2
+#define AIRLOCK_STATE_INOPEN -2
+#define AIRLOCK_STATE_PRESSURIZE -1
+#define AIRLOCK_STATE_CLOSED 0
+#define AIRLOCK_STATE_DEPRESSURIZE 1
+#define AIRLOCK_STATE_OUTOPEN 2
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
@@ -204,7 +204,6 @@
 	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
-	var/id_tag
 	var/exterior_door_tag
 	var/interior_door_tag
 	var/airpump_tag

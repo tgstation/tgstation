@@ -41,15 +41,8 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.can_use_abilities = TRUE
-	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 15), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-10, 15), TEXT_WEST = list(10, 15)))
-	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	riding.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-	riding.drive_verb = "ride"
-	riding.override_allow_spacemove = TRUE
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
+	faction = list("neutral")
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

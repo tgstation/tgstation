@@ -188,15 +188,16 @@
 
 /obj/projectile/kinetic/prehit_pierce(atom/target)
 	. = ..()
-	if(.)
-		if(kinetic_gun)
-			var/list/mods = kinetic_gun.modkits
-			for(var/obj/item/borg/upgrade/modkit/M in mods)
-				M.projectile_prehit(src, target, kinetic_gun)
-		if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(target)))
-			name = "weakened [name]"
-			damage = damage * pressure_decrease
-			pressure_decrease_active = TRUE
+	if(. == PROJECTILE_PIERCE_PHASE)
+		return
+	if(kinetic_gun)
+		var/list/mods = kinetic_gun.modkits
+		for(var/obj/item/borg/upgrade/modkit/modkit in mods)
+			modkit.projectile_prehit(src, target, kinetic_gun)
+	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(target)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
 
 /obj/projectile/kinetic/on_range()
 	strike_thing()
@@ -237,9 +238,9 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
 	w_class = WEIGHT_CLASS_SMALL
-	require_module = 1
-	module_type = list(/obj/item/robot_module/miner)
-	module_flags = BORG_MODULE_MINER
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/miner)
+	model_flags = BORG_MODEL_MINER
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30
@@ -260,7 +261,7 @@
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	. = ..()
 	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
+		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/H in R.model.modules)
 			return install(H, usr, FALSE)
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user, transfer_to_loc = TRUE)
@@ -297,7 +298,7 @@
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module.modules)
+		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.model.modules)
 			uninstall(KA)
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)

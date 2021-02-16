@@ -30,7 +30,7 @@
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
-	log_combat(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
+	log_combat(user, M, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
@@ -64,14 +64,15 @@
 		if(3)
 			to_chat(user, "ERROR: ARM ACTUATORS OVERLOADED.")
 
-/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
+/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user, params)
 	if(M == user)
 		return
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
 				if(isanimal(M))
-					M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+					var/list/modifiers = params2list(params)
+					M.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
 					return
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
@@ -113,7 +114,7 @@
 		if(2)
 			if(scooldown < world.time)
 				if(M.health >= 0)
-					if(ishuman(M)||ismonkey(M))
+					if(ishuman(M))
 						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
@@ -362,7 +363,7 @@
 	. = ..()
 	check_amount()
 
-/obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
+/obj/item/borg/lollipop/proc/check_amount() //Doesn't even use processing ticks.
 	if(charging)
 		return
 	if(candy < candymax)
@@ -430,7 +431,7 @@
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
 
-/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
+/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params) //Most certainly a good idea.
 	if(candy <= 0)
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
@@ -517,7 +518,7 @@
 		S.color = color
 		dropped = TRUE
 
-/obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
+/obj/item/ammo_casing/caseless/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
 	projectile_type = /obj/projectile/bullet/reusable/lollipop
@@ -589,7 +590,7 @@
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
-	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
+	var/projectile_speed_coefficient = 1.5 //Higher the coefficient slower the projectile.
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	var/list/obj/projectile/tracked
@@ -610,6 +611,12 @@
 	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
+	RegisterSignal(host, COMSIG_LIVING_DEATH, .proc/on_death)
+
+/obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+
+	deactivate_field()
 
 /obj/item/borg/projectile_dampen/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -639,7 +646,7 @@
 	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
 	var/mob/living/silicon/robot/owner = get_host()
 	if(owner)
-		owner.module.allow_riding = FALSE
+		owner.model.allow_riding = FALSE
 	active = TRUE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
@@ -651,7 +658,7 @@
 
 	var/mob/living/silicon/robot/owner = get_host()
 	if(owner)
-		owner.module.allow_riding = TRUE
+		owner.model.allow_riding = TRUE
 
 /obj/item/borg/projectile_dampen/proc/get_host()
 	if(istype(host))
@@ -673,10 +680,6 @@
 	deactivate_field()
 	. = ..()
 
-/obj/item/borg/projectile_dampen/on_mob_death()
-	deactivate_field()
-	. = ..()
-
 /obj/item/borg/projectile_dampen/process(delta_time)
 	process_recharge(delta_time)
 	process_usage(delta_time)
@@ -690,7 +693,7 @@
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/projectile/P = I
-		if(!P.stun && P.nodamage)	//No damage
+		if(!P.stun && P.nodamage) //No damage
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
 		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * delta_time
@@ -864,7 +867,7 @@
 	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/glass/beaker,
-				/obj/item/reagent_containers/glass/bottle)
+					/obj/item/reagent_containers/glass/bottle)
 
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
@@ -908,7 +911,7 @@
 	. += arm
 
 /obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
-	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
+	if(stored && !user.client?.keys_held["Alt"] && user.combat_mode)
 		var/obj/item/reagent_containers/C = stored
 		C.SplashReagents(get_turf(user))
 		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
@@ -923,8 +926,8 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/food/drinks/,
-				/obj/item/reagent_containers/food/condiment)
+	storable = list(/obj/item/reagent_containers/food/drinks,
+					/obj/item/reagent_containers/food/condiment)
 
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
@@ -932,9 +935,58 @@
 	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
 	update_icon()
 
-////////////////////
-//engi part holder//
-////////////////////
+/////////////////////
+//organ storage bag//
+/////////////////////
+
+/obj/item/borg/apparatus/organ_storage //allows medical cyborgs to manipulate organs without hands
+	name = "organ storage bag"
+	desc = "A container for holding body parts."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "evidenceobj"
+	item_flags = SURGICAL_TOOL
+	storable = list(/obj/item/organ,
+					/obj/item/bodypart)
+
+/obj/item/borg/apparatus/organ_storage/examine()
+	. = ..()
+	. += "The organ bag currently contains:"
+	if(stored)
+		var/obj/item/organ = stored
+		. += organ.name
+	else
+		. += "Nothing."
+
+/obj/item/borg/apparatus/organ_storage/update_overlays()
+	. = ..()
+	icon_state = null // hides the original icon (otherwise it's drawn underneath)
+	var/mutable_appearance/bag
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
+		stored_organ.layer = FLOAT_LAYER
+		stored_organ.plane = FLOAT_PLANE
+		stored_organ.pixel_x = 0
+		stored_organ.pixel_y = 0
+		. += stored_organ
+		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
+	else
+		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
+	. += bag
+
+/obj/item/borg/apparatus/organ_storage/attack_self(mob/user)
+	if(stored)
+		var/obj/item/organ = stored
+		user.visible_message("<span class='notice'>[user] dumps [organ] from [src].</span>", "<span class='notice'>You dump [organ] from [src].</span>")
+		cut_overlays()
+		organ.forceMove(get_turf(src))
+	else
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+	return
+
+////////////////////////////
+//engi circuitboard holder//
+////////////////////////////
 
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"

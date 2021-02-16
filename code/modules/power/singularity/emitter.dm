@@ -26,7 +26,7 @@
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
-	var/projectile_type = /obj/projectile/beam/emitter
+	var/projectile_type = /obj/projectile/beam/emitter/hitscan
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
 
@@ -166,14 +166,14 @@
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return TRUE
 
-/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
-	if(ismegafauna(M) && anchored)
+/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(ismegafauna(user) && anchored)
 		set_anchored(FALSE)
-		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+		user.visible_message("<span class='warning'>[user] rips [src] free from its moorings!</span>")
 	else
 		. = ..()
 	if(. && !anchored)
-		step(src, get_dir(M, src))
+		step(src, get_dir(user, src))
 
 /obj/machinery/power/emitter/process(delta_time)
 	if(machine_stat & (BROKEN))
@@ -395,7 +395,7 @@
 	auto.Remove(buckled_mob)
 	. = ..()
 
-/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(user.incapacitated() || !istype(user))
 		return
 	for(var/atom/movable/A in get_turf(src))
@@ -452,7 +452,7 @@
 				if(U.dropItemToGround(I))
 					var/obj/item/turret_control/TC = new /obj/item/turret_control()
 					U.put_in_hands(TC)
-			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				var/obj/item/turret_control/TC = new /obj/item/turret_control()
 				U.put_in_hands(TC)
 		UpdateButtonIcon()

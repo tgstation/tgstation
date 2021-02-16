@@ -148,14 +148,14 @@ no power level overlay is currently in the overlays list.
 	return TRUE
 
 
-/obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
+/obj/machinery/field/generator/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		set_anchored(FALSE)
-		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+		user.visible_message("<span class='warning'>[user] rips [src] free from its moorings!</span>")
 	else
 		..()
 	if(!anchored)
-		step(src, get_dir(M, src))
+		step(src, get_dir(user, src))
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
@@ -188,7 +188,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/proc/turn_off()
 	active = FG_OFFLINE
 	CanAtmosPass = ATMOS_PASS_YES
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, FALSE)
 	INVOKE_ASYNC(src, .proc/cleanup)
 	addtimer(CALLBACK(src, .proc/cool_down), 50)
 
@@ -266,7 +266,7 @@ no power level overlay is currently in the overlays list.
 		return
 	move_resist = INFINITY
 	CanAtmosPass = ATMOS_PASS_NO
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
 	addtimer(CALLBACK(src, .proc/setup_field, 1), 1)
 	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
 	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)

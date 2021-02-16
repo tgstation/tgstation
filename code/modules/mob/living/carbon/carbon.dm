@@ -1,9 +1,15 @@
-/mob/living/carbon/Initialize()
+/mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000)
 	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
+
+	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
+	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+
 	GLOB.carbon_list += src
+	if(!mapload)  //I don't want no gas leaks on my space ruin you hear?
+		RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -59,14 +65,15 @@
 	else
 		mode() // Activate held item
 
-/mob/living/carbon/attackby(obj/item/I, mob/user, params)
+/mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
 	for(var/datum/surgery/S in surgeries)
 		if(body_position == LYING_DOWN || !S.lying_required)
-			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
-				if(S.next_step(user,user.a_intent))
+			var/list/modifiers = params2list(params)
+			if((S.self_operable || user != src) && !user.combat_mode)
+				if(S.next_step(user, modifiers))
 					return 1
 
-	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
+	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))
@@ -81,14 +88,19 @@
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)
-		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), 3)
+		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
-	if(istype(throwingdatum, /datum/thrownthing))
+	if(istype(throwingdatum))
 		hurt = !throwingdatum.gentle
-	if(hit_atom.density && isturf(hit_atom))
-		if(hurt)
-			Paralyze(20)
+	if(hurt && hit_atom.density)
+		if(isturf(hit_atom))
+			Paralyze(2 SECONDS)
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		else if(isstructure(hit_atom) && extra_speed)
+			Paralyze(1 SECONDS)
+			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		else if(!iscarbon(hit_atom) && extra_speed)
+			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
@@ -96,8 +108,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			victim.Paralyze(20)
-			Paralyze(20)
+			victim.Paralyze(2 SECONDS)
+			Paralyze(2 SECONDS)
 			visible_message("<span class='danger'>[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim][extra_speed ? " extra hard" : ""]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
@@ -443,7 +455,7 @@
 	. = ..()
 	. += add_abilities_to_panel()
 
-/mob/living/carbon/attack_ui(slot)
+/mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0
 	return ..()
@@ -545,13 +557,13 @@
 /mob/living/carbon/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	var/total_burn	= 0
-	var/total_brute	= 0
+	var/total_burn = 0
+	var/total_brute = 0
 	var/total_stamina = 0
-	for(var/X in bodyparts)	//hardcoded to streamline things a bit
+	for(var/X in bodyparts) //hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
-		total_brute	+= (BP.brute_dam * BP.body_damage_coeff)
-		total_burn	+= (BP.burn_dam * BP.body_damage_coeff)
+		total_brute += (BP.brute_dam * BP.body_damage_coeff)
+		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 		total_stamina += (BP.stamina_dam * BP.stam_damage_coeff)
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
@@ -1311,3 +1323,14 @@
 		return
 
 	return ..()
+
+
+/mob/living/carbon/get_attack_type()
+	var/datum/species/species = dna?.species
+	if (species)
+		return species.attack_type
+	return ..()
+
+
+/mob/living/carbon/proc/attach_rot(mapload)
+	AddComponent(/datum/component/rot/corpse)

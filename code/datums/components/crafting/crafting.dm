@@ -50,7 +50,7 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
-/*	This is what procs do:
+/* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
 	get_surroundings - takes a list of things and makes a list of key-types to values-amounts of said type in the list
 	check_contents - takes a recipe and a key-type list and checks if said recipe can be done with available stuff
@@ -252,7 +252,7 @@
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
 							qdel(RG)
-						RC.on_reagent_change()
+						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
 			else if(ispath(A, /obj/item/stack))

@@ -120,7 +120,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -132,7 +132,8 @@
 	var/mob/living/L = user
 	if(!eyeobj)
 		CreateEye()
-
+	if(!eyeobj) //Eye creation failed
+		return
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)

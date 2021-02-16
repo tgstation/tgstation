@@ -76,7 +76,7 @@
 			M.temporarilyRemoveItemFromInventory(noz, TRUE)
 		noz.forceMove(src)
 
-/obj/item/watertank/attack_hand(mob/user)
+/obj/item/watertank/attack_hand(mob/user, list/modifiers)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)
 		toggle_mister(user)
 	else
@@ -126,7 +126,7 @@
 	tank = loc
 	if(!istype(tank))
 		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -186,6 +186,7 @@
 	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
 	inhand_icon_state = "waterbackpackatmos"
 	icon_state = "waterbackpackatmos"
+	worn_icon_state = "waterbackpackatmos"
 	volume = 200
 	slowdown = 0
 

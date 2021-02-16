@@ -21,7 +21,7 @@
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
-			return 0
+			return thealert
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 
@@ -35,7 +35,7 @@
 				clear_alert(category)
 				return .()
 			else //no need to update
-				return 0
+				return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -148,6 +148,17 @@
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "too_much_tox"
+
+/atom/movable/screen/alert/not_enough_n2o
+	name = "Choking (No N2O)"
+	desc = "You're not getting enough N2O. Find some good air before you pass out!"
+	icon_state = "not_enough_n2o"
+
+/atom/movable/screen/alert/too_much_n2o
+	name = "Choking (N2O)"
+	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_n2o"
+
 //End gas alerts
 
 
@@ -715,8 +726,8 @@ so as to remain in compliance with the most up-to-date laws."
 /atom/movable/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)
 		return
-	var/paramslist = params2list(params)
-	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(usr != owner)

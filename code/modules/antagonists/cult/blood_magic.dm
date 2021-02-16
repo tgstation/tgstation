@@ -552,7 +552,7 @@
 	. = ..()
 
 
-//Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
+//Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
 	desc = "Corrupts certain metalic objects on contact."
@@ -564,7 +564,7 @@
 	. = ..()
 	. += {"<u>A sinister spell used to convert:</u>\n
 	Plasteel into runed metal\n
-	[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell\n
+	[IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron into a construct shell\n
 	Living cyborgs into constructs after a delay\n
 	Cyborg shells into construct shells\n
 	Airlocks into brittle runed airlocks after a delay (harm intent)"}
@@ -575,15 +575,15 @@
 			to_chat(user, "<span class='cultitalic'>You are already invoking twisted construction!</span>")
 			return
 		var/turf/T = get_turf(target)
-		if(istype(target, /obj/item/stack/sheet/metal))
+		if(istype(target, /obj/item/stack/sheet/iron))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(METAL_TO_CONSTRUCT_SHELL_CONVERSION))
+			if(candidate.use(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
 				uses--
-				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
+				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the iron, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			else
-				to_chat(user, "<span class='warning'>You need [METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal to produce a construct shell!</span>")
+				to_chat(user, "<span class='warning'>You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!</span>")
 				return
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target
@@ -743,7 +743,7 @@
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
-					user.Beam(H,icon_state="sendbeam",time=15)
+					user.Beam(H, icon_state="sendbeam", time = 15)
 			else
 				if(H.stat == DEAD)
 					to_chat(user,"<span class='warning'>[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it.</span>")
@@ -754,7 +754,7 @@
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)
 					H.blood_volume -= 100
 					uses += 50
-					user.Beam(H,icon_state="drainbeam",time=10)
+					user.Beam(H, icon_state="drainbeam", time = 1 SECONDS)
 					playsound(get_turf(H), 'sound/magic/enter_blood.ogg', 50)
 					H.visible_message("<span class='danger'>[user] drains some of [H]'s blood!</span>")
 					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
@@ -775,7 +775,7 @@
 					M.visible_message("<span class='warning'>[M] is partially healed by [user]'s blood magic!</span>")
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
-				user.Beam(M,icon_state="sendbeam",time=10)
+				user.Beam(M, icon_state="sendbeam", time = 1 SECONDS)
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			blood_draw(target, user)
 		..()
@@ -795,7 +795,7 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
 		if(temp)
-			user.Beam(T,icon_state="drainbeam",time=15)
+			user.Beam(T,icon_state="drainbeam", time = 15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
 			playsound(T, 'sound/magic/enter_blood.ogg', 50)
 			to_chat(user, "<span class='cultitalic'>Your blood rite has gained [round(temp)] charge\s from blood sources around you!</span>")
@@ -829,7 +829,7 @@
 				if(uses < BLOOD_BARRAGE_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BARRAGE_COST] charges to perform this rite.</span>")
 				else
-					var/obj/rite = new /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood()
+					var/obj/rite = new /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood()
 					uses -= BLOOD_BARRAGE_COST
 					qdel(src)
 					if(user.put_in_hands(rite))

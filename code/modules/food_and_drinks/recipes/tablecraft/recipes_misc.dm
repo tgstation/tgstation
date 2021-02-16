@@ -54,7 +54,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheesewedge = 1
+		/obj/item/food/cheese = 1
 	)
 	result = /obj/item/food/loadedbakedpotato
 	subcategory = CAT_MISCFOOD
@@ -63,7 +63,7 @@
 	name = "Cheesy fries"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheesewedge = 1
+		/obj/item/food/cheese = 1
 	)
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
@@ -89,7 +89,7 @@
 /datum/crafting_recipe/food/eggplantparm
 	name ="Eggplant parmigiana"
 	reqs = list(
-		/obj/item/food/cheesewedge = 2,
+		/obj/item/food/cheese = 2,
 		/obj/item/food/grown/eggplant = 1
 	)
 	result = /obj/item/food/eggplantparm
@@ -155,7 +155,7 @@
 /datum/crafting_recipe/food/cheesyburrito
 	name ="Cheesy burrito"
 	reqs = list(
-		/obj/item/food/cheesewedge = 2,
+		/obj/item/food/cheese = 2,
 		/obj/item/food/tortilla = 1,
 		/obj/item/food/grown/soybeans = 1
 	)
@@ -208,7 +208,7 @@
 	name ="Cheesy nachos"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/tortilla = 1
 	)
 	result = /obj/item/food/cheesynachos
@@ -274,7 +274,7 @@
 	name ="Classic Taco"
 	reqs = list(
 		/obj/item/food/tortilla = 1,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/grown/cabbage = 1,
 	)
@@ -285,7 +285,7 @@
 	name ="Plain Taco"
 	reqs = list(
 		/obj/item/food/tortilla = 1,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/meat/cutlet = 1,
 	)
 	result = /obj/item/food/taco/plain
@@ -328,7 +328,7 @@
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/meat/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
@@ -337,10 +337,10 @@
 /datum/crafting_recipe/food/royalcheese
 	name = "Royal Cheese"
 	reqs = list(
-		/obj/item/food/cheesewheel = 1,
+		/obj/item/food/cheese/wheel = 1,
 		/obj/item/clothing/head/crown = 1,
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)
-	result = /obj/item/food/royalcheese
+	result = /obj/item/food/cheese/royal
 	subcategory = CAT_MISCFOOD

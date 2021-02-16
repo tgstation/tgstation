@@ -10,7 +10,7 @@
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = TRUE //Can it be charged in a recharger?
-	var/automatic_charge_overlays = TRUE	//Do we handle overlays with base update_icon()?
+	var/automatic_charge_overlays = TRUE //Do we handle overlays with base update_icon()?
 	var/charge_sections = 4
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
@@ -44,6 +44,7 @@
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 /obj/item/gun/energy/ComponentInitialize()
 	. = ..()
@@ -99,8 +100,8 @@
 			var/mob/living/silicon/robot/R = loc
 			if(R.cell)
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-					cell.give(shot.e_cost)	//... to recharge the shot
+				if(R.cell.use(shot.e_cost)) //Take power from the borg...
+					cell.give(shot.e_cost) //... to recharge the shot
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
 		if(cell.charge >= AC.e_cost) //if there's enough power in the cell cell...
@@ -117,12 +118,12 @@
 
 /obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(!chambered && can_shoot())
-		process_chamber()	// If the gun was drained and then recharged, load a new shot.
+		process_chamber() // If the gun was drained and then recharged, load a new shot.
 	return ..()
 
 /obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!chambered && can_shoot())
-		process_chamber()	// Ditto.
+		process_chamber() // Ditto.
 	return ..()
 
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
@@ -243,3 +244,10 @@
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = "<span class='danger'>[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.</span>"
+
+/obj/item/gun/energy/proc/instant_recharge()
+	if(!cell)
+		return
+	cell.charge = cell.maxcharge
+	recharge_newshot(no_cyborg_drain = TRUE)
+	update_icon()

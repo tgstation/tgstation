@@ -5,9 +5,9 @@
 /* Library Items
  *
  * Contains:
- *		Bookcase
- *		Book
- *		Barcode Scanner
+ * Bookcase
+ * Book
+ * Barcode Scanner
  */
 
 /*
@@ -133,7 +133,7 @@
 				return ..()
 
 
-/obj/structure/bookcase/attack_hand(mob/living/user)
+/obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -208,27 +208,30 @@
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb_continuous = list("bashes", "whacks", "educates")
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound =  'sound/items/handling/book_pickup.ogg'
-	var/dat				//Actual page content
-	var/due_date = 0	//Game time in 1/10th seconds
-	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	var/unique = FALSE	//false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
-	var/title			//The real name of the book.
+	var/dat //Actual page content
+	var/due_date = 0 //Game time in 1/10th seconds
+	var/author //Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	var/unique = FALSE //false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
+	var/title //The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
 
 /obj/item/book/attack_self(mob/user)
 	if(!user.can_read(src))
 		return
+	user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+	on_read(user)
+
+/obj/item/book/proc/on_read(mob/user)
 	if(dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+		user << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
@@ -254,7 +257,7 @@
 				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
-				if (length(newtitle) > 20)
+				if (length_char(newtitle) > 30)
 					to_chat(user, "<span class='warning'>That title won't fit on the cover!</span>")
 					return
 				if(!newtitle)
@@ -314,7 +317,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'</span>")
 
-	else if(istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER)
+	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
@@ -346,9 +349,9 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
-	var/obj/item/book/book			//Currently scanned book
-	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/obj/machinery/computer/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
+	var/obj/item/book/book //Currently scanned book
+	var/mode = 0 //0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1

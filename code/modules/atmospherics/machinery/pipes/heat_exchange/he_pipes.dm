@@ -25,7 +25,7 @@
 	var/turf/T = loc
 	if(istype(T))
 		if(islava(T))
-			environment_temperature = 5000
+			environment_temperature = 5000 //Yuck
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
@@ -33,7 +33,6 @@
 			environment_temperature = OT.GetTemperature()
 	else
 		environment_temperature = T.temperature
-
 	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
 		parent.temperature_interact(T, volume, thermal_conductivity)
 

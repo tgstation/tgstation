@@ -31,10 +31,6 @@ if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
-echo "Checking for pixel_[xy]"
-if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
-    echo "pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
-fi;
 echo "Checking for stacked cables"
 if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
     echo "found multiple cables on the same tile, please remove them."
@@ -94,6 +90,10 @@ if grep -ni 'nanotransen' _maps/**/*.dmm; then
 fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
+    st=1
+fi;
+if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
+    echo "Custom icon helper found. Please include dmis as standard assets instead for built-in maps."
     st=1
 fi;
 for json in _maps/*.json

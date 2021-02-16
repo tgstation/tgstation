@@ -79,7 +79,7 @@
 	if(!n || !direct)
 		return FALSE
 	if(mob.notransform)
-		return FALSE	//This is sota the goto stop mobs from moving var
+		return FALSE //This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
@@ -91,11 +91,11 @@
 		return FALSE
 
 	var/mob/living/L = mob  //Already checked for isliving earlier
-	if(L.incorporeal_move)	//Move though walls
+	if(L.incorporeal_move) //Move though walls
 		Process_Incorpmove(direct)
 		return FALSE
 
-	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+	if(mob.remote_control) //we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
@@ -104,13 +104,13 @@
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
-	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+	if(mob.buckled) //if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
 	if(!(L.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
-	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
+	if(isobj(mob.loc) || ismob(mob.loc)) //Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
@@ -336,7 +336,8 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
 
 //bodypart selection verbs - Cyberboss
-//8:repeated presses toggles through head - eyes - mouth
+//8: repeated presses toggles through head - eyes - mouth
+//9: eyes 8: head 7: mouth
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
@@ -349,6 +350,8 @@
  *
  * (bound to 8) - repeated presses toggles through head - eyes - mouth
  */
+
+///Hidden verb to target the head, bound to 8
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = TRUE
@@ -367,6 +370,28 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
+
+///Hidden verb to target the eyes, bound to 7
+/client/verb/body_eyes()
+	set name = "body-eyes"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
+
+///Hidden verb to target the mouth, bound to 9
+/client/verb/body_mouth()
+	set name = "body-mouth"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
 /client/verb/body_r_arm()

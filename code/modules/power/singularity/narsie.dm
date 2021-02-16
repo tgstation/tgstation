@@ -39,6 +39,8 @@
 /obj/narsie/Initialize()
 	. = ..()
 
+	AddElement(/datum/element/point_of_interest)
+
 	singularity = WEAKREF(AddComponent(
 		/datum/component/singularity, \
 		bsa_targetable = FALSE, \

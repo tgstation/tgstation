@@ -55,9 +55,14 @@
 	///How much stamina the mob recovers per call of update_stamina
 	var/stamina_recovery = 10
 
-	///Temperature effect.
+	///Minimal body temperature without receiving damage
 	var/minbodytemp = 250
+	///Maximal body temperature without receiving damage
 	var/maxbodytemp = 350
+	///This damage is taken when the body temp is too cold.
+	var/unsuitable_cold_damage
+	///This damage is taken when the body temp is too hot.
+	var/unsuitable_heat_damage
 
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
@@ -68,9 +73,9 @@
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 2
 
-	///LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly.
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 0
+	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 	///how much damage this simple animal does to objects, if any.
 	var/obj_damage = 0
 	///How much armour they ignore, as a flat reduction from the targets armour value.
@@ -128,6 +133,9 @@
 	var/dextrous = FALSE
 	var/dextrous_hud_type = /datum/hud/dextrous
 
+	///If the creature should have an innate TRAIT_MOVE_FLYING trait added on init that is also toggled off/on on death/revival.
+	var/is_flying_animal = FALSE
+
 	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
@@ -155,7 +163,7 @@
 	///How much bare wounding power it has
 	var/bare_wound_bonus = 0
 	///If the attacks from this are sharp
-	var/sharpness = SHARP_NONE
+	var/sharpness = NONE
 	///Generic flags
 	var/simple_mob_flags = NONE
 
@@ -178,6 +186,8 @@
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
+	if(is_flying_animal)
+		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -191,6 +201,12 @@
 		atmos_requirements = string_assoc_list(atmos_requirements)
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
+	if(!unsuitable_cold_damage)
+		unsuitable_cold_damage = unsuitable_atmos_damage
+	if(!unsuitable_heat_damage)
+		unsuitable_heat_damage = unsuitable_atmos_damage
 
 /mob/living/simple_animal/Life()
 	. = ..()
@@ -212,20 +228,31 @@
 
 	return ..()
 
+/mob/living/simple_animal/vv_edit_var(var_name, var_value)
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, is_flying_animal))
+			if(stat != DEAD)
+				if(!is_flying_animal)
+					REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+				else
+					ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
 	if(!is_type_in_list(O, food_type))
-		..()
+		return ..()
+	if(stat == DEAD)
+		to_chat(user, "<span class='warning'>[src] is dead!</span>")
 		return
+	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+	qdel(O)
+	if(tame)
+		return
+	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+		tame = TRUE
+		tamed(user)
 	else
-		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
-		qdel(O)
-		if(tame)
-			return
-		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-			tamed(user)
-		else
-			tame_chance += bonus_tame_chance
+		tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed(whomst)
@@ -246,8 +273,6 @@
 		else
 			set_stat(CONSCIOUS)
 	med_hud_set_status()
-	if(footstep_type)
-		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -270,7 +295,7 @@
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
-		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -380,8 +405,8 @@
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
-		adjustHealth(unsuitable_atmos_damage)
-		switch(unsuitable_atmos_damage)
+		adjustHealth(unsuitable_cold_damage)
+		switch(unsuitable_cold_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 			if(5 to 10)
@@ -389,8 +414,8 @@
 			if(10 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
-		adjustHealth(unsuitable_atmos_damage)
-		switch(unsuitable_atmos_damage)
+		adjustHealth(unsuitable_heat_damage)
+		switch(unsuitable_heat_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			if(5 to 10)
@@ -449,9 +474,6 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	if(!HAS_TRAIT(src, TRAIT_MOVE_FLYING)) //Has no extrinsic source of flight
-		movement_type &= ~FLYING
-		halt_floating_anim(NO_FLOATING_ANIM)
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -468,6 +490,8 @@
 		del_on_death = FALSE
 		qdel(src)
 	else
+		if(is_flying_animal)
+			REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 		health = 0
 		icon_state = icon_dead
 		if(flip_on_death)
@@ -501,18 +525,14 @@
 /mob/living/simple_animal/extinguish_mob()
 	return
 
-
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(!.)
 		return
-	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
-	if(initial(movement_type) & (FLYING)) //regain its intrisic flight
-		movement_type |= FLYING
-		floating_anim_check()
-
+	if(is_flying_animal)
+		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -655,27 +675,14 @@
 
 //ANIMAL RIDING
 
-/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-	if(riding_datum)
-		if(user.incapacitated())
-			return
-		for(var/atom/movable/A in get_turf(src))
-			if(A != src && A != M && A.density)
-				return
-		M.forceMove(get_turf(src))
-		return ..()
-
-/mob/living/simple_animal/relaymove(mob/living/user, direction)
-	if (stat == DEAD)
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
+	if(user.incapacitated())
 		return
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-	if(tame && riding_datum)
-		riding_datum.handle_ride(user, direction)
+	for(var/atom/movable/A in get_turf(src))
+		if(A != src && A != M && A.density)
+			return
 
-/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
-	. = ..()
-	LoadComponent(/datum/component/riding)
+	return ..()
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
 	if(!can_have_ai && (togglestatus != AI_OFF))
@@ -714,3 +721,19 @@
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()
 	return
+
+/mob/living/simple_animal/relaymove(mob/living/user, direction)
+	if(user.incapacitated())
+		return
+	return relaydrive(user, direction)
+
+/mob/living/simple_animal/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
+	stop_automated_movement = TRUE
+
+/mob/living/simple_animal/proc/stop_deadchat_plays()
+	stop_automated_movement = FALSE

@@ -156,7 +156,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "I" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -168,14 +168,14 @@
 /area/shuttle/escape)
 "J" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "K" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "L" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
@@ -207,7 +207,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "V" = (
 /obj/machinery/light{
 	dir = 1

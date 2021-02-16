@@ -8,7 +8,7 @@
 	var/variance = 0
 	var/randomspread = FALSE //use random spread for machineguns, instead of shotgun scatter
 	var/projectile_delay = 0
-	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
+	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 	mech_flags = EXOSUIT_MODULE_COMBAT
 
@@ -489,8 +489,7 @@
 	else
 		PG.throwforce = 0
 
-	//has to be low sleep or it looks weird, the beam doesn't exist for very long so it's a non-issue
-	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2, beam_sleep_time = 1)
+	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2)
 
 /obj/item/punching_glove
 	name = "punching glove"

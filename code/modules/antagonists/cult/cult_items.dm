@@ -257,7 +257,7 @@
 	breakouttime = 60
 	knockdown = 30
 
-/obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/user)
+/obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
@@ -323,7 +323,7 @@
 	icon_state = "magus"
 	inhand_icon_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
 	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -361,13 +361,13 @@
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	icon_state = "cult_sharpener"
-	used = 0
+	uses = 1
 	increment = 5
 	max = 40
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon_state()
-	icon_state = "cult_sharpener[used ? "_used" : ""]"
+	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -752,15 +752,15 @@
 		spear.throw_at(owner, 10, 2, owner)
 
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"
 	guns_left = 24
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
+	mag_type = /obj/item/ammo_box/magazine/internal/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"Did you truly think that you could channel MY blood without my approval? Amusing, but futile.\"</span>")
@@ -773,7 +773,8 @@
 		qdel(src)
 		return FALSE
 
-/obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
+/obj/item/ammo_box/magazine/internal/blood
+	caliber = CALIBER_A762
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
@@ -832,7 +833,8 @@
 		return
 	var/C = user.client
 	if(ishuman(user) && C)
-		angle = mouse_angle_from_client(C)
+		var/list/angle_vector = calculate_projectile_angle_and_pixel_offsets(user, params)
+		angle = angle_vector[1]
 	else
 		qdel(src)
 		return
@@ -912,8 +914,7 @@
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, TRUE)
 						L.emote("scream")
-		var/datum/beam/current_beam = new(user,temp_target,time=7,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
-		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 
 
 /obj/effect/ebeam/blood

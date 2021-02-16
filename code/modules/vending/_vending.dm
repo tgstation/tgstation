@@ -77,23 +77,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/**
 	  * List of products this machine sells
 	  *
-	  *	form should be list(/type/path = amount, /type/path2 = amount2)
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
 	  */
-	var/list/products	= list()
+	var/list/products = list()
 
 	/**
 	  * List of products this machine sells when you hack it
 	  *
-	  *	form should be list(/type/path = amount, /type/path2 = amount2)
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
 	  */
-	var/list/contraband	= list()
+	var/list/contraband = list()
 
 	/**
 	  * List of premium products this machine sells
 	  *
-	  *	form should be list(/type/path, /type/path2) as there is only ever one in stock
+	  * form should be list(/type/path, /type/path2) as there is only ever one in stock
 	  */
-	var/list/premium 	= list()
+	var/list/premium = list()
 
 	///String of slogans separated by semicolons, optional
 	var/product_slogans = ""
@@ -169,9 +169,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/// used for narcing on underages
 	var/obj/item/radio/Radio
 
-/obj/item/circuitboard
-	///determines if the circuit board originated from a vendor off station or not.
-	var/onstation = TRUE
 
 /**
  * Initialize the vending machine
@@ -240,7 +237,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
 		if(!(flags_1 & NODECONSTRUCT_1))
-			new /obj/item/stack/sheet/metal(loc, 3)
+			new /obj/item/stack/sheet/iron(loc, 3)
 		qdel(src)
 	else
 		..()
@@ -438,7 +435,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		to_chat(user, "<span class='warning'>You must first secure [src].</span>")
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/I, mob/user, params)
+/obj/machinery/vending/attackby(obj/item/I, mob/living/user, params)
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
 		return
@@ -461,7 +458,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
-	if(compartmentLoadAccessCheck(user) && user.a_intent != INTENT_HARM)
+	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog() //can't put this on the proc above because we spam it below
@@ -516,7 +513,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			new dump_path(get_turf(src))
 			break
 
-/obj/machinery/vending/proc/tilt(mob/fatty, crit=FALSE)
+///Tilts ontop of the atom supplied, if crit is true some extra shit can happen. Returns TRUE if it dealt damage to something.
+/obj/machinery/vending/proc/tilt(atom/fatty, crit=FALSE)
 	visible_message("<span class='danger'>[src] tips over!</span>")
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
@@ -527,6 +525,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(forcecrit)
 		crit_case = forcecrit
+
+	. = FALSE
 
 	if(in_range(fatty, src))
 		for(var/mob/living/L in get_turf(fatty))
@@ -605,12 +605,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 				L.apply_damage(squish_damage, forced=TRUE)
 				if(crit_case)
 					L.apply_damage(squish_damage, forced=TRUE)
-
 			if(was_alive && L.stat == DEAD && L.client)
 				L.client.give_award(/datum/award/achievement/misc/vendor_squish, L) // good job losing a fight with an inanimate object idiot
 
 			L.Paralyze(60)
 			L.emote("scream")
+			. = TRUE
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
 
@@ -619,11 +619,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 	transform = M
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
+		throw_at(get_turf(fatty), 1, 1, spin=FALSE, quickstart=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
-	user.visible_message("<span class='notice'>[user] rights [src].</span>", \
-		"<span class='notice'>You right [src].</span>")
+	if(user)
+		user.visible_message("<span class='notice'>[user] rights [src].</span>", \
+			"<span class='notice'>You right [src].</span>")
 
 	unbuckle_all_mobs(TRUE)
 
@@ -973,7 +974,7 @@ GLOBAL_LIST_EMPTY(vending_products)
  * * prb - probability the shock happens
  */
 /obj/machinery/vending/proc/shock(mob/living/user, prb)
-	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE
@@ -1003,6 +1004,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	tilt(L)
+
+///Crush the mob that the vending machine got thrown at
+/obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(isliving(hit_atom))
+		tilt(fatty=hit_atom)
+	return ..()
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"

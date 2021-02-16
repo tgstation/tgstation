@@ -39,10 +39,10 @@
 	var/explosion_block = 0
 
 	/**
-	  * used to store the different colors on an atom
-	  *
-	  * its inherent color, the colored paint applied on it, special color effect etc...
-	  */
+	 * used to store the different colors on an atom
+	 *
+	 * its inherent color, the colored paint applied on it, special color effect etc...
+	 */
 	var/list/atom_colours
 
 
@@ -146,6 +146,8 @@
 	var/list/canSmoothWith = null
 	///Reference to atom being orbited
 	var/atom/orbit_target
+	///AI controller that controls this atom. type on init, then turned into an instance during runtime
+	var/datum/ai_controller/ai_controller
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -236,6 +238,7 @@
 	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
+	InitializeAIController()
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -281,6 +284,7 @@
 	LAZYCLEARLIST(overlays)
 
 	QDEL_NULL(light)
+	QDEL_NULL(ai_controller)
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
@@ -502,6 +506,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_atom(src, reagents[R])
@@ -575,6 +580,10 @@
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
 	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
+///Used to insert text after the name but before the description in examine()
+/atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
+	return name_chaser
+
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
@@ -586,6 +595,7 @@
 /atom/proc/examine(mob/user)
 	. = list("[get_examine_string(user, TRUE)].")
 
+	. += get_name_chaser(user)
 	if(desc)
 		. += desc
 
@@ -601,7 +611,10 @@
 			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						. += "[R.volume] units of [R.name]"
+						. += "[round(R.volume, 0.01)] units of [R.name]"
+					if(reagents.is_reacting)
+						. += "<span class='warning'>It is currently reacting!</span>"
+					. += "<span class='notice'>The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.</span>"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
@@ -674,6 +687,16 @@
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
 
+/**
+ * A special case of relaymove() in which the person relaying the move may be "driving" this atom
+ *
+ * This is a special case for vehicles and ridden animals where the relayed movement may be handled
+ * by the riding component attached to this atom. Returns TRUE as long as there's nothing blocking
+ * the movement, or FALSE if the signal gets a reply that specifically blocks the movement
+ */
+/atom/proc/relaydrive(mob/living/user, direction)
+	return !(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)
+
 /// Handle what happens when your contents are exploded by a bomb
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
@@ -714,6 +737,7 @@
  * throw lots of items around - singularity being a notable example)
  */
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	SEND_SIGNAL(src, COMSIG_ATOM_HITBY, AM, skipcatch, hitpush, blocked, throwingdatum)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
 		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
 
@@ -1007,6 +1031,8 @@
  * * clean_types: any of the CLEAN_ constants
  */
 /atom/proc/wash(clean_types)
+	SHOULD_CALL_PARENT(TRUE)
+
 	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
 		. = TRUE
@@ -1097,6 +1123,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1141,6 +1169,16 @@
 		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
 		if(!isnull(strength))
 			AddComponent(/datum/component/radioactive, strength, src)
+
+
+	if(href_list[VV_HK_ADD_AI])
+		if(!check_rights(R_VAREDIT))
+			return
+		var/result = input(usr, "Choose the AI controller to apply to this atom WARNING: Not all AI works on all atoms.", "AI controller") as null|anything in subtypesof(/datum/ai_controller)
+		if(!result)
+			return
+		ai_controller = new result(src)
+
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
 		var/matrix/M = transform
@@ -1164,6 +1202,10 @@
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
 		if(newname && !(CHAT_FILTER_CHECK(newname) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") != "Confirm"))
 			vv_auto_rename(newname)
+
+	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_filter_editor(src)
 
 /atom/vv_get_header()
 	. = ..()
@@ -1279,6 +1321,8 @@
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			var/atom/created_atom = new atom_to_create(drop_location())
+			created_atom.pixel_x = rand(-8, 8)
+			created_atom.pixel_y = rand(-8, 8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")
@@ -1470,14 +1514,14 @@
 
 	victim.log_message(message, LOG_ATTACK, color="blue")
 
-/atom/movable/proc/add_filter(name,priority,list/params)
+/atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
 	update_filters()
 
-/atom/movable/proc/update_filters()
+/atom/proc/update_filters()
 	filters = null
 	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
@@ -1485,6 +1529,29 @@
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
+	UNSETEMPTY(filter_data)
+
+/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+
+	var/list/old_filter_data = filter_data[name]
+
+	var/list/params = old_filter_data.Copy()
+	for(var/thing in new_params)
+		params[thing] = new_params[thing]
+
+	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	for(var/param in params)
+		filter_data[name][param] = params[param]
+
+/atom/proc/change_filter_priority(name, new_priority)
+	if(!filter_data || !filter_data[name])
+		return
+
+	filter_data[name]["priority"] = new_priority
+	update_filters()
 
 /obj/item/update_filters()
 	. = ..()
@@ -1492,23 +1559,33 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/atom/movable/proc/get_filter(name)
+/atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/movable/proc/remove_filter(name)
-	if(filter_data && filter_data[name])
-		filter_data -= name
-		update_filters()
+/atom/proc/remove_filter(name_or_names)
+	if(!filter_data)
+		return
+
+	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
+
+	for(var/name in names)
+		if(filter_data[name])
+			filter_data -= name
+	update_filters()
+
+/atom/proc/clear_filters()
+	filter_data = null
+	filters = null
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
-///Sets the custom materials for an item.
+/// Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
+			var/datum/material/custom_material = GET_MATERIAL_REF(i)
 			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
@@ -1517,11 +1594,110 @@
 
 	if(!(material_flags & MATERIAL_NO_EFFECTS))
 		for(var/x in materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			var/datum/material/custom_material = GET_MATERIAL_REF(x)
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
+/**
+ * Returns the material composition of the atom.
+ *
+ * Used when recycling items, specifically to turn alloys back into their component mats.
+ *
+ * Exists because I'd need to add a way to un-alloy alloys or otherwise deal
+ * with people converting the entire stations material supply into alloys.
+ *
+ * Arguments:
+ * - flags: A set of flags determining how exactly the materials are broken down.
+ */
+/atom/proc/get_material_composition(breakdown_flags=NONE)
+	. = list()
+	if(!(breakdown_flags & BREAKDOWN_INCLUDE_ALCHEMY) && HAS_TRAIT(src, TRAIT_MAT_TRANSMUTED))
+		return
+
+	var/list/cached_materials = custom_materials
+	for(var/mat in cached_materials)
+		var/datum/material/material = GET_MATERIAL_REF(mat)
+		var/list/material_comp = material.return_composition(cached_materials[mat], breakdown_flags)
+		for(var/comp_mat in material_comp)
+			.[comp_mat] += material_comp[comp_mat]
+
+/**
+ * Fetches a list of all of the materials this object has of the desired type
+ *
+ * Arguments:
+ * - [mat_type][/datum/material]: The type of material we are checking for
+ * - exact: Whether to search for the _exact_ material type
+ * - mat_amount: The minimum required amount of material
+ */
+/atom/proc/has_material_type(datum/material/mat_type, exact=FALSE, mat_amount=0)
+	var/list/cached_materials = custom_materials
+	if(!length(cached_materials))
+		return null
+
+	. = list()
+	for(var/m in cached_materials)
+		if(cached_materials[m] < mat_amount)
+			continue
+		var/datum/material/material = GET_MATERIAL_REF(m)
+		if(exact ? material.type != m : !istype(material, mat_type))
+			continue
+		.[material] = cached_materials[m]
+
+/**
+ * Fetches a list of all of the materials this object has with the desired material category.
+ *
+ * Arguments:
+ * - category: The category to check for
+ * - any_flags: Any bitflags that must be present for the category
+ * - all_flags: All bitflags that must be present for the category
+ * - no_flags: Any bitflags that must not be present for the category
+ * - mat_amount: The minimum amount of materials that must be present
+ */
+/atom/proc/has_material_category(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
+	var/list/cached_materials = custom_materials
+	if(!length(cached_materials))
+		return null
+
+	. = list()
+	for(var/m in cached_materials)
+		if(cached_materials[m] < mat_amount)
+			continue
+		var/datum/material/material = GET_MATERIAL_REF(m)
+		var/category_flags = material?.categories[category]
+		if(isnull(category_flags))
+			continue
+		if(any_flags && !(category_flags & any_flags))
+			continue
+		if(all_flags && (all_flags != (category_flags & all_flags)))
+			continue
+		if(no_flags && (category_flags & no_flags))
+			continue
+		.[material] = cached_materials[m]
+
+/**
+ * Gets the most common material in the object.
+ */
+/atom/proc/get_master_material()
+	var/list/cached_materials = custom_materials
+	if(!length(cached_materials))
+		return null
+
+	var/most_common_material = null
+	var/max_amount = 0
+	for(var/m in cached_materials)
+		if(cached_materials[m] > max_amount)
+			most_common_material = m
+			max_amount = cached_materials[m]
+
+	if(most_common_material)
+		return GET_MATERIAL_REF(most_common_material)
+
+/**
+ * Gets the total amount of materials in this atom.
+ */
+/atom/proc/get_custom_material_amount()
+	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
@@ -1541,26 +1717,6 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
-
-
-/**Returns the material composition of the atom.
- *
- * Used when recycling items, specifically to turn alloys back into their component mats.
- *
- * Exists because I'd need to add a way to un-alloy alloys or otherwise deal
- * with people converting the entire stations material supply into alloys.
- *
- * Arguments:
- * - flags: A set of flags determining how exactly the materials are broken down.
- */
-/atom/proc/get_material_composition(breakdown_flags=NONE)
-	. = list()
-	var/list/cached_materials = custom_materials
-	for(var/mat in cached_materials)
-		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
-		var/list/material_comp = material.return_composition(cached_materials[material], breakdown_flags)
-		for(var/comp_mat in material_comp)
-			.[comp_mat] += material_comp[comp_mat]
 
 /**
  * Returns true if this atom has gravity for the passed in turf
@@ -1655,11 +1811,11 @@
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
 	if(href_list["statpanel_item_shiftclick"])
-		paramslist["shift"] = "1"
+		paramslist[SHIFT_CLICK] = "1"
 	if(href_list["statpanel_item_ctrlclick"])
-		paramslist["ctrl"] = "1"
+		paramslist[CTRL_CLICK] = "1"
 	if(href_list["statpanel_item_altclick"])
-		paramslist["alt"] = "1"
+		paramslist[ALT_CLICK] = "1"
 	if(href_list["statpanel_item_click"])
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
@@ -1684,3 +1840,35 @@
 		var/atom/atom_orbiter = o
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
+
+/**
+* Instantiates the AI controller of this atom. Override this if you want to assign variables first.
+*
+* This will work fine without manually passing arguments.
+
++*/
+/atom/proc/InitializeAIController()
+	if(ispath(ai_controller))
+		ai_controller = new ai_controller(src)
+
+/**
+ * Point at an atom
+ *
+ * Intended to enable and standardise the pointing animation for all atoms
+ *
+ * Not intended as a replacement for the mob verb
+ */
+/atom/movable/proc/point_at(atom/A)
+	if(!isturf(loc))
+		return FALSE
+
+	var/turf/tile = get_turf(A)
+	if (!tile)
+		return FALSE
+
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
+
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
+
+	return TRUE

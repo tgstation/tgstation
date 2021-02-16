@@ -25,8 +25,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/living/user)
+	if(!user.combat_mode)
 		. = 1
 		if(!is_insertion_ready(user))
 			return
@@ -129,7 +129,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	popup.set_content(ui_deconstruct())
 	popup.open()
 
-/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct()		//Legacy code
+/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct() //Legacy code
 	var/list/l = list()
 	if(!loaded_item)
 		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"

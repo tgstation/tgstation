@@ -134,7 +134,7 @@
 			maptext_x = 10
 		if(100)
 			maptext_x = 8
-	maptext = "[current_number]" //Finally, apply the maptext
+	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
@@ -160,7 +160,7 @@
 /obj/machinery/ticket_machine/proc/reset_cooldown()
 	ready = TRUE
 
-/obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user)
+/obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 	if(!ready)
 		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
@@ -176,8 +176,8 @@
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
 	theirticket.name = "Ticket #[ticket_number]"
-	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
-	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
+	theirticket.maptext = MAPTEXT(ticket_number)
+	theirticket.saved_maptext = MAPTEXT(ticket_number)
 	theirticket.ticket_number = ticket_number
 	theirticket.source = src
 	theirticket.owner = user
@@ -208,7 +208,7 @@
 	var/obj/machinery/ticket_machine/source
 	var/ticket_number
 
-/obj/item/ticket_machine_ticket/attack_hand(mob/user)
+/obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
 

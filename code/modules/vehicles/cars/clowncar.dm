@@ -9,7 +9,6 @@
 	movedelay = 0.6
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
-	key_type_exact = FALSE
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
@@ -43,8 +42,8 @@
 			var/mob/voreman = i
 			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
 
-/obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/M)
-	if((M.loc != src) || M.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
+/obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if((user.loc != src) || user.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
 		return ..()
 
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
@@ -98,7 +97,7 @@
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	return ..()
 
-/obj/vehicle/sealed/car/clowncar/after_move(direction)
+/obj/vehicle/sealed/car/clowncar/Move(newloc, dir)
 	. = ..()
 	if(droppingoil)
 		new /obj/effect/decal/cleanable/oil/slippery(loc)

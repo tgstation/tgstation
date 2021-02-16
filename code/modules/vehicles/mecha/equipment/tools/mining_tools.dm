@@ -122,10 +122,10 @@
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = FALSE
 
-/obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
 	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \
 						"<span class='userdanger'>[chassis] is drilling you with [src]!</span>")
-	log_combat(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
@@ -185,7 +185,7 @@
 		qdel(src)
 	if(istype(loc, /obj/vehicle/sealed/mecha/working) && scanning_time <= world.time)
 		var/obj/vehicle/sealed/mecha/working/mecha = loc
-		if(!mecha.occupants)
+		if(!LAZYLEN(mecha.occupants))
 			return
 		scanning_time = world.time + equip_cooldown
 		mineral_scan_pulse(get_turf(src))

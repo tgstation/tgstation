@@ -149,7 +149,7 @@
 
 //liquid plasma!!!!!!//
 
-/turf/open/floor/plasteel/dark/snowdin
+/turf/open/floor/iron/dark/snowdin
 	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = 1
 	temperature = 180
@@ -158,7 +158,7 @@
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
 	slowdown = 2
 
@@ -193,7 +193,7 @@
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
-				continue	//YOU'RE FLYING OVER IT
+				continue //YOU'RE FLYING OVER IT
 			if("snow" in L.weather_immunities)
 				continue
 
@@ -257,7 +257,7 @@
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	resistance_flags = FREEZE_PROOF
 	can_buckle = TRUE
-///////////	papers
+/////////// papers
 
 
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing

@@ -5,7 +5,7 @@
 /// How long it takes from stage 2 starting to move up to stage 3
 #define GUNPOINT_DELAY_STAGE_3 7.5 SECONDS
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
-#define GUNPOINT_BASE_WOUND_BONUS	5
+#define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
 #define GUNPOINT_MULT_STAGE_1 1
 /// As above, for stage 2
@@ -85,10 +85,10 @@
 	qdel(src)
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
-/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
+	if(T != target || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
 		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)

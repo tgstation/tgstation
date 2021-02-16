@@ -19,9 +19,12 @@
 	var/allowed_size = 1
 	var/energy = 100 //How strong are we?
 	var/dissipate = TRUE //Do we lose energy over time?
-	var/dissipate_delay = 10
-	var/dissipate_track = 0
-	var/dissipate_strength = 1 //How much energy do we lose?
+	/// How long should it take for us to dissipate in seconds?
+	var/dissipate_delay = 20
+	/// How much energy do we lose every dissipate_delay?
+	var/dissipate_strength = 1
+	/// How long its been (in seconds) since the last dissipation
+	var/time_since_last_dissipiation = 0
 	var/event_chance = 10 //Prob for event each tick
 	var/move_self = TRUE
 	var/consumed_supermatter = FALSE //If the singularity has eaten a supermatter shard and can go to stage six
@@ -36,7 +39,7 @@
 	energy = starting_energy
 
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	GLOB.singularities |= src
 
 	var/datum/component/singularity/new_component = AddComponent(
@@ -58,7 +61,6 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list.Remove(src)
 	GLOB.singularities.Remove(src)
 	return ..()
 
@@ -130,21 +132,23 @@
 		if(3)
 			energy -= round(((energy+1)/4),1)
 
-/obj/singularity/process()
+/obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
-	dissipate()
+	dissipate(delta_time)
 	check_energy()
 
-/obj/singularity/proc/dissipate()
-	if(!dissipate)
+/obj/singularity/proc/dissipate(delta_time)
+	if (!dissipate)
 		return
-	if(dissipate_track >= dissipate_delay)
-		src.energy -= dissipate_strength
-		dissipate_track = 0
-	else
-		dissipate_track++
+
+	time_since_last_dissipiation += delta_time
+
+	// Uses a while in case of especially long delta times
+	while (time_since_last_dissipiation >= dissipate_delay)
+		energy -= dissipate_strength
+		time_since_last_dissipiation -= dissipate_delay
 
 /obj/singularity/proc/expand(force_size)
 	var/temp_allowed_size = src.allowed_size
@@ -168,7 +172,7 @@
 			new_grav_pull = 4
 			new_consume_range = 0
 			dissipate_delay = 10
-			dissipate_track = 0
+			time_since_last_dissipiation = 0
 			dissipate_strength = 1
 		if(STAGE_TWO)
 			if(check_cardinals_range(1, TRUE))
@@ -180,7 +184,7 @@
 				new_grav_pull = 6
 				new_consume_range = 1
 				dissipate_delay = 5
-				dissipate_track = 0
+				time_since_last_dissipiation = 0
 				dissipate_strength = 5
 		if(STAGE_THREE)
 			if(check_cardinals_range(2, TRUE))
@@ -192,7 +196,7 @@
 				new_grav_pull = 8
 				new_consume_range = 2
 				dissipate_delay = 4
-				dissipate_track = 0
+				time_since_last_dissipiation = 0
 				dissipate_strength = 20
 		if(STAGE_FOUR)
 			if(check_cardinals_range(3, TRUE))
@@ -204,7 +208,7 @@
 				new_grav_pull = 10
 				new_consume_range = 3
 				dissipate_delay = 10
-				dissipate_track = 0
+				time_since_last_dissipiation = 0
 				dissipate_strength = 10
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
@@ -275,13 +279,13 @@
 		set_light(10)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
-	. = length(GLOB.cardinals)			//Should be 4.
+	. = length(GLOB.cardinals) //Should be 4.
 	for(var/i in GLOB.cardinals)
-		. -= check_turfs_in(i, steps)	//-1 for each working direction
-	if(. && retry_with_move)			//If there's still a positive value it means it didn't pass. Retry with move if applicable
+		. -= check_turfs_in(i, steps) //-1 for each working direction
+	if(. && retry_with_move) //If there's still a positive value it means it didn't pass. Retry with move if applicable
 		for(var/i in GLOB.cardinals)
-			if(step(src, i))			//Move in each direction.
-				if(check_cardinals_range(steps, FALSE))		//New location passes, return true.
+			if(step(src, i)) //Move in each direction.
+				if(check_cardinals_range(steps, FALSE)) //New location passes, return true.
 					return TRUE
 	return !.
 
@@ -409,13 +413,18 @@
 	qdel(src)
 	return gain
 
-/obj/singularity/deadchat_controlled
+/obj/singularity/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
 	move_self = FALSE
+
+/obj/singularity/proc/stop_deadchat_plays()
+	move_self = TRUE
 
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
-	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
-		"up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-		"down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-		"left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-		"right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)))
+	deadchat_plays(mode = DEMOCRACY_MODE)
+

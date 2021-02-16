@@ -64,9 +64,9 @@
 		storedpda = null
 		update_icon()
 
-/obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
+/obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
-		if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(!O.tool_start_check(user, amount=0))
 				return
 			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
@@ -103,13 +103,13 @@
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
 	obj_break()
 
-/obj/machinery/pdapainter/attack_hand(mob/user)
+/obj/machinery/pdapainter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 
 	if(storedpda)
-		if(machine_stat & BROKEN)	//otherwise the PDA is stuck until repaired
+		if(machine_stat & BROKEN) //otherwise the PDA is stuck until repaired
 			ejectpda()
 			to_chat(user, "<span class='info'>You manage to eject the loaded PDA.</span>")
 		else

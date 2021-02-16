@@ -26,18 +26,9 @@
 
 /atom/movable/screen/plane_master/openspace/Initialize()
 	. = ..()
-	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -10)
-	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -15)
-	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -20)
-
-/atom/movable/screen/plane_master/proc/outline(_size, _color)
-	filters += filter(type = "outline", size = _size, color = _color)
-
-/atom/movable/screen/plane_master/proc/shadow(_size, _border, _offset = 0, _x = 0, _y = 0, _color = "#04080FAA")
-	filters += filter(type = "drop_shadow", x = _x, y = _y, color = _color, size = _size, offset = _offset)
-
-/atom/movable/screen/plane_master/proc/clear_filters()
-	filters = list()
+	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
+	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
+	add_filter("third_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -20))
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -46,10 +37,6 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/floor/backdrop(mob/mymob)
-	filters = list()
-	if(istype(mymob) && mymob.eye_blurry)
-		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
 
 ///Contains most things in the game world
 /atom/movable/screen/plane_master/game_world
@@ -59,12 +46,8 @@
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world/backdrop(mob/mymob)
-	filters = list()
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
-		filters += AMBIENT_OCCLUSION
-	if(istype(mymob) && mymob.eye_blurry)
-		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
-
+		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/lighting
@@ -79,9 +62,9 @@
 
 /atom/movable/screen/plane_master/lighting/Initialize()
 	. = ..()
-	filters += filter(type="alpha", render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE)
-	filters += filter(type="alpha", render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE)
-	filters += filter(type="alpha", render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE)
+	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter("unblockable_emissives", 2, alpha_mask_filter(render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter("object_lighting", 3, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
 
 /**
  * Things placed on this mask the lighting plane. Doesn't render directly.
@@ -97,7 +80,7 @@
 
 /atom/movable/screen/plane_master/emissive/Initialize()
 	. = ..()
-	filters += filter(type="alpha", render_source=EMISSIVE_BLOCKER_RENDER_TARGET, flags=MASK_INVERSE)
+	add_filter("emissive_block", 1, alpha_mask_filter(render_source = EMISSIVE_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
 
 /**
  * Things placed on this always mask the lighting plane. Doesn't render directly.
@@ -163,4 +146,4 @@
 /atom/movable/screen/plane_master/runechat/backdrop(mob/mymob)
 	filters = list()
 	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
-		filters += AMBIENT_OCCLUSION
+		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))

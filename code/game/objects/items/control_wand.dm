@@ -1,6 +1,6 @@
-#define WAND_OPEN "Open Door"
-#define WAND_BOLT "Toggle Bolts"
-#define WAND_EMERGENCY "Toggle Emergency Access"
+#define WAND_OPEN "open"
+#define WAND_BOLT "bolt"
+#define WAND_EMERGENCY "emergency"
 
 /obj/item/door_remote
 	icon_state = "gangtool-white"
@@ -14,13 +14,31 @@
 	var/mode = WAND_OPEN
 	var/region_access = 1 //See access.dm
 	var/list/access_list
+	network_id = NETWORK_DOOR_REMOTES
 
 /obj/item/door_remote/Initialize()
 	. = ..()
 	access_list = get_region_accesses(region_access)
-	AddComponent(/datum/component/ntnet_interface)
+	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
+	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
+
+/obj/item/door_remote/proc/bad_signal(datum/source, datum/netdata/data, error_code)
+	if(QDELETED(data.user))
+		return // can't send a message to a missing user
+	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
+		to_chat(data.user, "<span class='notice'>This remote is not authorized to modify this door.</span>")
+	else
+		to_chat(data.user, "<span class='notice'>Error: [error_code]</span>")
+
+
+/obj/item/door_remote/proc/good_signal(datum/source, datum/netdata/data, error_code)
+	if(QDELETED(data.user))
+		return
+	var/toggled = data.data["data"]
+	to_chat(data.user, "<span class='notice'>Door [toggled] toggled</span>")
 
 /obj/item/door_remote/attack_self(mob/user)
+	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
 	switch(mode)
 		if(WAND_OPEN)
 			mode = WAND_BOLT
@@ -28,7 +46,7 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	to_chat(user, "<span class='notice'>Now in mode: [mode].</span>")
+	to_chat(user, "<span class='notice'>Now in mode: [desc[mode]].</span>")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
@@ -38,20 +56,12 @@
 	if(!target_interface)
 		return
 
+	user.set_machine(src)
 	// Generate a control packet.
-	var/datum/netdata/data = new
-	data.recipient_ids = list(target_interface.hardware_id)
-
-	switch(mode)
-		if(WAND_OPEN)
-			data.data["data"] = "open"
-		if(WAND_BOLT)
-			data.data["data"] = "bolt"
-		if(WAND_EMERGENCY)
-			data.data["data"] = "emergency"
-
-	data.data["data_secondary"] = "toggle"
+	var/datum/netdata/data = new(list("data" = mode,"data_secondary" = "toggle"))
+	data.receiver_id = target_interface.hardware_id
 	data.passkey = access_list
+	data.user = user // for responce message
 
 	ntnet_send(data)
 

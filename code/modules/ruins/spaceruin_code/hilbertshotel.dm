@@ -293,13 +293,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/attack_tk(mob/user)
 	return //need to be close.
 
-/turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_hand(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_animal(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_animal(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_paw(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_paw(mob/user, list/modifiers)
 	promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)
@@ -360,7 +360,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	. = ..()
 	if(istype(AM, /obj/item/hilbertshotel))
 		relocate(AM)
-	var/list/obj/item/hilbertshotel/hotels = AM.GetAllContents(/obj/item/hilbertshotel)
+	var/list/obj/item/hilbertshotel/hotels = AM.get_all_contents_type(/obj/item/hilbertshotel)
 	for(var/obj/item/hilbertshotel/H in hotels)
 		if(parentSphere == H)
 			relocate(H)
@@ -399,7 +399,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/mob/M = AM
 		if(M.mind)
 			var/stillPopulated = FALSE
-			var/list/currentLivingMobs = GetAllContents(/mob/living) //Got to catch anyone hiding in anything
+			var/list/currentLivingMobs = get_all_contents_type(/mob/living) //Got to catch anyone hiding in anything
 			for(var/mob/living/L in currentLivingMobs) //Check to see if theres any sentient mobs left.
 				if(L.mind)
 					stillPopulated = TRUE
@@ -499,7 +499,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	id_access_list = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
 	instant = TRUE
 	id = /obj/item/card/id/silver
-	uniform = /obj/item/clothing/under/rank/rnd/research_director
+	uniform = /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	back = /obj/item/storage/backpack/satchel/leather
 	suit = /obj/item/clothing/suit/toggle/labcoat

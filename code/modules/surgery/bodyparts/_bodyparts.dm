@@ -41,7 +41,7 @@
 	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
-	var/burn_reduction = 0	//Subtracted to burn damage taken
+	var/burn_reduction = 0 //Subtracted to burn damage taken
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -201,19 +201,19 @@
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(stam_regen)
-	if(stamina_dam > DAMAGE_PRECISION && stam_regen)					//DO NOT update health here, it'll be done in the carbon's life.
+	if(stamina_dam > DAMAGE_PRECISION && stam_regen) //DO NOT update health here, it'll be done in the carbon's life.
 		heal_damage(0, 0, INFINITY, null, FALSE)
 		. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE) // maybe separate BRUTE_SHARP and BRUTE_OTHER eventually somehow hmm
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE) // maybe separate BRUTE_SHARP and BRUTE_OTHER eventually somehow hmm
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
 	if(owner && (owner.status_flags & GODMODE))
-		return FALSE	//godmode
+		return FALSE //godmode
 
 	if(required_status && (status != required_status))
 		return FALSE
@@ -249,7 +249,10 @@
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 	if(wounding_type == WOUND_BLUNT && sharpness)
-		wounding_type = (sharpness == SHARP_EDGED ? WOUND_SLASH : WOUND_PIERCE)
+		if(sharpness & SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else if (sharpness & SHARP_POINTY)
+			wounding_type = WOUND_PIERCE
 
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(bio_state)
@@ -320,7 +323,7 @@
 	return update_bodypart_damage_state() || .
 
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=SHARP_NONE)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE)
 	if(!owner || phantom_wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND)
 		return
 
@@ -329,7 +332,10 @@
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 	if(wounding_type == WOUND_BLUNT && sharpness)
-		wounding_type = (sharpness == SHARP_EDGED ? WOUND_SLASH : WOUND_PIERCE)
+		if(sharpness & SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else if (sharpness & SHARP_POINTY)
+			wounding_type = WOUND_PIERCE
 
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(bio_state)
@@ -373,6 +379,9 @@
  * * bare_wound_bonus- The bare_wound_bonus of an attack
  */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
+	if(HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED))
+		return
+
 	// note that these are fed into an exponent, so these are magnified
 	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
 		damage *= 1.5
@@ -422,11 +431,10 @@
 			var/datum/wound/new_wound
 			if(replaced_wound)
 				new_wound = replaced_wound.replace_wound(possible_wound)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			else
 				new_wound = new possible_wound
 				new_wound.apply_wound(src)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
+			log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
@@ -678,8 +686,8 @@
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
-	var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
-	var/tburn	= round( (burn_dam/max_damage)*3, 1 )
+	var/tbrute = round( (brute_dam/max_damage)*3, 1 )
+	var/tburn = round( (burn_dam/max_damage)*3, 1 )
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
@@ -845,10 +853,7 @@
 
 	else
 		limb.icon = icon
-		if(should_draw_gender)
-			limb.icon_state = "[body_zone]_[icon_gender]"
-		else
-			limb.icon_state = "[body_zone]"
+		limb.icon_state = "[body_zone]" //Inorganic limbs are agender
 		if(aux_zone)
 			aux = image(limb.icon, "[aux_zone]", -aux_layer, image_dir)
 			. += aux
@@ -899,6 +904,8 @@
 
 
 /obj/item/bodypart/proc/get_bleed_rate()
+	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
+		return
 	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
 		return
 
@@ -966,3 +973,12 @@
 		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
+
+
+///Proc to turn bodypart into another.
+/obj/item/bodypart/proc/change_bodypart(obj/item/bodypart/new_type)
+	var/mob/living/carbon/our_owner = owner //dropping nulls the limb
+	drop_limb(TRUE)
+	var/obj/item/bodypart/new_part = new new_type()
+	new_part.attach_limb(our_owner, TRUE)
+	qdel(src)

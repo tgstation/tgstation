@@ -25,6 +25,13 @@
 	if(ismob(AM))
 		remove_occupant(AM)
 
+// so that we can check the access of the vehicle's occupants. Ridden vehicles do this in the riding component, but these don't have that
+/obj/vehicle/sealed/Bump(atom/A)
+	. = ..()
+	if(istype(A, /obj/machinery/door))
+		var/obj/machinery/door/conditionalwall = A
+		for(var/m in occupants)
+			conditionalwall.bumpopen(m)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
 	. = ..()
@@ -83,7 +90,7 @@
 	if(key_type && !is_key(inserted_key) && is_key(I))
 		if(user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-			if(inserted_key)	//just in case there's an invalid key
+			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
 		else
@@ -119,12 +126,22 @@
 
 /obj/vehicle/sealed/proc/dump_specific_mobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
-		if((occupants[i] & flag))
-			mob_exit(i, null, randomstep)
-			if(iscarbon(i))
-				var/mob/living/carbon/C = i
-				C.Paralyze(40)
+		if(!(occupants[i] & flag))
+			continue
+		mob_exit(i, null, randomstep)
+		if(iscarbon(i))
+			var/mob/living/carbon/C = i
+			C.Paralyze(40)
 
 
 /obj/vehicle/sealed/AllowDrop()
+	return FALSE
+
+/obj/vehicle/sealed/relaymove(mob/living/user, direction)
+	if(canmove)
+		vehicle_move(direction)
+	return TRUE
+
+/// Sinced sealed vehicles (cars and mechs) don't have riding components, the actual movement is handled here from [/obj/vehicle/sealed/proc/relaymove]
+/obj/vehicle/sealed/proc/vehicle_move(direction)
 	return FALSE

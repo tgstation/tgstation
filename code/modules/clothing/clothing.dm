@@ -1,3 +1,5 @@
+#define MOTH_EATING_CLOTHING_DAMAGE 15
+
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
@@ -7,11 +9,11 @@
 
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
-	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
-	var/visor_flags_cover = 0	//same as above, but for flags_cover
+	var/tint = 0 //Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/up = 0 //but separated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = 0 //flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = 0 //same as visor_flags, but for flags_inv
+	var/visor_flags_cover = 0 //same as above, but for flags_cover
 //what to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
@@ -33,6 +35,9 @@
 	var/list/user_vars_to_edit //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered //Auto built by the above + dropped() + equipped()
 
+	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
+	var/list/clothing_traits
+
 	var/pocket_storage_component_path
 
 	//These allow head/mask items to dynamically alter the user's hair
@@ -53,6 +58,9 @@
 	var/limb_integrity = 0
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
+
+	/// A lazily initiated "food" version of the clothing for moths
+	var/obj/item/food/clothing/moth_snack
 
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
@@ -76,21 +84,50 @@
 		var/atom/movable/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
+
 //This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	bite_consumption = 1
+	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
+	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
+	// ...maybe this was a mistake after all.
+	food_reagents = list(/datum/reagent/consumable/nutriment = INFINITY)
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtypes = CLOTH
 
-/obj/item/clothing/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && ismoth(M))
-		var/obj/item/food/clothing/clothing_as_food = new //collective bruh moment
-		clothing_as_food.name = name
-		if(clothing_as_food.attack(M, user, def_zone)) //BRUUUUUUUUUUUUUUUUUUUUUUUUUUUUUH
-			take_damage(15, sound_effect=FALSE)
-		qdel(clothing_as_food) ///WHAT ARE THOOSEEE
+	/// A weak reference to the clothing that created us
+	var/datum/weakref/clothing
+
+/obj/item/food/clothing/MakeEdible()
+	AddComponent(/datum/component/edible,\
+		initial_reagents = food_reagents,\
+		food_flags = food_flags,\
+		foodtypes = foodtypes,\
+		volume = max_volume,\
+		eat_time = eat_time,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+		bite_consumption = bite_consumption,\
+		microwaved_type = microwaved_type,\
+		junkiness = junkiness,\
+		after_eat = CALLBACK(src, .proc/after_eat))
+
+/obj/item/food/clothing/proc/after_eat(mob/eater)
+	var/obj/item/clothing/resolved_clothing = clothing.resolve()
+	if (resolved_clothing)
+		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE)
+	else
+		qdel(src)
+
+/obj/item/clothing/attack(mob/attacker, mob/living/user, params)
+	if(!user.combat_mode && ismoth(attacker))
+		if (isnull(moth_snack))
+			moth_snack = new
+			moth_snack.name = name
+			moth_snack.clothing = WEAKREF(src)
+		moth_snack.attack(attacker, user, params)
 	else
 		return ..()
 
@@ -134,7 +171,7 @@
 /**
  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
  *
- *	This proc only matters when a bodypart that this clothing is covering is harmed by a direct attack (being on fire or in space need not apply), and only if this clothing covers
+ * This proc only matters when a bodypart that this clothing is covering is harmed by a direct attack (being on fire or in space need not apply), and only if this clothing covers
  * more than one bodypart to begin with. No point in tracking damage by zone for a hat, and I'm not cruel enough to let you fully break them in a few shots.
  * Also if limb_integrity is 0, then this clothing doesn't have bodypart damage enabled so skip it.
  *
@@ -201,6 +238,7 @@
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
+	QDEL_NULL(moth_snack)
 	return ..()
 
 /obj/item/clothing/dropped(mob/user)
@@ -208,6 +246,9 @@
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	for(var/trait in clothing_traits)
+		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
@@ -216,12 +257,14 @@
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
 /obj/item/clothing/equipped(mob/user, slot)
-	..()
+	. = ..()
 	if (!istype(user))
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
+		for(var/trait in clothing_traits)
+			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -373,8 +416,8 @@
 		var/static/list/damaged_clothes_icons = list()
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 		if(!damaged_clothes_icon)
-			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
-			damaged_clothes_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1) //we only want to apply damaged effect to the initial icon_state for each object
+			damaged_clothes_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
 			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 			damaged_clothes_icons[index] = damaged_clothes_icon
@@ -391,10 +434,10 @@ BLIND     // can't see anything
 */
 
 /proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
+	var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
-	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
+	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
@@ -469,3 +512,5 @@ BLIND     // can't see anything
 		return
 	if(prob(0.2))
 		to_chat(L, "<span class='warning'>The damaged threads on your [src.name] chafe!</span>")
+
+#undef MOTH_EATING_CLOTHING_DAMAGE

@@ -1,7 +1,7 @@
 #define VAT_GROWTH_RATE 4
 
 ////////////////////////////////
-//// 		VERTEBRATES		////
+//// VERTEBRATES ////
 ////////////////////////////////
 
 /datum/micro_organism/cell_line/mouse //nuisance cell line designed to complicate the growing of animal type cell lines.
@@ -201,7 +201,7 @@
 
 
 ///////////////////////////////////////////
-/// 		SLIMES, OOZES & BLOBS  		///
+/// SLIMES, OOZES & BLOBS ///
 //////////////////////////////////////////
 
 /datum/micro_organism/cell_line/slime
@@ -316,7 +316,7 @@
 	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/grapes = 1)
 
 ////////////////////
-////	MISC	////
+//// MISC ////
 ////////////////////
 /datum/micro_organism/cell_line/cockroach //nuisance cell line designed to complicate the growing of slime type cell lines.
 	desc = "Blattodeoid anthropod cells"
@@ -416,31 +416,82 @@
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
-	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow))
+	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 
 /datum/micro_organism/cell_line/clown/bananaclown
 	desc = "Clown bits with banana chunks"
 
-	required_reagents = list(/datum/reagent/consumable/banana)
-	supplementary_reagents = list(/datum/reagent/medicine/coagulant/banana_peel = 4)
+	required_reagents = list(
+							/datum/reagent/consumable/nutriment/protein,
+							/datum/reagent/consumable/banana)
+
+	supplementary_reagents = list(
+							/datum/reagent/saltpetre = 4,
+							/datum/reagent/ammonia = 3,
+							/datum/reagent/carbondioxide = 3,
+							/datum/reagent/medicine/coagulant/banana_peel = 2,
+							/datum/reagent/plantnutriment/robustharvestnutriment = 1)
+
+	suppressive_reagents = list(
+							/datum/reagent/consumable/clownstears = -8,
+							/datum/reagent/toxin/plantbgone = -4,
+							/datum/reagent/consumable/ethanol/silencer = -3,
+							/datum/reagent/consumable/nothing = -2,
+							/datum/reagent/fuel/oil = -1)
+
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/banana = 1)
 
-/datum/micro_organism/cell_line/clown/fleshclown
-	desc = "Overly fleshy clown bits"
+/datum/micro_organism/cell_line/clown/glutton
+	desc = "hyperadipogenic clown stem cells"
 
-	required_reagents = list(/datum/reagent/consumable/banana)
-	supplementary_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
+	required_reagents = list(
+							/datum/reagent/consumable/nutriment/protein,
+							/datum/reagent/consumable/banana,
+							/datum/reagent/medicine/c2/synthflesh)
+	//r/chonkers
+	supplementary_reagents = list(
+							/datum/reagent/consumable/vanillapudding = 8,
+							/datum/reagent/growthserum = 6,
+							/datum/reagent/consumable/nutriment/peptides = 4,
+							/datum/reagent/consumable/cornoil = 3,
+							/datum/reagent/consumable/cooking_oil = 1,
+							/datum/reagent/consumable/space_cola = 1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown = 1)
+	suppressive_reagents = list(
+							/datum/reagent/consumable/clownstears = -8,
+							/datum/reagent/toxin/minttoxin = -6,
+							/datum/reagent/consumable/ethanol/silencer = -3,
+							/datum/reagent/consumable/ethanol/fernet = -3,
+							/datum/reagent/toxin/lipolicide = -3,
+							/datum/reagent/consumable/nothing = -2,
+							/datum/reagent/toxin/bad_food = -1)
+
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton = 1)
 
 /datum/micro_organism/cell_line/clown/longclown
 	desc = "long clown bits"
 
-	required_reagents = list(/datum/reagent/consumable/banana)
-	supplementary_reagents = list(/datum/reagent/consumable/laughter = 4)
+	required_reagents = list(
+							/datum/reagent/consumable/nutriment/protein,
+							/datum/reagent/consumable/banana)
+
+	supplementary_reagents = list(
+							/datum/reagent/drug/happiness = 5,
+							/datum/reagent/toxin/mimesbane = 4,
+							/datum/reagent/consumable/laughter = 3,
+							/datum/reagent/nitrous_oxide = 2)
+
+	suppressive_reagents = list(
+						/datum/reagent/consumable/clownstears = -8,
+						/datum/reagent/consumable/ethanol/beepsky_smash = -3,
+						/datum/reagent/consumable/ethanol/silencer = -3,
+						/datum/reagent/toxin/mutetoxin = -3,
+						/datum/reagent/consumable/nothing = -2,
+						/datum/reagent/sulfur = -1)
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
 
