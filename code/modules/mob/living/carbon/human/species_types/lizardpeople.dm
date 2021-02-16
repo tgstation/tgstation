@@ -99,7 +99,7 @@
 
 		// organ.Insert will qdel any existing organs in the same slot, so
 		// we don't need to manage that.
-		new_tail.Insert(C, TRUE, FALSE, ORGAN_MODIFIED_ON_INIT)
+		new_tail.Insert(C, special = TRUE, drop_if_replaced = FALSE, organ_init = TRUE)
 
 /*
 Lizard subspecies: ASHWALKERS

@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					oldorgan = null //now deleted
 			else
 				oldorgan.before_organ_replacement(neworgan)
-				oldorgan.Remove(C, TRUE, ORGAN_MODIFIED_ON_INIT)
+				oldorgan.Remove(C, special = TRUE, organ_init = TRUE)
 				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
 
 
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			oldorgan.setOrganDamage(0)
 		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
-			neworgan.Insert(C, TRUE, FALSE, ORGAN_MODIFIED_ON_INIT)
+			neworgan.Insert(C, special = TRUE, drop_if_replaced = FALSE, organ_init = TRUE)
 
 		if(!used_neworgan)
 			qdel(neworgan)
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				continue
 			var/obj/item/organ/I = C.getorgan(mutantorgan)
 			if(I)
-				I.Remove(C, organ_init = ORGAN_MODIFIED_ON_INIT)
+				I.Remove(C, organ_init = TRUE)
 				QDEL_NULL(I)
 
 	for(var/organ_path in mutant_organs)
@@ -336,7 +336,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(C, TRUE, FALSE, ORGAN_MODIFIED_ON_INIT)
+			replacement.Insert(C, special = TRUE, drop_if_replaced = FALSE, organ_init = TRUE)
 
 /**
  * Proc called when a carbon becomes this species.
@@ -2034,7 +2034,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * lost_tail - the tail that was removed
  * on_species_init - whether or not this was called when the species was initialized, or if it was called due to an ingame means (like surgery)
  */
-/datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail, on_species_init = ORGAN_MODIFIED_ON_RUNTIME)
+/datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail, on_species_init = FALSE)
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "right_tail_regained")
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
 	stop_wagging_tail(tail_owner)
@@ -2058,12 +2058,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * lost_tail - the tail that was added
  * on_species_init - whether or not this was called when the species was initialized, or if it was called due to an ingame means (like surgery)
  */
-/datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail, on_species_init = ORGAN_MODIFIED_ON_RUNTIME)
+/datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail, on_species_init = FALSE)
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
 
 	// If it's initializing the species, don't add moodlets
-	if(on_species_init == ORGAN_MODIFIED_ON_INIT)
+	if(on_species_init)
 		return
 	// If we don't have a set tail, don't add moodlets
 	if(!mutant_organs.len)
