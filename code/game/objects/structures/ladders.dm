@@ -126,16 +126,16 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ladder/attack_hand(mob/user)
+/obj/structure/ladder/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	use(user)
 
-/obj/structure/ladder/attack_paw(mob/user)
+/obj/structure/ladder/attack_paw(mob/user, list/modifiers)
 	return use(user)
 
-/obj/structure/ladder/attack_alien(mob/user)
+/obj/structure/ladder/attack_alien(mob/user, list/modifiers)
 	return use(user)
 
 /obj/structure/ladder/attack_larva(mob/user)

@@ -39,7 +39,7 @@
 	else
 		return ..()
 
-/obj/machinery/plate_press/attack_hand(mob/living/user)
+/obj/machinery/plate_press/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!pressing && current_plate)
 		work_press(user)
