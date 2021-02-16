@@ -7,7 +7,7 @@
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 
-	if(!currently_scanned_atom.custom_materials[SSmaterials.GetMaterialRef(/datum/material/meat)])
+	if(!currently_scanned_atom.has_material_type(/datum/material/meat))
 		linked_experiment_handler.announce_message("Object is not made out of the correct materials.")
 		return FALSE
 

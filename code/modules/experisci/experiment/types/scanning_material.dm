@@ -16,9 +16,9 @@
 		required_materials[i] = chosen_material
 
 /datum/experiment/scanning/random/material/final_contributing_index_checks(atom/target, typepath)
-	return ..() && target.custom_materials && target.custom_materials[SSmaterials.GetMaterialRef(required_materials[typepath])]
+	return ..() && target.custom_materials && target.has_material_type(required_materials[typepath])
 
 /datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)
-	var/datum/material/required_material = SSmaterials.GetMaterialRef(required_materials[target])
+	var/datum/material/required_material = GET_MATERIAL_REF(required_materials[target])
 	return EXP_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
 		traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])

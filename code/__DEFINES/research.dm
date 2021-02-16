@@ -33,7 +33,7 @@
 	)
 
 /// Amount of cash you can get from a maxcap
-#define TECHWEB_BOMB_POINTCAP 50000
+#define TECHWEB_BOMB_CASHCAP 50000
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3
