@@ -1661,7 +1661,7 @@
 	if(!length(cached_materials))
 		return null
 
-	. = list()
+	var/materials_of_type
 	for(var/m in cached_materials)
 		if(cached_materials[m] < mat_amount)
 			continue
@@ -1675,7 +1675,8 @@
 			continue
 		if(no_flags && (category_flags & no_flags))
 			continue
-		.[material] = cached_materials[m]
+		LAZYSET(materials_of_type, material, cached_materials[m])
+	return materials_of_type
 
 /**
  * Gets the most common material in the object.
