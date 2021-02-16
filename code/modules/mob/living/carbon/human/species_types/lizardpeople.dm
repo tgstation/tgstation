@@ -111,3 +111,38 @@ Lizard subspecies: ASHWALKERS
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/lizard/ash
+
+/*
+Lizard subspecies: SILVER SCALED
+*/
+/datum/species/lizard/silverscale
+	name = "Silver Scale"
+	id = "silverlizard"
+	limbs_id = "lizard"
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_HOLY,TRAIT_NOBREATH,TRAIT_VIRUSIMMUNE,TRAIT_WINE_TASTER)
+	species_language_holder = /datum/language_holder/lizard/silver
+	mutanttongue = /obj/item/organ/tongue/lizard/silver
+	armor = 10 //very light silvery scales soften blows
+	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	///stored mutcolor for when we turn back off of a silverscale.
+	var/old_mutcolor
+	///stored eye color for when we turn back off of a silverscale.
+	var/old_eyecolor
+
+/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	var/mob/living/carbon/human/new_silverscale = C
+	old_mutcolor = C.dna.features["mcolor"]
+	old_eyecolor = new_silverscale.eye_color
+	new_silverscale.dna.features["mcolor"] = "eeeeee"
+	new_silverscale.eye_color = "0000a0"
+	..()
+	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
+
+/datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/C)
+	var/mob/living/carbon/human/was_silverscale = C
+	was_silverscale.dna.features["mcolor"] = old_mutcolor
+	was_silverscale.eye_color = old_eyecolor
+
+	was_silverscale.remove_filter("silver_glint")
+	..()

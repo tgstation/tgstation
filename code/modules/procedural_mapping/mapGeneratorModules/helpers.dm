@@ -20,7 +20,7 @@
 /datum/map_generator_module/bottom_layer/massdelete
 	spawnableAtoms = list()
 	spawnableTurfs = list()
-	var/deleteturfs = TRUE	//separate var for the empty type.
+	var/deleteturfs = TRUE //separate var for the empty type.
 	var/list/ignore_typecache
 
 /datum/map_generator_module/bottom_layer/massdelete/generate()

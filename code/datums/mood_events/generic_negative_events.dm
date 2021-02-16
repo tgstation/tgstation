@@ -329,3 +329,8 @@
 	description = "<span class='boldwarning'>Is this some kind of sick joke?! This is NOT the right tail.</span>\n"
 	mood_change = -12 // -8 for tail still missing + -4 bonus for being frakenstein's monster
 	timeout = 5 MINUTES
+
+/datum/mood_event/burnt_wings
+	description = "<span class='boldwarning'>MY PRECIOUS WINGS!!</span>\n"
+	mood_change = -10
+	timeout = 10 MINUTES

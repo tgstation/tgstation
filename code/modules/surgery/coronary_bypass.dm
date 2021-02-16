@@ -63,7 +63,7 @@
 /datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	target.setOrganLoss(ORGAN_SLOT_HEART, 60)
 	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
-	if(heart)	//slightly worrying if we lost our heart mid-operation, but that's life
+	if(heart) //slightly worrying if we lost our heart mid-operation, but that's life
 		heart.operated = TRUE
 	display_results(user, target, "<span class='notice'>You successfully graft a bypass onto [target]'s heart.</span>",
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>",

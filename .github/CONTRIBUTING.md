@@ -212,7 +212,19 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
-You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces.
+Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
+
+```dm
+// Bad
+#define SPECIES_MOTH			"moth"
+#define SPECIES_LIZARDMAN		"lizardman"
+#define SPECIES_FELINID			"felinid"
+
+// Good
+#define SPECIES_MOTH "moth"
+#define SPECIES_LIZARDMAN "lizardman"
+#define SPECIES_FELINID "felinid"
+```
 
 ### No hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
@@ -462,6 +474,78 @@ When adding new signals to root level procs, eg;
 	dir = newdir
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
+
+### Use descriptive and obvious names
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
+
+#### Don't use abbreviations
+Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
+
+```dm
+// What is M? The user? The target?
+// What is A? The target? The item?
+/proc/use_item(mob/M, atom/A)
+
+// Much better!
+/proc/use_item(mob/user, atom/target)
+```
+
+Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
+
+#### Naming things when typecasting
+When typecasting, keep your names descriptive:
+```dm
+var/mob/living/living_target = target
+var/mob/living/carbon/carbon_target = living_target
+```
+
+Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
+
+Note that it's okay, semantically, to use the same variable name as the type, e.g.:
+```dm
+var/atom/atom
+var/client/client
+var/mob/mob
+```
+
+Your editor may highlight the variable names, but BYOND, and we, accept these as variable names:
+
+```dm
+// This functions properly!
+var/client/client = CLIENT_FROM_VAR(usr)
+// vvv this may be highlighted, but it's fine!
+client << browse(...)
+```
+
+#### Name things as directly as possible
+`was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
+
+#### Avoid negative variable names
+`is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
+
+#### Exceptions to variable names
+
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+
+Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
+
+```dm
+// Bad
+for (var/datum/reagent/R as anything in reagents)
+
+// Good
+for (var/datum/reagent/deadly_reagent as anything in reagents)
+
+// Allowed, but still has the potential to not be clear. What does `i` refer to?
+for (var/i in 1 to 12)
+
+// Better
+for (var/month in 1 to 12)
+
+// Bad, only use `i` for numeral loops
+for (var/i in reagents)
+```
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)

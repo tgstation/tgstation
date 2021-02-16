@@ -23,8 +23,8 @@
 		return TRUE
 	return FALSE
 
-//	Arguments: event_type as text, proc_holder as datum, proc_name as text
-//	Returns: New event, null on error.
+// Arguments: event_type as text, proc_holder as datum, proc_name as text
+// Returns: New event, null on error.
 /datum/events/proc/addEvent(event_type as text, datum/callback/cb)
 	if(!event_type || !cb)
 		return
