@@ -4,7 +4,7 @@
  * Arguments:
  * * amount The amount that will be used to adjust the mob's health
  * * updating_health If the mob's health should be immediately updated to a new value
- * * forced If we should force update the mob's health no matter the restrictions, like GODMODE
+ * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
  */
 /mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
