@@ -80178,34 +80178,11 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-<<<<<<< HEAD
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"deg" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/machinery/destructive_scanner,
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"deh" = (
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-=======
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "lHI" = (
 /obj/item/radio/intercom{
 	pixel_x = 26
->>>>>>> realmaster
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -81486,37 +81463,6 @@
 /area/command/meeting_room/council)
 "mdm" = (
 /obj/structure/table,
-<<<<<<< HEAD
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/item/clipboard{
-	pixel_x = -5
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/item/toy/figure/scientist{
-	pixel_x = -4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/item/experi_scanner{
-	pixel_x = 9
-	},
-/obj/item/experi_scanner{
-	pixel_x = 14;
-	pixel_y = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"dgN" = (
-/obj/structure/table,
-/obj/item/disk/tech_disk{
-	pixel_x = -6
-=======
 /obj/item/storage/firstaid/regular,
 /obj/item/paper/pamphlet/gateway,
 /obj/item/paper/pamphlet/gateway,
@@ -81551,7 +81497,6 @@
 "mdG" = (
 /obj/machinery/light/small{
 	dir = 1
->>>>>>> realmaster
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,

@@ -44195,37 +44195,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/structure/rack,
-/obj/item/experi_scanner{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/experi_scanner{
-	pixel_x = -3
-	},
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"chn" = (
-/obj/machinery/telecomms/broadcaster/preset_right,
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/tcommsat/server)
-"cho" = (
-/obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/tcommsat/server)
-"chp" = (
-/turf/closed/wall/r_wall,
-/area/security/checkpoint/science/research)
-"chq" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Post - Research Division";
-	req_access_txt = "63"
-=======
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
->>>>>>> realmaster
 	},
 /obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark,
@@ -45404,21 +45375,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-<<<<<<< HEAD
-/obj/machinery/destructive_scanner,
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"ckb" = (
-/obj/effect/landmark/start/scientist,
-/obj/effect/turf_decal/stripes/line{
-=======
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "jlh" = (
 /obj/machinery/meter,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
->>>>>>> realmaster
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
