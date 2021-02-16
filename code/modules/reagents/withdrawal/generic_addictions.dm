@@ -65,7 +65,8 @@
 	affected_carbon.Jitter(15 * delta_time)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 	if(DT_PROB(4, delta_time))
-		affected_carbon.apply_status_effect(STATUS_EFFECT_SEIZURE)
+		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
+			affected_carbon.apply_status_effect(STATUS_EFFECT_SEIZURE)
 
 /datum/addiction/hallucinogens
 	name = "hallucinogen"
@@ -113,7 +114,7 @@
 	//Only like gross food
 	affected_human.dna?.species.liked_food = GROSS
 	affected_human.dna?.species.disliked_food = NONE
-	affected_human.dna?.species.toxic_food = ALL & ~GROSS
+	affected_human.dna?.species.toxic_food = ~GROSS
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
