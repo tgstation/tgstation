@@ -170,7 +170,7 @@
 
 		var/is_a_thing = "are [refund_amt] credit\s."
 		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !attacking_pinpointer.roundstart)
-			synth_acc._adjust_money(-refund_amt)
+			synth_acc.adjust_money(-refund_amt)
 			var/obj/item/holochip/holochip = new (user.loc)
 			holochip.credits = refund_amt
 			holochip.name = "[holochip.credits] credit holochip"
