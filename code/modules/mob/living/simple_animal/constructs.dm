@@ -34,7 +34,6 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
-	hud_type = /datum/hud/constructs
 	var/list/construct_spells = list()
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
@@ -47,7 +46,6 @@
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_health_hud()
 	var/spellnum = 1
 	for(var/spell in construct_spells)
 		var/the_spell = new spell(null)
@@ -113,11 +111,6 @@
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0
-
-/mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(updating_health)
-		update_health_hud()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/juggernaut
@@ -479,21 +472,3 @@
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"
 		the_construct.seeking = TRUE
-
-
-/////////////////////////////ui stuff/////////////////////////////
-
-/mob/living/simple_animal/hostile/construct/update_health_hud()
-	if(hud_used)
-		if(health >= maxHealth)
-			hud_used.healths.icon_state = "[icon_state]_health0"
-		else if(health > maxHealth*0.8)
-			hud_used.healths.icon_state = "[icon_state]_health2"
-		else if(health > maxHealth*0.6)
-			hud_used.healths.icon_state = "[icon_state]_health3"
-		else if(health > maxHealth*0.4)
-			hud_used.healths.icon_state = "[icon_state]_health4"
-		else if(health > maxHealth*0.2)
-			hud_used.healths.icon_state = "[icon_state]_health5"
-		else
-			hud_used.healths.icon_state = "[icon_state]_health6"
