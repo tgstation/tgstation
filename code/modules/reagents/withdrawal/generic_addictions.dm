@@ -3,19 +3,19 @@
 	name = "opiod"
 	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some pain relief...", "It aches all over...I need some opiods!")
 
-/datum/addiction/opiods/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
+/datum/addiction/opiods/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(prob(20))
+	if(DT_PROB(10, delta_time))
 		affected_carbon.emote("yawn")
 
 /datum/addiction/opiods/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.apply_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
 
-/datum/addiction/opiods/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
+/datum/addiction/opiods/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED && prob(15))
-		affected_carbon.adjust_disgust(25)
+	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED && DT_PROB(7.5, delta_time))
+		affected_carbon.adjust_disgust(12.5 * delta_time)
 
 
 /datum/addiction/opiods/lose_addiction(datum/mind/victim_mind)
@@ -51,20 +51,20 @@
 	name = "alcohol"
 	withdrawal_stage_messages = list("I could use a drink...", "Maybe the bar is still open?..", "God I need a drink!")
 
-/datum/addiction/alcohol/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
+/datum/addiction/alcohol/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.Jitter(10)
+	affected_carbon.Jitter(5 * delta_time)
 
-/datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
+/datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.Jitter(20)
+	affected_carbon.Jitter(10 * delta_time)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 
-/datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
+/datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.Jitter(30)
+	affected_carbon.Jitter(15 * delta_time)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
-	if(prob(8))
+	if(DT_PROB(4, delta_time))
 		affected_carbon.apply_status_effect(STATUS_EFFECT_SEIZURE)
 
 /datum/addiction/hallucinogens
@@ -96,9 +96,9 @@
 	. = ..()
 	affected_carbon.hal_screwyhud = SCREWYHUD_HEALTHY
 
-/datum/addiction/maintenance_drugs/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
+/datum/addiction/maintenance_drugs/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(prob(15))
+	if(DT_PROB(7.5, delta_time))
 		affected_carbon.emote("growls")
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
@@ -116,9 +116,17 @@
 	affected_human.dna?.species.toxic_food = ALL & ~GROSS
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
-	ADD_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, type)
+	. = ..()
+	if(!ishuman(affected_carbon))
+		return
 
-/datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
+	var/mob/living/carbon/human/affected_human
+	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
+
+	ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
+	eyes.refresh()
+
+/datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	if(!ishuman(affected_carbon))
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
@@ -127,7 +135,7 @@
 	if(lums >= 0.4)
 		SEND_SIGNAL(affected_human, COMSIG_ADD_MOOD_EVENT, "too_bright", /datum/mood_event/bright_light)
 		affected_human.dizziness = min(40, affected_human.dizziness + 3)
-		affected_human.add_confusion(3)
+		affected_human.set_confusion(min(affected_human.get_confusion() + (0.5 * delta_time), 20))
 	else
 		SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "too_bright")
 
@@ -143,3 +151,5 @@
 	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
 	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
 	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
+	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
+	eyes.refresh()

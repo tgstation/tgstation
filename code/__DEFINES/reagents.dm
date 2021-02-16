@@ -57,11 +57,11 @@
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
-#define REAGENT_DEAD_PROCESS (1<<0) 
+#define REAGENT_DEAD_PROCESS (1<<0)
 ///Do not split the chem at all during processing - ignores all purity effects
-#define REAGENT_DONOTSPLIT (1<<1) 
+#define REAGENT_DONOTSPLIT (1<<1)
 ///Doesn't appear on handheld health analyzers.
-#define REAGENT_INVISIBLE (1<<2) 
+#define REAGENT_INVISIBLE (1<<2)
 ///When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SNEAKYNAME          (1<<3)
 ///Retains initial volume of chem when splitting for purity effects
@@ -75,7 +75,7 @@
 ///Convert into inverse on reaction completion when purity is low enough
 #define REACTION_CLEAR_INVERSE      (1<<1)
 ///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_CLEAR_RETAIN (1<<2) 
+#define REACTION_CLEAR_RETAIN (1<<2)
 ///Used to create instant reactions
 #define REACTION_INSTANT            (1<<3)
 ///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
@@ -92,7 +92,7 @@
 
 ///Addiction start/ends
 #define WITHDRAWAL_STAGE1_START_CYCLE 1
-#define WITHDRAWAL_STAGE1_END_CYCLE 30
-#define WITHDRAWAL_STAGE2_START_CYCLE 31
-#define WITHDRAWAL_STAGE2_END_CYCLE 60
-#define WITHDRAWAL_STAGE3_START_CYCLE 61
+#define WITHDRAWAL_STAGE1_END_CYCLE 60
+#define WITHDRAWAL_STAGE2_START_CYCLE 61
+#define WITHDRAWAL_STAGE2_END_CYCLE 120
+#define WITHDRAWAL_STAGE3_START_CYCLE 121

@@ -8,8 +8,8 @@
 	var/addiction_loss_threshold = 400
 	///Messages for each stage of addictions.
 	var/list/withdrawal_stage_messages = list()
-	///Rates at which you lose addiction (in units/tick) if you are not on the drug at that time per stage
-	var/addiction_loss_per_stage = list(1,2,3)
+	///Rates at which you lose addiction (in units/second) if you are not on the drug at that time per stage
+	var/addiction_loss_per_stage = list(0.5, 0.5, 1, 1.5)
 	///Rate at which high sanity helps addiction loss
 	var/high_sanity_addiction_loss = 2
 
@@ -45,12 +45,12 @@
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
 /datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time = 2)
-	var/currently_addicted = LAZYACCESS(affected_carbon.mind.active_addictions, type)
+	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type) //If this is null, we're not addicted
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
 			if(addiction == type && possible_drug.volume >= MIN_ADDICTION_REAGENT_AMOUNT) //If one of them matches, and we have enough of it in our system, we're not losing addiction
-				if(currently_addicted)
+				if(current_addiction_cycle)
 					LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
 				on_drug_of_this_addiction = TRUE
 				return
@@ -64,15 +64,15 @@
 			withdrawal_stage = 2
 		if(WITHDRAWAL_STAGE3_START_CYCLE to INFINITY)
 			withdrawal_stage = 3
+		else
+			withdrawal_stage = 0
 
 	if(!on_drug_of_this_addiction)
-		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage])) //If true was returned, we lost the addiction!
+		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * delta_time)) //If true was returned, we lost the addiction!
 			return
 
-	if(!currently_addicted) //Dont do the effects if were not on drugs
+	if(!current_addiction_cycle) //Dont do the effects if were not on drugs
 		return FALSE
-
-	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type)
 
 	switch(current_addiction_cycle)
 		if(WITHDRAWAL_STAGE1_START_CYCLE)
@@ -85,13 +85,13 @@
 	///One cycle is 2 seconds
 	switch(withdrawal_stage)
 		if(1)
-			withdrawal_stage_1_process(affected_carbon)
+			withdrawal_stage_1_process(affected_carbon, delta_time)
 		if(2)
-			withdrawal_stage_2_process(affected_carbon)
+			withdrawal_stage_2_process(affected_carbon, delta_time)
 		if(3)
-			withdrawal_stage_3_process(affected_carbon)
+			withdrawal_stage_3_process(affected_carbon, delta_time)
 
-	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!
+	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1 * delta_time) //Next cycle!
 
 /// Called when addiction enters stage 1
 /datum/addiction/proc/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
@@ -107,17 +107,17 @@
 
 
 /// Called when addiction is in stage 1 every process
-/datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
-	if(prob(10))
+/datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
+	if(DT_PROB(5, delta_time))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[1]]</span>")
 
 /// Called when addiction is in stage 2 every process
-/datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
-	if(prob(20))
+/datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
+	if(DT_PROB(10, delta_time))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 
 
 /// Called when addiction is in stage 3 every process
-/datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
-	if(prob(30))
+/datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
+	if(DT_PROB(15, delta_time))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[3]]</span>")

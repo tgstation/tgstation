@@ -5,7 +5,6 @@ This subsystem mostly exists to populate and manage the withdrawal singletons.
 SUBSYSTEM_DEF(addiction)
 	name = "Addiction"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_ADDICTION
 	///Dictionary of addiction.type || addiction ref
 	var/list/all_addictions = list()
 
