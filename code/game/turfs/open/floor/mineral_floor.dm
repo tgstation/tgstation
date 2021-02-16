@@ -175,7 +175,6 @@
 	name = "shuttle floor"
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-	broken_states = list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
 	custom_materials = list(/datum/material/alloy/plastitanium = 500)
 
 /turf/open/floor/mineral/plastitanium/setup_broken_states()
