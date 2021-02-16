@@ -221,7 +221,7 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	var/list/modifiers = params2list(click_parameters)
+	var/list/modifiers = params2list(params)
 	if((!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
