@@ -49,3 +49,8 @@
 	overlays -= typing_indicator
 
 	me_verb(message)
+
+/mob/proc/clear_typing_indicator()
+	var/image/typing_indicator = image('icons/mob/talk.dmi', src, "default0", FLY_LAYER)
+	overlays -= typing_indicator
+	return

@@ -544,7 +544,6 @@
 	var/old_beard
 	var/old_beard_color
 	var/old_hair_color
-	var/old_name
 
 
 /obj/item/clothing/glasses/fox/equipped(mob/user, slot)
@@ -556,10 +555,8 @@
 		old_beard = H.facial_hairstyle
 		old_hair_color = H.hair_color
 		old_beard_color = H.facial_hair_color
-		old_name = H.real_name
 		user.gender = MALE
 		handled = TRUE
-		H.real_name = "Rob Vortex"
 		H.hairstyle = "Business Hair 2"
 		H.facial_hairstyle = "Beard (Seven o Clock Shadow)"
 		H.hair_color = sanitize_hexcolor("#1E1D27")
@@ -584,7 +581,6 @@
 			H.facial_hairstyle = old_beard
 			H.hair_color = old_hair_color
 			H.facial_hair_color = old_beard_color
-			H.real_name = old_name
 			H.update_hair()
 			playsound(T, 'sound/effects/phasein.ogg', 40, TRUE)
 

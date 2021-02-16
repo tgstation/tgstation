@@ -115,3 +115,4 @@ config/title_music/sounds/Neon Starlight.ogg
 config/title_music/sounds/It Was At That Point I Realised.ogg
 config/title_music/sounds/Artificial Intelligence Bomb.ogg
 config/title_music/sounds/3D Galax.ogg
+config/title_music/sounds/Stranded.ogg
