@@ -40,7 +40,7 @@
 				M.dna.unique_enzymes = fields["UE"]
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
-			if(fields["UI"])	//UI+UE
+			if(fields["UI"]) //UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack("[log_msg] [loc_name(user)]")
@@ -73,7 +73,7 @@
 
 	log_combat(user, target, "injected", src)
 
-	if(!inject(target, user))	//Now we actually do the heavy lifting.
+	if(!inject(target, user)) //Now we actually do the heavy lifting.
 		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
 
 	used = 1
@@ -437,7 +437,7 @@
 	var/duration = 600
 
 /obj/item/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
-	if(M.stat == DEAD)	//prevents dead people from having their DNA changed
+	if(M.stat == DEAD) //prevents dead people from having their DNA changed
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
@@ -474,7 +474,7 @@
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 				M.dna.temporary_mutations[UE_CHANGED] = endtime
-			if(fields["UI"])	//UI+UE
+			if(fields["UI"]) //UI+UE
 				if(!M.dna.previous["UI"])
 					M.dna.previous["UI"] = M.dna.uni_identity
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])

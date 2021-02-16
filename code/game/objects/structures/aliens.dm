@@ -1,9 +1,9 @@
 /* Alien shit!
  * Contains:
- *		structure/alien
- *		Resin
- *		Weeds
- *		Egg
+ * structure/alien
+ * Resin
+ * Weeds
+ * Egg
  */
 
 
@@ -259,7 +259,7 @@
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
-#define MIN_GROWTH_TIME 900	//time it takes to grow a hugger
+#define MIN_GROWTH_TIME 900 //time it takes to grow a hugger
 #define MAX_GROWTH_TIME 1500
 
 /obj/structure/alien/egg
@@ -271,7 +271,7 @@
 	anchored = TRUE
 	max_integrity = 100
 	integrity_failure = 0.05
-	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 	var/obj/item/clothing/mask/facehugger/child
 

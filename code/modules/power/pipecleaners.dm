@@ -23,9 +23,9 @@ GLOBAL_LIST_INIT(pipe_cleaner_colors, list(
 
 /* Cable directions (d1 and d2)
  * 9   1   5
- *	\ | /
+ * \ | /
  * 8 - 0 - 4
- *	/ | \
+ * / | \
  * 10  2   6
 
 If d1 = 0 and d2 = 0, there's no pipe_cleaner
@@ -92,12 +92,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		color = pipe_cleaner_colors[random_color]
 	update_icon()
 
-/obj/structure/pipe_cleaner/Destroy()					// called when a pipe_cleaner is deleted
+/obj/structure/pipe_cleaner/Destroy() // called when a pipe_cleaner is deleted
 	//If we have a stored item at this point, lets just delete it, since that should be
 	//handled by deconstruction
 	if(stored)
 		QDEL_NULL(stored)
-	return ..()									// then go ahead and delete the pipe_cleaner
+	return ..() // then go ahead and delete the pipe_cleaner
 
 /obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -334,10 +334,10 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = C.loc
 
-	if(!isturf(T))		// sanity check
+	if(!isturf(T)) // sanity check
 		return
 
-	if(get_dist(C, user) > 1)		// make sure it's close enough
+	if(get_dist(C, user) > 1) // make sure it's close enough
 		to_chat(user, "<span class='warning'>You can't lay pipe cleaner at a place that far away!</span>")
 		return
 
@@ -352,7 +352,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// one end of the clicked pipe_cleaner is pointing towards us and no direction was supplied
 	if((C.d1 == dirn || C.d2 == dirn) && !forceddir)
-		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
+		if(!U.can_have_cabling()) //checking if it's a plating or catwalk
 			if (showerror)
 				to_chat(user, "<span class='warning'>You can only lay pipe cleaners on catwalks and plating!</span>")
 			return
@@ -360,9 +360,9 @@ By design, d1 is the smallest direction and d2 is the highest
 			// pipe_cleaner is pointing at us, we're standing on an open tile
 			// so create a stub pointing at the clicked pipe_cleaner on our tile
 
-			var/fdirn = turn(dirn, 180)		// the opposite direction
+			var/fdirn = turn(dirn, 180) // the opposite direction
 
-			for(var/obj/structure/pipe_cleaner/LC in U)		// check to make sure there's not a pipe_cleaner there already
+			for(var/obj/structure/pipe_cleaner/LC in U) // check to make sure there's not a pipe_cleaner there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
 					if (showerror)
 						to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
@@ -382,19 +382,19 @@ By design, d1 is the smallest direction and d2 is the highest
 	// exisiting pipe_cleaner doesn't point at our position or we have a supplied direction, so see if it's a stub
 	else if(C.d1 == 0)
 							// if so, make it a full pipe_cleaner pointing from it's old direction to our dirn
-		var/nd1 = C.d2	// these will be the new directions
+		var/nd1 = C.d2 // these will be the new directions
 		var/nd2 = dirn
 
 
-		if(nd1 > nd2)		// swap directions to match icons/states
+		if(nd1 > nd2) // swap directions to match icons/states
 			nd1 = dirn
 			nd2 = C.d2
 
 
-		for(var/obj/structure/pipe_cleaner/LC in T)		// check to make sure there's no matching pipe_cleaner
-			if(LC == C)			// skip the pipe_cleaner we're interacting with
+		for(var/obj/structure/pipe_cleaner/LC in T) // check to make sure there's no matching pipe_cleaner
+			if(LC == C) // skip the pipe_cleaner we're interacting with
 				continue
-			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no pipe_cleaner matches either direction
+			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) ) // make sure no pipe_cleaner matches either direction
 				if (showerror)
 					to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
 

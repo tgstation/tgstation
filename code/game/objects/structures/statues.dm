@@ -550,6 +550,8 @@ Moving interrupts
 	return ..()
 
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
+	if(content_ma)
+		QDEL_NULL(content_ma)
 	content_ma = new
 	content_ma.appearance = model_appearance
 	content_ma.pixel_x = 0

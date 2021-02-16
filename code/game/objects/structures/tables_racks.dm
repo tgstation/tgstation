@@ -1,11 +1,11 @@
 /* Tables and Racks
  * Contains:
- *		Tables
- *		Glass Tables
- *		Wooden Tables
- *		Reinforced Tables
- *		Racks
- *		Rack Parts
+ * Tables
+ * Glass Tables
+ * Wooden Tables
+ * Reinforced Tables
+ * Racks
+ * Rack Parts
  */
 
 /*

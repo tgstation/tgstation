@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sets machine power levels in the area
  */
 /area/LateInitialize()
-	power_change()		// all machines set to current power level, also updates icon
+	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
 
 /area/proc/RunGeneration()
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 	if (state != poweralm)
 		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the source is located.
+		if(istype(source)) //Only report power alarms on the z-level where the source is located.
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
 				if (!state)
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/FD in firedoors)
 			var/obj/machinery/door/firedoor/D = FD
 			var/cont = !D.welded
-			if(cont && opening)	//don't open if adjacent area is on fire
+			if(cont && opening) //don't open if adjacent area is on fire
 				for(var/I in D.affecting_areas)
 					var/area/A = I
 					if(A.fire)
@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/process()
 	if(!triggered_firealarms)
 		firereset() //If there are no breaches or fires, and this alert was caused by a breach or fire, die
-	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
+	if(firedoors_last_closed_on + 100 < world.time) //every 10 seconds
 		ModifyFiredoors(FALSE)
 
 /**
@@ -496,7 +496,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
  * per channel power_equip, power_light, power_environ
  */
-/area/proc/powered(chan)		// return true if the area has power to given channel
+/area/proc/powered(chan) // return true if the area has power to given channel
 
 	if(!requires_power)
 		return TRUE
@@ -524,8 +524,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
  */
 /area/proc/power_change()
-	for(var/obj/machinery/M in src)	// for each machine in the area
-		M.power_change()				// reverify power status (to update icons etc.)
+	for(var/obj/machinery/M in src) // for each machine in the area
+		M.power_change() // reverify power status (to update icons etc.)
 	SEND_SIGNAL(src, COMSIG_AREA_POWER_CHANGE)
 	update_icon()
 

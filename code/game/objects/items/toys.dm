@@ -1,28 +1,28 @@
 /* Toys!
  * Contains
- *		Balloons
- *		Fake singularity
- *		Toy gun
- *		Toy crossbow
- *		Toy swords
- *		Crayons
- *		Snap pops
- *		AI core prizes
- *		Toy codex gigas
- * 		Skeleton toys
- *		Cards
- *		Toy nuke
- *		Fake meteor
- *		Foam armblade
- *		Toy big red button
- *		Beach ball
- *		Toy xeno
+ * Balloons
+ * Fake singularity
+ * Toy gun
+ * Toy crossbow
+ * Toy swords
+ * Crayons
+ * Snap pops
+ * AI core prizes
+ * Toy codex gigas
+ * Skeleton toys
+ * Cards
+ * Toy nuke
+ * Fake meteor
+ * Foam armblade
+ * Toy big red button
+ * Beach ball
+ * Toy xeno
  *      Kitty toys!
- *		Snowballs
- *		Clockwork Watches
- *		Toy Daggers
- *		Squeaky Brain
- *		Broken Radio
+ * Snowballs
+ * Clockwork Watches
+ * Toy Daggers
+ * Squeaky Brain
+ * Broken Radio
  */
 
 /obj/item/toy

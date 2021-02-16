@@ -269,7 +269,7 @@
 	if(!istype(H))
 		return
 	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
+		H.back.add_fingerprint(H,1) //The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)
 			I.add_fingerprint(H,1)
 	if(H.wear_id)

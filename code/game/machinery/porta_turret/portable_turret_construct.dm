@@ -16,13 +16,13 @@
 	anchored = FALSE
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
-	var/finish_name = "turret"	//the name applied to the product turret
+	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
 
 /obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
-		if(PTURRET_UNSECURED)	//first step
+		if(PTURRET_UNSECURED) //first step
 			if(I.tool_behaviour == TOOL_WRENCH && !anchored)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
@@ -157,7 +157,7 @@
 				build_step = PTURRET_CLOSED
 				return
 
-	if(istype(I, /obj/item/pen))	//you can rename turrets like bots!
+	if(istype(I, /obj/item/pen)) //you can rename turrets like bots!
 		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
 		if(!t)
 			return

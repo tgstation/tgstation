@@ -452,7 +452,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		set_light_color(LIGHT_COLOR_FIRE)
 		desc += "<br><b>A tear in reality reveals a coursing river of lava... something recently teleported here from the Lavaland Mines!</b>"
 	outer_portal = new(T, 600, color)
-	light_range = 4
+	set_light_range(4)
 	update_light()
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
@@ -460,7 +460,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(inner_portal)
 	qdel(outer_portal)
 	desc = initial(desc)
-	light_range = 0
+	set_light_range(0)
 	update_light()
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.

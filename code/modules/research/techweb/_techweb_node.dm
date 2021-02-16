@@ -6,16 +6,16 @@
 	var/id
 	var/display_name = "Errored Node"
 	var/description = "Why are you seeing this?"
-	var/hidden = FALSE			//Whether it starts off hidden.
-	var/experimental = FALSE	//If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
-	var/starting_node = FALSE	//Whether it's available without any research.
+	var/hidden = FALSE //Whether it starts off hidden.
+	var/experimental = FALSE //If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
+	var/starting_node = FALSE //Whether it's available without any research.
 	var/list/prereq_ids = list()
 	var/list/design_ids = list()
-	var/list/unlock_ids = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
-	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
-	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
-	var/list/research_costs = list()					//Point cost to research. type = amount
-	var/category = "Misc"				//Category
+	var/list/unlock_ids = list() //CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
+	var/list/boost_item_paths = list() //Associative list, path = list(point type = point_value).
+	var/autounlock_by_boost = TRUE //boosting this will autounlock this node.
+	var/list/research_costs = list() //Point cost to research. type = amount
+	var/category = "Misc" //Category
 
 /datum/techweb_node/error_node
 	id = "ERROR"

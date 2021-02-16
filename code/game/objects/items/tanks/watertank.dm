@@ -126,7 +126,7 @@
 	tank = loc
 	if(!istype(tank))
 		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return

@@ -281,7 +281,7 @@
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
-	. =	expected_damage
+	. = expected_damage
 
 /datum/spacevine_mutation/woodening
 	name = "hardened"
@@ -453,8 +453,8 @@
 		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") == "Yes")
 			DeleteVines()
 
-/datum/spacevine_controller/proc/DeleteVines()	//this is kill
-	QDEL_LIST(vines)	//this will also qdel us
+/datum/spacevine_controller/proc/DeleteVines() //this is kill
+	QDEL_LIST(vines) //this will also qdel us
 
 /datum/spacevine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)

@@ -80,7 +80,7 @@
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock
 	ertblast = TRUE
-	var/checkdir = 4	//door won't open if turf in this dir is `turftype`
+	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()

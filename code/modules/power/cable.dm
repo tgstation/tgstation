@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
-	var/cable_layer = CABLE_LAYER_2			//bitflag
+	var/cable_layer = CABLE_LAYER_2 //bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 
@@ -110,14 +110,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					C.linked_dirs &= ~inverse
 					C.update_icon()
 
-/obj/structure/cable/Destroy()					// called when a cable is deleted
+/obj/structure/cable/Destroy() // called when a cable is deleted
 	Disconnect_cable()
 
 	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
+		cut_cable_from_powernet() // update the powernets
+	GLOB.cable_list -= src //remove it from global cable list
 
-	return ..()									// then go ahead and delete the cable
+	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(powernet && (powernet.avail > 0))		// is it powered?
+		if(powernet && (powernet.avail > 0)) // is it powered?
 			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
 		else
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
@@ -668,7 +668,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
-			C.deconstruct()						// remove adversary cable
+			C.deconstruct() // remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
 
@@ -682,12 +682,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	vis_contents += cable_node_3
 	update_icon()
 
-/obj/structure/cable/multilayer/Destroy()					// called when a cable is deleted
+/obj/structure/cable/multilayer/Destroy() // called when a cable is deleted
 	QDEL_NULL(machinery_node)
 	QDEL_NULL(cable_node_1)
 	QDEL_NULL(cable_node_2)
 	QDEL_NULL(cable_node_3)
-	return ..()									// then go ahead and delete the cable
+	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
@@ -755,8 +755,8 @@ GLOBAL_LIST(hub_radial_layer_list)
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
-			C.deconstruct()						// remove adversary cable
-	auto_propagate_cut_cable(src)				// update the powernets
+			C.deconstruct() // remove adversary cable
+	auto_propagate_cut_cable(src) // update the powernets
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")

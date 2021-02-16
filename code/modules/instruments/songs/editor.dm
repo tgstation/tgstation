@@ -112,7 +112,7 @@
 				lines.Remove(l)
 			else
 				linenum++
-		updateDialog(usr)		// make sure updates when complete
+		updateDialog(usr) // make sure updates when complete
 
 /datum/song/Topic(href, href_list)
 	if(!usr.canUseTopic(parent, TRUE, FALSE, FALSE, FALSE))
@@ -228,7 +228,7 @@
 		var/choice = input(usr, "Select Instrument", "Instrument Selection") as null|anything in instruments
 		if(!choice)
 			return
-		choice = instruments[choice]		//get id
+		choice = instruments[choice] //get id
 		if(choice)
 			set_instrument(choice)
 

@@ -1,5 +1,5 @@
-#define MAX_RADIUS_REQUIRED 20		//maxcap
-#define MIN_RADIUS_REQUIRED 4		//1, 2, 4
+#define MAX_RADIUS_REQUIRED 20 //maxcap
+#define MIN_RADIUS_REQUIRED 4 //1, 2, 4
 /**
  * # Explosive compressor machines
  *
@@ -72,7 +72,7 @@
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
 	if(already_made >= hard_limit)
-		return		//return null
+		return //return null
 	// my crappy autoscale formula
 	// linear scaling.
 	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
@@ -129,14 +129,14 @@
 		inserted_core = null
 		say("Transfer valve resulted in negligible explosive power. Items ejected.")
 		return
-	mix.react()		// build more pressure
+	mix.react() // build more pressure
 	var/pressure = mix.return_pressure()
 	var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
 	if(range < required_radius)
 		inserted_bomb.forceMove(src)
 		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
 		return
-	QDEL_NULL(inserted_bomb)	// bomb goes poof
+	QDEL_NULL(inserted_bomb) // bomb goes poof
 	inserted_core.create_core(drop_location(), TRUE, TRUE)
 	inserted_core = null
 	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
