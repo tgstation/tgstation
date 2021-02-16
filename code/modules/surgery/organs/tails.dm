@@ -10,7 +10,7 @@
 
 /obj/item/organ/tail/Insert(mob/living/carbon/human/tail_owner, special = FALSE, drop_if_replaced = TRUE, organ_init = FALSE)
 	. = ..()
-	if(!organ_init && tail_owner?.dna?.species)
+	if(tail_owner?.dna?.species)
 		tail_owner.dna.species.on_tail_regain(tail_owner, src, organ_init)
 
 /obj/item/organ/tail/Remove(mob/living/carbon/human/tail_owner, special = FALSE, organ_init = FALSE)
