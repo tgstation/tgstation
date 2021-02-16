@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(fexists(roundend_report_file()))
 		add_verb(src, /client/proc/show_previous_roundend_report)
 
-	if(fexists("data/last_roundend/server_last_roundend_report.html"))
+	if(fexists("data/server_last_roundend_report.html"))
 		add_verb(src, /client/proc/show_servers_last_roundend_report)
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
