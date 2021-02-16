@@ -116,7 +116,7 @@
 	affected_human.dna?.species.toxic_food = ALL & ~GROSS
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
-	ADD_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, "maint_drug_addiction")
+	ADD_TRAIT(affected_carbon, TRAIT_NIGHT_VISION, type)
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
 	if(!ishuman(affected_carbon))
@@ -142,4 +142,4 @@
 	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
 	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
 	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
-	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
+	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)

@@ -100,7 +100,7 @@
 #define STATUS_EFFECT_HIGHBLOODPRESSURE /datum/status_effect/high_blood_pressure
 
 
-/// https://www.youtube.com/watch?v=wvkHIZg_954
+/// makes you seize up. reminds me of this video https://www.youtube.com/watch?v=wvkHIZg_954
 #define STATUS_EFFECT_SEIZURE /datum/status_effect/seizure
 
 

@@ -8,8 +8,10 @@
 	var/addiction_loss_threshold = 400
 	///Messages for each stage of addictions.
 	var/list/withdrawal_stage_messages = list()
-	///Rate at which you lose addiction (in units/tick) if you are not on the drug at that time
-	var/addiction_loss = 2
+	///Rates at which you lose addiction (in units/tick) if you are not on the drug at that time per stage
+	var/addiction_loss_per_stage = list(1,2,3)
+	///Rate at which high sanity helps addiction loss
+	var/high_sanity_addiction_loss = 2
 
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
@@ -42,7 +44,7 @@
 	to_chat(victim_mind.current, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
-/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon)
+/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time = 2)
 	var/currently_addicted = LAZYACCESS(affected_carbon.mind.active_addictions, type)
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
@@ -53,8 +55,18 @@
 				on_drug_of_this_addiction = TRUE
 				return
 
+	var/withdrawal_stage
+
+	switch(current_addiction_cycle)
+		if(WITHDRAWAL_STAGE1_START_CYCLE to WITHDRAWAL_STAGE1_END_CYCLE)
+			withdrawal_stage = 1
+		if(WITHDRAWAL_STAGE2_START_CYCLE to WITHDRAWAL_STAGE2_END_CYCLE)
+			withdrawal_stage = 2
+		if(WITHDRAWAL_STAGE3_START_CYCLE to INFINITY)
+			withdrawal_stage = 3
+
 	if(!on_drug_of_this_addiction)
-		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss)) //If true was returned, we lost the addiction!
+		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage])) //If true was returned, we lost the addiction!
 			return
 
 	if(!currently_addicted) //Dont do the effects if were not on drugs
@@ -71,12 +83,12 @@
 			withdrawal_enters_stage_3(affected_carbon)
 
 	///One cycle is 2 seconds
-	switch(current_addiction_cycle)
-		if(WITHDRAWAL_STAGE1_START_CYCLE to WITHDRAWAL_STAGE1_END_CYCLE)
+	switch(withdrawal_stage)
+		if(1)
 			withdrawal_stage_1_process(affected_carbon)
-		if(WITHDRAWAL_STAGE2_START_CYCLE to WITHDRAWAL_STAGE2_END_CYCLE)
+		if(2)
 			withdrawal_stage_2_process(affected_carbon)
-		if(WITHDRAWAL_STAGE3_START_CYCLE to INFINITY)
+		if(3)
 			withdrawal_stage_3_process(affected_carbon)
 
 	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!

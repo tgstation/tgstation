@@ -1714,7 +1714,7 @@
 	color = "#2D2D2D"
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list()
+	addiction_types = null
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
