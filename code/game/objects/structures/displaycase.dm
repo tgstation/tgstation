@@ -174,10 +174,10 @@
 	open = !open
 	update_icon()
 
-/obj/structure/displaycase/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/displaycase/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/displaycase/attack_hand(mob/living/user)
+/obj/structure/displaycase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

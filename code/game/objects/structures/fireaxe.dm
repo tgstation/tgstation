@@ -104,7 +104,7 @@
 		fireaxe = null
 	qdel(src)
 
-/obj/structure/fireaxecabinet/attack_hand(mob/user)
+/obj/structure/fireaxecabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -124,8 +124,8 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	return attack_hand(user)
+/obj/structure/fireaxecabinet/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)

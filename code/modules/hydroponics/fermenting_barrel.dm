@@ -8,6 +8,7 @@
 	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
 	var/open = FALSE
+	var/can_open = TRUE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
 /obj/structure/fermenting_barrel/Initialize()
@@ -56,7 +57,9 @@
 	else
 		return ..()
 
-/obj/structure/fermenting_barrel/attack_hand(mob/user)
+/obj/structure/fermenting_barrel/attack_hand(mob/user, list/modifiers)
+	if(!can_open)
+		return
 	open = !open
 	if(open)
 		reagents.flags &= ~(DRAINABLE)
@@ -80,3 +83,14 @@
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 8)
 	time = 50
 	category = CAT_PRIMAL
+
+//lil gunpowder barrel fer pirates since it's a nice reagent holder
+
+/obj/structure/fermenting_barrel/gunpowder
+	name = "gunpowder barrel"
+	desc = "A large wooden barrel for holding gunpowder. You'll need to take from this to load the cannons."
+	can_open = FALSE
+
+/obj/structure/fermenting_barrel/gunpowder/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/gunpowder, 250)

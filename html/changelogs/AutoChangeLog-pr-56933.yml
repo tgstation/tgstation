@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "holodeck laser beams no longer get stage fright when their gun houses stop existing unexpectedly"

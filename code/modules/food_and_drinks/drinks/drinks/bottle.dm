@@ -522,7 +522,7 @@
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
-	var/list/accelerants = list(	/datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
+	var/list/accelerants = list( /datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
 	var/active = 0
 
@@ -588,7 +588,7 @@
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment
 	var/fermentation_time_remaining /// for partial fermentation
-	var/fermentation_timer 	/// store the timer id of fermentation
+	var/fermentation_timer /// store the timer id of fermentation
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
 	. = ..()

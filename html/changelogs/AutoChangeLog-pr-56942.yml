@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscdel: "Replaced Construct HUD with a generic living mob version."
+  - bugfix: "All constructs will now show a healthdoll to the user."
+  - qol: "All constructs will now show severity of their injuries as a red screen overlay to the user."

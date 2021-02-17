@@ -602,7 +602,7 @@
  *
  * Returns the number of sheets successfully ejected.
  * eject_sheet - Byond REF of the material to eject.
- *	eject_amt - Number of sheets to attempt to eject.
+ * eject_amt - Number of sheets to attempt to eject.
  */
 /obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = rmat.mat_container

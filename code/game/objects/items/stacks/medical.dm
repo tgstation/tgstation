@@ -280,7 +280,7 @@
 
 /obj/item/stack/medical/mesh/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	if(amount == max_amount)	 //only seal full mesh packs
+	if(amount == max_amount)  //only seal full mesh packs
 		is_open = FALSE
 		update_icon()
 
@@ -302,7 +302,7 @@
 		return
 	return ..()
 
-/obj/item/stack/medical/mesh/attack_hand(mob/user)
+/obj/item/stack/medical/mesh/attack_hand(mob/user, list/modifiers)
 	if(!is_open && user.get_inactive_held_item() == src)
 		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
 		return
