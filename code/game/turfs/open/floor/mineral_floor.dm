@@ -90,7 +90,6 @@
 	name = "shuttle floor"
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
-	broken_states = list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
 	custom_materials = list(/datum/material/titanium = 500)
 
 /turf/open/floor/mineral/titanium/setup_broken_states()
