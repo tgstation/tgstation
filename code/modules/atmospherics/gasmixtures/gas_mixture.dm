@@ -106,6 +106,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
 
+	/// Checks to see if gas amount exists in mixture
+/datum/gas_mixture/proc/has_gas(gas_id, amount=0)
+	ASSERT_GAS(gas_id, src)
+	var/list/cached_gases = gases
+	return amount < cached_gases[gas_id][MOLES]
+
 	/// Calculate pressure in kilopascals
 /datum/gas_mixture/proc/return_pressure()
 	if(volume) // to prevent division by zero
