@@ -428,6 +428,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_crystal"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
