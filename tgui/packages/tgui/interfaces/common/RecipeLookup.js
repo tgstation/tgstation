@@ -69,7 +69,6 @@ export const RecipeLookup = (props, context) => {
         {recipe.reactants.map(reactant => (
           <Box key={reactant.id}>
             <Button
-              key={reactant.name}
               icon="vial"
               color={reactant.color}
               content={reactant.ratio + "u " + reactant.name}
