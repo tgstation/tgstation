@@ -252,9 +252,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			..()
 	else if(Pewgun)
 		if(Pewgun.chambered)
-			if(Pewgun.chambered.BB)
-				qdel(Pewgun.chambered.BB)
-				Pewgun.chambered.BB = null //because qdel takes too long, ensures icon update
+			if(Pewgun.chambered.loaded_projectile)
+				qdel(Pewgun.chambered.loaded_projectile)
+				Pewgun.chambered.loaded_projectile = null //because qdel takes too long, ensures icon update
 				Pewgun.chambered.update_icon()
 				..()
 			else
