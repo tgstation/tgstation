@@ -104,6 +104,11 @@
 	. = ..()
 	name_source = GLOB.commando_names
 
+/datum/antagonist/ert/deathsquad/leader
+	name = "Deathsquad Officer"
+	outfit = /datum/outfit/centcom/death_commando
+	role = "Officer"
+
 /datum/antagonist/ert/medic/inquisitor
 	outfit = /datum/outfit/centcom/ert/medic/inquisitor
 
@@ -143,11 +148,6 @@
 /datum/antagonist/ert/janitor/heavy
 	role = "Heavy Duty Janitor"
 	outfit = /datum/outfit/centcom/ert/janitor/heavy
-
-/datum/antagonist/ert/deathsquad/leader
-	name = "Deathsquad Officer"
-	outfit = /datum/outfit/centcom/death_commando
-	role = "Officer"
 
 /datum/antagonist/ert/intern
 	name = "CentCom Intern"
@@ -287,6 +287,7 @@
 	name = "Undercover Cop"
 	role = "Undercover Cop"
 	outfit = /datum/outfit/families_police/beatcop
+	plasmaman_outfit = /datum/outfit/plasmaman/security
 	var/free_clothes = list(/obj/item/clothing/glasses/hud/spacecop/hidden,
 						/obj/item/clothing/under/rank/security/officer/beatcop,
 						/obj/item/clothing/head/spacepolice)
