@@ -1,0 +1,6 @@
+author: "NotRanged"
+delete-after: True
+changes: 
+  - rscadd: "The Reactive Spines blob strain's retaliation now applies the strain's reagents, and can trigger once every 2.5 seconds."
+  - bugfix: "Fixed and changed the Explosive Lattice blob strain. It didn't work at all, but now actually applies an AoE of light burn/brute."
+  - code_imp: "Changed comments and descriptions of various blob strains to be more consistent."

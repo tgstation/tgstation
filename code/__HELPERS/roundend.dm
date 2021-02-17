@@ -371,7 +371,7 @@
  * the file will be overwritten at the end of each shift.
  */
 /datum/controller/subsystem/ticker/proc/log_roundend_report()
-	var/filename = "[GLOB.log_directory]/round_end_data.html"
+	var/roundend_file = file("[GLOB.log_directory]/round_end_data.html")
 	var/list/parts = list()
 	parts += "<div class='panel stationborder'>"
 	parts += GLOB.survivor_report
@@ -379,12 +379,12 @@
 	parts += GLOB.common_report
 	var/content = parts.Join()
 	//Log the rendered HTML in the round log directory
-	fdel(filename)
-	text2file(content, filename)
+	fdel(roundend_file)
+	WRITE_FILE(roundend_file, content)
 	//Place a copy in the root folder, to be overwritten each round.
-	filename = "data/server_last_roundend_report.html"
-	fdel(filename)
-	text2file(content, filename)
+	roundend_file = file("data/server_last_roundend_report.html")
+	fdel(roundend_file)
+	WRITE_FILE(roundend_file, content)
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, report_type = null)
 	var/datum/browser/roundend_report = new(C, "roundend")
@@ -399,7 +399,6 @@
 	else //report_type is null, so make a new report based on the current round and show that to the player
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
-		remove_verb(C, /client/proc/show_previous_roundend_report)
 		fdel(filename)
 		text2file(content, filename)
 

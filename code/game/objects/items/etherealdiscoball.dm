@@ -27,7 +27,7 @@
 	. = ..()
 	update_icon()
 
-/obj/structure/etherealball/attack_hand(mob/living/carbon/human/user)
+/obj/structure/etherealball/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(TurnedOn)
 		TurnOff()

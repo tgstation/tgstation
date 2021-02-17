@@ -149,7 +149,7 @@ GLOBAL_LIST(labor_sheet_values)
 	icon_state = "console"
 	density = FALSE
 
-/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
+/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return

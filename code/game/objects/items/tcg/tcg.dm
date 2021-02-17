@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
-/obj/item/tcgcard/attack_hand(mob/user)
+/obj/item/tcgcard/attack_hand(mob/user, list/modifiers)
 	if(!isturf(loc))
 		return ..()
 	var/list/choices = GLOB.tcgcard_radial_choices
@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	. = ..()
 	. += "<span class='notice'>\The [src] has [contents.len] cards inside.</span>"
 
-/obj/item/tcgcard_deck/attack_hand(mob/user)
+/obj/item/tcgcard_deck/attack_hand(mob/user, list/modifiers)
 	var/list/choices = list(
 		"Draw" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw"),
 		"Shuffle" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle"),

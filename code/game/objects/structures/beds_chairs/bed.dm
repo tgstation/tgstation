@@ -33,8 +33,8 @@
 			new buildstacktype(loc,buildstackamount)
 	..()
 
-/obj/structure/bed/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/bed/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/bed/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))

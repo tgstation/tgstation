@@ -30,7 +30,7 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
-/obj/structure/falsewall/attack_hand(mob/user)
+/obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
 	if(opening)
 		return
 	. = ..()
@@ -171,7 +171,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/falsewall/uranium/attack_hand(mob/user)
+/obj/structure/falsewall/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
 	. = ..()
 
