@@ -2079,6 +2079,7 @@
 #include "code\modules\games\cas.dm"
 #include "code\modules\games\kotahi.dm"
 #include "code\modules\games\tarot.dm"
+#include "code\modules\games\wizoff.dm"
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\foreign_calendar.dm"
 #include "code\modules\holiday\holidays.dm"
