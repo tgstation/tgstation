@@ -317,7 +317,7 @@
 			unlucky_sob = L
 
 	if(unlucky_sob)
-		setAngle(Get_Angle(src, unlucky_sob.loc))
+		set_angle(Get_Angle(src, unlucky_sob.loc))
 
 /obj/projectile/proc/store_hitscan_collision(datum/point/pcache)
 	beam_segments[beam_index] = pcache
@@ -663,9 +663,9 @@
 		if(QDELETED(src))
 			return
 	if(isnum(angle))
-		setAngle(angle)
+		set_angle(angle)
 	if(spread)
-		setAngle(Angle + ((rand() - 0.5) * spread))
+		set_angle(Angle + ((rand() - 0.5) * spread))
 	var/turf/starting = get_turf(src)
 	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
 		if(isnull(xo) || isnull(yo))
@@ -673,7 +673,7 @@
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
-		setAngle(Get_Angle(src, target))
+		set_angle(Get_Angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -692,7 +692,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1, FALSE)	//move it now!
 
-/obj/projectile/proc/setAngle(new_angle, center_reflect = FALSE) //wrapper for overrides.
+/obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	Angle = new_angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -703,14 +703,31 @@
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
 		last_angle_set_hitscan_store = loc
 		var/datum/point/pcache = new (src)
-		var/list/coordinates = trajectory.return_coordinates()
-		if(center_reflect) // Makes the beam reflect at the center of the object - used by reflectors, looks better
-			pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
-			trajectory.set_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to it as well, to prevent a strange visual bug
-		else // Beam reflects off of the side of the object
-			pcache = trajectory.copy_to()
+		pcache = trajectory.copy_to()
 		store_hitscan_collision(pcache)
 	return TRUE
+
+/// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
+/obj/projectile/proc/set_angle_centered(new_angle)
+	Angle = new_angle
+	if(!nondirectional_sprite)
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
+	if(trajectory)
+		trajectory.set_angle(new_angle)
+	
+	var/list/coordinates = trajectory.return_coordinates()
+	trajectory.set_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to the center of the tile it bounced at
+
+	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store)) // Handles hitscan projectiles
+		last_angle_set_hitscan_store = loc
+		var/datum/point/pcache = new (src)
+		pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
+		store_hitscan_collision(pcache)
+	return TRUE
+		
+
 
 /obj/projectile/forceMove(atom/target)
 	if(!isloc(target) || !isloc(loc) || !z)
@@ -738,7 +755,7 @@
 /obj/projectile/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, Angle))
-			setAngle(var_value)
+			set_angle(var_value)
 			return TRUE
 		else
 			return ..()
@@ -817,7 +834,7 @@
 	PT.x += clamp(homing_offset_x, 1, world.maxx)
 	PT.y += clamp(homing_offset_y, 1, world.maxy)
 	var/angle = closer_angle_difference(Angle, angle_between_points(RETURN_PRECISE_POINT(src), PT))
-	setAngle(Angle + clamp(angle, -homing_turn_speed, homing_turn_speed))
+	set_angle(Angle + clamp(angle, -homing_turn_speed, homing_turn_speed))
 
 /obj/projectile/proc/set_homing_target(atom/A)
 	if(!A || (!isturf(A) && !isturf(A.loc)))
@@ -843,18 +860,18 @@
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc) + spread)
+		set_angle(Get_Angle(src, targloc) + spread)
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]
 		p_y = calculated[3]
 
-		setAngle(calculated[1] + spread)
+		set_angle(calculated[1] + spread)
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc) + spread)
+		set_angle(Get_Angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
