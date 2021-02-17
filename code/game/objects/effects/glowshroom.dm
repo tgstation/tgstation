@@ -135,7 +135,7 @@
 	if(!possibleLocs.len)
 		return
 
-	var/chance_generation = 100 * (NUM_E ** -(GLOWSHROOM_SPREAD_DIMINISH_FACTOR / myseed.potency * generation)) //https://www.desmos.com/calculator/fiefsljcsu
+	var/chance_generation = 100 * (NUM_E ** -(GLOWSHROOM_SPREAD_DIMINISH_FACTOR / myseed.potency * generation)) //https://www.desmos.com/calculator/ivfyxbn7uv
 
 	for(var/i in 1 to max(1, FLOOR(myseed.yield / 2, 1)))
 
