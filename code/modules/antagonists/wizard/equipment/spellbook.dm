@@ -473,6 +473,13 @@
 	category = "Mobility"
 	cost = 1
 
+/datum/spellbook_entry/item/ghostbat
+	name = "Ghostly Baseball bat"
+	desc = "A strange baseball bat that will hit a homerun with the target's soul."
+	item_path = /obj/item/melee/baseball_bat/ghostly
+	category = "Defensive"
+	cost = 1
+
 /datum/spellbook_entry/duffelbag
 	name = "Bestow Cursed Duffel Bag"
 	desc = "A curse that firmly attaches a demonic duffel bag to the target's back. The duffel bag will make the person it's attached to take periodical damage if it is not fed regularly, and regardless of whether or not it's been fed, it will slow the person wearing it down significantly."

@@ -491,3 +491,32 @@
 /obj/effect/temp_visual/tornado/Initialize()
 	. = ..()
 	animate(src, pixel_x = -500, time = 40)
+
+/**
+ * # Ghostly baseball bat
+ *
+ * A baseball bat that knocks people's ghost out.
+ *
+ * A wizard summonable item, it's a baseball bat that forcibly ghosts the target, IF they have a client, 
+ * and sends the ghost flying, making them visible for a brief period.  The ghost can immediately re-enter their corpse.
+ * When homerun charged, can perform three consecutive homeruns.
+ */
+/obj/item/melee/baseball_bat/ghostly
+	name = "Ghostly baseball bat"
+	desc = "This looks like it could knock the life straight out of someone."
+	cricket_chance = 0
+	homerun_limit = 3
+
+/obj/item/melee/baseball_bat/ghostly/prepare_and_get_throw_target(mob/struck_target)
+	if(!istype(struck_target, /mob/living))
+		return struck_target
+	if(!struck_target.client)
+		return struck_target
+	var/mob/dead/observer/ghost = struck_target.ghostize(TRUE)
+	if(QDELETED(ghost))
+		return struck_target
+	var/old_invisibility = ghost.invisibility
+	ghost.set_invisibility(0)
+	to_chat(ghost, "<span class='notice'>You feel like you were knocked out of your body!</span>")
+	addtimer(CALLBACK(ghost, /mob/dead/observer/proc/set_invisibility, old_invisibility), 20)
+	return ghost

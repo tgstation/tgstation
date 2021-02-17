@@ -636,12 +636,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
-	var/homerun_ready = 0
-	var/homerun_able = 0
+	
+	///The number of homeruns the bat can use per charge, knocking the target further than normal.  Set to zero to disable.
+	var/homerun_limit = 0
+	///The number of homeruns the bat has remaining.
+	var/homeruns_ready = 0
+	///The chance the bat will be renamed to "cricket bat", and gain a new description.
+	var/cricket_chance = 1
 
 /obj/item/melee/baseball_bat/Initialize()
 	. = ..()
-	if(prob(1))
+	if(prob(cricket_chance))
 		name = "cricket bat"
 		desc = "You've got red on you."
 		icon_state = "baseball_bat_brit"
@@ -650,13 +655,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
-	homerun_able = 1
+	homerun_limit = 1
+	cricket_chance = 0
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
-	if(!homerun_able)
+	if(!homerun_limit)
 		..()
 		return
-	if(homerun_ready)
+	if(homeruns_ready >= homerun_limit)
 		to_chat(user, "<span class='warning'>You're already ready to do a home run!</span>")
 		..()
 		return
@@ -664,24 +670,35 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
 	if(do_after(user, 90, target = src))
 		to_chat(user, "<span class='userdanger'>You gather power! Time for a home run!</span>")
-		homerun_ready = 1
+		homeruns_ready = homerun_limit
 	..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	var/atom/throw_target = get_edge_target_turf(target, user.dir)
-	if(homerun_ready)
+	var/atom/movable/to_throw = prepare_and_get_throw_target(target)
+	var/atom/throw_target = get_edge_target_turf(to_throw, user.dir)
+	if(homeruns_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
-		target.throw_at(throw_target, rand(8,10), 14, user)
+		to_throw.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homerun_ready = 0
+		homeruns_ready -= 1
 		return
-	else if(!target.anchored)
+	else if(!to_throw.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+		to_throw.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+
+/**
+ * Returns the target to be thrown, AND prepares the target to be thrown if needed.
+ *
+ * For most baseball bats, this will simply return the struck target, but on a few special baseball bats, something OTHER than the target will be thrown.
+ * For those bats, overwrite this proc, and perform any needed preparations, and then return the object to be thrown.
+ * * struck_target - This is the target the baseball bat hit.
+ */
+/obj/item/melee/baseball_bat/proc/prepare_and_get_throw_target(mob/struck_target)
+	return struck_target
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
@@ -690,6 +707,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat_metal"
 	force = 12
 	throwforce = 15
+	cricket_chance = 0
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
 	var/picksound = rand(1,2)
