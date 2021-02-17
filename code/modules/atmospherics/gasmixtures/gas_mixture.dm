@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	TOTAL_MOLES(cached_gases, .)
 
 	/// Checks to see if gas amount exists in mixture
+	/// WARNING - DO NOT USE THIS IN PERFORMANCE INTENSIVE CODE!!!
 /datum/gas_mixture/proc/has_gas(gas_id, amount=0)
 	ASSERT_GAS(gas_id, src)
 	var/list/cached_gases = gases
