@@ -44,7 +44,6 @@ export const ChemDispenser = (props, context) => {
                 </Box>
               )}
               <Button
-                key="Recipe lookup"
                 icon="book"
                 disabled={!data.isBeakerLoaded}
                 content={"Reaction search"}
@@ -52,7 +51,6 @@ export const ChemDispenser = (props, context) => {
                 tooltipPosition="bottom-left"
                 onClick={() => act('reaction_lookup')} />
               <Button
-                key="colorButton"
                 icon="cog"
                 tooltip="Color code the reagents by pH"
                 tooltipPosition="bottom-left"
