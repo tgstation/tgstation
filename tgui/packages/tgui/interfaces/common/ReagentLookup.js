@@ -38,12 +38,11 @@ export const ReagentLookup = (props, context) => {
       <LabeledList.Item label="Properties">
         <LabeledList>
           {!!reagent.OD && (
-          <LabeledList.Item label="Overdose">
-            {reagent.OD}u
-          </LabeledList.Item>
+            <LabeledList.Item label="Overdose">
+              {reagent.OD}u
+            </LabeledList.Item>
           )}
           {reagent.addictions[0] && (
-
             <LabeledList.Item label="Addiction">
               {reagent.addictions.map(addiction => (
                 <Box key={addiction}>
@@ -52,7 +51,6 @@ export const ReagentLookup = (props, context) => {
               ))}
             </LabeledList.Item>
           )}
-
           <LabeledList.Item label="Metabolization rate">
             {reagent.metaRate}u/s
           </LabeledList.Item>
