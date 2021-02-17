@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscdel: "You can't return your own wayfinding pinpointer to get a costume now"
-  - code_imp: "Improves code a bit in wayfinding.dm"
