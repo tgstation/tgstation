@@ -1,9 +1,9 @@
-#define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
+#define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
 ///Used when setting the mode of the canisters, enabling us to switch the overlays
 //These are used as icon states later down the line for tier overlays
-#define CANISTER_TIER_1					1
-#define CANISTER_TIER_2					2
-#define CANISTER_TIER_3					3
+#define CANISTER_TIER_1 1
+#define CANISTER_TIER_2 2
+#define CANISTER_TIER_3 3
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -386,21 +386,21 @@
 		if(disassembled)
 			switch(mode)
 				if(CANISTER_TIER_1)
-					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/iron (loc, 10)
 				if(CANISTER_TIER_2)
-					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/iron (loc, 10)
 					new /obj/item/stack/sheet/plasteel (loc, 5)
 				if(CANISTER_TIER_3)
-					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/iron (loc, 10)
 					new /obj/item/stack/sheet/plasteel (loc, 5)
 					new /obj/item/stack/sheet/bluespace_crystal (loc, 1)
 		else
-			new /obj/item/stack/sheet/metal (loc, 5)
+			new /obj/item/stack/sheet/iron (loc, 5)
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return FALSE
 
 	if(!I.tool_start_check(user, amount=0))

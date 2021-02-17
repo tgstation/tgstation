@@ -3,7 +3,7 @@
 	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
-	var/transparent = FALSE	// makes beam projectiles pass through the shield
+	var/transparent = FALSE // makes beam projectiles pass through the shield
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
 	return TRUE
@@ -100,7 +100,7 @@
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	new /obj/item/stack/sheet/metal(get_turf(src))
+	new /obj/item/stack/sheet/iron(get_turf(src))
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"

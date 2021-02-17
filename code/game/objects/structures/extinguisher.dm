@@ -46,7 +46,7 @@
 		stored_extinguisher = null
 		update_icon()
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		I.play_tool_sound(src)
@@ -68,13 +68,13 @@
 			return TRUE
 		else
 			toggle_cabinet(user)
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		toggle_cabinet(user)
 	else
 		return ..()
 
 
-/obj/structure/extinguisher_cabinet/attack_hand(mob/user)
+/obj/structure/extinguisher_cabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -105,8 +105,8 @@
 	toggle_cabinet(user)
 
 
-/obj/structure/extinguisher_cabinet/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/extinguisher_cabinet/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
@@ -147,7 +147,7 @@
 		if(disassembled)
 			new /obj/item/wallframe/extinguisher_cabinet(loc)
 		else
-			new /obj/item/stack/sheet/metal (loc, 2)
+			new /obj/item/stack/sheet/iron (loc, 2)
 		if(stored_extinguisher)
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null

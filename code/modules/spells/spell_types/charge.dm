@@ -19,7 +19,7 @@
 		var/burnt_out = FALSE
 
 		if(L.pulling && isliving(L.pulling))
-			var/mob/living/M =	L.pulling
+			var/mob/living/M = L.pulling
 			if(LAZYLEN(M.mob_spell_list) || (LAZYLEN(M.mind?.spell_list)))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 					S.charge_counter = S.charge_max

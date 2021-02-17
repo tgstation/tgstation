@@ -55,11 +55,11 @@
 
 	add_fingerprint(M)
 
-/obj/item/paper_bin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/paper_bin/attack_hand(mob/user)
+/obj/item/paper_bin/attack_hand(mob/user, list/modifiers)
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -148,7 +148,7 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 
-/obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
+/obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	..()
 	if(total_paper < 1)
 		qdel(src)

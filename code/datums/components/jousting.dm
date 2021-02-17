@@ -1,17 +1,17 @@
 /datum/component/jousting
 	var/current_direction = NONE
 	var/max_tile_charge = 5
-	var/min_tile_charge = 2				//tiles before this code gets into effect.
+	var/min_tile_charge = 2 //tiles before this code gets into effect.
 	var/current_tile_charge = 0
-	var/movement_reset_tolerance = 2			//deciseconds
+	var/movement_reset_tolerance = 3 //deciseconds
 	var/unmounted_damage_boost_per_tile = 0
 	var/unmounted_knockdown_chance_per_tile = 0
 	var/unmounted_knockdown_time = 0
 	var/mounted_damage_boost_per_tile = 2
 	var/mounted_knockdown_chance_per_tile = 20
 	var/mounted_knockdown_time = 20
-	var/requires_mob_riding = TRUE			//whether this only works if the attacker is riding a mob, rather than anything they can buckle to.
-	var/requires_mount = TRUE				//kinda defeats the point of jousting if you're not mounted but whatever.
+	var/requires_mob_riding = TRUE //whether this only works if the attacker is riding a mob, rather than anything they can buckle to.
+	var/requires_mount = TRUE //kinda defeats the point of jousting if you're not mounted but whatever.
 	var/mob/current_holder
 	var/current_timerid
 
@@ -43,7 +43,7 @@
 		return
 	var/current = current_tile_charge
 	var/obj/item/I = parent
-	var/target_buckled = target.buckled ? TRUE : FALSE			//we don't need the reference of what they're buckled to, just whether they are.
+	var/target_buckled = target.buckled ? TRUE : FALSE //we don't need the reference of what they're buckled to, just whether they are.
 	if((requires_mount && ((requires_mob_riding && !ismob(user.buckled)) || (!user.buckled))) || !current_direction || (current_tile_charge < min_tile_charge))
 		return
 	var/turf/target_turf = get_step(user, current_direction)

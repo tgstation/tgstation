@@ -77,23 +77,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/**
 	  * List of products this machine sells
 	  *
-	  *	form should be list(/type/path = amount, /type/path2 = amount2)
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
 	  */
-	var/list/products	= list()
+	var/list/products = list()
 
 	/**
 	  * List of products this machine sells when you hack it
 	  *
-	  *	form should be list(/type/path = amount, /type/path2 = amount2)
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
 	  */
-	var/list/contraband	= list()
+	var/list/contraband = list()
 
 	/**
 	  * List of premium products this machine sells
 	  *
-	  *	form should be list(/type/path, /type/path2) as there is only ever one in stock
+	  * form should be list(/type/path, /type/path2) as there is only ever one in stock
 	  */
-	var/list/premium 	= list()
+	var/list/premium = list()
 
 	///String of slogans separated by semicolons, optional
 	var/product_slogans = ""
@@ -237,7 +237,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
 		if(!(flags_1 & NODECONSTRUCT_1))
-			new /obj/item/stack/sheet/metal(loc, 3)
+			new /obj/item/stack/sheet/iron(loc, 3)
 		qdel(src)
 	else
 		..()
@@ -259,8 +259,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!light_mask)
 		return
 
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!(machine_stat & BROKEN) && powered())
-		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_STRUCTURE_LAYER, EMISSIVE_STRUCTURE_PLANE)
+		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
@@ -434,7 +435,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		to_chat(user, "<span class='warning'>You must first secure [src].</span>")
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/I, mob/user, params)
+/obj/machinery/vending/attackby(obj/item/I, mob/living/user, params)
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
 		return
@@ -457,7 +458,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
-	if(compartmentLoadAccessCheck(user) && user.a_intent != INTENT_HARM)
+	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog() //can't put this on the proc above because we spam it below
@@ -973,7 +974,7 @@ GLOBAL_LIST_EMPTY(vending_products)
  * * prb - probability the shock happens
  */
 /obj/machinery/vending/proc/shock(mob/living/user, prb)
-	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

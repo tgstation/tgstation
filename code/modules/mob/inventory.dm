@@ -186,7 +186,7 @@
 	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS))
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	return FALSE					//nonliving mobs don't have hands
+	return FALSE //nonliving mobs don't have hands
 
 /mob/living/put_in_hand_check(obj/item/I)
 	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)))
@@ -319,7 +319,7 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.item_flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
+		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 			if (isnull(newloc))
 				I.moveToNullspace()
 			else

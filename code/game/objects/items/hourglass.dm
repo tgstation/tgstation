@@ -6,7 +6,7 @@
 	var/obj/effect/countdown/hourglass/countdown
 	var/time = 1 MINUTES
 	var/finish_time //So countdown doesn't need to fiddle with timers
-	var/timing_id	//if present we're timing
+	var/timing_id //if present we're timing
 	var/hand_activated = TRUE
 	icon = 'icons/obj/hourglass.dmi'
 	icon_state = "hourglass_idle"
@@ -70,7 +70,7 @@
 	anchored = TRUE
 	hand_activated = FALSE
 
-/obj/item/hourglass/admin/attack_hand(mob/user)
+/obj/item/hourglass/admin/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(user.client && user.client.holder)
 		toggle(user)

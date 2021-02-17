@@ -16,7 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
-	wings_icon = "Megamoth"
+	wings_icons = list("Megamoth", "Mothra")
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
 
@@ -43,6 +43,7 @@
 		return
 	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "burnt_wings", /datum/mood_event/burnt_wings)
 		if(!H.dna.features["original_moth_wings"]) //Fire apparently destroys DNA, so let's preserve that elsewhere, checks if an original was already stored to prevent bugs
 			H.dna.features["original_moth_wings"] = H.dna.features["moth_wings"]
 		H.dna.features["moth_wings"] = "Burnt Off"

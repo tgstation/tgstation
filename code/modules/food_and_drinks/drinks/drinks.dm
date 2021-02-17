@@ -126,7 +126,7 @@
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
 		return
-	if(QDELING(src) || !target)		//Invalid loc
+	if(QDELING(src) || !target) //Invalid loc
 		return
 	if(bartender_check(target) && ranged)
 		return
@@ -211,8 +211,8 @@
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
-//	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
-//	Formatting is the same as food.
+// rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
+// Formatting is the same as food.
 
 /obj/item/reagent_containers/food/drinks/coffee
 	name = "robust coffee"
@@ -345,11 +345,11 @@
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
+/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/living/user, def_zone)
 	if(!target)
 		return
 
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		if(cap_on && reagents.total_volume && istype(target))
 			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 			return
@@ -359,8 +359,8 @@
 	if(!cap_on)
 		SplashReagents(target)
 
-/obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/user, proximity)
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
+/obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 		return
 
@@ -560,8 +560,8 @@
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
-//	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
-//	icon states.
+// itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
+// icon states.
 
 /obj/item/reagent_containers/food/drinks/shaker
 	name = "shaker"
@@ -640,8 +640,8 @@
 	sleep(20) //dramatic pause
 	return TOXLOSS
 
-/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
-	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
+/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/living/user)
+	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
 			user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		else

@@ -19,7 +19,7 @@
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	a_intent = INTENT_HARM //No swapping
+	combat_mode = TRUE //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
@@ -41,14 +41,14 @@
 	var/base_icon = "mulebot" /// icon_state to use in update_icon_state
 	var/atom/movable/load /// what we're transporting
 	var/mob/living/passenger /// who's riding us
-	var/turf/target				/// this is turf to navigate to (location of beacon)
-	var/loaddir = 0				/// this the direction to unload onto/load from
-	var/home_destination = "" 	/// tag of home delivery beacon
+	var/turf/target /// this is turf to navigate to (location of beacon)
+	var/loaddir = 0 /// this the direction to unload onto/load from
+	var/home_destination = "" /// tag of home delivery beacon
 
-	var/reached_target = TRUE 	///true if already reached the target
+	var/reached_target = TRUE ///true if already reached the target
 
-	var/auto_return = TRUE		/// true if auto return to home beacon after unload
-	var/auto_pickup = TRUE 	/// true if auto-pickup at beacon
+	var/auto_return = TRUE /// true if auto return to home beacon after unload
+	var/auto_pickup = TRUE /// true if auto-pickup at beacon
 	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
 	var/obj/item/stock_parts/cell/cell /// Internal Powercell
@@ -131,7 +131,7 @@
 	..()
 	reached_target = FALSE
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		. = ..()
 		if(open)
@@ -148,7 +148,7 @@
 		diag_hud_set_mulebotcell()
 		visible_message("<span class='notice'>[user] inserts \a [cell] into [src].</span>",
 						"<span class='notice'>You insert [cell] into [src].</span>")
-	else if(I.tool_behaviour == TOOL_CROWBAR && open && user.a_intent != INTENT_HARM)
+	else if(I.tool_behaviour == TOOL_CROWBAR && open && !user.combat_mode)
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] doesn't have a power cell!</span>")
 			return
@@ -433,7 +433,7 @@
 	if(!istype(crate))
 		if(!wires.is_cut(WIRE_LOADCHECK))
 			buzz(SIGH)
-			return	// if not hacked, only allow crates to be loaded
+			return // if not hacked, only allow crates to be loaded
 		crate = null
 
 	if(crate || isobj(AM))
@@ -578,8 +578,8 @@
 					return
 				if(isturf(next))
 					var/oldloc = loc
-					var/moved = step_towards(src, next)	// attempt to move
-					if(moved && oldloc!=loc)	// successful move
+					var/moved = step_towards(src, next) // attempt to move
+					if(moved && oldloc!=loc) // successful move
 						blockcount = 0
 						path -= loc
 
@@ -588,14 +588,14 @@
 						else
 							mode = BOT_DELIVER
 
-					else		// failed to move
+					else // failed to move
 
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
 							buzz(ANNOYED)
 
-						if(blockcount > 10)	// attempt 10 times before recomputing
+						if(blockcount > 10) // attempt 10 times before recomputing
 							// find new path excluding blocked turf
 							buzz(SIGH)
 							mode = BOT_WAIT_FOR_NAV
@@ -611,7 +611,7 @@
 				mode = BOT_NAV
 				return
 
-		if(BOT_NAV)	// calculate new path
+		if(BOT_NAV) // calculate new path
 			mode = BOT_WAIT_FOR_NAV
 			INVOKE_ASYNC(src, .proc/process_nav)
 
@@ -682,7 +682,7 @@
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
-		if(load)		// if loaded, unload at target
+		if(load) // if loaded, unload at target
 			if(report_delivery)
 				speak("Destination <b>[destination]</b> reached. Unloading [load].",radio_channel)
 			unload(loaddir)
@@ -695,7 +695,7 @@
 						if(!A.anchored)
 							AM = A
 							break
-				else			// otherwise, look for crates only
+				else // otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
 				if(AM?.Adjacent(src))
 					load(AM)
@@ -708,7 +708,7 @@
 			start_home()
 			mode = BOT_BLOCKED
 		else
-			bot_reset()	// otherwise go idle
+			bot_reset() // otherwise go idle
 
 
 /mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
@@ -760,11 +760,11 @@
 		return
 
 	for(var/obj/machinery/navbeacon/NB in GLOB.deliverybeacons)
-		if(NB.location == new_destination)	// if the beacon location matches the set destination
+		if(NB.location == new_destination) // if the beacon location matches the set destination
 									// the we will navigate there
 			destination = new_destination
 			target = NB.loc
-			var/direction = NB.dir	// this will be the load/unload dir
+			var/direction = NB.dir // this will be the load/unload dir
 			if(direction)
 				loaddir = text2num(direction)
 			else
@@ -806,7 +806,7 @@
 	if(load)
 		unload()
 
-/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
@@ -851,7 +851,7 @@
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
 		buzz(SIGH)
-		return	// if not hacked, only allow ghosts to be loaded
+		return // if not hacked, only allow ghosts to be loaded
 
 	else if(isobj(AM))
 		var/obj/O = AM

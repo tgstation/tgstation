@@ -416,7 +416,7 @@
 	name = "hook"
 	desc = "A hook."
 	projectile_type = /obj/projectile/hook
-	caliber = "hook"
+	caliber = CALIBER_HOOK
 	icon_state = "hook"
 
 /obj/projectile/hook
@@ -971,11 +971,11 @@
 	stage_prob = 20
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list("Your bones ache.")
-	stage2	= list("Your skin feels scaly.")
-	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
-	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
+	stage1 = list("Your bones ache.")
+	stage2 = list("Your skin feels scaly.")
+	stage3 = list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
+	stage4 = list("<span class='danger'>Your blood burns.</span>")
+	stage5 = list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -1075,12 +1075,11 @@
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
-		var/obj/effect/mine/pickup/bloodbath/B = new(H)
-		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
+		H.apply_status_effect(STATUS_EFFECT_MAYHEM)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
-	log_combat(user, null, "activated a bottle of mayhem", src)
+	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
 
 //Colossus

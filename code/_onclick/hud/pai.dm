@@ -82,13 +82,17 @@
 	icon_state = "host_monitor"
 	required_software = "host scan"
 
-/atom/movable/screen/pai/host_monitor/Click()
+/atom/movable/screen/pai/host_monitor/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
+	var/list/modifiers = params2list(params)
 	if(iscarbon(pAI.card.loc))
-		pAI.hostscan.attack(pAI.card.loc, pAI)
+		if (LAZYACCESS(modifiers, RIGHT_CLICK))
+			pAI.hostscan.attack_secondary(pAI.card.loc, pAI)
+		else
+			pAI.hostscan.attack(pAI.card.loc, pAI)
 	else
 		to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
 		return FALSE
@@ -135,6 +139,20 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.cmd_show_message_log(usr)
+
+/atom/movable/screen/pai/internal_gps
+	name = "Internal GPS"
+	icon_state = "internal_gps"
+	required_software = "internal gps"
+
+/atom/movable/screen/pai/internal_gps/Click()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/silicon/pai/pAI = usr
+	if(!pAI.internal_gps)
+		pAI.internal_gps = new(pAI)
+	pAI.internal_gps.attack_self(pAI)
 
 /atom/movable/screen/pai/image_take
 	name = "Take Image"
@@ -231,6 +249,11 @@
 // PDA log
 	using = new /atom/movable/screen/pai/pda_msg_show()
 	using.screen_loc = ui_pai_pda_log
+	static_inventory += using
+
+// Internal GPS
+	using = new /atom/movable/screen/pai/internal_gps()
+	using.screen_loc = ui_pai_internal_gps
 	static_inventory += using
 
 // Take image

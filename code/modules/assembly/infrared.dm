@@ -125,7 +125,7 @@
 		return
 	refreshBeam()
 
-/obj/item/assembly/infra/attack_hand()
+/obj/item/assembly/infra/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	refreshBeam()
 

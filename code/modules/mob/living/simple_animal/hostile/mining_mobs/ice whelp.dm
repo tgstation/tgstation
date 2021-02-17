@@ -41,9 +41,9 @@
 	var/fire_range = 4
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/Shoot()
-	var/turf/T = get_ranged_target_turf_direct(src, target, fire_range)
-	var/list/burn_turfs = getline(src, T) - get_turf(src)
-	dragon_fire_line(src, burn_turfs, TRUE)
+	var/turf/target_fire_turf = get_ranged_target_turf_direct(src, target, fire_range)
+	var/list/burn_turfs = getline(src, target_fire_turf) - get_turf(src)
+	dragon_fire_line(src, burn_turfs, frozen = TRUE)
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
 	. = ..()

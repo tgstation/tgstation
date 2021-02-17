@@ -24,7 +24,7 @@
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
-	var/real_explosion_block	//ignore this, just use explosion_block
+	var/real_explosion_block //ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/knocksound = 'sound/effects/Glassknock.ogg'
 	var/bashsound = 'sound/effects/Glassbash.ogg'
@@ -118,10 +118,10 @@
 	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
-	if(istype(O) && (O.pass_flags & PASSGLASS))
+	if(istype(O) && (O.pass_flags & pass_flags_self))
 		return TRUE
-	if(get_dir(O.loc, target) == dir)
-		return FALSE
+	if(!fulltile && get_dir(O.loc, target) == dir)
+		return !density
 	return TRUE
 
 
@@ -138,7 +138,7 @@
 		return
 	. = ..()
 
-/obj/structure/window/attack_hand(mob/user)
+/obj/structure/window/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -146,7 +146,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
 			"<span class='notice'>You knock on [src].</span>")
 		playsound(src, knocksound, 50, TRUE)
@@ -155,10 +155,10 @@
 			"<span class='warning'>You bash [src]!</span>")
 		playsound(src, bashsound, 100, TRUE)
 
-/obj/structure/window/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/window/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
 	..()
@@ -169,7 +169,7 @@
 
 	add_fingerprint(user)
 
-	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -384,10 +384,11 @@
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
+//2021 AND STILLLL GOING STRONG
 /obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
-			if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HARM)
+			if(I.tool_behaviour == TOOL_WELDER && user.combat_mode)
 				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
 										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
 				if(I.use_tool(src, user, 150, volume = 100))
@@ -511,12 +512,14 @@
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
+/obj/structure/window/plasma/reinforced/BlockSuperconductivity()
+	return TRUE
 //entirely copypasted code
 //take this out when construction is made a component or otherwise modularized in some way
 /obj/structure/window/plasma/reinforced/attackby(obj/item/I, mob/living/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
-			if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HARM)
+			if(I.tool_behaviour == TOOL_WELDER && user.combat_mode)
 				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
 										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
 				if(I.use_tool(src, user, 180, volume = 100))
@@ -774,11 +777,11 @@
 	for (var/i in 1 to rand(1,4))
 		. += new /obj/item/paper/natural(location)
 
-/obj/structure/window/paperframe/attack_hand(mob/user)
+/obj/structure/window/paperframe/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		take_damage(4,BRUTE,MELEE, 0)
 		if(!QDELETED(src))
 			update_icon()
@@ -796,11 +799,11 @@
 		QUEUE_SMOOTH(src)
 
 
-/obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
+/obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
 	if(W.get_temperature())
 		fire_act(W.get_temperature())
 		return
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
 		user.visible_message("<span class='notice'>[user] starts to patch the holes in \the [src].</span>")

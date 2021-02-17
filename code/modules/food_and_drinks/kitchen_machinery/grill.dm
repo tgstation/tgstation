@@ -111,14 +111,14 @@
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
 	finish_grill()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 5)
+		new /obj/item/stack/sheet/iron(loc, 5)
 		new /obj/item/stack/rods(loc, 5)
 	..()
 
 /obj/machinery/grill/attack_ai(mob/user)
 	return
 
-/obj/machinery/grill/attack_hand(mob/user)
+/obj/machinery/grill/attack_hand(mob/user, list/modifiers)
 	if(grilled_item)
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		grilled_item.forceMove(drop_location())

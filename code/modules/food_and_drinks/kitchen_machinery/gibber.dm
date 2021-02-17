@@ -51,8 +51,8 @@
 	else
 		. += "gridle"
 
-/obj/machinery/gibber/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/machinery/gibber/container_resist_act(mob/living/user)
 	go_out()
@@ -60,7 +60,7 @@
 /obj/machinery/gibber/relaymove(mob/living/user, direction)
 	go_out()
 
-/obj/machinery/gibber/attack_hand(mob/user)
+/obj/machinery/gibber/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -74,7 +74,7 @@
 		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")

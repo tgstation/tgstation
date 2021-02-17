@@ -7,7 +7,7 @@
 /// The volume of it's internal reagents the shower applies to everything it sprays.
 #define SHOWER_SPRAY_VOLUME 5
 /// How much the volume of the shower's spay reagents are amplified by when it sprays something.
-#define SHOWER_EXPOSURE_MULTIPLIER 2	// Showers effectively double exposed reagents
+#define SHOWER_EXPOSURE_MULTIPLIER 2 // Showers effectively double exposed reagents
 
 
 /obj/machinery/shower
@@ -151,7 +151,7 @@
 		for(var/am in loc)
 			var/atom/movable/movable_content = am
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-				wash_atom(movable_content)	// Reagent exposure is handled in wash_atom
+				wash_atom(movable_content) // Reagent exposure is handled in wash_atom
 
 		reagents.remove_any(SHOWER_SPRAY_VOLUME)
 		return
@@ -165,7 +165,7 @@
 		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 3)
+	new /obj/item/stack/sheet/iron(drop_location(), 3)
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)

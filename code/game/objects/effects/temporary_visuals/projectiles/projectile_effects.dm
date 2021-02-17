@@ -45,7 +45,7 @@
 	appearance = look
 	scale_to(1,scaling, FALSE)
 	turn_to(angle_override, FALSE)
-	if(!isnull(new_loc))	//If you want to null it just delete it...
+	if(!isnull(new_loc)) //If you want to null it just delete it...
 		forceMove(new_loc)
 	for(var/i in 1 to increment)
 		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)

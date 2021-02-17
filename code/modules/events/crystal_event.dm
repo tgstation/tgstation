@@ -564,8 +564,8 @@ This section is for the crystal portals variations
 	. = ..()
 	. += "<span class='notice'>The [src] seems to be releasing some sort or high frequency wavelength, maybe it could be closed if another signal is sent back or if an equivalent device is used on it.</span>"
 
-/obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/M)
-	if(faction_check(faction, M.faction, FALSE) && !M.client)
+/obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(faction_check(faction, user.faction, FALSE) && !user.client)
 		return ..()
 
 /obj/structure/crystal_portal/attackby(obj/item/W, mob/living/user, params)
@@ -653,7 +653,7 @@ This section is for the crystal monsters variations
 	turns_per_move = 1
 	speak_emote = list("resonates")
 	emote_see = list("resonates")
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	minbodytemp = 0
 	maxbodytemp = 1500
 	healable = 0 //they're crystals how would bruise packs help them??

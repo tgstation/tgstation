@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation 	= DWARFISM
+	var/inert_mutation = DWARFISM
 	///Used to set the mob's deathsound upon species change
 	var/deathsound
 	///Sounds to override barefeet walking
@@ -119,8 +119,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/flying_species = FALSE
 	///The actual flying ability given to flying species
 	var/datum/action/innate/flight/fly
-	///The icon used for the wings
+	///Current wings icon
 	var/wings_icon = "Angel"
+	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
+	var/list/wings_icons = list("Angel")
 	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
 	var/has_innate_wings = FALSE
 
@@ -197,8 +199,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/New()
 
-	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
+	if(!limbs_id) //if we havent set a limbs id to use, just use our own id
 		limbs_id = id
+	wings_icons = string_list(wings_icons)
 	..()
 
 /**
@@ -383,7 +386,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/obj/item/I = V
 			if(istype(I))
 				C.dropItemToGround(I)
-			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
 
 	for(var/X in inherent_traits)
@@ -455,6 +458,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.dna.species.mutant_bodyparts -= "wings"
 		C.dna.features["wings"] = "None"
 		C.update_body()
+	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
@@ -734,7 +738,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
-	var/list/standing	= list()
+	var/list/standing = list()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
 	H.remove_overlay(BODY_ADJ_LAYER)
@@ -1273,7 +1277,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
-	if(QDELETED(H))	//may be called from a timer
+	if(QDELETED(H)) //may be called from a timer
 		return
 	H.facial_hairstyle = "Shaved"
 	H.hairstyle = "Bald"
@@ -1418,7 +1422,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, modifiers)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -1428,27 +1432,24 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 	if(M.mind)
 		attacker_style = M.mind.martial_art
-	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.combat_mode && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempts to touch [H]!</span>", \
 						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='warning'>You attempt to touch [H]!</span>")
 		return
+
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
-	switch(M.a_intent)
-		if("help")
-			help(M, H, attacker_style)
 
-		if("grab")
-			grab(M, H, attacker_style)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		disarm(M, H, attacker_style)
+		return // dont attack after
+	if(M.combat_mode)
+		harm(M, H, attacker_style)
+	else
+		help(M, H, attacker_style)
 
-		if("harm")
-			harm(M, H, attacker_style)
-
-		if("disarm")
-			disarm(M, H, attacker_style)
-
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -1470,7 +1471,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/Iwound_bonus = I.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && H.body_position == LYING_DOWN && (LAZYLEN(H.surgeries) > 0))
+	if((I.item_flags & SURGICAL_TOOL) && !user.combat_mode && H.body_position == LYING_DOWN && (LAZYLEN(H.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
 	var/weakness = check_species_weakness(I, user)
@@ -1485,13 +1486,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/bloody = FALSE
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
-			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
-			if(prob(I.force * 2))	//blood spatter!
+			I.add_mob_blood(H) //Make the weapon bloody, not the person.
+			if(prob(I.force * 2)) //blood spatter!
 				bloody = TRUE
 				var/turf/location = H.loc
 				if(istype(location))
 					H.add_splatter_floor(location)
-				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
+				if(get_dist(user, H) <= 1) //people with TK won't get smeared with blood
 					user.add_mob_blood(H)
 
 		switch(hit_area)
@@ -1514,7 +1515,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
 
-				if(bloody)	//Apply blood
+				if(bloody) //Apply blood
 					if(H.wear_mask)
 						H.wear_mask.add_mob_blood(H)
 						H.update_inv_wear_mask()
@@ -1542,7 +1543,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
@@ -2026,6 +2027,63 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
 	return FALSE
 
+/*
+ * This proc is called when a mob loses their tail.
+ *
+ * tail_owner - the owner of the tail (who holds our species datum)
+ * lost_tail - the tail that was removed
+ * on_species_init - whether or not this was called when the species was initialized, or if it was called due to an ingame means (like surgery)
+ */
+/datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail, on_species_init = FALSE)
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "right_tail_regained")
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+	stop_wagging_tail(tail_owner)
+
+	// If it's initializing the species, don't add moodlets
+	if(on_species_init)
+		return
+	// If we don't have a set tail, don't bother adding moodlets
+	if(!mutant_organs.len)
+		return
+
+	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
+	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
+
+/*
+ * This proc is called when a mob gains a tail.
+ *
+ * tail_owner - the owner of the tail (who holds our species datum)
+ * lost_tail - the tail that was added
+ * on_species_init - whether or not this was called when the species was initialized, or if it was called due to an ingame means (like surgery)
+ */
+/datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail, on_species_init = FALSE)
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
+
+	// If it's initializing the species, don't add moodlets
+	if(on_species_init)
+		return
+	// If we don't have a set tail, don't add moodlets
+	if(!mutant_organs.len)
+		return
+
+	if(found_tail.type in mutant_organs)
+		SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "right_tail_regained", /datum/mood_event/tail_regained_right)
+	else
+		SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
+
+/*
+ * Clears all tail related moodlets when they lose their species.
+ *
+ * former_tail_owner - the mob that was once a species with a tail and now is a different species
+ */
+/datum/species/proc/clear_tail_moodlets(mob/living/carbon/human/former_tail_owner)
+	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
+	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
+	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "right_tail_regained")
+	SEND_SIGNAL(former_tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+	stop_wagging_tail(former_tail_owner)
+
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
@@ -2038,6 +2096,25 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(flying_species) //species that already have flying traits should not work with this proc
 		return
 	flying_species = TRUE
+	if(wings_icons.len > 1)
+		if(!H.client)
+			wings_icon = pick(wings_icons)
+		else
+			var/list/wings = list()
+			for(var/W in wings_icons)
+				var/datum/sprite_accessory/S = GLOB.wings_list[W] //Gets the datum for every wing this species has, then prompts user with a radial menu
+				var/image/img = image(icon = 'icons/mob/clothing/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND") //Process the HUD elements
+				img.transform *= 0.5
+				img.pixel_x = -32
+				if(wings[S.name])
+					stack_trace("Different wing types with repeated names. Please fix as this may cause issues.")
+				else
+					wings[S.name] = img
+			wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
+			if(!wings_icon)
+				wings_icon = pick(wings_icons)
+	else
+		wings_icon = wings_icons[1]
 	if(isnull(fly))
 		fly = new
 		fly.Grant(H)
@@ -2058,7 +2135,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/CanFly(mob/living/carbon/human/H)
 	if(H.stat || H.body_position == LYING_DOWN)
 		return FALSE
-	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
+	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))) //Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "<span class='warning'>Your suit blocks your wings from extending!</span>")
 		return FALSE
 	var/turf/T = get_turf(H)
@@ -2139,7 +2216,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. |= BIO_JUST_BONE
 
 ///Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.
-/datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target)
+/datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	return FALSE
 
 

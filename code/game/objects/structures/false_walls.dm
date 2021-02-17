@@ -19,7 +19,7 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
-	var/mineral = /obj/item/stack/sheet/metal
+	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
@@ -30,7 +30,7 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
-/obj/structure/falsewall/attack_hand(mob/user)
+/obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
 	if(opening)
 		return
 	. = ..()
@@ -171,7 +171,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/falsewall/uranium/attack_hand(mob/user)
+/obj/structure/falsewall/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
 	. = ..()
 

@@ -611,7 +611,10 @@
 			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						. += "[R.volume] units of [R.name]"
+						. += "[round(R.volume, 0.01)] units of [R.name]"
+					if(reagents.is_reacting)
+						. += "<span class='warning'>It is currently reacting!</span>"
+					. += "<span class='notice'>The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.</span>"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
@@ -652,9 +655,6 @@
 		. = TRUE
 
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
-		if(LAZYLEN(managed_vis_overlays))
-			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
 		var/list/new_overlays = update_overlays()
 		if(managed_overlays)
 			cut_overlay(managed_overlays)
@@ -1811,11 +1811,11 @@
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
 	if(href_list["statpanel_item_shiftclick"])
-		paramslist["shift"] = "1"
+		paramslist[SHIFT_CLICK] = "1"
 	if(href_list["statpanel_item_ctrlclick"])
-		paramslist["ctrl"] = "1"
+		paramslist[CTRL_CLICK] = "1"
 	if(href_list["statpanel_item_altclick"])
-		paramslist["alt"] = "1"
+		paramslist[ALT_CLICK] = "1"
 	if(href_list["statpanel_item_click"])
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
@@ -1848,7 +1848,7 @@
 
 +*/
 /atom/proc/InitializeAIController()
-	if(ai_controller)
+	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
 
 /**
@@ -1872,3 +1872,11 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+//Update the screentip to reflect what we're hoverin over
+/atom/MouseEntered(location, control, params)
+	. = ..()
+	if(flags_1 & NO_SCREENTIPS_1 || !usr?.client?.prefs.screentip_pref)
+		usr.hud_used.screentip_text.maptext = ""
+		return
+	usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")

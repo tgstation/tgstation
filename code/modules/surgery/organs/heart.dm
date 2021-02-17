@@ -6,7 +6,7 @@
 	slot = ORGAN_SLOT_HEART
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = 2.5 * STANDARD_ORGAN_DECAY		//designed to fail around 6 minutes after death
+	decay_factor = 2.5 * STANDARD_ORGAN_DECAY //designed to fail around 6 minutes after death
 
 	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
 	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
@@ -19,8 +19,8 @@
 	attack_verb_continuous = list("beats", "thumps")
 	attack_verb_simple = list("beat", "thump")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
-	var/failed = FALSE		//to prevent constantly running failing code
-	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
+	var/failed = FALSE //to prevent constantly running failing code
+	var/operated = FALSE //whether the heart's been operated on to fix some of its damages
 
 /obj/item/organ/heart/update_icon_state()
 	if(beating)
@@ -90,7 +90,7 @@
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
+	if(organ_flags & ORGAN_FAILING) //heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
 				"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
@@ -190,7 +190,7 @@
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/heart/cybernetic/tier2
 	name = "cybernetic heart"

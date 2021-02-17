@@ -7,7 +7,6 @@
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD,FAN_HUD)
 	hud_type = /datum/hud/human
-	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = 0
@@ -26,19 +25,19 @@
 	//Eye colour
 	var/eye_color = "000"
 
-	var/skin_tone = "caucasian1"	//Skin tone
+	var/skin_tone = "caucasian1" //Skin tone
 
-	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
+	var/lip_style = null //no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
 
-	var/age = 30		//Player's age
+	var/age = 30 //Player's age
 
-	var/underwear = "Nude"	//Which underwear the player wants
+	var/underwear = "Nude" //Which underwear the player wants
 	var/underwear_color = "000"
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
-	var/backpack = DBACKPACK		//Which backpack type the player has chosen.
-	var/jumpsuit_style = PREF_SUIT		//suit/skirt
+	var/backpack = DBACKPACK //Which backpack type the player has chosen.
+	var/jumpsuit_style = PREF_SUIT //suit/skirt
 
 	//Equipment slots
 	var/obj/item/clothing/wear_suit = null

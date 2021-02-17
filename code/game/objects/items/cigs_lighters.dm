@@ -82,7 +82,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == INTENT_HELP)
+	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>[cig] is already lit!</span>")
 		if(M == user)
@@ -168,10 +168,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
-	if(istype(glass))	//you can dip cigarettes into beakers
-		if(glass.reagents.trans_to(src, chem_volume, transfered_by = user))	//if reagents were transfered, show the message
+	if(istype(glass)) //you can dip cigarettes into beakers
+		if(glass.reagents.trans_to(src, chem_volume, transfered_by = user)) //if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
-		else			//if not, either the beaker was empty, or the cigarette was full
+		else //if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
 				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
 			else
@@ -296,7 +296,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light("<span class='notice'>[user] lights [src] with [M]'s burning body. What a cold-blooded badass.</span>")
 		return
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == INTENT_HELP)
+	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
 		if(M == user)
@@ -548,7 +548,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		STOP_PROCESSING(SSobj, src)
 		return
 	open_flame()
-	if(reagents?.total_volume)	//	check if it has any reagents at all
+	if(reagents?.total_volume) // check if it has any reagents at all
 		handle_reagents()
 
 
@@ -734,7 +734,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == INTENT_HELP)
+	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
 		if(M == user)

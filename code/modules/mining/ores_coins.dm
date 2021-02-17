@@ -27,12 +27,12 @@
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
 	if(difference == 0)
 		return
-	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
+	else if(difference < 0 && LAZYLEN(stack_overlays)) //amount < stack_overlays, remove excess.
 		if (LAZYLEN(stack_overlays)-difference <= 0)
 			stack_overlays = null
 		else
 			stack_overlays.len += difference
-	else if(difference > 0)			//amount > stack_overlays, add some.
+	else if(difference > 0) //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
 			newore.pixel_x = rand(-8,8)
@@ -87,7 +87,7 @@
 	singular_name = "iron ore chunk"
 	points = 1
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
-	refined_type = /obj/item/stack/sheet/metal
+	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
 	scan_state = "rock_Iron"
 	spreadChance = 20

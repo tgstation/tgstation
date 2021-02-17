@@ -11,13 +11,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
-	var/operable = 1	// true if can operate (no broken segments in this belt run)
-	var/forwards		// this is the default (forward) direction, set by the map dir
-	var/backwards		// hopefully self-explanatory
-	var/movedir			// the actual direction to move stuff in
-	var/id = ""			// the control ID	- must match controller ID
-	var/verted = 1		// Inverts the direction the conveyor belt moves.
+	var/operating = 0 // 1 if running forward, -1 if backwards, 0 if off
+	var/operable = 1 // true if can operate (no broken segments in this belt run)
+	var/forwards // this is the default (forward) direction, set by the map dir
+	var/backwards // hopefully self-explanatory
+	var/movedir // the actual direction to move stuff in
+	var/id = "" // the control ID - must match controller ID
+	var/verted = 1 // Inverts the direction the conveyor belt moves.
 	var/conveying = FALSE
 
 /obj/machinery/conveyor/centcom_auto
@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/am in affecting)
-		if(!ismovable(am))	//This is like a third faster than for(var/atom/movable in affecting)
+		if(!ismovable(am)) //This is like a third faster than for(var/atom/movable in affecting)
 			continue
 		var/atom/movable/movable_thing = am
 		//Give this a chance to yield if the server is busy
@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
@@ -193,13 +193,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()
 
 // attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user)
+/obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -248,12 +248,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon_state = "switch-off"
 	processing_flags = START_PROCESSING_MANUALLY
 
-	var/position = 0			// 0 off, -1 reverse, 1 forward
-	var/last_pos = -1			// last direction setting
-	var/oneway = FALSE			// if the switch only operates the conveyor belts in a single direction.
-	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
+	var/position = 0 // 0 off, -1 reverse, 1 forward
+	var/last_pos = -1 // last direction setting
+	var/oneway = FALSE // if the switch only operates the conveyor belts in a single direction.
+	var/invert_icon = FALSE // If the level points the opposite direction when it's turned on.
 
-	var/id = "" 				// must match conveyor IDs to control them
+	var/id = "" // must match conveyor IDs to control them
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()
