@@ -1,5 +1,4 @@
-//separate dm since hydro is getting bloated already
-
+#define GLOWSHROOM_SPREAD_DIMINISH_FACTOR 17
 /obj/structure/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
@@ -9,21 +8,25 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	/// Time interval between glowshroom "spreads"
-	var/delay_spread = 2 MINUTES
-	/// Time interval between glowshroom decay checks
-	var/delay_decay = 30 SECONDS
+	///Cooldown for when next to try to spread.
+	COOLDOWN_DECLARE(spread_cooldown)
+	/// Min time interval between glowshroom "spreads"
+	var/min_delay_spread = 15 SECONDS
+	/// Max time interval between glowshroom "spreads"
+	var/max_delay_spread = 25 SECONDS
 	/// Boolean to indicate if the shroom is on the floor/wall
 	var/floor = 0
 	/// Mushroom generation number
 	var/generation = 1
 	/// Chance to spread into adjacent tiles (0-100)
 	var/spreadIntoAdjacentChance = 75
+	///Amount of decay when decay happens on process
+	var/idle_decay_min = 5
+	///Amount of decay when decay happens on process
+	var/idle_decay_max = 20
 	/// Internal seed of the glowshroom, stats are stored here
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 
-	/// If we fail to spread this many times we stop trying to spread
-	var/max_failed_spreads = 5
 	/// Turfs where the glowshroom cannot spread to
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	/turf/open/lava,
@@ -64,15 +67,10 @@
 		myseed.forceMove(src)
 	else
 		myseed = new myseed(src)
-	if(spread)
-		myseed.adjust_potency(-round(myseed.potency * 0.25)) // Reduce potency of the little mushie if it's spreading
-	if(mutate_stats) //baby mushrooms have different stats :3
-		myseed.adjust_potency(rand(-4,3))
-		myseed.adjust_yield(rand(-3,2))
-		myseed.adjust_production(rand(-3,3))
-		myseed.adjust_endurance(myseed.endurance + rand(-3,2))
-	if(myseed.production >= 1) //In case production is varedited to -1 or less which would cause unlimited or negative delay.
-		delay_spread = delay_spread - (11 - myseed.production) * 100 //Because lower production speed stat gives faster production speed, which should give faster mushroom spread. Range 200-1100 deciseconds.
+	//myseed.potency = 100
+	//myseed.endurance = 100
+	//myseed.yield = 8
+
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
 		myseed.genes -= G
@@ -95,9 +93,10 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
 
+	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
+	COOLDOWN_START(src, decay_cooldown, delay_decay)
 
-	addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
-	addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/glowshroom/ComponentInitialize()
 	. = ..()
@@ -107,23 +106,25 @@
  * Causes glowshroom spreading across the floor/walls.
  */
 
+/obj/structure/glowshroom/process(delta_time)
+	if(COOLDOWN_FINISHED(src, spread_cooldown))
+		COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
+		Spread()
+
+	Decay(rand(idle_decay_min, idle_decay_max) * delta_time)
+
+
+
 /obj/structure/glowshroom/proc/Spread()
-
-	//We could be deleted at any point and the timers might not be cleaned up
-	if(QDELETED(src))
-		return
-
 	var/turf/ownturf = get_turf(src)
 	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
-		addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 		return //Deal with it not now
 
-	var/shrooms_planted = 0
 	var/list/possibleLocs = list()
 	//Lets collect a list of possible viewable turfs BEFORE we iterate for yield so we don't call view multiple
 	//times when there's no real chance of the viewable range changing, really you could do this once on item
 	//spawn and most people probably would not notice.
-	for(var/turf/open/floor/earth in view(3,src))
+	for(var/turf/open/floor/earth in oview(2,src))
 		if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 			continue
 		if(!TURF_SHARES(earth))
@@ -134,55 +135,45 @@
 	if(!possibleLocs.len)
 		return
 
-	for(var/i in 1 to myseed.yield)
-		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
-		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
+	var/chance_generation = 100 * (NUM_E ** -(GLOWSHROOM_SPREAD_DIMINISH_FACTOR / myseed.potency * generation)) //https://www.desmos.com/calculator/fiefsljcsu
 
-		// Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
-		if(prob(max(chance_stats, chance_generation)))
-			var/spreadsIntoAdjacent = prob(spreadIntoAdjacentChance)
-			var/turf/newLoc = null
+	for(var/i in 1 to max(1, FLOOR(myseed.yield / 2, 1)))
 
-			//Try three random locations to spawn before giving up tradeoff
-			//between running view(1, earth) on every single collected possibleLoc
-			//and failing to spread if we get 3 bad picks, which should only be a problem
-			//if there's a lot of glow shroom clustered about
-			for(var/Potato in 1 to 3)
-				var/turf/possibleLoc = pick(possibleLocs)
-				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,possibleLoc))
-					newLoc = possibleLoc
-					break
 
-			//We failed to find any location, skip trying to yield
-			if(newLoc == null)
+		if(!prob(chance_generation))
+			return
+		var/spreadsIntoAdjacent = prob(spreadIntoAdjacentChance)
+		var/turf/newLoc = null
+
+		//Try three random locations to spawn before giving up tradeoff
+		//between running view(1, earth) on every single collected possibleLoc
+		//and failing to spread if we get 3 bad picks, which should only be a problem
+		//if there's a lot of glow shroom clustered about
+		for(var/Potato in 1 to 3)
+			var/turf/possibleLoc = pick(possibleLocs)
+			if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,possibleLoc))
+				newLoc = possibleLoc
 				break
 
-			var/shroomCount = 0 //hacky
-			var/placeCount = 1
-			for(var/obj/structure/glowshroom/shroom in newLoc)
-				shroomCount++
-			for(var/wallDir in GLOB.cardinals)
-				var/turf/isWall = get_step(newLoc,wallDir)
-				if(isWall.density)
-					placeCount++
-			if(shroomCount >= placeCount)
-				continue
+		//We failed to find any location, skip trying to yield
+		if(newLoc == null)
+			break
 
-			Decay(TRUE, GLOWCAP_ENDURANCE_SPREAD_COST) // Decay before spawning new mushrooms to reduce their endurance
-			if(QDELETED(src)) //Decay can end us
-				return
-			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
-			child.generation = generation + 1
-			shrooms_planted++
+		var/shroomCount = 0 //hacky
+		var/placeCount = 1
+		for(var/obj/structure/glowshroom/shroom in newLoc)
+			shroomCount++
+		for(var/wallDir in GLOB.cardinals)
+			var/turf/isWall = get_step(newLoc,wallDir)
+			if(isWall.density)
+				placeCount++
+		if(shroomCount >= placeCount)
+			continue
 
-	if(!shrooms_planted)
-		max_failed_spreads--
-
-	//if we didn't get all possible shrooms planted or we haven't failed to spread at least 5 times then try to spread again later
-	if( (shrooms_planted <= myseed.yield) && (max_failed_spreads >= 0)  )
-		myseed.adjust_yield(-shrooms_planted)
-		//Lets make this a unique hash
-		addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		if(QDELETED(src)) //Decay can end us
+			return
+		var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
+		child.generation = generation + 1
 
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
@@ -217,20 +208,13 @@
 	return 1
 
 /**
- * Causes the glowshroom to decay by decreasing its endurance.
+ * Causes the glowshroom to decay by decreasing its endurance. Destroying it when it gets too low
  *
  * Arguments:
- * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
  * * amount - Amount of endurance to be reduced due to spread decay.
  */
-/obj/structure/glowshroom/proc/Decay(spread, amount)
-	if (spread) // Decay due to spread
-		myseed.adjust_endurance(-amount)
-	else // Timed decay
-		myseed.adjust_endurance(-1)
-		if (myseed.endurance > MIN_PLANT_ENDURANCE)
-			addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT) // Recall decay timer
-			return
+/obj/structure/glowshroom/proc/Decay(amount)
+	myseed.adjust_endurance(-amount)
 	if (myseed.endurance <= MIN_PLANT_ENDURANCE) // Plant is gone
 		qdel(src)
 
