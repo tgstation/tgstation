@@ -93,7 +93,7 @@
 	if(a_right)
 		a_right.dropped()
 
-/obj/item/assembly_holder/attack_hand(mob/living/user, modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+/obj/item/assembly_holder/attack_hand(mob/living/user, list/modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()
 	if(.)
 		return
