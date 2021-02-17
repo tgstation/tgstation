@@ -305,10 +305,11 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/centcom_formal
+/obj/item/clothing/suit/armor/centcom_formal
 	name = "\improper CentCom Formal Coat"
 	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
+
