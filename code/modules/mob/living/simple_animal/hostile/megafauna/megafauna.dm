@@ -154,7 +154,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time, ranged_buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
-	if(ranged_buffer_time)
+	if(isnum(ranged_buffer_time))
 		ranged_cooldown = world.time + ranged_buffer_time
 
 /// Grants medals and achievements to surrounding players
