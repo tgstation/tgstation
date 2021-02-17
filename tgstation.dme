@@ -261,6 +261,7 @@
 #include "code\_onclick\hud\revenanthud.dm"
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_objects.dm"
+#include "code\_onclick\hud\screentip.dm"
 #include "code\_onclick\hud\swarmer.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\controller.dm"
