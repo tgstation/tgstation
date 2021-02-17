@@ -2,6 +2,7 @@
 	var/strengthdiv = 10
 	var/modifier = 0
 	reaction_flags = REACTION_INSTANT
+	required_temp = 0 //Prevent impromptu RPGs
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	explode(holder, created_volume)
