@@ -652,3 +652,5 @@
 
 /turf/closed/mineral/strong/ex_act(severity, target)
 	return
+
+#undef MINING_MESSAGE_COOLDOWN
