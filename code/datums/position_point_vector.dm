@@ -22,7 +22,8 @@
 /proc/angle_between_points(datum/point/a, datum/point/b)
 	return ATAN2((b.y - a.y), (b.x - a.x))
 
-/datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
+/// For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
+/datum/position	
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -32,7 +33,8 @@
 /datum/position/proc/valid()
 	return x && y && z && !isnull(pixel_x) && !isnull(pixel_y)
 
-/datum/position/New(_x = 0, _y = 0, _z = 0, _pixel_x = 0, _pixel_y = 0)	//first argument can also be a /datum/point.
+/// First argument can also be a /datum/point.
+/datum/position/New(_x = 0, _y = 0, _z = 0, _pixel_x = 0, _pixel_y = 0)	
 	if(istype(_x, /datum/point))
 		var/datum/point/P = _x
 		var/turf/T = P.return_turf()
@@ -66,7 +68,8 @@
 /datum/position/proc/return_point()
 	return new /datum/point(src)
 
-/datum/point		//A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
+/// A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
+/datum/point		
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -80,7 +83,8 @@
 	p.z = z
 	return p
 
-/datum/point/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0)	//first argument can also be a /datum/position or /atom.
+/// First argument can also be a /datum/position or /atom.
+/datum/point/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0)	
 	if(istype(_x, /datum/position))
 		var/datum/position/P = _x
 		_x = P.x
@@ -130,10 +134,13 @@
 	return MODULUS(y, world.icon_size) - 16 - 1
 
 /datum/point/vector
-	var/speed = 32				//pixels per iteration
+	/// Pixels per iteration
+	var/speed = 32				
 	var/iteration = 0
 	var/angle = 0
-	var/mpx = 0					//calculated x/y movement amounts to prevent having to do trig every step.
+	/// Calculated x movement amounts to prevent having to do trig every step.
+	var/mpx = 0					
+	/// Calculated y movement amounts to prevent having to do trig every step.
 	var/mpy = 0
 	var/starting_x = 0			//just like before, pixels from EDGE of map! This is set in initialize_location().
 	var/starting_y = 0
@@ -151,7 +158,8 @@
 	starting_y = y
 	starting_z = z
 
-/datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0) // initialize_location of /datum/point/, doesn't set starting_x/y/z
+/// Same effect as initiliaze_location, but without setting the starting_x/y/z
+/datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0) 
 	if(!isnull(tile_x))
 		x = ((tile_x - 1) * world.icon_size) + world.icon_size * 0.5 + p_x + 1
 	if(!isnull(tile_y))
@@ -176,7 +184,8 @@
 		speed = pixel_speed
 	set_angle(new_angle)
 
-/datum/point/vector/proc/set_angle(new_angle)		//calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
+/// Calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
+/datum/point/vector/proc/set_angle(new_angle)
 	if(isnull(angle))
 		return
 	angle = new_angle
