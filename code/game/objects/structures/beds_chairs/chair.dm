@@ -75,20 +75,21 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
-		deconstruct()
-	else if(istype(W, /obj/item/assembly/shock_kit))
-		if(!user.temporarilyRemoveItemFromInventory(W))
-			return
-		var/obj/item/assembly/shock_kit/SK = W
-		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		E.setDir(dir)
-		E.part = SK
-		SK.forceMove(E)
-		SK.master = E
-		qdel(src)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(W.tool_behaviour == TOOL_WRENCH)
+			W.play_tool_sound(src)
+			deconstruct()
+		else if(istype(W, /obj/item/assembly/shock_kit) && type == /obj/structure/chair)
+			if(!user.temporarilyRemoveItemFromInventory(W))
+				return
+			var/obj/item/assembly/shock_kit/new_shock_kit = W
+			var/obj/structure/chair/e_chair/new_e_chair = new /obj/structure/chair/e_chair(src.loc)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			new_e_chair.setDir(dir)
+			new_e_chair.part = new_shock_kit
+			new_shock_kit.forceMove(new_e_chair)
+			new_shock_kit.master = new_e_chair
+			qdel(src)
 	else
 		return ..()
 
