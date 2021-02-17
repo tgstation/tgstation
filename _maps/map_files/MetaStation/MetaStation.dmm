@@ -33699,7 +33699,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
+/obj/machinery/destructive_scanner,
 /turf/open/floor/iron/white,
 /area/science/research)
 "euv" = (
@@ -34973,6 +34973,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/purple,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/science/research)
 "eRR" = (
@@ -43467,6 +43468,9 @@
 /area/commons/vacant_room/commissary)
 "isH" = (
 /obj/structure/table/glass,
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
 /turf/open/floor/iron/white,
 /area/science/research)
 "isV" = (
@@ -51975,6 +51979,16 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
+"lXi" = (
+/obj/structure/table/glass,
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
+/obj/item/experi_scanner{
+	pixel_x = -15
+	},
+/turf/open/floor/iron/white,
+/area/science/research)
 "lXu" = (
 /obj/item/radio/intercom{
 	pixel_y = -29
@@ -114559,7 +114573,7 @@ glk
 vou
 uwX
 jeM
-isH
+lXi
 vLG
 dvC
 hSZ
