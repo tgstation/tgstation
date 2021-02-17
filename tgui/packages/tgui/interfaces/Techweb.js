@@ -1,17 +1,16 @@
-import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
-import { Experiment } from './ExperimentConfigure';
-import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
-import { Fragment } from 'inferno';
+import { filter, map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { sortBy, filter, map } from 'common/collections';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
+import { Window } from '../layouts';
+import { Experiment } from './ExperimentConfigure';
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
 // This is primarily necessary due to measures that are taken to reduce the size
 // of the sent static JSON payload to as minimal of a size as possible
 // as larger sizes cause a delay for the user when opening the UI.
 
-let remappingIdCache = {};
+const remappingIdCache = {};
 const remapId = id => remappingIdCache[id];
 
 const selectRemappedStaticData = data => {
@@ -105,10 +104,9 @@ export const Techweb = (props, context) => {
 
   return (
     <Window
-      resizable
+      title={`${web_org} Research and Development Network`}
       width={640}
-      height={735}
-      title={`${web_org} Research and Development Network`}>
+      height={735}>
       {!!locked && (
         <Modal width="15em" align="center" className="Techweb__LockedModal">
           <div><b>Console Locked</b></div>
@@ -237,7 +235,7 @@ const TechwebOverview = (props, context) => {
       <Flex.Item>
         <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
-            <span>Web View</span>
+            Web View
           </Flex.Item>
           <Flex.Item grow={1}>
             <Tabs>
@@ -391,7 +389,7 @@ const TechwebDesignDisk = (props, context) => {
   ])(designIdByIdx);
 
   return (
-    <Fragment>
+    <>
       {showModal >= 0 && (
         <Modal width="20em">
           <Flex direction="column" className="Techweb__DesignModal">
@@ -428,47 +426,43 @@ const TechwebDesignDisk = (props, context) => {
           </Flex>
         </Modal>
       )}
-      {blueprints.map((x, i) => {
-        return (
-          <Section
-            title={`Slot ${i + 1}`}
-            key={i}
-            buttons={
-              <span>
-                {x !== null && (
-                  <Button
-                    icon="upload"
-                    onClick={() => act("uploadDesignSlot", { slot: i + 1 })}>
-                    Upload Design to Web
-                  </Button>
-                )}
+      {blueprints.map((x, i) => (
+        <Section
+          key={i}
+          title={`Slot ${i + 1}`}
+          buttons={
+            <>
+              {x !== null && (
                 <Button
-                  icon="save"
-                  onClick={() => setShowModal(i)}>
-                  {x !== null ? "Overwrite Slot" : "Load Design to Slot"}
+                  icon="upload"
+                  onClick={() => act("uploadDesignSlot", { slot: i + 1 })}>
+                  Upload Design to Web
                 </Button>
-                {x !== null && (
-                  <Button
-                    icon="trash"
-                    onClick={() => act("clearDesignSlot", { slot: i + 1 })}>
-                    Clear Slot
-                  </Button>
-                )}
-              </span>
-            }>
-            {x === null && (
-              <span>Empty</span>
-            ) || (
-              <span>
-                Contains the design for <b>{design_cache[x].name}</b>:<br />
-                <span
-                  className={`${design_cache[x].class} Techweb__DesignIcon`} />
-              </span>
-            )}
-          </Section>
-        );
-      })}
-    </Fragment>
+              )}
+              <Button
+                icon="save"
+                onClick={() => setShowModal(i)}>
+                {x !== null ? "Overwrite Slot" : "Load Design to Slot"}
+              </Button>
+              {x !== null && (
+                <Button
+                  icon="trash"
+                  onClick={() => act("clearDesignSlot", { slot: i + 1 })}>
+                  Clear Slot
+                </Button>
+              )}
+            </>
+          }>
+          {x === null && 'Empty' || (
+            <>
+              Contains the design for <b>{design_cache[x].name}</b>:<br />
+              <span
+                className={`${design_cache[x].class} Techweb__DesignIcon`} />
+            </>
+          )}
+        </Section>
+      ))}
+    </>
   );
 };
 
@@ -478,7 +472,7 @@ const TechwebTechDisk = (props, context) => {
   const { stored_research } = t_disk;
 
   return Object.keys(stored_research).map(x => ({ id: x })).map(n => (
-    <TechNode nocontrols node={n} key={n.id} />
+    <TechNode key={n.id} nocontrols node={n} />
   ));
 };
 
@@ -542,16 +536,16 @@ const TechNodeDetail = (props, context) => {
       </Flex.Item>
       {tabIndex === 0 && (
         <Flex.Item className="Techweb__OverviewNodes" grow={1}>
-          {prereqNodes.map(n =>
-            (<TechNode node={n} key={n.id} />)
-          )}
+          {prereqNodes.map(n => (
+            <TechNode key={n.id} node={n} />
+          ))}
         </Flex.Item>
       )}
       {tabIndex === 1 && (
         <Flex.Item className="Techweb__OverviewNodes" grow={1}>
-          {unlockedNodes.map(n =>
-            (<TechNode node={n} key={n.id} />)
-          )}
+          {unlockedNodes.map(n => (
+            <TechNode key={n.id} node={n} />
+          ))}
         </Flex.Item>
       )}
     </Flex>
@@ -588,7 +582,8 @@ const TechNode = (props, context) => {
   ] = useLocalState(context, 'nodeDetailTabIndex', 0);
 
   const expcompl = required_experiments
-    .filter(x => experiments[x]?.completed).length;
+    .filter(x => experiments[x]?.completed)
+    .length;
   const experimentProgress = (
     <ProgressBar
       ranges={{
@@ -602,7 +597,8 @@ const TechNode = (props, context) => {
   );
 
   const techcompl = prereq_ids
-    .filter(x => nodes.find(y => y.id === x)?.tier === 0).length;
+    .filter(x => nodes.find(y => y.id === x)?.tier === 0)
+    .length;
   const techProgress = (
     <ProgressBar
       ranges={{
@@ -618,14 +614,17 @@ const TechNode = (props, context) => {
   // Notice this logic will have te be changed if we make the discounts
   // pool-specific
   const nodeDiscount = Object.keys(discount_experiments)
-    .filter(x => experiments[x]?.completed).reduce((tot, curr) => {
+    .filter(x => experiments[x]?.completed)
+    .reduce((tot, curr) => {
       return tot + discount_experiments[curr];
     }, 0);
 
   return (
-    <Section title={name}
+    <Section
+      className="Techweb__NodeContainer"
+      title={name}
       buttons={!nocontrols && (
-        <span>
+        <>
           {!nodetails && (
             <Button
               icon="tasks"
@@ -642,11 +641,10 @@ const TechNode = (props, context) => {
               disabled={!can_unlock || tier > 1}
               onClick={() => act("researchNode", { node_id: id })}>
               Research
-            </Button>)}
-        </span>
-      )}
-      level={1}
-      className="Techweb__NodeContainer">
+            </Button>
+          )}
+        </>
+      )}>
       {tier !== 0 && (
         <Flex className="Techweb__NodeProgress">
           {costs.map(k => {
@@ -684,14 +682,13 @@ const TechNode = (props, context) => {
         {description}
       </Box>
       <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
-        {design_ids.map((k, i) => {
-          return (
-            <Button key={id}
-              className={`${design_cache[k].class} Techweb__DesignIcon`}
-              tooltip={design_cache[k].name}
-              tooltipPosition={i % 15 < 7 ? "right" : "left"} />
-          );
-        })}
+        {design_ids.map((k, i) => (
+          <Button
+            key={id}
+            className={`${design_cache[k].class} Techweb__DesignIcon`}
+            tooltip={design_cache[k].name}
+            tooltipPosition={i % 15 < 7 ? "right" : "left"} />
+        ))}
       </Box>
       {required_experiments?.length > 0 && (
         <Collapsible
