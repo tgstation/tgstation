@@ -6,6 +6,7 @@
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Right-Click to change the transfer rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
+	base_icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	///Who are we sticking our needle in?
@@ -36,53 +37,42 @@
 	return ..()
 
 /obj/machinery/iv_drip/update_icon_state()
-	icon_state = initial(icon_state)
-
 	if(attached)
-		if(mode)
-			icon_state += "_injecting"
-		else
-			icon_state += "_donating"
+		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
 	else
-		if(mode)
-			icon_state += "_injectidle"
-		else
-			icon_state += "_donateidle"
+		icon_state = "[base_icon_state]_[mode ? "injectidle" : "donateidle"]"
+	return ..()
 
 /obj/machinery/iv_drip/update_overlays()
 	. = ..()
 
-	if(beaker)
-		if(attached)
-			. += "beakeractive"
-		else
-			. += "beakeridle"
+	if(!beaker)
+		return
 
-		var/datum/reagents/target_reagents = get_reagent_holder()
-		if(target_reagents)
-			var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
+	. += attached ? "beakeractive" : "beakeridle"
+	var/datum/reagents/target_reagents = get_reagent_holder()
+	if(!target_reagents)
+		return
 
-			var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
-			switch(percent)
-				if(0 to 9)
-					filling_overlay.icon_state = "reagent0"
-				if(10 to 24)
-					filling_overlay.icon_state = "reagent10"
-				if(25 to 49)
-					filling_overlay.icon_state = "reagent25"
-				if(50 to 74)
-					filling_overlay.icon_state = "reagent50"
-				if(75 to 79)
-					filling_overlay.icon_state = "reagent75"
-				if(80 to 90)
-					filling_overlay.icon_state = "reagent80"
-				if(91 to INFINITY)
-					filling_overlay.icon_state = "reagent100"
+	var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
+	var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
+	switch(percent)
+		if(0 to 9)
+			filling_overlay.icon_state = "reagent0"
+		if(10 to 24)
+			filling_overlay.icon_state = "reagent10"
+		if(25 to 49)
+			filling_overlay.icon_state = "reagent25"
+		if(50 to 74)
+			filling_overlay.icon_state = "reagent50"
+		if(75 to 79)
+			filling_overlay.icon_state = "reagent75"
+		if(80 to 90)
+			filling_overlay.icon_state = "reagent80"
+		if(91 to INFINITY)
+			filling_overlay.icon_state = "reagent100"
 
-			filling_overlay.color = mix_color_from_reagents(target_reagents.reagent_list)
-			. += filling_overlay
-
-	filling_overlay.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+	filling_overlay.color = mix_color_from_reagents(target_reagents.reagent_list)
 	. += filling_overlay
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
@@ -205,7 +195,7 @@
 	add_fingerprint(usr)
 	attached = target
 	START_PROCESSING(SSmachines, src)
-	update_icon()
+	update_appearance()
 
 	SEND_SIGNAL(src, COMSIG_IV_ATTACH, target)
 
@@ -214,7 +204,7 @@
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 
 	attached = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/iv_drip/proc/get_reagent_holder()
 	return use_internal_storage ? reagents : beaker?.reagents
@@ -274,6 +264,7 @@
 	name = "saline drip"
 	desc = "An all-you-can-drip saline canister designed to supply a hospital without running out, with a scary looking pump rigged to inject saline into containers, but filling people directly might be a bad idea."
 	icon_state = "saline"
+	base_icon_state = "saline"
 	density = TRUE
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
@@ -295,6 +286,7 @@
 	name = "automated IV drip"
 	desc = "A modified IV drip with plumbing connects. Reagents received from the connect are injected directly into their bloodstream, blood that is drawn goes to the internal storage and then into the ducting."
 	icon_state = "plumb"
+	base_icon_state = "plumb"
 
 	density = TRUE
 	use_internal_storage = TRUE
