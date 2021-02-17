@@ -9,21 +9,49 @@
 	///Is the venue open at the moment?
 	var/open
 	///Portal linked to this venue at the moment
-	var//obj/structure/restaurant_portal
+	var/obj/machinery/restaurant_portal
+	///Lists the current visitors of a venue
+	var/list/current_visitors = list()
+	///Cooldown for next guest to arrive
+	COOLDOWN_DECLARE(visit_cooldown)
+	///Min time between new visits
+	var/min_time_between_visitor = 20 SECONDS
+	///Max time between new visits
+	var/max_time_between_visitor = 2 MINUTES
 
-/datum/venue/toggle_open()
+/datum/venue/process(delta_time)
+	if(!COOLDOWN_FINISHED(src, visit_cooldown))
+		return
+	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
+	if(current_visitors.len < max_guests)
+		create_new_customer()
+
+/datum/venue/proc/create_new_customer()
+	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), pickweight(customer_types), src)
+	current_visitors += new_customer
+
+/datum/venue/proc/toggle_open()
 	if(open)
-		closed()
+		close()
 	else
 		open()
 
-/datum/venue/open()
+/datum/venue/proc/open()
 	open = TRUE
+	restaurant_portal.update_icon()
+	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
+	START_PROCESSING(SSobj, src)
 
-/datum/venue/close()
+/datum/venue/proc/close()
 	open = FALSE
+	restaurant_portal.update_icon()
+	STOP_PROCESSING(SSobj, src)
+	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
+		robot_customer.ai_controller.blackboard[BB_BLACKBOARD_CUSTOMER_LEAVING] = TRUE //LEAVEEEEEE
 
-/obj/structure/machinery/restaurant_portal
+
+
+/obj/machinery/restaurant_portal
 	name = "restaurant portal"
 	desc = "A robot-only gate into the wonders of Space Station cuisine!"
 	icon = 'icons/obj/machines/restaurant_portal.dmi'
@@ -40,26 +68,27 @@
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue = /datum/venue
 
-/obj/structure/restaurant_portal/Initialize()
+
+/obj/machinery/restaurant_portal/Initialize()
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
-	linked_venue.portal = src
+	linked_venue.restaurant_portal = src
 
-/obj/structure/restaurant_portal/Destroy()
+/obj/machinery/restaurant_portal/Destroy()
 	. = ..()
 
-/obj/structure/restaurant_portal/update_icon_state()
+/obj/machinery/restaurant_portal/update_icon_state()
 	. = ..()
 	if(linked_venue.open) //Any open venues
-		icon = "portal_on"
+		icon_state = "portal_on"
 	else
-		icon = "portal_off"
+		icon_state = "portal"
 
 /obj/structure/restaurant_sign
 	name = "restaurant sign"
 	desc = "Flip it to show you're open or not."
 	icon = 'icons/obj/machines/restaurant_portal.dmi'
-	icon_state = "sign_open"
+	icon_state = "sign_closed"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF //fuck it
 	///What venue is this sign for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue = /datum/venue
@@ -76,6 +105,6 @@
 /obj/structure/restaurant_sign/update_icon_state()
 	. = ..()
 	if(linked_venue.open)
-		icon = "sign_open"
+		icon_state = "sign_open"
 	else
-		icon = "sign_closed"
+		icon_state = "sign_closed"

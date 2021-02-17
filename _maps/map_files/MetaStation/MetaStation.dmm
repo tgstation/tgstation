@@ -22819,7 +22819,7 @@
 /turf/open/floor/iron/dark,
 /area/security/office)
 "ciV" = (
-/obj/item/kirbyplants/random,
+/obj/structure/restaurant_sign/restaurant,
 /turf/open/floor/wood,
 /area/service/bar)
 "ciX" = (
@@ -47274,6 +47274,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "jXx" = (
@@ -50018,10 +50019,10 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "lgc" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/wood,
 /area/service/bar)
 "lgq" = (
@@ -58493,6 +58494,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/restaurant_sign/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "oFp" = (

@@ -64,5 +64,8 @@
 ///Robot customer AI controller blackboard keys
 #define BB_CUSTOMER_CURRENT_ORDER "BB_customer_current_order"
 #define BB_CUSTOMER_MY_SEAT "BB_customer_my_seat"
-#define BB_CUSTOMER_PATIENCE "BB_customer_my_seat"
+#define BB_CUSTOMER_PATIENCE "BB_customer_patience"
 #define BB_CUSTOMER_CUSTOMERINFO "BB_customer_customerinfo"
+#define BB_CUSTOMER_EATING "BB_customer_eating"
+#define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
+#define BB_BLACKBOARD_CUSTOMER_LEAVING "BB_customer_leaving"
