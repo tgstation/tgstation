@@ -289,21 +289,21 @@
 	return has_removed_reagent
 
 /// Fuck this one reagent
-/datum/reagents/proc/del_reagent(reagent)
+/datum/reagents/proc/del_reagent(target_reagent_typepath)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		if(cached_reagent.type == reagent)
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(reagent.type == target_reagent_typepath)
 			if(isliving(my_atom))
-				if(cached_reagent.metabolizing)
-					cached_reagent.metabolizing = FALSE
-					cached_reagent.on_mob_end_metabolize(my_atom)
-				cached_reagent.on_mob_delete(my_atom)
+				if(reagent.metabolizing)
+					reagent.metabolizing = FALSE
+					reagent.on_mob_end_metabolize(my_atom)
+				reagent.on_mob_delete(my_atom)
 
-			reagent_list -= R
-			LAZYREMOVE(previous_reagent_list, R.type)
-			qdel(R)
+			reagent_list -= reagent
+			LAZYREMOVE(previous_reagent_list, reagent.type)
+			qdel(reagent)
 			update_total()
-			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, cached_reagent)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
 
 //Converts the creation_purity to purity
@@ -591,42 +591,41 @@
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
+/datum/reagents/proc/metabolize(mob/living/carbon/owner, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
-	if(C)
-		expose_temperature(C.bodytemperature, 0.25)
+	if(owner)
+		expose_temperature(owner.bodytemperature, 0.25)
 	var/need_mob_update = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		if(QDELETED(R.holder))
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(QDELETED(reagent.holder))
 			continue
 
-		if(!C)
-			C = R.holder.my_atom
+		if(!owner)
+			owner = reagent.holder.my_atom
 
-		if(C && R)
-			if(C.reagent_check(R) != TRUE)
-				if(liverless && !R.self_consuming) //need to be metabolized
+		if(owner && reagent)
+			if(owner.reagent_check(reagent) != TRUE)
+				if(liverless && !reagent.self_consuming) //need to be metabolized
 					continue
-				if(!R.metabolizing)
-					R.metabolizing = TRUE
-					R.on_mob_metabolize(C)
+				if(!reagent.metabolizing)
+					reagent.metabolizing = TRUE
+					reagent.on_mob_metabolize(owner)
 				if(can_overdose)
-					if(R.overdose_threshold)
-						if(R.volume >= R.overdose_threshold && !R.overdosed)
-							R.overdosed = TRUE
-							need_mob_update += R.overdose_start(C)
-							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
-					for(var/addiction in R.addiction_types)
-						C.mind?.add_addiction_points(addiction, R.addiction_types[addiction] * REAGENTS_METABOLISM)
+					if(reagent.overdose_threshold)
+						if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
+							reagent.overdosed = TRUE
+							need_mob_update += reagent.overdose_start(owner)
+							log_game("[key_name(owner)] has started overdosing on [reagent.name] at [reagent.volume] units.")
+					for(var/addiction in reagent.addiction_types)
+						owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
 
-					if(R.overdosed)
-						need_mob_update += R.overdose_process(C)
+					if(reagent.overdosed)
+						need_mob_update += reagent.overdose_process(owner)
 
-				need_mob_update += R.on_mob_life(C)
-	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
-		C.updatehealth()
-		C.update_stamina()
+				need_mob_update += reagent.on_mob_life(owner)
+	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
+		owner.updatehealth()
+		owner.update_stamina()
 	update_total()
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
