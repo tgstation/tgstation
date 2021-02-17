@@ -268,6 +268,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.remove_any(to_smoke)
 
 /obj/item/clothing/mask/cigarette/process(delta_time)
+	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
 	if(isliving(loc))
 		M.IgniteMob()
@@ -278,7 +279,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 	smoketime -= delta_time
 	if(smoketime <= 0)
-		new type_butt(loc)
+		new type_butt(location)
 		if(ismob(loc))
 			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		qdel(src)
