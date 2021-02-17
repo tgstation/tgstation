@@ -112,9 +112,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = H
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/H)
-	if(H.combat_mode)
-		retaliate(H)
+/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(user.combat_mode)
+		retaliate(user)
 		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	return ..()
 
@@ -140,7 +140,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		retaliate(Proj.firer)
 	return ..()
 
-/mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!on)
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
@@ -342,7 +342,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	..()
 	if(!isalien(target))
 		target = user

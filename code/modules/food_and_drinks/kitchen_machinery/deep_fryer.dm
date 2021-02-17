@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/attack_ai(mob/user)
 	return
 
-/obj/machinery/deepfryer/attack_hand(mob/living/user)
+/obj/machinery/deepfryer/attack_hand(mob/living/user, list/modifiers)
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")

@@ -342,7 +342,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	add_fingerprint(usr)
 	return ..()
 
-/obj/item/attack_hand(mob/user, modifiers)
+/obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -406,7 +406,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
-/obj/item/attack_paw(mob/user)
+/obj/item/attack_paw(mob/user, list/modifiers)
 	if(!user)
 		return
 	if(anchored)
@@ -425,15 +425,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
-/obj/item/attack_alien(mob/user)
-	var/mob/living/carbon/alien/A = user
+/obj/item/attack_alien(mob/user, list/modifiers)
+	var/mob/living/carbon/alien/ayy = user
 
 	if(!user.can_hold_items(src))
-		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.dropItemToGround(src)
+		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
+			ayy.dropItemToGround(src)
 		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
 		return
-	attack_paw(A)
+	attack_paw(ayy, modifiers)
 
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/robot_model))
@@ -451,7 +451,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
+	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, final_block_chance, damage, attack_type)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
@@ -757,7 +757,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
 
-/obj/item/attack_animal(mob/living/simple_animal/M)
+/obj/item/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
@@ -824,6 +824,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
+	. = ..()
 	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr

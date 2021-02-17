@@ -88,6 +88,17 @@
 ////Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
 #define END_REACTION "end_reaction"
 
+///Minimum requirement for addiction buzz to be met
+#define MIN_ADDICTION_REAGENT_AMOUNT 2
+#define MAX_ADDICTION_POINTS 1000
+
+///Addiction start/ends
+#define WITHDRAWAL_STAGE1_START_CYCLE 1
+#define WITHDRAWAL_STAGE1_END_CYCLE 60
+#define WITHDRAWAL_STAGE2_START_CYCLE 61
+#define WITHDRAWAL_STAGE2_END_CYCLE 120
+#define WITHDRAWAL_STAGE3_START_CYCLE 121
+
 ///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
 /// This reagent does brute effects (BOTH damaging and healing)
 #define REACTION_TAG_BRUTE (1<<0)

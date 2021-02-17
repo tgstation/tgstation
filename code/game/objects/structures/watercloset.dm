@@ -18,7 +18,7 @@
 	update_icon()
 
 
-/obj/structure/toilet/attack_hand(mob/living/user)
+/obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -159,7 +159,7 @@
 	. = ..()
 	hiddenitem = new /obj/item/food/urinalcake
 
-/obj/structure/urinal/attack_hand(mob/living/user)
+/obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -276,7 +276,7 @@
 	. = ..()
 	. += "<span class='notice'>[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.</span>"
 
-/obj/structure/sink/attack_hand(mob/living/user)
+/obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -480,7 +480,7 @@
 	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
 
-/obj/structure/water_source/attack_hand(mob/living/user)
+/obj/structure/water_source/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -599,7 +599,7 @@
 	resistance_flags = UNACIDABLE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/water_source/puddle/attack_hand(mob/M)
+/obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
@@ -678,7 +678,7 @@
 	return TRUE
 
 
-/obj/structure/curtain/attack_hand(mob/user)
+/obj/structure/curtain/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -751,5 +751,5 @@
 	if(opaque_closed)
 		set_opacity(TRUE)
 
-/obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user)
+/obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
 		return
