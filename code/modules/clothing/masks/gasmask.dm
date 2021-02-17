@@ -10,6 +10,7 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	tint = 1.1
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -110,6 +111,7 @@
 	icon_state = "plaguedoctor"
 	inhand_icon_state = "gas_mask"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, RAD = 0, FIRE = 0, ACID = 0)
+	tint = 1
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -131,6 +133,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
+	tint = 1
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
@@ -177,6 +180,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
+	tint = 1
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -189,6 +193,7 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
+	tint = 1
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
@@ -241,6 +246,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
+	tint = 1
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
