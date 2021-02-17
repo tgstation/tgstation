@@ -123,7 +123,7 @@
 
 /datum/chemical_reaction/medicine/aiuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
-	for(var/mob/living/living_mob as anything in orange(3, this_turf))
+	for(var/mob/living/living_mob as anything in orange(3, get_turf(holder.my_atom)))
 		if(living_mob.flash_act(1, length = 5))
 			living_mob.set_blurriness(10)
 
@@ -145,9 +145,9 @@
 /datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	if(off_cooldown(holder, equilibrium, 2, "hercuri_freeze"))
 		return
-	playsound(my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
-	var/radius = max((volume/50), 1)
+	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	holder.my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	var/radius = max((equilibrium.step_target_vol/50), 1)
 	freeze_radius(holder, equilibrium, 200, radius, 2) //drying agent exists
 	explode_shockwave(holder, equilibrium, sound_and_text = FALSE)
 
@@ -176,11 +176,11 @@
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
 	if(!oxy)
-		equilibrium.delta_t = delta_t/10 //slow without oxygen
+		reaction.delta_t = delta_t/10 //slow without oxygen
 	else
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
 
-/datum/chemical_reaction/medicine/convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = false)
+/datum/chemical_reaction/medicine/convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
 	var/range = impure ? 4 : 3
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		explode_shockwave(holder, equilibrium, range) //damage 5
@@ -216,11 +216,11 @@
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
 	if(!oxy)
-		holder.pH += 0.05//pH drifts faster
+		holder.ph += 0.05//pH drifts faster
 	else
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
 
-/datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = false)
+/datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
 	var/bonus = impure ? 2 : 1
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/healing/tirimol, 7.5*bonus, 2, ignore_eyes = TRUE) //since we're smoke/air based
@@ -244,7 +244,7 @@
 	is_cold_recipe = TRUE
 	required_temp = 320
 	optimal_temp = 50
-	overheat_temp = NO_OVERHEAT
+	overheat_temp = 99999
 	optimal_ph_min = 2
 	optimal_ph_max = 5
 	determin_ph_range = 6
@@ -260,7 +260,7 @@
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "seiver_rads"))
 		return
-	modifier = max((200 - holder.reagents.chem_temp)*0.1, 0) //0 - 20 based off temperature(colder is more)
+	var/modifier = max((200 - holder.chem_temp)*0.1, 0) //0 - 20 based off temperature(colder is more)
 	radiation_pulse(holder.my_atom, modifier, 0.5, can_contaminate=FALSE) //Please advise on this, I don't have a good handle on the numbers
 
 /datum/chemical_reaction/medicine/multiver
@@ -284,18 +284,18 @@
 //You get nothing! I'm serious about staying under the heating requirements!
 /datum/chemical_reaction/medicine/multiver/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
-	var/datum/reagent/monover = holder.has_reagent(/datum/reagent/impurity/healing/monover)
+	var/datum/reagent/monover = holder.has_reagent(/datum/reagent/inverse/healing/monover)
 	if(monover)
-		holder.remove_reagent(/datum/reagent/impurity/healing/monover, monover.volume)
+		holder.remove_reagent(/datum/reagent/inverse/healing/monover, monover.volume)
 		holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover bursts into flames from the heat!</span>")
 		explode_fire_square(holder, equilibrium, 1)
-		holder.fire_act(holder.chem_temp, monover.volume)//I'm kinda banking on this setting the thing on fire. If you see this, then it didn't!
+		holder.my_atom.fire_act(holder.chem_temp, monover.volume)//I'm kinda banking on this setting the thing on fire. If you see this, then it didn't!
 
 /datum/chemical_reaction/medicine/multiver/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	if(delta_ph < 0.35)
 		//normalise delta_ph
-		norm_d_ph = 1-(delta_ph/0.35)
+		var/norm_d_ph = 1-(delta_ph/0.35)
 		holder.chem_temp += norm_d_ph*4 //0 - 16 per second)
 	if(delta_ph < 0.1)
 		holder.my_atom.visible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover begins to glow!</span>")
@@ -305,7 +305,7 @@
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
 	required_temp = 250
 	optimal_temp = 310
-	overheat_temp = NO_OVERHEAT
+	overheat_temp = 99999
 	optimal_ph_min = 5
 	optimal_ph_max = 9
 	determin_ph_range = 6
@@ -342,15 +342,14 @@
 /datum/chemical_reaction/medicine/penthrite/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "lub"))
-		explode_shockwave(holder, equlibrium, 3, 2)
-		playsound(my_atom, 'sound/health/slowbeat.ogg', 50, 1)
+		explode_shockwave(holder, equilibrium, 3, 2)
+		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1)
 	if(off_cooldown(holder, equilibrium, 1, "dub", 0.5))
-		explode_shockwave(holder, equlibrium, 3, 2, implosion = TRUE)
-		playsound(my_atom, 'sound/health/slowbeat.ogg', 50, 1)
+		explode_shockwave(holder, equilibrium, 3, 2, implosion = TRUE)
+		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1)
 	explode_fire_vortex(holder, equilibrium, 1, 1)
 
 
 /datum/chemical_reaction/medicine/penthrite/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
-	. = ..()
-	holder.reagents.chem_temp += 10
+	holder.chem_temp += 10
 

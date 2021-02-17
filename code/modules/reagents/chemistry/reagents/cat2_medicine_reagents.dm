@@ -8,7 +8,7 @@
 	purity = REAGENT_STANDARD_PUIRTY
 	inverse_chem_val = 0
 	inverse_chem = null
-	failed_chem = /datum/reagent/impurity/medicine_failure
+	failed_chem = /datum/reagent/impure/healing/medicine_failure
 	chemical_flags = REAGENT_SPLITRETAINVOL
 
 /******BRUTE******/
@@ -160,20 +160,20 @@
 	color = "#6171FF"
 	ph = 4.7
 	impure_chem = /datum/reagent/impurity/lentslurri
-	failed_chem = /datum/reagent/impurity/ichiyuri //I do hope cobby won't take this personally
+	failed_chem = /datum/reagent/inverse/ichiyuri //I do hope cobby won't take this personally
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 
-/datum/reagent/medicine/c2/lenturi/on_mob_add(mob/living/L, amount)
+/datum/reagent/medicine/c2/lenturi/on_mob_add(mob/living/owner, amount)
 	. = ..()
 	if(creation_purity == 1)
-		for(var/addiction in addiction_list) //maybe worth adding a has_addiction() check?
+		for(var/addiction in owner.addiction_list) //maybe worth adding a has_addiction() check?
 			if(addiction == /datum/reagent/impurity/lentslurri)
-				to_chat(M, "<span class='notice'>Something was off about that dose, it doesn't quite hit the spot. You still want more!</span>")//impure chem free!
+				to_chat(owner, "<span class='notice'>Something was off about that dose, it doesn't quite hit the spot. You still want more!</span>")//impure chem free!
 
-/datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss((-3 * REM*normalise_creation_purity())
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
+/datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/owner)
+	owner.adjustFireLoss(-3 * REM*normalise_creation_purity())
+	owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
 	..()
 	return TRUE
 
@@ -340,7 +340,7 @@
 /datum/reagent/medicine/c2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
-	inverse_chem = /datum/reagent/medicine/c2/monover
+	inverse_chem = /datum/reagent/inverse/healing/monover
 	inverse_chem_val = 0.35
 	failed_chem = null //Reaction uses a special method - so we don't want this for now.
 	ph = 9.2
@@ -476,7 +476,7 @@
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
-	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))) //0.5 - 0.75
+	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity)))) //0.5 - 0.75
 	if(show_message)
 		to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
@@ -502,6 +502,8 @@
 	color = "#F5F5F5"
 	overdose_threshold = 50
 	ph = 12.7
+	inverse_chem = /datum/reagent/inverse/penthrite
+	inverse_chem_val = 0.25
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()

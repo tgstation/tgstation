@@ -350,7 +350,7 @@
 		step_add = delta_chem_factor * reaction.results[product]
 		//If we make purities in real time
 		if(reaction.reaction_flags & REACTION_REAL_TIME_SPLIT && purity < 1)
-			var/datum/reagent/product_ref = GLOB.chemical_reagents_list[product.type]
+			var/datum/reagent/product_ref = GLOB.chemical_reagents_list[product]
 			if(purity < reaction.purity_min && product_ref.failed_chem) //If we're failed
 				holder.add_reagent(product_ref.failed_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
 			else if(purity < product_ref.inverse_chem_val && product_ref.inverse_chem) //If we're inverse

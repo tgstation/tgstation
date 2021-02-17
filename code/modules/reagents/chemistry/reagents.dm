@@ -86,11 +86,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/chemical_flags = NONE
 	///impure chem values (see fermi_readme.dm for more details on impure/inverse/failed mechanics):
 	/// What chemical path is made when metabolised as a function of purity
-	var/impure_chem = /datum/reagent/impurity
+	var/impure_chem = /datum/reagent/impurity/isomer
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
-	/// What chem is metabolised when purity is below inverse_chem_val						
-	var/inverse_chem = /datum/reagent/impurity/toxic
+	/// What chem is metabolised when purity is below inverse_chem_val
+	var/inverse_chem = /datum/reagent/impurity/isomer/toxic
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction
 
@@ -254,9 +254,9 @@ Primarily used in reagents/reaction_agents
 	return list("[taste_description]" = 1)
 
 /**
- * Used when you want the default reagents purity to be equal to the normal effects 
+ * Used when you want the default reagents purity to be equal to the normal effects
  * (i.e. if default purity is 0.75, and your reacted purity is 1, then it will return 1.33)
- * 
+ *
  * Arguments
  * * normalise_num_to - what number/purity value you're normalising to. If blank it will default to the compile value of purity for this chem
  * * _creation_purity - creation_purity override, if desired. This is the purity of the reagent that you're normalising from.

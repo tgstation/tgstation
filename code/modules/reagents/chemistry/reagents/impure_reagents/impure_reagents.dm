@@ -210,7 +210,7 @@
 		to_chat(M, "<span class='notice'>Your muscles feel normal again.</span>")
 
 //failed
-/datum/reagent/impurity/ichiyuri
+/datum/reagent/inverse/ichiyuri
 	name = "Ichiyuri"
 	description = "Prolonged exposure to this chemical can cause an overwhelming urge to itch oneself."
 	reagent_state = LIQUID
@@ -220,8 +220,8 @@
 	ph = 1.7
 
 //Just the removed itching mechanism - omage to it's origins.
-/datum/reagent/impurity/ichiyuri/on_mob_life(mob/living/carbon/M)
-	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
+/datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/M)
+	if(prob(resetting_probability) && !(HAS_TRAIT(M, TRAIT_RESTRAINED) || M.incapacitated()))
 		if(spammer < world.time)
 			to_chat(M,"<span class='warning'>You can't help but itch yourself.</span>")
 			spammer = world.time + (10 SECONDS)
@@ -257,22 +257,22 @@
 ////Hercuri
 
 //inverse
-/datum/reagent/impurity/hercuri
+/datum/reagent/inverse/hercuri
 	name = "Herignis"
 	description = "This reagent causes a dramatic raise in a patient's body temperature."
 	ph = 0.8
 
-/datum/reagent/impurity/hercuri/on_mob_life(mob/living/carbon/owner)
+/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner)
 	. = ..()
 	var/heating = rand(creation_purity*10, creation_purity*30)
-	owner.reagents?.chem_temp +=((heating*REM)
-	M.adjust_bodytemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
-	if(ishuman(M))
-		var/mob/living/carbon/human/humi = M
+	owner.reagents?.chem_temp += (heating*REM)*normalise_creation_purity()
+	owner.adjust_bodytemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/humi = owner
 		humi.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
 
 
-/datum/reagent/impurity/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
+/datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	. = ..()
 	if(!(methods & VAPOR))
 		return
@@ -292,7 +292,7 @@
 			if(prob(50))
 				owner.emote("yawn")
 		if(10 to INFINITY)
-			M.Sleeping(40)
+			owner.Sleeping(40)
 			. = 1
 			if(owner.IsSleeping() && !cached_reagent_list)
 				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
@@ -325,19 +325,21 @@
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner)
-	M.radiation += creation_purity
+	owner.radiation += creation_purity // 0 - 1
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
 	name = "please name me"
 	description = "I'm sleepy"
+	///The list of reagents we've affected
+	var/cached_reagent_list = list()
 
 /datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/living_mob)
-	if(!(iscarbon(living_mob))
+	if(!(iscarbon(living_mob)))
 		return ..()
 	var/mob/living/carbon/owner = living_mob
 	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
-		if(!(istype(reagent, /datum/reagent/medicine))
+		if(!(istype(reagent, /datum/reagent/medicine)))
 			continue
 		if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
 			continue
@@ -346,17 +348,15 @@
 	..()
 
 /datum/reagent/inverse/healing/syriniver/on_mob_delete(mob/living/living_mob)
-	if(!(iscarbon(living_mob))
+	if(!(iscarbon(living_mob)))
 		return ..()
-	var/mob/living/carbon/owner = living_mob
 	if(!cached_reagent_list)
 		return ..()
 	for(var/datum/reagent/reagent as anything in cached_reagent_list)
 		if(!reagent)
 			continue
 		reagent.creation_purity *= 1.25
-	QDELLNULL(cached_reagent_list)
-
+	cached_reagent_list = null
 
 ////Multiver
 //Inverse
@@ -383,18 +383,18 @@
 	name = "Nooartrium"
 	description = "A reagent that is known to stimulate the heart in a dead patient, bringing them ."
 	ph = 14
-	metabolisation_rate = 1 * REM
+	metabolization_rate = 1 * REM
 	///If we brought someone back from the dead
 	var/back_from_the_dead
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner)
-	var/obj/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(heart.organ_flags & ORGAN_FAILING)
 		return ..()
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(M, TRAIT_NOHARDCRIT, type)
-	ADD_TRAIT(M, TRAIT_NOSOFTCRIT, type)
-	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, type)
+	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
+	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	owner.stat = CONSCIOUS
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
@@ -405,16 +405,16 @@
 		owner.adjustBruteLoss(5*(1-creation_purity))
 		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2.5*(1-creation_purity))
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
-		iter_wound.bleed_rate += 2*(1-creation_purity)
+		iter_wound.blood_flow += (1-creation_purity)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.adjustStaminaLoss((-owner.health)/10)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
-		M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT, type)
-	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT, type)
-	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, type)
-	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	. = ..()

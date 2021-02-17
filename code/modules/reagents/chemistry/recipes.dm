@@ -435,7 +435,7 @@
 	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
 		if(!(istype(any_turf, /turf/open)))
 			continue
-		var/turf/open/open_turf = I
+		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = freeze_duration/2, freeze_duration = 5)
 		open_turf.temperature = temp
 
@@ -445,13 +445,14 @@
 	if(!holder)
 		return FALSE
 	for(var/reagent in required_reagents)
-		reagent.remove_reagent(reagent, volume)
+		holder.remove_reagent(reagent, volume)
 
 ///Clears the beaker of the product only
 /datum/chemical_reaction/proc/clear_products(datum/reagents/holder, volume = null)
 	if(!holder)
 		return FALSE
 	for(var/reagent in results)
+		holder.remove_reagent(reagent, volume)
 
 
 ///Clears the beaker of ALL reagents inside
@@ -472,17 +473,20 @@
 * * ignore_mask - if masks block the effect, making this true will affect someone regardless
 * * ignore_eyes - if glasses block the effect, making this true will affect someone regardless
 */
-/datum/chemical_reaction/proc/explode_attack_chem(datum/reagents/holder, datum/equilibrium/equilibrium, /datum/reagent/reagent, vol, range = 2, ignore_mask = FALSE, ignore_eyes = FALSE)
+/datum/chemical_reaction/proc/explode_attack_chem(datum/reagents/holder, datum/equilibrium/equilibrium, reagent, vol, range = 2, ignore_mask = FALSE, ignore_eyes = FALSE)
+	if(istype(reagent, /datum/reagent))
+		var/datum/reagent/temp_reagent = reagent
+		reagent = temp_reagent.type
 	for(var/atom/movable/movey as anything in orange(range, get_turf(holder.my_atom)))
-		if(!(iscarbon(movey))
+		if(!(iscarbon(movey)))
 			continue
 		var/mob/living/carbon/target = movey
 		if(target.has_smoke_protection() && !ignore_mask)
 			continue
 		if(target.get_eye_protection() && !ignore_eyes)
 			continue
-		to_chat(M, "The [holder] launches some of it's contents at you!")
-		M.reagents.add_reagent(reagent, vol)
+		to_chat(target, "The [holder] launches some of it's contents at you!")
+		target.reagents.add_reagent(reagent, vol)
 
 
 /*
@@ -500,7 +504,7 @@
 	if(isnull(equilibrium.data[id]))
 		equilibrium.data[id] = 0
 		if(initial_delay)
-			equilibrium.data[id] += inital_delay
+			equilibrium.data[id] += initial_delay
 			return FALSE
 		return TRUE//first time we know we can go
 	equilibrium.data[id] += equilibrium.time_deficit ? 0.5 : 0.25 //sync to lag compensator
