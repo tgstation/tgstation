@@ -11,9 +11,9 @@
 	///Cooldown for when next to try to spread.
 	COOLDOWN_DECLARE(spread_cooldown)
 	/// Min time interval between glowshroom "spreads"
-	var/min_delay_spread = 15 SECONDS
+	var/min_delay_spread = 30 SECONDS
 	/// Max time interval between glowshroom "spreads"
-	var/max_delay_spread = 25 SECONDS
+	var/max_delay_spread = 50 SECONDS
 	/// Boolean to indicate if the shroom is on the floor/wall
 	var/floor = 0
 	/// Mushroom generation number
@@ -21,9 +21,9 @@
 	/// Chance to spread into adjacent tiles (0-100)
 	var/spreadIntoAdjacentChance = 75
 	///Amount of decay when decay happens on process
-	var/idle_decay_min = 5
+	var/idle_decay_min = 2.5
 	///Amount of decay when decay happens on process
-	var/idle_decay_max = 20
+	var/idle_decay_max = 10
 	/// Internal seed of the glowshroom, stats are stored here
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 
@@ -67,7 +67,9 @@
 		myseed.forceMove(src)
 	else
 		myseed = new myseed(src)
-
+	myseed.potency = 100
+	myseed.endurance = 100
+	myseed.yield = 8
 
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
@@ -92,7 +94,6 @@
 		icon_state = base_icon_state
 
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
-	COOLDOWN_START(src, decay_cooldown, delay_decay)
 
 	START_PROCESSING(SSobj, src)
 
