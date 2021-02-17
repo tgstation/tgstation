@@ -66,7 +66,7 @@
 #define REAGENT_SNEAKYNAME (1<<3)
 ///Retains initial volume of chem when splitting for purity effects
 #define REAGENT_SPLITRETAINVOL (1<<4)
-//Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
+///Lets a given reagent be synthesized, important for random reagents and things like the odysseus syringe gun
 #define REAGENT_CAN_BE_SYNTHESIZED (1<<5)
 
 //Chemical reaction flags, for determining reaction specialties
