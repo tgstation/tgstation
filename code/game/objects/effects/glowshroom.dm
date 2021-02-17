@@ -67,9 +67,7 @@
 		myseed.forceMove(src)
 	else
 		myseed = new myseed(src)
-	//myseed.potency = 100
-	//myseed.endurance = 100
-	//myseed.yield = 8
+
 
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
