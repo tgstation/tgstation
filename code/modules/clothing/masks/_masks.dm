@@ -9,6 +9,8 @@
 	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 
+	var/has_filter = FALSE
+
 /obj/item/clothing/mask/attack_self(mob/user)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		clothing_flags ^= (VOICEBOX_DISABLED)

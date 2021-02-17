@@ -4,6 +4,10 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_atmos_filter"
 	var/filter_status = 100
+	var/filter_strenght_high = 10
+	var/filter_strenght_mid = 8
+	var/filter_strenght_low = 5
+	var/filter_efficiency = 0.5
 
 	var/list/gases_to_check = list(
 		/datum/gas/plasma,
@@ -21,7 +25,7 @@
 		/datum/gas/halon
 	)
 
-	var/list/gas_pp = list(
+	var/list/gases_moles = list(
 		/datum/gas/plasma = 0,
 		/datum/gas/carbon_dioxide = 0,
 		/datum/gas/nitrous_oxide = 0,
@@ -37,24 +41,24 @@
 		/datum/gas/halon = 0
 	)
 
-	var/list/low_danger_gases = list(
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/halon,
-		/datum/gas/bz
+	var/list/high_filtering_gases = list(
+		/datum/gas/plasma,
+		/datum/gas/carbon_dioxide,
+		/datum/gas/nitrous_oxide
 	)
 
-	var/list/mid_danger_gases = list(
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide,
+	var/list/mid_filtering_gases = list(
 		/datum/gas/nitryl,
 		/datum/gas/stimulum,
 		/datum/gas/freon,
-		/datum/gas/hypernoblium
+		/datum/gas/hypernoblium,
+		/datum/gas/bz
 	)
 
-	var/list/high_danger_gases = list(
-		/datum/gas/plasma,
+	var/list/low_filtering_gases = list(
+		/datum/gas/healium,
+		/datum/gas/proto_nitrate,
+		/datum/gas/halon,
 		/datum/gas/tritium,
 		/datum/gas/zauker
 	)
@@ -65,26 +69,33 @@
 		breath.assert_gas(gasID)
 
 	for(var/gasID in gases_to_check)
-		gas_pp[gasID] = max(breath.get_breath_partial_pressure(breath.gases[gasID][MOLES]), 0)
+		gases_moles[gasID] = breath.gases[gasID][MOLES]
 
 	var/danger_points = 0
 
-	for(var/gasID in low_danger_gases)
-		if(gas_pp[gasID][MOLES] > 5)
+	for(var/gasID in high_filtering_gases)
+		if(gases_moles[gasID] > 0.005)
+			breath.gases[gasID][MOLES] = max(breath.gases[gasID][MOLES] - filter_strenght_high * filter_efficiency * 0.001, 0)
 			danger_points += 0.5
-		else if(gas_pp[gasID][MOLES] > 0)
+		else if(gases_moles[gasID] > 0)
+			breath.gases[gasID][MOLES] = max(breath.gases[gasID][MOLES] - filter_strenght_high * filter_efficiency * 0.0005, 0)
 			danger_points += 0.05
 
-	for(var/gasID in mid_danger_gases)
-		if(gas_pp[gasID][MOLES] > 2.5)
+	for(var/gasID in mid_filtering_gases)
+		if(gases_moles[gasID] > 0.0025)
+			breath.gases[gasID][MOLES] = max(breath.gases[gasID][MOLES] - filter_strenght_mid * filter_efficiency * 0.001, 0)
 			danger_points += 0.75
-		else if(gas_pp[gasID][MOLES] > 0)
+		else if(gases_moles[gasID] > 0)
+			breath.gases[gasID][MOLES] = max(breath.gases[gasID][MOLES] - filter_strenght_mid * filter_efficiency * 0.0005, 0)
 			danger_points += 0.15
 
-	for(var/gasID in high_danger_gases)
-		if(gas_pp[gasID][MOLES] > 1)
+	for(var/gasID in low_filtering_gases)
+		if(gases_moles[gasID] > 0.001)
+			breath.gases[gasID][MOLES] = max(breath.gases[gasID][MOLES] - filter_strenght_low * filter_efficiency * 0.001, 0)
 			danger_points += 1
-		else if(gas_pp[gasID][MOLES] > 0)
+		else if(gases_moles[gasID] > 0)
+			breath.gases[gasID][MOLES] = max(breath.gases[gasID][MOLES] - filter_strenght_low * filter_efficiency * 0.0005, 0)
 			danger_points += 0.5
 
 	filter_status = max(filter_status - danger_points - 1, 0)
+	return breath

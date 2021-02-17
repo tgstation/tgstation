@@ -28,17 +28,19 @@
 		return TRUE
 	if(!user.transferItemToLoc(I, src))
 		return TRUE
+	has_filter = TRUE
 	LAZYADD(gas_filters, I)
 
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
 	if(LAZYLEN(gas_filters) <= 0 || max_filters == 0)
-		return FALSE
+		return breath
 	var/obj/item/gas_filter/gas_filter = pick(gas_filters)
-	gas_filter.reduce_filter_status(breath)
+	var/datum/gas_mixture/filtered_breath = gas_filter.reduce_filter_status(breath)
 	if(gas_filter.filter_status <= 0)
+		has_filter = FALSE
 		LAZYREMOVE(gas_filters, gas_filter)
 		qdel(gas_filter)
-	return TRUE
+	return filtered_breath
 
 /obj/item/clothing/mask/gas/proc/get_filter_durability()
 	var/max_filters_durability = LAZYLEN(gas_filters) * 100
