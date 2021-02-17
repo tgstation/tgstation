@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		return ..()
 
-/obj/machinery/washing_machine/attack_hand(mob/living/user)
+/obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

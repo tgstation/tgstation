@@ -60,10 +60,6 @@
 	var/ph = CHEMICAL_NORMAL_PH
 	/// unused
 	var/last_tick = 1
-	/// see [/datum/reagents/proc/metabolize] for usage
-	var/addiction_tick = 1
-	/// currently addicted reagents
-	var/list/datum/reagent/addiction_list
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
 	///list of reactions currently on going, this is a lazylist for optimisation
@@ -81,7 +77,6 @@
 
 /datum/reagents/Destroy()
 	//We're about to delete all reagents, so lets cleanup
-	addiction_list = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
@@ -292,7 +287,7 @@
 		else
 			if(istype(R, reagent_type))
 				matches = 1
-		// We found a match, proceed to remove the reagent.	Keep looping, we might find other reagents of the same type.
+		// We found a match, proceed to remove the reagent. Keep looping, we might find other reagents of the same type.
 		if(matches)
 			// Have our other proc handle removement
 			has_removed_reagent = remove_reagent(R.type, amount, safety)
@@ -311,8 +306,6 @@
 					R.on_mob_end_metabolize(my_atom)
 				R.on_mob_delete(my_atom)
 
-			//Clear from relevant lists
-			LAZYREMOVE(addiction_list, R)
 			reagent_list -= R
 			LAZYREMOVE(previous_reagent_list, R.type)
 			qdel(R)
@@ -378,7 +371,7 @@
  * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
  * * no_react - passed through to [/datum/reagents/proc/add_reagent]
  * * mob/transfered_by - used for logging
- * * remove_blacklisted - skips transferring of reagents with can_synth = FALSE
+ * * remove_blacklisted - skips transferring of reagents without REAGENT_CAN_BE_SYNTHESIZED in chemical_flags
  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
  * * show_message - passed through to [/datum/reagents/proc/expose_single]
  * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
@@ -423,7 +416,7 @@
 		var/part = amount / src.total_volume
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/T = reagent
-			if(remove_blacklisted && !T.can_synth)
+			if(remove_blacklisted && !(T.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
@@ -447,7 +440,7 @@
 			if(!to_transfer)
 				break
 			var/datum/reagent/T = reagent
-			if(remove_blacklisted && !T.can_synth)
+			if(remove_blacklisted && !(T.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
 			if(preserve_data)
 				trans_data = copy_data(T)
@@ -641,45 +634,13 @@
 							R.overdosed = TRUE
 							need_mob_update += R.overdose_start(C)
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
-					var/is_addicted_to = addiction_list && is_type_in_list(R, addiction_list)
-					if(R.addiction_threshold)
-						if(R.volume >= R.addiction_threshold && !is_addicted_to)
-							var/datum/reagent/new_reagent = new R.addiction_type()
-							LAZYADD(addiction_list, new_reagent)
-							is_addicted_to = TRUE
-							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
+					for(var/addiction in R.addiction_types)
+						C.mind?.add_addiction_points(addiction, R.addiction_types[addiction] * REAGENTS_METABOLISM)
+
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
-					var/datum/reagent/addiction_type = new R.addiction_type()
-					if(is_addicted_to)
-						for(var/addiction in addiction_list)
-							var/datum/reagent/A = addiction
-							if(istype(addiction_type, A))
-								A.addiction_stage = -15 // you're satisfied for a good while.
-				need_mob_update += R.on_mob_life(C)
 
-	if(can_overdose)
-		if(addiction_tick == 6)
-			addiction_tick = 1
-			for(var/addiction in addiction_list)
-				var/datum/reagent/R = addiction
-				if(!C)
-					break
-				R.addiction_stage++
-				switch(R.addiction_stage)
-					if(1 to 10)
-						need_mob_update += R.addiction_act_stage1(C)
-					if(10 to 20)
-						need_mob_update += R.addiction_act_stage2(C)
-					if(20 to 30)
-						need_mob_update += R.addiction_act_stage3(C)
-					if(30 to 40)
-						need_mob_update += R.addiction_act_stage4(C)
-					if(40 to INFINITY)
-						remove_addiction(R)
-					else
-						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-		addiction_tick++
+				need_mob_update += R.on_mob_life(C)
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
 		C.update_stamina()
@@ -699,14 +660,6 @@
 		if(R.metabolizing)
 			R.metabolizing = FALSE
 			R.on_mob_end_metabolize(C)
-
-/// Removes addiction to a specific reagent on [/datum/reagents/var/my_atom]
-/datum/reagents/proc/remove_addiction(datum/reagent/R)
-	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-	LAZYREMOVE(addiction_list, R)
-	qdel(R)
-
 
 /**
  * Calls [/datum/reagent/proc/on_move] on every reagent in this holder
@@ -930,7 +883,7 @@
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
-	qdel(equilibrium)	
+	qdel(equilibrium) 
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -1325,7 +1278,7 @@
 /// Returns the total heat capacity for all of the reagents currently in this holder.
 /datum/reagents/proc/heat_capacity()
 	. = 0
-	var/list/cached_reagents = reagent_list		//cache reagents
+	var/list/cached_reagents = reagent_list //cache reagents
 	for(var/I in cached_reagents)
 		var/datum/reagent/R = I
 		. += R.specific_heat * R.volume
@@ -1340,7 +1293,7 @@
 /datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000)
 	var/heat_capacity = heat_capacity()
 	if(!heat_capacity)
-		return	// no div/0 please
+		return // no div/0 please
 	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
 
 /// Applies heat to this holder
@@ -1469,12 +1422,12 @@
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
 
-/proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
+/proc/get_random_reagent_id() // Returns a random reagent ID minus blacklisted reagents
 	var/static/list/random_reagents = list()
 	if(!random_reagents.len)
 		for(var/thing in subtypesof(/datum/reagent))
 			var/datum/reagent/R = thing
-			if(initial(R.can_synth))
+			if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 				random_reagents += R
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent

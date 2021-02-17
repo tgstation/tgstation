@@ -305,7 +305,7 @@
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
-/obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
+/obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
 	Crossed(user) //honk
 	return ..()
 

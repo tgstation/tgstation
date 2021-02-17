@@ -37,7 +37,7 @@
 //This proc is for "high level" actions like admin heal/set species/etc/etc. The low level debugging things should go in admin/view_variables/topic_basic.dm incase this runtimes.
 /datum/proc/vv_do_topic(list/href_list)
 	if(!usr || !usr.client || !usr.client.holder || !check_rights(NONE))
-		return FALSE			//This is VV, not to be called by anything else.
+		return FALSE //This is VV, not to be called by anything else.
 	if(SEND_SIGNAL(src, COMSIG_VV_TOPIC, usr, href_list) & COMPONENT_VV_HANDLED)
 		return FALSE
 	if(href_list[VV_HK_MODIFY_TRAITS])

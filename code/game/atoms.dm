@@ -1811,11 +1811,11 @@
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
 	if(href_list["statpanel_item_shiftclick"])
-		paramslist["shift"] = "1"
+		paramslist[SHIFT_CLICK] = "1"
 	if(href_list["statpanel_item_ctrlclick"])
-		paramslist["ctrl"] = "1"
+		paramslist[CTRL_CLICK] = "1"
 	if(href_list["statpanel_item_altclick"])
-		paramslist["alt"] = "1"
+		paramslist[ALT_CLICK] = "1"
 	if(href_list["statpanel_item_click"])
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
@@ -1872,3 +1872,11 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+//Update the screentip to reflect what we're hoverin over
+/atom/MouseEntered(location, control, params)
+	. = ..()
+	if(flags_1 & NO_SCREENTIPS_1 || !usr?.client?.prefs.screentip_pref)
+		usr.hud_used.screentip_text.maptext = ""
+		return
+	usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")

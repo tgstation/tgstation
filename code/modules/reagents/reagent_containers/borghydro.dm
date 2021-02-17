@@ -1,4 +1,4 @@
-#define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
+#define C2NAMEREAGENT "[initial(reagent.name)] (Has Side-Effects)"
 /*
 Contains:
 Borg Hypospray
@@ -98,9 +98,9 @@ Borg Hypospray
 		if(R?.cell)
 			for(var/i in 1 to reagent_ids.len)
 				var/datum/reagents/RG = reagent_list[i]
-				if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
-					R.cell.use(charge_cost) 					//Take power from borg...
-					RG.add_reagent(reagent_ids[i], 5)		//And fill hypo with reagent.
+				if(RG.total_volume < RG.maximum_volume) //Don't recharge reagents and drain power if the storage is full.
+					R.cell.use(charge_cost) //Take power from borg...
+					RG.add_reagent(reagent_ids[i], 5) //And fill hypo with reagent.
 
 /obj/item/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
@@ -133,7 +133,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
-	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	. += DescribeContents() //Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 	var/datum/reagent/loaded = modes[mode]
 	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
 	. += "<span class='notice'><i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this == 5 ? "dose normally (5u)" : "microdose (2u)"].</span>"

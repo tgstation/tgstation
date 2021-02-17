@@ -128,6 +128,10 @@
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
 
+/datum/mood_event/bright_light
+	description = "<span class='boldwarning'>I hate it in the light...I need to find a darker place...</span>\n"
+	mood_change = -12
+
 /datum/mood_event/family_heirloom_missing
 	description = "<span class='warning'>I'm missing my family heirloom...</span>\n"
 	mood_change = -4
@@ -310,3 +314,27 @@
 	description = "<span class='warning'>All the fish are dead...</span>\n"
 	mood_change = -3
 	timeout = 90 SECONDS
+
+/datum/mood_event/tail_lost
+	description = "<span class='boldwarning'>My tail!! Why?!</span>\n"
+	mood_change = -8
+	timeout = 10 MINUTES
+
+/datum/mood_event/tail_balance_lost
+	description = "<span class='warning'>I feel off-balance without my tail.</span>\n"
+	mood_change = -2
+
+/datum/mood_event/tail_regained_right
+	description = "<span class='warning'>My tail is back, but that was traumatic...</span>\n"
+	mood_change = -2
+	timeout = 5 MINUTES
+
+/datum/mood_event/tail_regained_wrong
+	description = "<span class='boldwarning'>Is this some kind of sick joke?! This is NOT the right tail.</span>\n"
+	mood_change = -12 // -8 for tail still missing + -4 bonus for being frakenstein's monster
+	timeout = 5 MINUTES
+
+/datum/mood_event/burnt_wings
+	description = "<span class='boldwarning'>MY PRECIOUS WINGS!!</span>\n"
+	mood_change = -10
+	timeout = 10 MINUTES

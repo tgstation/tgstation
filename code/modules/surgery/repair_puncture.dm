@@ -3,7 +3,7 @@
 
 //the step numbers of each of these two, we only currently use the first to switch back and forth due to advancing after finishing steps anyway
 #define REALIGN_INNARDS 1
-#define WELD_VEINS		2
+#define WELD_VEINS 2
 
 ///// Repair puncture wounds
 /datum/surgery/repair_puncture

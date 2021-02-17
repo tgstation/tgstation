@@ -281,7 +281,7 @@
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
-	. =	expected_damage
+	. = expected_damage
 
 /datum/spacevine_mutation/woodening
 	name = "hardened"
@@ -406,18 +406,18 @@
 		SM.on_cross(src, AM)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/spacevine/attack_hand(mob/user)
+/obj/structure/spacevine/attack_hand(mob/user, list/modifiers)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user, user)
 	. = ..()
 
-/obj/structure/spacevine/attack_paw(mob/living/user)
+/obj/structure/spacevine/attack_paw(mob/living/user, list/modifiers)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
 
-/obj/structure/spacevine/attack_alien(mob/living/user)
+/obj/structure/spacevine/attack_alien(mob/living/user, list/modifiers)
 	eat(user)
 
 /datum/spacevine_controller
@@ -453,8 +453,8 @@
 		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") == "Yes")
 			DeleteVines()
 
-/datum/spacevine_controller/proc/DeleteVines()	//this is kill
-	QDEL_LIST(vines)	//this will also qdel us
+/datum/spacevine_controller/proc/DeleteVines() //this is kill
+	QDEL_LIST(vines) //this will also qdel us
 
 /datum/spacevine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)

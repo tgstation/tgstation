@@ -193,7 +193,7 @@
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
-				continue	//YOU'RE FLYING OVER IT
+				continue //YOU'RE FLYING OVER IT
 			if("snow" in L.weather_immunities)
 				continue
 
@@ -250,14 +250,7 @@
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
 
-/obj/vehicle/ridden/lavaboat/plasma
-	name = "plasma boat"
-	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = FREEZE_PROOF
-	can_buckle = TRUE
-///////////	papers
+/////////// papers
 
 
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing
