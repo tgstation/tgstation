@@ -139,8 +139,8 @@
 	text_dehack = "You reset [name]'s healing processor circuits."
 	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
-/mob/living/simple_animal/bot/medbot/attack_paw(mob/user)
-	return attack_hand(user)
+/mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /mob/living/simple_animal/bot/medbot/get_controls(mob/user)
 	var/dat
@@ -449,13 +449,13 @@
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H, modifiers)
-	if(DOING_INTERACTION_WITH_TARGET(H, src))
-		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		to_chat(user, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && mode != BOT_TIPPED)
-		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
+		user.visible_message("<span class='danger'>[user] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)
 			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
@@ -464,17 +464,17 @@
 			speak(message)
 			playsound(src, messagevoice[message], 70, FALSE)
 
-		if(do_after(H, 3 SECONDS, target=src))
-			tip_over(H)
+		if(do_after(user, 3 SECONDS, target=src))
+			tip_over(user)
 
-	else if(!H.combat_mode && mode == BOT_TIPPED)
-		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
-		if(do_after(H, 3 SECONDS, target=src))
-			set_right(H)
+	else if(!user.combat_mode && mode == BOT_TIPPED)
+		user.visible_message("<span class='notice'>[user] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		if(do_after(user, 3 SECONDS, target=src))
+			set_right(user)
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A) && !tending)

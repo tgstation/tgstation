@@ -60,10 +60,6 @@
 	var/ph = CHEMICAL_NORMAL_PH
 	/// unused
 	var/last_tick = 1
-	/// see [/datum/reagents/proc/metabolize] for usage
-	var/addiction_tick = 1
-	/// currently addicted reagents
-	var/list/datum/reagent/addiction_list
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
 	///list of reactions currently on going, this is a lazylist for optimisation
@@ -81,7 +77,6 @@
 
 /datum/reagents/Destroy()
 	//We're about to delete all reagents, so lets cleanup
-	addiction_list = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
@@ -311,8 +306,6 @@
 					R.on_mob_end_metabolize(my_atom)
 				R.on_mob_delete(my_atom)
 
-			//Clear from relevant lists
-			LAZYREMOVE(addiction_list, R)
 			reagent_list -= R
 			LAZYREMOVE(previous_reagent_list, R.type)
 			qdel(R)
@@ -641,45 +634,13 @@
 							R.overdosed = TRUE
 							need_mob_update += R.overdose_start(C)
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
-					var/is_addicted_to = addiction_list && is_type_in_list(R, addiction_list)
-					if(R.addiction_threshold)
-						if(R.volume >= R.addiction_threshold && !is_addicted_to)
-							var/datum/reagent/new_reagent = new R.addiction_type()
-							LAZYADD(addiction_list, new_reagent)
-							is_addicted_to = TRUE
-							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
+					for(var/addiction in R.addiction_types)
+						C.mind?.add_addiction_points(addiction, R.addiction_types[addiction] * REAGENTS_METABOLISM)
+
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
-					var/datum/reagent/addiction_type = new R.addiction_type()
-					if(is_addicted_to)
-						for(var/addiction in addiction_list)
-							var/datum/reagent/A = addiction
-							if(istype(addiction_type, A))
-								A.addiction_stage = -15 // you're satisfied for a good while.
-				need_mob_update += R.on_mob_life(C)
 
-	if(can_overdose)
-		if(addiction_tick == 6)
-			addiction_tick = 1
-			for(var/addiction in addiction_list)
-				var/datum/reagent/R = addiction
-				if(!C)
-					break
-				R.addiction_stage++
-				switch(R.addiction_stage)
-					if(1 to 10)
-						need_mob_update += R.addiction_act_stage1(C)
-					if(10 to 20)
-						need_mob_update += R.addiction_act_stage2(C)
-					if(20 to 30)
-						need_mob_update += R.addiction_act_stage3(C)
-					if(30 to 40)
-						need_mob_update += R.addiction_act_stage4(C)
-					if(40 to INFINITY)
-						remove_addiction(R)
-					else
-						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-		addiction_tick++
+				need_mob_update += R.on_mob_life(C)
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
 		C.update_stamina()
@@ -699,14 +660,6 @@
 		if(R.metabolizing)
 			R.metabolizing = FALSE
 			R.on_mob_end_metabolize(C)
-
-/// Removes addiction to a specific reagent on [/datum/reagents/var/my_atom]
-/datum/reagents/proc/remove_addiction(datum/reagent/R)
-	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-	LAZYREMOVE(addiction_list, R)
-	qdel(R)
-
 
 /**
  * Calls [/datum/reagent/proc/on_move] on every reagent in this holder

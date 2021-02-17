@@ -175,7 +175,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
