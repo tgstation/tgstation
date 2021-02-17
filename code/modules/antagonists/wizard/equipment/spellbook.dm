@@ -478,7 +478,6 @@
 	desc = "A strange baseball bat that will hit a homerun with the target's soul."
 	item_path = /obj/item/melee/baseball_bat/ghostly
 	category = "Defensive"
-	cost = 1
 
 /datum/spellbook_entry/duffelbag
 	name = "Bestow Cursed Duffel Bag"
