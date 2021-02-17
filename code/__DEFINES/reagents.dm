@@ -63,28 +63,28 @@
 ///Doesn't appear on handheld health analyzers.
 #define REAGENT_INVISIBLE (1<<2)
 ///When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SNEAKYNAME          (1<<3)
+#define REAGENT_SNEAKYNAME (1<<3)
 ///Retains initial volume of chem when splitting for purity effects
-#define REAGENT_SPLITRETAINVOL      (1<<4)
+#define REAGENT_SPLITRETAINVOL (1<<4)
 //Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
-#define REAGENT_CAN_BE_SYNTHESIZED  (1<<5)
+#define REAGENT_CAN_BE_SYNTHESIZED (1<<5)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_IMPURE       (1<<0)
+#define REACTION_CLEAR_IMPURE (1<<0)
 ///Convert into inverse on reaction completion when purity is low enough
-#define REACTION_CLEAR_INVERSE      (1<<1)
+#define REACTION_CLEAR_INVERSE (1<<1)
 ///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
 #define REACTION_CLEAR_RETAIN (1<<2)
 ///Used to create instant reactions
-#define REACTION_INSTANT            (1<<3)
+#define REACTION_INSTANT (1<<3)
 ///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
-#define REACTION_HEAT_ARBITARY      (1<<4)
+#define REACTION_HEAT_ARBITARY (1<<4)
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
-#define REACTION_COMPETITIVE        (1<<5)
+#define REACTION_COMPETITIVE (1<<5)
 
 ///Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
-#define END_REACTION                "end_reaction"
+#define END_REACTION "end_reaction"
 
 ///Minimum requirement for addiction buzz to be met
 #define MIN_ADDICTION_REAGENT_AMOUNT 2
