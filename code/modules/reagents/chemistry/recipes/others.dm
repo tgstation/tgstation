@@ -123,6 +123,24 @@
 	results = list(/datum/reagent/nitrous_oxide = 5)
 	required_reagents = list(/datum/reagent/ammonia = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
 	required_temp = 525
+	optimal_temp = 550
+	overheat_temp = 575
+	temp_exponent_factor = 0.2
+	purity_min = 0.3
+	thermic_constant = 35 //gives a bonus 15C wiggle room
+	rate_up_lim = 25 //Give a chance to pull back
+
+/datum/chemical_reaction/nitrous_oxide/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+	. = ..()
+	var/turf/exposed_turf = get_turf(holder.my_atom)
+	if(!exposed_turf)
+		return
+	exposed_turf.atmos_spawn_air("n2o=[equilibrium.step_target_vol/2];TEMP=[holder.chem_temp]")
+	clear_products(holder, equilibrium.step_target_vol)
+
+/datum/chemical_reaction/nitrous_oxide/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+	return //This is empty because the explosion reaction will occur instead (see pyrotechnics.dm). This is just here to update the lookup ui.
+
 
 //Technically a mutation toxin
 /datum/chemical_reaction/mulligan

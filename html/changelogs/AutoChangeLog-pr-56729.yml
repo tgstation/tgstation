@@ -1,0 +1,4 @@
+author: "Mothblocks, Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "Hovering your mouse over things now shows their name on the top of the screen"
