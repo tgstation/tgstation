@@ -125,11 +125,11 @@
 /**
  * Handles actual flashing part of the attack
  *
- *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
+ * This proc is awful in every sense of the way, someone should definately refactor this whole code.
  * Arguments:
  * * M - Victim
  * * user - Attacker
- *	* power - handles the amount of confusion it gives you
+ * * power - handles the amount of confusion it gives you
  * * targeted - determines if it was aoe or targeted
  * * generic_message - checks if it should display default message.
  */
@@ -182,7 +182,7 @@
 /**
  * Handles the directionality of the attack
  *
- *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+ * Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
  * Arguments:
  * * victim - Victim
  * * attacker - Attacker

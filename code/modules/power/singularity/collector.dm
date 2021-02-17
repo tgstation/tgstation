@@ -1,7 +1,7 @@
 // stored_energy += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
-#define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_EFFICIENCY 80 // radiation needs to be over this amount to get power
 #define RAD_COLLECTOR_COEFFICIENT 100
-#define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
+#define RAD_COLLECTOR_STORED_OUT 0.04 // (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
 #define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.00001 //This is gonna need a lot of tweaking to get right. This is the number used to calculate the conversion of watts to research points per process()
 #define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 /obj/machinery/power/rad_collector

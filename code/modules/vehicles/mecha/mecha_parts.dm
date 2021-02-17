@@ -22,7 +22,7 @@
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
 	icon_state = "backbone"
-	interaction_flags_item = NONE			//Don't pick us up!!
+	interaction_flags_item = NONE //Don't pick us up!!
 	var/construct_type
 
 /obj/item/mecha_parts/chassis/Initialize()

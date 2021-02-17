@@ -493,7 +493,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/paper = 1
 	)
-	parts =	list(
+	parts = list(
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie

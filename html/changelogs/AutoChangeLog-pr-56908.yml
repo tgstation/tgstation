@@ -1,6 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - bugfix: "Rearea's Xenobiology so that Monkey Recycler and Slime Grinder are accessable to the Slime Consoles at game start."
-  - bugfix: "Changes some active turfs in space to inactive"
-  - bugfix: "Removes a second wire at the bridge-side door"

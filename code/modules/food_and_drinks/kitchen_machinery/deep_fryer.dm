@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/deep_fryer
-	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
+	var/obj/item/food/deepfryholder/frying //What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.025 //How much cooking oil is used per second
 	var/fry_speed = 1 //How quickly we fry food
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		return
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //where's the open maint panel icon?!
 		return
 	else
 		if(is_type_in_typecache(I, deepfry_blacklisted_items) || is_type_in_typecache(I, GLOB.oilfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/attack_ai(mob/user)
 	return
 
-/obj/machinery/deepfryer/attack_hand(mob/living/user)
+/obj/machinery/deepfryer/attack_hand(mob/living/user, list/modifiers)
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")

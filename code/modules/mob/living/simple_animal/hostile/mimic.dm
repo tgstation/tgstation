@@ -47,7 +47,7 @@
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	. = ..()
-	if(mapload)	//eat shit
+	if(mapload) //eat shit
 		for(var/obj/item/I in loc)
 			I.forceMove(src)
 
@@ -304,9 +304,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(M.combat_mode)
+	if(user.combat_mode)
 		return
 	toggle_open()
 

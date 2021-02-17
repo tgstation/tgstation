@@ -34,7 +34,7 @@
 	var/locked = FALSE //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/datum/effect_system/spark_spread/spark_system
-	var/real_explosion_block	//ignore this, just use explosion_block
+	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
@@ -121,7 +121,7 @@
 		if(isliving(AM))
 			var/mob/living/M = AM
 			if(world.time - M.last_bumped <= 10)
-				return	//Can bump-open one airlock per second. This is to prevent shock spam.
+				return //Can bump-open one airlock per second. This is to prevent shock spam.
 			M.last_bumped = world.time
 			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null))
 				return
@@ -168,7 +168,7 @@
 		else
 			do_animate("deny")
 
-/obj/machinery/door/attack_hand(mob/user)
+/obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -221,7 +221,8 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
+	var/list/modifiers = params2list(params)
+	if((!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I

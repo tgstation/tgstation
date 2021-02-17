@@ -1,8 +1,8 @@
 /*
  * Holds procs to help with list operations
  * Contains groups:
- *			Misc
- *			Sorting
+ * Misc
+ * Sorting
  */
 
 /*
@@ -22,13 +22,15 @@
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
 #define LAZYNULL(L) L = null
-#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += V;
+///This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
 #define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 #define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 #define QDEL_LAZYLIST(L) for(var/I in L) qdel(I); L = null;
 //These methods don't null the list
 #define LAZYCOPY(L) (L ? L.Copy() : list() ) //Use LAZYLISTDUPLICATE instead if you want it to null with no entries
-#define LAZYCLEARLIST(L) if(L) L.Cut() // Consider LAZYNULL instead 
+#define LAZYCLEARLIST(L) if(L) L.Cut() // Consider LAZYNULL instead
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverseRange(L.Copy())
 
@@ -242,7 +244,7 @@
 	if(L.len)
 		var/picked = rand(1,L.len)
 		. = L[picked]
-		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
+		L.Cut(picked,picked+1) //Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
@@ -376,10 +378,10 @@
 //fromIndex and toIndex must be in the range [1,L.len+1]
 //This will preserve associations ~Carnie
 /proc/moveElement(list/L, fromIndex, toIndex)
-	if(fromIndex == toIndex || fromIndex+1 == toIndex)	//no need to move
+	if(fromIndex == toIndex || fromIndex+1 == toIndex) //no need to move
 		return
 	if(fromIndex > toIndex)
-		++fromIndex	//since a null will be inserted before fromIndex, the index needs to be nudged right by one
+		++fromIndex //since a null will be inserted before fromIndex, the index needs to be nudged right by one
 
 	L.Insert(toIndex, null)
 	L.Swap(fromIndex, toIndex)
@@ -391,10 +393,10 @@
 //This will preserve associations ~Carnie
 /proc/moveRange(list/L, fromIndex, toIndex, len=1)
 	var/distance = abs(toIndex - fromIndex)
-	if(len >= distance)	//there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
+	if(len >= distance) //there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
 		if(fromIndex <= toIndex)
-			return	//no need to move
-		fromIndex += len	//we want to shift left instead of right
+			return //no need to move
+		fromIndex += len //we want to shift left instead of right
 
 		for(var/i=0, i<distance, ++i)
 			L.Insert(fromIndex, null)
@@ -414,7 +416,7 @@
 //Note: if the two ranges overlap, only the destination order will be preserved fully, since some elements will be within both ranges ~Carnie
 /proc/swapRange(list/L, fromIndex, toIndex, len=1)
 	var/distance = abs(toIndex - fromIndex)
-	if(len > distance)	//there is an overlap, therefore swapping each element will require more swaps than inserting new elements
+	if(len > distance) //there is an overlap, therefore swapping each element will require more swaps than inserting new elements
 		if(fromIndex < toIndex)
 			toIndex += len
 		else

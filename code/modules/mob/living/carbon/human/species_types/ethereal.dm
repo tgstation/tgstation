@@ -59,6 +59,7 @@
 	b1 = GETBLUEPART(default_color)
 	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
 	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
+	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	ethereal_light = ethereal.mob_light()
 	spec_updatehealth(ethereal)
 	C.set_safe_hunger_level()
@@ -66,6 +67,7 @@
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
+	UnregisterSignal(C, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(ethereal_light)
 	return ..()
 
@@ -113,6 +115,11 @@
 	handle_emag(H)
 	addtimer(CALLBACK(src, .proc/stop_emag, H), 30 SECONDS) //Disco mode for 30 seconds! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 
+/// Special handling for getting hit with a light eater
+/datum/species/ethereal/proc/on_light_eater(mob/living/carbon/human/source, datum/light_eater)
+	SIGNAL_HANDLER
+	source.emp_act(EMP_LIGHT)
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /datum/species/ethereal/spec_life(mob/living/carbon/human/H)
 	.=..()
@@ -138,26 +145,23 @@
 	H.visible_message("<span class='danger'>[H] stops flickering and goes back to their normal state!</span>")
 
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H)
-	brutemod = 1.25
 	switch(get_charge(H))
-		if(ETHEREAL_CHARGE_NONE)
+		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			H.throw_alert("ethereal_charge", /atom/movable/screen/alert/etherealcharge, 3)
+			if(H.health > 10.5)
+				apply_damage(0.65, TOX, null, null, H)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			H.throw_alert("ethereal_charge", /atom/movable/screen/alert/etherealcharge, 2)
 			if(H.health > 10.5)
 				apply_damage(0.65, TOX, null, null, H)
-			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			H.throw_alert("ethereal_charge", /atom/movable/screen/alert/etherealcharge, 1)
-			brutemod = 1.5
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
 			H.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 1)
 			apply_damage(0.2, TOX, null, null, H)
-			brutemod = 1.5
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			H.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 2)
 			apply_damage(0.65, TOX, null, null, H)
-			brutemod = 1.75
 			if(prob(10)) //10% each tick for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(H)
 		else

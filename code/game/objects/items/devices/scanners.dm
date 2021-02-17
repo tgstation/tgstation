@@ -112,7 +112,7 @@ GENE SCANNER
 			to_chat(user, "<span class='notice'>You switch the health analyzer to report extra info on wounds.</span>")
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
-	flick("[icon_state]-scan", src)	//makes it so that it plays the scan animation upon scanning, including clumsy scanning
+	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
 
 	// Clumsiness/brain damage check
 	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
@@ -452,13 +452,12 @@ GENE SCANNER
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
 
-		if(LAZYLEN(M.reagents.addiction_list))
-			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following reagents:</span>\n"
-			for(var/a in M.reagents.addiction_list)
-				var/datum/reagent/addiction = a
-				render_list += "<span class='alert ml-2'>[addiction.name]</span>\n"
+		if(LAZYLEN(M.mind.active_addictions))
+			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following types of drug:</span>\n"
+			for(var/datum/addiction/addiction_type as anything in M.mind.active_addictions)
+				render_list += "<span class='alert ml-2'>[initial(addiction_type.name)]</span>\n"
 		else
-			render_list += "<span class='notice ml-1'>Subject is not addicted to any reagents.</span>\n"
+			render_list += "<span class='notice ml-1'>Subject is not addicted to any types of drug.</span>\n"
 
 		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
 
@@ -922,7 +921,7 @@ GENE SCANNER
 	var/selected_target = null
 
 /obj/item/scanner_wand/attack(mob/living/M, mob/living/carbon/human/user)
-	flick("[icon_state]_active", src)	//nice little visual flash when scanning someone else.
+	flick("[icon_state]_active", src) //nice little visual flash when scanning someone else.
 
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(25))
 		user.visible_message("<span class='warning'>[user] targets himself for scanning.</span>", \
