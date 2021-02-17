@@ -37,7 +37,7 @@ const store = configureStore({
   middleware: {
     pre: [
       chatMiddleware,
-      pingMiddleware,
+      // pingMiddleware,
       telemetryMiddleware,
       settingsMiddleware,
       audioMiddleware,
