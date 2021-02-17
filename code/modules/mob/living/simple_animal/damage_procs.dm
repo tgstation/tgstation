@@ -1,5 +1,5 @@
 /**
- * Adjusts the health of a simple mob by a set amount
+ * Adjusts the health of a simple mob by a set amount and wakes AI if its idle to react
  *
  * Arguments:
  * * amount The amount that will be used to adjust the mob's health
@@ -7,12 +7,11 @@
  * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
  */
 /mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
-	if(updating_health)
-		updatehealth()
-	. = amount
+	if(forced || !(status_flags & GODMODE))
+		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
+		if(updating_health)
+			updatehealth()
+		. = amount
 	if(ckey || stat)
 		return
 	if(AIStatus == AI_IDLE)
