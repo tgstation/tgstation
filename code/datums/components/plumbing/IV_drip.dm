@@ -5,13 +5,16 @@
 
 	methods = INJECT
 
+/datum/component/plumbing/iv_drip/Initialize()
+	. = ..()
+	
+	recipient_reagents_holder = null
+
 /datum/component/plumbing/iv_drip/RegisterWithParent()
 	. = ..()
 
 	RegisterSignal(parent, list(COMSIG_IV_ATTACH), .proc/update_attached)
 	RegisterSignal(parent, list(COMSIG_IV_DETACH), .proc/clear_attached)
-
-	recipient_reagents_holder = null
 
 /datum/component/plumbing/iv_drip/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_IV_ATTACH))
