@@ -7,6 +7,7 @@
  * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
  */
 /mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = FALSE
 	if(forced || !(status_flags & GODMODE))
 		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
 		if(updating_health)
