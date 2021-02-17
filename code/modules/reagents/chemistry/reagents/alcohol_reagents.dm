@@ -35,6 +35,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 91-100: Dangerously toxic - swift death
 */
 
+/datum/reagent/consumable/ethanol/New()
+	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
+	return ..()
+
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
@@ -178,38 +182,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Kong"
 	description = "Makes You Go Ape!&#174;"
 	color = "#332100" // rgb: 51, 33, 0
-	addiction_threshold = 15
 	taste_description = "the grip of a giant ape"
 	glass_name = "glass of Kong"
 	glass_desc = "Makes You Go Ape!&#174;"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage1(mob/living/M)
-	if(prob(5))
-		to_chat(M, "<span class='notice'>You've made so many mistakes.</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
-	..()
-
-/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage2(mob/living/M)
-	if(prob(5))
-		to_chat(M, "<span class='notice'>No matter what you do, people will always get hurt.</span>")
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
-	..()
-
-/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage3(mob/living/M)
-	if(prob(5))
-		to_chat(M, "<span class='notice'>You've lost so many people.</span>")
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
-	..()
-
-/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage4(mob/living/M)
-	if(prob(5))
-		to_chat(M, "<span class='notice'>Just lie down and die.</span>")
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_severe", /datum/mood_event/depression_severe)
-	..()
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn
 	name = "candy corn liquor"
@@ -234,7 +211,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 80
 	quality = DRINK_GOOD
 	overdose_threshold = 60
-	addiction_threshold = 30
 	taste_description = "jitters and death"
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
@@ -491,6 +467,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_brown2"
 	glass_name = "Hooch"
 	glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
+	addiction_types = list(/datum/addiction/alcohol = 5, /datum/addiction/maintenance_drugs = 2)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
