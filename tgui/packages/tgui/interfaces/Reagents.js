@@ -327,7 +327,7 @@ export const Reagents = (props, context) => {
                               key={reactant.id}
                               icon="vial"
                               textColor="white"
-                              color={currentReagents?.includes(reactant) ? "green" : "default"}
+                              color={currentReagents?.includes(reactant.id) ? "green" : "default"}
                               content={reactant.name}
                               onClick={() => act('reagent_click', {
                                 id: reactant.id,
@@ -374,7 +374,7 @@ export const Reagents = (props, context) => {
                               mt={0.1}
                               key={reactant.id}
                               icon="vial"
-                              color={currentReagents?.includes(reactant) ? "green" : "default"}
+                              color={currentReagents?.includes(reactant.id) ? "green" : "default"}
                               content={reactant.name}
                               onClick={() => act('reagent_click', {
                                 id: reactant.id,
