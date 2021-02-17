@@ -213,7 +213,7 @@ const PointLocked = (props, context) => {
 
 const SingleLoadout = (props, context) => {
   const { act } = useBackend(context);
-  const { author, name, blurb, icon, loadoutId, loadoutColor, last } = props;
+  const { author, name, blurb, icon, loadoutId, loadoutColor } = props;
   return (
     <Stack.Item grow>
       <Section width={LoadoutWidth} title={name}>
