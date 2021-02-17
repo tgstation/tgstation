@@ -278,7 +278,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 	smoketime -= delta_time
 	if(smoketime <= 0)
-		new type_butt(location)
+		new type_butt(loc)
 		if(ismob(loc))
 			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		qdel(src)
