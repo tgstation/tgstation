@@ -1,4 +1,4 @@
-///////////	Oldstation items
+/////////// Oldstation items
 
 /obj/item/paper/fluff/ruins/oldstation
 	name = "Cryo Awakening Alert"

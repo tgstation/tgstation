@@ -93,7 +93,7 @@
 	else
 		return ..()
 
-/obj/structure/janitorialcart/attack_hand(mob/user)
+/obj/structure/janitorialcart/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

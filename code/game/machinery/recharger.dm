@@ -101,7 +101,7 @@
 
 	return ..()
 
-/obj/machinery/recharger/attack_hand(mob/user)
+/obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

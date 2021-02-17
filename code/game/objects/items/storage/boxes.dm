@@ -1,24 +1,24 @@
 /*
- *	Everything derived from the common cardboard box.
- *	Basically everything except the original is a kit (starts full).
+ * Everything derived from the common cardboard box.
+ * Basically everything except the original is a kit (starts full).
  *
- *	Contains:
- *		Empty box, starter boxes (survival/engineer),
- *		Latex glove and sterile mask boxes,
- *		Syringe, beaker, dna injector boxes,
- *		Blanks, flashbangs, and EMP grenade boxes,
- *		Tracking and chemical implant boxes,
- *		Prescription glasses and drinking glass boxes,
- *		Condiment bottle and silly cup boxes,
- *		Donkpocket and monkeycube boxes,
- *		ID and security PDA cart boxes,
- *		Handcuff, mousetrap, and pillbottle boxes,
- *		Snap-pops and matchboxes,
- *		Replacement light boxes.
- *		Action Figure Boxes
- *		Various paper bags.
+ * Contains:
+ * Empty box, starter boxes (survival/engineer),
+ * Latex glove and sterile mask boxes,
+ * Syringe, beaker, dna injector boxes,
+ * Blanks, flashbangs, and EMP grenade boxes,
+ * Tracking and chemical implant boxes,
+ * Prescription glasses and drinking glass boxes,
+ * Condiment bottle and silly cup boxes,
+ * Donkpocket and monkeycube boxes,
+ * ID and security PDA cart boxes,
+ * Handcuff, mousetrap, and pillbottle boxes,
+ * Snap-pops and matchboxes,
+ * Replacement light boxes.
+ * Action Figure Boxes
+ * Various paper bags.
  *
- *		For syndicate call-ins see uplink_kits.dm
+ * For syndicate call-ins see uplink_kits.dm
  */
 
 /obj/item/storage/box
@@ -85,7 +85,7 @@
 	inhand_icon_state = null
 	alpha = 0
 
-/obj/item/storage/box/mime/attack_hand(mob/user)
+/obj/item/storage/box/mime/attack_hand(mob/user, list/modifiers)
 	..()
 	if(user.mind.miming)
 		alpha = 255
@@ -551,7 +551,7 @@
 		new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
 
-	var/newcart = pick(	/obj/item/cartridge/engineering,
+	var/newcart = pick( /obj/item/cartridge/engineering,
 						/obj/item/cartridge/security,
 						/obj/item/cartridge/medical,
 						/obj/item/cartridge/signal/toxins,
@@ -651,7 +651,7 @@
 
 /obj/item/storage/box/alienhandcuffs/PopulateContents()
 	for(var/i in 1 to 7)
-		new	/obj/item/restraints/handcuffs/alien(src)
+		new /obj/item/restraints/handcuffs/alien(src)
 
 /obj/item/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
@@ -1073,7 +1073,7 @@
 	name = "box of materials"
 	illustration = "implant"
 
-/obj/item/storage/box/material/PopulateContents() 	//less uranium because radioactive
+/obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
 	var/static/items_inside = list(
 		/obj/item/stack/sheet/iron/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
@@ -1327,7 +1327,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
-		
+
 /obj/item/storage/box/emergencytank
 	name = "emergency oxygen tank box"
 	desc = "A box of emergency oxygen tanks."
@@ -1337,7 +1337,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/tank/internals/emergency_oxygen(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
-		
+
 /obj/item/storage/box/engitank
 	name = "extended-capacity emergency oxygen tank box"
 	desc = "A box of extended-capacity emergency oxygen tanks."

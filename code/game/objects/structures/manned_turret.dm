@@ -56,7 +56,7 @@
 			if(M.dropItemToGround(I))
 				var/obj/item/gun_control/TC = new(src)
 				M.put_in_hands(TC)
-		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 			var/obj/item/gun_control/TC = new(src)
 			M.put_in_hands(TC)
 	M.pixel_y = 14
@@ -82,7 +82,7 @@
 	if(C)
 		var/atom/A = C.mouseObject
 		var/turf/T = get_turf(A)
-		if(istype(T))	//They're hovering over something in the map.
+		if(istype(T)) //They're hovering over something in the map.
 			direction_track(controller, T)
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
@@ -147,7 +147,7 @@
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
 	if(user.incapacitated() || !(user in buckled_mobs))
 		return
-	update_positioning()						//REFRESH MOUSE TRACKING!!
+	update_positioning() //REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf

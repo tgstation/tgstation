@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "you can now open airlocks and firedoors and stuff with a crowbar on combat mode by right clicking"

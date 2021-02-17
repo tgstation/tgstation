@@ -70,10 +70,10 @@
 #define STATUS_EFFECT_CONVULSING /datum/status_effect/convulsing
 
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
-#define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
-#define CURSE_SPAWNING	2 //spawns creatures that attack the target only
-#define CURSE_WASTING	4 //causes gradual damage
-#define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
+#define CURSE_BLINDING 1 //makes the edges of the target's screen obscured
+#define CURSE_SPAWNING 2 //spawns creatures that attack the target only
+#define CURSE_WASTING 4 //causes gradual damage
+#define CURSE_GRASPING 8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbola_pacify //Gives the user gondola traits while the gonbola is attached to them.
 
@@ -92,6 +92,17 @@
 #define STATUS_EFFECT_AMOK /datum/status_effect/amok //Makes the target automatically strike out at adjecent non-heretics.
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
+
+///Raises click cooldowns for everything you do.
+#define STATUS_EFFECT_WOOZY /datum/status_effect/woozy
+
+///Makes you bleed harder
+#define STATUS_EFFECT_HIGHBLOODPRESSURE /datum/status_effect/high_blood_pressure
+
+
+/// makes you seize up. reminds me of this video https://www.youtube.com/watch?v=wvkHIZg_954
+#define STATUS_EFFECT_SEIZURE /datum/status_effect/seizure
+
 
 /// Makes the mob move randomly.
 /// Read the documentation for /datum/status_effect/confusion for more information.

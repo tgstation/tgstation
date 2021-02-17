@@ -19,12 +19,12 @@ Nothing else in the console has ID requirements.
 	desc = "A console used to interface with R&D tools."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	var/datum/techweb/stored_research					//Reference to global science techweb.
-	var/obj/item/disk/tech_disk/t_disk	//Stores the technology disk.
-	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
+	var/datum/techweb/stored_research //Reference to global science techweb.
+	var/obj/item/disk/tech_disk/t_disk //Stores the technology disk.
+	var/obj/item/disk/design_disk/d_disk //Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
-	req_access = list(ACCESS_RND)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
+	req_access = list(ACCESS_RND) //lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
 	//UI VARS
 	var/screen = RDSCREEN_MENU
@@ -196,7 +196,7 @@ Nothing else in the console has ID requirements.
 	l += "<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_techdisk()		//Legacy code
+/obj/machinery/computer/rdconsole/proc/ui_techdisk() //Legacy code
 	RDSCREEN_UI_TDISK_CHECK
 	var/list/l = list()
 	l += "<div class='statusDisplay'>Disk Operations: <A href='?src=[REF(src)];clear_tech=0'>Clear Disk</A>"
@@ -210,7 +210,7 @@ Nothing else in the console has ID requirements.
 	l += "</div>"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_designdisk()		//Legacy code
+/obj/machinery/computer/rdconsole/proc/ui_designdisk() //Legacy code
 	RDSCREEN_UI_DDISK_CHECK
 	var/list/l = list()
 	l += "Disk Operations: <A href='?src=[REF(src)];clear_design=0'>Clear Disk</A><A href='?src=[REF(src)];updt_design=0'>Upload All</A><A href='?src=[REF(src)];eject_design=1'>Eject Disk</A>"
@@ -225,7 +225,7 @@ Nothing else in the console has ID requirements.
 		l += "</div>"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_designdisk_upload()	//Legacy code
+/obj/machinery/computer/rdconsole/proc/ui_designdisk_upload() //Legacy code
 	RDSCREEN_UI_DDISK_CHECK
 	var/list/l = list()
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
@@ -257,7 +257,7 @@ Nothing else in the console has ID requirements.
 				l += "</td>[RDSCREEN_NOBREAK]"
 		l += "</tr></table>[RDSCREEN_NOBREAK]"
 	else
-		var/list/avail = list()			//This could probably be optimized a bit later.
+		var/list/avail = list() //This could probably be optimized a bit later.
 		var/list/unavail = list()
 		var/list/res = list()
 		for(var/v in stored_research.researched_nodes)
@@ -350,7 +350,7 @@ Nothing else in the console has ID requirements.
 	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_techweb_designview()		//Legacy code
+/obj/machinery/computer/rdconsole/proc/ui_techweb_designview() //Legacy code
 	var/datum/design/selected_design = SSresearch.techweb_design_by_id(selected_design_id)
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
@@ -454,9 +454,9 @@ Nothing else in the console has ID requirements.
 		disk_slot_selected = text2num(ls["disk_slot"])
 	if(ls["research_node"])
 		if(!research_control)
-			return				//honestly should call them out for href exploiting :^)
+			return //honestly should call them out for href exploiting :^)
 		if(!SSresearch.science_tech.available_nodes[ls["research_node"]])
-			return			//Nope!
+			return //Nope!
 		research_node(ls["research_node"], usr)
 	if(ls["clear_tech"]) //Erase la on the technology disk.
 		if(QDELETED(t_disk))

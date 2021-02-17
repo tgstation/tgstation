@@ -13,13 +13,13 @@
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
 */
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M, modifiers)
+/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
+		to_chat(user, "No attacking people at spawn, you jackass.")
 		return
 
-	if(M.combat_mode)
-		if(M == src && check_self_for_injuries())
+	if(user.combat_mode)
+		if(user == src && check_self_for_injuries())
 			return
 		set_resting(FALSE)
 		AdjustStun(-60)
@@ -28,18 +28,18 @@ In all, this is a lot like the monkey code. /N
 		AdjustParalyzed(-60)
 		AdjustUnconscious(-60)
 		AdjustSleeping(-100)
-		visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+		visible_message("<span class='notice'>[user.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 	else if(health > 0)
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
+		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, "<span class='danger'>You bite [src]!</span>")
+		visible_message("<span class='danger'>[user.name] bites [src]!</span>", \
+						"<span class='userdanger'>[user.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='danger'>You bite [src]!</span>")
 		adjustBruteLoss(1)
-		log_combat(M, src, "attacked")
+		log_combat(user, src, "attacked")
 		updatehealth()
 	else
-		to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
+		to_chat(user, "<span class='warning'>[name] is too injured for that.</span>")
 
 
 
@@ -47,33 +47,33 @@ In all, this is a lot like the monkey code. /N
 	return attack_alien(L)
 
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M, modifiers)
+/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(.)	//to allow surgery to return properly.
+	if(.) //to allow surgery to return properly.
 		return FALSE
 
-	if(M.combat_mode)
+	if(user.combat_mode)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
-		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		return TRUE
 	else
-		help_shake_act(M)
+		help_shake_act(user)
 
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/human/M)
+/mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..())
 		if (stat != DEAD)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
 
 
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
+/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		switch(M.melee_damage_type)
+		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+		switch(user.melee_damage_type)
 			if(BRUTE)
 				adjustBruteLoss(damage)
 			if(BURN)

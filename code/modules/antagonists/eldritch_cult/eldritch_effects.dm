@@ -14,7 +14,7 @@
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
 
-/obj/effect/eldritch/attack_hand(mob/living/user)
+/obj/effect/eldritch/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -207,7 +207,7 @@
 /obj/effect/broken_illusion/proc/show_presence()
 	animate(src,alpha = 255,time = 15 SECONDS)
 
-/obj/effect/broken_illusion/attack_hand(mob/living/user)
+/obj/effect/broken_illusion/attack_hand(mob/living/user, list/modifiers)
 	if(!ishuman(user))
 		return ..()
 	var/mob/living/carbon/human/human_user = user

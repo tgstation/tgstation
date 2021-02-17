@@ -215,7 +215,7 @@
 			<li>Insert the nuclear authorisation disk into slot.</li>
 			<li>Type numeric authorisation code into the keypad. This should have been provided. Note: If you make a mistake press R to reset the device.
 			<li>Press the E button to log onto the device.</li>
-			You now have activated the device. To deactivate the buttons at anytime for example when you've already prepped the bomb for detonation	remove the auth disk OR press the R on the keypad.<br>
+			You now have activated the device. To deactivate the buttons at anytime for example when you've already prepped the bomb for detonation remove the auth disk OR press the R on the keypad.<br>
 			Now the bomb CAN ONLY be detonated using the timer. Manual detonation is not an option.<br>
 			Note: Nanotrasen is a pain in the neck.<br>
 			Toggle off the SAFETY.<br>

@@ -2,15 +2,15 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
-	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
+	var/efficiency_coeff = 1 //Materials needed / coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
-	var/production_animation				//What's flick()'d on print.
+	var/production_animation //What's flick()'d on print.
 	var/allowed_buildtypes = NONE
 	var/list/datum/design/cached_designs
 	var/list/datum/design/matching_designs
-	var/department_tag = "Unidentified"			//used for material distribution among other things.
+	var/department_tag = "Unidentified" //used for material distribution among other things.
 
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
@@ -48,7 +48,7 @@
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
-	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
+	if(reagents) //If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
 			reagents.maximum_volume += G.volume

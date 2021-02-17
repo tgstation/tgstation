@@ -40,7 +40,7 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
 	cut_overlays()
-	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
+	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
 
 	for(var/node in front_nodes)
 		add_attached_images(node)

@@ -41,6 +41,19 @@
 	time = 50
 	category = CAT_PRIMAL
 
+/obj/vehicle/ridden/lavaboat/plasma
+	name = "plasma boat"
+	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
+	icon_state = "goliath_boat"
+	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	resistance_flags = FREEZE_PROOF
+	can_buckle = TRUE
+
+/datum/crafting_recipe/boat/plasma
+	name = "Polar Bear Hide Boat"
+	result = /obj/vehicle/ridden/lavaboat/plasma
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 3)
+
 //Dragon Boat
 
 

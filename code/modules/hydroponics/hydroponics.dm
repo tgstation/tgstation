@@ -379,7 +379,7 @@
 		myseed = null
 	else
 		oldPlantName = "empty tray"
-	switch(rand(1,18))		// randomly pick predominative weed
+	switch(rand(1,18)) // randomly pick predominative weed
 		if(16 to 18)
 			myseed = new /obj/item/seeds/reishi(src)
 		if(14 to 15)
@@ -740,7 +740,7 @@
 
 	return ..()
 
-/obj/machinery/hydroponics/attack_hand(mob/user)
+/obj/machinery/hydroponics/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

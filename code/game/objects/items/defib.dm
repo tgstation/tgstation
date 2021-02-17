@@ -85,7 +85,7 @@
 	toggle_paddles()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/defibrillator/attack_hand(mob/user)
+/obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
@@ -458,7 +458,7 @@
 	do_help(H, user)
 
 /obj/item/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(isliving(H.pulledby))		//CLEAR!
+	if(isliving(H.pulledby)) //CLEAR!
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, H))
 			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")

@@ -30,8 +30,8 @@ RLD
 	var/matter = 0
 	var/max_matter = 100
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
-	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
-	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
+	var/has_ammobar = FALSE //controls whether or not does update_icon apply ammo indicator overlays
+	var/ammo_sections = 10 //amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	/// Bitflags for upgrades
 	var/upgrade = NONE
 	/// Bitflags for banned upgrades
@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon()	//ensures that ammo counters (if present) get updated
+		update_icon() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -178,7 +178,7 @@ RLD
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 		if(has_ammobar)
-			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
+			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
@@ -1009,18 +1009,20 @@ RLD
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/pill_press = 20,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/iv_drip/plumbing = 20
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
