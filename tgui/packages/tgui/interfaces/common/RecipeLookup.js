@@ -1,5 +1,5 @@
-import { Box, LabeledList, Chart, Flex, Button, Icon } from '../../components';
 import { useBackend } from '../../backend';
+import { Box, Button, Chart, Flex, Icon, LabeledList } from '../../components';
 
 export const RecipeLookup = (props, context) => {
   const { recipe, bookmarkedReactions } = props;
@@ -15,14 +15,15 @@ export const RecipeLookup = (props, context) => {
   const getReaction = id => {
     return data.master_reaction_list.filter(reaction => (
       reaction.id === id
-    )); };
+    ));
+  };
 
   const addBookmark = bookmark => {
     bookmarkedReactions.add(bookmark);
   };
 
   return (
-    <LabeledList labelBold>
+    <LabeledList>
       <LabeledList.Item bold label="Recipe">
         <Icon name="circle" mr={1} color={recipe.reagentCol} />
         {recipe.name}
@@ -30,26 +31,24 @@ export const RecipeLookup = (props, context) => {
           icon="arrow-left"
           ml={3}
           disabled={recipe.subReactIndex === 1}
-          content={null}
           onClick={() => act('reduce_index', {
             id: recipe.name,
           })} />
         <Button
           icon="arrow-right"
           disabled={recipe.subReactIndex === recipe.subReactLen}
-          content={null}
           onClick={() => act('increment_index', {
             id: recipe.name,
           })} />
         {bookmarkedReactions && (
           <Button
-            key={recipe.id}
             icon="book"
             color="green"
-            content={null}
-            disabled={bookmarkedReactions.has(getReaction(recipe.id)[0])
-              ? true : false}
-            onClick={() => { addBookmark(getReaction(recipe.id)[0]); act('update_ui'); }} />
+            disabled={bookmarkedReactions.has(getReaction(recipe.id)[0])}
+            onClick={() => {
+              addBookmark(getReaction(recipe.id)[0]);
+              act('update_ui');
+            }} />
         )}
       </LabeledList.Item>
       {recipe.products && (
@@ -58,7 +57,7 @@ export const RecipeLookup = (props, context) => {
             <Button
               key={product.name}
               icon="vial"
-              disabled={product.hasProduct ? true : false}
+              disabled={product.hasProduct}
               content={product.ratio + "u " + product.name}
               onClick={() => act('reagent_click', {
                 id: product.id,
@@ -79,12 +78,10 @@ export const RecipeLookup = (props, context) => {
               })} />
             {!!reactant.tooltipBool && (
               <Button
-                key={reactant.name}
                 icon="flask"
-                color={"purple"}
-                content={null}
+                color="purple"
                 tooltip={reactant.tooltip}
-                tooltipPosition={"right"}
+                tooltipPosition="right"
                 onClick={() => act('find_reagent_reaction', {
                   id: reactant.id,
                 })} />
@@ -98,7 +95,6 @@ export const RecipeLookup = (props, context) => {
             <Box key={catalyst.id}>
               {catalyst.tooltipBool && (
                 <Button
-                  key={catalyst.name}
                   icon="vial"
                   color={catalyst.color}
                   content={catalyst.ratio + "u " + catalyst.name}
@@ -109,7 +105,6 @@ export const RecipeLookup = (props, context) => {
                   })} />
               ) || (
                 <Button
-                  key={catalyst.name}
                   icon="vial"
                   color={catalyst.color}
                   content={catalyst.ratio + "u " + catalyst.name}
@@ -133,7 +128,7 @@ export const RecipeLookup = (props, context) => {
       )}
       <LabeledList.Item bold label="Purity">
         <LabeledList>
-          <LabeledList.Item label="Optimal pH range" >
+          <LabeledList.Item label="Optimal pH range">
             <Button
               color="transparent"
               textColor="white"
@@ -170,7 +165,7 @@ export const RecipeLookup = (props, context) => {
           position="relative"
           style={{
             'background-color': 'black',
-          }} >
+          }}>
           <Chart.Line
             fillPositionedParent
             data={recipe.thermodynamics}
@@ -194,17 +189,21 @@ export const RecipeLookup = (props, context) => {
           <Button
             color="transparent"
             textColor={recipe.isColdRecipe ? "red" : "white"}
-            content={recipe.isColdRecipe ? recipe.explodeTemp+"K" : recipe.tempMin+"K"}
+            content={recipe.isColdRecipe
+              ? recipe.explodeTemp + "K"
+              : recipe.tempMin + "K"}
             tooltip={recipe.isColdRecipe
               ? "The temperature at which it is underheated, causing negative effects on the reaction."
               : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."}
             tooltipPosition="right" />
           {recipe.explosive && (
-            <Flex width="190px" position="relative" top="0px" left="155px" >
+            <Flex width="190px" position="relative" top="0px" left="155px">
               <Button
                 color="transparent"
                 textColor={recipe.isColdRecipe ? "white" : "red"}
-                content={recipe.isColdRecipe ? recipe.tempMin+"K" : recipe.explodeTemp+"K"}
+                content={recipe.isColdRecipe
+                  ? recipe.tempMin + "K"
+                  : recipe.explodeTemp + "K"}
                 tooltip={recipe.isColdRecipe
                   ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."
                   : "The temperature at which it is overheated, causing negative effects on the reaction."}
@@ -216,7 +215,7 @@ export const RecipeLookup = (props, context) => {
           <Button
             color="transparent"
             textColor="white"
-            content={recipe.thermoUpper+"u/s"}
+            content={recipe.thermoUpper + "u/s"}
             tooltip="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above."
             tooltipPosition="right" />
         </LabeledList.Item>
