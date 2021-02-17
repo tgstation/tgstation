@@ -668,7 +668,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
-	if(do_after(user, 90, target = src))
+	if(do_after(user, 9 SECONDS, target = src))
 		to_chat(user, "<span class='userdanger'>You gather power! Time for a home run!</span>")
 		homeruns_ready = homerun_limit
 	..()
@@ -677,7 +677,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	var/atom/movable/to_throw = prepare_and_get_throw_target(target)
+	var/atom/movable/to_throw = prepare_and_get_throw_target(target, homeruns_ready)
 	var/atom/throw_target = get_edge_target_turf(to_throw, user.dir)
 	if(homeruns_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
@@ -696,9 +696,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
  * For most baseball bats, this will simply return the struck target, but on a few special baseball bats, something OTHER than the target will be thrown.
  * For those bats, overwrite this proc, and perform any needed preparations, and then return the object to be thrown.
  * * struck_target - This is the target the baseball bat hit.
+ * * is_homerun - A boolean, for if this particular swing used a charged homerun
  */
-/obj/item/melee/baseball_bat/proc/prepare_and_get_throw_target(mob/struck_target)
-	return struck_target
+/obj/item/melee/baseball_bat/proc/prepare_and_get_throw_target(mob/struck_target, is_homerun)
+	return is_homerun
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
