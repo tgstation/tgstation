@@ -1,10 +1,9 @@
-import { resolveAsset } from '../assets';
 import { round, toFixed } from 'common/math';
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon, TextArea } from '../components';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
-
 
 export const ChemHeater = (props, context) => {
   const { act, data } = useBackend(context);
@@ -105,7 +104,7 @@ export const ChemHeater = (props, context) => {
                   })} />
               </Table.Cell>
               <Table.Cell color={"#fbc314"} textAlign="center">
-                {acidicBufferVol+"u"}
+                {acidicBufferVol + "u"}
               </Table.Cell>
               <Table.Cell>
                 <Button
@@ -147,7 +146,7 @@ export const ChemHeater = (props, context) => {
                   })} />
               </Table.Cell>
               <Table.Cell color={"#3853a4"} textAlign="center">
-                {basicBufferVol+"u"}
+                {basicBufferVol + "u"}
               </Table.Cell>
               <Table.Cell>
                 <Button
@@ -218,15 +217,15 @@ export const ChemHeater = (props, context) => {
                 </Table.Row>
                 {activeReactions.map(reaction => (
                   <Table.Row key="reactions">
-                    <Table.Cell width={'60px'} color={reaction.danger ? "red" : "white"}>
+                    <Table.Cell width={'60px'} color={reaction.danger && "red"}>
                       {reaction.name}
                     </Table.Cell>
                     <Table.Cell width={'100px'} pr={'10px'}>
                       {upgradeLevel < 4 && (
                         <Icon
                           name={reaction.danger ? "exclamation-triangle" : "spinner"}
-                          color={reaction.danger ? "red" : "white"}
-                          spin={reaction.danger ? false : true}
+                          color={reaction.danger && "red"}
+                          spin={!reaction.danger}
                           ml={2.5} />
                       ) || (
                         <AnimatedNumber value={reaction.quality}>
@@ -257,14 +256,14 @@ export const ChemHeater = (props, context) => {
                           minValue={0}
                           maxValue={reaction.targetVol}
                           textAlign={'center'}
-                          icon={reaction.overheat ? "thermometer-full" : ""}
+                          icon={reaction.overheat && "thermometer-full"}
                           width={7}
                           color={reaction.overheat ? "red" : "label"}>
                           {reaction.targetVol}u
                         </ProgressBar>
                       ) || (
                         <Box
-                          color={reaction.danger ? "red" : "white"}
+                          color={reaction.danger && "red"}
                           ml={2}>
                           {reaction.targetVol}u
                         </Box>
@@ -283,7 +282,9 @@ export const ChemHeater = (props, context) => {
             style={{
               'white-space': 'pre-wrap',
             }}>
-            <img left={-1} mx={-1} src={resolveAsset("chem_help_advisor.gif")} width={"30px"} />
+            <img
+              src={resolveAsset("chem_help_advisor.gif")}
+              width="30px" />
             {tutorialMessage}
           </Section>
         )}
