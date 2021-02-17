@@ -17,7 +17,7 @@
 	name = "Omelette"
 	reqs = list(
 		/obj/item/food/egg = 2,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/omelette
 	subcategory = CAT_EGG
@@ -26,7 +26,7 @@
 	name = "Chocolate egg"
 	reqs = list(
 		/obj/item/food/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/chocolateegg
 	subcategory = CAT_EGG
@@ -46,8 +46,8 @@
 	reqs = list(
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/corn = 1
 	)
 	result = /obj/item/food/salad/eggbowl
 	subcategory = CAT_EGG

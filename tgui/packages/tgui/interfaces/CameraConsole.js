@@ -2,9 +2,8 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi, Input, Section, Flex } from '../components';
+import { Button, ByondUi, Flex, Input, Section } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -42,7 +41,7 @@ export const selectCameras = (cameras, searchText = '') => {
 };
 
 export const CameraConsole = (props, context) => {
-  const { act, data, config } = useBackend(context);
+  const { act, data } = useBackend(context);
   const { mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
   const [
@@ -52,8 +51,7 @@ export const CameraConsole = (props, context) => {
   return (
     <Window
       width={870}
-      height={708}
-      resizable>
+      height={708}>
       <div className="CameraConsole__left">
         <Window.Content scrollable>
           <CameraConsoleContent />

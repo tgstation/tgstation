@@ -22,10 +22,10 @@
 		QDEL_NULL(fireaxe)
 	return ..()
 
-/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
+/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || I.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
-	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
+	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=2))
 				return
@@ -95,7 +95,7 @@
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
@@ -104,7 +104,7 @@
 		fireaxe = null
 	qdel(src)
 
-/obj/structure/fireaxecabinet/attack_hand(mob/user)
+/obj/structure/fireaxecabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -124,21 +124,22 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	return attack_hand(user)
+/obj/structure/fireaxecabinet/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
 
+
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
 		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
-	else
-		open = !open
-		update_icon()
-		return
+	open = !open
+	update_icon()
+
 
 /obj/structure/fireaxecabinet/update_overlays()
 	. = ..()

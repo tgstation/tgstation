@@ -23,7 +23,7 @@
 		projector = null
 	return ..()
 
-/obj/structure/holosign/attack_hand(mob/living/user)
+/obj/structure/holosign/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -48,7 +48,7 @@
 	name = "holobarrier"
 	desc = "A short holographic barrier which can only be passed by walking."
 	icon_state = "holosign_sec"
-	pass_flags = LETPASSTHROW
+	pass_flags_self = PASSTABLE | PASSGRILLE | PASSGLASS | LETPASSTHROW
 	density = TRUE
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
@@ -57,11 +57,9 @@
 	. = ..()
 	if(.)
 		return
-	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
-		return TRUE
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(C.stat)	// Lets not prevent dragging unconscious/dead people.
+		if(C.stat) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
 			return TRUE
@@ -76,7 +74,7 @@
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(C.stat)	// Lets not prevent dragging unconscious/dead people.
+		if(C.stat) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && C.m_intent != MOVE_INTENT_WALK)
 			return FALSE
@@ -99,7 +97,14 @@
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/holosign/barrier/atmos/BlockSuperconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
+	return TRUE
+
+/obj/structure/holosign/barrier/atmos/Destroy()
+	. = ..()
+	air_update_turf(TRUE, FALSE)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
@@ -109,11 +114,11 @@
 	allow_walk = FALSE
 
 /obj/structure/holosign/barrier/cyborg/bullet_act(obj/projectile/P)
-	take_damage((P.damage / 5) , BRUTE, MELEE, 1)	//Doesn't really matter what damage flag it is.
+	take_damage((P.damage / 5) , BRUTE, MELEE, 1) //Doesn't really matter what damage flag it is.
 	if(istype(P, /obj/projectile/energy/electrode))
-		take_damage(10, BRUTE, MELEE, 1)	//Tasers aren't harmful.
+		take_damage(10, BRUTE, MELEE, 1) //Tasers aren't harmful.
 	if(istype(P, /obj/projectile/beam/disabler))
-		take_damage(5, BRUTE, MELEE, 1)	//Disablers aren't harmful.
+		take_damage(5, BRUTE, MELEE, 1) //Disablers aren't harmful.
 	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/medical
@@ -156,8 +161,8 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
-	if(CanPass(user) && user.a_intent == INTENT_HELP)
+/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
+	if(CanPass(user) && !user.combat_mode)
 		force_allaccess = !force_allaccess
 		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
 	else
@@ -170,20 +175,20 @@
 	var/shockcd = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
-	take_damage(P.damage, BRUTE, MELEE, 1)	//Yeah no this doesn't get projectile resistance.
+	take_damage(P.damage, BRUTE, MELEE, 1) //Yeah no this doesn't get projectile resistance.
 	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE
 
-/obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user)
+/obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
-			M.electrocute_act(15,"Energy Barrier", flags = SHOCK_NOGLOVES)
+			M.electrocute_act(15,"Energy Barrier")
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
@@ -195,6 +200,6 @@
 		return
 
 	var/mob/living/M = AM
-	M.electrocute_act(15,"Energy Barrier", flags = SHOCK_NOGLOVES)
+	M.electrocute_act(15,"Energy Barrier")
 	shockcd = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), 5)

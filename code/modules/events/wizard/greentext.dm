@@ -34,7 +34,7 @@
 
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	roundend_callback = CALLBACK(src,.proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
@@ -56,8 +56,8 @@
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
-	last_holder 	= null
-	new_holder 		= null
+	last_holder = null
+	new_holder = null
 	STOP_PROCESSING(SSobj, src)
 	..()
 
@@ -84,7 +84,6 @@
 		return QDEL_HINT_LETMELIVE
 
 	SSticker.round_end_events -= roundend_callback
-	GLOB.poi_list.Remove(src)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		var/message = "<span class='warning'>A dark temptation has passed from this world"

@@ -17,6 +17,15 @@
 	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
 
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast_check(skipcharge = 0,mob/user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/area/noteleport_check = get_area(user)
+	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+		to_chat(user, "<span class='danger'>Some dull, universal force is stopping you from jaunting here.</span>")
+		return FALSE
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	play_sound("enter",user)
 	for(var/mob/living/target in targets)
@@ -70,42 +79,15 @@
 			playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /obj/effect/dummy/phased_mob/spell_jaunt
-	name = "water"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
+	movespeed = 2 //quite slow.
 	var/reappearing = FALSE
-	var/movedelay = 0
-	var/movespeed = 2
-	density = FALSE
-	anchored = TRUE
-	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/dummy/phased_mob/spell_jaunt/Destroy()
-	// Eject contents if deleted somehow
-	for(var/atom/movable/AM in src)
-		AM.forceMove(get_turf(src))
-	return ..()
-
-/obj/effect/dummy/phased_mob/spell_jaunt/relaymove(mob/living/user, direction)
-	if ((movedelay > world.time) || reappearing || !direction)
+/obj/effect/dummy/phased_mob/spell_jaunt/phased_check(mob/living/user, direction)
+	if(reappearing)
 		return
-	var/turf/newLoc = get_step(src,direction)
-	setDir(direction)
-
-	movedelay = world.time + movespeed
-
-	if(newLoc.flags_1 & NOJAUNT_1)
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
+	. = ..()
+	if(!.)
 		return
-	if (locate(/obj/effect/blessing, newLoc))
+	if (locate(/obj/effect/blessing, .))
 		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
-		return
-
-	forceMove(newLoc)
-
-/obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
-	return
-
-/obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
-	return BULLET_ACT_FORCE_PIERCE
+		return null

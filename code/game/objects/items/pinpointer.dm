@@ -89,24 +89,22 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
-	custom_price = 900
-	custom_premium_price = 900
+	custom_price = PAYCHECK_MEDIUM * 4
+	custom_premium_price = PAYCHECK_MEDIUM * 6
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
-	if((H.z == 0 || H.z == here.z) && istype(H.w_uniform, /obj/item/clothing/under))
-		var/obj/item/clothing/under/U = H.w_uniform
-
-		// Suit sensors must be on maximum.
-		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level))
-			return FALSE
-
-		var/turf/there = get_turf(H)
-		return (H.z != 0 || (there && there.z == here.z))
-
+	var/turf/there = get_turf(H)
+	if(here && there && (there.z == here.z || (is_station_level(here.z) && is_station_level(there.z)))) // Device and target should be on the same level or different levels of the same station
+		if (H in GLOB.nanite_sensors_list)
+			return TRUE
+		if (istype(H.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = H.w_uniform
+			if(U.has_sensor && (U.sensor_mode >= SENSOR_COORDS || ignore_suit_sensor_level)) // Suit sensors must be on maximum or a contractor pinpointer
+				return TRUE
 	return FALSE
 
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
@@ -167,7 +165,7 @@
 	name = "proximity crew pinpointer"
 	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
 	icon_state = "pinpointer_crewprox"
-	custom_price = 300
+	custom_price = PAYCHECK_MEDIUM * 3
 
 /obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
 	var/size = ""

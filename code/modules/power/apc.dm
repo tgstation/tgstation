@@ -1,30 +1,30 @@
 //update_state
-#define UPSTATE_CELL_IN		(1<<0)
-#define UPSTATE_OPENED1		(1<<1)
-#define UPSTATE_OPENED2		(1<<2)
-#define UPSTATE_MAINT		(1<<3)
-#define UPSTATE_BROKE		(1<<4)
-#define UPSTATE_BLUESCREEN	(1<<5)
-#define UPSTATE_WIREEXP		(1<<6)
-#define UPSTATE_ALLGOOD		(1<<7)
+#define UPSTATE_CELL_IN (1<<0)
+#define UPSTATE_OPENED1 (1<<1)
+#define UPSTATE_OPENED2 (1<<2)
+#define UPSTATE_MAINT (1<<3)
+#define UPSTATE_BROKE (1<<4)
+#define UPSTATE_BLUESCREEN (1<<5)
+#define UPSTATE_WIREEXP (1<<6)
+#define UPSTATE_ALLGOOD (1<<7)
 
 #define APC_RESET_EMP "emp"
 
 //update_overlay
-#define APC_UPOVERLAY_CHARGEING0	(1<<0)
-#define APC_UPOVERLAY_CHARGEING1	(1<<1)
-#define APC_UPOVERLAY_CHARGEING2	(1<<2)
-#define APC_UPOVERLAY_EQUIPMENT0	(1<<3)
-#define APC_UPOVERLAY_EQUIPMENT1	(1<<4)
-#define APC_UPOVERLAY_EQUIPMENT2	(1<<5)
-#define APC_UPOVERLAY_LIGHTING0		(1<<6)
-#define APC_UPOVERLAY_LIGHTING1		(1<<7)
-#define APC_UPOVERLAY_LIGHTING2		(1<<8)
-#define APC_UPOVERLAY_ENVIRON0		(1<<9)
-#define APC_UPOVERLAY_ENVIRON1		(1<<10)
-#define APC_UPOVERLAY_ENVIRON2		(1<<11)
-#define APC_UPOVERLAY_LOCKED		(1<<12)
-#define APC_UPOVERLAY_OPERATING		(1<<13)
+#define APC_UPOVERLAY_CHARGEING0 (1<<0)
+#define APC_UPOVERLAY_CHARGEING1 (1<<1)
+#define APC_UPOVERLAY_CHARGEING2 (1<<2)
+#define APC_UPOVERLAY_EQUIPMENT0 (1<<3)
+#define APC_UPOVERLAY_EQUIPMENT1 (1<<4)
+#define APC_UPOVERLAY_EQUIPMENT2 (1<<5)
+#define APC_UPOVERLAY_LIGHTING0 (1<<6)
+#define APC_UPOVERLAY_LIGHTING1 (1<<7)
+#define APC_UPOVERLAY_LIGHTING2 (1<<8)
+#define APC_UPOVERLAY_ENVIRON0 (1<<9)
+#define APC_UPOVERLAY_ENVIRON1 (1<<10)
+#define APC_UPOVERLAY_ENVIRON2 (1<<11)
+#define APC_UPOVERLAY_LOCKED (1<<12)
+#define APC_UPOVERLAY_OPERATING (1<<13)
 
 #define APC_ELECTRONICS_MISSING 0 // None
 #define APC_ELECTRONICS_INSTALLED 1 // Installed but not secured
@@ -65,8 +65,8 @@
 	var/area/area
 	var/areastring = null
 	var/obj/item/stock_parts/cell/cell
-	var/start_charge = 90				// initial cell charge %
-	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
+	var/start_charge = 90 // initial cell charge %
+	var/cell_type = /obj/item/stock_parts/cell/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = APC_COVER_CLOSED
 	var/shorted = FALSE
 	var/lighting = 3
@@ -86,7 +86,7 @@
 	var/lastused_environ = 0
 	var/lastused_total = 0
 	var/main_status = 0
-	powernet = FALSE		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
+	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/has_electronics = APC_ELECTRONICS_MISSING // 0 - none, 1 - plugged in, 2 - secured by screwdriver
@@ -165,7 +165,7 @@
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
 		setDir(ndir)
-	tdir = dir		// to fix Vars bug
+	tdir = dir // to fix Vars bug
 	setDir(SOUTH)
 
 	switch(tdir)
@@ -234,7 +234,7 @@
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
 		cell = new cell_type
-		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
+		cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 
 	var/area/A = loc.loc
 
@@ -255,6 +255,16 @@
 	make_terminal()
 
 	addtimer(CALLBACK(src, .proc/update), 5)
+
+/obj/machinery/power/apc/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
+/obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return (exposed_temperature > 2000)
+
+/obj/machinery/power/apc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(min(exposed_temperature/100, 10), BURN)
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -282,7 +292,7 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	var/update = check_updates() 		//returns 0 if no need to update icons.
+	var/update = check_updates() //returns 0 if no need to update icons.
 						// 1 if we need to update the icon_state
 						// 2 if we need to update the overlays
 	if(!update)
@@ -529,7 +539,7 @@
 							"<span class='hear'>You hear welding.</span>")
 		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((machine_stat & BROKEN) || opened==APC_COVER_REMOVED)
-				new /obj/item/stack/sheet/metal(loc)
+				new /obj/item/stack/sheet/iron(loc)
 				user.visible_message("<span class='notice'>[user.name] cuts [src] apart with [W].</span>",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
@@ -544,7 +554,7 @@
 	if(issilicon(user) && get_dist(src,user)>1)
 		return attack_hand(user)
 
-	if	(istype(W, /obj/item/stock_parts/cell) && opened)
+	if (istype(W, /obj/item/stock_parts/cell) && opened)
 		if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 			return
@@ -780,7 +790,7 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
-			playsound(src, "sparks", 75, TRUE)
+			playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
@@ -789,7 +799,7 @@
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
+/obj/machinery/power/apc/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -798,7 +808,27 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
+		if(H.combat_mode && E.drain_time < world.time)
+			if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Disarm
+				if(cell.charge == cell.maxcharge)
+					to_chat(H, "<span class='warning'>The APC is full!</span>")
+					return
+				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+				if(stomach.crystal_charge < 10)
+					to_chat(H, "<span class='warning'>Your charge is too low!</span>")
+					return
+				E.drain_time = world.time + 75
+				to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
+				if(do_after(user, 75, target = src))
+					if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+						return
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
+						stomach.adjust_charge(-10)
+						cell.charge += 10
+					else
+						to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
+				return
 			if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
 				to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
 				return
@@ -817,26 +847,6 @@
 					cell.charge -= APC_POWER_GAIN
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
-			return
-		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
-			if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-				to_chat(H, "<span class='warning'>The APC is full!</span>")
-				return
-			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge < APC_POWER_GAIN)
-				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
-				return
-			E.drain_time = world.time + APC_DRAIN_TIME
-			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
-			if(do_after(user, APC_DRAIN_TIME, target = src))
-				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < APC_POWER_GAIN))
-					return
-				if(istype(stomach))
-					to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
-					stomach.adjust_charge(-APC_POWER_GAIN)
-					cell.charge += APC_POWER_GAIN
-				else
-					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 			return
 
 	if(opened && (!issilicon(user)))
@@ -1056,8 +1066,8 @@
 	malf.malfhack = src
 	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
-	var/obj/screen/alert/hackingapc/A
-	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
+	var/atom/movable/screen/alert/hackingapc/A
+	A = malf.throw_alert("hackingapc", /atom/movable/screen/alert/hackingapc)
 	A.target = src
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
@@ -1072,7 +1082,7 @@
 	if(!is_station_level(z))
 		return
 	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
+	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY? //IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
@@ -1182,7 +1192,7 @@
 		update_icon()
 	if(machine_stat & (BROKEN|MAINT))
 		return
-	if(!area.requires_power)
+	if(!area || !area.requires_power)
 		return
 	if(failure_timer)
 		update()
@@ -1215,22 +1225,22 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > lastused_total)		// if power excess recharge the cell
+		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE)		// add the load used to recharge the cell
+			add_load(cellused/GLOB.CELLRATE) // add the load used to recharge the cell
 
 
-		else		// no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
-				add_load(excess)		// so draw what we can from the grid
+		else // no excess, and not enough per-apc
+			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess) //recharge with what we can
+				add_load(excess) // so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
-			else	// not enough power available to run the last tick!
+			else // not enough power available to run the last tick!
 				charging = APC_NOT_CHARGING
 				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
@@ -1247,22 +1257,22 @@
 		else if(longtermpower > -10)
 			longtermpower -= 2
 
-		if(cell.charge <= 0)					// zero charge, turn all off
+		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			area.poweralert(TRUE, src)
-		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
+		else if(cell.percent() < 15 && longtermpower < 0) // <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
 			area.poweralert(TRUE, src)
-		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
+		else if(cell.percent() < 30 && longtermpower < 0) // <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
 			area.poweralert(TRUE, src)
-		else									// otherwise all can be on
+		else // otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
@@ -1272,14 +1282,14 @@
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
+			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
 				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
 				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
-				charging = APC_NOT_CHARGING		// stop charging
+				charging = APC_NOT_CHARGING // stop charging
 				chargecount = 0
 
 		// show cell as fully charged if so
@@ -1326,15 +1336,15 @@
 
 /obj/machinery/power/apc/proc/autoset(val, on)
 	if(on==0)
-		if(val==2)			// if on, return off
+		if(val==2) // if on, return off
 			return 0
-		else if(val==3)		// if auto-on, return auto-off
+		else if(val==3) // if auto-on, return auto-off
 			return 1
 	else if(on==1)
-		if(val==1)			// if auto-off, return auto-on
+		if(val==1) // if auto-off, return auto-on
 			return 3
 	else if(on==2)
-		if(val==3)			// if auto-on, return auto-off
+		if(val==3) // if auto-on, return auto-off
 			return 1
 	return val
 
@@ -1490,5 +1500,4 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
-	custom_price = 50
 	desc = "Heavy-duty switching circuits for power control."

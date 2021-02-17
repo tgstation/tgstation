@@ -8,7 +8,7 @@
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
 		return
-	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is receiving will verify themselves for adjacency.
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
@@ -80,15 +80,15 @@
 /atom/proc/IsAutoclickable()
 	return TRUE
 
-/obj/screen/IsAutoclickable()
+/atom/movable/screen/IsAutoclickable()
 	return FALSE
 
-/obj/screen/click_catcher/IsAutoclickable()
+/atom/movable/screen/click_catcher/IsAutoclickable()
 	return TRUE
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	var/list/L = params2list(params)
-	if (L["middle"])
+	var/list/modifiers = params2list(params)
+	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if (src_object && src_location != over_location)
 			middragtime = world.time
 			middragatom = src_object

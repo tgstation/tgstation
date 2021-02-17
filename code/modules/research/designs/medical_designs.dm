@@ -71,6 +71,15 @@
 	build_path = /obj/item/reagent_containers/glass/beaker/meta
 	category = list("Medical Designs")
 
+/datum/design/ph_meter
+	name = "Chemical analyser"
+	id = "ph_meter"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/glass = 2500, /datum/material/gold = 1000, /datum/material/titanium = 1000)
+	build_path = /obj/item/ph_meter
+	category = list("Medical Designs")
+
 /datum/design/bluespacesyringe
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
@@ -689,7 +698,8 @@
 /datum/design/surgery/healing //PLEASE ACCOUNT FOR UNIQUE HEALING BRANCHES IN THE hptech HREF (currently 2 for Brute/Burn; Combo is bonus)
 	name = "Tend Wounds"
 	desc = "An upgraded version of the original surgery."
-	id = "surgery_healing_base" //holder because travis cries otherwise. Not used in techweb unlocks.
+	id = "surgery_healing_base" //holder because CI cries otherwise. Not used in techweb unlocks.
+	surgery = /datum/surgery/healing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing/brute_upgrade

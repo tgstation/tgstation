@@ -8,28 +8,26 @@
 	density = TRUE
 	anchored = FALSE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
-	var/list/mob/occupants				//mob = bitflags of their control level.
+	var/list/mob/occupants //mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers
 	var/max_occupants = 1
 	////Maximum amount of drivers
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
-	///The typepath for the key we use to turn on this car if it has one
+	/**
+	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on their riding component subtype
+	  * [/datum/component/riding/var/keytype] variable because only a few specific checks are handled here with this var, and the majority of it is on the riding component
+	  * Eventually the remaining checks should be moved to the component and this var removed.
+	  */
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	///Whether the key must be strict type and not a subtype to put it in the car
-	var/key_type_exact = TRUE
 	/// Whether the vehicle os currently able to move
 	var/canmove = TRUE
-	///Whether the occupants will bump into a door when the car bumps it
-	var/emulate_door_bumps = TRUE
-	///Whether we handle driving normally or through other things like riding components
-	var/default_driver_move = TRUE
-	var/list/autogrant_actions_passenger	//plain list of typepaths
-	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
+	var/list/autogrant_actions_passenger //plain list of typepaths
+	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
+	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
@@ -56,13 +54,13 @@
 			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/vehicle/proc/is_key(obj/item/I)
-	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
+	return istype(I, key_type)
 
 /obj/vehicle/proc/return_occupants()
 	return occupants
 
 /obj/vehicle/proc/occupant_amount()
-	return length(occupants)
+	return LAZYLEN(occupants)
 
 /obj/vehicle/proc/return_amount_of_controllers_with_flag(flag)
 	. = 0
@@ -87,12 +85,13 @@
 	return is_occupant(M) && occupants[M] & VEHICLE_CONTROL_DRIVE
 
 /obj/vehicle/proc/is_occupant(mob/M)
-	return !isnull(occupants[M])
+	return !isnull(LAZYACCESS(occupants, M))
 
 /obj/vehicle/proc/add_occupant(mob/M, control_flags)
-	if(!istype(M) || occupants[M])
+	if(!istype(M) || is_occupant(M))
 		return FALSE
-	occupants[M] = NONE
+
+	LAZYSET(occupants, M, NONE)
 	add_control_flags(M, control_flags)
 	after_add_occupant(M)
 	grant_passenger_actions(M)
@@ -101,7 +100,7 @@
 /obj/vehicle/proc/after_add_occupant(mob/M)
 	auto_assign_occupant_flags(M)
 
-/obj/vehicle/proc/auto_assign_occupant_flags(mob/M)	//override for each type that needs it. Default is assign driver if drivers is not at max.
+/obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
 		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 
@@ -110,7 +109,7 @@
 		return FALSE
 	remove_control_flags(M, ALL)
 	remove_passenger_actions(M)
-	occupants -= M
+	LAZYREMOVE(occupants, M)
 	cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE
@@ -118,40 +117,17 @@
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
-	if(is_driver(user))
-		return driver_move(user, direction)
-	return FALSE
-
-/obj/vehicle/proc/driver_move(mob/living/user, direction)
-	if(key_type && !is_key(inserted_key))
-		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
-		return FALSE
-	if(!default_driver_move)
-		return
 	if(!canmove)
-		return
-	vehicle_move(direction)
-	return TRUE
-
-/obj/vehicle/proc/vehicle_move(direction)
-	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
-	if(trailer)
-		var/dir_to_move = get_dir(trailer.loc, loc)
-		var/did_move = step(src, direction)
-		if(did_move)
-			step(trailer, dir_to_move)
-		return did_move
-	else
-		after_move(direction)
-		return step(src, direction)
+	if(is_driver(user))
+		return relaydrive(user, direction)
+	return FALSE
 
 /obj/vehicle/proc/after_move(direction)
 	return
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
-	if(!istype(controller) || !flags)
+	if(!is_occupant(controller) || !flags)
 		return FALSE
 	occupants[controller] |= flags
 	for(var/i in GLOB.bitflags)
@@ -160,20 +136,13 @@
 	return TRUE
 
 /obj/vehicle/proc/remove_control_flags(mob/controller, flags)
-	if(!istype(controller) || !flags)
+	if(!is_occupant(controller) || !flags)
 		return FALSE
 	occupants[controller] &= ~flags
 	for(var/i in GLOB.bitflags)
 		if(flags & i)
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
-
-/obj/vehicle/Bump(atom/A)
-	. = ..()
-	if(emulate_door_bumps)
-		if(istype(A, /obj/machinery/door))
-			for(var/m in occupants)
-				A.Bumped(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

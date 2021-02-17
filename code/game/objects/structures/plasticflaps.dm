@@ -62,7 +62,8 @@
 			return TRUE
 
 		var/mob/living/M = caller
-		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
+		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+		if(!ventcrawler && M.mob_size != MOB_SIZE_TINY)
 			return FALSE
 	var/atom/movable/M = caller
 	if(M?.pulling)
@@ -71,7 +72,8 @@
 
 /obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
 	. = ..()
-
+	if(A.pass_flags & PASSFLAPS) //For anything specifically engineered to cross plastic flaps.
+		return TRUE
 	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
@@ -89,11 +91,11 @@
 
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(isbot(A)) //Bots understand the secrets
-			return TRUE
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return TRUE
-		if(M.body_position == STANDING_UP && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
+
+		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+		if(M.body_position == STANDING_UP && !ventcrawler && M.mob_size != MOB_SIZE_TINY) //If your not laying down, or a ventcrawler or a small creature, no pass.
 			return FALSE
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
@@ -103,10 +105,10 @@
 
 /obj/structure/plasticflaps/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc
 	. = ..()
 	if (oldloc)
-		oldloc.air_update_turf(1)
+		oldloc.air_update_turf(TRUE, FALSE)

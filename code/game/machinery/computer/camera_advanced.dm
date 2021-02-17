@@ -120,7 +120,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -132,7 +132,8 @@
 	var/mob/living/L = user
 	if(!eyeobj)
 		CreateEye()
-
+	if(!eyeobj) //Eye creation failed
+		return
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
@@ -297,7 +298,7 @@
 	if(final)
 		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))
-		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+		C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)

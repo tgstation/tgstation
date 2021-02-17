@@ -25,8 +25,8 @@
 /obj/structure/barricade/proc/make_debris()
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && bar_material == METAL)
+/obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && bar_material == METAL)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -96,7 +96,6 @@
 /obj/structure/barricade/wooden/make_debris()
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
 
-
 /obj/structure/barricade/sandbags
 	name = "sandbags"
 	desc = "Bags of sand. Self explanatory."
@@ -105,13 +104,15 @@
 	base_icon_state = "sandbags"
 	max_integrity = 280
 	proj_pass_rate = 20
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	bar_material = SAND
-	climbable = TRUE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_SANDBAGS)
 	canSmoothWith = list(SMOOTH_GROUP_SANDBAGS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SECURITY_BARRICADE)
 
+/obj/structure/barricade/sandbags/Initialize()
+	. = ..()
+	AddElement(/datum/element/climbable)
 
 /obj/structure/barricade/security
 	name = "security barrier"
@@ -169,7 +170,7 @@
 
 	to_chat(user, "<span class='notice'>[src] is now in [mode] mode.</span>")
 
-/obj/item/grenade/barrier/prime(mob/living/lanced_by)
+/obj/item/grenade/barrier/detonate(mob/living/lanced_by)
 	. = ..()
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)

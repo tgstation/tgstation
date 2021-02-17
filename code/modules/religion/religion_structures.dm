@@ -6,8 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	climbable = TRUE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.
@@ -16,12 +15,13 @@
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
 	reflect_sect_in_icons()
+	AddElement(/datum/element/climbable)
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
 
-/obj/structure/altar_of_gods/attack_hand(mob/living/user)
+/obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)
 		return ..()
 	if(!isliving(user.pulling))

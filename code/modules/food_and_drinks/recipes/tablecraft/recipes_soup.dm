@@ -9,8 +9,8 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/potato = 1
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/potato = 1
 	)
 	result = /obj/item/food/soup/meatball
 	subcategory = CAT_SOUP
@@ -20,10 +20,10 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
-		/obj/item/reagent_containers/food/snacks/grown/eggplant = 1,
-		/obj/item/reagent_containers/food/snacks/grown/potato = 1
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/potato = 1
 	)
 	result = /obj/item/food/soup/vegetable
 	subcategory = CAT_SOUP
@@ -33,8 +33,8 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/nettle = 1,
-		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
+		/obj/item/food/grown/nettle = 1,
+		/obj/item/food/grown/potato = 1,
 		/obj/item/food/boiledegg = 1
 	)
 	result = /obj/item/food/soup/nettle
@@ -64,8 +64,8 @@
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/soup/hotchili
 	subcategory = CAT_SOUP
@@ -75,8 +75,8 @@
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/reagent_containers/food/snacks/grown/icepepper = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+		/obj/item/food/grown/icepepper = 1,
+		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/soup/coldchili
 	subcategory = CAT_SOUP
@@ -86,8 +86,8 @@
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1,
 		/obj/item/clothing/shoes/clown_shoes = 1
 	)
 	result = /obj/item/food/soup/clownchili
@@ -98,7 +98,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 2
+		/obj/item/food/grown/tomato = 2
 	)
 	result = /obj/item/food/soup/tomato
 	subcategory = CAT_SOUP
@@ -108,7 +108,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 2,
+		/obj/item/food/grown/tomato = 2,
 		/obj/item/organ/eyes = 1
 	)
 	result = /obj/item/food/soup/tomato/eyeball
@@ -120,7 +120,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/soydope = 2,
+		/obj/item/food/soydope = 2,
 		/obj/item/food/tofu = 2
 	)
 	result = /obj/item/food/soup/milo
@@ -131,7 +131,7 @@
 	reqs = list(
 		/datum/reagent/blood = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato/blood = 2
+		/obj/item/food/grown/tomato/blood = 2
 	)
 	result = /obj/item/food/soup/blood
 	subcategory = CAT_SOUP
@@ -151,7 +151,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/food/grown/banana = 1,
 		/obj/item/stack/sheet/mineral/bananium = 1
 	)
 	result = /obj/item/food/soup/clownstears
@@ -162,10 +162,10 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/badrecipe = 1,
+		/obj/item/food/badrecipe = 1,
 		/obj/item/food/tofu = 1,
 		/obj/item/food/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 	)
 	result = /obj/item/food/soup/mystery
 	subcategory = CAT_SOUP
@@ -176,7 +176,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/water = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
+		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/food/soup/mushroom
 	subcategory = CAT_SOUP
@@ -186,8 +186,8 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/whitebeet = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
+		/obj/item/food/grown/whitebeet = 1,
+		/obj/item/food/grown/cabbage = 1,
 	)
 	result = /obj/item/food/soup/beet
 	subcategory = CAT_SOUP
@@ -197,12 +197,12 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
+		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meat/cutlet = 3,
-		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/eggplant = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom = 1
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/mushroom = 1
 	)
 	result = /obj/item/food/soup/stew
 	subcategory = CAT_SOUP
@@ -212,7 +212,7 @@
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap = 3
+		/obj/item/food/grown/mushroom/libertycap = 3
 	)
 	result = /obj/item/food/soup/spacylibertyduff
 	subcategory = CAT_SOUP
@@ -222,7 +222,7 @@
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita = 3
+		/obj/item/food/grown/mushroom/amanita = 3
 	)
 	result = /obj/item/food/soup/amanitajelly
 	subcategory = CAT_SOUP
@@ -233,7 +233,7 @@
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/potato/sweet = 2
+		/obj/item/food/grown/potato/sweet = 2
 	)
 	result = /obj/item/food/soup/sweetpotato
 	subcategory = CAT_SOUP
@@ -243,8 +243,8 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/redbeet = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
+		/obj/item/food/grown/redbeet = 1,
+		/obj/item/food/grown/cabbage = 1
 	)
 	result = /obj/item/food/soup/beet/red
 	subcategory = CAT_SOUP
@@ -254,8 +254,8 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/cheese = 1,
 	)
 	result = /obj/item/food/soup/onion
 	subcategory = CAT_SOUP
@@ -277,8 +277,8 @@
 		/datum/reagent/water = 5,
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
-		/obj/item/reagent_containers/food/snacks/grown/bungofruit = 1
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/bungofruit = 1
 	)
 	result = /obj/item/food/soup/bungocurry
 	subcategory = CAT_SOUP
@@ -289,7 +289,19 @@
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 1
+		/obj/item/food/grown/mushroom/jupitercup = 1
 	)
 	result = /obj/item/food/soup/electron
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/peasoup
+	name = "Pea soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/food/grown/peas = 2,
+		/obj/item/food/grown/parsnip = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/reagent_containers/glass/bowl = 1
+	)
+	result = /obj/item/food/soup/peasoup
 	subcategory = CAT_SOUP

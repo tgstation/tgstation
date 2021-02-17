@@ -8,10 +8,10 @@
 	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
 
-/obj/item/clothing/mask/muzzle/attack_paw(mob/user)
+/obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.wear_mask)
+		var/mob/living/carbon/carbon_user = user
+		if(src == carbon_user.wear_mask)
 			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
@@ -22,9 +22,9 @@
 	icon_state = "sterile"
 	inhand_icon_state = "sterile"
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH
-	visor_flags_inv = HIDEFACE
+	visor_flags_inv = HIDEFACE|HIDESNOUT
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
@@ -38,6 +38,7 @@
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
+	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEFACE
 	species_exception = list(/datum/species/golem)
 
@@ -69,6 +70,7 @@
 	name = "joy mask"
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
 	icon_state = "joy"
+	flags_inv = HIDESNOUT
 
 
 /obj/item/clothing/mask/bandana
@@ -76,8 +78,8 @@
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
-	flags_inv = HIDEFACE|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
@@ -152,21 +154,21 @@
 	desc = "Ancient bandages."
 	icon_state = "mummy_mask"
 	inhand_icon_state = "mummy_mask"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/scarecrow
 	name = "sack mask"
 	desc = "A burlap sack with eyeholes."
 	icon_state = "scarecrow_sack"
 	inhand_icon_state = "scarecrow_sack"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/gondola
 	name = "gondola mask"
 	desc = "Genuine gondola fur."
 	icon_state = "gondola"
 	inhand_icon_state = "gondola"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	modifies_speech = TRUE
 

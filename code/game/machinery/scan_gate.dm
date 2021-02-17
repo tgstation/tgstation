@@ -1,22 +1,22 @@
-#define SCANGATE_NONE 			"Off"
-#define SCANGATE_MINDSHIELD 	"Mindshield"
-#define SCANGATE_NANITES 		"Nanites"
-#define SCANGATE_DISEASE 		"Disease"
-#define SCANGATE_GUNS 			"Guns"
-#define SCANGATE_WANTED			"Wanted"
-#define SCANGATE_SPECIES		"Species"
-#define SCANGATE_NUTRITION		"Nutrition"
+#define SCANGATE_NONE "Off"
+#define SCANGATE_MINDSHIELD "Mindshield"
+#define SCANGATE_NANITES "Nanites"
+#define SCANGATE_DISEASE "Disease"
+#define SCANGATE_GUNS "Guns"
+#define SCANGATE_WANTED "Wanted"
+#define SCANGATE_SPECIES "Species"
+#define SCANGATE_NUTRITION "Nutrition"
 
-#define SCANGATE_HUMAN			"human"
-#define SCANGATE_LIZARD			"lizard"
-#define SCANGATE_FELINID		"felinid"
-#define SCANGATE_FLY			"fly"
-#define SCANGATE_PLASMAMAN		"plasma"
-#define SCANGATE_MOTH			"moth"
-#define SCANGATE_JELLY			"jelly"
-#define SCANGATE_POD			"pod"
-#define SCANGATE_GOLEM			"golem"
-#define SCANGATE_ZOMBIE			"zombie"
+#define SCANGATE_HUMAN "human"
+#define SCANGATE_LIZARD "lizard"
+#define SCANGATE_FELINID "felinid"
+#define SCANGATE_FLY "fly"
+#define SCANGATE_PLASMAMAN "plasma"
+#define SCANGATE_MOTH "moth"
+#define SCANGATE_JELLY "jelly"
+#define SCANGATE_POD "pod"
+#define SCANGATE_GOLEM "golem"
+#define SCANGATE_ZOMBIE "zombie"
 
 /obj/machinery/scanner_gate
 	name = "scanner gate"
@@ -229,7 +229,7 @@
 			var/new_nutrition = params["new_nutrition"]
 			var/nutrition_list = list(
 				"Starving",
-  				"Obese"
+				"Obese"
 			)
 			if(new_nutrition && (new_nutrition in nutrition_list))
 				switch(new_nutrition)

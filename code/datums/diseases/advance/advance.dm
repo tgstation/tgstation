@@ -23,7 +23,7 @@
 	agent = "advance microbes"
 	max_stages = 5
 	spread_text = "Unknown"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human)
 
 	// NEW VARS
 	var/list/properties = list()
@@ -31,41 +31,41 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
-	var/oldres	//To prevent setting new cures unless resistance changes.
+	var/oldres //To prevent setting new cures unless resistance changes.
 
 	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they won't react away in bodies.
-	var/static/list/advance_cures = 	list(
-									list(	// level 1
+	var/static/list/advance_cures = list(
+									list( // level 1
 										/datum/reagent/copper, /datum/reagent/silver, /datum/reagent/iodine, /datum/reagent/iron, /datum/reagent/carbon
 									),
-									list(	// level 2
+									list( // level 2
 										/datum/reagent/potassium, /datum/reagent/consumable/ethanol, /datum/reagent/lithium, /datum/reagent/silicon, /datum/reagent/bromine
 									),
-									list(	// level 3
+									list( // level 3
 										/datum/reagent/consumable/salt, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/milk
 									),
-									list(	//level 4
+									list( //level 4
 										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/c2/multiver
 									),
-									list(	//level 5
+									list( //level 5
 										/datum/reagent/fuel/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
 									),
-									list(	// level 6
+									list( // level 6
 										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
 									),
-									list(	// level 7
+									list( // level 7
 										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/higadrite
 									),
-									list(	// level 8
+									list( // level 8
 										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
 									),
-									list(	// level 9
+									list( // level 9
 										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/sal_acid
 									),
-									list(	// level 10
+									list( // level 10
 										/datum/reagent/medicine/haloperidol, /datum/reagent/drug/aranesp, /datum/reagent/medicine/diphenhydramine
 									),
-									list(	//level 11
+									list( //level 11
 										/datum/reagent/medicine/modafinil, /datum/reagent/toxin/anacea
 									)
 								)
@@ -421,7 +421,7 @@
 		var/datum/disease/advance/D2 = pick(diseases)
 		D2.Mix(D1)
 
-	 // Should be only 1 entry left, but if not let's only return a single entry
+	// Should be only 1 entry left, but if not let's only return a single entry
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(TRUE)
 	return to_return
@@ -469,7 +469,7 @@
 		if(!new_name)
 			return
 		D.Refresh()
-		D.AssignName(new_name)	//Updates the master copy
+		D.AssignName(new_name) //Updates the master copy
 		D.name = new_name //Updates our copy
 
 		var/list/targets = list("Random")

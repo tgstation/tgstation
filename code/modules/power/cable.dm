@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
-	var/cable_layer = CABLE_LAYER_2			//bitflag
+	var/cable_layer = CABLE_LAYER_2 //bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 
@@ -46,7 +46,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
+/obj/structure/cable/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
+	SIGNAL_HANDLER
+	
+	if(avail())
+		king.apply_damage(10)
+		playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)
+	deconstruct()
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
@@ -102,14 +110,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					C.linked_dirs &= ~inverse
 					C.update_icon()
 
-/obj/structure/cable/Destroy()					// called when a cable is deleted
+/obj/structure/cable/Destroy() // called when a cable is deleted
 	Disconnect_cable()
 
 	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
+		cut_cable_from_powernet() // update the powernets
+	GLOB.cable_list -= src //remove it from global cable list
 
-	return ..()									// then go ahead and delete the cable
+	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -156,7 +164,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(powernet && (powernet.avail > 0))		// is it powered?
+		if(powernet && (powernet.avail > 0)) // is it powered?
 			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
 		else
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
@@ -382,7 +390,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = 75
+	custom_price = PAYCHECK_PRISONER * 0.8
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -399,7 +407,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
@@ -408,14 +416,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	cost = 1
+	source = /datum/robot_energy_storage/wire
 	var/cable_color = "yellow"
 	var/obj/structure/cable/target_type = /obj/structure/cable
 	var/target_layer = CABLE_LAYER_2
 
-/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 /obj/item/stack/cable_coil/examine(mob/user)
@@ -440,7 +450,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
@@ -452,7 +462,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	var/image/restraints_icon = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cuff")
-	restraints_icon.maptext = "<span class='maptext' [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>"
+	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
 
 	var/list/radial_menu = list(
 	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
@@ -589,18 +599,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon_state = "coil2"
 	worn_icon_state = "coil"
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
+/obj/item/stack/cable_coil/cut/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(!amount)
 		amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	. = ..()
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
-
-/obj/item/stack/cable_coil/cyborg
-	is_cyborg = 1
-	custom_materials = list()
-	cost = 1
 
 #undef CABLE_RESTRAINTS_COST
 #undef UNDER_SMES
@@ -663,7 +668,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
-			C.deconstruct()						// remove adversary cable
+			C.deconstruct() // remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
 
@@ -677,12 +682,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	vis_contents += cable_node_3
 	update_icon()
 
-/obj/structure/cable/multilayer/Destroy()					// called when a cable is deleted
+/obj/structure/cable/multilayer/Destroy() // called when a cable is deleted
 	QDEL_NULL(machinery_node)
 	QDEL_NULL(cable_node_1)
 	QDEL_NULL(cable_node_2)
 	QDEL_NULL(cable_node_3)
-	return ..()									// then go ahead and delete the cable
+	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
@@ -696,7 +701,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/attack_robot(mob/user)
 	attack_hand(user)
 
-/obj/structure/cable/multilayer/attack_hand(mob/living/user)
+/obj/structure/cable/multilayer/attack_hand(mob/living/user, list/modifiers)
 	if(!user)
 		return
 	if(!GLOB.hub_radial_layer_list)
@@ -738,7 +743,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
@@ -750,8 +755,8 @@ GLOBAL_LIST(hub_radial_layer_list)
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
-			C.deconstruct()						// remove adversary cable
-	auto_propagate_cut_cable(src)				// update the powernets
+			C.deconstruct() // remove adversary cable
+	auto_propagate_cut_cable(src) // update the powernets
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")

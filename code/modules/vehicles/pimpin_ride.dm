@@ -10,8 +10,7 @@
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
 	update_icon()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
 	if(floorbuffer)
 		AddElement(/datum/element/cleaning)
@@ -64,7 +63,7 @@
 	if(floorbuffer)
 		. += "cart_buffer"
 
-/obj/vehicle/ridden/janicart/attack_hand(mob/user)
+/obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

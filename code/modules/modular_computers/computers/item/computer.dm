@@ -11,13 +11,13 @@
 	max_integrity = 100
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 
-	var/enabled = 0											// Whether the computer is turned on.
-	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
-	var/device_theme = "ntos"								// Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
-	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
-	var/hardware_flag = 0									// A flag that describes this device type
+	var/enabled = 0 // Whether the computer is turned on.
+	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
+	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
+	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
+	var/hardware_flag = 0 // A flag that describes this device type
 	var/last_power_usage = 0
-	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
+	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
 	///Looping sound for when the computer is on
@@ -25,19 +25,19 @@
 	///Whether or not this modular computer uses the looping sound
 	var/looping_sound = TRUE
 
-	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
-	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	var/base_active_power_usage = 50 // Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	var/base_idle_power_usage = 5 // Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
-	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
-	var/icon_state_powered = null							// Icon state when the computer is turned on.
-	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
-	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
-	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
+	var/icon_state_unpowered = null // Icon state when the computer is turned off.
+	var/icon_state_powered = null // Icon state when the computer is turned on.
+	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
+	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
+	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
+	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	/// List of "connection ports" in this computer and the components with which they are plugged
 	var/list/all_components = list()
@@ -46,11 +46,11 @@
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
-	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
-	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
-	var/comp_light_luminosity = 3				//The brightness of that light
-	var/comp_light_color			//The color of that light
+	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
+	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
+	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
+	var/comp_light_luminosity = 3 //The brightness of that light
+	var/comp_light_color //The color of that light
 
 
 /obj/item/modular_computer/Initialize()
@@ -122,7 +122,7 @@
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src, BE_CLOSE))
+	if((!istype(over_object, /atom/movable/screen)) && usr.canUseTopic(src, BE_CLOSE))
 		return attack_self(M)
 	return ..()
 
@@ -263,6 +263,28 @@
 	handle_power(delta_time) // Handles all computer power interaction
 	//check_update_ui_need()
 
+/**
+ * Displays notification text alongside a soundbeep when requested to by a program.
+ *
+ * After checking tha the requesting program is allowed to send an alert, creates
+ * a visible message of the requested text alongside a soundbeep. This proc adds
+ * text to indicate that the message is coming from this device and the program
+ * on it, so the supplied text should be the exact message and ending punctuation.
+ *
+ * Arguments:
+ * The program calling this proc.
+ * The message that the program wishes to display.
+ */
+
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+		return
+	playsound(src, sound, 50, TRUE)
+	visible_message("<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+	var/mob/living/holder = loc
+	if(istype(holder))
+		to_chat(holder, "[icon2html(src)] <span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
 	var/list/data = list()
@@ -345,7 +367,8 @@
 	if(!get_ntnet_status())
 		return FALSE
 	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
-	return SSnetworks.station_network.add_log(text, network_card)
+
+	return SSnetworks.add_log(text, network_card.network_id, network_card.hardware_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
@@ -360,10 +383,10 @@
 	update_icon()
 
 /**
-  * Toggles the computer's flashlight, if it has one.
-  *
-  * Called from ui_act(), does as the name implies.
-  * It is seperated from ui_act() to be overwritten as needed.
+ * Toggles the computer's flashlight, if it has one.
+ *
+ * Called from ui_act(), does as the name implies.
+ * It is seperated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight()
 	if(!has_light)
@@ -376,12 +399,12 @@
 	return TRUE
 
 /**
-  * Sets the computer's light color, if it has a light.
-  *
-  * Called from ui_act(), this proc takes a color string and applies it.
-  * It is seperated from ui_act() to be overwritten as needed.
-  * Arguments:
-  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
+ * Sets the computer's light color, if it has a light.
+ *
+ * Called from ui_act(), this proc takes a color string and applies it.
+ * It is seperated from ui_act() to be overwritten as needed.
+ * Arguments:
+ ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
 /obj/item/modular_computer/proc/set_flashlight_color(color)
 	if(!has_light || !color)
@@ -437,7 +460,7 @@
 		if(all_components.len)
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
+		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
 		physical.visible_message("<span class='notice'>\The [src] is disassembled by [user].</span>")
 		relay_qdel()
 		qdel(src)

@@ -5,9 +5,12 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	var/crafted = FALSE
+	/// Optional travel time for ladder in deciseconds
+	var/travel_time = 0
 
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
@@ -35,15 +38,17 @@
 	if (!down)
 		L = locate() in SSmapping.get_turf_below(T)
 		if (L)
-			down = L
-			L.up = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				down = L
+				L.up = src  // Don't waste effort looping the other way
+				L.update_icon()
 	if (!up)
 		L = locate() in SSmapping.get_turf_above(T)
 		if (L)
-			up = L
-			L.down = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				up = L
+				L.down = src  // Don't waste effort looping the other way
+				L.update_icon()
 
 	update_icon()
 
@@ -63,7 +68,7 @@
 		icon_state = "ladder10"
 	else if(down)
 		icon_state = "ladder01"
-	else	//wtf make your ladders properly assholes
+	else //wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
 /obj/structure/ladder/singularity_pull()
@@ -73,8 +78,11 @@
 
 /obj/structure/ladder/proc/travel(going_up, mob/user, is_ghost, obj/structure/ladder/ladder)
 	if(!is_ghost)
-		show_fluff_message(going_up, user)
 		ladder.add_fingerprint(user)
+		if(!do_after(user, travel_time, target = src))
+			return
+		show_fluff_message(going_up, user)
+
 
 	var/turf/T = get_turf(ladder)
 	var/atom/movable/AM
@@ -123,16 +131,25 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ladder/attack_hand(mob/user)
+/obj/structure/ladder/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	use(user)
 
-/obj/structure/ladder/attack_paw(mob/user)
+/obj/structure/ladder/attack_paw(mob/user, list/modifiers)
 	return use(user)
 
-/obj/structure/ladder/attack_alien(mob/user)
+/obj/structure/ladder/attack_alien(mob/user, list/modifiers)
+	return use(user)
+
+/obj/structure/ladder/attack_larva(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_animal(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_slime(mob/user)
 	return use(user)
 
 /obj/structure/ladder/attackby(obj/item/W, mob/user, params)
@@ -195,3 +212,6 @@
 				break  // break if both our connections are filled
 
 	update_icon()
+
+/obj/structure/ladder/crafted
+	crafted = TRUE

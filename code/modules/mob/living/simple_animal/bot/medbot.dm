@@ -1,13 +1,13 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-#define MEDBOT_PANIC_NONE	0
-#define MEDBOT_PANIC_LOW	15
-#define MEDBOT_PANIC_MED	35
-#define MEDBOT_PANIC_HIGH	55
-#define MEDBOT_PANIC_FUCK	70
-#define MEDBOT_PANIC_ENDING	90
-#define MEDBOT_PANIC_END	100
+#define MEDBOT_PANIC_NONE 0
+#define MEDBOT_PANIC_LOW 15
+#define MEDBOT_PANIC_MED 35
+#define MEDBOT_PANIC_HIGH 55
+#define MEDBOT_PANIC_FUCK 70
+#define MEDBOT_PANIC_ENDING 90
+#define MEDBOT_PANIC_END 100
 
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
@@ -18,7 +18,7 @@
 	anchored = FALSE
 	health = 20
 	maxHealth = 20
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	status_flags = (CANPUSH | CANSTUN)
 
@@ -139,8 +139,8 @@
 	text_dehack = "You reset [name]'s healing processor circuits."
 	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
-/mob/living/simple_animal/bot/medbot/attack_paw(mob/user)
-	return attack_hand(user)
+/mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /mob/living/simple_animal/bot/medbot/get_controls(mob/user)
 	var/dat
@@ -218,7 +218,7 @@
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, TRUE)
+		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
 			oldpatient = user
 
@@ -405,7 +405,7 @@
 	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
 		return FALSE
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
-		return FALSE	//welp too late for them!
+		return FALSE //welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
@@ -432,16 +432,16 @@
 
 	//They're injured enough for it!
 	var/list/treat_me_for = list()
-	if(C.getBruteLoss() >= heal_threshold)
+	if(C.getBruteLoss() > heal_threshold)
 		treat_me_for += BRUTE
 
-	if(C.getOxyLoss() >= (5 + heal_threshold))
+	if(C.getOxyLoss() > (5 + heal_threshold))
 		treat_me_for += OXY
 
-	if(C.getFireLoss() >= heal_threshold)
+	if(C.getFireLoss() > heal_threshold)
 		treat_me_for += BURN
 
-	if(C.getToxLoss() >= heal_threshold)
+	if(C.getToxLoss() > heal_threshold)
 		treat_me_for += TOX
 
 	if(damagetype_healer in treat_me_for)
@@ -449,13 +449,13 @@
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
-	if(INTERACTING_WITH(H, src))
-		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		to_chat(user, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
-	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
-		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && mode != BOT_TIPPED)
+		user.visible_message("<span class='danger'>[user] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)
 			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
@@ -464,17 +464,19 @@
 			speak(message)
 			playsound(src, messagevoice[message], 70, FALSE)
 
-		if(do_after(H, 3 SECONDS, target=src))
-			tip_over(H)
+		if(do_after(user, 3 SECONDS, target=src))
+			tip_over(user)
 
-	else if(H.a_intent == INTENT_HELP && mode == BOT_TIPPED)
-		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
-		if(do_after(H, 3 SECONDS, target=src))
-			set_right(H)
+	else if(!user.combat_mode && mode == BOT_TIPPED)
+		user.visible_message("<span class='notice'>[user] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		if(do_after(user, 3 SECONDS, target=src))
+			set_right(user)
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(iscarbon(A) && !tending)
 		var/mob/living/carbon/C = A
 		patient = C
@@ -513,16 +515,16 @@
 		var/treatment_method
 		var/list/potential_methods = list()
 
-		if(C.getBruteLoss() >= heal_threshold)
+		if(C.getBruteLoss() > heal_threshold)
 			potential_methods += BRUTE
 
-		else if(C.getFireLoss() >= heal_threshold)
+		if(C.getFireLoss() > heal_threshold)
 			potential_methods += BURN
 
-		else if(C.getOxyLoss() >= (5 + heal_threshold))
+		if(C.getOxyLoss() > (5 + heal_threshold))
 			potential_methods += OXY
 
-		else if(C.getToxLoss() >= heal_threshold)
+		if(C.getToxLoss() > heal_threshold)
 			potential_methods += TOX
 
 		for(var/i in potential_methods)

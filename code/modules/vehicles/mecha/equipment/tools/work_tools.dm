@@ -19,6 +19,8 @@
 	var/clamp_damage = 20
 	///Var for the chassis we are attached to, needed to access ripley contents and such
 	var/obj/vehicle/sealed/mecha/working/ripley/cargo_holder
+	///Audio for using the hydraulic clamp
+	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M)
 	. = ..()
@@ -35,7 +37,7 @@
 	. = ..()
 	cargo_holder = null
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, params)
 	if(!action_checks(target))
 		return
 	if(!cargo_holder)
@@ -57,10 +59,12 @@
 		var/obj/clamptarget = target
 		if(istype(clamptarget, /obj/machinery/door/firedoor))
 			var/obj/machinery/door/firedoor/targetfiredoor = clamptarget
+			playsound(chassis, clampsound, 50, FALSE, -6)
 			targetfiredoor.try_to_crowbar(src, source)
 			return
 		if(istype(clamptarget, /obj/machinery/door/airlock/))
 			var/obj/machinery/door/airlock/targetairlock = clamptarget
+			playsound(chassis, clampsound, 50, FALSE, -6)
 			targetairlock.try_to_crowbar(src, source)
 			return
 		if(clamptarget.anchored)
@@ -69,6 +73,7 @@
 		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)]<span class='warning'>Not enough room in cargo compartment!</span>")
 			return
+		playsound(chassis, clampsound, 50, FALSE, -6)
 		chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
@@ -86,7 +91,10 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
-		if(source.a_intent == INTENT_HELP)
+
+		var/list/modifiers = params2list(params)
+
+		if(!source.combat_mode)
 			step_away(M,chassis)
 			if(killer_clamp)
 				target.visible_message("<span class='danger'>[chassis] tosses [target] like a piece of paper!</span>", \
@@ -96,7 +104,7 @@
 				chassis.visible_message("<span class='notice'>[chassis] pushes [target] out of the way.</span>", \
 				"<span class='notice'>[chassis] pushes you aside.</span>")
 			return ..()
-		else if(source.a_intent == INTENT_DISARM && iscarbon(M))//meme clamp here
+		else if(LAZYACCESS(modifiers, RIGHT_CLICK) && iscarbon(M))//meme clamp here
 			if(!killer_clamp)
 				to_chat(source, "<span class='notice'>You longingly wish to tear [M]'s arms off.</span>")
 				return
@@ -116,7 +124,7 @@
 			playsound(src, get_dismember_sound(), 80, TRUE)
 			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
 						   "<span class='userdanger'>[chassis] rips your arms off!</span>")
-			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 
 		M.take_overall_damage(clamp_damage)
@@ -127,7 +135,7 @@
 		target.visible_message("<span class='danger'>[chassis] squeezes [target]!</span>", \
 							"<span class='userdanger'>[chassis] squeezes you!</span>",\
 							"<span class='hear'>You hear something crack.</span>")
-		log_combat(source, M, "attacked", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+		log_combat(source, M, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
 	return ..()
 
 
@@ -217,9 +225,9 @@
 		return FALSE
 
 
-#define MODE_DECONSTRUCT	0
-#define MODE_WALL			1
-#define MODE_AIRLOCK		2
+#define MODE_DECONSTRUCT 0
+#define MODE_WALL 1
+#define MODE_AIRLOCK 2
 
 /obj/item/mecha_parts/mecha_equipment/rcd
 	name = "mounted RCD"
@@ -254,7 +262,7 @@
 				var/turf/closed/wall/W = target
 				if(!do_after_cooldown(W, source))
 					return
-				W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+				W.ScrapeAway()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				if(!do_after_cooldown(target, source))
@@ -336,39 +344,39 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/M)
-	var/obj/vehicle/sealed/mecha/working/ripley/mk2/N = new (get_turf(M),1)
-	if(!N)
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone)
+	var/obj/vehicle/sealed/mecha/working/ripley/mk2/marktwo = new (get_turf(markone),1)
+	if(!marktwo)
 		return
-	QDEL_NULL(N.cell)
-	if (M.cell)
-		N.cell = M.cell
-		M.cell.forceMove(N)
-		M.cell = null
-	QDEL_NULL(N.scanmod)
-	if (M.scanmod)
-		N.scanmod = M.scanmod
-		M.scanmod.forceMove(N)
-		M.scanmod = null
-	QDEL_NULL(N.capacitor)
-	if (M.capacitor)
-		N.capacitor = M.capacitor
-		M.capacitor.forceMove(N)
-		M.capacitor = null
-	N.update_part_values()
-	for(var/obj/item/mecha_parts/E in M.contents)
-		if(istype(E, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
-			E.forceMove(N)
-	for(var/obj/item/mecha_parts/mecha_equipment/E in M.equipment) //Move the equipment over...
-		E.detach(M)
-		E.attach(N)
-	N.dna_lock = M.dna_lock
-	N.mecha_flags = M.mecha_flags
-	N.strafe = M.strafe
-	N.obj_integrity = M.obj_integrity //This is not a repair tool
-	if(M.name != initial(M.name))
-		N.name = M.name
-	M.wreckage = FALSE
-	qdel(M)
-	playsound(get_turf(N),'sound/items/ratchet.ogg',50,TRUE)
+	QDEL_NULL(marktwo.cell)
+	if (markone.cell)
+		marktwo.cell = markone.cell
+		markone.cell.forceMove(marktwo)
+		markone.cell = null
+	QDEL_NULL(marktwo.scanmod)
+	if (markone.scanmod)
+		marktwo.scanmod = markone.scanmod
+		markone.scanmod.forceMove(marktwo)
+		markone.scanmod = null
+	QDEL_NULL(marktwo.capacitor)
+	if (markone.capacitor)
+		marktwo.capacitor = markone.capacitor
+		markone.capacitor.forceMove(marktwo)
+		markone.capacitor = null
+	marktwo.update_part_values()
+	for(var/obj/item/mecha_parts/equipment in markone.contents)
+		if(istype(equipment, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
+			equipment.forceMove(marktwo)
+	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.equipment) //Move the equipment over...
+		equipment.detach(marktwo)
+		equipment.attach(marktwo)
+	marktwo.dna_lock = markone.dna_lock
+	marktwo.mecha_flags = markone.mecha_flags
+	marktwo.strafe = markone.strafe
+	marktwo.obj_integrity = round((markone.obj_integrity / markone.max_integrity) * marktwo.obj_integrity) //Integ set to the same percentage integ as the old mecha, rounded to be whole number
+	if(markone.name != initial(markone.name))
+		marktwo.name = markone.name
+	markone.wreckage = FALSE
+	qdel(markone)
+	playsound(get_turf(marktwo),'sound/items/ratchet.ogg',50,TRUE)
 	return

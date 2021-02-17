@@ -144,18 +144,23 @@
 		reagents.expose(usr.loc)
 		src.reagents.clear_reagents()
 
-/obj/item/reagent_containers/spray/on_reagent_change(changetype)
-	var/total_reagent_weight
-	var/amount_of_reagents
-	for (var/datum/reagent/R in reagents.reagent_list)
-		total_reagent_weight = total_reagent_weight + R.reagent_weight
-		amount_of_reagents++
+/// Handles updating the spreay distance when the reagents change.
+/obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
+	. = ..()
+	var/total_reagent_weight = 0
+	var/number_of_reagents = 0
+	var/amount_of_reagents = holder.total_volume
+	var/list/cached_reagents = holder.reagent_list
+	for(var/datum/reagent/reagent in cached_reagents)
+		total_reagent_weight += reagent.reagent_weight * reagent.volume
+		number_of_reagents++
 
-	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+	if(total_reagent_weight && number_of_reagents && amount_of_reagents) //don't bother if the container is empty - DIV/0
 		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
-		spray_range = clamp(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+		spray_range = clamp(round((initial(spray_range) / average_reagent_weight) - ((number_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
 	else
 		spray_range = initial(spray_range)
+
 	if(stream_mode == 0)
 		current_range = spray_range
 
@@ -248,7 +253,7 @@
 	var/generate_amount = 5
 	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 	can_fill_from_container = FALSE
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
@@ -258,7 +263,7 @@
 	volume = 3
 	generate_type = /datum/reagent/clf3
 	generate_amount = 1
-	generate_delay = 40		//deciseconds
+	generate_delay = 40 //deciseconds
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
 	. = ..()
@@ -335,7 +340,7 @@
 	var/generate_amount = 50
 	var/generate_type = /datum/reagent/space_cleaner
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
 	. = ..()
@@ -374,7 +379,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = 900
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()

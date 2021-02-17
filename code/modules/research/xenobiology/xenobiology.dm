@@ -43,6 +43,7 @@
 	create_reagents(100, INJECTABLE | DRAWABLE)
 
 /obj/item/slime_extract/on_grind()
+	. = ..()
 	if(Uses)
 		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
@@ -136,7 +137,7 @@
 			user.visible_message("<span class='warning'>[user] starts shaking violently!</span>","<span class='warning'>Your [name] starts pulsing violently...</span>")
 			if(do_after(user, 50, target = user))
 				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
-				if(user.a_intent != INTENT_HARM)
+				if(!user.combat_mode)
 					S.faction |= "neutral"
 				else
 					S.faction |= "slime"
@@ -155,12 +156,11 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
-			var/obj/item/reagent_containers/food/snacks/O = new food_type
-			O.silver_spawned = TRUE
-			if(!user.put_in_active_hand(O))
-				O.forceMove(user.drop_location())
+			var/obj/item/food_item = new food_type
+			if(!user.put_in_active_hand(food_item))
+				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
+			user.visible_message("<span class='warning'>[user] spits out [food_item]!</span>", "<span class='notice'>You spit out [food_item]!</span>")
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
 			var/drink_type = get_random_drink()
@@ -189,7 +189,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/obj/item/stack/sheet/metal/O = new(null, 5)
+			var/obj/item/stack/sheet/iron/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -265,7 +265,7 @@
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 	effectmod = "charged"
-	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_2
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
@@ -765,7 +765,7 @@
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/user, proximity)
+/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/living/user, proximity)
 	if(!proximity)
 		return
 	if(prompted || !ismob(M))
@@ -892,6 +892,7 @@
 	if(!proximity)
 		return
 	if(!istype(C))
+		// applying this to vehicles is handled in the ridable element, see [/datum/element/ridable/proc/check_potion]
 		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
 	if(isitem(C))
@@ -900,16 +901,6 @@
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
 		I.slowdown = 0
-
-	if(istype(C, /obj/vehicle))
-		var/obj/vehicle/V = C
-		var/datum/component/riding/R = V.GetComponent(/datum/component/riding)
-		if(R)
-			var/vehicle_speed_mod = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
-			if(R.vehicle_move_delay <= vehicle_speed_mod)
-				to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
-				return ..()
-			R.vehicle_move_delay = vehicle_speed_mod
 
 	to_chat(user, "<span class='notice'>You slather the red gunk over the [C], making it faster.</span>")
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -991,7 +982,7 @@
 
 	to_chat(user, "<span class='notice'>You offer [src] to [user]...</span>")
 
-	var/new_name = stripped_input(M, "What would you like your name to be?", "Input a name", M.real_name, MAX_NAME_LEN)
+	var/new_name = sanitize_name(stripped_input(M, "What would you like your name to be?", "Input a name", M.real_name, MAX_NAME_LEN))
 
 	if(!new_name || QDELETED(src) || QDELETED(M) || new_name == M.real_name || !M.Adjacent(user))
 		being_used = FALSE
@@ -1037,14 +1028,14 @@
 	inhand_icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/bluespace
-
+	merge_type = /obj/item/stack/tile/bluespace
 
 /obj/item/stack/tile/sepia
 	name = "sepia floor tile"
@@ -1054,14 +1045,14 @@
 	inhand_icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28
 	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
-
+	merge_type = /obj/item/stack/tile/sepia
 
 /obj/item/areaeditor/blueprints/slime
 	name = "cerulean prints"

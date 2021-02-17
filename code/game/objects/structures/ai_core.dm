@@ -69,7 +69,7 @@
 	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
 	. += "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>"
 
-/obj/structure/ai_core/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
+/obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
 		return FALSE
 	if(!safety_checks)
@@ -237,8 +237,10 @@
 
 						if (brain.overrides_aicore_laws)
 							A = new /mob/living/silicon/ai(loc, brain.laws, B)
+							brain.laws = null //Brain's law datum is being donated, so we need the brain to let it go or the GC will eat it
 						else
 							A = new /mob/living/silicon/ai(loc, laws, B)
+							laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
@@ -309,7 +311,7 @@ That prevents a few funky behaviors.
 /obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
- //Transferring a carded AI to a core.
+	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = FALSE
 		AI.radio_enabled = TRUE

@@ -1,7 +1,7 @@
 /obj/item/assembly_holder
 	name = "Assembly"
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
-	icon_state = "holder"
+	icon_state = "assembly_holder"
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -93,14 +93,14 @@
 	if(a_right)
 		a_right.dropped()
 
-/obj/item/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+/obj/item/assembly_holder/attack_hand(mob/living/user, list/modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()
 	if(.)
 		return
 	if(a_left)
-		a_left.attack_hand()
+		a_left.attack_hand(user, modifiers)
 	if(a_right)
-		a_right.attack_hand()
+		a_right.attack_hand(user, modifiers)
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())

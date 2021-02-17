@@ -30,7 +30,6 @@
 @include meta.load-css('~tgui/styles/components/Dimmer.scss');
 @include meta.load-css('~tgui/styles/components/Divider.scss');
 @include meta.load-css('~tgui/styles/components/Dropdown.scss');
-@include meta.load-css('~tgui/styles/components/FatalError.scss');
 @include meta.load-css('~tgui/styles/components/Flex.scss');
 @include meta.load-css('~tgui/styles/components/Input.scss');
 @include meta.load-css('~tgui/styles/components/Knob.scss');
@@ -41,6 +40,7 @@
 @include meta.load-css('~tgui/styles/components/ProgressBar.scss');
 @include meta.load-css('~tgui/styles/components/Section.scss');
 @include meta.load-css('~tgui/styles/components/Slider.scss');
+@include meta.load-css('~tgui/styles/components/Stack.scss');
 @include meta.load-css('~tgui/styles/components/Table.scss');
 @include meta.load-css('~tgui/styles/components/Tabs.scss');
 @include meta.load-css('~tgui/styles/components/TextArea.scss');

@@ -81,10 +81,11 @@
 	name = "ERT Security - High Alert"
 
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	belt = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
+		/obj/item/storage/belt/security/full=1)
 
 
 /datum/outfit/centcom/ert/medic
@@ -130,12 +131,13 @@
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses =  /obj/item/clothing/glasses/meson/engine
 	back = /obj/item/storage/backpack/ert/engineer
-	belt = /obj/item/storage/belt/utility/full
+	belt = /obj/item/storage/belt/utility/full/powertools
 	l_pocket = /obj/item/rcd_ammo/large
 	l_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/construction/rcd/loaded=1)
+		/obj/item/construction/rcd/loaded/upgraded=1,\
+		/obj/item/pipe_dispenser=1)
 
 
 /datum/outfit/centcom/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -155,7 +157,8 @@
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/construction/rcd/combat=1)
+		/obj/item/construction/rcd/combat=1,\
+		/obj/item/pipe_dispenser=1)
 
 
 /datum/outfit/centcom/centcom_official
@@ -298,7 +301,7 @@
 	belt = /obj/item/storage/belt/champion
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	r_pocket = /obj/item/bikehorn/golden
-	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
+	l_pocket = /obj/item/food/grown/banana
 	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
 		/obj/item/melee/transforming/energy/sword/bananium=1,\
 		/obj/item/shield/energy/bananium=1,\
@@ -325,7 +328,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/melee/classic_baton
-	l_hand = /obj/item/gun/ballistic/rifle/boltaction
+	l_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
@@ -343,13 +346,26 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
+/datum/outfit/centcom/centcom_intern/unarmed
+	name = "CentCom Intern (Unarmed)"
+	belt = null
+	l_hand = null
+	l_pocket = null
+	r_pocket = null
+
 /datum/outfit/centcom/centcom_intern/leader
 	name = "CentCom Head Intern"
 	belt = /obj/item/melee/baton/loaded
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	l_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
+
+/datum/outfit/centcom/centcom_intern/leader/unarmed // i'll be nice and let the leader keep their baton and vest
+	name = "CentCom Head Intern (Unarmed)"
+	suit_store = null
+	l_pocket = null
+	r_pocket = null
 
 /datum/outfit/centcom/ert/janitor/party
 	name = "ERP Cleaning Service"
@@ -392,7 +408,7 @@
 	suit_store = null
 	l_hand = /obj/item/areaeditor/blueprints
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
-		/obj/item/stack/sheet/metal/fifty=1,\
+		/obj/item/stack/sheet/iron/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
 		/obj/item/stack/sheet/plasteel/twenty=1,\
 		/obj/item/etherealballdeployer=1,\

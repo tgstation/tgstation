@@ -27,7 +27,7 @@
 	drop_sound = 'sound/items/handling/multitool_drop.ogg'
 	pickup_sound =  'sound/items/handling/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
-	custom_premium_price = 450
+	custom_premium_price = PAYCHECK_HARD * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
 	var/obj/machinery/buffer // simple machine buffer for device linkage
@@ -48,7 +48,7 @@
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
 	var/detect_state = PROXIMITY_NONE
-	var/rangealert = 8	//Glows red when inside
+	var/rangealert = 8 //Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
 	var/hud_type = DATA_HUD_AI_DETECT
 	var/hud_on = FALSE
@@ -103,7 +103,7 @@
 
 /obj/item/multitool/ai_detect/proc/show_hud(mob/user)
 	if(user && hud_type)
-		var/obj/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
+		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		PM.alpha = 150
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		if(!H.hudusers[user])
@@ -113,7 +113,7 @@
 
 /obj/item/multitool/ai_detect/proc/remove_hud(mob/user)
 	if(user && hud_type)
-		var/obj/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
+		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		PM.alpha = 255
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)

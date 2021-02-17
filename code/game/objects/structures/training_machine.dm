@@ -7,11 +7,11 @@
 #define MAX_ATTACK_DELAY 15
 
 /**
-  * Machine that runs around wildly so people can practice clickin on things
-  *
-  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess, 
-  * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
-  */
+ * Machine that runs around wildly so people can practice clickin on things
+ *
+ * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
+ * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
+ */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
@@ -74,7 +74,7 @@
 	return data
 
 /**
- * Control the attached variables. 
+ * Control the attached variables.
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
@@ -98,7 +98,7 @@
 			move_speed = clamp(range_input, MIN_SPEED, MAX_SPEED)
 			. = TRUE
 
-/obj/structure/training_machine/attack_hand(mob/user)
+/obj/structure/training_machine/attack_hand(mob/user, list/modifiers)
 	ui_interact(user)
 
 /**
@@ -107,8 +107,8 @@
  * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
-/obj/structure/training_machine/attackby(obj/item/target, mob/user)
-	if (user.a_intent != INTENT_HELP)
+/obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
+	if (!user.combat_mode)
 		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
@@ -174,6 +174,11 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, FLOOR_OKAY))
+		return
+	if(has_buckled_mobs())
+		user_unbuckle_mob(buckled_mobs[1], user)
+		return
 	if (!attached_item)
 		return
 	if (obj_flags & EMAGGED)
@@ -184,7 +189,7 @@
 	playsound(src, "rustle", 50, TRUE)
 
 /**
- * Toggle the machine's movement 
+ * Toggle the machine's movement
  */
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
@@ -221,8 +226,8 @@
 /**
  * Main movement method for the machine
  *
- * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started. 
- * Will only move if the move_cooldown cooldown macro is finished. 
+ * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started.
+ * Will only move if the move_cooldown cooldown macro is finished.
  * If it can't find a place to go, it will stop moving.
  */
 /obj/structure/training_machine/process()
@@ -320,17 +325,20 @@
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
+	var/has_buckled_mob = has_buckled_mobs()
+	if(has_buckled_mob)
+		. += "<span class='notice'><b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b></span>"
 	if (obj_flags & EMAGGED)
 		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
-	else if (attached_item) //Can't removed the syndicate toolbox!
+	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
 		. += "<span class='notice'><b>Alt-Click to remove \the [attached_item]</b></span>"
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 
 /**
-  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
-  *
-  * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
-  */
+ * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
+ *
+ * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
+ */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
@@ -349,9 +357,9 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/user, proximity)
+/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if (!proximity || target == user || user.a_intent == INTENT_HELP)
+	if (!proximity || target == user || !user.combat_mode)
 		return
 	if (check_hit(target))
 		user.changeNext_move(CLICK_CD_MELEE)

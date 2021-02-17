@@ -86,7 +86,7 @@
  */
 
 /***********************************************
- Medical HUD! Basic mode needs suit sensors on.
+Medical HUD! Basic mode needs suit sensors on.
 ************************************************/
 
 //HELPERS
@@ -214,7 +214,7 @@
 
 
 /***********************************************
- FAN HUDs! For identifying other fans on-sight.
+FAN HUDs! For identifying other fans on-sight.
 ************************************************/
 
 //HOOKS
@@ -232,7 +232,7 @@
 			holder.icon_state = "fan_clown_pin"
 
 /***********************************************
- Security HUDs! Basic mode shows only the job.
+Security HUDs! Basic mode shows only the job.
 ************************************************/
 
 //HOOKS
@@ -292,7 +292,7 @@
 	holder.icon_state = null
 
 /***********************************************
- Diagnostic HUDs!
+Diagnostic HUDs!
 ************************************************/
 
 /mob/living/proc/hud_set_nanite_indicator()
@@ -300,7 +300,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = null
-	if(src in SSnanites.nanite_monitored_mobs)
+	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
 		holder.icon_state = "nanite_ping"
 
 //For Diag health and cell bars!
@@ -363,7 +363,7 @@
 		holder.icon_state = null
 	else if(deployed) //AI shell in use by an AI
 		holder.icon_state = "hudtrackingai"
-	else	//Empty AI shell
+	else //Empty AI shell
 		holder.icon_state = "hudtracking"
 
 //AI side tracking of AI shell control

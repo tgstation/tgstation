@@ -15,7 +15,7 @@
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.4"
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
 	var/blood = 1
@@ -159,7 +159,7 @@
 		weapon.attack(C, src)
 		C.Knockdown(20)
 
-/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID())
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
@@ -171,7 +171,7 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
-	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
+	else if(istype(W, /obj/item/kitchen/knife) && !user.combat_mode)
 		to_chat(user, "<span class='notice'>You start attaching \the [W] to \the [src]...</span>")
 		if(do_after(user, 25, target = src))
 			deputize(W, user)
@@ -237,7 +237,7 @@
 		target = scan(/obj/item/trash)
 
 	if(!target && trash) //Search for dead mices.
-		target = scan(/obj/item/reagent_containers/food/snacks/deadmouse)
+		target = scan(/obj/item/food/deadmouse)
 
 	if(!target && auto_patrol) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
@@ -253,14 +253,14 @@
 			return
 
 		if(loc == get_turf(target))
-			if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
-				UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+			if(!(check_bot(target) && prob(50))) //Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+				UnarmedAttack(target) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 				if(QDELETED(target)) //We done here.
 					target = null
 					mode = BOT_IDLE
 					return
 			else
-				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
+				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
 
 		if(!path || path.len == 0) //No path, need a new one
@@ -307,11 +307,13 @@
 
 	if(trash)
 		target_types += /obj/item/trash
-		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
+		target_types += /obj/item/food/deadmouse
 
 	target_types = typecacheof(target_types)
 
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(ismopable(A))
 		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING

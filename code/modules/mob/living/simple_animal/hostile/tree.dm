@@ -21,6 +21,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	pixel_x = -16
+	base_pixel_x = -16
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -90,9 +91,9 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	is_tree = FALSE
 
-/mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(M.a_intent == "help")
+	if(!user.combat_mode)
 		visible_message("<span class='warning'>[src] crackles with static electricity!</span>")
 		for(var/obj/item/stock_parts/cell/C in range(2, get_turf(src)))
 			C.give(75)

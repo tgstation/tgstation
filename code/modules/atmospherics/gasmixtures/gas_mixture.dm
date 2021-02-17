@@ -1,18 +1,21 @@
- /*
+/*
 What are the archived variables for?
-	Calculations are done using the archived variables with the results merged into the regular variables.
-	This prevents race conditions that arise based on the order of tile processing.
+Calculations are done using the archived variables with the results merged into the regular variables.
+This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define MINIMUM_MOLE_COUNT		0.01
+#define MINIMUM_HEAT_CAPACITY 0.0003
+#define MINIMUM_MOLE_COUNT 0.01
 #define MOLAR_ACCURACY  1E-7
-#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))/*I feel the need to document what happens here. Basically this is used
-															to catch most rounding errors, however its previous value made it so that
-                                                            once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
-															counts would get rounded away. Thus, we lowered it a few orders of magnitude
-                                                            Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
-                                                            So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
-                                                            and any attempts to fix it just killed atmos. I leave this to a greater man then I*/
+/**
+ *I feel the need to document what happens here. Basically this is used
+ *catch most rounding errors, however its previous value made it so that
+ *once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
+ *counts would get rounded away. Thus, we lowered it a few orders of magnitude
+ *Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
+ *So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
+ *and any attempts to fix it just killed atmos. I leave this to a greater man then I
+ */
+#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -272,7 +275,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 	///Copies all gas info from the turf into the gas list along with temperature
-	///Returns: 1 if we are mutable, 0 otherwise
+	///Returns: TRUE if we are mutable, FALSE otherwise
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
 
@@ -281,7 +284,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
 		temperature = model.temperature
 
-	return 1
+	return TRUE
 
 	///Copies variables from a particularly formatted string.
 	///Returns: 1 if we are mutable, 0 otherwise
@@ -292,7 +295,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		temperature = text2num(gas["TEMP"])
+		temperature_archived = temperature
 		gas -= "TEMP"
+	else // if we do not have a temp in the new gas mix lets assume room temp.
+		temperature = T20C
 	gases.Cut()
 	for(var/id in gas)
 		var/path = id
@@ -341,10 +347,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			else
 				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
-		gas[MOLES]			-= delta
-		sharergas[MOLES]	+= delta
-		moved_moles			+= delta
-		abs_moved_moles		+= abs(delta)
+		gas[MOLES] -= delta
+		sharergas[MOLES] += delta
+		moved_moles += delta
+		abs_moved_moles += abs(delta)
 
 	last_share = abs_moved_moles
 
@@ -416,7 +422,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	var/our_moles
 	TOTAL_MOLES(cached_gases, our_moles)
-	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
+	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
 		var/temp = temperature
 		var/sample_temp = sample.temperature
 
@@ -434,12 +440,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!length(cached_gases))
 		return
 	var/list/reactions = list()
-	for(var/datum/gas_reaction/G in SSair.gas_reactions)
-		if(cached_gases[G.major_gas])
+	for(var/G in SSair.gas_reactions)
+		var/datum/gas_reaction/reaction = G
+		if(cached_gases[reaction.major_gas])
 			reactions += G
+
 	if(!length(reactions))
 		return
+
 	reaction_results = new
+	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be careful
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
@@ -448,7 +458,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
-			if(	(min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
+			if( (min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
 				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
 				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
 			)
@@ -463,9 +473,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 
 			. |= reaction.react(src, holder)
+
 			if (. & STOP_REACTIONS)
 				break
-	if(.)
+
+	if(.) //If we changed the mix to any degree, or if we stopped reacting
 		garbage_collect()
 
 ///Takes the amount of the gas you want to PP as an argument
@@ -500,7 +512,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	//Calculate necessary moles to transfer using PV=nRT
 	if((total_moles() > 0) && (temperature>0))
 		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = remove(transfer_moles)
@@ -523,7 +535,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 		//Can not have a pressure delta that would cause output_pressure > input_pressure
 
-		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = remove(transfer_moles)

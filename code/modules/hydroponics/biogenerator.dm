@@ -21,7 +21,6 @@
 /obj/machinery/biogenerator/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
-	create_reagents(1000)
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
@@ -62,9 +61,6 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
 
-/obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
-	update_icon()
-
 /obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
@@ -75,8 +71,8 @@
 	else
 		icon_state = "biogen-work"
 
-/obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(user.a_intent == INTENT_HARM)
+/obj/machinery/biogenerator/attackby(obj/item/O, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
 
 	if(processing)
@@ -112,12 +108,12 @@
 	else if(istype(O, /obj/item/storage/bag/plants))
 		var/obj/item/storage/bag/plants/PB = O
 		var/i = 0
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
+		for(var/obj/item/food/grown/G in contents)
 			i++
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
 		else
-			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
+			for(var/obj/item/food/grown/G in PB.contents)
 				if(i >= max_items)
 					break
 				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
@@ -130,9 +126,9 @@
 				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
 		return TRUE //no afterattack
 
-	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
+	else if(istype(O, /obj/item/food/grown))
 		var/i = 0
-		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
+		for(var/obj/item/food/grown/G in contents)
 			i++
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
@@ -161,11 +157,11 @@
 		detach(user)
 
 /**
-  * activate: Activates biomass processing and converts all inserted grown products into biomass
-  *
-  * Arguments:
-  * * user The mob starting the biomass processing
-  */
+ * activate: Activates biomass processing and converts all inserted grown products into biomass
+ *
+ * Arguments:
+ * * user The mob starting the biomass processing
+ */
 /obj/machinery/biogenerator/proc/activate(mob/user)
 	if(user.stat != CONSCIOUS)
 		return
@@ -175,7 +171,7 @@
 		to_chat(user, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
 	var/S = 0
-	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
+	for(var/obj/item/food/grown/I in contents)
 		S += 5
 		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1 * productivity
@@ -192,13 +188,13 @@
 		update_icon()
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
-	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
 		return FALSE
-	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
+	if (materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency > points)
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
+			points -= materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		return TRUE
 
@@ -273,7 +269,7 @@
 	data["beaker"] = beaker ? TRUE : FALSE
 	data["biomass"] = points
 	data["processing"] = processing
-	if(locate(/obj/item/reagent_containers/food/snacks/grown) in contents)
+	if(locate(/obj/item/food/grown) in contents)
 		data["can_process"] = TRUE
 	else
 		data["can_process"] = FALSE
@@ -301,7 +297,7 @@
 			cat["items"] += list(list(
 				"id" = D.id,
 				"name" = D.name,
-				"cost" = D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency,
+				"cost" = D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency,
 			))
 		data["categories"] += list(cat)
 

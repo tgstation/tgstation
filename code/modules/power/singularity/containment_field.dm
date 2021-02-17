@@ -19,17 +19,18 @@
 
 /obj/machinery/field/containment/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
 	CanAtmosPass = ATMOS_PASS_YES
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/field/containment/attack_hand(mob/user)
+/obj/machinery/field/containment/attack_hand(mob/user, list/modifiers)
 	if(get_dist(src, user) > 1)
 		return FALSE
 	else
@@ -53,14 +54,14 @@
 /obj/machinery/field/containment/ex_act(severity, target)
 	return FALSE
 
-/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!FG1 || !FG2)
 		qdel(src)
 		return
-	if(ismegafauna(M))
-		M.visible_message("<span class='warning'>[M] glows fiercely as the containment field flickers out!</span>")
+	if(ismegafauna(user))
+		user.visible_message("<span class='warning'>[user] glows fiercely as the containment field flickers out!</span>")
 		FG1.calc_power(INFINITY) //rip that 'containment' field
-		M.adjustHealth(-M.obj_damage)
+		user.adjustHealth(-user.obj_damage)
 	else
 		return ..()
 
@@ -78,6 +79,11 @@
 	FG1 = master1
 	FG2 = master2
 	return TRUE
+
+/obj/machinery/field/containment/proc/block_singularity()
+	SIGNAL_HANDLER
+
+	return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/field/containment/shock(mob/living/user)
 	if(!FG1 || !FG2)

@@ -49,13 +49,13 @@
 	. += "This is a [generation]\th generation [name]!"
 
 /**
-  *	Creates a new glowshroom structure.
-  *
-  * Arguments:
-  * * newseed - Seed of the shroom
-  * * mutate_stats - If the plant needs to mutate their stats
-  * * spread - If the plant is a result of spreading, reduce its stats
-  */
+ * Creates a new glowshroom structure.
+ *
+ * Arguments:
+ * * newseed - Seed of the shroom
+ * * mutate_stats - If the plant needs to mutate their stats
+ * * spread - If the plant is a result of spreading, reduce its stats
+ */
 
 /obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
 	. = ..()
@@ -65,12 +65,12 @@
 	else
 		myseed = new myseed(src)
 	if(spread)
-		myseed.potency -= round(myseed.potency * 0.25) // Reduce potency of the little mushie if it's spreading
+		myseed.adjust_potency(-round(myseed.potency * 0.25)) // Reduce potency of the little mushie if it's spreading
 	if(mutate_stats) //baby mushrooms have different stats :3
 		myseed.adjust_potency(rand(-4,3))
 		myseed.adjust_yield(rand(-3,2))
 		myseed.adjust_production(rand(-3,3))
-		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
+		myseed.adjust_endurance(myseed.endurance + rand(-3,2))
 	if(myseed.production >= 1) //In case production is varedited to -1 or less which would cause unlimited or negative delay.
 		delay_spread = delay_spread - (11 - myseed.production) * 100 //Because lower production speed stat gives faster production speed, which should give faster mushroom spread. Range 200-1100 deciseconds.
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
@@ -99,9 +99,13 @@
 	addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 	addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
+/obj/structure/glowshroom/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /**
-  * Causes glowshroom spreading across the floor/walls.
-  */
+ * Causes glowshroom spreading across the floor/walls.
+ */
 
 /obj/structure/glowshroom/proc/Spread()
 
@@ -134,7 +138,7 @@
 		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
 		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 
-		 // Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
+		// Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
 		if(prob(max(chance_stats, chance_generation)))
 			var/spreadsIntoAdjacent = prob(spreadIntoAdjacentChance)
 			var/turf/newLoc = null
@@ -164,8 +168,8 @@
 			if(shroomCount >= placeCount)
 				continue
 
-			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
-			if(QDELETED(src))	//Decay can end us
+			Decay(TRUE, GLOWCAP_ENDURANCE_SPREAD_COST) // Decay before spawning new mushrooms to reduce their endurance
+			if(QDELETED(src)) //Decay can end us
 				return
 			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
 			child.generation = generation + 1
@@ -213,30 +217,32 @@
 	return 1
 
 /**
-  * Causes the glowshroom to decay by decreasing its endurance.
-  *
-  * Arguments:
-  * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
-  * * amount - Amount of endurance to be reduced due to spread decay.
-  */
+ * Causes the glowshroom to decay by decreasing its endurance.
+ *
+ * Arguments:
+ * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
+ * * amount - Amount of endurance to be reduced due to spread decay.
+ */
 /obj/structure/glowshroom/proc/Decay(spread, amount)
 	if (spread) // Decay due to spread
-		myseed.endurance -= amount
+		myseed.adjust_endurance(-amount)
 	else // Timed decay
-		myseed.endurance -= 1
-		if (myseed.endurance > 0)
+		myseed.adjust_endurance(-1)
+		if (myseed.endurance > MIN_PLANT_ENDURANCE)
 			addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT) // Recall decay timer
 			return
-	if (myseed.endurance < 1) // Plant is gone
+	if (myseed.endurance <= MIN_PLANT_ENDURANCE) // Plant is gone
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
 		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/glowshroom/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/glowshroom/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
 	visible_message("<span class='danger'>[src] melts away!</span>")
@@ -244,8 +250,3 @@
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
 	return TRUE
-
-/obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
-	if (istype(I, /obj/item/plant_analyzer))
-		return myseed.attackby(I, user, params) // Hacky I guess
-	return ..() // Attack normally

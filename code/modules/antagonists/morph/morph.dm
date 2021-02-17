@@ -9,11 +9,10 @@
 	icon_living = "morph"
 	icon_dead = "morph_dead"
 	speed = 2
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxHealth = 150
@@ -36,10 +35,16 @@
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
 	var/static/list/blacklist_typecache = typecacheof(list(
-	/obj/screen,
+	/atom/movable/screen,
 	/obj/singularity,
+	/obj/energy_ball,
+	/obj/narsie,
 	/mob/living/simple_animal/hostile/morph,
 	/obj/effect))
+
+/mob/living/simple_animal/hostile/morph/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
@@ -95,10 +100,10 @@
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
 	copy_overlays(target)
-	alpha = max(alpha, 150)	//fucking chameleons
+	alpha = max(alpha, 150) //fucking chameleons
 	transform = initial(transform)
-	pixel_y = initial(pixel_y)
-	pixel_x = initial(pixel_x)
+	pixel_y = base_pixel_y
+	pixel_x = base_pixel_x
 
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised

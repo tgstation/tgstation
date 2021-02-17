@@ -3,8 +3,8 @@
 // Accumulates junk liberally
 /datum/blobstrain/debris_devourer
 	name = "Debris Devourer"
-	description = "will launch accumulated debris into targets."
-	analyzerdescdamage = "Does medium brute damage and may grab onto melee weapons."
+	description = "will launch accumulated debris into targets. Does very low brute damage without debris-launching."
+	analyzerdescdamage = "Does very low brute damage and may grab onto melee weapons."
 	analyzerdesceffect = "Devours loose items left on the station, and releases them when attacking or attacked."
 	color = "#8B1000"
 	complementary_color = "#00558B"
@@ -18,7 +18,7 @@
 		debris_attack(L, blob)
 
 /datum/blobstrain/debris_devourer/on_sporedeath(mob/living/spore)
-	var/obj/structure/blob/core/core = overmind.blob_core
+	var/obj/structure/blob/special/core/core = overmind.blob_core
 	for(var/i in 1 to 3)
 		var/obj/item/I = pick(core.contents)
 		if (I && !QDELETED(I))
@@ -30,7 +30,7 @@
 		I.forceMove(overmind.blob_core)
 
 /datum/blobstrain/debris_devourer/proc/debris_attack(mob/living/L, source)
-	var/obj/structure/blob/core/core = overmind.blob_core
+	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (prob(40 * DEBRIS_DENSITY)) // Pretend the items are spread through the blob and its mobs and not in the core.
 		var/obj/item/I = pick(core.contents)
 		if (I && !QDELETED(I))
@@ -41,12 +41,12 @@
 	debris_attack(L,blobbernaut)
 
 /datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
-	var/obj/structure/blob/core/core = overmind.blob_core
+	var/obj/structure/blob/special/core/core = overmind.blob_core
 	return round(max((coefficient*damage)-min(coefficient*DEBRIS_DENSITY, 10), 0)) // reduce damage taken by items per blob, up to 10
 
 /datum/blobstrain/debris_devourer/examine(mob/user)
 	. = ..()
-	var/obj/structure/blob/core/core = overmind.blob_core
+	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (isobserver(user))
 		. += "<span class='notice'>Absorbed debris is currently reducing incoming damage by [round(max(min(DEBRIS_DENSITY, 10),0))]</span>"
 	else

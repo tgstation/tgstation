@@ -25,6 +25,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	microwaved_type = null
 
+/obj/item/food/spaghetti/boiledspaghetti/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
+
 /obj/item/food/spaghetti/pastatomato
 	name = "spaghetti"
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"

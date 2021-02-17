@@ -8,7 +8,7 @@
 	var/check_every = 12 SECONDS
 	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
-	var/datum/emote/next_breath_type = /datum/emote/inhale
+	var/datum/emote/next_breath_type = /datum/emote/living/inhale
 
 /datum/component/manual_breathing/Initialize()
 	if(!iscarbon(parent))
@@ -33,14 +33,14 @@
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/pause)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/pause)
 
 /datum/component/manual_breathing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
 	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
-	UnregisterSignal(parent, COMSIG_MOB_DEATH)
+	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 
 /datum/component/manual_breathing/proc/restart()
 	SIGNAL_HANDLER
@@ -90,10 +90,10 @@
 	SIGNAL_HANDLER
 
 	if(emote.type == next_breath_type)
-		if(next_breath_type == /datum/emote/inhale)
-			next_breath_type = /datum/emote/exhale
+		if(next_breath_type == /datum/emote/living/inhale)
+			next_breath_type = /datum/emote/living/exhale
 		else
-			next_breath_type = /datum/emote/inhale
+			next_breath_type = /datum/emote/living/inhale
 
 		warn_grace = FALSE
 		warn_dying = FALSE

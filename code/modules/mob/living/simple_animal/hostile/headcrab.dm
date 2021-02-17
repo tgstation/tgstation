@@ -20,9 +20,12 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
+
+/mob/living/simple_animal/hostile/headcrab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -65,7 +68,7 @@
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
-	var/mob/living/carbon/monkey/M = new(owner)
+	var/mob/living/carbon/human/species/monkey/M = new(owner)
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)

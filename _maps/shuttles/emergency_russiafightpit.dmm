@@ -133,7 +133,7 @@
 "av" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aw" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
@@ -188,21 +188,21 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aH" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aI" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aJ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -236,13 +236,13 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aP" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aQ" = (
 /obj/effect/decal/cleanable/robot_debris/old,
 /turf/open/floor/engine,
@@ -468,11 +468,11 @@
 "bA" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bB" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bC" = (
 /obj/structure/extinguisher_cabinet{
@@ -484,12 +484,12 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/table,
@@ -500,7 +500,7 @@
 	},
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/closet,
@@ -523,7 +523,7 @@
 "bJ" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/window/reinforced{
@@ -580,12 +580,12 @@
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/clothing/gloves/fingerless,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "wq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/optable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 
 (1,1,1) = {"

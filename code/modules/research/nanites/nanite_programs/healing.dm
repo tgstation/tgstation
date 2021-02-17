@@ -52,6 +52,11 @@
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
+/datum/nanite_program/purging/check_conditions()
+	. = ..()
+	if(!. || !host_mob.reagents)
+		return FALSE // No trying to purge simple mobs
+
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/R in host_mob.reagents.reagent_list)
@@ -140,6 +145,11 @@
 			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. Consumes nanites even if it has no effect."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging_advanced/check_conditions()
+	. = ..()
+	if(!. || !host_mob.reagents)
+		return FALSE
 
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)

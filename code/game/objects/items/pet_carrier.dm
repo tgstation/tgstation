@@ -82,7 +82,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 	if(!open)
 		to_chat(user, "<span class='warning'>You need to open [src]'s door!</span>")
@@ -135,7 +135,7 @@
 		to_chat(user, "<span class='notice'>You start pushing out of [src]... (This will take about 20 seconds.)</span>")
 		if(!do_after(user, 200, target = user) || open || !locked || !(user in occupants))
 			return
-		loc.visible_message("<span class='warning'>[user] shoves out of	[src]!</span>", null, null, null, user)
+		loc.visible_message("<span class='warning'>[user] shoves out of [src]!</span>", null, null, null, user)
 		to_chat(user, "<span class='notice'>You shove open [src]'s door against the lock's resistance and fall out!</span>")
 		locked = FALSE
 		open = TRUE
@@ -155,7 +155,7 @@
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()
-	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
+	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)

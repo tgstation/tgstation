@@ -284,7 +284,7 @@
 		data["radStrength"] = radstrength
 		data["radDuration"] = radduration
 		data["stdDevStr"] = radstrength * RADIATION_STRENGTH_MULTIPLIER
-		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2)))	//hardcoded values from a z-table for a normal distribution
+		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2))) //hardcoded values from a z-table for a normal distribution
 			if(0 to 0.25)
 				data["stdDevAcc"] = ">95 %"
 			if(0.25 to 0.5)
@@ -573,7 +573,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to swap out
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
@@ -710,7 +710,7 @@
 		//  referred to as a "Research" type. Expects a string with 0 or 1, which
 		//  then gets converted to a number.
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
@@ -784,7 +784,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "disk" - From inserted diskette
 		if("save_console")
@@ -818,7 +818,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		if("save_disk")
@@ -1195,8 +1195,8 @@
 		// params["type"] - Type of injector to create
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_injector")
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
@@ -1274,8 +1274,8 @@
 		// params["type"] - Type of genetic makeup copy to implement
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_apply")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
@@ -1311,8 +1311,8 @@
 		// params["type"] - Type of genetic makeup copy to implement
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_delay")
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
@@ -1391,7 +1391,7 @@
 			// GUARD CHECK - If the name is null or blank, reject.
 			// GUARD CHECK - If the name isn't in the list of advanced injectors, we
 			//  want to reject this as it shouldn't be possible ever do this.
-			//	Unexpected result
+			// Unexpected result
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
@@ -1415,7 +1415,7 @@
 			// GUARD CHECK - If the name is null or blank, reject.
 			// GUARD CHECK - If the name isn't in the list of advanced injectors, we
 			//  want to reject this as it shouldn't be possible ever do this.
-			//	Unexpected result
+			// Unexpected result
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
@@ -1449,7 +1449,7 @@
 		if("add_advinj_mut")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
-			// 	This is needed because this operation can only be completed from the
+			// This is needed because this operation can only be completed from the
 			//  genetic sequencer.
 			if(!can_modify_occupant())
 				return
@@ -1544,15 +1544,15 @@
 	return FALSE
 
 /**
-  * Applies the enzyme buffer to the current scanner occupant
-  *
-  * Applies the type of a specific genetic makeup buffer to the current scanner
+ * Applies the enzyme buffer to the current scanner occupant
+ *
+ * Applies the type of a specific genetic makeup buffer to the current scanner
 	* occupant
 	*
-  * Arguments:
-  * * type - "ui"/"ue"/"mixed" - Which part of the enzyme buffer to apply
-  * * buffer_slot - Index of the enzyme buffer to apply
-  */
+ * Arguments:
+ * * type - "ui"/"ue"/"mixed" - Which part of the enzyme buffer to apply
+ * * buffer_slot - Index of the enzyme buffer to apply
+ */
 /obj/machinery/computer/scan_consolenew/proc/apply_genetic_makeup(type, buffer_slot)
 	// Note - This proc is only called from code that has already performed the
 	//  necessary occupant guard checks. If you call this code yourself, please
@@ -1608,18 +1608,18 @@
 
 	return FALSE
 /**
-  * Checks if there is a connected DNA Scanner that is operational
-  */
+ * Checks if there is a connected DNA Scanner that is operational
+ */
 /obj/machinery/computer/scan_consolenew/proc/scanner_operational()
 	return connected_scanner?.is_operational
 
 /**
-  * Checks if there is a valid DNA Scanner occupant for genetic modification
-  *
+ * Checks if there is a valid DNA Scanner occupant for genetic modification
+ *
 	* Checks if there is a valid subject in the DNA Scanner that can be genetically
 	* modified. Will set the scanner occupant var as part of this check.
 	* Requires that the scanner can be operated and will return early if it can't
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/can_modify_occupant()
 	// GUARD CHECK - We always want to perform the scanner operational check as
 	//  part of checking if we can modify the occupant.
@@ -1635,7 +1635,7 @@
 		// Check validity of occupent for DNA Modification
 		// DNA Modification:
 		//   requires DNA
-		//	   this DNA can not be bad
+		//    this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
 	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
@@ -1644,12 +1644,12 @@
 	return FALSE
 
 /**
-  * Checks for adjacent DNA scanners and connects when it finds a viable one
-  *
+ * Checks for adjacent DNA scanners and connects when it finds a viable one
+ *
 	* Seearches cardinal directions in order. Stops when it finds a viable DNA Scanner.
 	* Will connect to a broken scanner if no functional scanner is available.
 	* Links itself to the DNA Scanner to receive door open and close events.
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/connect_to_scanner()
 	var/obj/machinery/dna_scannernew/test_scanner = null
 	var/obj/machinery/dna_scannernew/broken_scanner = null
@@ -1675,11 +1675,11 @@
 		connected_scanner.linked_console = src
 
 /**
-  * Called by connected DNA Scanners when their doors close.
-  *
+ * Called by connected DNA Scanners when their doors close.
+ *
 	* Sets the new scanner occupant and completes delayed enzyme transfer if one
 	* is queued.
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
 	// Set the appropriate occupant now the scanner is closed
 	if(connected_scanner.occupant)
@@ -1700,11 +1700,11 @@
 		delayed_action = null
 
 /**
-  * Called by connected DNA Scanners when their doors open.
-  *
+ * Called by connected DNA Scanners when their doors open.
+ *
 	* Clears enzyme pulse operations, stops processing and nulls the current
 	* scanner occupant var.
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_open()
 	// If we had a radiation pulse action ongoing, we want to stop this.
 	// Imagine it being like a microwave stopping when you open the door.
@@ -1714,8 +1714,8 @@
 	scanner_occupant = null
 
 /**
-  * Builds the genetic makeup list which will be sent to tgui interface.
-  */
+ * Builds the genetic makeup list which will be sent to tgui interface.
+ */
 /obj/machinery/computer/scan_consolenew/proc/build_genetic_makeup_list()
 	// No code will ever null this list, we can safely Cut it.
 	tgui_genetic_makeup.Cut()
@@ -1727,12 +1727,12 @@
 			tgui_genetic_makeup["[i]"] = null
 
 /**
-  * Builds the genetic makeup list which will be sent to tgui interface.
+ * Builds the genetic makeup list which will be sent to tgui interface.
 	*
 	* Will iterate over the connected scanner occupant, DNA Console, inserted
 	* diskette and chromosomes and any advanced injectors, building the main data
 	* structures which get passed to the tgui interface.
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/build_mutation_list(can_modify_occ)
 	// No code will ever null these lists. We can safely Cut them.
 	tgui_occupant_mutations.Cut()
@@ -1741,7 +1741,7 @@
 	tgui_console_chromosomes.Cut()
 	tgui_advinjector_mutations.Cut()
 
-  // ------------------------------------------------------------------------ //
+	// ------------------------------------------------------------------------ //
 	// GUARD CHECK - Can we genetically modify the occupant? This check will have
 	//  previously included checks to make sure the DNA Scanner is still
 	//  operational
@@ -1948,15 +1948,15 @@
 			))
 
 /**
-  * Takes any given chromosome and calculates chromosome compatibility
+ * Takes any given chromosome and calculates chromosome compatibility
 	*
 	* Will iterate over the stored chromosomes in the DNA Console and will check
 	* whether it can be applied to the supplied mutation. Then returns a list of
 	* names of chromosomes that were compatible.
 	*
 	* Arguments:
-  * * mutation - The mutation to check chromosome compatibility with
-  */
+ * * mutation - The mutation to check chromosome compatibility with
+ */
 /obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)
 	var/list/chromosomes = list()
 
@@ -1967,14 +1967,14 @@
 	return chromosomes
 
 /**
-  * Checks whether a mutation alias has been discovered
+ * Checks whether a mutation alias has been discovered
 	*
 	* Checks whether a given mutation's genetic sequence has been completed and
 	* discovers it if appropriate
 	*
 	* Arguments:
-  * * alias - Alias of the mutation to check (ie "Mutation 51" or "Mutation 12")
-  */
+ * * alias - Alias of the mutation to check (ie "Mutation 51" or "Mutation 12")
+ */
 /obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)
 	// Note - All code paths that call this have already done checks on the
 	//  current occupant to prevent cheese and other abuses. If you call this
@@ -2005,20 +2005,20 @@
 	return FALSE
 
 /**
-  * Find a mutation from various storage locations via ATOM ref
+ * Find a mutation from various storage locations via ATOM ref
 	*
 	* Takes an ATOM Ref and searches the appropriate mutation buffers and storage
 	* vars to try and find the associated mutation.
 	*
 	* Arguments:
-  * * ref - ATOM ref of the mutation to locate
+ * * ref - ATOM ref of the mutation to locate
 	* * target_flags - Flags for storage mediums to search, see #defines
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/get_mut_by_ref(ref, target_flags)
 	var/mutation
 
 	// Assume the occupant is valid and the check has been carried out before
-	// 	calling this proc with the relevant flags.
+	// calling this proc with the relevant flags.
 	if(target_flags & SEARCH_OCCUPANT)
 		mutation = (locate(ref) in scanner_occupant.dna.mutations)
 		if(mutation)
@@ -2043,37 +2043,37 @@
 	return null
 
 /**
-  * Creates a randomised accuracy value for the enzyme pulse functionality.
+ * Creates a randomised accuracy value for the enzyme pulse functionality.
 	*
 	* Donor code from previous DNA Console iteration.
 	*
 	* Arguments:
-  * * position - Index of the intended enzyme element to pulse
+ * * position - Index of the intended enzyme element to pulse
 	* * radduration - Duration of intended radiation pulse
 	* * number_of_blocks - Number of individual data blocks in the pulsed enzyme
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position, radduration, number_of_blocks)
 	var/val = round(gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration) + position, 1)
 	return WRAP(val, 1, number_of_blocks+1)
 
 /**
-  * Scrambles an enzyme element value for the enzyme pulse functionality.
+ * Scrambles an enzyme element value for the enzyme pulse functionality.
 	*
 	* Donor code from previous DNA Console iteration.
 	*
 	* Arguments:
-  * * input - Enzyme identity element to scramble, expected hex value
+ * * input - Enzyme identity element to scramble, expected hex value
 	* * rs - Strength of radiation pulse, increases the range of possible outcomes
-  */
+ */
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs)
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
-		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-chance makes people mad though
+		ran = pick(-1,1) //hacky, statistically should almost never happen. 0-chance makes people mad though
 	else if(ran < 0)
-		ran = round(ran)	//negative, so floor it
+		ran = round(ran) //negative, so floor it
 	else
-		ran = -round(-ran)	//positive, so ceiling it
+		ran = -round(-ran) //positive, so ceiling it
 	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
 
 	/**
@@ -2092,7 +2092,7 @@
 		return
 
 	var/len = length_char(scanner_occupant.dna.uni_identity)
-	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2																																																		 //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
+	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2  //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 	var/hex = copytext_char(scanner_occupant.dna.uni_identity, num, num+1)
 	hex = scramble(hex, radstrength, radduration)
 
@@ -2104,8 +2104,8 @@
 	return
 
 /**
-  * Sets the default state for the tgui interface.
-  */
+ * Sets the default state for the tgui interface.
+ */
 /obj/machinery/computer/scan_consolenew/proc/set_default_state()
 	tgui_view_state["consoleMode"] = "storage"
 	tgui_view_state["storageMode"] = "console"
@@ -2113,14 +2113,14 @@
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
 /**
-  * Ejects the DNA Disk from the console.
+ * Ejects the DNA Disk from the console.
 	*
 	* Will insert into the user's hand if possible, otherwise will drop it at the
 	* console's location.
 	*
 	* Arguments:
-  * * user - The mob that is attempting to eject the diskette.
-  */
+ * * user - The mob that is attempting to eject the diskette.
+ */
 /obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
 	// Check for diskette.
 	if(!diskette)

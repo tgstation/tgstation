@@ -14,27 +14,40 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/BadInitializeCalls = list()
 
+	///initAtom() adds the atom its creating to this list iff InitializeAtoms() has been given a list to populate as an argument
+	var/list/created_atoms
+	// ^ if this is not null after InitializeAtoms() is done, this list will fill up with every atom in the world initialized afterwards!
+
+	initialized = INITIALIZATION_INSSATOMS
+
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' sequence
+
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
+	initialized = INITIALIZATION_INNEW_REGULAR
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
+	old_initialized = initialized
 	initialized = INITIALIZATION_INNEW_MAPLOAD
+
+	if (atoms_to_return)
+		LAZYINITLIST(created_atoms)
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
+
 	if(atoms)
 		count = atoms.len
-		for(var/I in atoms)
-			var/atom/A = I
+		for(var/I in 1 to count)
+			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
-				InitAtom(I, mapload_arg)
+				InitAtom(A, mapload_arg)
 				CHECK_TICK
 	else
 		count = 0
@@ -47,14 +60,18 @@ SUBSYSTEM_DEF(atoms)
 	testing("Initialized [count] atoms")
 	pass(count)
 
-	initialized = INITIALIZATION_INNEW_REGULAR
+	initialized = old_initialized
 
 	if(late_loaders.len)
-		for(var/I in late_loaders)
-			var/atom/A = I
+		for(var/I in 1 to late_loaders.len)
+			var/atom/A = late_loaders[I]
 			A.LateInitialize()
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
+
+	if (created_atoms)
+		atoms_to_return += created_atoms
+		created_atoms = null
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
@@ -75,7 +92,7 @@ SUBSYSTEM_DEF(atoms)
 	if(result != INITIALIZE_HINT_NORMAL)
 		switch(result)
 			if(INITIALIZE_HINT_LATELOAD)
-				if(arguments[1])	//mapload
+				if(arguments[1]) //mapload
 					late_loaders += A
 				else
 					A.LateInitialize()
@@ -85,12 +102,15 @@ SUBSYSTEM_DEF(atoms)
 			else
 				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
 
-	if(!A)	//possible harddel
+	if(!A) //possible harddel
 		qdeleted = TRUE
 	else if(!(A.flags_1 & INITIALIZED_1))
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+
+	if (created_atoms)
+		created_atoms += A
 
 	return qdeleted || QDELING(A)
 
@@ -149,8 +169,3 @@ SUBSYSTEM_DEF(atoms)
 	var/initlog = InitLog()
 	if(initlog)
 		text2file(initlog, "[GLOB.log_directory]/initialize.log")
-
-#undef BAD_INIT_QDEL_BEFORE
-#undef BAD_INIT_DIDNT_INIT
-#undef BAD_INIT_SLEPT
-#undef BAD_INIT_NO_HINT

@@ -23,11 +23,11 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/arrivals/arrivals
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
-	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
-	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
-	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
+	var/emergencyCallTime = 6000 //time taken for emergency shuttle to reach the station when called (in deciseconds)
+	var/emergencyDockTime = 1800 //time taken for emergency shuttle to leave again once it has docked (in deciseconds)
+	var/emergencyEscapeTime = 1200 //time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
-	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
+	var/emergencyCallAmount = 0 //how many times the escape shuttle was called
 	var/emergencyNoEscape
 	var/emergencyNoRecall = FALSE
 	var/adminEmergencyNoRecall = FALSE
@@ -39,10 +39,10 @@ SUBSYSTEM_DEF(shuttle)
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
-	var/ordernum = 1					//order number given to next order
-	var/points = 5000					//number of trade-points we have
-	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
+	var/ordernum = 1 //order number given to next order
+	var/points = 5000 //number of trade-points we have
+	var/centcom_message = "" //Remarks from CentCom on how well you checked the last order.
+	var/list/discoveredPlants = list() //Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/shuttle_purchased = SHUTTLEPURCHASE_PURCHASABLE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
-	var/lockdown = FALSE	//disallow transit after nuke goes off
+	var/lockdown = FALSE //disallow transit after nuke goes off
 
 	var/datum/map_template/shuttle/selected
 
@@ -392,7 +392,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/ai/shuttledock.ogg', "Priority")
+			null, ANNOUNCER_SHUTTLEDOCK, "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -409,7 +409,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return 0 //dock successful
 
 
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
@@ -424,7 +424,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return 0 //dock successful
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
@@ -484,10 +484,10 @@ SUBSYSTEM_DEF(shuttle)
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
 	/*  0------2
-        |      |
-        |      |
-        |  x   |
-        3------1
+	*   |      |
+	*   |      |
+	*   |  x   |
+	*   3------1
 	*/
 
 	var/x0 = coords[1]
@@ -925,3 +925,7 @@ SUBSYSTEM_DEF(shuttle)
 					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 				shuttle_loading = FALSE
+				if(emergency == mdp) //you just changed the emergency shuttle, there are events in game + captains that can change your snowflake choice.
+					var/set_purchase = alert(usr, "Do you want to also disable shuttle purchases/random events that would change the shuttle?", "Butthurt Admin Prevention", "Yes, disable purchases/events", "No, I want to possibly get owned")
+					if(set_purchase == "Yes, disable purchases/events")
+						SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED

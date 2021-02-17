@@ -34,7 +34,7 @@
 	else
 		. += "[icon_state]_door"
 
-/obj/structure/guncase/attackby(obj/item/I, mob/user, params)
+/obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category) && open)
@@ -47,13 +47,13 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		return
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		open = !open
 		update_icon()
 	else
 		return ..()
 
-/obj/structure/guncase/attack_hand(mob/user)
+/obj/structure/guncase/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -66,11 +66,11 @@
 		update_icon()
 
 /**
-  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
-  *
-  * Arguments:
-  * * user The mob to which we are showing the radial menu
-  */
+ * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
+ *
+ * Arguments:
+ * * user The mob to which we are showing the radial menu
+ */
 /obj/structure/guncase/proc/show_menu(mob/user)
 	if(!LAZYLEN(contents))
 		return
@@ -98,11 +98,11 @@
 	update_icon()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/structure/guncase/proc/check_menu(mob/living/carbon/human/user)
 	if(!open)
 		return FALSE

@@ -5,12 +5,12 @@
 	icon_screen = "comm_logs"
 	desc = "Has full access to all details and record of the telecommunications network it's monitoring."
 
-	var/screen = 0				// the screen number:
-	var/list/servers = list()	// the servers located by the computer
+	var/screen = 0 // the screen number:
+	var/list/servers = list() // the servers located by the computer
 	var/obj/machinery/telecomms/server/SelectedServer
 
-	var/network = "NULL"		// the network to probe
-	var/temp = ""				// temporary feedback messages
+	var/network = "NULL" // the network to probe
+	var/temp = "" // temporary feedback messages
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
@@ -67,7 +67,7 @@
 					// -- Determine race of orator --
 
 					var/mobtype = C.parameters["mobtype"]
-					var/race			   // The actual race of the mob
+					var/race    // The actual race of the mob
 
 					if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
 						race = "Humanoid"
@@ -75,9 +75,6 @@
 					// NT knows a lot about slimes, but not aliens. Can identify slimes
 					else if(ispath(mobtype, /mob/living/simple_animal/slime))
 						race = "Slime"
-
-					else if(ispath(mobtype, /mob/living/carbon/monkey))
-						race = "Monkey"
 
 					// sometimes M gets deleted prematurely for AIs... just check the job
 					else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")

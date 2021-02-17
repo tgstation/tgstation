@@ -2,9 +2,6 @@
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/postdig_icon_change = FALSE
-	var/postdig_icon
-
 	var/footstep = null
 	var/barefootstep = null
 	var/clawfootstep = null
@@ -113,6 +110,7 @@
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "boss"
 	baseturfs = /turf/open/indestructible/boss
+	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss/air
@@ -120,6 +118,7 @@
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
 	smoothing_flags = SMOOTH_CORNERS
@@ -167,7 +166,7 @@
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
-			SSair.active_turfs |= src
+			SSair.active_turfs += src
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -177,7 +176,7 @@
 
 /turf/open/proc/TakeTemperature(temp)
 	air.temperature += temp
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
@@ -223,7 +222,7 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
+		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
 		if(force_drop)
 			for(var/obj/item/I in C.held_items)
 				C.accident(I)
@@ -246,7 +245,7 @@
 		else if(lube&SLIDE_ICE)
 			if(C.force_moving) //If we're already slipping extend it
 				qdel(C.force_moving)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE) //spinning would be bad for ice, fucks up the next dir
 		return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
@@ -261,21 +260,28 @@
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/turf/open/rad_act(pulse_strength)
+/turf/open/rad_act(strength)
 	. = ..()
-	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
-		pulse_strength = min(pulse_strength, air.gases[/datum/gas/carbon_dioxide][MOLES] * 1000, air.gases[/datum/gas/oxygen][MOLES] * 2000) //Ensures matter is conserved properly
-		air.gases[/datum/gas/carbon_dioxide][MOLES] = max(air.gases[/datum/gas/carbon_dioxide][MOLES] - (pulse_strength * 0.001),0)
-		air.gases[/datum/gas/oxygen][MOLES] = max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength * 0.0005),0)
-		air.assert_gas(/datum/gas/pluoxium)
-		air.gases[/datum/gas/pluoxium][MOLES] +=(pulse_strength * 0.00025)
+	var/gas_change = FALSE
+	var/list/cached_gases = air.gases
+	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide])
+		gas_change = TRUE
+		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
+		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
+		ASSERT_GAS(/datum/gas/pluoxium, air)
+		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
+		strength -= pulse_strength
+
+	if(cached_gases[/datum/gas/hydrogen])
+		gas_change = TRUE
+		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
+		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
+		ASSERT_GAS(/datum/gas/tritium, air)
+		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
+		strength -= pulse_strength
+
+	if(gas_change)
 		air.garbage_collect()
-		air_update_turf()
-	if (air.gases[/datum/gas/hydrogen])
-		pulse_strength = min(pulse_strength, air.gases[/datum/gas/hydrogen][MOLES] * 1000)
-		air.gases[/datum/gas/hydrogen][MOLES] = max(air.gases[/datum/gas/hydrogen][MOLES] - (pulse_strength * 0.001), 0)
-		air.assert_gas(/datum/gas/tritium)
-		air.gases[/datum/gas/tritium][MOLES] += (pulse_strength * 0.001)
-		air.garbage_collect()
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 

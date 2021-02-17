@@ -84,12 +84,12 @@ This component is used in vat growing to swab for microbiological samples which 
 		var/obj/item/I = parent
 		I.update_icon()
 
-		return COMPONENT_NO_ATTACK
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!can_swab(target))
 		return NONE //Just do the normal attack.
 
 
-	. = COMPONENT_NO_ATTACK //Point of no return. No more attacking after this.
+	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return. No more attacking after this.
 
 	if(LAZYLEN(swabbed_items))
 		to_chat(user, "<span class='warning'>You cannot collect another sample on [parent]!</span>")

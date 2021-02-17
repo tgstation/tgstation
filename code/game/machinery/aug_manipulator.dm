@@ -16,8 +16,8 @@
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
-    initial_icon_state = initial(icon_state)
-    return ..()
+	initial_icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/aug_manipulator/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -52,7 +52,7 @@
 		storedpart = null
 		update_icon()
 
-/obj/machinery/aug_manipulator/attackby(obj/item/O, mob/user, params)
+/obj/machinery/aug_manipulator/attackby(obj/item/O, mob/living/user, params)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
@@ -73,7 +73,7 @@
 			O.add_fingerprint(user)
 			update_icon()
 
-	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return
@@ -94,7 +94,7 @@
 	else
 		return ..()
 
-/obj/machinery/aug_manipulator/attack_hand(mob/user)
+/obj/machinery/aug_manipulator/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -114,12 +114,12 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  * * part The body part that is being customized
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ * * part The body part that is being customized
+ */
 /obj/machinery/aug_manipulator/proc/check_menu(mob/living/user, obj/item/bodypart/part)
 	if(!istype(user))
 		return FALSE

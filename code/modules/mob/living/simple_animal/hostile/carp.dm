@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/food/carpmeat = 2)
+	butcher_results = list(/obj/item/food/fishmeat/carp = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -41,7 +41,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 
@@ -147,14 +147,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-2, 12), TEXT_WEST = list(2, 12)))
-	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-	D.drive_verb = "ride"
-	D.override_allow_spacemove = TRUE
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
@@ -182,6 +175,7 @@
 	maxHealth = 20
 	health = 20
 	pixel_x = -16
+	base_pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 	random_color = FALSE
 	food_type = list()
@@ -193,7 +187,6 @@
 	melee_damage_upper = 20
 
 	var/regen_cooldown = 0
-	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
 	. = ..()
@@ -212,24 +205,19 @@
 	if(.)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
+/mob/living/simple_animal/hostile/carp/megacarp/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
+	can_buckle = TRUE
+	buckle_lying = 0
+
 /mob/living/simple_animal/hostile/carp/megacarp/Life()
 	. = ..()
 	if(regen_cooldown < world.time)
 		heal_overall_damage(4)
-	if(!rideable && src.mind)
-		can_buckle = TRUE
-		buckle_lying = 0
-		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
-		D.set_vehicle_dir_offsets(SOUTH, pixel_x, 0)
-		D.set_vehicle_dir_offsets(NORTH, pixel_x, 0)
-		D.set_vehicle_dir_offsets(EAST, pixel_x, 0)
-		D.set_vehicle_dir_offsets(WEST, pixel_x, 0)
-		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-		rideable = TRUE
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"

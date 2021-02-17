@@ -1,28 +1,28 @@
 /* Toys!
  * Contains
- *		Balloons
- *		Fake singularity
- *		Toy gun
- *		Toy crossbow
- *		Toy swords
- *		Crayons
- *		Snap pops
- *		AI core prizes
- *		Toy codex gigas
- * 		Skeleton toys
- *		Cards
- *		Toy nuke
- *		Fake meteor
- *		Foam armblade
- *		Toy big red button
- *		Beach ball
- *		Toy xeno
+ * Balloons
+ * Fake singularity
+ * Toy gun
+ * Toy crossbow
+ * Toy swords
+ * Crayons
+ * Snap pops
+ * AI core prizes
+ * Toy codex gigas
+ * Skeleton toys
+ * Cards
+ * Toy nuke
+ * Fake meteor
+ * Foam armblade
+ * Toy big red button
+ * Beach ball
+ * Toy xeno
  *      Kitty toys!
- *		Snowballs
- *		Clockwork Watches
- *		Toy Daggers
- *		Squeaky Brain
- *		Broken Radio
+ * Snowballs
+ * Clockwork Watches
+ * Toy Daggers
+ * Squeaky Brain
+ * Broken Radio
  */
 
 /obj/item/toy
@@ -198,14 +198,14 @@
 	return MANUAL_SUICIDE
 
 /**
-  * Internal function used in the toy singularity suicide
-  *
-  * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
-  * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
-  * Throwing the singularity away will cause the user to start choking themself to death.
-  * Arguments:
-  * * user - Whoever is doing the suiciding
-  */
+ * Internal function used in the toy singularity suicide
+ *
+ * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
+ * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
+ * Throwing the singularity away will cause the user to start choking themself to death.
+ * Arguments:
+ * * user - Whoever is doing the suiciding
+ */
 /obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
 	if(!user)
 		return
@@ -281,7 +281,7 @@
 	. = ..()
 	if (flag)
 		return
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
@@ -292,8 +292,8 @@
 	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
-						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='hear'>You hear a gunshot!</span>")
+		"<span class='danger'>You fire [src] at [target]!</span>", \
+		"<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -550,8 +550,8 @@
 	var/phomeme
 
 // Talking toys are language universal, and thus all species can use them
-/obj/item/toy/talking/attack_alien(mob/user)
-	return attack_hand(user)
+/obj/item/toy/talking/attack_alien(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
@@ -695,7 +695,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/attack_hand(mob/user, list/modifiers)
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
@@ -778,8 +778,8 @@
 			M.put_in_hands(src)
 			to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
-		else if(istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		else if(istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 				to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
@@ -862,11 +862,11 @@
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -875,8 +875,8 @@
 	return TRUE
 
 /**
-  * This proc updates the sprite for when you create a hand of cards
-  */
+ * This proc updates the sprite for when you create a hand of cards
+ */
 /obj/item/toy/cards/cardhand/proc/update_sprite()
 	cut_overlays()
 	var/overlay_cards = currenthand.len
@@ -1495,3 +1495,44 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
+
+
+/*
+ * Eldritch Toys
+ */
+
+/obj/item/toy/eldritch_book
+	name = "Codex Cicatrix"
+	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "book"
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
+	attack_verb_simple = list("sacrifice", "transmute", "grasp", "curse")
+	/// Helps determine the icon state of this item when it's used on self.
+	var/book_open = FALSE
+
+/obj/item/toy/eldritch_book/attack_self(mob/user)
+	book_open = !book_open
+	update_icon()
+
+/obj/item/toy/eldritch_book/update_icon_state()
+	icon_state = book_open ? "book_open" : "book"
+
+/*
+ * Fake tear
+ */
+
+/obj/item/toy/reality_pierce
+	name = "Pierced reality"
+	desc = "Hah. You thought it was the real deal!"
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "pierced_illusion"
+
+/obj/item/storage/box/heretic_box
+	name = "box of pierced realities"
+	desc = "A box containing toys resembling pierced realities."
+
+/obj/item/storage/box/heretic_box/PopulateContents()
+	for(var/i in 1 to rand(1,4))
+		new /obj/item/toy/reality_pierce(src)

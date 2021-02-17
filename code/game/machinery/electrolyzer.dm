@@ -1,5 +1,5 @@
-#define ELECTROLYZER_MODE_STANDBY	"standby"
-#define ELECTROLYZER_MODE_WORKING	"working"
+#define ELECTROLYZER_MODE_STANDBY "standby"
+#define ELECTROLYZER_MODE_WORKING "working"
 
 /obj/machinery/electrolyzer
 	anchored = FALSE
@@ -102,7 +102,7 @@
 	removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
 	removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
 	env.merge(removed) //put back the new gases in the turf
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	cell.use((5 * proportion * workingPower) / (efficiency + workingPower))
 
 /obj/machinery/electrolyzer/RefreshParts()

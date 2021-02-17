@@ -10,7 +10,7 @@
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "basic_electrolite", "c-reader", "desttagger", "salestagger", "handlabel", "packagewrap",
 					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
+					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
 					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon", "conveyor_belt", "conveyor_switch")
 
 /datum/techweb_node/mmi
@@ -49,7 +49,7 @@
 	display_name = "Basic Tools"
 	description = "Basic mechanical, electronic, surgical and botanical tools."
 	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "decal_painter",
-					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "secateurs", "mop", "plunger", "spraycan", "swab", "petri_dish")
+					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "secateurs", "mop", "pushbroom", "plunger", "spraycan", "swab", "petri_dish", "normtrash")
 
 /datum/techweb_node/basic_medical
 	id = "basic_medical"
@@ -65,7 +65,7 @@
 /datum/techweb_node/biotech
 	id = "biotech"
 	display_name = "Biological Technology"
-	description = "What makes us tick."	//the MC, silly!
+	description = "What makes us tick." //the MC, silly!
 	prereq_ids = list("base")
 	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox", "medipen_refiller", "biopsy_tool", "plumbing_rcd_sci")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -75,7 +75,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact", "ph_meter")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/bio_process
@@ -83,7 +83,7 @@
 	display_name = "Biological Processing"
 	description = "From slimes to kitchens."
 	prereq_ids = list("biotech")
-	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive", "fat_sucker")
+	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive", "fat_sucker", "griddle")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /////////////////////////Advanced Surgery/////////////////////////
@@ -147,7 +147,8 @@
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
-	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier")
+	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier", "HFR_core", "HFR_fuel_input",
+	"HFR_waste_output", "HFR_moderator_input", "HFR_corner", "HFR_interface")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/anomaly
@@ -335,7 +336,7 @@
 
 /datum/techweb_node/emp_super
 	id = "emp_super"
-	display_name = "Quantum Electromagnetic Technology"	//bs
+	display_name = "Quantum Electromagnetic Technology" //bs
 	description = "Even better electromagnetic technology."
 	prereq_ids = list("emp_adv")
 	design_ids = list("quadultra_micro_laser")
@@ -357,10 +358,10 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcard","idcardconsole", "seccamera")
+	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcard", "seccamera")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
-/datum/techweb_node/computer_hardware_basic				//Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
+/datum/techweb_node/computer_hardware_basic //Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
 	id = "computer_hardware_basic"
 	display_name = "Computer Hardware"
 	description = "How computer hardware are made."
@@ -489,7 +490,7 @@
 /datum/techweb_node/adv_mining
 	id = "adv_mining"
 	display_name = "Advanced Mining Technology"
-	description = "Efficiency Level 127"	//dumb mc references
+	description = "Efficiency Level 127" //dumb mc references
 	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
 	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -499,7 +500,7 @@
 	display_name = "Advanced Sanitation Technology"
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
-	design_ids = list("holobarrier_jani", "advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap")
+	design_ids = list("holobarrier_jani", "advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap", "paint_remover")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/botany
@@ -528,7 +529,7 @@
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"
-	display_name = "rapid device upgrade designs"
+	display_name = "Rapid Device Upgrade Designs"
 	description = "Unlocks new designs that improve rapid devices."
 	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_upgrade_furnishing", "rpd_upgrade_unwrench")
 	prereq_ids = list("adv_engi")
@@ -536,7 +537,7 @@
 
 /datum/techweb_node/adv_rcd_upgrade
 	id = "adv_rcd_upgrade"
-	display_name = "Advanced RCD designs upgrade"
+	display_name = "Advanced RCD Designs Upgrade"
 	description = "Unlocks new RCD designs."
 	design_ids = list("rcd_upgrade_silo_link")
 	prereq_ids = list("rcd_upgrade", "bluespace_travel")
@@ -575,14 +576,6 @@
 	design_ids = list("nuclear_gun")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/medical_weapons
-	id = "medical_weapons"
-	display_name = "Medical Weaponry"
-	description = "Weapons using medical technology."
-	prereq_ids = list("adv_biotech", "weaponry")
-	design_ids = list("rapidsyringe")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/beam_weapons
 	id = "beam_weapons"
 	display_name = "Beam Weaponry"
@@ -619,7 +612,7 @@
 	id = "exotic_ammo"
 	display_name = "Exotic Ammunition"
 	description = "They won't know what hit em."
-	prereq_ids = list("adv_weaponry", "medical_weapons")
+	prereq_ids = list("adv_weaponry")
 	design_ids = list("techshotshell", "c38_hotshot", "c38_iceblox")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -877,7 +870,7 @@
 	display_name = "Harmonic Nanite Programming"
 	description = "Nanite programs that require seamless integration between nanites and biology. Passively increases nanite regeneration rate for all clouds upon researching."
 	prereq_ids = list("nanite_bio","nanite_smart","nanite_mesh")
-	design_ids = list("fakedeath_nanites","aggressive_nanites","defib_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites","adrenaline_nanites")
+	design_ids = list("fakedeath_nanites","aggressive_nanites","defib_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
 
 /datum/techweb_node/nanite_combat
@@ -899,9 +892,19 @@
 /datum/techweb_node/nanite_replication_protocols
 	id = "nanite_replication_protocols"
 	display_name = "Nanite Replication Protocols"
-	description = "Advanced behaviours that allow nanites to exploit certain circumstances to replicate faster."
+	description = "Protocols that overwrite the default nanite replication routine to achieve more efficiency in certain circumstances."
 	prereq_ids = list("nanite_smart")
-	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites")
+	design_ids = list("kickstart_nanites","factory_nanites","pyramid_nanites","offline_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/nanite_storage_protocols
+	id = "nanite_storage_protocols"
+	display_name = "Nanite Storage Protocols"
+	description = "Protocols that overwrite the default nanite storage routine to achieve more efficiency or greater capacity."
+	prereq_ids = list("nanite_smart")
+	design_ids = list("hive_nanites","zip_nanites","free_range_nanites","unsafe_storage_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
 	hidden = TRUE
 	experimental = TRUE
@@ -951,18 +954,18 @@
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
 	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
-	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor", "donksoft_refill", "advanced_camera")
+	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor", "donksoft_refill", "advanced_camera", "rapidsyringe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	hidden = TRUE
 
-/datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
+/datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	boost_item_paths = list()
 	for(var/path in GLOB.uplink_items)
 		var/datum/uplink_item/UI = new path
 		if(!UI.item || !UI.illegal_tech)
 			continue
-		boost_item_paths |= UI.item	//allows deconning to unlock.
+		boost_item_paths |= UI.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////

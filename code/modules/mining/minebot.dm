@@ -12,7 +12,7 @@
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list("neutral")
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	move_to_delay = 10
@@ -85,7 +85,7 @@
 	Field repairs can be done with a welder."}
 	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
-		for(var/A in stored_gun.get_modkits())
+		for(var/A in stored_gun.modkits)
 			var/obj/item/borg/upgrade/modkit/M = A
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
@@ -122,17 +122,17 @@
 	deathmessage = "blows apart!"
 	..()
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(M.a_intent == INTENT_HELP)
+	if(!user.combat_mode)
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)
-				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
+				to_chat(user, "<span class='info'>[src] has been set to search and store loose ore.</span>")
 			if(MINEDRONE_ATTACK)
-				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
+				to_chat(user, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 
 /mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/O)
@@ -140,7 +140,7 @@
 	if(istype(O, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/K = O
 		if(K.kinetic_gun)
-			for(var/A in K.kinetic_gun.get_modkits())
+			for(var/A in K.kinetic_gun.modkits)
 				var/obj/item/borg/upgrade/modkit/M = A
 				if(istype(M, /obj/item/borg/upgrade/modkit/minebot_passthrough))
 					return TRUE

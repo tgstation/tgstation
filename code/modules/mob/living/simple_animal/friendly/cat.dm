@@ -6,7 +6,6 @@
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
-	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows.", "mews.")
@@ -14,7 +13,6 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -23,13 +21,14 @@
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
@@ -49,6 +48,7 @@
 	. = ..()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/pet/cat/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -68,7 +68,6 @@
 /mob/living/simple_animal/pet/cat/breadcat
 	name = "bread cat"
 	desc = "It's a cat... with a bread!"
-	gender = MALE
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
@@ -77,7 +76,8 @@
 	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
 /mob/living/simple_animal/pet/cat/breadcat/add_cell_sample()
- 	return
+	return
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
@@ -267,6 +267,7 @@
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	inept_hunter = TRUE
+	gender = MALE
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
@@ -310,12 +311,12 @@
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/food/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()
 
-/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
+/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/user, list/modifiers)
 	..()
-	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
-		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
-		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+	if(user.combat_mode && user.reagents && !stat)
+		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
+		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)

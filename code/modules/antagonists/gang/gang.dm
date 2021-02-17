@@ -66,7 +66,7 @@
 /datum/antagonist/gang/on_gain()
 	if(starter_gangster)
 		equip_gangster_in_inventory()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	..()
 
 /datum/antagonist/gang/on_removal()
@@ -98,7 +98,7 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
 		H.wanted_lvl = giving_wanted_lvl
 		giving_wanted_lvl.hud = H
 		H.infodisplay += giving_wanted_lvl
@@ -411,7 +411,7 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to meth."
+	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to stimulants."
 	antag_hud_name = "Vagos"
 
 /datum/antagonist/gang/vagos/check_gang_objective()
@@ -423,10 +423,8 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			people_on_station++
-			var/list/addictions = H.get_addiction_list()
-			for(var/R in addictions)
-				if(istype(R, /datum/reagent/drug/methamphetamine))
-					people_on_crack++
+			if(H.mind.active_addictions[/datum/addiction/stimulants])
+				people_on_crack++
 	if(0.25*people_on_station > people_on_crack)
 		return FALSE
 	return TRUE
@@ -546,6 +544,6 @@
 		return FALSE // didnt pass the bar check, no point in continuing to loop
 	var/obj/machinery/ore_silo/S = GLOB.ore_silo_default
 	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
-	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
+	if(mat_container.materials[GET_MATERIAL_REF(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
 		return FALSE
 	return TRUE

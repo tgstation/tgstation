@@ -171,16 +171,23 @@
 	cost = 10
 	requirements = list(50,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
-	if ((antag_count < max_traitors) && prob(mode.threat_level))//adding traitors if the antag population is getting low
-		return ..()
-	else
+
+	// adding traitors if the antag population is getting low
+	var/too_little_antags = antag_count < max_traitors
+	if (!too_little_antags)
+		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
 		return FALSE
+
+	if (!prob(mode.threat_level))
+		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
+		return FALSE
+
+	return ..()
 
 /datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
 	..()
@@ -221,10 +228,10 @@
 	weight = 1
 	cost = 25
 	requirements = list(101,101,101,101,101,80,50,30,10,10)
-	flags = HIGHLANDER_RULESET
+	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
 	minimum_players = 36
-	antag_cap = list(6,6,6,6,6,6,6,6,6,6)
+	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
@@ -277,7 +284,7 @@
 //////////////////////////////////////////////
 //                                          //
 //         Malfunctioning AI                //
-//                              		    //
+//     //
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround/malf
@@ -315,7 +322,7 @@
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(AI)
 	if(prob(ion_announce))
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
+		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
 		if(prob(removeDontImproveChance))
 			M.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 		else
@@ -337,7 +344,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 20
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
+	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -371,7 +378,7 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
-	flags = HIGHLANDER_RULESET
+	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -551,7 +558,7 @@
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Space Dragon by the midround ruleset.")
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	return S
-	
+
 //////////////////////////////////////////////
 //                                          //
 //           ABDUCTORS    (GHOST)           //
@@ -575,17 +582,116 @@
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
-	new_team = new
-	if(new_team.team_number > ABDUCTOR_MAX_TEAMS)
-		return MAP_ERROR
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/finish_setup(mob/new_character, index)
-	if (index == 1) // Our first guy is the scientist.
+	if (index == 1) // Our first guy is the scientist.  We also initialize the team here as well since this should only happen once per pair of abductors.
+		new_team = new
+		if(new_team.team_number > ABDUCTOR_MAX_TEAMS)
+			return MAP_ERROR
 		var/datum/antagonist/abductor/scientist/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
-	else // Our second guy is the agent
+	else // Our second guy is the agent, team is already created, don't need to make another one.
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
 
 #undef ABDUCTOR_MAX_TEAMS
+
+//////////////////////////////////////////////
+//                                          //
+//            SWARMERS    (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/swarmers
+	name = "Swarmers"
+	antag_datum = /datum/antagonist/swarmer
+	antag_flag = "Swarmer"
+	antag_flag_override = ROLE_ALIEN
+	required_type = /mob/dead/observer
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/swarmers/execute()
+	var/list/spawn_locs = list()
+	for(var/x in GLOB.xeno_spawn)
+		var/turf/spawn_turf = x
+		var/light_amount = spawn_turf.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			spawn_locs += spawn_turf
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
+		return MAP_ERROR
+	var/obj/structure/swarmer_beacon/new_beacon = new(pick(spawn_locs))
+	log_game("A Swarmer Beacon was spawned via Dynamic Mode.")
+	notify_ghosts("\A Swarmer Beacon has spawned!", source = new_beacon, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Swarmer Beacon Spawned")
+	return ..()
+
+//////////////////////////////////////////////
+//                                          //
+//            SPACE NINJA (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja
+	name = "Space Ninja"
+	antag_datum = /datum/antagonist/ninja
+	antag_flag = "Space Ninja"
+	antag_flag_override = ROLE_NINJA
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
+	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+		if(!isturf(carp_spawn.loc))
+			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
+			continue
+		spawn_locs += carp_spawn.loc
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/generate_ruleset_body(mob/applicant)
+	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
+	ninja.key = applicant.key
+	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
+
+	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a Space Ninja by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(ninja)] was spawned as a Space Ninja by the midround ruleset.")
+	return ninja
+
+//////////////////////////////////////////////
+//                                          //
+//            SPIDERS     (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/spiders
+	name = "Spiders"
+	antag_flag = "Spider"
+	antag_flag_override = ROLE_ALIEN
+	required_type = /mob/dead/observer
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+	var/spawncount = 2
+
+/datum/dynamic_ruleset/midround/spiders/execute()
+	create_midwife_eggs(spawncount)
+	return ..()

@@ -7,6 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
+	worn_icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = list()
@@ -16,8 +17,8 @@
 	var/ignore_flags = NONE
 	var/infinite = FALSE
 
-/obj/item/reagent_containers/hypospray/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	inject(M, user)
@@ -37,7 +38,7 @@
 	var/contained = english_list(injected)
 	log_combat(user, M, "attempted to inject", src, "([contained])")
 
-	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
+	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
@@ -111,8 +112,8 @@
 	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
-	custom_price = 150
-	custom_premium_price = 300
+	custom_price = PAYCHECK_MEDIUM
+	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -126,7 +127,7 @@
 		update_icon()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FLOOR_OKAY))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE, FLOOR_OKAY))
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
@@ -209,7 +210,7 @@
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
-	if(reagents.total_volume > 30)
+	if(reagents.total_volume >= volume)
 		icon_state = initial(icon_state)
 	else if (reagents.total_volume > 0)
 		icon_state = "[initial(icon_state)]1"
@@ -230,12 +231,12 @@
 		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 		return ..()
 
-	if(M in user.do_afters)
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SURVIVALPEN))
 		to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
 		return
 
 	to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
-	if(!do_mob(user, M, 10 SECONDS))
+	if(!do_mob(user, M, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
 		return
 
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
@@ -286,6 +287,7 @@
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
 	desc = "An epinephrine medipen with extra coagulant and antibiotics to help stabilize bad cuts and burns."
+	icon_state = "firstaid"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
@@ -293,6 +295,7 @@
 /obj/item/reagent_containers/hypospray/medipen/blood_loss
 	name = "hypovolemic-response autoinjector"
 	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	icon_state = "hypovolemic"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)

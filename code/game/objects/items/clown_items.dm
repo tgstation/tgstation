@@ -1,9 +1,9 @@
 /* Clown Items
  * Contains:
- *		Soap
- *		Bike Horns
- *		Air Horns
- *		Canned Laughter
+ * Soap
+ * Bike Horns
+ * Air Horns
+ * Canned Laughter
  */
 
 /*
@@ -98,12 +98,12 @@
 	return (TOXLOSS)
 
 /**
-  * Decrease the number of uses the bar of soap has.
-  *
-  * The higher the cleaning skill, the less likely the soap will lose a use.
-  * Arguments
-  * * user - The mob that is using the soap to clean.
-  */
+ * Decrease the number of uses the bar of soap has.
+ *
+ * The higher the cleaning skill, the less likely the soap will lose a use.
+ * Arguments
+ * * user - The mob that is using the soap to clean.
+ */
 /obj/item/soap/proc/decreaseUses(mob/user)
 	var/skillcheck = 1
 	if(user?.mind)
@@ -136,11 +136,10 @@
 
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/human/human_user = user
-		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here			if(user.zone_selected == "mouth")
+		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here if(user.zone_selected == "mouth")
 		if(human_user.lip_style)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
-			human_user.lip_style = null //removes lipstick
-			human_user.update_body()
+			human_user.update_lips(null)
 		decreaseUses(user)
 		return
 	else if(istype(target, /obj/structure/window))
@@ -171,7 +170,7 @@
 
 /obj/item/bikehorn
 	name = "bike horn"
-	desc = "A horn off of a bicycle."
+	desc = "A horn off of a bicycle. Rumour has it that they're made from recycled clowns."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
@@ -189,7 +188,7 @@
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user != M && ishuman(user))
@@ -212,7 +211,7 @@
 
 /obj/item/bikehorn/airhorn/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
 
 //golden bikehorn
 /obj/item/bikehorn/golden

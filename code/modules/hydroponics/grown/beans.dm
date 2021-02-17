@@ -5,7 +5,7 @@
 	icon_state = "seed-soybean"
 	species = "soybean"
 	plantname = "Soybean Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/soybeans
+	product = /obj/item/food/grown/soybeans
 	maturation = 4
 	production = 4
 	potency = 15
@@ -17,15 +17,14 @@
 	mutatelist = list(/obj/item/seeds/soya/koi)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/consumable/cooking_oil = 0.03) //Vegetable oil!
 
-/obj/item/reagent_containers/food/snacks/grown/soybeans
+/obj/item/food/grown/soybeans
 	seed = /obj/item/seeds/soya
 	name = "soybeans"
 	desc = "It's pretty bland, but oh the possibilities..."
 	gender = PLURAL
 	icon_state = "soybeans"
-	filling_color = "#F0E68C"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/soymilk = 0)
 	tastes = list("soy" = 1)
 	wine_power = 20
@@ -37,19 +36,18 @@
 	icon_state = "seed-koibean"
 	species = "koibean"
 	plantname = "Koibean Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/koibeans
+	product = /obj/item/food/grown/koibeans
 	potency = 10
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/toxin/carpotoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 	rarity = 20
 
-/obj/item/reagent_containers/food/snacks/grown/koibeans
+/obj/item/food/grown/koibeans
 	seed = /obj/item/seeds/soya/koi
 	name = "koibean"
 	desc = "Something about these seems fishy."
 	icon_state = "koibeans"
-	filling_color = "#F0E68C"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40

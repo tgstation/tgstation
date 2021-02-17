@@ -7,16 +7,19 @@ SUBSYSTEM_DEF(air)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
+	var/cost_atoms = 0
 	var/cost_turfs = 0
+	var/cost_hotspots = 0
+	var/cost_ex_cleanup = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
-	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
-	var/cost_rebuilds = 0
 	var/cost_atmos_machinery = 0
+	var/cost_rebuilds = 0
 
 	var/list/excited_groups = list()
+	var/list/cleanup_ex_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
@@ -28,14 +31,16 @@ SUBSYSTEM_DEF(air)
 	//atmos singletons
 	var/list/gas_reactions = list()
 	var/list/atmos_gen
+	var/list/planetary = list() //Lets cache static planetary mixes
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
 	var/list/turf/open/high_pressure_delta = list()
+	var/list/atom_process = list()
 
 	/// A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
 	var/list/currentrun = list()
-	var/currentpart = SSAIR_REBUILD_PIPENETS
+	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
@@ -45,30 +50,36 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "CL:[round(cost_ex_cleanup, 1)]|"
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
-	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
+	msg += "AM:[round(cost_atmos_machinery,1)]|"
+	msg += "AO:[round(cost_atoms, 1)]|"
 	msg += "RB:[round(cost_rebuilds,1)]|"
-	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
-	msg += "EG:[excited_groups.len]|"
 	msg += "HS:[hotspots.len]|"
-	msg += "PN:[networks.len]|"
+	msg += "CL:[cleanup_ex_groups.len]|"
+	msg += "EG:[excited_groups.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
-	msg += "AS:[active_super_conductivity.len]|"
+	msg += "SC:[active_super_conductivity.len]|"
+	msg += "PN:[networks.len]|"
+	msg += "AM:[atmos_machinery.len]|"
+	msg += "AO:[atom_process.len]|"
+	msg += "RB:[pipenets_needing_rebuilt.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
+	gas_reactions = init_gas_reactions()
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
-	gas_reactions = init_gas_reactions()
 	setup_turf_visuals()
 	return ..()
 
@@ -77,20 +88,20 @@ SUBSYSTEM_DEF(air)
 	var/timer = TICK_USAGE_REAL
 	var/delta_time = wait * 0.1
 
-	if(currentpart == SSAIR_REBUILD_PIPENETS)
-		if(!resumed) //We track the use for each subprocess for the full tick, so we can get an acccurate idea of how much each part costs
-			cached_cost = 0
+	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
+	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
+	if(length(pipenets_needing_rebuilt))
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
 		for(var/thing in pipenet_rebuilds)
 			var/obj/machinery/atmospherics/AT = thing
+			if(!thing) //If a null somehow shows up here, this next line runtimes and the subsystem dies
+				continue
 			AT.build_network()
 		cached_cost += TICK_USAGE_REAL - timer
 		pipenets_needing_rebuilt.Cut()
 		if(state != SS_RUNNING)
 			return
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		currentpart = SSAIR_PIPENETS
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		timer = TICK_USAGE_REAL
@@ -126,6 +137,30 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
+		currentpart = SSAIR_HOTSPOTS
+
+	if(currentpart == SSAIR_HOTSPOTS) //We do this before excited groups to allow breakdowns to be independent of adding turfs while still *mostly preventing mass fires
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_hotspots(delta_time, resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		currentpart = SSAIR_EXCITEDCLEANUP
+
+	if(currentpart == SSAIR_EXCITEDCLEANUP)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_excited_cleanup(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		cost_ex_cleanup = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
 		currentpart = SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
@@ -150,18 +185,6 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-		currentpart = SSAIR_HOTSPOTS
-
-	if(currentpart == SSAIR_HOTSPOTS)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_hotspots(delta_time, resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
 		currentpart = SSAIR_SUPERCONDUCTIVITY
 
 	if(currentpart == SSAIR_SUPERCONDUCTIVITY)
@@ -174,8 +197,20 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-	currentpart = SSAIR_REBUILD_PIPENETS
+		currentpart = SSAIR_PROCESS_ATOMS
 
+	if(currentpart == SSAIR_PROCESS_ATOMS)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_atoms(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+
+	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
 
@@ -197,6 +232,20 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
 		pipenets_needing_rebuilt += atmos_machine
+
+/datum/controller/subsystem/air/proc/process_atoms(resumed = FALSE)
+	if(!resumed)
+		src.currentrun = atom_process.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/atom/talk_to = currentrun[currentrun.len]
+		currentrun.len--
+		if(!talk_to)
+			return
+		talk_to.process_exposure()
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(delta_time, resumed = FALSE)
 	if (!resumed)
@@ -239,7 +288,6 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = FALSE)
 	while (high_pressure_delta.len)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
@@ -264,6 +312,30 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/air/proc/process_excited_cleanup(resumed = FALSE)
+	//cache for sanic speed
+	var/fire_count = times_fired
+	if (!resumed)
+		src.currentrun = cleanup_ex_groups.Copy()
+		cleanup_ex_groups.Cut() //Cut the list here so any later breakdowns get added properly
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/list/turf_packet = currentrun[currentrun.len]
+		var/breakdown = turf_packet[EX_CLEANUP_BREAKDOWN]
+		var/dismantle = turf_packet[EX_CLEANUP_DISMANTLE]
+		var/list/turf_list = turf_packet[EX_CLEANUP_TURFS]
+		while(turf_list.len) //The turf list
+			var/turf/open/T = turf_list[turf_list.len]
+			//I'd normally check for nulls here, but turfs are dumb with refs, so it's not an issue
+			//We don't allow planetary turfs as a semi stopgap to worldspanning groups
+			if(istype(T) && !istype(T.air, /datum/gas_mixture/immutable) && !T.planetary_atmos)
+				T.cleanup_group(fire_count, breakdown, dismantle)
+			turf_list.len--
+			if (MC_TICK_CHECK)
+				return
+		currentrun.len-- //If we process all the turfs in a packet, del it.
+
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = excited_groups.Copy()
@@ -275,13 +347,13 @@ SUBSYSTEM_DEF(air)
 		EG.breakdown_cooldown++
 		EG.dismantle_cooldown++
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
-			EG.self_breakdown()
+			EG.self_breakdown(poke_turfs = TRUE)
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
 			EG.dismantle()
 		if (MC_TICK_CHECK)
 			return
 
-
+///Removes a turf from processing, and causes its excited group to clean up so things properly adapt to the change
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
@@ -292,28 +364,49 @@ SUBSYSTEM_DEF(air)
 	if(istype(T))
 		T.excited = FALSE
 		if(T.excited_group)
-			T.excited_group.garbage_collect()
+			//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
+			//The group also expands by a tile per rebuild on each edge, suffering
+			T.excited_group.garbage_collect(will_cleanup = TRUE) //Poke everybody in the group and reform
 
-/datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
+///Puts an active turf to sleep so it doesn't process. Do this without cleaning up its excited group.
+/datum/controller/subsystem/air/proc/sleep_active_turf(turf/open/T)
+	active_turfs -= T
+	if(currentpart == SSAIR_ACTIVETURFS)
+		currentrun -= T
+	#ifdef VISUALIZE_ACTIVE_TURFS
+	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
+	#endif
+	if(istype(T))
+		T.excited = FALSE
+
+///Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group
+/datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = FALSE)
 	if(istype(T) && T.air)
+		T.significant_share_ticker = 0
+		if(blockchanges && T.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
+			T.excited_group.garbage_collect() //Nuke it
+		if(T.excited) //Don't keep doing it if there's no point
+			return
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
 		T.excited = TRUE
-		active_turfs |= T
+		active_turfs += T
 		if(currentpart == SSAIR_ACTIVETURFS)
-			currentrun |= T
-		if(blockchanges && T.excited_group)
-			T.excited_group.garbage_collect()
+			currentrun += T
 	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
-			add_to_active(S)
+			add_to_active(S, TRUE)
 	else if(map_loading)
 		if(queued_for_activation)
 			queued_for_activation[T] = T
 		return
 	else
 		T.requires_activation = TRUE
+
+/datum/controller/subsystem/air/proc/add_to_cleanup(datum/excited_group/ex_grp)
+	//Store the cooldowns. If we're already doing cleanup, DO NOT add to the currently processing list, infinite loop man bad.
+	cleanup_ex_groups += list(list(ex_grp.breakdown_cooldown, ex_grp.dismantle_cooldown, ex_grp.turf_list.Copy()))
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)
@@ -322,7 +415,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/StopLoadingMap()
 	map_loading = FALSE
 	for(var/T in queued_for_activation)
-		add_to_active(T)
+		add_to_active(T, TRUE)
 	queued_for_activation.Cut()
 
 /datum/controller/subsystem/air/proc/setup_allturfs()
@@ -369,11 +462,11 @@ SUBSYSTEM_DEF(air)
 		var/ending_ats = active_turfs.len
 		for(var/thing in excited_groups)
 			var/datum/excited_group/EG = thing
-			EG.self_breakdown(space_is_all_consuming = 1)
+			EG.self_breakdown(roundstart = TRUE)
 			EG.dismantle()
 			CHECK_TICK
 
-		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
+		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats - starting_ats] other turfs) with atmos differences at round start."
 		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
@@ -387,7 +480,7 @@ SUBSYSTEM_DEF(air)
 		EG.add_turf(src)
 
 	for (var/turf/open/ET in atmos_adjacent_turfs)
-		if ( ET.blocks_air || !ET.air)
+		if (ET.blocks_air || !ET.air)
 			continue
 
 		var/ET_EG = ET.excited_group
@@ -409,8 +502,8 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
-//	all atmos machinery has to initalize before the first
-//	pipenet can be built.
+// all atmos machinery has to initalize before the first
+// pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.build_network()
@@ -428,13 +521,14 @@ GLOBAL_LIST_EMPTY(colored_images)
 		GLOB.colored_images += shiny
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
-	for(var/A in atmos_machines)
-		var/obj/machinery/atmospherics/AM = A
+	var/obj/machinery/atmospherics/AM
+	for(var/A in 1 to atmos_machines.len)
+		AM = atmos_machines[A]
 		AM.atmosinit()
 		CHECK_TICK
 
-	for(var/A in atmos_machines)
-		var/obj/machinery/atmospherics/AM = A
+	for(var/A in 1 to atmos_machines.len)
+		AM = atmos_machines[A]
 		AM.build_network()
 		CHECK_TICK
 
@@ -464,27 +558,27 @@ GLOBAL_LIST_EMPTY(colored_images)
 	return mix.gas_string
 
 /**
-  * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
-  *
-  * This should be fast, so no error checking is done.
-  * If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
-  * object you added. Do not use irresponsibly.
-  * Arguments:
-  * * machine - The machine to start processing. Can be any /obj/machinery.
-  */
+ * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
+ *
+ * This should be fast, so no error checking is done.
+ * If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
+ * object you added. Do not use irresponsibly.
+ * Arguments:
+ * * machine - The machine to start processing. Can be any /obj/machinery.
+ */
 /datum/controller/subsystem/air/proc/start_processing_machine(obj/machinery/machine)
 	atmos_machinery += machine
 
 /**
-  * Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
-  *
-  * This should be fast, so no error checking is done.
-  * If you call this proc when your machine isn't processing, you're likely attempting to
-  * remove something that isn't in a list with over 1000 objects, twice. Do not use
-  * irresponsibly.
-  * Arguments:
-  * * machine - The machine to stop processing.
-  */
+ * Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
+ *
+ * This should be fast, so no error checking is done.
+ * If you call this proc when your machine isn't processing, you're likely attempting to
+ * remove something that isn't in a list with over 1000 objects, twice. Do not use
+ * irresponsibly.
+ * Arguments:
+ * * machine - The machine to stop processing.
+ */
 /datum/controller/subsystem/air/proc/stop_processing_machine(obj/machinery/machine)
 	atmos_machinery -= machine
 
@@ -538,7 +632,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	#else
 	data["display_max"] = FALSE
 	#endif
-	var/obj/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
+	var/atom/movable/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
 	data["showing_user"] = (plane.alpha == 255)
 	return data
 
@@ -577,7 +671,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 					group.hide_turfs()
 			return TRUE
 		if("toggle_user_display")
-			var/obj/screen/plane_master/plane = ui.user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
+			var/atom/movable/screen/plane_master/plane = ui.user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
 			if(!plane.alpha)
 				if(ui.user.client)
 					ui.user.client.images += GLOB.colored_images

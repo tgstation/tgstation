@@ -25,12 +25,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/canUseStorage()
 	return FALSE
 
-/mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
-	return
-
-/mob/dead/gib()		//ghosts can't be gibbed.
-	return
-
 /mob/dead/forceMove(atom/destination)
 	var/turf/old_turf = get_turf(src)
 	var/turf/new_turf = get_turf(destination)
@@ -88,10 +82,10 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/client/C = client
 	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
-	new /obj/screen/splash(C)
+	new /atom/movable/screen/splash(C)
 
 	notransform = TRUE
-	sleep(29)	//let the animation play
+	sleep(29) //let the animation play
 	notransform = FALSE
 
 	if(!C)

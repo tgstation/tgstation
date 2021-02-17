@@ -1,6 +1,6 @@
 /obj/item/melee/baton
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with."
+	desc = "A stun baton for incapacitating people with. Left click to stun, right click to harm."
 
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
@@ -90,7 +90,7 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(turned_on && prob(throw_stun_chance) && iscarbon(hit_atom))
+	if(turned_on && prob(throw_stun_chance) && isliving(hit_atom) && !iscyborg(hit_atom))
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
@@ -156,7 +156,7 @@
 	toggle_on(user)
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
-	if(cell && cell.charge > cell_hit_cost)
+	if(cell && cell.charge >= cell_hit_cost)
 		turned_on = !turned_on
 		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
 		playsound(src, activate_sound, 75, TRUE, -1)
@@ -179,7 +179,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
 
@@ -193,23 +193,25 @@
 		if(check_martial_counter(L, user))
 			return
 
-	if(user.a_intent != INTENT_HARM)
-		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				if(baton_effect(M, user))
-					user.do_attack_animation(M)
-					return
-			else
-				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
-		else
-			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
-	else
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
 				baton_effect(M, user)
 		..()
-
+		return
+	else if(turned_on)
+		if(attack_cooldown_check <= world.time)
+			if(baton_effect(M, user))
+				user.do_attack_animation(M)
+				return
+		else
+			to_chat(user, "<span class='danger'>The baton is still charging!</span>")
+			return
+	else
+		M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
+					"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
+		return
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
@@ -277,7 +279,7 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton."
+	desc = "An improvised stun baton. Left click to stun, right click to harm."
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -320,17 +322,10 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(turned_on)
-		if(ishuman(thrower))
-			var/mob/living/carbon/human/H = thrower
-			H.throw_mode_off() //so they can catch it on the return.
-	return ..()
-
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(turned_on)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(ishuman(hit_atom) && !caught && prob(throw_stun_chance))//if they are a carbon and they didn't catch it
+		if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 			baton_effect(hit_atom)
 		if(thrownby && !caught)
 			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)

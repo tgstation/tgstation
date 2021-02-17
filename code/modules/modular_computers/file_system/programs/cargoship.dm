@@ -1,6 +1,7 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
 	filedesc = "GrandArk Exporter"
+	category = PROGRAM_CATEGORY_SUPL
 	program_icon_state = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	size = 6
@@ -8,8 +9,12 @@
 	program_icon = "tags"
 	///Account used for creating barcodes.
 	var/datum/bank_account/payments_acc
-	///The amount which the tagger will receive for the sale.
-	var/percent_cut = 20
+	///The person who tagged this will receive the sale value multiplied by this number.
+	var/cut_multiplier = 0.5
+	///Maximum value for cut_multiplier.
+	var/cut_max = 0.5
+	///Minimum value for cut_multiplier.
+	var/cut_min = 0.01
 
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -22,7 +27,7 @@
 	data["paperamt"] = printer ? "[printer.stored_paper] / [printer.max_paper]" : null
 	data["card_owner"] = card_slot?.stored_card ? id_card.registered_name : "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
-	data["barcode_split"] = percent_cut
+	data["barcode_split"] = cut_multiplier * 100
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
@@ -42,7 +47,7 @@
 	switch(action)
 		if("ejectid")
 			if(id_card)
-				card_slot.try_eject(TRUE, usr)
+				card_slot.try_eject(usr, TRUE)
 		if("selectid")
 			if(!id_card)
 				return
@@ -54,8 +59,8 @@
 		if("resetid")
 			payments_acc = null
 		if("setsplit")
-			var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
-			percent_cut = potential_cut ? clamp(round(potential_cut, 1), 1, 50) : 20
+			var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
+			cut_multiplier = potential_cut ? clamp(round(potential_cut/100, cut_min), cut_min, cut_max) : initial(cut_multiplier)
 		if("print")
 			if(!printer)
 				to_chat(usr, "<span class='notice'>Hardware error: A printer is required to print barcodes.</span>")
@@ -68,6 +73,6 @@
 				return
 			var/obj/item/barcode/barcode = new /obj/item/barcode(get_turf(ui_host()))
 			barcode.payments_acc = payments_acc
-			barcode.percent_cut = percent_cut
+			barcode.cut_multiplier = cut_multiplier
 			printer.stored_paper--
 			to_chat(usr, "<span class='notice'>The computer prints out a barcode.</span>")

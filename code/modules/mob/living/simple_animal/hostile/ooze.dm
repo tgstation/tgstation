@@ -7,7 +7,6 @@
 	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
@@ -23,7 +22,7 @@
 	attack_verb_continuous = "slimes"
 	attack_verb_simple = "slime"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
@@ -37,7 +36,9 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -49,7 +50,9 @@
 		return ..()
 	eat_atom(attacked_target)
 
-/mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)
@@ -99,7 +102,7 @@
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
 	if(hud_used) //clientless oozes
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>"
+		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>")
 
 
 ///* Gelatinious Ooze code below *\\\\
@@ -207,7 +210,7 @@
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_owner_death)
 	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 
 /datum/action/consume/proc/handle_mob_deletion()

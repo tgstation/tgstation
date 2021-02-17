@@ -11,7 +11,7 @@ RLD
 
 /obj/item/construction
 	name = "not for ingame use"
-	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly build and deconstruct. Reload with iron, plasteel, glass or compressed matter cartridges."
 	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
@@ -30,8 +30,8 @@ RLD
 	var/matter = 0
 	var/max_matter = 100
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
-	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
-	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
+	var/has_ammobar = FALSE //controls whether or not does update_icon apply ammo indicator overlays
+	var/ammo_sections = 10 //amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	/// Bitflags for upgrades
 	var/upgrade = NONE
 	/// Bitflags for banned upgrades
@@ -53,7 +53,7 @@ RLD
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
-			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 metal
+			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon()	//ensures that ammo counters (if present) get updated
+		update_icon() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -161,7 +161,7 @@ RLD
 			return FALSE
 
 		var/list/materials = list()
-		materials[SSmaterials.GetMaterialRef(/datum/material/iron)] = 500
+		materials[GET_MATERIAL_REF(/datum/material/iron)] = 500
 		silo_mats.mat_container.use_materials(materials, amount)
 		silo_mats.silo_log(src, "consume", -amount, "build", materials)
 		return TRUE
@@ -178,7 +178,7 @@ RLD
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 		if(has_ammobar)
-			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
+			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
@@ -208,12 +208,13 @@ RLD
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_premium_price = 1700
+	custom_premium_price = PAYCHECK_HARD * 10
 	max_matter = 160
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = RCD_FLOORWALL
+	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock
@@ -230,9 +231,30 @@ RLD
 	/// Integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/airlock_electronics
 
-/obj/item/construction/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
-	return (BRUTELOSS)
+/obj/item/construction/rcd/suicide_act(mob/living/user)
+	var/turf/T = get_turf(user)
+
+	if(!isopenturf(T)) // Oh fuck
+		user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		return BRUTELOSS
+
+	mode = RCD_FLOORWALL
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(checkResource(16, user)) // It takes 16 resources to construct a wall
+		var/success = T.rcd_act(user, src, RCD_FLOORWALL)
+		T = get_turf(user)
+		// If the RCD placed a floor instead of a wall, having a wall without plating under it is cursed
+		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
+		if(success && isopenturf(T))
+			T.rcd_act(user, src, RCD_FLOORWALL)
+		useResource(16, user)
+		activate()
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user.gib()
+		return MANUAL_SUICIDE
+
+	user.visible_message("<span class='suicide'>[user] pulls the trigger... But there is not enough ammo!</span>")
+	return SHAME
 
 /obj/item/construction/rcd/verb/toggle_window_glass_verb()
 	set name = "RCD : Toggle Window Glass"
@@ -502,16 +524,29 @@ RLD
 		return FALSE
 	var/delay = rcd_results["delay"] * delay_mod
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
-	if(checkResource(rcd_results["cost"], user))
-		if(do_after(user, delay, target = A))
-			if(checkResource(rcd_results["cost"], user))
-				if(A.rcd_act(user, src, rcd_results["mode"]))
-					rcd_effect.end_animation()
-					useResource(rcd_results["cost"], user)
-					activate()
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					return TRUE
-	qdel(rcd_effect)
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
+		var/turf/target_turf = get_turf(A)
+		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(rcd_effect)
+			return FALSE
+	if(!do_after(user, delay, target = A))
+		qdel(rcd_effect)
+		return FALSE
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(!A.rcd_act(user, src, rcd_results["mode"]))
+		qdel(rcd_effect)
+		return FALSE
+	rcd_effect.end_animation()
+	useResource(rcd_results["cost"], user)
+	activate()
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	return TRUE
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
@@ -529,7 +564,6 @@ RLD
 	..()
 	var/list/choices = list(
 		"Airlock" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/hud/radial.dmi', icon_state = "delete"),
 		"Grilles & Windows" = image(icon = 'icons/hud/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/hud/radial.dmi', icon_state = "wallfloor")
 	)
@@ -546,38 +580,37 @@ RLD
 		choices += list(
 		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
-	if(mode == RCD_AIRLOCK)
-		choices += list(
-		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
-		)
-	else if(mode == RCD_WINDOWGRILLE)
-		choices += list(
-		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
-		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
-		)
-	else if(mode == RCD_FURNISHING)
-		choices += list(
-		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
-		)
+	switch(construction_mode)
+		if(RCD_AIRLOCK)
+			choices += list(
+			"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
+			"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
+			)
+		if(RCD_WINDOWGRILLE)
+			choices += list(
+			"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
+			"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
+			)
+		if(RCD_FURNISHING)
+			choices += list(
+			"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
+			)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
 		if("Floors & Walls")
-			mode = RCD_FLOORWALL
+			construction_mode = RCD_FLOORWALL
 		if("Airlock")
-			mode = RCD_AIRLOCK
-		if("Deconstruct")
-			mode = RCD_DECONSTRUCT
+			construction_mode = RCD_AIRLOCK
 		if("Grilles & Windows")
-			mode = RCD_WINDOWGRILLE
+			construction_mode = RCD_WINDOWGRILLE
 		if("Machine Frames")
-			mode = RCD_MACHINE
+			construction_mode = RCD_MACHINE
 		if("Furnishing")
-			mode = RCD_FURNISHING
+			construction_mode = RCD_FURNISHING
 		if("Computer Frames")
-			mode = RCD_COMPUTER
+			construction_mode = RCD_COMPUTER
 			change_computer_dir(user)
 			return
 		if("Change Access")
@@ -609,11 +642,18 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+/obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
-	if(!prox_check(proximity))
-		return
+	mode = construction_mode
 	rcd_create(A, user)
+	return FALSE
+
+/obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
+	. = ..()
+	mode = RCD_DECONSTRUCT
+	rcd_create(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -678,6 +718,9 @@ RLD
 /obj/item/construction/rcd/loaded
 	matter = 160
 
+/obj/item/construction/rcd/loaded/upgraded
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
 	icon_state = "ircd"
@@ -685,6 +728,7 @@ RLD
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
@@ -715,7 +759,7 @@ RLD
 
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A prototype RCD with ranged capability and extended capacity. Reload with iron, plasteel, glass or compressed matter cartridges."
 	max_matter = 300
 	matter = 300
 	delay_mod = 0.6
@@ -726,11 +770,19 @@ RLD
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!range_check(A,user))
-		return
-	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
-	rcd_create(A,user)
+	if(range_check(A,user))
+		pre_attack(A, user)
+
+/obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(range_check(target,user))
+		pre_attack_secondary(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+/obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
+	. = ..()
+	if(.)
+		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
 
 
 
@@ -740,7 +792,7 @@ RLD
 
 /obj/item/construction/rld
 	name = "Rapid Lighting Device (RLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	worn_icon_state = "RPD"
@@ -806,7 +858,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -820,7 +872,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 					if(do_after(user, floordelay, target = A))
@@ -866,7 +918,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
@@ -897,7 +949,7 @@ RLD
 
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device (MRLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -957,18 +1009,20 @@ RLD
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/pill_press = 20,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/iv_drip/plumbing = 20
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type

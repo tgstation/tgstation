@@ -26,8 +26,7 @@
 	response_harm_simple = "squish"
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	a_intent = INTENT_HELP
-	ventcrawler = VENTCRAWLER_ALWAYS
+	combat_mode = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	stat_attack = HARD_CRIT
 	gender = NEUTER
@@ -49,6 +48,8 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
 	udder = new()
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
@@ -154,7 +155,7 @@
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
 	visible_message("<span class='notice'>[src] grows up into [L].</span>")
-	Destroy()
+	qdel(src)
 
 //Gutlunch udder
 /obj/item/udder/gutlunch

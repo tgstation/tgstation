@@ -41,7 +41,13 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = PAYCHECK_HARD
+
+/obj/item/clothing/suit/armor/vest/cuirass
+	name = "cuirass"
+	desc = "A lighter plate armor used to still keep out those pesky arrows, while retaining the ability to move."
+	icon_state = "cuirass"
+	inhand_icon_state = "armor"
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -228,7 +234,7 @@
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit"
-	desc = "Pukish armor."	//classy.
+	desc = "Pukish armor." //classy.
 	icon_state = "tdgreen"
 	inhand_icon_state = "tdgreen"
 

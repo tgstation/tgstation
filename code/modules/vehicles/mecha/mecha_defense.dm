@@ -51,7 +51,7 @@
 	if(.)
 		. *= booster_damage_modifier
 
-/obj/vehicle/sealed/mecha/attack_hand(mob/living/user)
+/obj/vehicle/sealed/mecha/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -61,15 +61,15 @@
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens.</span>", null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw. Attacker - [user].", LOG_MECHA, color="red")
 
-/obj/vehicle/sealed/mecha/attack_paw(mob/user as mob)
-	return attack_hand(user)
+/obj/vehicle/sealed/mecha/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/vehicle/sealed/mecha/attack_alien(mob/living/user)
+/obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, 15, BRUTE, MELEE, 0)
+	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
 
-/obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user)
+/obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
@@ -168,15 +168,17 @@
 		for(var/occus in occupants)
 			var/mob/living/occupant = occus
 			occupant.update_mouse_pointer()
-	if(!equipment_disabled && occupants) //prevent spamming this message with back-to-back EMPs
+	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = 1
 
-/obj/vehicle/sealed/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature>max_temperature)
-		log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
-		take_damage(5, BURN, 0, 1)
+/obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > max_temperature
+
+/obj/vehicle/sealed/mecha/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
+	take_damage(5, BURN, 0, 1)
 
 /obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
 
@@ -298,7 +300,7 @@
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	. = ..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return
 	. = TRUE
 	if(internal_damage & MECHA_INT_TANK_BREACH)
@@ -326,12 +328,12 @@
 			target.reagents.add_reagent(/datum/reagent/toxin, force/2.5)
 
 
-/obj/vehicle/sealed/mecha/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/user)
+/obj/vehicle/sealed/mecha/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/living/user)
 	if(!has_charge(melee_energy_drain))
 		return NONE
 	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
-		log_combat(user, src, "attacked", M, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		log_combat(user, src, "attacked", M, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)

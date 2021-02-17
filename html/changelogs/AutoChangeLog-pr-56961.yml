@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "you can now cast rituals on dynamic if the threat level is 100"

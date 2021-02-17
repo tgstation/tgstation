@@ -4,7 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
-	drag_slowdown = 1.5		// Same as a prone mob
+	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
@@ -32,15 +32,17 @@
 	var/close_sound = 'sound/machines/closet_close.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
-	var/material_drop = /obj/item/stack/sheet/metal
+	var/material_drop = /obj/item/stack/sheet/iron
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
+	var/divable = TRUE
 
 
 /obj/structure/closet/Initialize(mapload)
-	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
+	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	. = ..()
 	update_icon()
@@ -102,10 +104,9 @@
 		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
 		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
-	if(isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_SKITTISH))
-			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
+
+	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
+		. += "<span class='notice'>If you bump into [p_them()] while running, you will jump inside.</span>"
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -151,6 +152,9 @@
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
+	for(var/i in reverseRange(L.GetAllContents()))
+		var/atom/movable/thing = i
+		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
@@ -163,10 +167,14 @@
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
-	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
+	after_open(user, force)
 	return TRUE
+
+///Proc to override for effects after opening a door
+/obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
+	return
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
 	if(contents.len >= storage_capacity)
@@ -214,11 +222,16 @@
 		return FALSE
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
-	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
 	update_icon()
+	after_close(user)
 	return TRUE
+
+///Proc to override for effects after closing a door
+/obj/structure/closet/proc/after_close(mob/living/user)
+	return
+
 
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
@@ -243,7 +256,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -280,6 +293,7 @@
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='hear'>You hear welding.</span>")
+			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_icon()
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)
@@ -289,7 +303,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='hear'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE
@@ -302,7 +316,7 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!istype(O) || O.anchored || istype(O, /obj/screen))
+	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
 		return
 	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
 		return
@@ -324,13 +338,13 @@
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] [actuallyismob ? "tries to ":""]stuff [O] into [src].</span>", \
-				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
-				 	 	"<span class='hear'>You hear clanging.</span>")
+		"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
+		"<span class='hear'>You hear clanging.</span>")
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
 			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
-							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
-							 	 "<span class='hear'>You hear a loud metal bang.</span>")
+				"<span class='notice'>You stuff [O] into [src].</span>", \
+				"<span class='hear'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
@@ -354,7 +368,7 @@
 	container_resist_act(user)
 
 
-/obj/structure/closet/attack_hand(mob/living/user)
+/obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -365,8 +379,8 @@
 		togglelock(user)
 
 
-/obj/structure/closet/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/closet/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/closet/attack_robot(mob/user)
 	if(user.Adjacent(src))
@@ -374,7 +388,8 @@
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
-	return attack_hand(user)
+	if(attack_hand(user))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in view(1)
@@ -443,13 +458,6 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/CtrlShiftClick(mob/living/user)
-	if(!HAS_TRAIT(user, TRAIT_SKITTISH))
-		return ..()
-	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(user.loc))
-		return
-	dive_into(user)
-
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(allowed(user))
@@ -470,14 +478,14 @@
 			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
 							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 							"<span class='hear'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, TRUE)
+		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
 		update_icon()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
 	. = ..()
@@ -517,24 +525,3 @@
 
 /obj/structure/closet/return_temperature()
 	return
-
-/obj/structure/closet/proc/dive_into(mob/living/user)
-	var/turf/T1 = get_turf(user)
-	var/turf/T2 = get_turf(src)
-	if(!opened)
-		if(locked)
-			togglelock(user, TRUE)
-		if(!open(user))
-			to_chat(user, "<span class='warning'>It won't budge!</span>")
-			return
-	step_towards(user, T2)
-	T1 = get_turf(user)
-	if(T1 == T2)
-		user.set_resting(TRUE) //so people can jump into crates without slamming the lid on their head
-		if(!close(user))
-			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.set_resting(FALSE)
-			return
-		user.set_resting(FALSE)
-		togglelock(user)
-		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")

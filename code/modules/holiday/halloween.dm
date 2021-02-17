@@ -10,14 +10,14 @@
 	items = list(
 		/obj/item/food/egg,
 	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
+	result = /obj/item/food/cookie/sugar/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
 	reagents_list = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/coffee = 5)
 	items = list(
 		/obj/item/food/egg,
 	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
+	result = /obj/item/food/cookie/sugar/spookycoffin
 
 //////////////////////////////
 //Spookoween trapped closets//
@@ -25,9 +25,9 @@
 
 #define SPOOKY_SKELETON 1
 #define ANGRY_FAITHLESS 2
-#define SCARY_BATS 		3
-#define INSANE_CLOWN	4
-#define HOWLING_GHOST	5
+#define SCARY_BATS 3
+#define INSANE_CLOWN 4
+#define HOWLING_GHOST 5
 
 //Spookoween variables
 /obj/structure/closet
@@ -185,10 +185,13 @@
 	icon_dead = "scary_clown"
 	icon_gib = "scary_clown"
 	speak = list("...", ". . .")
-	maxHealth = 1e6
-	health = 1e6
+	maxHealth = INFINITY
+	health = INFINITY
 	emote_see = list("silently stares")
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	var/timer
 
 /mob/living/simple_animal/hostile/clown_insane/Initialize()
@@ -253,9 +256,6 @@
 			visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")
 		return
 	return ..()
-
-/mob/living/simple_animal/hostile/clown_insane/handle_temperature_damage()
-	return
 
 /////////////////////////
 // Spooky Uplink Items //

@@ -9,8 +9,9 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	custom_price = 1200
-	custom_premium_price = 1200
+	custom_price = PAYCHECK_MEDIUM * 10
+	custom_premium_price = PAYCHECK_COMMAND * 6
+	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
@@ -22,7 +23,7 @@
 	if(iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
 		var/mob/living/carbon/U = user
-		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE)
+		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 		if(success)
 			if(C == user)
 				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
@@ -31,42 +32,43 @@
 		else
 			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
 
-		qdel(src)
-
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
 	name = "spray-on insulated gloves"
 	icon_state = "sprayon"
 	inhand_icon_state = "sprayon"
+	item_flags = DROPDEL
 	permeability_coefficient = 0
 	resistance_flags = ACID_PROOF
-	var/shocks_remaining = 10
+	var/charges_remaining = 10
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
 	.=..()
-	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/Shocked)
+	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/use_charge)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/use_charge)
 
-/obj/item/clothing/gloves/color/yellow/sprayon/proc/Shocked()
-	shocks_remaining--
-	if(shocks_remaining < 0)
-		qdel(src) //if we run out of uses, the gloves crumble away into nothing, just like my dreams after working with .dm
+/obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
+	SIGNAL_HANDLER
 
-/obj/item/clothing/gloves/color/yellow/sprayon/dropped()
-	.=..()
-	qdel(src) //loose nodrop items bad
+	charges_remaining--
+	if(charges_remaining <= 0)
+		var/turf/location = get_turf(src)
+		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
-	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
+	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
+	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/clothing/gloves/color/fyellow/Initialize()
 	. = ..()
@@ -80,6 +82,16 @@
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
+/obj/item/clothing/gloves/cut
+	desc = "These gloves would protect the wearer from electric shock... if the fingers were covered."
+	name = "fingerless insulated gloves"
+	icon_state = "yellowcut"
+	inhand_icon_state = "ygloves"
+	transfer_prints = TRUE
+
+/obj/item/clothing/gloves/cut/heirloom
+	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
+
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"
@@ -90,16 +102,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	var/can_be_cut = TRUE
-
-/obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER)
-		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
-			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/fingerless(drop_location())
-			qdel(src)
-	..()
+	cut_type = /obj/item/clothing/gloves/fingerless
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
@@ -186,16 +189,6 @@
 	permeability_coefficient = 0.01
 	transfer_prints = TRUE
 	resistance_flags = NONE
-	var/carrytrait = TRAIT_QUICK_CARRY
-
-/obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
-	..()
-	if(slot == ITEM_SLOT_GLOVES)
-		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
-
-/obj/item/clothing/gloves/color/latex/dropped(mob/user)
-	..()
-	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
@@ -203,7 +196,6 @@
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	transfer_prints = FALSE
-	carrytrait = TRAIT_QUICKER_CARRY
 
 /obj/item/clothing/gloves/color/latex/nitrile/infiltrator
 	name = "infiltrator gloves"
@@ -222,7 +214,7 @@
 	inhand_icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0.8
 	permeability_coefficient = 0.3
-	carrytrait = TRAIT_QUICK_BUILD
+	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
 /obj/item/clothing/gloves/color/white
@@ -230,7 +222,7 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
-	custom_price = 200
+	custom_price = PAYCHECK_MINIMAL
 
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"

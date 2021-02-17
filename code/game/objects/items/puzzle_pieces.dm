@@ -1,6 +1,6 @@
 //**************
 //*****Keys*******************
-//**************		**  **
+//************** **  **
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."
@@ -117,7 +117,7 @@
 	trigger_delay = 10
 	protected = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	var/reward = /obj/item/reagent_containers/food/snacks/cookie
+	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
 /obj/item/pressure_plate/hologrid/Initialize()

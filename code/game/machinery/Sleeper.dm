@@ -23,7 +23,7 @@
 		list(/datum/reagent/medicine/c2/multiver, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
 		list(/datum/reagent/medicine/omnizine)
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: mutadone -> morphine
+	var/list/chem_buttons //Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
@@ -94,7 +94,7 @@
 
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 
 	close_machine(target)
@@ -202,6 +202,8 @@
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
+				if(R.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+					continue
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
 
@@ -271,7 +273,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = list()
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)

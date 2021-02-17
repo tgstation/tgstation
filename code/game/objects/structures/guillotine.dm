@@ -66,7 +66,7 @@
 	if (LAZYLEN(buckled_mobs))
 		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
 
-/obj/structure/guillotine/attack_hand(mob/user)
+/obj/structure/guillotine/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)
 
 	// Currently being used by something
@@ -83,7 +83,7 @@
 			return
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
-				if (user.a_intent == INTENT_HARM)
+				if (user.combat_mode)
 					user.visible_message("<span class='warning'>[user] begins to pull the lever!</span>",
 						                 "<span class='warning'>You begin to the pull the lever.</span>")
 					current_action = GUILLOTINE_ACTION_INUSE
@@ -189,7 +189,7 @@
 	else
 		return ..()
 
-/obj/structure/guillotine/user_buckle_mob(mob/living/M, force = FALSE, check_loc = FALSE)
+/obj/structure/guillotine/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if (!anchored)
 		to_chat(usr, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 		return FALSE
@@ -202,7 +202,7 @@
 		to_chat(usr, "<span class='warning'>You need to raise the blade before buckling someone in!</span>")
 		return FALSE
 
-	return ..(M, force, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
+	return ..(M, user, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
 
 /obj/structure/guillotine/post_buckle_mob(mob/living/M)
 	if (!istype(M, /mob/living/carbon/human))

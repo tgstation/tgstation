@@ -70,7 +70,7 @@ Charged extracts:
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	new /obj/item/stack/sheet/metal(get_turf(user), 25)
+	new /obj/item/stack/sheet/iron(get_turf(user), 25)
 	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
 	..()
@@ -203,7 +203,7 @@ Charged extracts:
 /obj/item/slimecross/charged/gold/process()
 	visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(src))
-	playsound(get_turf(src), "sparks", 50, TRUE)
+	playsound(get_turf(src), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)

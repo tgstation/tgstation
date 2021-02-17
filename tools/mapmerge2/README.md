@@ -1,8 +1,27 @@
-# Map Merge 2
+# Map Merger
 
-**Map Merge 2** is an improvement over previous map merging scripts, with
-better merge-conflict prevention, multi-Z support, and automatic handling of
-key overflow. For up-to-date tips and tricks, also visit the [Map Merger] wiki article.
+The **Map Merger** is a collection of scripts that keep this repository's maps
+in a format which is easier to track in Git and less likely to cause merge
+conflicts. When merge conflicts do occur, it can sometimes resolve them.
+
+For detailed troubleshooting instructions and other tips, visit the
+[Map Merger] wiki article.
+
+## Installation
+
+To install the [Git hooks], open the `tools/hooks/` folder and double-click
+`Install.bat`. Linux users run `tools/hooks/install.sh`.
+
+## Manual Use
+
+If using a Git GUI which is not compatible with the hooks:
+
+* Before committing, double-click `Run Before Committing.bat`
+* When a merge has map conflicts, double-click `Resolve Map Conflicts.bat`
+
+The console will show whether the operation succeeded.
+
+For more details, see the [Map Merger] wiki article.
 
 ## What Map Merging Is
 
@@ -13,16 +32,8 @@ version of the map while maintaining all the actual changes. It requires an old
 version of the map to use as a reference and a new version of the map which
 contains the desired changes.
 
-## Installation
-
-To install Python dependencies, run `requirements-install.bat`, or run
-`python -m pip install -r requirements.txt` directly. See the [Git hooks]
-documentation to install the Git pre-commit hook which runs the map merger
-automatically, or use `tools/mapmerge/Prepare Maps.bat` to save backups before
-running `mapmerge.bat`.
-
-For up-to-date installation and detailed troubleshooting instructions, visit
-the [Map Merger] wiki article.
+Map Merge 2 adds multi-Z support, automatic handling of key overflow, better
+merge conflict prevention, and a real merge conflict resolver.
 
 ## Code Structure
 

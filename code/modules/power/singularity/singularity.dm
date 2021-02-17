@@ -1,5 +1,4 @@
-
-
+/// The gravitational singularity
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
@@ -11,102 +10,112 @@
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = LONG_GLIDE
+
+	/// The singularity component itself.
+	/// A weak ref in case an admin removes the component to preserve the functionality.
+	var/datum/weakref/singularity_component
+
 	var/current_size = 1
 	var/allowed_size = 1
-	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
 	var/dissipate = TRUE //Do we lose energy over time?
-	var/dissipate_delay = 10
-	var/dissipate_track = 0
-	var/dissipate_strength = 1 //How much energy do we lose?
-	var/move_self = 1 //Do we move on our own?
-	var/grav_pull = 4 //How many tiles out do we pull?
-	var/consume_range = 0 //How many tiles out do we eat
+	/// How long should it take for us to dissipate in seconds?
+	var/dissipate_delay = 20
+	/// How much energy do we lose every dissipate_delay?
+	var/dissipate_strength = 1
+	/// How long its been (in seconds) since the last dissipation
+	var/time_since_last_dissipiation = 0
 	var/event_chance = 10 //Prob for event each tick
-	var/target = null //its target. moves towards the target if it has one
-	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-	var/last_warning
-	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
-	var/drifting_dir = 0 // Chosen direction to drift in
+	var/move_self = TRUE
+	var/consumed_supermatter = FALSE //If the singularity has eaten a supermatter shard and can go to stage six
+
+	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
 /obj/singularity/Initialize(mapload, starting_energy = 50)
-	//CARN: admin-alert for chuckle-fuckery.
-	admin_investigate_setup()
-
-	src.energy = starting_energy
 	. = ..()
+
+	energy = starting_energy
+
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	GLOB.singularities |= src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
-		if(singubeacon.active)
-			target = singubeacon
+
+	var/datum/component/singularity/new_component = AddComponent(
+		/datum/component/singularity, \
+		consume_callback = CALLBACK(src, .proc/consume), \
+	)
+
+	singularity_component = WEAKREF(new_component)
+
+	expand(current_size)
+
+	for (var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
+		if (singubeacon.active)
+			new_component.target = singubeacon
 			break
-	AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
+
+	if (!mapload)
+		notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list.Remove(src)
 	GLOB.singularities.Remove(src)
 	return ..()
 
-/obj/singularity/Move(atom/newloc, direct)
-	var/turf/T = get_turf(src)
-	for(var/dir in GLOB.cardinals)
-		if(direct & dir)
-			T = get_step(T, dir)
-			if(!T)
-				break
-			// eat the stuff if we're going to move into it so it doesn't mess up our movement
-			for(var/atom/A in T.contents)
-				consume(A)
-			consume(T)
-
-	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
-		last_failed_movement = 0//Reset this because we moved
-		return ..()
-	else
-		last_failed_movement = direct
-		return FALSE
-
-/obj/singularity/attack_hand(mob/user)
-	consume(user)
-	return TRUE
-
-/obj/singularity/attack_paw(mob/user)
-	consume(user)
-
-/obj/singularity/attack_alien(mob/user)
-	consume(user)
-
-/obj/singularity/attack_animal(mob/user)
-	consume(user)
-
-/obj/singularity/attackby(obj/item/W, mob/user, params)
-	consume(user)
-	return TRUE
-
-/obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return FALSE
-
-/obj/singularity/blob_act(obj/structure/blob/B)
-	return
-
 /obj/singularity/attack_tk(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.visible_message("<span class='danger'>[C]'s head begins to collapse in on itself!</span>", "<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>", "<span class='hear'>You hear something crack and explode in gore.</span>")
-		var/turf/T = get_turf(C)
-		for(var/i in 1 to 3)
-			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-			new /obj/effect/gibspawner/generic(T, C)
-			sleep(1)
-		C.ghostize()
-		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
+	if(!iscarbon(user))
+		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	var/mob/living/carbon/jedi = user
+	jedi.visible_message(
+		"<span class='danger'>[jedi]'s head begins to collapse in on itself!</span>",
+		"<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>",
+		"<span class='hear'>You hear something crack and explode in gore.</span>"
+		)
+	jedi.Stun(3 SECONDS)
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	if(jedi.stat == DEAD)
+		jedi.ghostize()
+		var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
 		rip_u.dismember(BURN) //nice try jedi
+		qdel(rip_u)
+		return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_two, jedi), 0.1 SECONDS)
+
+
+/obj/singularity/proc/carbon_tk_part_two(mob/living/carbon/jedi)
+	if(QDELETED(jedi))
+		return
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	if(jedi.stat == DEAD)
+		jedi.ghostize()
+		var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
+		if(rip_u)
+			rip_u.dismember(BURN)
+			qdel(rip_u)
+		return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_three, jedi), 0.1 SECONDS)
+
+
+/obj/singularity/proc/carbon_tk_part_three(mob/living/carbon/jedi)
+	if(QDELETED(jedi))
+		return
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	jedi.ghostize()
+	var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
+	if(rip_u)
+		rip_u.dismember(BURN)
 		qdel(rip_u)
 
 /obj/singularity/ex_act(severity, target)
@@ -122,68 +131,37 @@
 			energy -= round(((energy+1)/3),1)
 		if(3)
 			energy -= round(((energy+1)/4),1)
-	return
 
-
-/obj/singularity/bullet_act(obj/projectile/P)
-	qdel(P)
-	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
-
-
-/obj/singularity/Bump(atom/A)
-	consume(A)
-	if(QDELETED(A)) // don't keep moving into objects that weren't destroyed infinitely
-		step(src, drifting_dir)
-	return
-
-/obj/singularity/Crossed(atom/A)
-	..()
-	consume(A)
-
-/obj/singularity/Bumped(atom/movable/AM)
-	consume(AM)
-
-
-/obj/singularity/process()
+/obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
-		move()
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
-	eat()
-	dissipate()
+	dissipate(delta_time)
 	check_energy()
 
-	return
-
-
-/obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
-	return
-
-
-/obj/singularity/proc/admin_investigate_setup()
-	var/turf/T = get_turf(src)
-	last_warning = world.time
-	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
-	if(!count)
-		message_admins("A singulo has been created without containment fields active at [ADMIN_VERBOSEJMP(T)].")
-	investigate_log("was created at [AREACOORD(T)]. [count?"":"<font color='red'>No containment fields were active</font>"]", INVESTIGATE_SINGULO)
-
-/obj/singularity/proc/dissipate()
-	if(!dissipate)
+/obj/singularity/proc/dissipate(delta_time)
+	if (!dissipate)
 		return
-	if(dissipate_track >= dissipate_delay)
-		src.energy -= dissipate_strength
-		dissipate_track = 0
-	else
-		dissipate_track++
 
+	time_since_last_dissipiation += delta_time
 
-/obj/singularity/proc/expand(force_size = 0)
+	// Uses a while in case of especially long delta times
+	while (time_since_last_dissipiation >= dissipate_delay)
+		energy -= dissipate_strength
+		time_since_last_dissipiation -= dissipate_delay
+
+/obj/singularity/proc/expand(force_size)
 	var/temp_allowed_size = src.allowed_size
+
 	if(force_size)
 		temp_allowed_size = force_size
-	if(temp_allowed_size >= STAGE_SIX && !consumedSupermatter)
+
+	if(temp_allowed_size >= STAGE_SIX && !consumed_supermatter)
 		temp_allowed_size = STAGE_FIVE
+
+	var/new_grav_pull
+	var/new_consume_range
+
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
@@ -191,10 +169,10 @@
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-			grav_pull = 4
-			consume_range = 0
+			new_grav_pull = 4
+			new_consume_range = 0
 			dissipate_delay = 10
-			dissipate_track = 0
+			time_since_last_dissipiation = 0
 			dissipate_strength = 1
 		if(STAGE_TWO)
 			if(check_cardinals_range(1, TRUE))
@@ -203,10 +181,10 @@
 				icon_state = "singularity_s3"
 				pixel_x = -32
 				pixel_y = -32
-				grav_pull = 6
-				consume_range = 1
+				new_grav_pull = 6
+				new_consume_range = 1
 				dissipate_delay = 5
-				dissipate_track = 0
+				time_since_last_dissipiation = 0
 				dissipate_strength = 5
 		if(STAGE_THREE)
 			if(check_cardinals_range(2, TRUE))
@@ -215,10 +193,10 @@
 				icon_state = "singularity_s5"
 				pixel_x = -64
 				pixel_y = -64
-				grav_pull = 8
-				consume_range = 2
+				new_grav_pull = 8
+				new_consume_range = 2
 				dissipate_delay = 4
-				dissipate_track = 0
+				time_since_last_dissipiation = 0
 				dissipate_strength = 20
 		if(STAGE_FOUR)
 			if(check_cardinals_range(3, TRUE))
@@ -227,10 +205,10 @@
 				icon_state = "singularity_s7"
 				pixel_x = -96
 				pixel_y = -96
-				grav_pull = 10
-				consume_range = 3
+				new_grav_pull = 10
+				new_consume_range = 3
 				dissipate_delay = 10
-				dissipate_track = 0
+				time_since_last_dissipiation = 0
 				dissipate_strength = 10
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
@@ -238,18 +216,27 @@
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
-			grav_pull = 10
-			consume_range = 4
-			dissipate = 0 //It cant go smaller due to e loss
+			new_grav_pull = 10
+			new_consume_range = 4
+			dissipate = FALSE //It cant go smaller due to e loss
 		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
 			current_size = STAGE_SIX
 			icon = 'icons/effects/352x352.dmi'
 			icon_state = "singularity_s11"
 			pixel_x = -160
 			pixel_y = -160
-			grav_pull = 15
-			consume_range = 5
-			dissipate = 0
+			new_grav_pull = 15
+			new_consume_range = 5
+			dissipate = FALSE
+
+	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
+	if (!isnull(resolved_singularity))
+		resolved_singularity.consume_range = new_consume_range
+		resolved_singularity.grav_pull = new_grav_pull
+		resolved_singularity.disregard_failed_movements = current_size >= STAGE_FIVE
+		resolved_singularity.roaming = move_self && current_size >= STAGE_TWO
+		resolved_singularity.singularity_size = current_size
+
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
 		return TRUE
@@ -274,7 +261,7 @@
 		if(1000 to 1999)
 			allowed_size = STAGE_FOUR
 		if(2000 to INFINITY)
-			if(energy >= 3000 && consumedSupermatter)
+			if(energy >= 3000 && consumed_supermatter)
 				allowed_size = STAGE_SIX
 			else
 				allowed_size = STAGE_FIVE
@@ -282,60 +269,23 @@
 		expand()
 	return TRUE
 
-
-/obj/singularity/proc/eat()
-	for(var/tile in spiral_range_turfs(grav_pull, src))
-		var/turf/T = tile
-		if(!T || !isturf(loc))
-			continue
-		if(get_dist(T, src) > consume_range)
-			T.singularity_pull(src, current_size)
-		else
-			consume(T)
-		for(var/thing in T)
-			if(isturf(loc) && thing != src)
-				var/atom/movable/X = thing
-				if(get_dist(X, src) > consume_range)
-					X.singularity_pull(src, current_size)
-				else
-					consume(X)
-			CHECK_TICK
-	return
-
-
-/obj/singularity/proc/consume(atom/A)
-	var/gain = A.singularity_act(current_size, src)
-	src.energy += gain
-	if(istype(A, /obj/machinery/power/supermatter_crystal) && !consumedSupermatter)
+/obj/singularity/proc/consume(atom/thing)
+	var/gain = thing.singularity_act(current_size, src)
+	energy += gain
+	if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
-		consumedSupermatter = 1
+		consumed_supermatter = TRUE
 		set_light(10)
-	return
-
-
-/obj/singularity/proc/move(force_move = 0)
-	if(!move_self)
-		return FALSE
-
-	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
-
-	if(force_move)
-		drifting_dir = force_move
-
-	if(target && prob(60))
-		drifting_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
-
-	step(src, drifting_dir)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
-	. = length(GLOB.cardinals)			//Should be 4.
+	. = length(GLOB.cardinals) //Should be 4.
 	for(var/i in GLOB.cardinals)
-		. -= check_turfs_in(i, steps)	//-1 for each working direction
-	if(. && retry_with_move)			//If there's still a positive value it means it didn't pass. Retry with move if applicable
+		. -= check_turfs_in(i, steps) //-1 for each working direction
+	if(. && retry_with_move) //If there's still a positive value it means it didn't pass. Retry with move if applicable
 		for(var/i in GLOB.cardinals)
-			if(step(src, i))			//Move in each direction.
-				if(check_cardinals_range(steps, FALSE))		//New location passes, return true.
+			if(step(src, i)) //Move in each direction.
+				if(check_cardinals_range(steps, FALSE)) //New location passes, return true.
 					return TRUE
 	return !.
 
@@ -455,26 +405,26 @@
 
 /obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
-	return
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
-	return(gain)
+	return gain
 
-/obj/singularity/proc/bluespace_reaction()
-	investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
-	qdel(src)
+/obj/singularity/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
 
-/obj/singularity/deadchat_controlled
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
 	move_self = FALSE
+
+/obj/singularity/proc/stop_deadchat_plays()
+	move_self = TRUE
 
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
-	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
-	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)))
+	deadchat_plays(mode = DEMOCRACY_MODE)
+

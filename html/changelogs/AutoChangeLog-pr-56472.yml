@@ -1,0 +1,8 @@
+author: "Whoneedspacee"
+delete-after: True
+changes: 
+  - rscadd: "You can now purchase ice hiking boots from the mining vendor."
+  - rscadd: "You can now craft plasma lava boats from polar bear hide."
+  - rscadd: "Icebox turfs can now be mined with your bare hands.
+tweak: Icebox creatures now have signals that can be tracked."
+  - balance: "Ash drake armor now has cold protection so it can be used on icebox."

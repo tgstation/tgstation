@@ -49,13 +49,13 @@
 			possible_expansions -= borderline
 
 /**
-  * Moves the lift UP or DOWN, this is what users invoke with their hand.
-  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
-  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
-  * Arguments:
-  * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
-  * user - Whomever made the lift movement.
-  */
+ * Moves the lift UP or DOWN, this is what users invoke with their hand.
+ * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+ * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+ * Arguments:
+ * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
+ * user - Whomever made the lift movement.
+ */
 /datum/lift_master/proc/MoveLift(going, mob/user)
 	set_controls(LOCKED)
 	for(var/p in lift_platforms)
@@ -64,10 +64,10 @@
 	set_controls(UNLOCKED)
 
 /**
-  * Moves the lift, this is what users invoke with their hand.
-  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
-  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
-  */
+ * Moves the lift, this is what users invoke with their hand.
+ * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+ * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+ */
 /datum/lift_master/proc/MoveLiftHorizontal(going, z)
 	var/max_x = 1
 	var/max_y = 1
@@ -118,13 +118,13 @@
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
 		if(!T)//the edges of multi-z maps
 			return FALSE
-		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/transparent/openspace))
+		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/openspace))
 			return FALSE
 	return TRUE
 
 /**
-  * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
-  */
+ * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
+ */
 /datum/lift_master/proc/set_controls(state)
 	for(var/l in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = l
@@ -246,7 +246,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		return FALSE
 	return TRUE
 
-/obj/structure/industrial_lift/attack_hand(mob/user)
+/obj/structure/industrial_lift/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isAdminGhostAI(user))
 		use(user)
 
-/obj/structure/industrial_lift/attack_paw(mob/user)
+/obj/structure/industrial_lift/attack_paw(mob/user, list/modifiers)
 	return use(user)
 
 /obj/structure/industrial_lift/attackby(obj/item/W, mob/user, params)

@@ -1,12 +1,12 @@
 /* Library Machines
  *
  * Contains:
- *		Borrowbook datum
- *		Library Public Computer
- *		Cachedbook datum
- *		Library Computer
- *		Library Scanner
- *		Book Binder
+ * Borrowbook datum
+ * Library Public Computer
+ * Cachedbook datum
+ * Library Computer
+ * Library Scanner
+ * Book Binder
  */
 
 
@@ -185,7 +185,7 @@
 	var/list/inventory = list()
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
-	var/page = 1	//current page of the external archives
+	var/page = 1 //current page of the external archives
 	var/printer_cooldown = 0
 	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
@@ -465,7 +465,6 @@
 		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			printer_cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/db_query/query_library_print = SSdbcore.NewQuery(
 				"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
 				list("id" = id)
@@ -474,6 +473,7 @@
 				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 			while(query_library_print.NextRow())
 				var/author = query_library_print.item[2]
 				var/title = query_library_print.item[3]
@@ -517,7 +517,7 @@
 	icon_state = "bigscanner"
 	desc = "It servers the purpose of scanning stuff."
 	density = TRUE
-	var/obj/item/book/cache		// Last scanned book
+	var/obj/item/book/cache // Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/book))
@@ -526,7 +526,7 @@
 	else
 		return ..()
 
-/obj/machinery/libraryscanner/attack_hand(mob/user)
+/obj/machinery/libraryscanner/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

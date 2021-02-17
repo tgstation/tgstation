@@ -88,7 +88,7 @@
 
 	. = cures.len
 	for(var/C_id in cures)
-		if(!affected_mob.has_reagent(C_id))
+		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
 		return FALSE
@@ -101,7 +101,7 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 2
@@ -164,9 +164,29 @@
 	return "[type]"
 
 /datum/disease/proc/remove_disease()
-	LAZYREMOVE(affected_mob.diseases, src)	//remove the datum from the list
+	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
+
+/**
+ * Checks the given typepath against the list of viable mobtypes.
+ *
+ * Returns TRUE if the mob_type path is derived from of any entry in the viable_mobtypes list.
+ * Returns FALSE otherwise.
+ *
+ * Arguments:
+ * * mob_type - Type path to check against the viable_mobtypes list.
+ */
+/datum/disease/proc/is_viable_mobtype(mob_type)
+	for(var/viable_type in viable_mobtypes)
+		if(ispath(mob_type, viable_type))
+			return TRUE
+
+	// Let's only do this check if it fails. Did some genius coder pass in a non-type argument?
+	if(!ispath(mob_type))
+		stack_trace("Non-path argument passed to mob_type variable: [mob_type]")
+
+	return FALSE
 
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)

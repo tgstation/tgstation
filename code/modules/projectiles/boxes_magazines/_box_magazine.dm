@@ -35,31 +35,26 @@
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
-	if (!bullet_cost)
-		for (var/material in custom_materials)
-			var/material_amount = custom_materials[material]
-			LAZYSET(base_cost, material, (material_amount * 0.10))
-
-			material_amount *= 0.90 // 10% for the container
-			material_amount /= max_ammo
-			LAZYSET(bullet_cost, material, material_amount)
+	if(!bullet_cost)
+		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
+		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon()
 
 /**
-  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
-  *
-  * Arguments:
-  * * load_type - if you want to specify a specific ammo casing type to load, enter the path here, otherwise it'll use the basic [/obj/item/ammo_box/var/ammo_type]. Must be a compatible round
-  * * starting - Relevant for revolver cylinders, if FALSE then we mind the nulls that represent the empty cylinders (since those nulls don't exist yet if we haven't initialized when this is TRUE)
-  */
+ * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
+ *
+ * Arguments:
+ * * load_type - if you want to specify a specific ammo casing type to load, enter the path here, otherwise it'll use the basic [/obj/item/ammo_box/var/ammo_type]. Must be a compatible round
+ * * starting - Relevant for revolver cylinders, if FALSE then we mind the nulls that represent the empty cylinders (since those nulls don't exist yet if we haven't initialized when this is TRUE)
+ */
 /obj/item/ammo_box/proc/top_off(load_type, starting=FALSE)
 	if(!load_type) //this check comes first so not defining an argument means we just go with default ammo
 		load_type = ammo_type
 
 	var/obj/item/ammo_casing/round_check = load_type
-	if(!starting && (caliber && initial(round_check.caliber) != caliber) || (!caliber && load_type != ammo_type))
+	if(!starting && !(caliber ? (caliber == initial(round_check.caliber)) : (ammo_type == load_type)))
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
@@ -81,7 +76,7 @@
 ///puts a round into the magazine
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
-	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
 		return FALSE
 
 	if (stored_ammo.len < max_ammo)
@@ -136,7 +131,7 @@
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		A.forceMove(drop_location())
-		if(!user.is_holding(src) || !user.put_in_hands(A))	//incase they're using TK
+		if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 			A.bounce_away(FALSE, NONE)
 		playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")

@@ -74,14 +74,13 @@
 	data["HouseBalance"] = my_card?.registered_account.account_balance
 	data["LastSpin"] = last_spin
 	data["Spinning"] = playing
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/card/id/C = H.get_idcard(TRUE)
-		if(C)
-			data["AccountBalance"] = C.registered_account.account_balance
-		else
-			data["AccountBalance"] = 0
-		data["CanUnbolt"] = (H.get_idcard() == my_card)
+	var/mob/living/carbon/human/H = user
+	var/obj/item/card/id/C = H.get_idcard(TRUE)
+	if(C)
+		data["AccountBalance"] = C.registered_account.account_balance
+	else
+		data["AccountBalance"] = 0
+	data["CanUnbolt"] = (C == my_card)
 
 	return data
 
@@ -147,7 +146,7 @@
 			var/potential_payout = chosen_bet_amount * potential_payout_mult
 
 			if(!check_bartender_funds(potential_payout))
-				return FALSE	 //bartender is too poor
+				return FALSE  //bartender is too poor
 
 			if(last_anti_spam > world.time) //do not cheat me
 				return FALSE
@@ -380,7 +379,7 @@
 			icon_state = "open"
 
 /obj/machinery/roulette/proc/shock(mob/user, prb)
-	if(!on)		// unpowered, no shock
+	if(!on) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you

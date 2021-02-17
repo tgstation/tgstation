@@ -51,8 +51,8 @@
 	else
 		. += "gridle"
 
-/obj/machinery/gibber/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/machinery/gibber/container_resist_act(mob/living/user)
 	go_out()
@@ -60,7 +60,7 @@
 /obj/machinery/gibber/relaymove(mob/living/user, direction)
 	go_out()
 
-/obj/machinery/gibber/attack_hand(mob/user)
+/obj/machinery/gibber/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -74,7 +74,7 @@
 		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
@@ -118,14 +118,12 @@
 	else
 		return ..()
 
-
-
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "empty gibber"
+	set name = "Empty gibber"
 	set src in oview(1)
 
-	if(usr.incapacitated())
+	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -141,6 +139,7 @@
 	if(!occupant)
 		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
+
 	use_power(1000)
 	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
@@ -174,16 +173,16 @@
 		var/mob/living/carbon/C = occupant
 		typeofmeat = C.type_of_meat
 		gibtype = C.gib_type
-		if(ismonkey(C))
-			typeofskin = /obj/item/stack/sheet/animalhide/monkey
-		else if(isalien(C))
+		if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+
 	var/occupant_volume
 	if(occupant?.reagents)
 		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
@@ -220,7 +219,7 @@
 			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
-	pixel_x = initial(pixel_x) //return to its spot after shaking
+	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
 	update_icon()
 
@@ -230,9 +229,9 @@
 
 /obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
 	var/atom/input = get_step(src, input_dir)
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/victim = AM
 
-		if(M.loc == input)
-			M.forceMove(src)
-			M.gib()
+		if(victim.loc == input)
+			victim.forceMove(src)
+			victim.gib()

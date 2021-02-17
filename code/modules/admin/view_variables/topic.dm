@@ -29,6 +29,12 @@
 				return
 
 			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
+
+			// If the new name is something that would be restricted by IC chat filters,
+			// give the admin a warning but allow them to do it anyway if they want.
+			if(CHAT_FILTER_CHECK(new_name) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") == "Cancel")
+				return
+
 			if( !new_name || !M )
 				return
 
@@ -58,9 +64,9 @@
 			if(!check_rights(R_SPAWN))
 				return
 
-			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
-			if(!istype(Mo))
-				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey", confidential = TRUE)
+			var/mob/living/carbon/human/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
+			if(!ismonkey(Mo))
+				to_chat(usr, "This can only be done to monkeys", confidential = TRUE)
 				return
 
 			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")

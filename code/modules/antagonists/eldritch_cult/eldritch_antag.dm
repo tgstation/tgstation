@@ -19,25 +19,25 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='cult'>The book whispers, the forbidden knowledge walks once again!<br>\
-	Your book allows you to research abilities, read it very carefully! you cannot undo what has been done!<br>\
-	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br> \
+	to_chat(owner, "<span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!<br>\
+	Your book allows you to research abilities. Read it very carefully, for you cannot undo what has been done!<br>\
+	You gain charges by either collecting influences or sacrificing people tracked by the living heart.<br> \
 	You can find a basic guide at : https://tgstation13.org/wiki/Heresy_101 </span>")
 
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
 	if(ishuman(current))
 		forge_primary_objectives()
-		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
-		gain_knowledge(/datum/eldritch_knowledge/living_heart)
-		gain_knowledge(/datum/eldritch_knowledge/codex_cicatrix)
+		for(var/eldritch_knowledge in GLOB.heretic_start_knowledge)
+			gain_knowledge(eldritch_knowledge)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
+	RegisterSignal(owner.current,COMSIG_LIVING_DEATH,.proc/on_death)
 	if(give_equipment)
 		equip_cultist()
 	return ..()
@@ -53,6 +53,8 @@
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
+
+	on_death()
 
 	return ..()
 
@@ -85,9 +87,19 @@
 
 /datum/antagonist/heretic/process()
 
+	if(owner.current.stat == DEAD)
+		return
+
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
+
+///What happens to the heretic once he dies, used to remove any custom perks
+/datum/antagonist/heretic/proc/on_death()
+
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		EK.on_death(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
@@ -138,7 +150,7 @@
 	if(mob_override)
 		current = mob_override
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
-	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
+	handle_clown_mutation(current, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
@@ -173,7 +185,7 @@
 				cultiewin = FALSE
 			count++
 	if(ascended)
-		parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
+		parts += "<span class='greentext big'>THE HERETIC ASCENDED!</span>"
 	else
 		if(cultiewin)
 			parts += "<span class='greentext'>The heretic was successful!</span>"

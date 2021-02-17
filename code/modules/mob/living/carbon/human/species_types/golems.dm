@@ -3,7 +3,7 @@
 	name = "Golem"
 	id = "iron golem"
 	species_traits = list(NOBLOOD,MUTCOLORS,NO_UNDERWEAR)
-	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
@@ -88,7 +88,7 @@
 	fixed_mut_color = "a3d"
 	meat = /obj/item/stack/ore/plasma
 	//Can burn and takes damage from heat
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER) //no RESISTHEAT, NOFIRE
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER) //no RESISTHEAT, NOFIRE
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
 	heatmod = 0 //fine until they blow up
 	prefix = "Plasma"
@@ -277,7 +277,7 @@
 	fixed_mut_color = "9E704B"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
@@ -312,27 +312,56 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 
-//Radioactive
+//Radioactive puncher, hits for burn but only as hard as human, slightly more durable against brute but less against everything else
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium golem"
 	fixed_mut_color = "7f0"
 	meat = /obj/item/stack/ore/uranium
-	info_text = "As an <span class='danger'>Uranium Golem</span>, you emit radiation pulses every once in a while. It won't harm fellow golems, but organic lifeforms will be affected."
-
+	info_text = "As an <span class='danger'>Uranium Golem</span>, your very touch burns and irradiates organic lifeforms. You don't hit as hard as most golems, but you are far more durable against blunt force trauma."
+	attack_verb = "burn"
+	attack_sound = 'sound/weapons/sear.ogg'
+	attack_type = BURN
 	var/last_event = 0
 	var/active = null
+	armor = 40
+	brutemod = 0.5
+	punchdamagelow = 1
+	punchdamagehigh = 10
+	punchstunthreshold = 9
 	prefix = "Uranium"
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
+	COOLDOWN_DECLARE(radiation_emission_cooldown)
 
-/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
-	if(!active)
-		if(world.time > last_event+30)
-			active = 1
-			radiation_pulse(H, 50)
-			last_event = world.time
-			active = null
+/datum/species/golem/uranium/proc/radiation_emission(mob/living/carbon/human/H)
+	if(!COOLDOWN_FINISHED(src, radiation_emission_cooldown))
+		return
+	else
+		radiation_pulse(H, 50)
+		COOLDOWN_START(src, radiation_emission_cooldown, 2 SECONDS)
+
+/datum/species/golem/uranium/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+	var/radiation_block = target.run_armor_check(affecting, RAD)
+	///standard damage roll for use in determining how much you irradiate per punch
+	var/attacker_irradiate_value = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+	target.apply_effect(attacker_irradiate_value*5, EFFECT_IRRADIATE, radiation_block)
+
+/datum/species/golem/uranium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
+	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && M != H &&  M.combat_mode)
+		radiation_emission(H)
+
+/datum/species/golem/uranium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
+	..()
+	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && user != H)
+		radiation_emission(H)
+
+/datum/species/golem/uranium/on_hit(obj/projectile/P, mob/living/carbon/human/H)
+	..()
+	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown))
+		radiation_emission(H)
 
 //Immune to physical bullets and resistant to brute, but very vulnerable to burn damage. Dusts on death.
 /datum/species/golem/sand
@@ -421,7 +450,7 @@
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(H))
-	playsound(get_turf(H), "sparks", 50, TRUE)
+	playsound(get_turf(H), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
@@ -437,10 +466,10 @@
 
 /datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.combat_mode)
 		reactive_teleport(H)
 
-/datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+/datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
 	if(world.time > last_teleport + teleport_cooldown && user != H)
 		reactive_teleport(H)
@@ -503,6 +532,20 @@
 	id = "bananium golem"
 	fixed_mut_color = "ff0"
 	say_mod = "honks"
+	inherent_traits = list(
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_CLUMSY,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+	)
 	punchdamagelow = 0
 	punchdamagehigh = 1
 	punchstunthreshold = 2 //Harmless and can't stun
@@ -524,10 +567,17 @@
 	last_banana = world.time
 	last_honk = world.time
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
+	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
 
 /datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+
+	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		REMOVE_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
 	var/clown_name = pick(GLOB.clown_names)
@@ -536,11 +586,11 @@
 
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_banana + banana_cooldown && M != H &&  M.combat_mode)
 		new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
 		last_banana = world.time
 
-/datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+/datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
 	if(world.time > last_banana + banana_cooldown && user != H)
 		new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
@@ -586,7 +636,7 @@
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors
-	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	prefix = "Runic"
 	special_names = null
@@ -641,7 +691,7 @@
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable. \
 	Being made of cloth, your body is magic resistant and faster than that of other golems, but weaker and less resilient."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR) //no mutcolors, and can burn
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
@@ -751,18 +801,25 @@
 /datum/species/golem/plastic
 	name = "Plastic Golem"
 	id = "plastic golem"
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_VENTCRAWLER_NUDE,
+	)
 	prefix = "Plastic"
 	special_names = list("Sheet", "Bag", "Bottle")
 	fixed_mut_color = "fffa"
 	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling and passing through plastic flaps as long as you are naked."
-
-/datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.ventcrawler = VENTCRAWLER_NUDE
-
-/datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.ventcrawler = initial(C.ventcrawler)
 
 /datum/species/golem/bronze
 	name = "Bronze Golem"
@@ -790,10 +847,10 @@
 
 /datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(world.time > last_gong_time + gong_cooldown &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_gong_time + gong_cooldown && M.combat_mode)
 		gong(H)
 
-/datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+/datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
 	if(world.time > last_gong_time + gong_cooldown)
 		gong(H)
@@ -806,7 +863,7 @@
 /datum/species/golem/bronze/proc/gong(mob/living/carbon/human/H)
 	last_gong_time = world.time
 	for(var/mob/living/M in get_hearers_in_view(7,H))
-		if(M.stat == DEAD)	//F
+		if(M.stat == DEAD) //F
 			continue
 		if(M == H)
 			H.show_message("<span class='narsiesmall'>You cringe with pain as your body rings around you!</span>", MSG_AUDIBLE)
@@ -840,7 +897,7 @@
 	special_names = list("Box")
 	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_NOFLASH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_NOFLASH)
 	limbs_id = "c_golem" //special sprites
 	attack_verb = "whips"
 	attack_sound = 'sound/weapons/whip.ogg'
@@ -856,7 +913,7 @@
 	var/last_creation = 0
 	var/brother_creation_cooldown = 300
 
-/datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+/datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	. = ..()
 	if(user != H)
 		return FALSE //forced reproduction is rape.
@@ -885,7 +942,7 @@
 	name = "Leather Golem"
 	id = "leather golem"
 	special_names = list("Face", "Man", "Belt") //Ah dude 4 strength 4 stam leather belt AHHH
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_STRONG_GRABBER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_STRONG_GRABBER)
 	prefix = "Leather"
 	fixed_mut_color = "624a2e"
 	info_text = "As a <span class='danger'>Leather Golem</span>, you are flammable, but you can grab things with incredible ease, allowing all your grabs to start at a strong level."
@@ -900,7 +957,7 @@
 	special_names = list("Boll","Weave")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
 	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_NOFLASH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_NOFLASH)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 
 /datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -922,7 +979,7 @@
 	mutantstomach = /obj/item/organ/stomach/bone
 	sexes = FALSE
 	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH)
 	species_language_holder = /datum/language_holder/golem/bone
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
 	var/datum/action/innate/bonechill/bonechill
@@ -1005,14 +1062,14 @@
 	name = "Snow Golem"
 	id = "snow golem"
 	limbs_id = "sn_golem"
-	fixed_mut_color = "null" //custom sprites
+	fixed_mut_color = null //custom sprites
 	armor = 45 //down from 55
 	burnmod = 3 //melts easily
 	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage, but you can generate snowballs and shoot cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
 	prefix = "Snow"
 	special_names = list("Flake", "Blizzard", "Storm")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors, no eye sprites
-	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 
 	var/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/ball
 	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
@@ -1023,7 +1080,7 @@
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
-	new /obj/item/reagent_containers/food/snacks/grown/carrot(get_turf(H))
+	new /obj/item/food/grown/carrot(get_turf(H))
 	qdel(H)
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -1052,94 +1109,6 @@
 	action_icon = 'icons/obj/toy.dmi'
 	action_icon_state = "snowball"
 
-/datum/species/golem/capitalist
-	name = "Capitalist Golem"
-	id = "capitalist golem"
-	prefix = "Capitalist"
-	attack_verb = "monopoliz"
-	limbs_id = "ca_golem"
-	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr. Moneybags", "Adam Smith")
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
-	changesource_flags = MIRROR_BADMIN
-	random_eligible = FALSE
-
-	var/last_cash = 0
-	var/cash_cooldown = 100
-
-/datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), ITEM_SLOT_HEAD)
-	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), ITEM_SLOT_EYES)
-	C.revive(full_heal = TRUE, admin_revive = FALSE)
-
-	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
-	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
-	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/capitalist/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_SAY)
-	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
-		C.RemoveSpell(spell)
-
-/datum/species/golem/capitalist/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	..()
-	if(isgolem(target))
-		return
-	if(target.nutrition >= NUTRITION_LEVEL_FAT)
-		target.set_species(/datum/species/golem/capitalist)
-		return
-	target.adjust_nutrition(40)
-
-/datum/species/golem/capitalist/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/mymoney.ogg', 25, FALSE)
-	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
-
-/datum/species/golem/soviet
-	name = "Soviet Golem"
-	id = "soviet golem"
-	prefix = "Comrade"
-	attack_verb = "nationaliz"
-	limbs_id = "s_golem"
-	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
-	changesource_flags = MIRROR_BADMIN
-	random_eligible = FALSE
-
-/datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), ITEM_SLOT_HEAD)
-	C.revive(full_heal = TRUE, admin_revive = FALSE)
-
-	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
-	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
-	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/soviet/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
-		C.RemoveSpell(spell)
-	UnregisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	..()
-	if(isgolem(target))
-		return
-	if(target.nutrition <= NUTRITION_LEVEL_STARVING)
-		target.set_species(/datum/species/golem/soviet)
-		return
-	target.adjust_nutrition(-40)
-
-/datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, FALSE)
-	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"
-
 /datum/species/golem/mhydrogen
 	name = "Metallic Hydrogen Golem"
 	id = "Metallic Hydrogen golem"
@@ -1147,7 +1116,7 @@
 	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique mineral makeup makes you immune to most types of damages."
 	prefix = "Metallic Hydrogen"
 	special_names = null
-	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
 
 /datum/species/golem/mhydrogen/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

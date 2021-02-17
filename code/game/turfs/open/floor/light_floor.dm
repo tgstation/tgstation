@@ -9,7 +9,6 @@
 	light_range = 5
 	icon_state = "light_on-1"
 	floor_tile = /obj/item/stack/tile/light
-	broken_states = list("light_broken")
 	///var to see if its on or off
 	var/on = TRUE
 	///defines on top
@@ -23,6 +22,9 @@
 	tiled_dirt = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
+
+/turf/open/floor/light/setup_broken_states()
+	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
@@ -66,12 +68,12 @@
 				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
 				set_light_color(currentcolor)
 				set_light(5)
-				light_range = 3
+				set_light_range(3)
 			if(LIGHTFLOOR_FLICKER)
 				icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
 				set_light_color(currentcolor)
 				set_light(3)
-				light_range = 2
+				set_light_range(2)
 			if(LIGHTFLOOR_BREAKING)
 				icon_state = "light_on_broken"
 				set_light(1)
@@ -156,12 +158,12 @@
 	can_modify_colour = FALSE
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  * * multitool The multitool used to interact with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ * * multitool The multitool used to interact with a menu
+ */
 /turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool)
 	if(!istype(user))
 		return FALSE

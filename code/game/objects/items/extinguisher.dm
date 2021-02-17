@@ -34,7 +34,7 @@
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	inhand_icon_state = "miniFE"
-	hitsound = null	//it is much lighter, after all.
+	hitsound = null //it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
@@ -89,8 +89,8 @@
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
-/obj/item/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
+/obj/item/extinguisher/attack(mob/M, mob/living/user)
+	if(!user.combat_mode && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
 	else
 		return ..()
@@ -231,7 +231,7 @@
 	addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, repetition), timer_seconds)
 
 /obj/item/extinguisher/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(!user.is_holding(src))
 		to_chat(user, "<span class='notice'>You must be holding the [src] in your hands do this!</span>")

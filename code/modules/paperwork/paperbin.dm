@@ -49,17 +49,17 @@
 	if(over_object == M)
 		M.put_in_hands(src)
 
-	else if(istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	else if(istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 	add_fingerprint(M)
 
-/obj/item/paper_bin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/paper_bin/attack_hand(mob/user)
+/obj/item/paper_bin/attack_hand(mob/user, list/modifiers)
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -148,7 +148,7 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 
-/obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
+/obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	..()
 	if(total_paper < 1)
 		qdel(src)

@@ -89,11 +89,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	SSblackbox.record_feedback("text", "religion_book", 1, "[choice]")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ */
 /obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -229,14 +229,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			qdel(sword)
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
-		if(SS.purified)
+		if(SS.theme == THEME_HOLY)
 			return
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			SS.usability = TRUE
-			SS.purified = TRUE
+			SS.theme = THEME_HOLY
 			SS.icon_state = "purified_soulstone"
 			for(var/mob/M in SS.contents)
 				if(M.mind)
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 
 /obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
-	if (user.a_intent == INTENT_HELP)
+	if (!user.combat_mode)
 		return ..()
 	else
 		return ..(M,user,heal_mode = FALSE)

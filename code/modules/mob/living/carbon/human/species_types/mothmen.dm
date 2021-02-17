@@ -3,10 +3,9 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE, HAS_MARKINGS)
+	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("moth_wings", "moth_antennae", "moth_markings")
-	default_features = list("moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
+	mutant_bodyparts = list("moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -17,7 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
-	wings_icon = "Megamoth"
+	wings_icons = list("Megamoth", "Mothra")
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
 
@@ -44,9 +43,12 @@
 		return
 	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
-		H.dna.features["original_moth_wings"] = H.dna.features["moth_wings"] //Fire apparently destroys DNA, so let's preserve that elsewhere
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "burnt_wings", /datum/mood_event/burnt_wings)
+		if(!H.dna.features["original_moth_wings"]) //Fire apparently destroys DNA, so let's preserve that elsewhere, checks if an original was already stored to prevent bugs
+			H.dna.features["original_moth_wings"] = H.dna.features["moth_wings"]
 		H.dna.features["moth_wings"] = "Burnt Off"
-		H.dna.features["original_moth_antennae"] = H.dna.features["moth_antennae"]
+		if(!H.dna.features["original_moth_antennae"]) //Stores antennae type for if they get restored later
+			H.dna.features["original_moth_antennae"] = H.dna.features["moth_antennae"]
 		H.dna.features["moth_antennae"] = "Burnt Off"
 		if(flying_species) //This is all exclusive to if the person has the effects of a potion of flight
 			if(H.movement_type & FLYING)
@@ -87,6 +89,6 @@
 	if(H.dna.features["original_moth_antennae"] != null)
 		H.dna.features["moth_antennae"] = H.dna.features["original_moth_antennae"]
 
-	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae" == "Burnt Off"])
+	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae"] == "Burnt Off")
 		H.dna.features["moth_antennae"] = "Plain"
 	handle_mutant_bodyparts(H)

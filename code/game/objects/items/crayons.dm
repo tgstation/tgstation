@@ -10,9 +10,9 @@
 #define RANDOM_RUNE "Random Rune"
 #define RANDOM_ANY "Random Anything"
 
-#define PAINT_NORMAL	1
-#define PAINT_LARGE_HORIZONTAL	2
-#define PAINT_LARGE_HORIZONTAL_ICON	'icons/effects/96x32.dmi'
+#define PAINT_NORMAL 1
+#define PAINT_LARGE_HORIZONTAL 2
+#define PAINT_LARGE_HORIZONTAL_ICON 'icons/effects/96x32.dmi'
 
 /*
  * Crayons
@@ -159,14 +159,13 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		if(has_cap)
-			is_capped = !is_capped
-			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
-			update_icon()
+	if(has_cap && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		is_capped = !is_capped
+		to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
+		update_icon()
 
 /obj/item/toy/crayon/CtrlClick(mob/user)
-	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		select_colour(user)
 	else
 		return ..()
@@ -262,7 +261,7 @@
 
 /obj/item/toy/crayon/proc/select_colour(mob/user)
 	var/chosen_colour = input(user, "", "Choose Color", paint_color) as color|null
-	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		paint_color = chosen_colour
 		return TRUE
 	return FALSE
@@ -287,10 +286,8 @@
 	if(ishuman(user))
 		if (istagger)
 			cost *= 0.5
-	var/charges_used = use_charges(user, cost)
-	if(!charges_used)
+	if(check_empty(user, cost))
 		return
-	. = charges_used
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
@@ -355,16 +352,16 @@
 			else
 				graf_rot = 0
 
-	var/list/click_params = params2list(params)
+	var/list/modifiers = params2list(params)
 	var/clickx
 	var/clicky
 
-	if(click_params && click_params["icon-x"] && click_params["icon-y"])
-		clickx = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-		clicky = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+		clickx = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 
 	if(!instant)
-		to_chat(user, "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>")
+		to_chat(user, "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>")
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -377,6 +374,11 @@
 	if(gang_mode || !instant)
 		if(!do_after(user, 50, target = target))
 			return
+
+	var/charges_used = use_charges(user, cost)
+	if(!charges_used)
+		return
+	. = charges_used
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
@@ -411,9 +413,9 @@
 						return
 			C.add_hiddenprint(user)
 			if(istagger)
-				C.AddComponent(/datum/component/art, GOOD_ART)
+				C.AddElement(/datum/element/art, GOOD_ART)
 			else
-				C.AddComponent(/datum/component/art, BAD_ART)
+				C.AddElement(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -630,6 +632,8 @@
 	if(contents.len > 0)
 		to_chat(user, "<span class='warning'>You can't fold down [src] with crayons inside!</span>")
 		return
+	if(flags_1 & HOLOGRAM_1)
+		return
 
 	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
 	to_chat(user, "<span class='notice'>You fold the [src] into cardboard.</span>")
@@ -683,9 +687,7 @@
 			paint_color = "#C0C0C0"
 		update_icon()
 		if(actually_paints)
-			H.lip_style = "spray_face"
-			H.lip_color = paint_color
-			H.update_body()
+			H.update_lips("spray_face", paint_color)
 		var/used = use_charges(user, 10, FALSE)
 		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
 
@@ -736,10 +738,7 @@
 			flash_color(C, flash_color=paint_color, flash_time=40)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
-			H.lip_style = "spray_face"
-			H.lip_color = paint_color
-			H.update_body()
-
+			H.update_lips("spray_face", paint_color)
 		. = use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(C, VAPOR, fraction * volume_multiplier)

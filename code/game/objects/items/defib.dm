@@ -85,7 +85,7 @@
 	toggle_paddles()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/defibrillator/attack_hand(mob/user)
+/obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
@@ -107,8 +107,8 @@
 	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
@@ -410,7 +410,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/user)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user, params)
 	if(busy)
 		return
 	if(req_defib && !defib.powered)
@@ -430,7 +430,8 @@
 			to_chat(user, "<span class='warning'>[src] are recharging!</span>")
 		return
 
-	if(user.a_intent == INTENT_DISARM)
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		do_disarm(M, user)
 		return
 
@@ -446,7 +447,7 @@
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		do_harm(H, user)
 		return
 
@@ -457,7 +458,7 @@
 	do_help(H, user)
 
 /obj/item/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(isliving(H.pulledby))		//CLEAR!
+	if(isliving(H.pulledby)) //CLEAR!
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, H))
 			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")

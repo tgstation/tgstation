@@ -87,10 +87,10 @@
 		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
-   as instructions and/or memes for the next generation of spessmen.
+as instructions and/or memes for the next generation of spessmen.
 
-   Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the curator's soapstone.
+Limited in location to station_z only. Can be smashed out or exploded,
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -128,6 +128,9 @@
 
 	var/turf/original_turf
 
+	/// Total vote count at or below which we won't persist.
+	var/delete_at = -5
+
 /obj/structure/chisel_message/Initialize(mapload)
 	. = ..()
 	SSpersistence.chisel_messages += src
@@ -137,6 +140,9 @@
 	if(!good_chisel_message_location(T))
 		persists = FALSE
 		return INITIALIZE_HINT_QDEL
+
+	if(like_keys.len - dislike_keys.len <= delete_at)
+		persists = FALSE
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
@@ -270,3 +276,6 @@
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)
+				return
+
+	persists = like_keys.len - dislike_keys.len > delete_at

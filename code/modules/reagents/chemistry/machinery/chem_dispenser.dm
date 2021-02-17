@@ -29,6 +29,8 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
+	///If the UI has the pH meter shown
+	var/show_ph = TRUE
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -191,23 +193,26 @@
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
 	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["showpH"] = show_ph
 
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "volume" = round(R.volume, 0.01), "pH" = R.ph, "purity" = R.purity))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
 	if (beaker)
-		data["beakerCurrentVolume"] = beakerCurrentVolume
+		data["beakerCurrentVolume"] = round(beakerCurrentVolume, 0.01)
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerCurrentpH"] = round(beaker.reagents.ph, 0.01)
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 		data["beakerTransferAmounts"] = null
+		data["beakerCurrentpH"] = null
 
 	var/chemicals[0]
 	var/is_hallucinating = FALSE
@@ -219,7 +224,7 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name))))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "pH" = temp.ph, "pHCol" = ConvertpHToCol(temp.ph))))
 	data["chemicals"] = chemicals
 	data["recipes"] = saved_recipes
 
@@ -333,7 +338,7 @@
 			recording_recipe = null
 			. = TRUE
 
-/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
+/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -349,7 +354,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
+	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
 	else
@@ -402,6 +407,32 @@
 		beaker = new_beaker
 	update_icon()
 	return TRUE
+
+//Converts the pH into a tgui readable color
+/obj/machinery/chem_dispenser/proc/ConvertpHToCol(pH)
+	switch(pH)
+		if(-INFINITY to 1)
+			return "red"
+		if(1 to 2)
+			return "orange"
+		if(2 to 3)
+			return "average"
+		if(3 to 4)
+			return "yellow" 
+		if(4 to 5)
+			return "olive"
+		if(5 to 6)
+			return "good"
+		if(6 to 8)
+			return "green"
+		if(8 to 9.5)
+			return "teal"
+		if(9.5 to 11)
+			return "blue"
+		if(11 to 12.5)
+			return "violet"
+		if(12.5 to INFINITY)
+			return "purple"
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null
@@ -456,6 +487,7 @@
 	working_state = null
 	nopower_state = null
 	pass_flags = PASSTABLE
+	show_ph = FALSE
 	dispensable_reagents = list(
 		/datum/reagent/water,
 		/datum/reagent/consumable/ice,
@@ -500,7 +532,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks(src)
@@ -561,7 +593,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks/beer(src)
@@ -609,7 +641,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
@@ -634,7 +666,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
@@ -703,7 +735,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)

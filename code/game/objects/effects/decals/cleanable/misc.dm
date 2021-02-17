@@ -16,8 +16,8 @@
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/ash, 30)
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/effect/decal/cleanable/ash/crematorium
 //crematoriums need their own ash cause default ash deletes itself if created in an obj
@@ -108,6 +108,7 @@
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -120,6 +121,7 @@
 	icon_state = "molten"
 	mergeable_decal = FALSE
 	beauty = -150
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
@@ -135,7 +137,7 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	beauty = -150
 
-/obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
+/obj/effect/decal/cleanable/vomit/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -250,6 +252,7 @@
 	icon_state = "garbage"
 	layer = OBJ_LAYER //To display the decal over wires.
 	beauty = -150
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/garbage/Initialize()
 	. = ..()

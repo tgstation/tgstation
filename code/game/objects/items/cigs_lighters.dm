@@ -82,7 +82,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == INTENT_HELP)
+	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>[cig] is already lit!</span>")
 		if(M == user)
@@ -168,10 +168,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
-	if(istype(glass))	//you can dip cigarettes into beakers
-		if(glass.reagents.trans_to(src, chem_volume, transfered_by = user))	//if reagents were transfered, show the message
+	if(istype(glass)) //you can dip cigarettes into beakers
+		if(glass.reagents.trans_to(src, chem_volume, transfered_by = user)) //if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
-		else			//if not, either the beaker was empty, or the cigarette was full
+		else //if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
 				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
 			else
@@ -296,7 +296,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light("<span class='notice'>[user] lights [src] with [M]'s burning body. What a cold-blooded badass.</span>")
 		return
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == INTENT_HELP)
+	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
 		if(M == user)
@@ -336,10 +336,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Carp Classic brand cigarette. A small label on its side indicates that it does NOT contain carpotoxin."
 
 /obj/item/clothing/mask/cigarette/carp/Initialize()
-    . = ..()
-    if(!prob(5))
-        return
-    reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
+	. = ..()
+	if(!prob(5))
+		return
+	reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
@@ -548,15 +548,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		STOP_PROCESSING(SSobj, src)
 		return
 	open_flame()
-	if(reagents?.total_volume)	//	check if it has any reagents at all
+	if(reagents?.total_volume) // check if it has any reagents at all
 		handle_reagents()
 
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/G = O
+	if(istype(O, /obj/item/food/grown))
+		var/obj/item/food/grown/G = O
 		if(!packeditem)
-			if(G.dry == 1)
+			if(HAS_TRAIT(G, TRAIT_DRIED))
 				to_chat(user, "<span class='notice'>You stuff [O] into [src].</span>")
 				smoketime = 13 * 60
 				packeditem = TRUE
@@ -622,7 +622,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
-	custom_price = 55
+	custom_price = PAYCHECK_ASSISTANT * 1.1
 	light_system = MOVABLE_LIGHT
 	light_range = 2
 	light_power = 0.6
@@ -734,7 +734,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == INTENT_HELP)
+	if(lit && cig && !user.combat_mode)
 		if(cig.lit)
 			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
 		if(M == user)
@@ -825,9 +825,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/O = target
-		if(O.dry)
+	if(istype(target, /obj/item/food/grown))
+		var/obj/item/food/grown/O = target
+		if(HAS_TRAIT(O, TRAIT_DRIED))
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
 			target.reagents.trans_to(R, R.chem_volume, transfered_by = user)

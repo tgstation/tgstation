@@ -5,6 +5,7 @@ $include dbconfig.txt
 $include comms.txt
 $include antag_rep.txt
 $include resources.txt
+$include interviews.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -106,6 +107,9 @@ LOG_ATTACK
 
 ## log pda messages
 LOG_PDA
+
+## log uplink purchases
+LOG_UPLINK
 
 ## log telecomms messages
 LOG_TELECOMMS
@@ -241,6 +245,9 @@ CHECK_RANDOMIZER
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
+## Discord bot command prefix, if the discord bot is used
+# DISCORDBOTCOMMANDPREFIX ?
+
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
 ## This will take priority over the game logs address during reboot.
@@ -341,6 +348,10 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
 #PANIC_BUNKER
+
+## Uncomment to enable the interview system for players who are below the living hour requirement instead of explicitly blocking them from the server
+## Note this requires the PANIC_BUNKER to be enabled to do anything.
+#PANIC_BUNKER_INTERVIEW
 
 ## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection
 #PANIC_BUNKER_LIVING 90

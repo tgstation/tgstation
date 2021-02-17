@@ -75,7 +75,7 @@
 	if (!diode)
 		to_chat(user, "<span class='notice'>You point [src] at [target], but nothing happens!</span>")
 		return
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
@@ -162,12 +162,12 @@
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
-	var/list/click_params = params2list(params)
-	if(click_params)
-		if(click_params["icon-x"])
-			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
-		if(click_params["icon-y"])
-			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+	var/list/modifiers = params2list(params)
+	if(modifiers)
+		if(LAZYACCESS(modifiers, ICON_X))
+			I.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)
+		if(LAZYACCESS(modifiers, ICON_Y))
+			I.pixel_y = (text2num(LAZYACCESS(modifiers, ICON_Y)) - 16)
 	else
 		I.pixel_x = target.pixel_x + rand(-5,5)
 		I.pixel_y = target.pixel_y + rand(-5,5)

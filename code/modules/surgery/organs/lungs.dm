@@ -1,6 +1,6 @@
 /obj/item/organ/lungs
 	var/failed = FALSE
-	var/operated = FALSE	//whether we can still have our damages fixed through surgery
+	var/operated = FALSE //whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST
@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = STANDARD_ORGAN_DECAY
+	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
 
 	low_threshold_passed = "<span class='warning'>You feel short of breath.</span>"
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
@@ -21,6 +21,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	//Breath damage
+	//These numbers are roughly equivilant to molar count at room temperature, they scale up and down with temp tho
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0
@@ -34,13 +35,12 @@
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
+	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
 	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
 	var/healium_sleep_min = 6
-	///Minimum amount of hexane needed to start having effect
-	var/hexane_min = 2
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -75,7 +75,6 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
-
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if(H.status_flags & GODMODE)
 		H.failed_last_breath = FALSE //clear oxy issues
@@ -85,7 +84,7 @@
 		return
 
 	if(!breath || (breath.total_moles() == 0))
-		if(H.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
+		if(H.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
 			return
 		if(H.health >= H.crit_threshold)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -94,13 +93,13 @@
 
 		H.failed_last_breath = TRUE
 		if(safe_oxygen_min)
-			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+			H.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		else if(safe_toxins_min)
-			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			H.throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
 		else if(safe_co2_min)
-			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			H.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
 		else if(safe_nitro_min)
-			H.throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+			H.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
 	var/gas_breathed = 0
@@ -130,8 +129,9 @@
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
-
-
+	//Vars for n2o and healium induced euphorias.
+	var/n2o_euphoria = EUPHORIA_LAST_FLAG
+	var/healium_euphoria = EUPHORIA_LAST_FLAG
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
@@ -139,7 +139,7 @@
 		if(O2_pp > safe_oxygen_max)
 			var/ratio = (breath_gases[/datum/gas/oxygen][MOLES]/safe_oxygen_max) * 10
 			H.apply_damage_type(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
-			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+			H.throw_alert("too_much_oxy", /atom/movable/screen/alert/too_much_oxy)
 		else
 			H.clear_alert("too_much_oxy")
 
@@ -147,7 +147,7 @@
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
 			gas_breathed = handle_too_little_breath(H, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
-			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+			H.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -167,7 +167,7 @@
 		if(N2_pp > safe_nitro_max)
 			var/ratio = (breath_gases[/datum/gas/nitrogen][MOLES]/safe_nitro_max) * 10
 			H.apply_damage_type(clamp(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
-			H.throw_alert("too_much_nitro", /obj/screen/alert/too_much_nitro)
+			H.throw_alert("too_much_nitro", /atom/movable/screen/alert/too_much_nitro)
 		else
 			H.clear_alert("too_much_nitro")
 
@@ -175,7 +175,7 @@
 	if(safe_nitro_min)
 		if(N2_pp < safe_nitro_min)
 			gas_breathed = handle_too_little_breath(H, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
-			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
+			H.throw_alert("nitro", /atom/movable/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -200,7 +200,7 @@
 				H.apply_damage_type(3, co2_damage_type) // Lets hurt em a little, let them know we mean business
 				if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					H.apply_damage_type(8, co2_damage_type)
-				H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
+				H.throw_alert("too_much_co2", /atom/movable/screen/alert/too_much_co2)
 			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 				H.emote("cough")
 
@@ -212,7 +212,7 @@
 	if(safe_co2_min)
 		if(CO2_pp < safe_co2_min)
 			gas_breathed = handle_too_little_breath(H, CO2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
-			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			H.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -233,7 +233,7 @@
 		if(Toxins_pp > safe_toxins_max)
 			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_toxins_max) * 10
 			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+			H.throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
 		else
 			H.clear_alert("too_much_tox")
 
@@ -242,7 +242,7 @@
 	if(safe_toxins_min)
 		if(Toxins_pp < safe_toxins_min)
 			gas_breathed = handle_too_little_breath(H, Toxins_pp, safe_toxins_min, breath_gases[/datum/gas/plasma][MOLES])
-			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			H.throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -258,27 +258,24 @@
 
 	//-- TRACES --//
 
-	if(breath)	// If there's some other shit in the air lets deal with it here.
+	if(breath) // If there's some other shit in the air lets deal with it here.
 
 	// N2O
 
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 		if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
+			H.throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
 			H.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 				H.Sleeping(min(H.AmountSleeping() + 100, 200))
-		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			H.clear_alert("too_much_n2o")
 			if(prob(20))
+				n2o_euphoria = EUPHORIA_ACTIVE
 				H.emote(pick("giggle", "laugh"))
-				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
-		if(safe_toxins_max && SA_pp > safe_toxins_max*3)
-			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_toxins_max)
-			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
-		else
-			H.clear_alert("too_much_tox")
+			n2o_euphoria = EUPHORIA_INACTIVE
+			H.clear_alert("too_much_n2o")
 
 
 	// BZ
@@ -287,13 +284,8 @@
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 10
 			H.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
-			if(prob(33))
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
-
-		else if(bz_pp > 0.01)
-			H.hallucination += 5
-			H.reagents.add_reagent(/datum/reagent/bz_metabolites,1)
-
+		if(bz_pp > BZ_brain_damage_min && prob(33))
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 	// Tritium
 		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
@@ -305,15 +297,10 @@
 	// Nitryl
 		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
 		if (prob(nitryl_pp))
-			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>")
-		if (nitryl_pp >40)
-			H.emote("gasp")
-			H.adjustFireLoss(10)
-			if (prob(nitryl_pp/2))
-				to_chat(H, "<span class='alert'>Your throat closes up!</span>")
-				H.silent = max(H.silent, 3)
-		else
-			H.adjustFireLoss(nitryl_pp/4)
+			H.emote("burp")
+		if (prob(nitryl_pp) && nitryl_pp>10)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
+			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			H.reagents.add_reagent(/datum/reagent/nitryl,1)
@@ -343,10 +330,11 @@
 		if(healium_pp > gas_stimulation_min)
 			if(prob(15))
 				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
-				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+				healium_euphoria = EUPHORIA_ACTIVE
 				H.emote("gasp")
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			healium_euphoria = EUPHORIA_INACTIVE
+
 		if(healium_pp > healium_para_min)
 			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
 			if(healium_pp > healium_sleep_min)
@@ -437,6 +425,12 @@
 		// Clear out moods when no miasma at all
 		else
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+
+		if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		// Activate mood on first flag, remove on second, do nothing on third.
 
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
@@ -535,7 +529,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -566,5 +560,5 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

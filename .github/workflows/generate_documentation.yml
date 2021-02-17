@@ -1,0 +1,31 @@
+name: Generate documentation
+on:
+  push:
+    branches:
+    - master
+jobs:
+  generate_documentation:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm
+      - name: Install SpacemanDMM
+        run: bash tools/ci/install_spaceman_dmm.sh dmdoc
+      - name: Generate documentation
+        run: |
+          ~/dmdoc
+          touch dmdoc/.nojekyll
+          echo codedocs.tgstation13.org > dmdoc/CNAME
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          BRANCH: gh-pages
+          CLEAN: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SINGLE_COMMIT: true
+          FOLDER: dmdoc

@@ -96,38 +96,38 @@
 
 /obj/item/storage/box/ingredients/wildcard/PopulateContents()
 	for(var/i in 1 to 7)
-		var/randomFood = pick(/obj/item/reagent_containers/food/snacks/grown/chili,
-							  /obj/item/reagent_containers/food/snacks/grown/tomato,
-							  /obj/item/reagent_containers/food/snacks/grown/carrot,
-							  /obj/item/reagent_containers/food/snacks/grown/potato,
-							  /obj/item/reagent_containers/food/snacks/grown/potato/sweet,
-							  /obj/item/reagent_containers/food/snacks/grown/apple,
-							  /obj/item/reagent_containers/food/snacks/chocolatebar,
-							  /obj/item/reagent_containers/food/snacks/grown/cherries,
-							  /obj/item/reagent_containers/food/snacks/grown/banana,
-							  /obj/item/reagent_containers/food/snacks/grown/cabbage,
-							  /obj/item/reagent_containers/food/snacks/grown/soybeans,
-							  /obj/item/reagent_containers/food/snacks/grown/corn,
-							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
-							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+		var/randomFood = pick(/obj/item/food/grown/chili,
+							  /obj/item/food/grown/tomato,
+							  /obj/item/food/grown/carrot,
+							  /obj/item/food/grown/potato,
+							  /obj/item/food/grown/potato/sweet,
+							  /obj/item/food/grown/apple,
+							  /obj/item/food/chocolatebar,
+							  /obj/item/food/grown/cherries,
+							  /obj/item/food/grown/banana,
+							  /obj/item/food/grown/cabbage,
+							  /obj/item/food/grown/soybeans,
+							  /obj/item/food/grown/corn,
+							  /obj/item/food/grown/mushroom/plumphelmet,
+							  /obj/item/food/grown/mushroom/chanterelle)
 		new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
 	theme_name = "fiesta"
 
 /obj/item/storage/box/ingredients/fiesta/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/tortilla(src)
+	new /obj/item/food/tortilla(src)
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
-		new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+		new /obj/item/food/grown/corn(src)
+		new /obj/item/food/grown/soybeans(src)
+		new /obj/item/food/grown/chili(src)
 
 /obj/item/storage/box/ingredients/italian
 	theme_name = "italian"
 
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/food/grown/tomato(src)
 		new /obj/item/food/meatball(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
@@ -136,21 +136,21 @@
 
 /obj/item/storage/box/ingredients/vegetarian/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/grown/carrot(src)
-	new /obj/item/reagent_containers/food/snacks/grown/eggplant(src)
-	new /obj/item/reagent_containers/food/snacks/grown/potato(src)
-	new /obj/item/reagent_containers/food/snacks/grown/apple(src)
-	new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/eggplant(src)
+	new /obj/item/food/grown/potato(src)
+	new /obj/item/food/grown/apple(src)
+	new /obj/item/food/grown/corn(src)
+	new /obj/item/food/grown/tomato(src)
 
 /obj/item/storage/box/ingredients/american
 	theme_name = "american"
 
 /obj/item/storage/box/ingredients/american/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
-		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
+		new /obj/item/food/grown/potato(src)
+		new /obj/item/food/grown/tomato(src)
+		new /obj/item/food/grown/corn(src)
 	new /obj/item/food/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
@@ -158,42 +158,42 @@
 
 /obj/item/storage/box/ingredients/fruity/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/grown/apple(src)
-		new /obj/item/reagent_containers/food/snacks/grown/citrus/orange(src)
-	new /obj/item/reagent_containers/food/snacks/grown/citrus/lemon(src)
-	new /obj/item/reagent_containers/food/snacks/grown/citrus/lime(src)
-	new /obj/item/reagent_containers/food/snacks/grown/watermelon(src)
+		new /obj/item/food/grown/apple(src)
+		new /obj/item/food/grown/citrus/orange(src)
+	new /obj/item/food/grown/citrus/lemon(src)
+	new /obj/item/food/grown/citrus/lime(src)
+	new /obj/item/food/grown/watermelon(src)
 
 /obj/item/storage/box/ingredients/sweets
 	theme_name = "sweets"
 
 /obj/item/storage/box/ingredients/sweets/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/grown/cherries(src)
-		new /obj/item/reagent_containers/food/snacks/grown/banana(src)
-	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
-	new /obj/item/reagent_containers/food/snacks/grown/cocoapod(src)
-	new /obj/item/reagent_containers/food/snacks/grown/apple(src)
+		new /obj/item/food/grown/cherries(src)
+		new /obj/item/food/grown/banana(src)
+	new /obj/item/food/chocolatebar(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/food/grown/apple(src)
 
 /obj/item/storage/box/ingredients/delights
 	theme_name = "delights"
 
 /obj/item/storage/box/ingredients/delights/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/grown/potato/sweet(src)
-		new /obj/item/reagent_containers/food/snacks/grown/bluecherries(src)
-	new /obj/item/reagent_containers/food/snacks/grown/vanillapod(src)
-	new /obj/item/reagent_containers/food/snacks/grown/cocoapod(src)
-	new /obj/item/reagent_containers/food/snacks/grown/berries(src)
+		new /obj/item/food/grown/potato/sweet(src)
+		new /obj/item/food/grown/bluecherries(src)
+	new /obj/item/food/grown/vanillapod(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/food/grown/berries(src)
 
 /obj/item/storage/box/ingredients/grains
 	theme_name = "grains"
 
 /obj/item/storage/box/ingredients/grains/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/snacks/grown/oat(src)
-	new /obj/item/reagent_containers/food/snacks/grown/wheat(src)
-	new /obj/item/reagent_containers/food/snacks/grown/cocoapod(src)
+		new /obj/item/food/grown/oat(src)
+	new /obj/item/food/grown/wheat(src)
+	new /obj/item/food/grown/cocoapod(src)
 	new /obj/item/reagent_containers/honeycomb(src)
 	new /obj/item/seeds/poppy(src)
 
@@ -203,8 +203,8 @@
 /obj/item/storage/box/ingredients/carnivore/PopulateContents()
 	new /obj/item/food/meat/slab/bear(src)
 	new /obj/item/food/meat/slab/spider(src)
-	new /obj/item/reagent_containers/food/snacks/spidereggs(src)
-	new /obj/item/food/carpmeat(src)
+	new /obj/item/food/spidereggs(src)
+	new /obj/item/food/fishmeat/carp(src)
 	new /obj/item/food/meat/slab/xeno(src)
 	new /obj/item/food/meat/slab/corgi(src)
 	new /obj/item/food/meatball(src)
@@ -214,10 +214,10 @@
 
 /obj/item/storage/box/ingredients/exotic/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/food/carpmeat(src)
-		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
-		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
-	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+		new /obj/item/food/fishmeat/carp(src)
+		new /obj/item/food/grown/soybeans(src)
+		new /obj/item/food/grown/cabbage(src)
+	new /obj/item/food/grown/chili(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
@@ -345,7 +345,7 @@
 	///List of mobs that have already been mobbed.
 	var/static/list/mob_mobs = list()
 
-#define NICKNAME_CAP	(MAX_NAME_LEN/2)
+#define NICKNAME_CAP (MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(resistance_flags & ON_FIRE)
@@ -408,3 +408,15 @@
 	name = "poppy bouquet"
 	desc = "A bouquet of poppies. You feel loved just looking at it."
 	icon_state = "poppybouquet"
+
+/obj/item/bouquet/rose
+	name = "rose bouquet"
+	desc = "A bouquet of roses. A bundle of love."
+	icon_state = "rosebouquet"
+
+/obj/item/gun_maintenance_supplies
+	name = "gun maintenance supplies"
+	desc = "plastic box containing gun maintenance supplies and spare parts. Use them on a Mosin Nagant to clean it."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "plasticbox"
+	w_class = WEIGHT_CLASS_SMALL

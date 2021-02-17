@@ -1,7 +1,7 @@
 /* Gifts and wrapping paper
  * Contains:
- *		Gifts
- *		Wrapping Paper
+ * Gifts
+ * Wrapping Paper
  */
 
 /*
@@ -72,8 +72,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/toy/beach_ball,
 		/obj/item/toy/beach_ball/holoball,
 		/obj/item/banhammer,
-		/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
-		/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+		/obj/item/food/grown/ambrosia/deus,
+		/obj/item/food/grown/ambrosia/vulgaris,
 		/obj/item/paicard,
 		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,

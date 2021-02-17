@@ -42,9 +42,9 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = FALSE
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
+				for(var/obj/item/potential_snack in oview(src,3))
+					if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+						movement_target = potential_snack
 						break
 			if(movement_target)
 				stop_automated_movement = TRUE
@@ -54,7 +54,7 @@
 				sleep(3)
 				step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+				if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					var/turf/T = get_turf(movement_target)
 					if(!T)
 						return
@@ -100,7 +100,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/shaved = FALSE
-	var/nofur = FALSE 		//Corgis that have risen past the material plane of existence.
+	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
 
 /mob/living/simple_animal/pet/dog/corgi/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -140,7 +140,7 @@
 
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
-	desc = "This dog can tell someting smells around here, and that something is CRIME!"
+	desc = "This dog can tell something smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/bullterrier
 	name = "\improper bull terrier"
@@ -169,8 +169,7 @@
 	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
-		if(!D.owner)
-			D.update_owner(src)
+		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
 			break
 
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
@@ -190,15 +189,19 @@
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	user.set_machine(src)
+	var/list/dat = list()
 
+	dat += "<table>"
+	dat += "<tr><td><B>Head:</B></td><td><A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Collar:</B></td><td><A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'>Nothing"]</A>"
-	dat += "<br><B>Back:</B> <A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'>Nothing"]</A>"
-	dat += "<br><B>Collar:</B> <A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'>Nothing"]</A>"
-
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "mob[REF(src)]")
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
 
 /mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
@@ -410,7 +413,7 @@
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/ian
 	name = "Ian"
-	real_name = "Ian"	//Intended to hold the name without altering it.
+	real_name = "Ian" //Intended to hold the name without altering it.
 	gender = MALE
 	desc = "It's the HoP's beloved corgi."
 	response_help_continuous = "pets"
@@ -434,11 +437,7 @@
 	if(age == 0)
 		var/turf/target = get_turf(loc)
 		if(target)
-			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
-			P.name = "Ian"
-			P.real_name = "Ian"
-			P.gender = MALE
-			P.desc = "It's the HoP's beloved corgi puppy."
+			new /mob/living/simple_animal/pet/dog/corgi/puppy/ian(target)
 			Write_Memory(FALSE)
 			return INITIALIZE_HINT_QDEL
 	else if(age == record_age)
@@ -463,8 +462,8 @@
 /mob/living/simple_animal/pet/dog/corgi/ian/proc/Read_Memory()
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
-		S["age"] 		>> age
-		S["record_age"]	>> record_age
+		S["age"] >> age
+		S["record_age"] >> record_age
 		S["saved_head"] >> saved_head
 		fdel("data/npc_saves/Ian.sav")
 	else
@@ -605,8 +604,15 @@
 		return
 	..()
 
+//PUPPY IAN! SQUEEEEEEEEE~
+/mob/living/simple_animal/pet/dog/corgi/puppy/ian
+	name = "Ian"
+	real_name = "Ian"
+	gender = MALE
+	desc = "It's the HoP's beloved corgi puppy."
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
+
+/mob/living/simple_animal/pet/dog/corgi/puppy/void //Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
 	desc = "A corgi puppy that has been infused with deep space energy. It's staring back..."
@@ -620,7 +626,7 @@
 	held_state = "void_puppy"
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
-	return 1	//Void puppies can navigate space.
+	return 1 //Void puppies can navigate space.
 
 
 //LISA! SQUEEEEEEEEE~

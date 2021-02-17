@@ -10,9 +10,9 @@
 	var/icon_on = "potato_active"
 	var/detonation_timerid
 	var/activation_time = 0
-	var/timer = 600			//deciseconds
+	var/timer = 600 //deciseconds
 	var/show_timer = FALSE
-	var/reusable = FALSE		//absolute madman
+	var/reusable = FALSE //absolute madman
 	var/sticky = TRUE
 	var/forceful_attachment = TRUE
 	var/stimulant = TRUE
@@ -68,17 +68,20 @@
 	return ..()
 
 /obj/item/hot_potato/process()
-	if(stimulant)
-		if(isliving(loc))
-			var/mob/living/L = loc
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetSleeping(0)
-			L.SetImmobilized(0)
-			L.SetParalyzed(0)
-			L.SetUnconscious(0)
-			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
-			colorize(L)
+	if(!isliving(loc))
+		return
+	var/mob/living/L = loc
+	colorize(L)
+	if(!stimulant)
+		return
+	L.SetStun(0)
+	L.SetKnockdown(0)
+	L.SetSleeping(0)
+	L.SetImmobilized(0)
+	L.SetParalyzed(0)
+	L.SetUnconscious(0)
+	L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5)) //If you don't have legs or get bola'd, tough luck!
+
 
 /obj/item/hot_potato/examine(mob/user)
 	. = ..()
@@ -172,3 +175,4 @@
 	sticky = FALSE
 	reusable = TRUE
 	forceful_attachment = FALSE
+	stimulant = FALSE

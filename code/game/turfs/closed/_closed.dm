@@ -5,6 +5,7 @@
 	blocks_air = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
+	pass_flags_self = PASSCLOSEDTURF
 
 /turf/closed/AfterChange()
 	. = ..()
@@ -12,11 +13,6 @@
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
-
-/turf/closed/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
-		return TRUE
 
 /turf/closed/indestructible
 	name = "wall"
@@ -173,7 +169,6 @@
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
-
 /turf/closed/indestructible/opsglass
 	name = "window"
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
@@ -243,6 +238,17 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "necro1"
 	return TRUE
+
+/turf/closed/indestructible/iron
+	name = "impervious iron wall"
+	desc = "A wall with tough iron plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron_wall-0"
+	base_icon_state = "iron_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
+	opacity = FALSE
 
 /turf/closed/indestructible/riveted/boss
 	name = "necropolis wall"

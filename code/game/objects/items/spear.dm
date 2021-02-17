@@ -29,6 +29,7 @@
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	update_icon()
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
@@ -107,7 +108,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
-	explosive.prime()
+	explosive.detonate()
 	user.gib()
 	qdel(src)
 	return BRUTELOSS
@@ -131,7 +132,7 @@
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
-		explosive.prime(lanced_by=user)
+		explosive.detonate(lanced_by=user)
 		qdel(src)
 
 //GREY TIDE
@@ -164,13 +165,13 @@
 /*
  * Bone Spear
  */
-/obj/item/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 12
 	throwforce = 22
-	armour_penetration = 15				//Enhanced armor piercing
+	armour_penetration = 15 //Enhanced armor piercing
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()

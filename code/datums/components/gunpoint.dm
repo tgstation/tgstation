@@ -5,7 +5,7 @@
 /// How long it takes from stage 2 starting to move up to stage 3
 #define GUNPOINT_DELAY_STAGE_3 7.5 SECONDS
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
-#define GUNPOINT_BASE_WOUND_BONUS	5
+#define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
 #define GUNPOINT_MULT_STAGE_1 1
 /// As above, for stage 2
@@ -38,7 +38,7 @@
 	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
 	shooter.visible_message("<span class='danger'>[shooter] aims [weapon] point blank at [target]!</span>", \
-		"<span class='danger'>You aim [weapon] point blank at [target]!</span>", target)
+		"<span class='danger'>You aim [weapon] point blank at [target]!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] aims [weapon] point blank at you!</span>")
 
 	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP)
@@ -80,18 +80,18 @@
 		return
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
-		"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)
+		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] bumps into you and fumbles [shooter.p_their()] aim!</span>")
 	qdel(src)
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
-/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
+	if(T != target || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
-		"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)
+		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] bumps into you and fumbles [shooter.p_their()] aim!</span>")
 	qdel(src)
 
@@ -130,7 +130,7 @@
 
 	if(!weapon.can_shoot() || !weapon.can_trigger_gun(shooter) || (weapon.weapon_weight == WEAPON_HEAVY && shooter.get_inactive_held_item()))
 		shooter.visible_message("<span class='danger'>[shooter] fumbles [weapon]!</span>", \
-			"<span class='danger'>You fumble [weapon] and fail to fire at [target]!</span>", target)
+			"<span class='danger'>You fumble [weapon] and fail to fire at [target]!</span>", ignored_mobs = target)
 		to_chat(target, "<span class='userdanger'>[shooter] fumbles [weapon] and fails to fire at you!</span>")
 		qdel(src)
 		return
@@ -159,14 +159,14 @@
 
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
-		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", target)
+		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] breaks [shooter.p_their()] aim on you!</span>")
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	qdel(src)
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
 /datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/mob/living/shooter = parent
 	if(attacker == shooter)
@@ -184,7 +184,7 @@
 	if(prob(flinch_chance))
 		shooter.visible_message("<span class='danger'>[shooter] flinches!</span>", \
 			"<span class='danger'>You flinch!</span>")
-		trigger_reaction()
+		INVOKE_ASYNC(src, .proc/trigger_reaction)
 
 #undef GUNPOINT_SHOOTER_STRAY_RANGE
 #undef GUNPOINT_DELAY_STAGE_2

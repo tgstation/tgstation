@@ -1,11 +1,11 @@
 /* Morgue stuff
  * Contains:
- *		Morgue
- *		Morgue tray
- *		Crematorium
- *		Creamatorium
- *		Crematorium tray
- *		Crematorium button
+ * Morgue
+ * Morgue tray
+ * Crematorium
+ * Creamatorium
+ * Crematorium tray
+ * Crematorium button
  */
 
 /*
@@ -58,10 +58,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return
 	open()
 
-/obj/structure/bodycontainer/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/bodycontainer/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/bodycontainer/attack_hand(mob/user)
+/obj/structure/bodycontainer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -101,7 +101,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return ..()
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 5)
+	if (!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron (loc, 5)
 	recursive_organ_check(src)
 	qdel(src)
 
@@ -126,7 +127,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
-	connected.setDir(dir)
+	if (connected)
+		connected.setDir(dir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
@@ -144,7 +146,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
@@ -181,7 +183,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			icon_state = "morgue1"
 		else
 			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
+			var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 			if(!length(compiled)) // No mobs?
 				icon_state = "morgue3"
 				return
@@ -295,8 +297,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/i_scream in GetAllContents(/mob/living))
-		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
+	for(var/i_scream in get_all_contents_type(/mob/living))
+		var/obj/item/food/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)
 		icecreams += IC
@@ -314,7 +316,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -325,13 +327,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return ..()
 
 /obj/structure/tray/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 2)
+	new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
-/obj/structure/tray/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/tray/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/tray/attack_hand(mob/user)
+/obj/structure/tray/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -388,16 +390,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
+	pass_flags_self = PASSTABLE
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return TRUE
+	if(.)
+		return
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
-
-/obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)

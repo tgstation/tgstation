@@ -2,9 +2,9 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
-	var/lootcount = 1		//how many items will be spawned
-	var/lootdoubles = TRUE	//if the same item can be spawned twice
-	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	var/lootcount = 1 //how many items will be spawned
+	var/lootdoubles = TRUE //if the same item can be spawned twice
+	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
@@ -139,7 +139,7 @@
 				/obj/effect/spawner/lootdrop/botanical_waste = 8,
 				/obj/effect/spawner/lootdrop/cigbutt = 8,
 				/obj/item/reagent_containers/syringe = 5,
-				/obj/item/reagent_containers/food/snacks/deadmouse = 2,
+				/obj/item/food/deadmouse = 2,
 				/obj/item/light/tube/broken = 3,
 				/obj/item/light/tube/broken = 1,
 				/obj/item/trash/candle = 1)
@@ -169,7 +169,7 @@
 	name = "botanical waste spawner"
 	loot = list(/obj/item/grown/bananapeel = 60,
 				/obj/item/grown/corncob = 30,
-				/obj/item/reagent_containers/food/snacks/grown/bungopit = 10)
+				/obj/item/food/grown/bungopit = 10)
 
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"
@@ -202,7 +202,7 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
+			/obj/item/food/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
@@ -245,6 +245,13 @@
 
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FILLED_MAINT))
+		lootcount = FLOOR(lootcount * 1.5, 1)
+
+	else if(HAS_TRAIT(SSstation, STATION_TRAIT_EMPTY_MAINT))
+		lootcount = FLOOR(lootcount * 0.5, 1)
+
 	. = ..()
 
 /obj/effect/spawner/lootdrop/maintenance/two
@@ -498,8 +505,7 @@
 	name = "secure command circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/crew,
-				/obj/item/circuitboard/computer/communications,
-				/obj/item/circuitboard/computer/card
+				/obj/item/circuitboard/computer/communications
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/rnd_secure
@@ -673,4 +679,40 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robust = 2,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1
+	)
+
+/obj/effect/spawner/lootdrop/decorative_material
+	lootcount = 1
+	loot = list(
+		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
+		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
+		/obj/item/stack/tile/bronze/thirty = 20,
+		/obj/item/stack/tile/noslip{amount = 20} = 10,
+		/obj/item/stack/sheet/plastic{amount = 30} = 10,
+		/obj/item/stack/tile/pod{amount = 20} = 4,
+		/obj/item/stack/tile/pod/light{amount = 20} = 3,
+		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
+	)
+
+/obj/effect/spawner/lootdrop/maintenance_carpet
+	lootcount = 1
+	loot = list(
+		/obj/item/stack/tile/carpet{amount = 30} = 35,
+		/obj/item/stack/tile/carpet/black{amount = 30} = 20,
+		/obj/item/stack/tile/carpet/donk/thirty = 15,
+		/obj/item/stack/tile/carpet/stellar/thirty = 15,
+		/obj/item/stack/tile/carpet/executive/thirty = 15,
+	)
+
+/obj/effect/spawner/lootdrop/decorations_spawner
+	lootcount = 1
+	loot = list(
+	/obj/effect/spawner/lootdrop/maintenance_carpet = 25,
+	/obj/effect/spawner/lootdrop/decorative_material = 25,
+	/obj/item/sign = 10,
+	/obj/item/flashlight/lamp/green = 10,
+	/obj/item/plaque = 5,
+	/obj/item/flashlight/lantern/jade = 5,
+	/obj/item/phone = 5,
+	/obj/item/flashlight/lamp/bananalamp = 3
 	)

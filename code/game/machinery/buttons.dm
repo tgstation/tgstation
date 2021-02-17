@@ -60,7 +60,7 @@
 	if(board)
 		. += "button-board"
 
-/obj/machinery/button/attackby(obj/item/W, mob/user, params)
+/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
@@ -101,7 +101,7 @@
 		update_icon()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
+	if(!user.combat_mode && !(W.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()
@@ -111,7 +111,7 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
@@ -132,7 +132,7 @@
 		id = "[port.id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user)
+/obj/machinery/button/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -217,6 +217,16 @@
 	id = INCINERATOR_ATMOS_AUXVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
 
+/obj/machinery/button/door/atmos_test_room_mainvent_1
+	name = "test chamber 1 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_1
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
+/obj/machinery/button/door/atmos_test_room_mainvent_2
+	name = "test chamber 2 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_2
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
 /obj/machinery/button/door/incinerator_vent_syndicatelava_main
 	name = "turbine vent control"
 	id = INCINERATOR_SYNDICATELAVA_MAINVENT
@@ -266,6 +276,13 @@
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/flasher
+
+/obj/machinery/button/curtain
+	name = "curtain button"
+	desc = "A remote control switch for a mechanical curtain."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/curtain
 
 /obj/machinery/button/flasher/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

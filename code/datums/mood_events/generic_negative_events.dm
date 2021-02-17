@@ -3,8 +3,8 @@
 	mood_change = -1
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
-  description = "<span class='boldwarning'>I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow...</span>\n"
-  mood_change = -8
+	description = "<span class='boldwarning'>I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow...</span>\n"
+	mood_change = -8
 
 /datum/mood_event/on_fire
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>\n"
@@ -43,7 +43,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/delam //SM delamination
-	description = "<span class='boldwarning'>Those God damn engineers can't do anything right...</span>\n"
+	description = "<span class='boldwarning'>Those goddamn engineers can't do anything right...</span>\n"
 	mood_change = -2
 	timeout = 4 MINUTES
 
@@ -68,14 +68,14 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
-  description = "<span class='boldwarning'>I can't even end it all!</span>\n"
-  mood_change = -15
-  timeout = 60 SECONDS
+	description = "<span class='boldwarning'>I can't even end it all!</span>\n"
+	mood_change = -15
+	timeout = 60 SECONDS
 
 /datum/mood_event/dismembered
-  description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
-  mood_change = -10
-  timeout = 8 MINUTES
+	description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
+	mood_change = -10
+	timeout = 8 MINUTES
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
@@ -95,7 +95,7 @@
 	if(isfelinid(owner))
 		var/mob/living/carbon/human/H = owner
 		H.dna.species.start_wagging_tail(H)
-		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
+		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 3 SECONDS)
 		description = "<span class='nicegreen'>They want to play on the table!</span>\n"
 		mood_change = 2
 
@@ -109,24 +109,28 @@
 		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/brain_damage
-  mood_change = -3
+	mood_change = -3
 
 /datum/mood_event/brain_damage/add_effects()
-  var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
-  description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
+	var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
+	description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
 
 /datum/mood_event/hulk //Entire duration of having the hulk mutation
-  description = "<span class='warning'>HULK SMASH!</span>\n"
-  mood_change = -4
+	description = "<span class='warning'>HULK SMASH!</span>\n"
+	mood_change = -4
 
 /datum/mood_event/epilepsy //Only when the mutation causes a seizure
-  description = "<span class='warning'>I should have paid attention to the epilepsy warning.</span>\n"
-  mood_change = -3
-  timeout = 5 MINUTES
+	description = "<span class='warning'>I should have paid attention to the epilepsy warning.</span>\n"
+	mood_change = -3
+	timeout = 5 MINUTES
 
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
+
+/datum/mood_event/bright_light
+	description = "<span class='boldwarning'>I hate it in the light...I need to find a darker place...</span>\n"
+	mood_change = -12
 
 /datum/mood_event/family_heirloom_missing
 	description = "<span class='warning'>I'm missing my family heirloom...</span>\n"
@@ -157,7 +161,7 @@
 	timeout = 60 SECONDS
 
 /datum/mood_event/spooked
-	description = "<span class='warning'>The rattling of those bones...It still haunts me.</span>\n"
+	description = "<span class='warning'>The rattling of those bones... It still haunts me.</span>\n"
 	mood_change = -4
 	timeout = 4 MINUTES
 
@@ -169,13 +173,13 @@
 /datum/mood_event/notcreeping
 	description = "<span class='warning'>The voices are not happy, and they painfully contort my thoughts into getting back on task.</span>\n"
 	mood_change = -6
-	timeout = 30
+	timeout = 3 SECONDS
 	hidden = TRUE
 
 /datum/mood_event/notcreepingsevere//not hidden since it's so severe
 	description = "<span class='boldwarning'>THEY NEEEEEEED OBSESSIONNNN!!</span>\n"
 	mood_change = -30
-	timeout = 30
+	timeout = 3 SECONDS
 
 /datum/mood_event/notcreepingsevere/add_effects(name)
 	var/list/unstable = list(name)
@@ -209,7 +213,7 @@
 /datum/mood_event/artbad
 	description = "<span class='warning'>I've produced better art than that from my ass.</span>\n"
 	mood_change = -2
-	timeout = 1200
+	timeout = 2 MINUTES
 
 /datum/mood_event/graverobbing
 	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
@@ -221,27 +225,58 @@
 	mood_change = -20
 
 /datum/mood_event/gunpoint
-	description = "<span class='boldwarning'>This guy is insane! I better be careful....</span>\n"
+	description = "<span class='boldwarning'>This guy is insane! I better be careful...</span>\n"
 	mood_change = -10
 
 /datum/mood_event/tripped
 	description = "<span class='boldwarning'>I can't believe I fell for the oldest trick in the book!</span>\n"
-	mood_change = -10
+	mood_change = -5
 	timeout = 2 MINUTES
 
 /datum/mood_event/untied
 	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
-	mood_change = -5
-	timeout = 1 MINUTES
+	mood_change = -3
+	timeout = 60 SECONDS
 
 /datum/mood_event/gates_of_mansus
 	description = "<span class='boldwarning'>I HAD A GLIMPSE OF THE HORROR BEYOND THIS WORLD. REALITY UNCOILED BEFORE MY EYES!</span>\n"
 	mood_change = -25
 	timeout = 4 MINUTES
 
+/datum/mood_event/high_five_alone
+	description = "<span class='boldwarning'>I tried getting a high-five with no one around, how embarassing!</span>\n"
+	mood_change = -2
+	timeout = 60 SECONDS
+
+/datum/mood_event/high_five_full_hand
+	description = "<span class='boldwarning'>Oh god, I don't even know how to high-five correctly...</span>\n"
+	mood_change = -1
+	timeout = 45 SECONDS
+
+/datum/mood_event/left_hanging
+	description = "<span class='boldwarning'>But everyone loves high fives! Maybe people just... hate me?</span>\n"
+	mood_change = -2
+	timeout = 90 SECONDS
+
+/datum/mood_event/too_slow
+	description = "<span class='boldwarning'>NO! HOW COULD I BE... TOO SLOW???</span>\n"
+	mood_change = -2 // multiplied by how many people saw it happen, up to 8, so potentially massive. the ULTIMATE prank carries a lot of weight
+	timeout = 2 MINUTES
+
+/datum/mood_event/too_slow/add_effects(param)
+	var/people_laughing_at_you = 1 // start with 1 in case they're on the same tile or something
+	for(var/mob/living/carbon/iter_carbon in oview(owner, 7))
+		if(iter_carbon.stat == CONSCIOUS)
+			people_laughing_at_you++
+			if(people_laughing_at_you > 7)
+				break
+
+	mood_change *= people_laughing_at_you
+	return ..()
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
-	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
+	description = "<span class='boldwarning'>THEY'RE CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
 
 /datum/mood_event/nanite_sadness
@@ -254,3 +289,52 @@
 /datum/mood_event/bald
 	description ="<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
+
+/datum/mood_event/bad_touch
+	description = "<span class='warning'>I don't like when people touch me.</span>\n"
+	mood_change = -3
+	timeout = 4 MINUTES
+
+/datum/mood_event/very_bad_touch
+	description = "<span class='warning'>I really don't like when people touch me.</span>\n"
+	mood_change = -5
+	timeout = 4 MINUTES
+
+/datum/mood_event/noogie
+	description = "<span class='warning'>Ow! This is like space high school all over again...</span>\n"
+	mood_change = -2
+	timeout = 60 SECONDS
+
+/datum/mood_event/noogie_harsh
+	description = "<span class='warning'>OW!! That was even worse than a regular noogie!</span>\n"
+	mood_change = -4
+	timeout = 60 SECONDS
+
+/datum/mood_event/aquarium_negative
+	description = "<span class='warning'>All the fish are dead...</span>\n"
+	mood_change = -3
+	timeout = 90 SECONDS
+
+/datum/mood_event/tail_lost
+	description = "<span class='boldwarning'>My tail!! Why?!</span>\n"
+	mood_change = -8
+	timeout = 10 MINUTES
+
+/datum/mood_event/tail_balance_lost
+	description = "<span class='warning'>I feel off-balance without my tail.</span>\n"
+	mood_change = -2
+
+/datum/mood_event/tail_regained_right
+	description = "<span class='warning'>My tail is back, but that was traumatic...</span>\n"
+	mood_change = -2
+	timeout = 5 MINUTES
+
+/datum/mood_event/tail_regained_wrong
+	description = "<span class='boldwarning'>Is this some kind of sick joke?! This is NOT the right tail.</span>\n"
+	mood_change = -12 // -8 for tail still missing + -4 bonus for being frakenstein's monster
+	timeout = 5 MINUTES
+
+/datum/mood_event/burnt_wings
+	description = "<span class='boldwarning'>MY PRECIOUS WINGS!!</span>\n"
+	mood_change = -10
+	timeout = 10 MINUTES

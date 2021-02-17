@@ -6,8 +6,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 
 /datum/material
+	/// What the material is referred to as IC.
 	var/name = "material"
+	/// A short description of the material. Not used anywhere, yet...
 	var/desc = "its..stuff."
+	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
+	var/id
+
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	var/color
 	///Base alpha of the material, is used for greyscale icons.
@@ -26,7 +31,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
-	///How beautiful is this material per unit
+	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
 	var/item_sound_override
@@ -34,18 +39,26 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/turf_sound_override
 	///what texture icon state to overlay
 	var/texture_layer_icon_state
-	///a cached filter for the texture icon
-	var/cached_texture_filter
+	///a cached icon for the texture filter
+	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
 
-/datum/material/New()
-	. = ..()
+/** Handles initializing the material.
+ *
+ * Arugments:
+ * - _id: The ID the material should use. Overrides the existing ID.
+ */
+/datum/material/proc/Initialize(_id, ...)
+	if(_id)
+		id = _id
+	else if(isnull(id))
+		id = type
+
 	if(texture_layer_icon_state)
-		var/texture_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
-		cached_texture_filter = filter(type="layer", icon=texture_icon, blend_mode = BLEND_INSET_OVERLAY)
+		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
 
-
+	return TRUE
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -56,13 +69,15 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.alpha = alpha
 		if(texture_layer_icon_state)
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
-			source.filters += cached_texture_filter
+			source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
 
+	if(alpha < 255)
+		source.opacity = FALSE
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
+		source.AddComponent(/datum/component/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -107,13 +122,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
 	if(isopenturf(T))
-		if(!turf_sound_override)
-			return
-		var/turf/open/O = T
-		O.footstep = turf_sound_override
-		O.barefootstep = turf_sound_override
-		O.clawfootstep = turf_sound_override
-		O.heavyfootstep = turf_sound_override
+		if(turf_sound_override)
+			var/turf/open/O = T
+			O.footstep = turf_sound_override
+			O.barefootstep = turf_sound_override
+			O.clawfootstep = turf_sound_override
+			O.heavyfootstep = turf_sound_override
+	if(alpha < 255)
+		T.AddElement(/datum/element/turf_z_transparency, TRUE)
 	return
 
 ///This proc is called when the material is removed from an object.
@@ -122,12 +138,15 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(color)
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 		if(texture_layer_icon_state)
-			source.filters -= cached_texture_filter
+			source.remove_filter("material_texture_[name]")
 			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 		source.alpha = initial(source.alpha)
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
+
+	if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
+		source.AddComponent(/datum/component/beauty, -beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
@@ -144,24 +163,25 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.throwforce = initial(o.throwforce)
 
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
-	return
+	if(alpha)
+		RemoveElement(/datum/element/turf_z_transparency, FALSE)
 
 /**
-  *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
-  * Arguments
-  * * M - person consuming the mat
-  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
-  */
+ * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+ * Arguments
+ * * M - person consuming the mat
+ * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
+ */
 /datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
 	return FALSE
 
 /** Returns the composition of this material.
-  *
-  * Mostly used for alloys when breaking down materials.
-  *
-  * Arguments:
-  * - amount: The amount of the material to break down.
-  * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
-  */
+ *
+ * Mostly used for alloys when breaking down materials.
+ *
+ * Arguments:
+ * - amount: The amount of the material to break down.
+ * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
+ */
 /datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
 	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.

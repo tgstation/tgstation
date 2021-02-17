@@ -1,18 +1,18 @@
 /**
-  * Finds and extracts seeds from an object
-  *
-  * Checks if the object is such that creates a seed when extracted.  Used by seed
-  * extractors or posably anything that would create seeds in some way.  The seeds
-  * are dropped either at the extractor, if it exists, or where the original object
-  * was and it qdel's the object
-  *
-  * Arguments:
-  * * O - Object containing the seed, can be the loc of the dumping of seeds
-  * * t_max - Amount of seed copies to dump, -1 is ranomized
-  * * extractor - Seed Extractor, used as the dumping loc for the seeds and seed multiplier
-  * * user - checks if we can remove the object from the inventory
-  * *
-  */
+ * Finds and extracts seeds from an object
+ *
+ * Checks if the object is such that creates a seed when extracted.  Used by seed
+ * extractors or posably anything that would create seeds in some way.  The seeds
+ * are dropped either at the extractor, if it exists, or where the original object
+ * was and it qdel's the object
+ *
+ * Arguments:
+ * * O - Object containing the seed, can be the loc of the dumping of seeds
+ * * t_max - Amount of seed copies to dump, -1 is ranomized
+ * * extractor - Seed Extractor, used as the dumping loc for the seeds and seed multiplier
+ * * user - checks if we can remove the object from the inventory
+ * *
+ */
 /proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
 	var/list/seeds = list()
@@ -26,8 +26,8 @@
 	if(extractor)
 		seedloc = extractor.loc
 
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
-		var/obj/item/reagent_containers/food/snacks/grown/F = O
+	if(istype(O, /obj/item/food/grown/))
+		var/obj/item/food/grown/F = O
 		if(F.seed)
 			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
 				return
@@ -78,7 +78,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.</span>"
 
-/obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
+/obj/machinery/seed_extractor/attackby(obj/item/O, mob/living/user, params)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
@@ -114,30 +114,30 @@
 			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 			updateUsrDialog()
 		return
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
 	else
 		return ..()
 
 /**
-  * Generate seed string
-  *
-  * Creates a string based of the traits of a seed.  We use this string as a bucket for all
-  * seeds that match as well as the key the ui uses to get the seed.  We also use the key
-  * for the data shown in the ui.  Javascript parses this string to display
-  *
-  * Arguments:
-  * * O - seed to generate the string from
-  */
+ * Generate seed string
+ *
+ * Creates a string based of the traits of a seed.  We use this string as a bucket for all
+ * seeds that match as well as the key the ui uses to get the seed.  We also use the key
+ * for the data shown in the ui.  Javascript parses this string to display
+ *
+ * Arguments:
+ * * O - seed to generate the string from
+ */
 /obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
 	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability]"
 
 
 /** Add Seeds Proc.
-  *
-  * Adds the seeds to the contents and to an associated list that pregenerates the data
-  * needed to go to the ui handler
-  *
+ *
+ * Adds the seeds to the contents and to an associated list that pregenerates the data
+ * needed to go to the ui handler
+ *
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
@@ -190,11 +190,20 @@
 		if("select")
 			var/item = params["item"]
 			if(piles[item] && length(piles[item]) > 0)
-				var/datum/weakref/WO = piles[item][1]
-				var/obj/item/seeds/O = WO.resolve()
-				if(O)
-					piles[item] -= WO
-					O.forceMove(drop_location())
-					. = TRUE
-					//to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+				var/datum/weakref/found_seed_weakref = piles[item][1]
+				var/obj/item/seeds/found_seed = found_seed_weakref.resolve()
+				if(!found_seed)
+					return
+
+				piles[item] -= found_seed_weakref
+				if(usr)
+					var/mob/user = usr
+					if(user.put_in_hands(found_seed))
+						to_chat(user, "<span class='notice'>You take [found_seed] out of the slot.</span>")
+					else
+						to_chat(user, "<span class='notice'>[found_seed] falls onto the floor.</span>")
+				else
+					found_seed.forceMove(drop_location())
+					visible_message("<span class='notice'>[found_seed] falls onto the floor.</span>", null, "<span class='hear'>You hear a soft clatter.</span>", COMBAT_MESSAGE_RANGE)
+				. = TRUE
 

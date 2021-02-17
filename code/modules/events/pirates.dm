@@ -7,6 +7,10 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+#define PIRATES_ROGUES "Rogues"
+#define PIRATES_SILVERSCALES "Silverscales"
+#define PIRATES_DUTCHMAN "Flying Dutchman"
+
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
 		return EVENT_CANT_RUN
@@ -19,23 +23,45 @@
 	var/payoff = 0
 	var/payoff_min = 20000
 	var/paid_off = FALSE
+	var/pirate_type
+	var/ship_template
 	var/ship_name = "Space Privateers Association"
 	var/shuttle_spawned = FALSE
 
 /datum/round_event/pirates/setup()
-	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
+	pirate_type = pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
+	switch(pirate_type)
+		if(PIRATES_ROGUES)
+			ship_name = pick(strings(PIRATE_NAMES_FILE, "rogue_names"))
+		if(PIRATES_SILVERSCALES)
+			ship_name = pick(strings(PIRATE_NAMES_FILE, "silverscale_names"))
+		if(PIRATES_DUTCHMAN)
+			ship_name = "Flying Dutchman"
 
 /datum/round_event/pirates/announce(fake)
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
+	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
 	if(fake)
 		return
 	threat = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
-	threat.title = "Business proposition"
-	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
-	threat.possible_answers = list("We'll pay.","No way.")
+	switch(pirate_type)
+		if(PIRATES_ROGUES)
+			ship_template = /datum/map_template/shuttle/pirate/default
+			threat.title = "Sector protection offer"
+			threat.content = "Greetings from the [ship_name]. Your sector needs protection, how about you pay us [payoff] credits, or else you may be left wide open to an attack."
+			threat.possible_answers = list("We'll pay.","That sounds like a scam.")
+		if(PIRATES_SILVERSCALES)
+			ship_template = /datum/map_template/shuttle/pirate/silverscale
+			threat.title = "Tribute to high society"
+			threat.content = "This is the [ship_name]. The Silver Scales wish for some tribute from your plebeian lizards. [payoff] credits should do the trick."
+			threat.possible_answers = list("We'll pay.","Tribute? Really? Go away.")
+		if(PIRATES_DUTCHMAN)
+			ship_template = /datum/map_template/shuttle/pirate/dutchman
+			threat.title = "Business proposition"
+			threat.content = "Ahoy! This be the [ship_name]. Cough up [payoff] credits or you'll walk the plank."
+			threat.possible_answers = list("We'll pay.","We will not be extorted.")
 	threat.answer_callback = CALLBACK(src,.proc/answered)
 	SScommunications.send_message(threat,unique = TRUE)
 
@@ -67,7 +93,7 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/shuttle/pirate/default/ship = new
+	var/datum/map_template/shuttle/pirate/ship = new ship_template
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -149,7 +175,7 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	if(credits_stored)	// Prevents spamming empty holochips
+	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
 		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
 		credits_stored = 0
@@ -327,7 +353,7 @@
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
+		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
 
 	for(var/datum/export/E in ex.total_amount)
 		status_report += E.total_printout(ex,notes = FALSE)
@@ -396,9 +422,6 @@
 		status_report = custom_report
 	pad.icon_state = pad.idle_state
 	deltimer(sending_timer)
-
-/datum/export/pirate
-	export_category = EXPORT_PIRATE
 
 //Attempts to find the thing on station
 /datum/export/pirate/proc/find_loot()

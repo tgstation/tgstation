@@ -40,7 +40,7 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
 	cut_overlays()
-	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
+	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
 
 	for(var/node in front_nodes)
 		add_attached_images(node)
@@ -70,9 +70,9 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
-		if(NORTH || SOUTH)
+		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
-		if(EAST || WEST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
@@ -132,4 +132,5 @@
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
 
 /obj/machinery/atmospherics/pipe/layer_manifold/visible
+	hide = FALSE
 	layer = GAS_PIPE_VISIBLE_LAYER

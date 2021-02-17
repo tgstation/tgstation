@@ -101,7 +101,7 @@
 	else
 		icon_state = "mw"
 
-/obj/machinery/microwave/attackby(obj/item/O, mob/user, params)
+/obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
 		return
 	if(default_deconstruction_crowbar(O))
@@ -165,7 +165,9 @@
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
 		var/loaded = 0
-		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
+		for(var/obj/S in T.contents)
+			if(!IS_EDIBLE(S))
+				continue
 			if(ingredients.len >= max_n_of_items)
 				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 				return TRUE
@@ -176,7 +178,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into \the [src].</span>")
 		return
 
-	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
+	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.combat_mode)
 		if(ingredients.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 			return TRUE
@@ -317,9 +319,9 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.custom_materials && length(O.custom_materials))
-			if(O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-				metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
+		if(LAZYLEN(O.custom_materials))
+			if(O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+				metal += O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)]
 
 	if(metal)
 		spark()
@@ -350,11 +352,6 @@
 	dirty = 100
 	dirty_anim_playing = FALSE
 	operating = FALSE
-
-	for(var/obj/item/reagent_containers/food/snacks/S in src)
-		if(prob(50))
-			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
-			qdel(S)
 
 	after_finish_loop()
 
