@@ -221,7 +221,7 @@
 			log_combat(user, src, "emagged")
 		return
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
-		to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
+		to_chat(user, "<span class='warning'>You need to open [src]'s maintenance panel first!</span>")
 
 /mob/living/simple_animal/bot/examine(mob/user)
 	. = ..()
