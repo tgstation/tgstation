@@ -1,4 +1,4 @@
-#define GLOWSHROOM_SPREAD_DIMINISH_FACTOR 17
+#define GLOWSHROOM_SPREAD_DIMINISH_FACTOR 23
 /obj/structure/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
@@ -21,9 +21,9 @@
 	/// Chance to spread into adjacent tiles (0-100)
 	var/spreadIntoAdjacentChance = 75
 	///Amount of decay when decay happens on process
-	var/idle_decay_min = 2.5
+	var/idle_decay_min = 0.5
 	///Amount of decay when decay happens on process
-	var/idle_decay_max = 10
+	var/idle_decay_max = 1
 	/// Internal seed of the glowshroom, stats are stored here
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 
@@ -233,3 +233,5 @@
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
 	return TRUE
+
+#undef GLOWSHROOM_SPREAD_DIMINISH_FACTOR
