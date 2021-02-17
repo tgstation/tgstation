@@ -6,7 +6,10 @@
 	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
 	creation_purity = REAGENT_STANDARD_PUIRTY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
 	purity = REAGENT_STANDARD_PUIRTY
+	inverse_chem_val = 0
+	inverse_chem = null
 	failed_chem = /datum/reagent/impurity/medicine_failure
+	chemical_flags = REAGENT_SPLITRETAINVOL
 
 /******BRUTE******/
 /*Suffix: -bital*/
@@ -94,7 +97,6 @@
 	ph = 8.2
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
-	chemical_flags = REAGENT_SPLITRETAINVOL
 	impure_chem = /datum/reagent/impurity/libitoil
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M)
@@ -182,9 +184,11 @@
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
 	color = "#8C93FF"
+	ph = 4
+	impure_chem = /datum/reagent/impurity/aiuri //blurriness
 	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
 	var/message_cd = 0
-	impure_chem = /datum/reagent/impurity/aiuri //blurriness
+
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss((-2*REM)*normalise_creation_purity())
@@ -199,6 +203,7 @@
 	color = "#F7FFA5"
 	overdose_threshold = 25
 	reagent_weight = 0.6
+	ph = 8.9
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 50)
@@ -242,6 +247,7 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
+	ph = 5.6
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
 
@@ -267,6 +273,7 @@
 	name = "Tirimol"
 	description = "An oxygen deprivation medication that causes fatigue. Prolonged exposure causes the patient to fall asleep once the medicine metabolizes."
 	color = "#FF6464"
+	ph = 5.6
 	var/drowsycd = 0
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M)
@@ -293,7 +300,9 @@
 	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
 	inverse_chem_val = 0.3
+	ph = 3.7
 	inverse_chem = /datum/reagent/inverse/technetium
+	inverse_chem_val = 0.4
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/M)
 	. = ..()
@@ -332,7 +341,9 @@
 	name = "Multiver"
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
 	inverse_chem = /datum/reagent/medicine/c2/monover
+	inverse_chem_val = 0.35
 	failed_chem = null //Reaction uses a special method - so we don't want this for now.
+	ph = 9.2
 
 /datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/M)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
@@ -369,6 +380,8 @@
 	color = "#8CDF24" // heavy saturation to make the color blend better
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	overdose_threshold = 6
+	impure_chem = /datum/reagent/inverse/healing/syriniver
+	ph = 8.6
 	var/conversion_amount
 
 /datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
@@ -403,16 +416,17 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/c2/musiver //MUScles //This is always purity 1
+/datum/reagent/medicine/c2/musiver //MUScles
 	name = "Musiver"
 	description = "The active metabolite of syriniver. Causes muscle weakness on overdose"
 	reagent_state = LIQUID
 	color = "#DFD54E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 25
+	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
-/datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/M) //This is always purity 1
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -446,6 +460,7 @@
 	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). 100u or more can restore corpses husked by burns. Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
+	ph = 7.2
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -461,7 +476,7 @@
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
-	carbies.adjustToxLoss((harmies+burnies)*0.66)
+	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))) //0.5 - 0.75
 	if(show_message)
 		to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
@@ -486,6 +501,7 @@
 	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. Mixing it with epinephrine or atropine will cause an explosion."
 	color = "#F5F5F5"
 	overdose_threshold = 50
+	ph = 12.7
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()
@@ -497,7 +513,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
-	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //we cannot save someone below our lowered crit threshold.
+	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
 
 		H.adjustToxLoss(-2 * REM, 0)
 		H.adjustBruteLoss(-2 * REM, 0)
@@ -515,7 +531,7 @@
 		if(prob(33))
 			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
 
-	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //certain death below this threshold
+	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
 		H.emote("scream")

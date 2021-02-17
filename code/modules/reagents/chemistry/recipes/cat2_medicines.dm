@@ -303,7 +303,54 @@
 /datum/chemical_reaction/medicine/syriniver
 	results = list(/datum/reagent/medicine/c2/syriniver = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
+	required_temp = 250
+	optimal_temp = 310
+	overheat_temp = NO_OVERHEAT
+	optimal_ph_min = 5
+	optimal_ph_max = 9
+	determin_ph_range = 6
+	temp_exponent_factor = 2
+	ph_exponent_factor = 0.5
+	thermic_constant = -20
+	H_ion_release = -5
+	rate_up_lim = 20 //affected by pH too
+	purity_min = 0.3
+	reaction_flags = REACTION_PH_VOL_CONSTANT
+
+/datum/chemical_reaction/medicine/syriniver/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+	. = ..()
+	reaction.delta_t = delta_t * delta_ph
 
 /datum/chemical_reaction/medicine/penthrite
 	results = list(/datum/reagent/medicine/c2/penthrite = 3)
 	required_reagents = list(/datum/reagent/pentaerythritol = 1, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1 , /datum/reagent/wittel = 1)
+	required_temp = 255
+	optimal_temp = 350
+	overheat_temp = 450
+	optimal_ph_min = 2
+	optimal_ph_max = 9
+	determin_ph_range = 3
+	temp_exponent_factor = 1
+	ph_exponent_factor = 1
+	thermic_constant = 120
+	H_ion_release = -5
+	rate_up_lim = 20
+	purity_min = 0.55
+	reaction_flags = REACTION_PH_VOL_CONSTANT
+
+//overheat beats like a heart! (or is it overbeat?)
+/datum/chemical_reaction/medicine/penthrite/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+	. = ..()
+	if(off_cooldown(holder, equilibrium, 1, "lub"))
+		explode_shockwave(holder, equlibrium, 3, 2)
+		playsound(my_atom, 'sound/health/slowbeat.ogg', 50, 1)
+	if(off_cooldown(holder, equilibrium, 1, "dub", 0.5))
+		explode_shockwave(holder, equlibrium, 3, 2, implosion = TRUE)
+		playsound(my_atom, 'sound/health/slowbeat.ogg', 50, 1)
+	explode_fire_vortex(holder, equilibrium, 1, 1)
+
+
+/datum/chemical_reaction/medicine/penthrite/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+	. = ..()
+	holder.reagents.chem_temp += 10
+

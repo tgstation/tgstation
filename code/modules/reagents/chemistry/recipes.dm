@@ -341,7 +341,7 @@
 		clear_products(holder)
 
 //Pushes everything out, and damages mobs with 10 brute damage.
-/datum/chemical_reaction/proc/explode_shockwave(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3, damage = 5, sound_and_text = TRUE)
+/datum/chemical_reaction/proc/explode_shockwave(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3, damage = 5, sound_and_text = TRUE, implosion = FALSE)
 	var/turf/this_turf = get_turf(holder.my_atom)
 	if(sound_and_text)
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
@@ -355,10 +355,16 @@
 			continue
 		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
 			continue
-		var/distance = get_dist(movey, this_turf)
-		var/moving_power = max(4 - distance, 1)//Make sure we're thrown out of range of the next one
-		var/atom/throw_target = get_edge_target_turf(movey, get_dir(movey, get_step_away(movey, this_turf)))
-		movey.throw_at(throw_target, moving_power, 1)
+		if(implosion)
+			var/distance = get_dist(movey, this_turf)
+			var/moving_power = max(4 - distance, 1)
+			var/turf/target = get_turf(holder.my_atom)
+			movey.throw_at(target, moving_power, 1)
+		else
+			var/distance = get_dist(movey, this_turf)
+			var/moving_power = max(4 - distance, 1)//Make sure we're thrown out of range of the next one
+			var/atom/throw_target = get_edge_target_turf(movey, get_dir(movey, get_step_away(movey, this_turf)))
+			movey.throw_at(throw_target, moving_power, 1)
 
 
 ////////BEGIN FIRE BASED EXPLOSIONS
@@ -487,11 +493,15 @@
 * Arguments:
 * * seconds - the amount of time in server seconds to delay between true returns, will ceiling to the nearest 0.25
 * * id - a string phrase so that multiple cooldowns can be applied if needed
+* * initial_delay - The number of seconds of delay to add on creation
 */
-/datum/chemical_reaction/proc/off_cooldown(datum/reagents/holder, datum/equilibrium/equilibrium, seconds = 1, id = "default")
+/datum/chemical_reaction/proc/off_cooldown(datum/reagents/holder, datum/equilibrium/equilibrium, seconds = 1, id = "default", initial_delay = 0)
 	id = id+"_cooldown"
 	if(isnull(equilibrium.data[id]))
 		equilibrium.data[id] = 0
+		if(initial_delay)
+			equilibrium.data[id] += inital_delay
+			return FALSE
 		return TRUE//first time we know we can go
 	equilibrium.data[id] += equilibrium.time_deficit ? 0.5 : 0.25 //sync to lag compensator
 	if(equilibrium.data[id] >= seconds)

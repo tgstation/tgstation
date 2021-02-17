@@ -374,3 +374,47 @@
 	M.adjustToxLoss((-2*REM)*creation_purity, 0)
 	..()
 	return TRUE
+
+///Can bring a corpse back to life temporarily (if heart is intact)
+///Makes wounds bleed more, if it brought someone back, they take brute and heart damage
+///They can't die during this, but if they're past crit then take increasing stamina damage
+///If they're past fullcrit, their movement is slowed by half
+/datum/reagent/inverse/penthrite
+	name = "Nooartrium"
+	description = "A reagent that is known to stimulate the heart in a dead patient, bringing them ."
+	ph = 14
+	metabolisation_rate = 1 * REM
+	///If we brought someone back from the dead
+	var/back_from_the_dead
+
+/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner)
+	var/obj/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	if(heart.organ_flags & ORGAN_FAILING)
+		return ..()
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(M, TRAIT_NOHARDCRIT, type)
+	ADD_TRAIT(M, TRAIT_NOSOFTCRIT, type)
+	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, type)
+	owner.stat = CONSCIOUS
+	back_from_the_dead = TRUE
+	owner.emote("gasp")
+
+/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner)
+	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
+	if(back_from_the_dead)
+		owner.adjustBruteLoss(5*(1-creation_purity))
+		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2.5*(1-creation_purity))
+	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
+		iter_wound.bleed_rate += 2*(1-creation_purity)
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
+		owner.adjustStaminaLoss((-owner.health)/10)
+	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
+		M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+
+/datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT, type)
+	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT, type)
+	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, type)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	. = ..()

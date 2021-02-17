@@ -50,6 +50,19 @@
 /datum/chemical_reaction/medicine/synthflesh
 	results = list(/datum/reagent/medicine/c2/synthflesh = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/libital = 1)
+	required_temp = 250
+	optimal_temp = 310
+	overheat_temp = 325
+	optimal_ph_min = 5
+	optimal_ph_max = 9
+	determin_ph_range = 3
+	temp_exponent_factor = 1
+	ph_exponent_factor = 2
+	thermic_constant = 10
+	H_ion_release = -2.5
+	rate_up_lim = 20 //affected by pH too
+	purity_min = 0.3
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 
 /datum/chemical_reaction/medicine/calomel
 	results = list(/datum/reagent/medicine/calomel = 2)
