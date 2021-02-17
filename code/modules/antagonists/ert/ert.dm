@@ -93,6 +93,14 @@
 /datum/antagonist/ert/commander/red
 	outfit = /datum/outfit/centcom/ert/commander/alert
 
+/datum/antagonist/ert/janitor
+	role = "Janitor"
+	outfit = /datum/outfit/centcom/ert/janitor
+
+/datum/antagonist/ert/janitor/heavy
+	role = "Heavy Duty Janitor"
+	outfit = /datum/outfit/centcom/ert/janitor/heavy
+
 /datum/antagonist/ert/deathsquad
 	name = "Deathsquad Trooper"
 	outfit = /datum/outfit/centcom/death_commando
@@ -140,14 +148,6 @@
 /datum/antagonist/ert/commander/inquisitor/on_gain()
 	. = ..()
 	owner.holy_role = HOLY_ROLE_PRIEST
-
-/datum/antagonist/ert/janitor
-	role = "Janitor"
-	outfit = /datum/outfit/centcom/ert/janitor
-
-/datum/antagonist/ert/janitor/heavy
-	role = "Heavy Duty Janitor"
-	outfit = /datum/outfit/centcom/ert/janitor/heavy
 
 /datum/antagonist/ert/intern
 	name = "CentCom Intern"
