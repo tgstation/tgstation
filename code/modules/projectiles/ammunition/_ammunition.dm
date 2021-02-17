@@ -9,18 +9,29 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
-	var/fire_sound = null //What sound should play when this ammo is fired
-	var/caliber = null //Which kind of guns it can be loaded into
-	var/projectile_type = null //The bullet type to create when New() is called
-	var/obj/projectile/BB = null //The loaded bullet
-	var/pellets = 1 //Pellets for spreadshot
-	var/variance = 0 //Variance for inaccuracy fundamental to the casing
-	var/randomspread = 0 //Randomspread for automatics
-	var/delay = 0 //Delay for energy weapons
-	var/click_cooldown_override = 0 //Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
-	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the ammo is fired.
+	///What sound should play when this ammo is fired
+	var/fire_sound = null
+	///Which kind of guns it can be loaded into
+	var/caliber = null
+	///The bullet type to create when New() is called
+	var/projectile_type = null
+	///the loaded projectile in this ammo casing
+	var/obj/projectile/BB = null
+	///Pellets for spreadshot
+	var/pellets = 1
+	///Variance for inaccuracy fundamental to the casing
+	var/variance = 0
+	///Randomspread for automatics
+	var/randomspread = 0
+	///Delay for energy weapons
+	var/delay = 0
+	///Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
+	var/click_cooldown_override = 0
+	///the visual effect appearing when the ammo is fired.
+	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	var/heavy_metal = TRUE
-	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
+	///pacifism check for boolet, set to FALSE if bullet is non-lethal
+	var/harmful = TRUE
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -41,6 +52,7 @@
 	var/turf/T = get_turf(src)
 	if(T && !BB && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
+	QDEL_NULL(BB)
 
 /obj/item/ammo_casing/update_icon()
 	. = ..()

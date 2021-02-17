@@ -86,7 +86,7 @@
 	user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 	update_icon()
 
-/obj/item/reagent_containers/glass/maunamug/attack_hand(mob/living/user)
+/obj/item/reagent_containers/glass/maunamug/attack_hand(mob/living/user, list/modifiers)
 	if(cell && open)
 		cell.update_icon()
 		user.put_in_hands(cell)

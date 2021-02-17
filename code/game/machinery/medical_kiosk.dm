@@ -252,9 +252,9 @@
 				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 				if(bit_vol > 0)
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
-	for(var/a in altPatient.reagents.addiction_list)
-		var/datum/reagent/addiction = a
-		addict_list += list(list("name" = addiction.name))
+	for(var/datum/addiction/addiction_type as anything in altPatient.mind.active_addictions)
+		addict_list += list(list("name" = initial(addiction_type.name)))
+
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
