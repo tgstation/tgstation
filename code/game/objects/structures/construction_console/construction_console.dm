@@ -132,10 +132,3 @@
 	max_matter = 600
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5
-
-/obj/item/construction/rcd/internal/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
