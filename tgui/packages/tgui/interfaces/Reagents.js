@@ -12,16 +12,6 @@ const bookmarkedReactions = new Set();
 
 const matchBitflag = (a, b) => (a & b) && (a | b) === b;
 
-const hasReagentType = (currentReagents, reagent) => {
-  if (currentReagents === null) {
-    return false;
-  }
-  if (currentReagents.includes(reagent)) {
-    return true;
-  }
-  return false;
-};
-
 export const Reagents = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -76,7 +66,8 @@ export const Reagents = (props, context) => {
   };
 
   const visibleReactions = master_reaction_list.filter(reaction => (
-    (selectedBitflags?matchBitflag(selectedBitflags, reaction.bitflags):true)
+    (selectedBitflags
+      ? matchBitflag(selectedBitflags, reaction.bitflags) : true)
     && matchReagents(reaction)
   ));
 
@@ -336,7 +327,7 @@ export const Reagents = (props, context) => {
                               key={reactant.id}
                               icon="vial"
                               textColor="white"
-                              color={hasReagentType(currentReagents, reactant.id) ? "green" : "default"}
+                              color={currentReagents?.includes(reactant) ? "green" : "default"}
                               content={reactant.name}
                               onClick={() => act('reagent_click', {
                                 id: reactant.id,
@@ -383,7 +374,7 @@ export const Reagents = (props, context) => {
                               mt={0.1}
                               key={reactant.id}
                               icon="vial"
-                              color={hasReagentType(currentReagents, reactant.id) ? "green" : "default"}
+                              color={currentReagents?.includes(reactant) ? "green" : "default"}
                               content={reactant.name}
                               onClick={() => act('reagent_click', {
                                 id: reactant.id,

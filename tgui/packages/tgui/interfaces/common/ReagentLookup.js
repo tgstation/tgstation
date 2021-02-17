@@ -1,5 +1,6 @@
 import { Box, LabeledList, Button, Icon } from '../../components';
 import { useBackend } from '../../backend';
+import { map } from 'common/collections';
 
 export const ReagentLookup = (props, context) => {
   const { reagent } = props;
@@ -19,7 +20,6 @@ export const ReagentLookup = (props, context) => {
         {reagent.name}
         <Button
           ml={1}
-          content={reagent.name}
           icon="wifi"
           color="teal"
           tooltip="Open the associated wikipage for this reagent."
@@ -37,12 +37,22 @@ export const ReagentLookup = (props, context) => {
       </LabeledList.Item>
       <LabeledList.Item label="Properties">
         <LabeledList>
+          {!!reagent.OD && (
           <LabeledList.Item label="Overdose">
             {reagent.OD}u
           </LabeledList.Item>
-          <LabeledList.Item label="Addiction">
-            {reagent.Addiction}u
-          </LabeledList.Item>
+          )}
+          {reagent.addictions[0] && (
+
+            <LabeledList.Item label="Addiction">
+              {reagent.addictions.map(addiction => (
+                <Box key={addiction}>
+                  {addiction}
+                </Box>
+              ))}
+            </LabeledList.Item>
+          )}
+
           <LabeledList.Item label="Metabolization rate">
             {reagent.metaRate}u/s
           </LabeledList.Item>

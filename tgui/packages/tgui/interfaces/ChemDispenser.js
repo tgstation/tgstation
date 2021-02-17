@@ -36,7 +36,7 @@ export const ChemDispenser = (props, context) => {
         <Section
           title="Status"
           buttons={(
-            <Fragment>
+            <>
               {recording && (
                 <Box inline mx={1} color="red">
                   <Icon name="circle" mr={1} />
@@ -58,7 +58,7 @@ export const ChemDispenser = (props, context) => {
                 tooltipPosition="bottom-left"
                 selected={hasCol}
                 onClick={() => setHasCol(!hasCol)} />
-            </Fragment>
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item label="Energy">
