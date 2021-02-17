@@ -1,7 +1,7 @@
-import { useBackend } from '../backend';
-import { Stack, Box } from '../components';
-import { Window } from '../layouts';
 import { Component } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Stack } from '../components';
+import { Window } from '../layouts';
 
 export class Thermometer extends Component {
   componentDidMount() {
@@ -29,7 +29,7 @@ export class Thermometer extends Component {
           backgroundColor="#242322"
           style={{
             'background-image': "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEVya3UjIyN3S/1dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAMSURBVAjXY2hgcAAAAcQAwUlFKkkAAAAASUVORK5CYII=')",
-          }} >
+          }}>
           <Stack.Item ml={1}>
             <ThermometerIcon
               temperature={data.Temperature}
