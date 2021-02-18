@@ -44,7 +44,8 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	return
+	var/datum/customer_data/customer_info = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+	new /obj/item/holochip(get_step(customer_pawn, customer_pawn.dir), customer_info.order_prices[customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]])
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
@@ -131,7 +132,6 @@
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	//var/datum/venue/linked_venue = /datum/venue
 
 /obj/item/holosign_creator/robot_seat/attack_self(mob/user)
 	return
@@ -145,10 +145,14 @@
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
 
+/obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
+	. = ..()
+	linked_venue = SSrestaurant.all_venues[linked_venue]
+
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
 /obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I, projector.type) && !SSrestaurant.claimed_seats[src])
+	if(I.type == projector?.type && !SSrestaurant.claimed_seats[src])
 		qdel(src)

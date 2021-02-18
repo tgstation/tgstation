@@ -9,6 +9,10 @@
 	var/obj/structure/holosign/robot_seat/found_seat
 
 	for(var/obj/structure/holosign/robot_seat/potential_seat in oview(7, controller.pawn))
+
+		if(potential_seat.linked_venue != controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]) //Incorrect venue
+			continue
+
 		if(SSrestaurant.claimed_seats[potential_seat]) //Someone called dibs
 			continue
 		var/turf/seat_turf = get_turf(potential_seat)
@@ -64,7 +68,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	if(DT_PROB(2, delta_time))
+	if(DT_PROB(1, delta_time))
 		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
@@ -98,7 +102,7 @@
 
 /datum/ai_behavior/leave_venue
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 0
+	required_distance = 1
 
 /datum/ai_behavior/leave_venue/perform(delta_time, datum/ai_controller/controller)
 	. = ..()

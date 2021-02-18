@@ -3,9 +3,8 @@
 	name = "robot"
 	desc = "I wonder what they'll order..."
 	icon = 'icons/mob/tourists.dmi'
-	icon_state = "greyscale_american"
-	icon_living = "greyscale_american"
-	icon_dead = "fox_dead"
+	icon_state = "amerifat"
+	icon_living = "amerifat"
 	///Override so it uses datum ai
 	can_have_ai = FALSE
 	AIStatus = AI_OFF
@@ -15,9 +14,8 @@
 	var/datum/atom_hud/hud_to_show_on_hover
 
 
-/mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data, datum/venue/attending_venue)
+/mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT) //dont push me bitch
-	color = random_color()
 	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	clothes_set = pick(customer_info.clothing_sets)
@@ -45,6 +43,10 @@
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()
+	var/mutable_appearance/greyscale = mutable_appearance(icon, "[icon_state]_greyscale")
+	greyscale.color = rgb(rand(150,255), rand(150,255), rand(150,255)) //"#[random_color()]"
+	greyscale.appearance_flags = RESET_COLOR
+	. += greyscale
+
 	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
-	clothes.appearance_flags = RESET_COLOR
 	. += clothes

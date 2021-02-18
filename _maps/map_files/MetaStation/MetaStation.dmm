@@ -22819,8 +22819,13 @@
 /turf/open/floor/iron/dark,
 /area/security/office)
 "ciV" = (
-/obj/structure/restaurant_sign/restaurant,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/restaurant_sign/bar,
+/turf/open/floor/iron,
 /area/service/bar)
 "ciX" = (
 /obj/structure/cable,
@@ -40489,6 +40494,7 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
+/obj/structure/restaurant_sign/restaurant,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -47274,7 +47280,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "jXx" = (
@@ -50022,7 +50027,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/restaurant_portal/restaurant,
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "lgq" = (
@@ -58494,7 +58499,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/restaurant_sign/bar,
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/wood,
 /area/service/bar)
 "oFp" = (
@@ -60287,6 +60292,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron,
 /area/service/bar)
 "pod" = (
@@ -75249,6 +75255,7 @@
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -115812,7 +115819,7 @@ meu
 tIz
 iEa
 jKO
-lde
+ciV
 hmF
 lLh
 twX
@@ -117090,7 +117097,7 @@ bhG
 bjp
 tFU
 hkR
-ciV
+otW
 otW
 pTE
 rNI

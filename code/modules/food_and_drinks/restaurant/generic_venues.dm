@@ -11,7 +11,7 @@
 
 	customer_pawn.say(order_food_line(object_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, plane = HUD_PLANE, layer = HUD_LAYER)
 	I.appearance = object_to_order.appearance
 	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
 	I.pixel_y = 32
@@ -29,8 +29,9 @@
 	return "I'll take [order]"
 
 /datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn,  obj/item/order_item)
+	. = ..()
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [order_item] into their mouth-shaped hole!</span>", "<span class='danger'>You push [order_item] into your mouth-shaped hole</span>")
-	playsound(customer_pawn.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
 
 /obj/machinery/restaurant_portal/restaurant
 	linked_venue = /datum/venue/restaurant
@@ -40,6 +41,10 @@
 
 /obj/item/holosign_creator/robot_seat/restaurant
 	name = "restaurant seating indicator placer"
+	holosign_type = /obj/structure/holosign/robot_seat/restaurant
+
+/obj/structure/holosign/robot_seat/restaurant
+	linked_venue = /datum/venue/restaurant
 
 /////BAR/////
 
@@ -49,16 +54,23 @@
 	customer_types = list(/datum/customer_data/american = 5)//, /datum/customer_data/italian = 3, /datum/customer_data/french = 3)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/obj/item/reagent_to_order = pickweight(customer_data.orderable_objects[type])
+	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])
 
-	var/obj/item/glass_visual = new /obj/item/reagent_containers/food/drinks/drinkingglass(get_turf(customer_pawn))
-	glass_visual.reagents.add_reagent(reagent_to_order, VENUE_BAR_MINIMUM_REAGENTS)
+	var/glass_visual
+
+	if(initial(reagent_to_order.glass_icon_state))
+		glass_visual = initial(reagent_to_order.glass_icon_state)
+	else if(initial(reagent_to_order.shot_glass_icon_state))
+		glass_visual = initial(reagent_to_order.shot_glass_icon_state)
+	else if(initial(reagent_to_order.fallback_icon_state))
+		glass_visual = initial(reagent_to_order.fallback_icon_state)
+	else
+		CRASH("[reagent_to_order] has no icon sprite for restaurant code, please set a fallback_icon_state for this reagent.")
 
 	customer_pawn.say(order_food_line(reagent_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
-	I.appearance = glass_visual.appearance
-	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, plane = HUD_PLANE, layer = HUD_LAYER)
+	I.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
 	I.pixel_y = 32
 	I.pixel_x = 16
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", I)
@@ -69,9 +81,10 @@
 	return "I'll take a glass of [initial(order.name)]"
 
 
-/datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/venue/bar/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	. = ..()
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] ine one go.</span>")
-	playsound(customer_pawn.loc, 'sound/items/drink.ogg', 50, TRUE)
+	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
 
 ///The bar needs to have a minimum amount of the reagent
 /datum/venue/bar/is_correct_order(object_used, wanted_item)
@@ -87,3 +100,7 @@
 
 /obj/item/holosign_creator/robot_seat/bar
 	name = "bar seating indicator placer"
+	holosign_type = /obj/structure/holosign/robot_seat/bar
+
+/obj/structure/holosign/robot_seat/bar
+	linked_venue = /datum/venue/bar

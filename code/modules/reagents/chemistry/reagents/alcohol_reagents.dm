@@ -95,6 +95,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A freezing pint of beer."
 	ph = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	fallback_icon_state = "beer"
 
 
 	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
@@ -113,6 +114,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A freezing pint of watery light beer."
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	fallback_icon_state = "beer"
 
 /datum/reagent/consumable/ethanol/beer/maltliquor
 	name = "Malt Liquor"

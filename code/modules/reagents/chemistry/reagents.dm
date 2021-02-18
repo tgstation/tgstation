@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/glass_icon_state = null
 	/// used for shot glasses, mostly for alcohol
 	var/shot_glass_icon_state = null
+	/// fallback icon if  the reagent has no glass or shot glass icon state. Used for restaurants.
+	var/fallback_icon_state = null
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
@@ -81,7 +83,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/impure_chem = /datum/reagent/impurity
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
-	/// What chem is metabolised when purity is below inverse_chem_val 
+	/// What chem is metabolised when purity is below inverse_chem_val
 	var/inverse_chem = /datum/reagent/impurity/toxic
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction
