@@ -172,7 +172,7 @@ export const RecipeLookup = (props, context) => {
               justify="right"
               top={0.01}
               bottom={0}
-              right={recipe.isColdRecipe && null}
+              right={recipe.isColdRecipe ? null : 0}
               width="28px"
               data={recipe.explosive}
               strokeWidth={0}
