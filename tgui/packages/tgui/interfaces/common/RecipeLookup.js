@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Chart, Flex, Icon, LabeledList } from '../../components';
+import { Box, Button, Chart, Flex, Icon, LabeledList, Tooltip } from '../../components';
 
 export const RecipeLookup = (props, context) => {
   const { recipe, bookmarkedReactions } = props;
@@ -128,31 +128,28 @@ export const RecipeLookup = (props, context) => {
       <LabeledList.Item bold label="Purity">
         <LabeledList>
           <LabeledList.Item label="Optimal pH range">
-            <Button
-              color="transparent"
-              textColor="white"
-              tooltipPosition="right"
-              content={recipe.lowerpH + "-" + recipe.upperpH}
-              tooltip="If your reaction is kept within these bounds then the purity of your product will be 100%" />
+            <Box position="relative">
+              <Tooltip
+                content="If your reaction is kept within these bounds then the purity of your product will be 100%" />
+              {recipe.lowerpH + "-" + recipe.upperpH}
+            </Box>
           </LabeledList.Item>
           {!!recipe.inversePurity && (
             <LabeledList.Item label="Inverse purity">
-              <Button
-                color="transparent"
-                textColor="white"
-                tooltipPosition="right"
-                content={`<${(recipe.inversePurity*100)}%`}
-                tooltip="If your purity is below this it will 100% convert into the product's associated Inverse reagent on consumption." />
+              <Box position="relative">
+                <Tooltip
+                  content="If your purity is below this it will 100% convert into the product's associated Inverse reagent on consumption." />
+                {`<${(recipe.inversePurity*100)}%`}
+              </Box>
             </LabeledList.Item>
           )}
           {!!recipe.minPurity && (
             <LabeledList.Item label="Minimum purity">
-              <Button
-                color="transparent"
-                tooltipPosition="right"
-                textColor="white"
-                content={`<${(recipe.minPurity*100)}%`}
-                tooltip="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent." />
+              <Box position="relative">
+                <Tooltip
+                  content="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent." />
+                {`<${(recipe.minPurity*100)}%`}
+              </Box>
             </LabeledList.Item>
           )}
         </LabeledList>
@@ -184,48 +181,52 @@ export const RecipeLookup = (props, context) => {
         </Flex>
       </LabeledList.Item>
       <LabeledList.Item bold label="Dynamics">
-        <Flex position="relative" top="5px" left="-12px">
-          <Button
-            color="transparent"
-            textColor={recipe.isColdRecipe ? "red" : "white"}
-            content={recipe.isColdRecipe
+        <Flex>
+          <Flex
+            position="relative"
+            left="-12px"
+            top="-5px"
+            textColor={recipe.isColdRecipe && "red"}>
+            <Tooltip
+              position="right"
+              content={recipe.isColdRecipe
+                ? "The temperature at which it is underheated, causing negative effects on the reaction."
+                : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."} />
+            {recipe.isColdRecipe
               ? recipe.explodeTemp + "K"
               : recipe.tempMin + "K"}
-            tooltip={recipe.isColdRecipe
-              ? "The temperature at which it is underheated, causing negative effects on the reaction."
-              : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."}
-            tooltipPosition="right" />
+          </Flex>
           {recipe.explosive && (
-            <Flex width="190px" position="relative" top="0px" left="155px">
-              <Button
-                color="transparent"
-                textColor={recipe.isColdRecipe ? "white" : "red"}
+            <Flex
+              // width="190px"
+              position="relative"
+              left={recipe.isColdRecipe ? "200px" : "155px"}
+              top="-7px"
+              textColor={!recipe.isColdRecipe && "red"}>
+              <Tooltip
                 content={recipe.isColdRecipe
-                  ? recipe.tempMin + "K"
-                  : recipe.explodeTemp + "K"}
-                tooltip={recipe.isColdRecipe
                   ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."
-                  : "The temperature at which it is overheated, causing negative effects on the reaction."}
-                tooltipPosition="right" />
+                  : "The temperature at which it is overheated, causing negative effects on the reaction."} />
+              {recipe.isColdRecipe
+                ? recipe.tempMin + "K"
+                : recipe.explodeTemp + "K"}
             </Flex>
           )}
         </Flex>
         <LabeledList.Item label="Optimal rate">
-          <Button
-            color="transparent"
-            textColor="white"
-            content={recipe.thermoUpper + "u/s"}
-            tooltip="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above."
-            tooltipPosition="right" />
+          <Box position="relative">
+            <Tooltip
+              content="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above." />
+            {recipe.thermoUpper + "u/s"}
+          </Box>
         </LabeledList.Item>
-        <Flex>
-          <Button
-            color="transparent"
-            textColor="white"
-            content={recipe.thermics}
-            tooltip="The heat generated by a reaction - exothermic produces heat, endothermic consumes heat."
-            tooltipPosition="right" />
-        </Flex>
+        <Box
+          position="relative"
+          ml={1}>
+          <Tooltip
+            content="The heat generated by a reaction - exothermic produces heat, endothermic consumes heat." />
+          {recipe.thermics}
+        </Box>
       </LabeledList.Item>
     </LabeledList>
   );
