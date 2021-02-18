@@ -81,7 +81,8 @@
 	var/turf/infront_turf = get_step(controller.pawn, controller.pawn.dir)
 	for(var/obj/item/I in infront_turf.contents)
 		if(attending_venue.is_correct_order(I, controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]))
-			eat_order(I, attending_venue)
+			var/datum/ai_controller/robot_customer/customer = controller
+			customer.eat_order(I, attending_venue)
 			break
 
 

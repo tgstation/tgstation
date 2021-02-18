@@ -50,7 +50,7 @@
 		return COMPONENT_NO_AFTERATTACK
 
 
-/datum/ai_controller/robot_customer/proc/eat_order(obj/item/order_item, attending_venue)
+/datum/ai_controller/robot_customer/proc/eat_order(obj/item/order_item, datum/venue/attending_venue)
 	if(!blackboard[BB_CUSTOMER_EATING])
 		blackboard[BB_CUSTOMER_EATING] = TRUE
 		attending_venue.on_get_order(pawn, order_item)

@@ -24,7 +24,9 @@
 
 /datum/customer_data/american
 	name = "American Robot"
-	orderable_objects = list(/datum/venue/restaurant = list(/obj/item/food/burger/plain = 1), /datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 1))
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/food/burger/plain = 15, /obj/item/food/burger/cheese = 8, /obj/item/food/burger/superbite = 1),
+	 /datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer/light = 10, /datum/reagent/consumable/ethanol/beer = 15))
 	found_seat_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
 	cant_find_seat_lines = list("I'm so tired from standing...", "I have chronic backpain please hurry up and get me a seat!", "I'm not going to tip if I don't get a seat.")
 	leave_mad_lines = list("NO TIP FOR YOU. GOODBYE!", "Atleast at SpaceDonalds they serve their burgers FAST!", "This venue is horrendous!", "I will speak to your manager.", "I'll be sure to leave a bad Yelp review.")
