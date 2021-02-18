@@ -301,6 +301,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")
 
+/// Simple helper trim for sandbox mode's ID cards. Comes with station AA.
 /datum/id_trim/sandbox
 	assignment = "Sandbox"
 	trim_state = "trim_captain"

@@ -10,16 +10,31 @@
 	tgui_id = "NtosCard"
 	program_icon = "id-card"
 
+	/// If TRUE, this program only modifies Centcom accesses.
 	var/is_centcom = FALSE
+	/// If TRUE, this program is authenticated with limited departmental access.
 	var/minor = FALSE
 	/// The name/assignment combo of the ID card used to authenticate.
 	var/authenticated_user
+	/// The regions this program has access to based on the authenticated ID.
 	var/list/region_access = list()
+	/// List of subordinate jobs for head roles on the authenticated ID.
 	var/list/head_subordinates = list()
+	/// List of job templates that can be applied to ID cards from this program.
 	var/list/job_templates = list()
-	///Which departments this computer has access to. Defined as access regions. null = all departments
+	/// Which departments this program has access to. See region defines.
 	var/target_dept
 
+/**
+ * Authenticates the program based on the specific ID card.
+ *
+ * If the card has ACCESS_CHANGE_IDs, it authenticates with all options.
+ * Otherwise, it authenticates depending on SSid_access.sub_department_managers_tgui
+ * compared to the access on the supplied ID card.
+ * Arguments:
+ * * user - Program's user.
+ * * id_card - The ID card to attempt to authenticate under.
+ */
 /datum/computer_file/program/card_mod/proc/authenticate(mob/user, obj/item/card/id/id_card)
 	if(!id_card)
 		return
@@ -228,6 +243,7 @@
 					message_admins("[ADMIN_LOOKUPFLW(user)] just added [SSid_access.get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [SSid_access.get_access_desc(access_type)]")
 			return TRUE
+		// Apply template to ID card.
 		if("PRG_template")
 			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
@@ -247,8 +263,6 @@
 				return TRUE
 
 			return TRUE
-
-
 
 /datum/computer_file/program/card_mod/ui_static_data(mob/user)
 	var/list/data = list()

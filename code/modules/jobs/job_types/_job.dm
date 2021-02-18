@@ -69,7 +69,7 @@
 
 /datum/job/New()
 	. = ..()
-	var/list/jobs_changes = GetMapChanges()
+	var/list/jobs_changes = get_map_changes()
 	if(!jobs_changes)
 		return
 	if(isnum(jobs_changes["spawn_positions"]))
@@ -77,7 +77,8 @@
 	if(isnum(jobs_changes["total_positions"]))
 		total_positions = jobs_changes["total_positions"]
 
-/datum/job/proc/GetMapChanges()
+/// Loads up map configs if necessary and returns job changes for this job.
+/datum/job/proc/get_map_changes()
 	var/string_type = "[type]"
 	var/list/splits = splittext(string_type, "/")
 	var/endpart = splits[splits.len]
@@ -191,7 +192,7 @@
 	return TRUE
 
 /datum/job/proc/map_check()
-	var/list/job_changes = GetMapChanges()
+	var/list/job_changes = get_map_changes()
 	if(!job_changes)
 		return FALSE
 	return TRUE

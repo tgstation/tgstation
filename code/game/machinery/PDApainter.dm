@@ -1,3 +1,4 @@
+/// Basic machine used to paint PDAs and re-trim ID cards.
 /obj/machinery/pdapainter
 	name = "\improper PDA & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
@@ -5,8 +6,11 @@
 	icon_state = "pdapainter"
 	density = TRUE
 	max_integrity = 200
+	/// Current ID card inserted into the machine.
 	var/obj/item/card/id/stored_id_card = null
+	/// Current PDA inserted into the machine.
 	var/obj/item/pda/stored_pda = null
+	/// A blacklist of PDA types that we should not be able to paint.
 	var/static/list/pda_type_blacklist = list(
 		/obj/item/pda/ai/pai,
 		/obj/item/pda/ai,
@@ -15,8 +19,11 @@
 		/obj/item/pda/syndicate,
 		/obj/item/pda/chameleon,
 		/obj/item/pda/chameleon/broken)
+	/// A list of the PDA types that this machine can currently paint.
 	var/list/pda_types = list()
+	/// A list of the card trims that this machine can currently imprint onto a card.
 	var/list/card_trims = list()
+	/// Set to a region define (REGION_SECURITY for example) to create a departmental variant, limited to departmental options. If null, this is unrestricted.
 	var/target_dept
 
 /obj/machinery/pdapainter/update_icon_state()
@@ -139,6 +146,15 @@
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
 	obj_break()
 
+/**
+ * Insert a PDA into the machine.
+ *
+ * Will swap PDAs if one is already inside. Attempts to put the PDA into the user's hands if possible.
+ * Returns TRUE on success, FALSE otherwise.
+ * Arguments:
+ * * new_pda - The PDA to insert.
+ * * user - The user to try and eject the PDA into the hands of.
+ */
 /obj/machinery/pdapainter/proc/insert_pda(obj/item/pda/new_pda, mob/living/user)
 	if(!istype(new_pda))
 		return FALSE
@@ -156,6 +172,12 @@
 	update_icon()
 	return TRUE
 
+/**
+ * Eject the stored PDA into the user's hands if possible, otherwise on the floor.
+ *
+ * Arguments:
+ * * user - The user to try and eject the PDA into the hands of.
+ */
 /obj/machinery/pdapainter/proc/eject_pda(mob/living/user)
 	if(stored_pda)
 		if(user && !issilicon(user) && in_range(src, user))
@@ -166,6 +188,15 @@
 		stored_pda = null
 		update_icon()
 
+/**
+ * Insert an ID card into the machine.
+ *
+ * Will swap ID cards if one is already inside. Attempts to put the card into the user's hands if possible.
+ * Returns TRUE on success, FALSE otherwise.
+ * Arguments:
+ * * new_id_card - The ID card to insert.
+ * * user - The user to try and eject the PDA into the hands of.
+ */
 /obj/machinery/pdapainter/proc/insert_id_card(obj/item/card/id/new_id_card, mob/living/user)
 	if(!istype(new_id_card))
 		return FALSE
@@ -183,6 +214,12 @@
 	update_icon()
 	return TRUE
 
+/**
+ * Eject the stored ID card into the user's hands if possible, otherwise on the floor.
+ *
+ * Arguments:
+ * * user - The user to try and eject the ID card into the hands of.
+ */
 /obj/machinery/pdapainter/proc/eject_id_card(mob/living/user)
 	if(stored_id_card)
 		if(user && !issilicon(user) && in_range(src, user))
@@ -291,18 +328,22 @@
 
 			return TRUE
 
+/// Security departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/security
 	name = "\improper Security PDA & ID Painter"
 	target_dept = REGION_SECURITY
 
+/// Medical departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/medbay
 	name = "\improper Medbay PDA & ID Painter"
 	target_dept = REGION_MEDBAY
 
+/// Science departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/research
 	name = "\improper Research PDA & ID Painter"
 	target_dept = REGION_RESEARCH
 
+/// Engineering departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
 /obj/machinery/pdapainter/engineering
 	name = "\improper Engineering PDA & ID Painter"
 	target_dept = REGION_ENGINEERING

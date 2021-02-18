@@ -61,6 +61,7 @@
  * ID CARDS
  */
 
+/// "Retro" ID card that renders itself as the icon state with no overlays.
 /obj/item/card/id
 	name = "retro identification card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -114,6 +115,14 @@
 		my_store.my_card = null
 	return ..()
 
+/**
+ * Helper proc, checks whether the ID card can hold any given set of wildcards.
+ *
+ * Returns TRUE if the card can hold the wildcards, FALSE otherwise.
+ * Arguments:
+ * * wildcard_list - List of accesses to check.
+ * * try_wildcard - If not null, will attempt to add wildcards for this wildcard specifically and will return FALSE if the card cannot hold all wildcards in this slot.
+ */
 /obj/item/card/id/proc/can_add_wildcards(list/wildcard_list, try_wildcard = null)
 	if(!length(wildcard_list))
 		return TRUE
@@ -148,6 +157,14 @@
 
 	return TRUE
 
+/**
+ * Attempts to add the given wildcards to the ID card.
+ *
+ * Arguments:
+ * * wildcard_list - List of accesses to add.
+ * * try_wildcard - If not null, will attempt to add all wildcards to this wildcard slot only.
+ * * mode - The method to use when adding wildcards. See define for ERROR_ON_FAIL
+ */
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/wildcard_allocated
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
@@ -197,6 +214,12 @@
 			wildcard_usage |= wildcard
 			access |= wildcard
 
+/**
+ * Removes wildcards from the ID card.
+ *
+ * Arguments:
+ * * wildcard_list - List of accesses to remove.
+ */
 /obj/item/card/id/proc/remove_wildcards(list/wildcard_list)
 	var/wildcard_removed
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to remove it.
@@ -228,6 +251,15 @@
 			wildcard_usage -= wildcard
 			access -= wildcard
 
+/**
+ * Attempts to add the given accesses to the ID card as non-wildcards.
+ *
+ * Depending on the mode, may add accesses as wildcards or error if it can't add them as non-wildcards.
+ * Arguments:
+ * * add_accesses - List of accesses to check.
+ * * try_wildcard - If not null, will attempt to add all accesses that require wildcard slots to this wildcard slot only.
+ * * mode - The method to use when adding accesses. See define for ERROR_ON_FAIL
+ */
 /obj/item/card/id/proc/add_access(list/add_accesses, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
@@ -246,6 +278,13 @@
 
 	return TRUE
 
+/**
+ * Removes the given accesses from the ID Card.
+ *
+ * Will remove the wildcards if the accesses given are on the card as wildcard accesses.
+ * Arguments:
+ * * rem_accesses - List of accesses to remove.
+ */
 /obj/item/card/id/proc/remove_access(list/rem_accesses)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
@@ -255,6 +294,14 @@
 	access -= normal_access
 	remove_wildcards(wildcard_access)
 
+/**
+ * Attempts to set the card's accesses to the given accesses, clearing all accesses not in the given list.
+ *
+ * Depending on the mode, may add accesses as wildcards or error if it can't add them as non-wildcards.
+ * Arguments:
+ * * new_access_list - List of all accesses that this card should hold exclusively.
+ * * mode - The method to use when setting accesses. See define for ERROR_ON_FAIL
+ */
 /obj/item/card/id/proc/set_access(list/new_access_list, mode = ERROR_ON_FAIL)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
@@ -275,6 +322,7 @@
 
 	return TRUE
 
+/// Clears all accesses from the ID card - both wildcard and normal.
 /obj/item/card/id/proc/clear_access()
 	// Go through the wildcards and reset them.
 	for(var/flag_name in wildcard_slots)
@@ -285,6 +333,16 @@
 	// Hard reset access
 	access.Cut()
 
+/**
+ * Helper proc. Creates access lists for the access procs.
+ *
+ * Takes the accesses list and compares it with the trim. Any basic accesses that match the trim are
+ * added to basic_access_list and the rest are added to wildcard_access_list.
+
+ * This proc directly modifies the lists passed in as args. It expects these lists to be instantiated.
+ * There is no return value.
+ * Arguments:
+ */
 /obj/item/card/id/proc/build_access_lists(list/accesses, list/basic_access_list, list/wildcard_access_list)
 	if(!length(accesses) || isnull(basic_access_list) || isnull(wildcard_access_list))
 		CRASH("Invalid parameters passed to build_access_lists")
@@ -340,25 +398,40 @@
 	else
 		return ..()
 
-/obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+/**
+ * Insert credits or coins into the ID card and add their value to the associated bank account.
+ *
+ * Arguments:
+ * money - The item to attempt to convert to credits and insert into the card.
+ * user - The user inserting the item.
+ * physical_currency - Boolean, whether this is a physical currency such as a coin and not a holochip.
+ */
+/obj/item/card/id/proc/insert_money(obj/item/money, mob/user, physical_currency)
 	if(!registered_account)
-		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [money] into!</span>")
 		return
-	var/cash_money = I.get_item_credit_value()
+	var/cash_money = money.get_item_credit_value()
 	if(!cash_money)
-		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
+		to_chat(user, "<span class='warning'>[money] doesn't seem to be worth anything!</span>")
 		return
 	registered_account.adjust_money(cash_money)
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
 	if(physical_currency)
-		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
+		to_chat(user, "<span class='notice'>You stuff [money] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
 	else
-		to_chat(user, "<span class='notice'>You insert [I] into [src], adding [cash_money] credits to the linked account.</span>")
+		to_chat(user, "<span class='notice'>You insert [money] into [src], adding [cash_money] credits to the linked account.</span>")
 
 	to_chat(user, "<span class='notice'>The linked account now reports a balance of [registered_account.account_balance] cr.</span>")
-	qdel(I)
+	qdel(money)
 
+/**
+ * Insert multiple money or money-equivalent items at once.
+ *
+ * Arguments:
+ * money - List of items to attempt to convert to credits and insert into the card.
+ * user - The user inserting the items.
+ */
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
 	if(!registered_account)
 		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit into!</span>")
@@ -380,6 +453,7 @@
 
 	return total
 
+/// Helper proc. Can the user alt-click the ID?
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return
@@ -388,7 +462,7 @@
 
 	return TRUE
 
-// Returns true if new account was set.
+/// Attempts to set a new bank account on the ID card.
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
 	var/datum/bank_account/old_account = registered_account
@@ -492,6 +566,7 @@
 /obj/item/card/id/RemoveID()
 	return src
 
+/// Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.
 /obj/item/card/id/proc/update_in_wallet()
 	SIGNAL_HANDLER
 
@@ -501,7 +576,8 @@
 			powergaming.update_label()
 			powergaming.update_icon()
 
-/obj/item/card/id/proc/update_label(update_icon = FALSE)
+/// Updates the name based on the card's vars and state.
+/obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
 	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
@@ -549,7 +625,7 @@
 	name = "bunker access ID"
 
 /obj/item/card/id/departmental_budget
-	name = "departmental card (FUCK)"
+	name = "departmental card (ERROR)"
 	desc = "Provides access to the departmental budget."
 	icon_state = "budgetcard"
 	var/department_ID = ACCOUNT_CIV
