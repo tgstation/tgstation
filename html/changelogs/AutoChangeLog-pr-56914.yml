@@ -1,8 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer receive 50x the value of items sold with barcodes on the Supply shuttle
-tweak: Sales barcode profit splits will consistently default to 50% (you can still set this to less, but there's no reason to at the moment)
-tweak: Sales tagger examine message improvements
-tweak: Sales tagger and GrandArk Exporter tablet app both tell you the valid range to set the profit split in now"
-  - spellcheck: "'Barcode tag' is now called 'barcode tag'"
