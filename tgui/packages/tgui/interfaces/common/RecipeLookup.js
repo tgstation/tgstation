@@ -182,7 +182,6 @@ export const RecipeLookup = (props, context) => {
         <Flex justify="space-between">
           <Flex.Item
             position="relative"
-            width="190px"
             textColor={recipe.isColdRecipe && "red"}>
             <Tooltip
               content={recipe.isColdRecipe
