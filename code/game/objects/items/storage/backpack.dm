@@ -388,10 +388,8 @@
 	. = ..()
 
 /obj/item/storage/backpack/duffelbag/cursed/process()
-	///don't process if it's somehow on the floor
-	if(!iscarbon(src.loc))
-		return
-	var/mob/living/carbon/user = src.loc
+
+	var/mob/living/carbon/user = loc
 	///check hp
 	if(obj_integrity == 0)
 		user.dropItemToGround(src, TRUE)
