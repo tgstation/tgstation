@@ -40,7 +40,13 @@
 			foodtypes = RAW | MEAT | GROSS,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, .proc/OnEatFrom))
-
+/*
+ * Insert the organ into the select mob.
+ *
+ * M - the mob who will get our organ
+ * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
+ * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
+ */
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
@@ -64,7 +70,12 @@
 		A.Grant(M)
 	STOP_PROCESSING(SSobj, src)
 
-//Special is for instant replacement like autosurgeons
+/*
+ * Remove the organ from the select mob.
+ *
+ * M - the mob who owns our organ, that we're removing the organ from.
+ * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
+ */
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
 	owner = null
 	if(M)

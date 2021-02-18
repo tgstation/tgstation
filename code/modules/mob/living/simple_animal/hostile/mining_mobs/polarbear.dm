@@ -10,8 +10,8 @@
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
 	speak_emote = list("growls")
-	speed = 12
-	move_to_delay = 12
+	speed = 8
+	move_to_delay = 8
 	maxHealth = 300
 	health = 300
 	obj_damage = 40
@@ -28,7 +28,6 @@
 	butcher_results = list(/obj/item/food/meat/slab/bear = 3, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 1)
 	loot = list()
-	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW

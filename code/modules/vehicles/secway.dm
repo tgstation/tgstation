@@ -48,7 +48,7 @@
 		return TRUE
 	return ..()
 
-/obj/vehicle/ridden/secway/attack_hand(mob/living/user)
+/obj/vehicle/ridden/secway/attack_hand(mob/living/user, list/modifiers)
 	if(eddie_murphy)                                                       // v lol
 		user.visible_message("<span class='warning'>[user] begins cleaning [eddie_murphy] out of [src].</span>", "<span class='warning'>You begin cleaning [eddie_murphy] out of [src]...</span>")
 		if(do_after(user, 60, target = src))

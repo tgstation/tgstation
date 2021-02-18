@@ -87,5 +87,5 @@
 	icon_state = "stamp-syndicate"
 	dye_color = DYE_SYNDICATE
 
-/obj/item/stamp/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/stamp/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
