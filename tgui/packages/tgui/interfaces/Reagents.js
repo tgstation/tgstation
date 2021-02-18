@@ -17,7 +17,6 @@ export const Reagents = (props, context) => {
     bitflags = {},
   } = data;
 
-
   const flagIcons = [
     { flag: bitflags.BRUTE, icon: "gavel" },
     { flag: bitflags.BURN, icon: "burn" },
@@ -280,14 +279,16 @@ const RecipeLibrary = (props, context) => {
     return matches === currentReagents.length;
   };
 
-  const visibleReactions = master_reaction_list.filter(reaction => (
-    (selectedBitflags
-      ? matchBitflag(selectedBitflags, reaction.bitflags)
-      : true)
-    && matchReagents(reaction)
-  ));
-
   const bookmarkArray = Array.from(bookmarkedReactions);
+
+  const visibleReactions = bookmarkMode
+    ? bookmarkArray
+    : master_reaction_list.filter(reaction => (
+      (selectedBitflags
+        ? matchBitflag(selectedBitflags, reaction.bitflags)
+        : true)
+    && matchReagents(reaction)
+    ));
 
   const addBookmark = bookmark => {
     bookmarkedReactions.add(bookmark);
@@ -296,6 +297,7 @@ const RecipeLibrary = (props, context) => {
   const removeBookmark = bookmark => {
     bookmarkedReactions.delete(bookmark);
   };
+
   return (
     <Section
       fill
@@ -332,42 +334,42 @@ const RecipeLibrary = (props, context) => {
             {!bookmarkMode ? "Save" : "Del"}
           </Table.Cell>
         </Table.Row>
-        {!bookmarkMode && (
-          visibleReactions.map(reaction => (
-            <Table.Row key={reaction.id} className="candystripe">
-              <>
-                <Table.Cell bold color="label">
+        {visibleReactions.map(reaction => (
+          <Table.Row key={reaction.id} className="candystripe">
+            <>
+              <Table.Cell bold color="label">
+                <Button
+                  mt={0.5}
+                  icon="flask"
+                  color="purple"
+                  content={reaction.name}
+                  onClick={() => act('recipe_click', {
+                    id: reaction.id,
+                  })} />
+              </Table.Cell>
+              <Table.Cell>
+                {reaction.reactants.map(reactant => (
                   <Button
-                    mt={0.5}
-                    icon="flask"
-                    color="purple"
-                    content={reaction.name}
-                    onClick={() => act('recipe_click', {
-                      id: reaction.id,
+                    key={reactant.id}
+                    mt={0.1}
+                    icon="vial"
+                    textColor="white"
+                    color={currentReagents?.includes(reactant.id) && "green"} // check here
+                    content={reactant.name}
+                    onClick={() => act('reagent_click', {
+                      id: reactant.id,
                     })} />
-                </Table.Cell>
-                <Table.Cell>
-                  {reaction.reactants.map(reactant => (
-                    <Button
-                      key={reactant.id}
-                      mt={0.1}
-                      icon="vial"
-                      textColor="white"
-                      color={currentReagents?.includes(reactant.id) && "green"} // check here
-                      content={reactant.name}
-                      onClick={() => act('reagent_click', {
-                        id: reactant.id,
-                      })} />
+                ))}
+              </Table.Cell>
+              <Table.Cell width="60px">
+                {flagIcons
+                  .filter(meta => reaction.bitflags & meta.flag)
+                  .map(meta => (
+                    <Icon key={meta.flag} name={meta.icon} mr={1} />
                   ))}
-                </Table.Cell>
-                <Table.Cell width="60px">
-                  {flagIcons
-                    .filter(meta => reaction.bitflags & meta.flag)
-                    .map(meta => (
-                      <Icon key={meta.flag} name={meta.icon} mr={1} />
-                    ))}
-                </Table.Cell>
-                <Table.Cell width="20px">
+              </Table.Cell>
+              <Table.Cell width="20px">
+                {!bookmarkMode && (
                   <Button
                     icon="book"
                     color="green"
@@ -376,54 +378,16 @@ const RecipeLibrary = (props, context) => {
                       addBookmark(reaction);
                       act('update_ui');
                     }} />
-                </Table.Cell>
-              </>
-            </Table.Row>
-          ))
-        ) || (
-          bookmarkArray.map(reaction => (
-            <Table.Row key={reaction.id} className="candystripe">
-              <>
-                <Table.Cell bold color="label">
-                  <Button
-                    mt={0.5}
-                    icon="flask"
-                    color="purple"
-                    content={reaction.name}
-                    onClick={() => act('recipe_click', {
-                      id: reaction.id,
-                    })} />
-                </Table.Cell>
-                <Table.Cell>
-                  {reaction.reactants.map(reactant => (
-                    <Button
-                      mt={0.1}
-                      key={reactant.id}
-                      icon="vial"
-                      color={currentReagents?.includes(reactant.id) && "green"}
-                      content={reactant.name}
-                      onClick={() => act('reagent_click', {
-                        id: reactant.id,
-                      })} />
-                  ))}
-                </Table.Cell>
-                <Table.Cell width="60px">
-                  {flagIcons
-                    .filter(meta => reaction.bitflags & meta.flag)
-                    .map(meta => (
-                      <Icon key={meta.flag} name={meta.icon} mr={1} />
-                    ))}
-                </Table.Cell>
-                <Table.Cell width="20px">
+                ) || (
                   <Button
                     icon="trash"
                     color="red"
                     onClick={() => removeBookmark(reaction)} />
-                </Table.Cell>
-              </>
-            </Table.Row>
-          ))
-        )}
+                )}
+              </Table.Cell>
+            </>
+          </Table.Row>
+        ))}
       </Table>
     </Section>
   );
