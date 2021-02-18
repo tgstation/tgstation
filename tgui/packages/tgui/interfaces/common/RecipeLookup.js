@@ -157,7 +157,6 @@ export const RecipeLookup = (props, context) => {
       <LabeledList.Item bold label="Rate profile" width="10px">
         <Box
           height="50px"
-          width="225px"
           position="relative"
           style={{
             'background-color': 'black',
@@ -170,9 +169,10 @@ export const RecipeLookup = (props, context) => {
           {recipe.explosive && (
             <Chart.Line
               position="absolute"
+              justify="right"
               top={0.01}
               bottom={0}
-              right={recipe.isColdRecipe ? 16.41 : 0}
+              right={recipe.isColdRecipe && null}
               width="28px"
               data={recipe.explosive}
               strokeWidth={0}
@@ -180,8 +180,7 @@ export const RecipeLookup = (props, context) => {
           )}
         </Box>
         <Flex
-          justify="space-between"
-          width="225px">
+          justify="space-between">
           <Flex.Item
             position="relative"
             textColor={recipe.isColdRecipe && "red"}>
