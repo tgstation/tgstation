@@ -26,10 +26,27 @@
 	if(current_visitors.len < max_guests)
 		create_new_customer()
 
+///Spawns a new customer at the portal
 /datum/venue/proc/create_new_customer()
 	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), pickweight(customer_types), src)
 	current_visitors += new_customer
 
+/datum/venue/proc/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
+	return
+
+///Checks if the object used is correct for the venue
+/datum/venue/proc/is_correct_order(atom/movable/object_used, wanted_item)
+	return FALSE
+
+///The line the robot says when ordering
+/datum/venue/proc/order_food_line(order)
+	return "broken venue pls call a coder"
+
+///Effects for when a customer receives their order at this venue
+/datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+	return
+
+///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
 	if(open)
 		close()
@@ -48,8 +65,6 @@
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
 		robot_customer.ai_controller.blackboard[BB_BLACKBOARD_CUSTOMER_LEAVING] = TRUE //LEAVEEEEEE
-
-
 
 /obj/machinery/restaurant_portal
 	name = "restaurant portal"
@@ -108,3 +123,32 @@
 		icon_state = "sign_open"
 	else
 		icon_state = "sign_closed"
+
+
+/obj/item/holosign_creator/robot_seat
+	name = "seating indicator placer"
+	creation_time = 1 SECONDS
+	holosign_type = /obj/structure/holosign/robot_seat
+	desc = "Use this to place seats for your restaurant guests!"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	//var/datum/venue/linked_venue = /datum/venue
+
+/obj/item/holosign_creator/robot_seat/attack_self(mob/user)
+	return
+
+
+/obj/structure/holosign/robot_seat
+	density = FALSE
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "holosign"
+	layer = BELOW_MOB_LAYER
+	use_vis_overlay = FALSE
+	var/datum/venue/linked_venue = /datum/venue
+
+/obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
+	return
+
+/obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if(istype(I, projector.type) && !SSrestaurant.claimed_seats[src])
+		qdel(src)

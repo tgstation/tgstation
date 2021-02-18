@@ -56,3 +56,6 @@
 #define FOOD_LIKED 1
 #define FOOD_DISLIKED 2
 #define FOOD_TOXIC 3
+
+
+#define VENUE_BAR_MINIMUM_REAGENTS 10

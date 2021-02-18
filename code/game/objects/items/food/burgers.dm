@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/burger/plain
-	name = "burger"
+	name = "plain burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN | MEAT

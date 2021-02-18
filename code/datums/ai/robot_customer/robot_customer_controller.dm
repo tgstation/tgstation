@@ -22,11 +22,11 @@
 	current_behaviors = list()
 	if(blackboard[BB_BLACKBOARD_CUSTOMER_LEAVING])
 		var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		current_movement_target = attending_venue
+		current_movement_target = attending_venue.restaurant_portal
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/leave_venue)
 		return
 
-	var/obj/structure/chair/my_seat = blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/my_seat = blackboard[BB_CUSTOMER_MY_SEAT]
 
 	if(!my_seat) //We havn't got a seat yet! find one!
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_seat)
@@ -43,7 +43,16 @@
 
 /datum/ai_controller/robot_customer/proc/on_attackby(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
-	if(blackboard[BB_CUSTOMER_CURRENT_ORDER] == I.type)
+	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
+	if(attending_venue.is_correct_order(I, blackboard[BB_CUSTOMER_CURRENT_ORDER]))
+		to_chat(user, "<span class='notice'>You hand [I] to [pawn]</span>")
+		eat_order(I, attending_venue)
+		return COMPONENT_NO_AFTERATTACK
+
+
+/datum/ai_controller/robot_customer/proc/eat_order(obj/item/order_item, attending_venue)
+	if(!blackboard[BB_CUSTOMER_EATING])
 		blackboard[BB_CUSTOMER_EATING] = TRUE
-		pawn.visible_message("<span class='danger'>[pawn] pushes [I] into their mouth-shaped hole!</span>", "<span class='danger'>You push [I] into your mouth-shaped hole</span>")
-		qdel(I)
+		attending_venue.on_get_order(pawn, order_item)
+		qdel(order_item)
+
