@@ -21,3 +21,23 @@
 	icon_state = "intern"
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/centcom/cc_turtle
+	name = "\improper CentCom Turtleneck Suit"
+	desc = "A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe."
+	icon_state = "cc_turtle"
+	inhand_icon_state = "dg_suit"
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/centcom/cc_turtle_skirt
+	name = "\improper CentCom Turtleneck Skirt"
+	desc = "A skirt version of the CentCom Turtleneck, rarer and more sought after than the original."
+	icon_state = "cc_turtle_skirt"
+	inhand_icon_state = "dg_suit"
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/centcom/centcom_skirt
+	name = "\improper CentCom Officer's Jumpskirt"
+	desc = "It's a jumpskirt worn by CentCom's highest-tier Commanders."
+	icon_state = "centcom_skirt"
+	inhand_icon_state = "dg_suit"
