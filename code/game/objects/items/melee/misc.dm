@@ -74,10 +74,33 @@
 	custom_materials = list(/datum/material/iron = 1000)
 	wound_bonus = 10
 	bare_wound_bonus = 25
+	var/lunge_delay = 1.2 SECONDS
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+
+/obj/item/melee/sabre/examine(datum/source, mob/user, list/examine_list)
+	. = ..()
+	. += "<span class='notice'><b>right-click</b> to lunge with [src].</span>"
+
+/obj/item/melee/sabre/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(user.Adjacent(target))
+		return
+	to_chat(user, "<span class='notice'>You prepare to lunge at [target]!</span>")
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!do_after(user, lunge_delay, interaction_key = "lunge_attack"))
+		return
+	user.throw_at(target, 2, 10, spin = FALSE, gentle = TRUE, callback = CALLBACK(src, .proc/after_lunge, user, target))
+	return
+
+/obj/item/melee/sabre/proc/after_lunge(mob/user, atom/target)
+	if(!user.Adjacent(target))
+		to_chat(user, "<span class='warning'>You miss [target]!</span>")
+		return
+	///Two hits for the price of one
+	melee_attack_chain(user, target)
+	melee_attack_chain(user, target)
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
