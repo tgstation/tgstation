@@ -1623,7 +1623,7 @@
 			.[comp_mat] += material_comp[comp_mat]
 
 /**
- * Fetches a list of all of the materials this object has of the desired type
+ * Fetches a list of all of the materials this object has of the desired type. Returns null if there is no valid materials of the type
  *
  * Arguments:
  * - [mat_type][/datum/material]: The type of material we are checking for
@@ -1635,14 +1635,16 @@
 	if(!length(cached_materials))
 		return null
 
-	. = list()
+	var/materials_of_type
 	for(var/m in cached_materials)
 		if(cached_materials[m] < mat_amount)
 			continue
 		var/datum/material/material = GET_MATERIAL_REF(m)
 		if(exact ? material.type != m : !istype(material, mat_type))
 			continue
-		.[material] = cached_materials[m]
+		LAZYSET(materials_of_type, material, cached_materials[m])
+
+	return materials_of_type
 
 /**
  * Fetches a list of all of the materials this object has with the desired material category.
@@ -1659,7 +1661,7 @@
 	if(!length(cached_materials))
 		return null
 
-	. = list()
+	var/materials_of_category
 	for(var/m in cached_materials)
 		if(cached_materials[m] < mat_amount)
 			continue
@@ -1673,7 +1675,8 @@
 			continue
 		if(no_flags && (category_flags & no_flags))
 			continue
-		.[material] = cached_materials[m]
+		LAZYSET(materials_of_category, material, cached_materials[m])
+	return materials_of_category
 
 /**
  * Gets the most common material in the object.

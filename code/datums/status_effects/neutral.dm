@@ -322,6 +322,9 @@
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
 	. = ..()
+	if(!.)
+		return
+
 	owner.emote("surrender")
 
 /*

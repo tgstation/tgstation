@@ -38,6 +38,13 @@
 	create_reagents(200, NO_REACT)//Lets save some calculations here
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
 
+/obj/machinery/chem_heater/deconstruct(disassembled)
+	. = ..()
+	if(beaker && disassembled)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		beaker.forceMove(drop_location())
+		beaker = null
+
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
@@ -59,7 +66,7 @@
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
 
