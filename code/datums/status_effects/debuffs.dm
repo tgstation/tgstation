@@ -268,14 +268,15 @@
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	if(usr != owner)
+	if(!.)
 		return
+
 	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
 	if(do_after(owner, 3.5 SECONDS, owner))
 		if(isliving(owner))
-			var/mob/living/L = owner
-			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
-			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			var/mob/living/living_owner = owner
+			to_chat(living_owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			living_owner.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify

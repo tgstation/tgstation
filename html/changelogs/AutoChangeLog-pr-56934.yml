@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "The server's last round should be actually viewable now"
