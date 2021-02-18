@@ -60,11 +60,7 @@
 	temp_exponent_factor = 1.75
 	ph_exponent_factor = 1
 	thermic_constant = 75
-<<<<<<< Updated upstream
-	H_ion_release = -4.5
-=======
 	H_ion_release = -6.5
->>>>>>> Stashed changes
 	rate_up_lim = 40
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT
