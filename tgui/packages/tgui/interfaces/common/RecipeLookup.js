@@ -179,7 +179,9 @@ export const RecipeLookup = (props, context) => {
               fillColor={"#d92727"} />
           )}
         </Box>
-        <Flex justify="space-between">
+        <Flex
+          justify="space-between"
+          width="225px">
           <Flex.Item
             position="relative"
             textColor={recipe.isColdRecipe && "red"}>
