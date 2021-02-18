@@ -79,7 +79,7 @@ export const Reagents = (props, context) => {
   };
 
   return (
-    <Window resizable
+    <Window
       width={720}
       height={850}>
       <Window.Content>
