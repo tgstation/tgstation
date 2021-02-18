@@ -23,7 +23,7 @@
 	overdose_threshold = 35
 	reagent_state = SOLID
 	inverse_chem_val = 0.3
-	inverse_chem = /datum/reagent/impurity/helgrasp
+	inverse_chem = /datum/reagent/inverse/helgrasp
 	failed_chem = null
 	var/helbent = FALSE
 	var/reaping = FALSE
@@ -511,6 +511,7 @@
 	ph = 12.7
 	inverse_chem = /datum/reagent/inverse/penthrite
 	inverse_chem_val = 0.25
+	failed_chem = null //We don't want to accidentally crash it out (see reaction)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)

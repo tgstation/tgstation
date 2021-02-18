@@ -352,6 +352,8 @@
 		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
 	for(var/atom/movable/movey as anything in orange(range, this_turf))
+		if(!istype(movey, /atom/movable))
+			continue
 		if(isliving(movey) && damage)
 			var/mob/living/live = movey
 			live.apply_damage(damage)//Since this can be called multiple times
@@ -436,12 +438,12 @@
 * * radius - the range of the effect
 * * freeze_duration - how long the icey spots remain for
 */
-/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 5)
+/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50)
 	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
 		if(!(istype(any_turf, /turf/open)))
 			continue
 		var/turf/open/open_turf = any_turf
-		open_turf.MakeSlippery(TURF_WET_PERMAFROST, max_wet_time = freeze_duration)
+		open_turf.MakeSlippery(TURF_WET_PERMAFROST, 10, freeze_duration, freeze_duration)
 		open_turf.temperature = temp
 
 ///Clears the beaker of the reagents only

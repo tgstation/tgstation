@@ -71,13 +71,13 @@
 	required_temp = 225
 	optimal_temp = 700
 	overheat_temp = 750
-	optimal_ph_min = 5
+	optimal_ph_min = 4.5
 	optimal_ph_max = 12
 	determin_ph_range = 2
 	temp_exponent_factor = 0.75
 	ph_exponent_factor = 4
 	thermic_constant = 50
-	H_ion_release = -3
+	H_ion_release = -2.5
 	rate_up_lim = 30
 	purity_min = 0.35//15% window
 	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
@@ -110,13 +110,13 @@
 	required_temp = 50
 	optimal_temp = 300
 	overheat_temp = 350
-	optimal_ph_min = 5
+	optimal_ph_min = 4.8
 	optimal_ph_max = 9
 	determin_ph_range = 3
-	temp_exponent_factor = 0.5
+	temp_exponent_factor = 5
 	ph_exponent_factor = 2
 	thermic_constant = -400
-	H_ion_release = 3.5
+	H_ion_release = 3.2
 	rate_up_lim = 35
 	purity_min = 0.25
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -128,6 +128,8 @@
 			continue
 		if(living_mob.flash_act(1, length = 5))
 			living_mob.set_blurriness(10)
+	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [holder.my_atom] lets out a loud bang!</span>")
+	playsound(holder.my_atom, 'sound/effects/explosion1.ogg', 50, 1)
 
 /datum/chemical_reaction/medicine/hercuri
 	results = list(/datum/reagent/medicine/c2/hercuri = 5)
@@ -139,8 +141,9 @@
 	optimal_ph_min = 6
 	optimal_ph_max = 11
 	determin_ph_range = 1
-	temp_exponent_factor = 4
-	thermic_constant = -40
+	temp_exponent_factor = 3
+	thermic_constant = -35
+	H_ion_release = 3.7
 	rate_up_lim = 50
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 
@@ -334,9 +337,9 @@
 	determin_ph_range = 3
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1
-	thermic_constant = 120
+	thermic_constant = 150
 	H_ion_release = -5
-	rate_up_lim = 20
+	rate_up_lim = 15
 	purity_min = 0.55
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 
@@ -351,6 +354,6 @@
 		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1)
 	explode_fire_vortex(holder, equilibrium, 1, 1)
 
+//enabling hardmode
 /datum/chemical_reaction/medicine/penthrite/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
-	holder.chem_temp += 10
-
+	holder.chem_temp += 15

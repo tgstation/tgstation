@@ -50,20 +50,21 @@
 //// Helbital
 
 //Inverse:
-/datum/reagent/impurity/helgrasp
+datum/reagent/inverse/helgrasp
 	name = "Helgrasp"
 	description = "This rare and forbidden concoction is thought to bring you closer to the grasp of the Norse goddess Hel."
 	metabolization_rate = 1*REM //This is fast
+	tox_damage = 0.25
 	ph = 14
 
 //Warns you about the impenting hands
-/datum/reagent/impurity/helgrasp/on_mob_add(mob/living/L, amount)
+datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
 	. = ..()
 	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
 	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 
 //Sends hands after you for your hubris
-/datum/reagent/impurity/helgrasp/on_mob_life(mob/living/carbon/owner)
+datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	. = ..()
 	//Adapted from the end of the curse - but lasts a short time
 	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
@@ -86,6 +87,7 @@
 	description = "Temporarilly interferes a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
 	ph = 13.5
+	liver_damage = 0.1
 	addiction_types = list(/datum/addiction/medicine = 4)
 
 /datum/reagent/impurity/libitoil/on_mob_add(mob/living/L, amount)
@@ -137,9 +139,10 @@
 
 //impure
 /datum/reagent/impurity/lentslurri //Okay maybe I should outsource names for these
-	name = "lentslurri"//This is a really bad name please replace
+	name = "Lentslurri"//This is a really bad name please replace
 	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong."
 	addiction_types = list(/datum/addiction/medicine = 8)
+	liver_damage = 0
 
 /datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/M)
 	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
@@ -155,10 +158,13 @@
 	description = "Prolonged exposure to this chemical can cause an overwhelming urge to itch oneself."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	var/resetting_probability = 0
-	var/spammer = 0
 	ph = 1.7
 	addiction_types = list(/datum/addiction/medicine = 2.5)
+	tox_damage = 0.1
+	///Probability of scratch - increases as a function of time
+	var/resetting_probability = 0
+	///Prevents message spam
+	var/spammer = 0
 
 //Just the removed itching mechanism - omage to it's origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/M)
@@ -182,6 +188,7 @@
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
 	addiction_types = list(/datum/addiction/medicine = 1.5)
+	liver_damage = 0.1
 	//blurriness at the start of taking the med
 	var/cached_blurriness
 
@@ -203,6 +210,7 @@
 	name = "Herignis"
 	description = "This reagent causes a dramatic raise in a patient's body temperature."
 	ph = 0.8
+	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 2.5)
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner)
@@ -323,21 +331,23 @@
 	return TRUE
 
 ///Can bring a corpse back to life temporarily (if heart is intact)
-///Makes wounds bleed more, if it brought someone back, they take brute and heart damage
+///Makes wounds bleed more, if it brought someone back, they take additional brute and heart damage
 ///They can't die during this, but if they're past crit then take increasing stamina damage
 ///If they're past fullcrit, their movement is slowed by half
+///If they OD, their heart explodes (if they were brought back from the dead)
 /datum/reagent/inverse/penthrite
 	name = "Nooartrium"
-	description = "A reagent that is known to stimulate the heart in a dead patient, bringing them ."
+	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
 	ph = 14
 	metabolization_rate = 1 * REM
 	addiction_types = list(/datum/addiction/medicine = 12)
+	overdose_threshold = 20
 	///If we brought someone back from the dead
 	var/back_from_the_dead
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
-	if(heart.organ_flags & ORGAN_FAILING)
+	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
 	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
@@ -365,4 +375,13 @@
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	. = ..()
+
+/datum/reagent/inverse/penthrite/overdose_process(mob/living/carbon/owner)
+	if(!back_from_the_dead)
+		return ..()
+	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	explosion(owner, 1, 0, 1)
+	qdel(heart)
+	owner.visible_message("<span class='warning'>[user]'s heart explodes!</span>")
 	. = ..()
