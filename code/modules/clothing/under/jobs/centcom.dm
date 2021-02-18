@@ -35,9 +35,11 @@
 	icon_state = "cc_turtle_skirt"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/centcom/centcom_skirt
 	name = "\improper CentCom Officer's Jumpskirt"
 	desc = "It's a jumpskirt worn by CentCom's highest-tier Commanders."
 	icon_state = "centcom_skirt"
 	inhand_icon_state = "dg_suit"
+	fitted = FEMALE_UNIFORM_TOP
