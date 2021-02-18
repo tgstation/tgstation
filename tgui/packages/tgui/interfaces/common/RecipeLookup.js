@@ -193,7 +193,6 @@ export const RecipeLookup = (props, context) => {
           </Flex.Item>
           {recipe.explosive && (
             <Flex.Item
-              width="90px"
               position="relative"
               textColor={!recipe.isColdRecipe && "red"}>
               <Tooltip
