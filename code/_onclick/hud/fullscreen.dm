@@ -1,4 +1,6 @@
-/mob/proc/overlay_fullscreen(category, type, severity)
+/mob/proc/overlay_fullscreen(category, type, severity, _alpha)
+	if(!_alpha)
+		_alpha = 255
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)
 		// needs to be recreated
@@ -9,6 +11,7 @@
 		return screen
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
+	screen.alpha = _alpha
 	screen.severity = severity
 	if (client && screen.should_show_to(src))
 		screen.update_for_view(client.view)
