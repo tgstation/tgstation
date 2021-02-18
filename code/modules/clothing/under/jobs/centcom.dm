@@ -18,14 +18,14 @@
 /obj/item/clothing/under/rank/centcom/officer
 	name = "\improper CentCom Turtleneck Suit"
 	desc = "A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe."
-	icon_state = "cc_turtle"
+	icon_state = "officer"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/centcom/officer_skirt
 	name = "\improper CentCom Turtleneck Skirt"
 	desc = "A skirt version of the CentCom Turtleneck, rarer and more sought after than the original."
-	icon_state = "cc_turtle_skirt"
+	icon_state = "officer_skirt"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
