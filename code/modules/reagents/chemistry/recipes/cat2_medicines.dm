@@ -139,10 +139,10 @@
 	optimal_temp = 10
 	overheat_temp = 5
 	optimal_ph_min = 6
-	optimal_ph_max = 11
+	optimal_ph_max = 10
 	determin_ph_range = 1
 	temp_exponent_factor = 3
-	thermic_constant = -35
+	thermic_constant = -40
 	H_ion_release = 3.7
 	rate_up_lim = 50
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -153,7 +153,7 @@
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	holder.my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
 	var/radius = max((equilibrium.step_target_vol/50), 1)
-	freeze_radius(holder, equilibrium, 200, radius, 2) //drying agent exists
+	freeze_radius(holder, equilibrium, 200, radius, 50) //drying agent exists
 	explode_shockwave(holder, equilibrium, sound_and_text = FALSE)
 
 /*****OXY*****/
