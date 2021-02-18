@@ -60,7 +60,7 @@
 	temp_exponent_factor = 1.75
 	ph_exponent_factor = 1
 	thermic_constant = 75
-	H_ion_release = -4
+	H_ion_release = -4.5
 	rate_up_lim = 40
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -107,7 +107,7 @@
 /datum/chemical_reaction/medicine/aiuri
 	results = list(/datum/reagent/medicine/c2/aiuri = 4)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/hydrogen = 2)
-	required_temp = 250
+	required_temp = 50
 	optimal_temp = 300
 	overheat_temp = 350
 	optimal_ph_min = 5
@@ -115,7 +115,7 @@
 	determin_ph_range = 3
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 2
-	thermic_constant = -500
+	thermic_constant = -400
 	H_ion_release = 3.5
 	rate_up_lim = 35
 	purity_min = 0.25
