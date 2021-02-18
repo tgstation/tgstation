@@ -84,7 +84,7 @@ export const Reagents = (props, context) => {
       height={850}>
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item >
+          <Stack.Item>
             <Stack fill>
               <Stack.Item grow basis={0}>
                 <Section
