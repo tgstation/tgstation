@@ -623,7 +623,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing malfunction.</span>")
 			if(istype(usedgunkit, /obj/item/gunmaintkit/premium))
 				malfunction_protection = GUN_MALFUNCTION_PROTECTION
-				qdel(usedgunkit)
+				QDEL_NULL(usedgunkit)
 			return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
