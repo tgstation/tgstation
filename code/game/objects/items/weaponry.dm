@@ -488,7 +488,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "angelplasm"
 
 /obj/item/ectoplasm/mystic
-	icon_state = "revenantEctoplasm"
+	icon_state = "mysticplasm"
 
 
 /obj/item/mounted_chainsaw

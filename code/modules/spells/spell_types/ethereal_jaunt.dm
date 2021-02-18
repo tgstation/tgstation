@@ -13,6 +13,7 @@
 	nonabstract_req = TRUE
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
+	var/jaunt_out_time = 0 //time for immobilization
 	var/jaunt_in_type = /obj/effect/temp_visual/wizard
 	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
@@ -41,7 +42,10 @@
 	target.reset_perspective(holder)
 	target.notransform=0 //mob is safely inside holder now, no need for protection.
 	jaunt_steam(mobloc)
-
+	if(jaunt_out_time)
+		ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
+		sleep(jaunt_out_type)
+		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	sleep(jaunt_duration)
 
 	if(target.loc != holder) //mob warped out of the warp
