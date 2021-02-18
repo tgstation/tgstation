@@ -167,7 +167,7 @@
 /datum/reagent/medicine/c2/lenturi/on_mob_add(mob/living/owner, amount)
 	. = ..()
 	if(creation_purity == 1)
-		for(var/addiction in owner.addiction_list) //maybe worth adding a has_addiction() check?
+		for(var/addiction in owner.reagents.addiction_list) //maybe worth adding a has_addiction() check?
 			if(addiction == /datum/reagent/impurity/lentslurri)
 				to_chat(owner, "<span class='notice'>Something was off about that dose, it doesn't quite hit the spot. You still want more!</span>")//impure chem free!
 
