@@ -1079,7 +1079,6 @@
 	if (R.purity == 1)
 		return
 	if(R.chemical_flags & REAGENT_DONOTSPLIT)
-		R.purity = 1
 		return
 	if(R.purity < 0)
 		stack_trace("Purity below 0 for chem: [type]!")
@@ -1098,7 +1097,7 @@
 		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
 			remove_reagent(R.type, impureVol, FALSE)
 		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-	R.purity = 1 //prevent this process from repeating (this is why creation_purity exists)
+	R.chemical_flags = R.chemical_flags | REAGENT_DONOTSPLIT
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()

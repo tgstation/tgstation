@@ -11,12 +11,14 @@
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3.5)
+	liver_damage = 0
 
 /datum/reagent/inverse/healing
 	name = "Healing inverse reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3)
+	tox_damage = 0
 
 //// END SUBTYPES
 
@@ -51,7 +53,7 @@
 /datum/reagent/impurity/helgrasp
 	name = "Helgrasp"
 	description = "This rare and forbidden concoction is thought to bring you closer to the grasp of the Norse goddess Hel."
-	metabolization_rate = 1 //This is fast
+	metabolization_rate = 1*REM //This is fast
 	ph = 14
 
 //Warns you about the impenting hands
@@ -114,6 +116,7 @@
 	overdose_threshold = 10
 	ph = 1
 	addiction_types = list(/datum/addiction/medicine = 5)
+	liver_damage = 0
 
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 4  * REAGENTS_METABOLISM
@@ -125,10 +128,10 @@
 	ph = 2.1
 
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner)
-	. = ..()
 	owner.adjustFireLoss(-0.5)
 	owner.adjustBruteLoss(-1.5)
 	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM)
+	. = ..()
 
 ////Lenturi
 
@@ -264,6 +267,7 @@
 	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Has a very low metabolism rate and will irradiate the patient when present, purging is recommended after use."
 	metabolization_rate = 0.01 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
+	tox_damage = 0
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner)
 	owner.radiation += creation_purity // 0 - 1

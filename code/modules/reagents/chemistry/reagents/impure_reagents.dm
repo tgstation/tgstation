@@ -18,13 +18,14 @@
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
 	ph = 3
+	var/liver_damage = 0.5
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)//Though, lets be safe
 		C.adjustToxLoss(1, FALSE)//Incase of no liver!
 		return ..()
-	C.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.5*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage*REM)
 	return ..()
 
 //Basically just so people don't forget to adjust metabolization_rate
@@ -36,6 +37,8 @@
 	impure_chem = null
 	inverse_chem = null
 	failed_chem = null
+	///how much this reagent does for tox damage too
+	var/tox_damage
 
 //Does the same as above, but also causes toxin damage
 /datum/reagent/inverse
@@ -44,7 +47,7 @@
 	ph = 2
 
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/C)
-	C.adjustToxLoss(1, FALSE)
+	C.adjustToxLoss(tox_damage, FALSE)
 	return ..()
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it

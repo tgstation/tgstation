@@ -9,7 +9,7 @@
 	//FermiChem vars:
 	required_temp = 250
 	optimal_temp = 1000
-	overheat_temp = 650
+	overheat_temp = 550
 	optimal_ph_min = 5
 	optimal_ph_max = 9.5
 	determin_ph_range = 4
@@ -37,7 +37,7 @@
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()//drains product
-	overly_impure(holder, equilibrium)//faster vortex
+	explode_fire_vortex(holder, equilibrium, 2, 2, "overheat", TRUE)
 
 /datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, react_vol)
 	. = ..()
@@ -54,13 +54,17 @@
 	required_temp = 225
 	optimal_temp = 700
 	overheat_temp = 840
-	optimal_ph_min = 5
+	optimal_ph_min = 6
 	optimal_ph_max = 10
 	determin_ph_range = 4
 	temp_exponent_factor = 1.75
 	ph_exponent_factor = 1
 	thermic_constant = 75
+<<<<<<< Updated upstream
 	H_ion_release = -4.5
+=======
+	H_ion_release = -6.5
+>>>>>>> Stashed changes
 	rate_up_lim = 40
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -75,9 +79,9 @@
 	optimal_ph_max = 12
 	determin_ph_range = 2
 	temp_exponent_factor = 0.75
-	ph_exponent_factor = -4
+	ph_exponent_factor = 4
 	thermic_constant = 50
-	H_ion_release = 4
+	H_ion_release = -3
 	rate_up_lim = 30
 	purity_min = 0.35//15% window
 	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
@@ -124,6 +128,8 @@
 /datum/chemical_reaction/medicine/aiuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
 	for(var/mob/living/living_mob as anything in orange(3, get_turf(holder.my_atom)))
+		if(!isliving(living_mob))
+			continue
 		if(living_mob.flash_act(1, length = 5))
 			living_mob.set_blurriness(10)
 
@@ -275,10 +281,10 @@
 	determin_ph_range = 4
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 1
-	thermic_constant = 50
+	thermic_constant = 0
 	H_ion_release = 0
 	rate_up_lim = 25
-	purity_min = 0 //Fire is our worry for now
+	purity_min = 0.1 //Fire is our worry for now
 	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT
 
 //You get nothing! I'm serious about staying under the heating requirements!
@@ -296,7 +302,7 @@
 	if(delta_ph < 0.35)
 		//normalise delta_ph
 		var/norm_d_ph = 1-(delta_ph/0.35)
-		holder.chem_temp += norm_d_ph*4 //0 - 16 per second)
+		holder.chem_temp += norm_d_ph*12 //0 - 48 per second)
 	if(delta_ph < 0.1)
 		holder.my_atom.visible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover begins to glow!</span>")
 
@@ -348,7 +354,6 @@
 		explode_shockwave(holder, equilibrium, 3, 2, implosion = TRUE)
 		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1)
 	explode_fire_vortex(holder, equilibrium, 1, 1)
-
 
 /datum/chemical_reaction/medicine/penthrite/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
 	holder.chem_temp += 10

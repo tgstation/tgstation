@@ -176,7 +176,7 @@
 			holder.remove_reagent(reagent.type, (impureVol), FALSE)
 			holder.add_reagent(reagent.impure_chem, impureVol, FALSE, added_purity = 1-cached_purity)
 			reagent.creation_purity = cached_purity
-			reagent.purity = 1
+			reagent.chemical_flags = reagent.chemical_flags | REAGENT_DONOTSPLIT
 
 /**
  * Occurs when a reation is overheated (i.e. past it's overheatTemp)
@@ -309,9 +309,10 @@
 			invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
 			continue
-		else(reagent.impure_chem && accept_impure)
+		else if (reagent.impure_chem && accept_impure)
 			invert_reagents.add_reagent(reagent.impure_chem, reagent.volume, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
+			continue
 		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
@@ -378,38 +379,39 @@
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly errupts in flames!")
 
 //Creates a ring of fire in a set range around the beaker location
-/datum/chemical_reaction/proc/explode_fire_vortex(datum/reagents/holder, datum/equilibrium/equilibrium, x_offset = 1, y_offset = 1)
-	if(!equilibrium.explosion_data)
-		equilibrium.explosion_data = list("x" = x_offset, "y" = y_offset, "tar" = "y")//I could make it so you can have multiple vortexes, but...
-	if(equilibrium.explosion_data["tar"] == "x")
-		if(equilibrium.explosion_data["x"] >= x_offset)
-			equilibrium.explosion_data["tar"] = "y"
-			equilibrium.explosion_data["y"] += 1
-		else if(equilibrium.explosion_data["x"] <= -x_offset)
-			equilibrium.explosion_data["tar"] = "y"
-			equilibrium.explosion_data["y"] -= 1
+/datum/chemical_reaction/proc/explode_fire_vortex(datum/reagents/holder, datum/equilibrium/equilibrium, x_offset = 1, y_offset = 1, reverse = FALSE, id = "f_vortex", )
+	var/increment = reverse ? -1 : 1
+	if(!equilibrium.data)
+		equilibrium.data = list("[id]_x" = x_offset, "[id]_y" = y_offset, "[id]_tar" = "[id]_y")//tar is the current movement direction the cyclone is moving in
+	if(equilibrium.data["[id]_tar"] == "[id]_x")
+		if(equilibrium.data["[id]_x"] >= x_offset)
+			equilibrium.data["[id]_tar"] = "[id]_y"
+			equilibrium.data["[id]_y"] += increment
+		else if(equilibrium.data["[id]_x"] <= -x_offset)
+			equilibrium.data["[id]_tar"] = "[id]_y"
+			equilibrium.data["[id]_y"] -= increment
 		else
-			if(equilibrium.explosion_data["y"] < 0)
-				equilibrium.explosion_data["x"] += 1
-			else if(equilibrium.explosion_data["y"] > 0)
-				equilibrium.explosion_data["x"] -= 1
+			if(equilibrium.data["[id]_y"] < 0)
+				equilibrium.data["[id]_x"] += increment
+			else if(equilibrium.data["[id]_y"] > 0)
+				equilibrium.data["[id]_x"] -= increment
 
-	else if (equilibrium.explosion_data["tar"] == "y")
-		if(equilibrium.explosion_data["y"] >= y_offset)
-			equilibrium.explosion_data["tar"] = "x"
-			equilibrium.explosion_data["x"] -= 1
-		else if(equilibrium.explosion_data["y"] <= -y_offset)
-			equilibrium.explosion_data["tar"] = "x"
-			equilibrium.explosion_data["x"] += 1
+	else if (equilibrium.data["[id]_tar"] == "[id]_y")
+		if(equilibrium.data["[id]_y"] >= y_offset)
+			equilibrium.data["[id]_tar"] = "[id]_x"
+			equilibrium.data["[id]_x"] -= increment
+		else if(equilibrium.data["[id]_y"] <= -y_offset)
+			equilibrium.data["[id]_tar"] = "[id]_x"
+			equilibrium.data["[id]_x"] += increment
 		else
-			if(equilibrium.explosion_data["x"] < 0)
-				equilibrium.explosion_data["y"] -= 1
-			else if(equilibrium.explosion_data["x"] > 0)
-				equilibrium.explosion_data["y"] += 1
+			if(equilibrium.data["[id]_x"] < 0)
+				equilibrium.data["[id]_y"] -= increment
+			else if(equilibrium.data["[id]_x"] > 0)
+				equilibrium.data["[id]_y"] += increment
 	var/turf/holder_turf = get_turf(holder.my_atom)
-	var/turf/target = locate(holder_turf.x + equilibrium.explosion_data["x"], holder_turf.y + equilibrium.explosion_data["y"], holder_turf.z)
+	var/turf/target = locate(holder_turf.x + equilibrium.data["[id]_x"], holder_turf.y + equilibrium.data["[id]_y"], holder_turf.z)
 	new /obj/effect/hotspot(target)
-	debug_world("X: [equilibrium.explosion_data["x"]], Y: [equilibrium.explosion_data["x"]]")
+	debug_world("X: [equilibrium.data["[id]_x"]], Y: [equilibrium.data["[id]_x"]]")
 
 /*
  * Creates a square of fire in a fire_range radius,

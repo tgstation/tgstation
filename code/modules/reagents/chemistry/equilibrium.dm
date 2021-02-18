@@ -44,9 +44,7 @@
 	var/thermic_mod = 1
 	///Allow us to deal with lag by "charging" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
 	var/time_deficit
-	///explosion data - used to keep track of things between explosion calls. CANNOT be used as a part of chemical_recipe - those vars are static lookup tables.
-	var/explosion_data
-	///Used to store specific data needed for a reaction
+	///Used to store specific data needed for a reaction, usually used to keep track of things between explosion calls. CANNOT be used as a part of chemical_recipe - those vars are static lookup tables.
 	var/data = list()
 
 /*
