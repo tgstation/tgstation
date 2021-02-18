@@ -111,7 +111,8 @@ export const Reagents = (props, context) => {
                 </Section>
               </Stack.Item>
               <Stack.Item grow basis={0}>
-                <Section title="Reagent lookup"
+                <Section
+                  title="Reagent lookup"
                   minWidth="300px"
                   buttons={(
                     <Button
@@ -269,7 +270,9 @@ export const Reagents = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={2} basis={0}>
-            <Section scrollable fill
+            <Section
+              fill
+              scrollable
               title={bookmarkMode ? "Bookmarked recipes" : "Possible recipes"}
               buttons={(
                 <>
