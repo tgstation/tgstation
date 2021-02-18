@@ -114,7 +114,7 @@
 		card_assignment = id_card.assignment
 
 	if(card_assignment in (SSjob.station_jobs + SSjob.additional_jobs_with_icons)) //Check if the job has a hud icon
-		return jobName
+		return card_assignment
 	if(card_assignment in SSjob.centcom_jobs) //Return with the NT logo if it is a CentCom job
 		return "CentCom"
 	return "Unknown" //Return unknown if none of the above apply
