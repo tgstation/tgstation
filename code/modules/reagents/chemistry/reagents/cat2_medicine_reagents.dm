@@ -275,8 +275,10 @@
 	description = "An oxygen deprivation medication that causes fatigue. Prolonged exposure causes the patient to fall asleep once the medicine metabolizes."
 	color = "#FF6464"
 	ph = 5.6
+	inverse_chem = /datum/reagent/inverse/healing/tirimol
+	inverse_chem_val = 0.3
 	var/drowsycd = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-3*normalise_creation_purity())

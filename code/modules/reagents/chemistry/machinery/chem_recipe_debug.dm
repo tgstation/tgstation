@@ -26,6 +26,8 @@
 	var/majorImpurity
 	///If we failed to react this current chem so use a lower temp
 	var/failed = 0
+	///If we're forcing optimal conditions
+	var/force_optimal = FALSE
 
 ///Create reagents datum
 /obj/machinery/chem_recipe_debug/Initialize()
@@ -127,3 +129,16 @@
 	if(C.reaction_flags & REACTION_INSTANT)
 		say("This reaction is instant")
 
+/obj/machinery/chem_recipe_debug/specific_reactions
+	///List of PRODUCTS to run
+	var/list/run_me = list()
+
+/obj/machinery/chem_recipe_debug/proc/setup_reactions()
+	cached_reactions = list()
+	for(var/V in run_me)
+		var/datum/chemical_reaction/reaction = //Get list here
+			continue
+		cached_reactions += reaction
+	reagents.clear_reagents()
+	index = 1
+	processing = TRUE

@@ -225,6 +225,7 @@
 	else
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
 
+//Sleepytime for chem
 /datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
 	var/bonus = impure ? 2 : 1
 	if(holder.has_reagent(/datum/reagent/oxygen))

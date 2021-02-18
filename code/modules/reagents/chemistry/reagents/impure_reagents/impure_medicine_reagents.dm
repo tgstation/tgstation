@@ -248,6 +248,8 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 			. = 1
 			if(owner.IsSleeping() && !cached_reagent_list)
 				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+					if(reagent in cached_reagent_list)
+						continue
 					if(istype(reagent, /datum/reagent/medicine))
 						if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
 							continue
