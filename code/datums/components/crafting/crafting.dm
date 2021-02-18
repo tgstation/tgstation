@@ -147,7 +147,7 @@
 	var/list/present_qualities = list()
 
 	for(var/obj/item/contained_item in source.contents)
-		if(istype(contained_item, /obj/item/storage))
+		if(contained_item.GetComponent(/datum/component/storage))
 			for(var/obj/item/subcontained_item in contained_item.contents)
 				available_tools[subcontained_item.type] = TRUE
 				if(subcontained_item.tool_behaviour)
