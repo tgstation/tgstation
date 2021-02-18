@@ -15,7 +15,7 @@
 	// Stops people from "diving into" a crate you can't open normally
 	divable = FALSE
 
-/obj/structure/closet/crate/large/attack_hand(mob/user)
+/obj/structure/closet/crate/large/attack_hand(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)

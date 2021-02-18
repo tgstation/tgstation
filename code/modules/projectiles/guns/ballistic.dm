@@ -91,7 +91,7 @@
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 
 	///Gun internal magazine modification and misfiring
-	
+
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
 	///our initial ammo type. Should match initial caliber, but a bit of redundency doesn't hurt.
@@ -119,6 +119,7 @@
 	var/can_misfire = FALSE
 	///If only our alternative ammuntion misfires and not our main ammunition, we set this to TRUE
 	var/alternative_ammo_misfires = FALSE
+
 	///What is the probability point for the weapon to misfire? If left at 0, it will always roll for misfire if possible.
 	var/misfire_threshold = 0
 	
@@ -179,7 +180,7 @@
 		. += MA
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
-	
+
 	if(gun_flags & TOY_FIREARM_OVERLAY)
 		. += "[icon_state]_toy"
 
@@ -322,7 +323,7 @@
 		return
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
-			if (chambered && !chambered.BB)
+			if (chambered && !chambered.loaded_projectile)
 				chambered.forceMove(drop_location())
 				chambered = null
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
@@ -362,8 +363,7 @@
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-
-	if(magazine && chambered.BB && can_misfire && malfunction_probability >= misfire_threshold)
+	if(magazine && chambered.loaded_projectile && can_misfire && malfunction_probability >= misfire_threshold)
 		if(prob(malfunction_probability))
 			if(blow_up(user))
 				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
@@ -439,7 +439,7 @@
 	postfire_empty_checks(.)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/attack_hand(mob/user)
+/obj/item/gun/ballistic/attack_hand(mob/user, list/modifiers)
 	if(!internal_magazine && loc == user && user.is_holding(src) && magazine)
 		eject_magazine(user)
 		return
@@ -548,7 +548,7 @@
 #define BRAINS_BLOWN_THROW_SPEED 1
 /obj/item/gun/ballistic/suicide_act(mob/user)
 	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-	if (B && chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
+	if (B && chambered && chambered.loaded_projectile && can_trigger_gun(user) && !chambered.loaded_projectile.nodamage)
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
@@ -630,15 +630,15 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!user.is_holding(src))
 		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
 		return TRUE
-	
+
 	if(!can_modify_ammo)
 		return
-	
+
 	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo()) 
+		if(get_ammo())
 			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
 			return
-		
+
 		else if(!bolt_locked)
 			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
 			return
@@ -647,7 +647,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-	
+
 	if(blow_up(user))
 		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
 		return
@@ -674,7 +674,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
 	. = FALSE
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.BB)
+		if(AC.loaded_projectile)
 			process_fire(user, user, FALSE)
 			. = TRUE
 

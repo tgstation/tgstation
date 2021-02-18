@@ -62,7 +62,7 @@
 /obj/effect/portal/attack_tk(mob/user)
 	return
 
-/obj/effect/portal/attack_hand(mob/user)
+/obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
