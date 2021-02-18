@@ -91,7 +91,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
 	if(can_jam)
-		if(chambered.BB)
+		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
 				jammed = TRUE
 			jamming_chance  += jamming_increment
@@ -110,7 +110,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
-	if(chambered?.BB)
+	if(chambered?.loaded_projectile)
 		process_fire(user, user, FALSE)
 		. = TRUE
 
