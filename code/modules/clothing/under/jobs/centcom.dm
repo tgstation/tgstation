@@ -2,13 +2,6 @@
 	icon = 'icons/obj/clothing/under/centcom.dmi'
 	worn_icon = 'icons/mob/clothing/under/centcom.dmi'
 
-/obj/item/clothing/under/rank/centcom/officer
-	name = "\improper CentCom officer's jumpsuit"
-	desc = "It's a jumpsuit worn by CentCom Officers."
-	icon_state = "officer"
-	inhand_icon_state = "g_suit"
-	alt_covers_chest = TRUE
-
 /obj/item/clothing/under/rank/centcom/commander
 	name = "\improper CentCom officer's jumpsuit"
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
@@ -22,14 +15,14 @@
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/centcom/cc_turtle
+/obj/item/clothing/under/rank/centcom/officer
 	name = "\improper CentCom Turtleneck Suit"
 	desc = "A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe."
 	icon_state = "cc_turtle"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/centcom/cc_turtle_skirt
+/obj/item/clothing/under/rank/centcom/officer_skirt
 	name = "\improper CentCom Turtleneck Skirt"
 	desc = "A skirt version of the CentCom Turtleneck, rarer and more sought after than the original."
 	icon_state = "cc_turtle_skirt"
