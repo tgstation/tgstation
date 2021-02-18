@@ -9,27 +9,38 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
-	var/fire_sound = null //What sound should play when this ammo is fired
-	var/caliber = null //Which kind of guns it can be loaded into
-	var/projectile_type = null //The bullet type to create when New() is called
-	var/obj/projectile/BB = null //The loaded bullet
-	var/pellets = 1 //Pellets for spreadshot
-	var/variance = 0 //Variance for inaccuracy fundamental to the casing
-	var/randomspread = 0 //Randomspread for automatics
-	var/delay = 0 //Delay for energy weapons
-	var/click_cooldown_override = 0 //Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
-	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the ammo is fired.
+	///What sound should play when this ammo is fired
+	var/fire_sound = null
+	///Which kind of guns it can be loaded into
+	var/caliber = null
+	///The bullet type to create when New() is called
+	var/projectile_type = null
+	///the loaded projectile in this ammo casing
+	var/obj/projectile/loaded_projectile = null
+	///Pellets for spreadshot
+	var/pellets = 1
+	///Variance for inaccuracy fundamental to the casing
+	var/variance = 0
+	///Randomspread for automatics
+	var/randomspread = 0
+	///Delay for energy weapons
+	var/delay = 0
+	///Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
+	var/click_cooldown_override = 0
+	///the visual effect appearing when the ammo is fired.
+	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	var/heavy_metal = TRUE
-	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
+	///pacifism check for boolet, set to FALSE if bullet is non-lethal
+	var/harmful = TRUE
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
-	BB = null
+	loaded_projectile = null
 
 /obj/item/ammo_casing/Initialize()
 	. = ..()
 	if(projectile_type)
-		BB = new projectile_type(src)
+		loaded_projectile = new projectile_type(src)
 	pixel_x = base_pixel_x + rand(-10, 10)
 	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
@@ -39,20 +50,21 @@
 	. = ..()
 
 	var/turf/T = get_turf(src)
-	if(T && !BB && is_station_level(T.z))
+	if(T && !loaded_projectile && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
+	QDEL_NULL(loaded_projectile)
 
 /obj/item/ammo_casing/update_icon()
 	. = ..()
-	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
+	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : ""]"
+	desc = "[initial(desc)][loaded_projectile ? "" : " This one is spent."]"
 
 /*
  * On accidental consumption, 'spend' the ammo, and add in some gunpowder
  */
 /obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
-	if(BB)
-		BB = null
+	if(loaded_projectile)
+		loaded_projectile = null
 		update_icon()
 		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
 		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
@@ -61,8 +73,8 @@
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
-	if(!BB)
-		BB = new projectile_type(src, src)
+	if(!loaded_projectile)
+		loaded_projectile = new projectile_type(src, src)
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box))
@@ -72,7 +84,7 @@
 			for(var/obj/item/ammo_casing/bullet in loc)
 				if (box.stored_ammo.len >= box.max_ammo)
 					break
-				if (bullet.BB)
+				if (bullet.loaded_projectile)
 					if (box.give_round(bullet, 0))
 						boolets++
 				else

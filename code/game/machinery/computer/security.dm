@@ -272,6 +272,8 @@ What a mess.*/
 		active1 = null
 	if(!( GLOB.data_core.security.Find(active2) ))
 		active2 = null
+	if(!authenticated && href_list["choice"] != "Log In") // logging in is the only action you can do if not logged in
+		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
