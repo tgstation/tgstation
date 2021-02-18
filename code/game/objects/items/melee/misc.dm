@@ -96,6 +96,9 @@
 
 /obj/item/melee/sabre/proc/after_lunge(mob/user, atom/target)
 	if(!user.Adjacent(target))
+		if(isliving(user))
+			var/mob/living/living_user = user
+			living_user.Stun(1 SECONDS)
 		to_chat(user, "<span class='warning'>You miss [target]!</span>")
 		return
 	///Two hits for the price of one
