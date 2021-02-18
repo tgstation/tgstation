@@ -306,4 +306,4 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /datum/id_trim/sandbox/New()
 	. = ..()
-	access = REGION_ACCESS_ALL_STATION
+	access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))

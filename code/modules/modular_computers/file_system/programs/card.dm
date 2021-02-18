@@ -108,7 +108,7 @@
 						<u>Access:</u><br>
 						"}
 
-			var/known_access_rights = REGION_ACCESS_ALL_STATION
+			var/list/known_access_rights = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 			for(var/A in target_id_card.access)
 				if(A in known_access_rights)
 					contents += "  [SSid_access.get_access_desc(A)]"
@@ -198,7 +198,7 @@
 			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
-			if(access_type in (is_centcom ? REGION_ACCESS_CENTCOM : REGION_ACCESS_ALL_STATION))
+			if(access_type in (is_centcom ? SSid_access.get_region_access_list(list(REGION_CENTCOM)) : SSid_access.get_region_access_list(list(REGION_ALL_STATION))))
 				if(access_type in target_id_card.access)
 					target_id_card.remove_access(list(access_type))
 					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [SSid_access.get_access_desc(access_type)]")

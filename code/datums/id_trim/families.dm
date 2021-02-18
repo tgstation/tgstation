@@ -4,4 +4,4 @@
 
 /datum/id_trim/space_police/New()
 	. = ..()
-	access = REGION_ACCESS_ALL_STATION
+	access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))

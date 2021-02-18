@@ -503,7 +503,7 @@
 				open()
 			else
 				req_access = list()
-				req_access += pick(REGION_ACCESS_ALL_STATION)
+				req_access += pick(SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/thing in contents)

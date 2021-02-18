@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(id_access)
 	for(var/trim in typesof(/datum/id_trim))
 		trim_singletons_by_path[trim] = new trim()
 
-/// Creates various data structures that get fed to tgui interfaces.
+/// Creates various data structures that primarily get fed to tgui interfaces, although these lists are used in other places.
 /datum/controller/subsystem/id_access/proc/setup_tgui_lists()
 	accesses_by_region[REGION_ALL_STATION] = REGION_ACCESS_ALL_STATION
 	accesses_by_region[REGION_ALL_GLOBAL] = REGION_ACCESS_ALL_GLOBAL
@@ -270,6 +270,15 @@ SUBSYSTEM_DEF(id_access)
 
 /datum/controller/subsystem/id_access/proc/get_access_desc(access)
 	return desc_by_access["[access]"]
+
+/datum/controller/subsystem/id_access/proc/get_region_access_list(list/regions)
+	if(!length(regions))
+		return
+
+	var/list/built_region_list = list()
+
+	for(var/region in regions)
+		built_region_list |= accesses_by_region[region]
 
 /datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path, copy_access = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]

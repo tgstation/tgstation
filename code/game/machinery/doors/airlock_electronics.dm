@@ -52,7 +52,7 @@
 			one_access = 0
 			. = TRUE
 		if("grant_all")
-			accesses = REGION_ACCESS_ALL_STATION
+			accesses = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 			. = TRUE
 		if("one_access")
 			one_access = !one_access
@@ -72,13 +72,13 @@
 			var/region = params["region"]
 			if(isnull(region))
 				return
-			accesses |= SSid_access.accesses_by_region[region]
+			accesses |= SSid_access.get_region_access_list(list(region))
 			. = TRUE
 		if("deny_region")
 			var/region = params["region"]
 			if(isnull(region))
 				return
-			accesses -= SSid_access.accesses_by_region[region]
+			accesses -= SSid_access.get_region_access_list(list(region))
 			. = TRUE
 
 /obj/item/electronics/airlock/ui_host()

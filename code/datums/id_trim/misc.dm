@@ -4,7 +4,8 @@
 
 /datum/id_trim/admin/New()
 	. = ..()
-	access = REGION_ACCESS_ALL_GLOBAL
+	// Every single access in the game, all on one handy trim.
+	access = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))
 
 /datum/id_trim/highlander
 	assignment = "Highlander"
@@ -12,7 +13,7 @@
 
 /datum/id_trim/highlander/New()
 	. = ..()
-	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
+	access = SSid_access.get_region_access_list(list(REGION_ACCESS_CENTCOM, REGION_ALL_STATION))
 
 /datum/id_trim/reaper_assassin
 	assignment = "Reaper"
@@ -20,7 +21,7 @@
 
 /datum/id_trim/highlander/New()
 	. = ..()
-	access = REGION_ACCESS_ALL_STATION
+	access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 
 /datum/id_trim/mobster
 	assignment = "Mobster"
@@ -31,7 +32,7 @@
 
 /datum/id_trim/vr/New()
 	. = ..()
-	access |= REGION_ACCESS_ALL_STATION
+	access |= SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 
 /datum/id_trim/vr/operative
 	assignment = "Syndicate VR Operative"
@@ -46,4 +47,4 @@
 
 /datum/id_trim/tunnel_clown/New()
 	. = ..()
-	access |= REGION_ACCESS_ALL_STATION
+	access |= SSid_access.get_region_access_list(list(REGION_ALL_STATION))

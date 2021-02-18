@@ -18,7 +18,7 @@
 
 /obj/item/door_remote/Initialize()
 	. = ..()
-	access_list = SSid_access.accesses_by_region[region_access]
+	access_list = SSid_access.get_region_access_list(list(region_access))
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
 
@@ -95,17 +95,17 @@
 	name = "supply door remote"
 	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	icon_state = "gangtool-green"
-	region_access = REGION_ACCESS_SUPPLY
+	region_access = REGION_SUPPLY
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
 	icon_state = "gangtool-blue"
-	region_access = REGION_ACCESS_MEDBAY
+	region_access = REGION_MEDBAY
 
 /obj/item/door_remote/civilian
 	name = "civilian door remote"
 	icon_state = "gangtool-white"
-	region_access = REGION_ACCESS_GENERAL
+	region_access = REGION_GENERAL
 
 #undef WAND_OPEN
 #undef WAND_BOLT

@@ -34,7 +34,7 @@
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 	. = ..()
 	update_icon()
-	req_one_access = REGION_ACCESS_ALL_STATION + REGION_ACCESS_CENTCOM
+	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
