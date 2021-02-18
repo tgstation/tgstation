@@ -56,7 +56,7 @@
 			var/selection_size = abs(cornerA.x - cornerB.x) * abs(cornerA.y - cornerB.y)
 
 			if(selection_size > FILL_WARNING_MIN) // Confirm fill if the number of tiles in the selection is greater than FILL_WARNING_MIN
-				var/choice = alert("Your selected area is [num2text(selection_size)] tiles! Continue?", "Large Fill Confirmation", "Yes", "No")
+				var/choice = alert("Your selected area is [selection_size] tiles! Continue?", "Large Fill Confirmation", "Yes", "No")
 				if(choice != "Yes")
 					return
 
