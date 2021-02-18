@@ -683,17 +683,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	var/atom/movable/to_throw = prepare_and_get_throw_target(target, homeruns_ready)
 	var/atom/throw_target = get_edge_target_turf(to_throw, user.dir)
-	if(homeruns_ready)
-		user.visible_message("<span class='userdanger'>It's a home run!</span>")
-		to_throw.throw_at(throw_target, rand(8,10), 14, user)
-		SSexplosions.medturf += throw_target
-		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homeruns_ready -= 1
-		homeruns_performed += 1
-		return
-	else if(!to_throw.anchored)
-		var/whack_speed = (prob(60) ? 1 : 4)
-		to_throw.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+	if(!QDELETED(to_throw))
+		if(homeruns_ready)
+			user.visible_message("<span class='userdanger'>It's a home run!</span>")
+			to_throw.throw_at(throw_target, rand(8,10), 14, user)
+			SSexplosions.medturf += throw_target
+			playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+			homeruns_ready -= 1
+			homeruns_performed += 1
+			return
+		else if(!to_throw.anchored)
+			var/whack_speed = (prob(60) ? 1 : 4)
+			to_throw.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /**
  * Returns the target to be thrown, AND prepares the target to be thrown if needed.
