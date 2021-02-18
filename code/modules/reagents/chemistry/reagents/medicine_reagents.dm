@@ -1065,12 +1065,12 @@
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob, delta_time, times_fired)
+/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
-	M.AdjustAllImmobility(-20 * REM * delta_time)
-	M.adjustStaminaLoss(-10 * REM * delta_time, 0)
-	M.Jitter(10 * REM * delta_time)
-	M.Dizzy(10 * REM * delta_time)
+	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
+	metabolizer.adjustStaminaLoss(-10 * REM * delta_time, 0)
+	metabolizer.Jitter(10 * REM * delta_time)
+	metabolizer.Dizzy(10 * REM * delta_time)
 	return TRUE
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
@@ -1087,8 +1087,8 @@
 	L.Dizzy(0)
 	L.Jitter(0)
 
-/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob, delta_time, times_fired)
-	M.adjustToxLoss(1 * REM * delta_time, 0)
+/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, delta_time, times_fired)
+	metabolizer.adjustToxLoss(1 * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -1107,8 +1107,8 @@
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 	..()
 
-/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustToxLoss(2 * REM * delta_time, 0)
+/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
+	metabolizer.adjustToxLoss(2 * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -1177,12 +1177,12 @@
 	REMOVE_TRAIT(M, TRAIT_SLEEPIMMUNE, type)
 	..()
 
-/datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + ((rand(-10, 10) / 10) * REM * delta_time) // for extra fun
-		M.AdjustAllImmobility(-5 * REM * delta_time)
-		M.adjustStaminaLoss(-0.5 * REM * delta_time, 0)
-		M.Jitter(1)
+		metabolizer.AdjustAllImmobility(-5 * REM * delta_time)
+		metabolizer.adjustStaminaLoss(-0.5 * REM * delta_time, 0)
+		metabolizer.Jitter(1)
 		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per second
 		. = TRUE
 	..()
