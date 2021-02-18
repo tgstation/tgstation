@@ -643,6 +643,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homeruns_ready = 0
 	///The chance the bat will be renamed to "cricket bat", and gain a new description.
 	var/cricket_chance = 1
+	///The number of homeruns the bat has already performed.  Right now it's only used in a sanity check to prevent the bat from being charged WHILE being used, by making sure it wasn't used during the charge.
+	var/homeruns_performed = 0
 
 /obj/item/melee/baseball_bat/Initialize()
 	. = ..()
@@ -668,7 +670,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
-	if(do_after(user, 9 SECONDS, target = src))
+	var/homeruns_before_charge = homeruns_performed
+	if(do_after(user, 9 SECONDS, target = src) && (homeruns_before_charge == homeruns_performed))
 		to_chat(user, "<span class='userdanger'>You gather power! Time for a home run!</span>")
 		homeruns_ready = homerun_limit
 	..()
@@ -685,6 +688,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
 		homeruns_ready -= 1
+		homeruns_performed += 1
 		return
 	else if(!to_throw.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
