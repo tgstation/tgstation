@@ -3,6 +3,7 @@
 	desc = "This is the special coder plush, do not steal."
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
+	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
 	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
