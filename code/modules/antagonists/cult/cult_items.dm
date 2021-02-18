@@ -687,7 +687,7 @@
 
 /obj/item/melee/cultblade/halberd/Destroy()
 	if(halberd_act)
-		qdel(halberd_act)
+		QDEL_NULL(halberd_act)
 	..()
 
 /obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

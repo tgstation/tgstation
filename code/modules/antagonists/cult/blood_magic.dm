@@ -603,7 +603,7 @@
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(EMP_HEAVY)
-					var/list/constructs = list(
+					var/static/list/constructs = list(
 						"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
 						"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
 						"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
@@ -661,7 +661,7 @@
 
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
-		return FALSE
+		CRASH("The cult construct selection radial menu was accessed by something other than a valid user.")
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
@@ -803,7 +803,7 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/spells = list(
+		var/static/list/spells = list(
 			"Bloody Halberd (150)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
 			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/guns/projectile.dmi', icon_state = "arcane_barrage"),
 			"Blood Beam (500)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "disintegrate")
@@ -856,7 +856,7 @@
 
 /obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)
 	if(!istype(user))
-		return FALSE
+		CRASH("The Blood Rites manipulator radial menu was accessed by something other than a valid user.")
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
