@@ -617,7 +617,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				sort_by_job = !sort_by_job
 
 			if("MessageAll")
-				send_to_all(U)
+				if(cartridge?.spam_enabled)
+					send_to_all(U)
 
 			if("cart")
 				if(cartridge)

@@ -24,7 +24,7 @@
 	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = BB
+	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
 	if (A.tool_behaviour == TOOL_SCREWDRIVER && !modified)
 		modified = TRUE
 		FD.modified = TRUE
@@ -49,7 +49,7 @@
 		return ..()
 
 /obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = BB
+	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
 		FD.nodamage = initial(FD.nodamage)

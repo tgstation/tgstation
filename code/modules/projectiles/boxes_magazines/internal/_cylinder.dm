@@ -38,7 +38,7 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(!bullet || !bullet.BB) // found a spent ammo
+		if(!bullet || !bullet.loaded_projectile) // found a spent ammo
 			stored_ammo[i] = R
 			R.forceMove(src)
 

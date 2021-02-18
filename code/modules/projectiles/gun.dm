@@ -299,7 +299,7 @@
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
-	if(chambered?.BB)
+	if(chambered?.loaded_projectile)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
 				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
@@ -643,16 +643,16 @@
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
 
-	if(chambered?.BB)
-		chambered.BB.damage *= 5
-		if(chambered.BB.wound_bonus != CANT_WOUND)
-			chambered.BB.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
+	if(chambered?.loaded_projectile)
+		chambered.loaded_projectile.damage *= 5
+		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
 	var/fired = process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
-	if(!fired && chambered?.BB)
-		chambered.BB.damage /= 5
-		if(chambered.BB.wound_bonus != CANT_WOUND)
-			chambered.BB.wound_bonus -= 5
+	if(!fired && chambered?.loaded_projectile)
+		chambered.loaded_projectile.damage /= 5
+		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			chambered.loaded_projectile.wound_bonus -= 5
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
