@@ -195,7 +195,7 @@
 /// Access flags that can be applied to command wildcard slots.
 #define WILDCARD_FLAG_COMMAND		ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND
 /// Name associated with the command wildcard bitflag.
-#define WILDCARD_NAME_COMMAND		ACCESS_FLAG_PRV_COMMAND_NAME
+#define WILDCARD_NAME_COMMAND		ACCESS_FLAG_COMMAND_NAME
 /// Access flags that can be applied to private command wildcard slots.
 #define WILDCARD_FLAG_PRV_COMMAND	ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND | ACCESS_FLAG_PRV_COMMAND
 /// Name associated with the private command wildcard bitflag.
