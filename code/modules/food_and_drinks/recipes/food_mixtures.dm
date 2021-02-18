@@ -179,13 +179,13 @@
 	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
 
 /datum/chemical_reaction/food/failed_nutriconversion
-	results = list(/datum/reagent/consumable/nutriment/peptides_failed = 0.5)
+	results = list(/datum/reagent/peptides_failed = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
 	required_catalysts = list(/datum/reagent/impurity/probital_failed = 0.5)
 	thermic_constant = 100 // a tell
 
 /datum/chemical_reaction/food/failed_protein_peptide
-	results = list(/datum/reagent/consumable/nutriment/peptides_failed = 0.5)
+	results = list(/datum/reagent/peptides_failed = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
 	required_catalysts = list(/datum/reagent/impurity/probital_failed = 0.5)
 	thermic_constant = 100 // a tell

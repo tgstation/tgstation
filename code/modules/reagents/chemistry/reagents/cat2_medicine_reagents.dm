@@ -114,7 +114,7 @@
 	color = "#FFFF6B"
 	ph = 5.5
 	overdose_threshold = 20
-	inverse_chem_val = 0.3
+	inverse_chem_val = 0.5//Though it's tough to get
 	inverse_chem = /datum/reagent/medicine/metafactor //Seems thematically intact
 	failed_chem = /datum/reagent/impurity/probital_failed
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -10,13 +10,13 @@
 	name = "Healing impure reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
-	addiction_types = list(/datum/addiction/medicine = 2.5)
+	addiction_types = list(/datum/addiction/medicine = 3.5)
 
 /datum/reagent/inverse/healing
 	name = "Healing inverse reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
-	addiction_types = list(/datum/addiction/medicine = 1)
+	addiction_types = list(/datum/addiction/medicine = 3)
 
 //// END SUBTYPES
 
@@ -118,14 +118,17 @@
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 4  * REAGENTS_METABOLISM
 
-/datum/reagent/consumable/nutriment/peptides_failed
+/datum/reagent/peptides_failed
 	name = "Prion peptides"
 	taste_description = "spearmint frosting"
 	description = "These inhibitory peptides slow down wound healing and also cost nutrition as well!"
-	nutriment_factor = -10 * REAGENTS_METABOLISM
-	brute_heal = -1.5 //I halved it because I was concerned it might be too strong at 4 damage a tick.
-	burn_heal = -0.5
 	ph = 2.1
+
+/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner)
+	. = ..()
+	owner.adjustFireLoss(-0.5)
+	owner.adjustBruteLoss(-1.5)
+	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM)
 
 ////Lenturi
 
@@ -137,11 +140,11 @@
 
 /datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/M)
 	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-	return ..()
+	return
 
 /datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/M)
 	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-	return ..()
+	return
 
 //failed
 /datum/reagent/inverse/ichiyuri
@@ -175,7 +178,7 @@
 	name = "Aivime"
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
-	addiction_types = list(/datum/addiction/medicine = 1)
+	addiction_types = list(/datum/addiction/medicine = 1.5)
 	//blurriness at the start of taking the med
 	var/cached_blurriness
 
@@ -197,7 +200,7 @@
 	name = "Herignis"
 	description = "This reagent causes a dramatic raise in a patient's body temperature."
 	ph = 0.8
-	addiction_types = list(/datum/addiction/medicine = 2)
+	addiction_types = list(/datum/addiction/medicine = 2.5)
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner)
 	. = ..()

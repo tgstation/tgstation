@@ -72,14 +72,14 @@
 	optimal_temp = 700
 	overheat_temp = 750
 	optimal_ph_min = 5
-	optimal_ph_max = 14
+	optimal_ph_max = 12
 	determin_ph_range = 2
 	temp_exponent_factor = 0.75
 	ph_exponent_factor = -4
 	thermic_constant = 50
 	H_ion_release = 4
 	rate_up_lim = 30
-	purity_min = 0.4
+	purity_min = 0.35//15% window
 	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
 
 /*****BURN*****/
@@ -98,8 +98,8 @@
 	determin_ph_range = 6
 	temp_exponent_factor = 1
 	ph_exponent_factor = 2
-	thermic_constant = -150 //Though, it is a test in endothermicity
-	H_ion_release = -3
+	thermic_constant = -175 //Though, it is a test in endothermicity
+	H_ion_release = -2.5
 	rate_up_lim = 30
 	purity_min = 0.25
 	reaction_flags = REACTION_PH_VOL_CONSTANT
