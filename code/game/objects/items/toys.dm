@@ -1536,3 +1536,10 @@
 /obj/item/storage/box/heretic_box/PopulateContents()
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
+
+/obj/item/toy/foamfinger
+	name = "foam finger"
+	desc = "root for the home team! wait, does this station even have a sports team?"
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "foamfinger"
+	w_class = WEIGHT_CLASS_NORMAL
