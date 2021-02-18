@@ -11,11 +11,13 @@
 
 	customer_pawn.say(order_food_line(object_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, plane = HUD_PLANE, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+
 	I.appearance = object_to_order.appearance
 	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
 	I.pixel_y = 32
 	I.pixel_x = 16
+	I.plane = HUD_PLANE
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", I)
 
 	. = object_to_order.type
@@ -69,10 +71,11 @@
 
 	customer_pawn.say(order_food_line(reagent_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, plane = HUD_PLANE, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
 	I.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
 	I.pixel_y = 32
 	I.pixel_x = 16
+	I.plane = HUD_PLANE
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", I)
 
 	return reagent_to_order
