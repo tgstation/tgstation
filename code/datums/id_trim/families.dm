@@ -1,3 +1,4 @@
+/// Trim for the families space police. Has all access.
 /datum/id_trim/space_police
 	trim_state = "trim_ert_security"
 	assignment = "Space Police"

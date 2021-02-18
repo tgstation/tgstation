@@ -1,7 +1,16 @@
+/**
+ * This file contains all the trims associated with station jobs.
+ * It also contains special prisoner trims and the miner's spare ID trim.
+ */
+
+/// ID Trims for station jobs.
 /datum/id_trim/job
 	trim_state = "trim_assistant"
+	/// Minimal access is the non-wildcard access from the base id_trim but is applied when minimal access flags are set.
 	var/list/minimal_access = list()
+	/// Minimal access is the wildcard access from the base id_trim but is applied when minimal access flags are set.
 	var/list/minimal_wildcard_access = list()
+	/// Static list. Cache of any mapping config job changes.
 	var/static/list/job_changes
 	/// What config entry relates to this job. Should be a lowercase job name with underscores for spaces, eg "prisoner" "research_director" "head_of_security"
 	var/config_job
@@ -9,8 +18,6 @@
 	var/list/template_access
 
 /datum/id_trim/job/New()
-	. = ..()
-
 	if(isnull(job_changes))
 		SSmapping.HACK_LoadMapConfig()
 		job_changes = SSmapping.config.job_changes
@@ -32,20 +39,18 @@
 	if(islist(access_changes["additional_minimal_wildcard_access"]))
 		minimal_wildcard_access |= access_changes["additional_minimal_wildcard_access"]
 
-/datum/id_trim/job/New()
-	// Needed for robots?
+	// If there's no config or minimal access is set, let's overwrite the accesses accordingly.
 	if(!config)
 		access = minimal_access.Copy()
 		wildcard_access = minimal_wildcard_access.Copy()
-		return
+	else
+		if(CONFIG_GET(flag/jobs_have_minimal_access))
+			access = minimal_access.Copy()
+			wildcard_access = minimal_wildcard_access.Copy()
 
-	if(CONFIG_GET(flag/jobs_have_minimal_access))
-		access = minimal_access.Copy()
-		wildcard_access = minimal_wildcard_access.Copy()
-
-	// If the config has global maint access set, we always want to add maint access.
-	if(CONFIG_GET(flag/everyone_has_maint_access))
-		access |= list(ACCESS_MAINT_TUNNELS)
+		// If the config has global maint access set, we always want to add maint access.
+		if(CONFIG_GET(flag/everyone_has_maint_access))
+			access |= list(ACCESS_MAINT_TUNNELS)
 
 	return ..()
 
@@ -96,14 +101,14 @@
 	config_job = "captain"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 
+/// Captain gets all station accesses hardcoded in because it's the captain.
 /datum/id_trim/job/captain/New()
 	. = ..()
 
-	access = COMMON_ACCESS
-	access += COMMAND_ACCESS
-	wildcard_access = PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS
-	minimal_access = COMMON_ACCESS + COMMAND_ACCESS
-	minimal_wildcard_access = PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS
+	access |= (COMMON_ACCESS + COMMAND_ACCESS)
+	wildcard_access |= (PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS)
+	minimal_access |= (COMMON_ACCESS + COMMAND_ACCESS)
+	minimal_wildcard_access |= (PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS)
 
 /datum/id_trim/job/cargo_technician
 	assignment = "Cargo Technician"
@@ -383,6 +388,7 @@
 	config_job = "scientist"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_RD, ACCESS_CHANGE_IDS)
 
+/// Sec officers have departmental variants. They each have their own trims with bonus departmental accesses.
 /datum/id_trim/job/security_officer
 	assignment = "Security Officer"
 	trim_state = "trim_securityofficer"
