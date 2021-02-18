@@ -23,7 +23,7 @@
 	var/list/clothing_sets = list("amerifat_clothes")
 
 /datum/customer_data/american
-	name = "American Robot"
+	name = "Space-American Robot"
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/burger/plain = 15, /obj/item/food/burger/cheese = 8, /obj/item/food/burger/superbite = 1),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer/light = 15, /datum/reagent/consumable/ethanol/beer = 25))
