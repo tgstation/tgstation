@@ -19,7 +19,7 @@
  */
 
 /obj/item/toy/crayon
-	name = "crayon"
+	name = "red crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
@@ -81,9 +81,6 @@
 
 /obj/item/toy/crayon/Initialize()
 	. = ..()
-	// Makes crayons identifiable in things like grinders
-	if(name == "crayon")
-		name = "[crayon_color] crayon"
 
 	dye_color = crayon_color
 
@@ -566,7 +563,7 @@
 	dye_color = DYE_WHITE
 
 /obj/item/toy/crayon/mime
-//	name = "mime crayon"
+	name = "mime crayon"
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"

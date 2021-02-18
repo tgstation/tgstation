@@ -1,4 +1,4 @@
-/// Makes sure that crayons have their crayon_color in their initial name.
+/// Makes sure that crayons have their crayon_color in their initial name (to differentiate them in the crafting menu).
 
 /datum/unit_test/crayon_naming/Run()
 	for(var/obj/item/toy/crayon/crayon_path as anything in typesof(/obj/item/toy/crayon))
