@@ -1,8 +1,10 @@
-///Makes sure that crayons have their crayon_color in their initial name.
+/// Makes sure that crayons have their crayon_color in their initial name.
 
 /datum/unit_test/crayon_naming/Run()
-	for(var/obj/item/toy/crayon/this_crayon as anything in typesof(/obj/item/toy/crayon))
-		if(istype(this_crayon, /obj/item/toy/crayon/spraycan))
+	for(var/obj/item/toy/crayon/crayon_path as anything in typesof(/obj/item/toy/crayon))
+		if(ispath(crayon_path, /obj/item/toy/crayon/spraycan))
 			continue
-		if(!findtext("[this_crayon]","[this_crayon.crayon_color]"))
-			Fail("[this_crayon.type] does not have its crayon_color ([this_crayon.crayon_color]) in its initial name ([this_crayon]).")
+		var/obj/item/toy/crayon/real_crayon = new crayon_path
+		if(!findtext(initial(real_crayon.name),real_crayon.crayon_color))
+			Fail("[real_crayon] does not have its crayon_color ([real_crayon.crayon_color]) in its initial name ([initial(real_crayon.name)]).")
+		qdel(real_crayon)
