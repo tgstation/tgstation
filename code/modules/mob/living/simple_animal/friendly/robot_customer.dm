@@ -1,6 +1,6 @@
 ///Robot customers
 /mob/living/simple_animal/robot_customer
-	name = "robot"
+	name = "space-tourist bot"
 	desc = "I wonder what they'll order..."
 	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
