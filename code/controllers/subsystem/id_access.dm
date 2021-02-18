@@ -280,6 +280,8 @@ SUBSYSTEM_DEF(id_access)
 	for(var/region in regions)
 		built_region_list |= accesses_by_region[region]
 
+	return built_region_list
+
 /datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path, copy_access = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 
