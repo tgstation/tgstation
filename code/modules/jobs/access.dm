@@ -102,17 +102,13 @@
 /obj/proc/check_access_ntnet(list/passkey)
 	return check_access_list(passkey)
 
-/// Returns a list of all "recognised" syndicate jobs which should be represented on ID cards with syndicate trim icons.
-/proc/get_all_syndicate_jobs()
-	return list("Syndicate Overlord", "Syndicate Operative", "Syndicate Ship Captain")
-
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/card/id/I = GetID()
 	if(!I)
 		return
 	var/jobName = I.assignment
-	if(jobName in ALL_STATION_JOBS_LIST + ADDITIONAL_ICON_JOBS) //Check if the job has a hud icon
+	if(jobName in SSjob.station_jobs + SSjob.additional_jobs_with_icons) //Check if the job has a hud icon
 		return jobName
-	if(jobName in ALL_CENTCOM_JOBS_LIST) //Return with the NT logo if it is a CentCom job
+	if(jobName in SSjob.centcom_jobs) //Return with the NT logo if it is a CentCom job
 		return "CentCom"
 	return "Unknown" //Return unknown if none of the above apply

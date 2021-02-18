@@ -16,8 +16,16 @@ SUBSYSTEM_DEF(job)
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
+	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
+	var/list/station_jobs
+	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
+	var/list/additional_jobs_with_icons
+	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
+	var/list/centcom_jobs
+
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.HACK_LoadMapConfig()
+	setup_job_lists()
 	if(!occupations.len)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
@@ -723,3 +731,16 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
+
+/// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
+/datum/controller/subsystem/job/proc/setup_job_lists()
+	station_jobs = list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician", \
+		"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer", \
+		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
+		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
+
+	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
+		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando")
+
+	centcom_jobs = list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer", \
+		"Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
