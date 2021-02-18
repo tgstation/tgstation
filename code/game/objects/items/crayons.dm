@@ -566,7 +566,7 @@
 	dye_color = DYE_WHITE
 
 /obj/item/toy/crayon/mime
-	name = "mime crayon"
+//	name = "mime crayon"
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
