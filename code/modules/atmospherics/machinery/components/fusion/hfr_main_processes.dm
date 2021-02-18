@@ -419,7 +419,7 @@
 						internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
 						internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
 						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
-						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(heat_output))) // If they can see it without mesons on.  Bad on them.
+						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_HFR(heat_output))) // If they can see it without mesons on.  Bad on them.
 							if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 								var/D = sqrt(1 / max(1, get_dist(l, src)))
 								l.hallucination += power_level * 50 * D * delta_time
@@ -446,7 +446,7 @@
 					if(m_bz > 100)
 						internal_output.assert_gases(/datum/gas/healium)
 						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
-						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(heat_output))) // If they can see it without mesons on.  Bad on them.
+						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_HFR(heat_output))) // If they can see it without mesons on.  Bad on them.
 							if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 								var/D = sqrt(1 / max(1, get_dist(l, src)))
 								l.hallucination += power_level * 100 * D
@@ -473,7 +473,7 @@
 						radiation *= 2
 						heat_output *= 2.25
 					if(m_bz)
-						for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_RANGE(heat_output)))
+						for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
 							//mesons won't protect you at fusion level 6
 							var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
 							human.hallucination += power_level * 150 * distance_root

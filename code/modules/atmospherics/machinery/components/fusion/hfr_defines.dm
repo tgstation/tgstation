@@ -38,6 +38,8 @@
 #define MIN_POWER_USAGE 50000
 ///Sets the multiplier for the damage
 #define DAMAGE_CAP_MULTIPLIER 0.005
+///Sets the range of the hallucinations
+#define HALLUCINATION_HFR(P) (min(7, round(abs(P) ** 0.25)))
 
 //If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
 #define HYPERTORUS_MELTING_PERCENT 5
