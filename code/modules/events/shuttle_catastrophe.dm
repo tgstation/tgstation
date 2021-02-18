@@ -30,7 +30,7 @@
 			message += "You have been awarded a bonus from [command_name()] for smart spending."
 	else
 		message += "Your replacement shuttle will be the [new_shuttle.name] until further notice."
-	priority_announce(message, "CentCom Spacecraft Engineering")
+	priority_announce(message, "[command_name()] Spacecraft Engineering")
 
 /datum/round_event/shuttle_catastrophe/setup()
 	if(SSshuttle.shuttle_insurance)
