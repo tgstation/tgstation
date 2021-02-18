@@ -227,11 +227,12 @@
 	var/t_He = p_they(TRUE)
 	var/t_his = p_their()
 	var/t_is = p_are()
+	var/defalt_message = "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
 	if(key || !getorgan(/obj/item/organ/brain))
-		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>" //Default death message
+		return defalt_message
 	//The death mob has a brain and no client/player that is assigned to the mob
 	if(!ghost?.can_reenter_corpse)  //And there is no ghost that could reenter the body
-		//There is no way this mob can in any normal way get a player, so they lost the will to live
+		//Returned to show that they body is unrevivable
 		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
-	//This mob has a ghost linked that could still reenter the body, so the soul only departed
-	return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+	//Returned if the ghost is out of body but still revivable
+	return defalt_message
