@@ -103,12 +103,18 @@
 	return check_access_list(passkey)
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
-	var/obj/item/card/id/I = GetID()
-	if(!I)
+	var/obj/item/card/id/id_card = GetID()
+
+	if(!id_card)
 		return
-	var/jobName = I.assignment
-	if(jobName in SSjob.station_jobs + SSjob.additional_jobs_with_icons) //Check if the job has a hud icon
+
+	var/card_assignment = id_card.trim?.assignment
+
+	if(!card_assignment)
+		card_assignment = id_card.assignment
+
+	if(card_assignment in (SSjob.station_jobs + SSjob.additional_jobs_with_icons)) //Check if the job has a hud icon
 		return jobName
-	if(jobName in SSjob.centcom_jobs) //Return with the NT logo if it is a CentCom job
+	if(card_assignment in SSjob.centcom_jobs) //Return with the NT logo if it is a CentCom job
 		return "CentCom"
 	return "Unknown" //Return unknown if none of the above apply
