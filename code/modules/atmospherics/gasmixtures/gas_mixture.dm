@@ -106,12 +106,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
 
-/// Checks to see if gas amount exists in mixture
-/// WARNING - DO NOT USE THIS IN PERFORMANCE INTENSIVE CODE!!!
+/// Checks to see if gas amount exists in mixture.
+/// Do NOT use this in code where performance matters!
+/// It's faster to just manually check the gas with a direct var lookup
 /datum/gas_mixture/proc/has_gas(gas_id, amount=0)
 	ASSERT_GAS(gas_id, src)
-	var/list/cached_gases = gases
-	return amount < cached_gases[gas_id][MOLES]
+	var/is_there_gas = amount < gases[gas_id][MOLES]
+	garbage_collect()
+	return is_there_gas
 
 /// Calculate pressure in kilopascals
 /datum/gas_mixture/proc/return_pressure()
