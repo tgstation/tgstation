@@ -297,7 +297,7 @@
 
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
-/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
+/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	var/sum_volume = 0
@@ -309,6 +309,9 @@
 			invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
 			continue
+		else(reagent.impure_chem && accept_impure)
+			invert_reagents.add_reagent(reagent.impure_chem, reagent.volume, no_react = TRUE)
+			holder.remove_reagent(reagent.type, reagent.volume)
 		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
