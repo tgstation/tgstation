@@ -132,8 +132,8 @@
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
 	jaunt_in_time = 0.6 SECONDS
+	jaunt_out_time = 0.6 SECONDS
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
-	jaunt_out_type = 0.6 SECONDS
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)

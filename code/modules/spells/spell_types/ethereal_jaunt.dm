@@ -44,7 +44,7 @@
 	jaunt_steam(mobloc)
 	if(jaunt_out_time)
 		ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
-		sleep(jaunt_out_type)
+		sleep(jaunt_out_time)
 		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	sleep(jaunt_duration)
 
