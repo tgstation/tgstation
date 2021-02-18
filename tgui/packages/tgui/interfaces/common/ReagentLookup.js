@@ -1,6 +1,5 @@
 import { Box, LabeledList, Button, Icon } from '../../components';
 import { useBackend } from '../../backend';
-import { map } from 'common/collections';
 
 export const ReagentLookup = (props, context) => {
   const { reagent } = props;
