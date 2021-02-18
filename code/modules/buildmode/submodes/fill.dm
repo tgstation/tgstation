@@ -1,4 +1,3 @@
-#ifndef FILL_WARNING_MIN
 #define FILL_WARNING_MIN 150
 
 /datum/buildmode_mode/fill
@@ -70,4 +69,3 @@
 			log_admin("Build Mode: [key_name(c)] with path [objholder], filled the region from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]")
 
 #undef FILL_WARNING_MIN
-#endif
