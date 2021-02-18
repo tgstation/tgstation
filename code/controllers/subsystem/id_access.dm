@@ -1,3 +1,6 @@
+/**
+ * Non-processing subsystem that holds various procs and data structures to manage ID cards, trims and access.
+ */
 SUBSYSTEM_DEF(id_access)
 	name = "IDs and Access"
 	init_order = INIT_ORDER_IDACCESS
@@ -34,6 +37,7 @@ SUBSYSTEM_DEF(id_access)
 	setup_tgui_lists()
 	return ..()
 
+/// Build access flag lists.
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
 	for(var/access in COMMON_ACCESS)
 		flags_by_access |= list("[access]" = ACCESS_FLAG_COMMON)
@@ -61,6 +65,7 @@ SUBSYSTEM_DEF(id_access)
 	access_flag_string_by_flag["[ACCESS_FLAG_AWAY]"] = ACCESS_FLAG_AWAY_NAME
 	access_flag_string_by_flag["[ACCESS_FLAG_SPECIAL]"] = ACCESS_FLAG_SPECIAL_NAME
 
+/// Instantiate trim singletons and add them to a list.
 /datum/controller/subsystem/id_access/proc/setup_trim_singletons()
 	for(var/trim in typesof(/datum/id_trim))
 		trim_singletons_by_path[trim] = new trim()
@@ -171,6 +176,7 @@ SUBSYSTEM_DEF(id_access)
 				manager_pdas[pda_path] = initial(fake_pda.name)
 				station_pda_templates[pda_path] = initial(fake_pda.name)
 
+/// Set up dictionary to convert wildcard names to flags.
 /datum/controller/subsystem/id_access/proc/setup_wildcard_dict()
 	wildcard_flags_by_wildcard[WILDCARD_NAME_ALL] = WILDCARD_FLAG_ALL
 	wildcard_flags_by_wildcard[WILDCARD_NAME_COMMON] = WILDCARD_FLAG_COMMON
@@ -183,6 +189,7 @@ SUBSYSTEM_DEF(id_access)
 	wildcard_flags_by_wildcard[WILDCARD_NAME_SPECIAL] = WILDCARD_FLAG_SPECIAL
 	wildcard_flags_by_wildcard[WILDCARD_NAME_FORCED] = WILDCARD_FLAG_FORCED
 
+/// Setup dictionary that converts access levels to text descriptions.
 /datum/controller/subsystem/id_access/proc/setup_access_descriptions()
 	desc_by_access["[ACCESS_CARGO]"] = "Cargo Bay"
 	desc_by_access["[ACCESS_SECURITY]"] = "Security"
@@ -262,15 +269,33 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 
+/**
+ * Returns the access bitflags associated with any given access level.
+ *
+ * In proc form due to accesses being stored in the list as text instead of numbers.
+ * Arguments:
+ * * access - Access as either pure number or as a string representation of the number.
+ */
 /datum/controller/subsystem/id_access/proc/get_access_flag(access)
 	var/flag = flags_by_access["[access]"]
-	if(!flag)
-		CRASH("Bad.")
 	return flag
 
+/**
+ * Returns the access description associated with any given access level.
+ *
+ * In proc form due to accesses being stored in the list as text instead of numbers.
+ * Arguments:
+ * * access - Access as either pure number or as a string representation of the number.
+ */
 /datum/controller/subsystem/id_access/proc/get_access_desc(access)
 	return desc_by_access["[access]"]
 
+/**
+ * Builds and returns a list of accesses from a list of regions.
+ *
+ * Arguments:
+ * * regions - A list of region defines.
+ */
 /datum/controller/subsystem/id_access/proc/get_region_access_list(list/regions)
 	if(!length(regions))
 		return
@@ -282,6 +307,17 @@ SUBSYSTEM_DEF(id_access)
 
 	return built_region_list
 
+/**
+ * Applies a trim singleton to a card.
+ *
+ * Returns FALSE if the trim could not be applied due to being incompatible with the card.
+ * Incompatibility is defined as a card not being able to hold all the trim's required wildcards.
+ * Returns TRUE otherwise.
+ * Arguments:
+ * * id_card - ID card to apply the trim_path to.
+ * * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
+ * * copy_access - Boolean value. If true, the trim's access is also copied to the card.
+ */
 /datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path, copy_access = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 
@@ -304,12 +340,26 @@ SUBSYSTEM_DEF(id_access)
 
 	return TRUE
 
+/**
+ * Removes a trim from an ID card. Also removes all accesses from it too.
+ *
+ * Arguments:
+ * * id_card - The ID card to remove the trim from.
+ */
 /datum/controller/subsystem/id_access/proc/remove_trim_from_card(obj/item/card/id/id_card)
 	id_card.trim = null
 	id_card.clear_access()
 	id_card.update_label()
 	id_card.update_icon()
 
+/**
+ * Applies a trim to a chameleon card. This is purely visual, utilising the card's override vars.
+ *
+ * Arguments:
+ * * id_card - The chameleon card to apply the trim visuals to.
+* * trim_path - A trim path to apply to the card. Grabs the trim's associated singleton and applies it.
+ * * check_forged - Boolean value. If TRUE, will not overwrite the card's assignment if the card has been forged.
+ */
 /datum/controller/subsystem/id_access/proc/apply_trim_to_chameleon_card(obj/item/card/id/advanced/chameleon/id_card, trim_path, check_forged = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 	id_card.trim_icon_override = trim.trim_icon
@@ -320,10 +370,26 @@ SUBSYSTEM_DEF(id_access)
 
 	// We'll let the chameleon action update the card's label as necessary instead of doing it here.
 
+/**
+ * Removes a trim from a chameleon ID card.
+ *
+ * Arguments:
+ * * id_card - The ID card to remove the trim from.
+ */
 /datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
 
+/**
+ * Adds the accesses associated with a trim to an ID card.
+ *
+ * Clears the card's existing access levels first.
+ * Primarily intended for applying trim templates to cards. Will attempt to add as many ordinary access
+ * levels as it can, without consuming any wildcards. Will then attempt to apply the trim-specific wildcards after.
+ *
+ * Arguments:
+ * * id_card - The ID card to remove the trim from.
+ */
 /datum/controller/subsystem/id_access/proc/add_trim_access_to_card(obj/item/card/id/id_card, trim_path)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 
