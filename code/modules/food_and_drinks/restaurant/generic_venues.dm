@@ -32,7 +32,7 @@
 
 /datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn,  obj/item/order_item)
 	. = ..()
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [order_item] into their mouth-shaped hole!</span>", "<span class='danger'>You push [order_item] into your mouth-shaped hole</span>")
+	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [order_item] into their mouth-shaped hole!</span>", "<span class='danger'>You push [order_item] into your mouth-shaped hole.</span>")
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
 
 /obj/machinery/restaurant_portal/restaurant
@@ -86,7 +86,7 @@
 
 /datum/venue/bar/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	. = ..()
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] ine one go.</span>")
+	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
 
 ///The bar needs to have a minimum amount of the reagent

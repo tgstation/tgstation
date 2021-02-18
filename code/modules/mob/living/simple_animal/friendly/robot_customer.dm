@@ -9,6 +9,7 @@
 	can_have_ai = FALSE
 	AIStatus = AI_OFF
 	del_on_death = TRUE
+	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	ai_controller = /datum/ai_controller/robot_customer
 	var/clothes_set = "amerifat_clothes"
 	var/datum/atom_hud/hud_to_show_on_hover

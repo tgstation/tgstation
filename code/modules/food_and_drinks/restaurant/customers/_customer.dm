@@ -29,10 +29,10 @@
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer/light = 15, /datum/reagent/consumable/ethanol/beer = 25))
 	order_prices = list(/obj/item/food/burger/plain = 100, /obj/item/food/burger/cheese = 125, /obj/item/food/burger/superbite = 400, /datum/reagent/consumable/ethanol/b52 = 250, /datum/reagent/consumable/ethanol/manhattan = 250, /datum/reagent/consumable/ethanol/atomicbomb = 250, /datum/reagent/consumable/ethanol/beer/light = 50, /datum/reagent/consumable/ethanol/beer = 50)
 	found_seat_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
-	cant_find_seat_lines = list("I'm so tired from standing...", "I have chronic backpain please hurry up and get me a seat!", "I'm not going to tip if I don't get a seat.")
-	leave_mad_lines = list("NO TIP FOR YOU. GOODBYE!", "Atleast at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager.", "I'll be sure to leave a bad Yelp review.")
-	leave_happy_lines = list("An extra tip for you my friend.", "Thanks for the great food!", "Diabetes is a myth anyways!")
-	wait_for_food_lines = list("Listen buddy I'm getting real impatient over here!", "I've been waiting for ages...")
+	cant_find_seat_lines = list("I'm so tired from standing...", "I have chronic back pain, please hurry up and get me a seat!", "I'm not going to tip if I don't get a seat.")
+	leave_mad_lines = list("NO TIP FOR YOU. GOODBYE!", "At least at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager!", "I'll be sure to leave a bad Yelp review.")
+	leave_happy_lines = list("An extra tip for you my friend.", "Thanks for the great food!", "Diabetes is a myth anyway!")
+	wait_for_food_lines = list("Listen buddy, I'm getting real impatient over here!", "I've been waiting for ages...")
 
 /datum/customer_data/italian
 	name = "Italian Robot"
