@@ -287,7 +287,7 @@ const RecipeLibrary = (props, context) => {
       (selectedBitflags
         ? matchBitflag(selectedBitflags, reaction.bitflags)
         : true)
-    && matchReagents(reaction)
+      && matchReagents(reaction)
     ));
 
   const addBookmark = bookmark => {

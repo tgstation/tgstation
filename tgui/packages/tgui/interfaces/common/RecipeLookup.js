@@ -155,7 +155,7 @@ export const RecipeLookup = (props, context) => {
         </LabeledList>
       </LabeledList.Item>
       <LabeledList.Item bold label="Rate profile" width="10px">
-        <Flex
+        <Box
           height="50px"
           width="225px"
           position="relative"
@@ -172,42 +172,41 @@ export const RecipeLookup = (props, context) => {
               position="absolute"
               top={0.01}
               bottom={0}
-              right={recipe.isColdRecipe?16.41:0}
+              right={recipe.isColdRecipe ? 16.41 : 0}
               width="28px"
               data={recipe.explosive}
               strokeWidth={0}
               fillColor={"#d92727"} />
           )}
-        </Flex>
-        <Box
-          position="relative"
-          left="-10px"
-          width="190px"
-          textColor={recipe.isColdRecipe && "red"}>
-          <Tooltip
-            content={recipe.isColdRecipe
-              ? "The temperature at which it is underheated, causing negative effects on the reaction."
-              : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."} />
-          {recipe.isColdRecipe
-            ? recipe.explodeTemp + "K"
-            : recipe.tempMin + "K"}
         </Box>
-        {recipe.explosive && (
-          <Box
+        <Flex justify="space-between">
+          <Flex.Item
             position="relative"
-            left={recipe.isColdRecipe ? "210px" : "185px"}
-            top="-14px"
-            width="90px"
-            textColor={!recipe.isColdRecipe && "red"}>
+            width="190px"
+            textColor={recipe.isColdRecipe && "red"}>
             <Tooltip
               content={recipe.isColdRecipe
-                ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."
-                : "The temperature at which it is overheated, causing negative effects on the reaction."} />
+                ? "The temperature at which it is underheated, causing negative effects on the reaction."
+                : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."} />
             {recipe.isColdRecipe
-              ? recipe.tempMin + "K"
-              : recipe.explodeTemp + "K"}
-          </Box>
-        )}
+              ? recipe.explodeTemp + "K"
+              : recipe.tempMin + "K"}
+          </Flex.Item>
+          {recipe.explosive && (
+            <Flex.Item
+              width="90px"
+              position="relative"
+              textColor={!recipe.isColdRecipe && "red"}>
+              <Tooltip
+                content={recipe.isColdRecipe
+                  ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."
+                  : "The temperature at which it is overheated, causing negative effects on the reaction."} />
+              {recipe.isColdRecipe
+                ? recipe.tempMin + "K"
+                : recipe.explodeTemp + "K"}
+            </Flex.Item>
+          )}
+        </Flex>
       </LabeledList.Item>
       <LabeledList.Item bold label="Dynamics">
         <LabeledList>
