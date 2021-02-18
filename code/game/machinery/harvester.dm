@@ -45,7 +45,7 @@
 	warming_up = FALSE
 	harvesting = FALSE
 
-/obj/machinery/harvester/attack_hand(mob/user)
+/obj/machinery/harvester/attack_hand(mob/user, list/modifiers)
 	if(state_open)
 		close_machine()
 	else if(!harvesting)

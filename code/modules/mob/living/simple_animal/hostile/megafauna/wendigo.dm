@@ -30,6 +30,7 @@ Difficulty: Hard
 	ranged = TRUE
 	pixel_x = -16
 	base_pixel_x = -16
+	gps_name = "Berserk Signal"
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)

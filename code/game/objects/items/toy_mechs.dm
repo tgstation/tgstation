@@ -132,7 +132,7 @@
 	else
 		. = ..()
 
-/obj/item/toy/prize/attack_hand(mob/user)
+/obj/item/toy/prize/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

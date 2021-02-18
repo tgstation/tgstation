@@ -250,13 +250,6 @@
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
 
-/obj/vehicle/ridden/lavaboat/plasma
-	name = "plasma boat"
-	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = FREEZE_PROOF
-	can_buckle = TRUE
 /////////// papers
 
 
