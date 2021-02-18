@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
  */
 /obj/item/gas_filter/proc/reduce_filter_status(datum/gas_mixture/breath)
 
-	for(var/gas_id in breath)
+	for(var/gas_id in GLOB.meta_gas_info)
 		gases_moles[gas_id] = breath.gases[gas_id][MOLES]
 
 	var/danger_points = 0
