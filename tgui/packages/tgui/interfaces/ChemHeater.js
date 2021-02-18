@@ -103,7 +103,7 @@ export const ChemHeater = (props, context) => {
                     target: 1,
                   })} />
               </Table.Cell>
-              <Table.Cell color={"#fbc314"} textAlign="center">
+              <Table.Cell color={acidicpH} textAlign="center">
                 {acidicBufferVol + "u"}
               </Table.Cell>
               <Table.Cell>
@@ -145,7 +145,7 @@ export const ChemHeater = (props, context) => {
                     target: 1,
                   })} />
               </Table.Cell>
-              <Table.Cell color={"#3853a4"} textAlign="center">
+              <Table.Cell color={basicpH} textAlign="center">
                 {basicBufferVol + "u"}
               </Table.Cell>
               <Table.Cell>

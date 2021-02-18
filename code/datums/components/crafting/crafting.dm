@@ -459,7 +459,7 @@
 	data["name"] = R.name
 	data["ref"] = "[REF(R)]"
 	var/list/req_text = list()
-	var/list/tool_text = list()
+	var/list/tool_list = list()
 	var/list/catalyst_text = list()
 
 	for(var/atom/req_atom as anything in R.reqs)
@@ -476,7 +476,6 @@
 		catalyst_text += "[R.chem_catalysts[req_catalyst]] [initial(req_catalyst.name)]"
 	data["catalyst_text"] = catalyst_text.Join(", ")
 
-	var/list/tool_list = list()
 	for(var/required_quality in R.tool_behaviors)
 		tool_list += required_quality
 	for(var/obj/item/required_path as anything in R.tool_paths)

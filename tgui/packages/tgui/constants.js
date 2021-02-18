@@ -30,6 +30,10 @@ export const COLORS = {
     burn: '#e67e22',
     brute: '#e74c3c',
   },
+  reagent: {
+    acidicpH: "#fbc314",
+    basicpH: "#3853a4",
+  }
 };
 
 // Colors defined in CSS

@@ -14,7 +14,7 @@
 	var/list/tool_paths
 	var/time = 30 //time in deciseconds
 	var/list/parts = list() //type paths of items that will be placed in the result
-	var/list/chem_catalysts = list() //like tools but for reagents
+	var/list/chem_catalysts = list() //like tool_behaviors but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 	var/always_available = TRUE //Set to FALSE if it needs to be learned first.
@@ -1200,7 +1200,7 @@
 
 /datum/crafting_recipe/thermometer
 	name = "Thermometer"
-	tools = list(TOOL_WELDER)
+	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/thermometer
 	time = 5 SECONDS
 	reqs = list(
@@ -1232,7 +1232,7 @@
 /datum/crafting_recipe/dropper //Maybe make a glass pipette icon?
 	name = "Dropper"
 	result = /obj/item/reagent_containers/dropper
-	tools = list(TOOL_WELDER)
+	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
 	reqs = list(
 				/obj/item/stack/sheet/glass  = 1,
@@ -1242,7 +1242,7 @@
 /datum/crafting_recipe/improvised_chem_heater
 	name = "Improvised chem heater"
 	result = /obj/machinery/space_heater/improvised_chem_heater
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER)
 	time = 15 SECONDS
 	reqs = list(
 				/obj/item/stack/cable_coil = 2,
@@ -1265,7 +1265,7 @@
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/extinguisher/crafted
 	time = 10 SECONDS
 	reqs = list(
