@@ -319,9 +319,9 @@
 	if(unlucky_sob)
 		set_angle(Get_Angle(src, unlucky_sob.loc))
 
-/obj/projectile/proc/store_hitscan_collision(datum/point/pcache)
-	beam_segments[beam_index] = pcache
-	beam_index = pcache
+/obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
+	beam_segments[beam_index] = point_cache
+	beam_index = point_cache
 	beam_segments[beam_index] = null
 
 /obj/projectile/Bump(atom/A)
@@ -347,7 +347,7 @@
 		return FALSE
 	if(impacted[A]) // NEVER doublehit
 		return FALSE
-	var/datum/point/pcache = trajectory.copy_to()
+	var/datum/point/point_cache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
 		ricochets++
@@ -360,7 +360,7 @@
 			damage *= ricochet_decay_damage
 			range = decayedRange
 			if(hitscan)
-				store_hitscan_collision(pcache)
+				store_hitscan_collision(point_cache)
 			return TRUE
 
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
@@ -676,9 +676,9 @@
 		set_angle(Get_Angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
-		var/matrix/M = new
-		M.Turn(Angle)
-		transform = M
+		var/matrix/matrix = new
+		matrix.Turn(Angle)
+		transform = matrix
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -695,25 +695,25 @@
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/M = new
-		M.Turn(Angle)
-		transform = M
+		var/matrix/matrix = new
+		matrix.Turn(Angle)
+		transform = matrix
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
 		last_angle_set_hitscan_store = loc
-		var/datum/point/pcache = new (src)
-		pcache = trajectory.copy_to()
-		store_hitscan_collision(pcache)
+		var/datum/point/point_cache = new (src)
+		point_cache = trajectory.copy_to()
+		store_hitscan_collision(point_cache)
 	return TRUE
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
 	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/M = new
-		M.Turn(Angle)
-		transform = M
+		var/matrix/matrix = new
+		matrix.Turn(Angle)
+		transform = matrix
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	
@@ -722,9 +722,9 @@
 
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store)) // Handles hitscan projectiles
 		last_angle_set_hitscan_store = loc
-		var/datum/point/pcache = new (src)
-		pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
-		store_hitscan_collision(pcache)
+		var/datum/point/point_cache = new (src)
+		point_cache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
+		store_hitscan_collision(point_cache)
 	return TRUE
 		
 
@@ -766,10 +766,10 @@
 		return TRUE
 	return FALSE
 
-/obj/projectile/proc/record_hitscan_start(datum/point/pcache)
-	if(pcache)
+/obj/projectile/proc/record_hitscan_start(datum/point/point_cache)
+	if(point_cache)
 		beam_segments = list()
-		beam_index = pcache
+		beam_index = point_cache
 		beam_segments[beam_index] = null //record start.
 
 /obj/projectile/proc/process_hitscan()
@@ -792,9 +792,9 @@
 		return
 	last_projectile_move = world.time
 	if(!nondirectional_sprite && !hitscanning)
-		var/matrix/M = new
-		M.Turn(Angle)
-		transform = M
+		var/matrix/matrix = new
+		matrix.Turn(Angle)
+		transform = matrix
 	if(homing)
 		process_homing()
 	var/forcemoved = FALSE
@@ -922,8 +922,8 @@
 
 /obj/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
 	if(trajectory && beam_index)
-		var/datum/point/pcache = trajectory.copy_to()
-		beam_segments[beam_index] = pcache
+		var/datum/point/point_cache = trajectory.copy_to()
+		beam_segments[beam_index] = point_cache
 	generate_hitscan_tracers(null, null, impacting)
 
 /obj/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
@@ -937,9 +937,9 @@
 		var/datum/point/p = beam_segments[1]
 		var/atom/movable/thing = new muzzle_type
 		p.move_atom_to_src(thing)
-		var/matrix/M = new
-		M.Turn(original_angle)
-		thing.transform = M
+		var/matrix/matrix = new
+		matrix.Turn(original_angle)
+		thing.transform = matrix
 		thing.color = color
 		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
 		QDEL_IN(thing, duration)
@@ -947,9 +947,9 @@
 		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
 		var/atom/movable/thing = new impact_type
 		p.move_atom_to_src(thing)
-		var/matrix/M = new
-		M.Turn(Angle)
-		thing.transform = M
+		var/matrix/matrix = new
+		matrix.Turn(Angle)
+		thing.transform = matrix
 		thing.color = color
 		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
 		QDEL_IN(thing, duration)

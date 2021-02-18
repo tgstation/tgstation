@@ -33,7 +33,7 @@
 /datum/position/proc/valid()
 	return x && y && z && !isnull(pixel_x) && !isnull(pixel_y)
 
-/datum/position/New(_x = 0, _y = 0, _z = 0, _pixel_x = 0, _pixel_y = 0)	//first argument can also be a /datum/point.
+/datum/position/New(_x = 0, _y = 0, _z = 0, _pixel_x = 0, _pixel_y = 0) //first argument can also be a /datum/point.
 	if(istype(_x, /datum/point))
 		var/datum/point/P = _x
 		var/turf/T = P.return_turf()
