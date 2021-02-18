@@ -248,7 +248,7 @@
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	. = ..()
-	var/obj/projectile/energy/duel/D = BB
+	var/obj/projectile/energy/duel/D = loaded_projectile
 	D.setting = setting
 	D.update_icon()
 

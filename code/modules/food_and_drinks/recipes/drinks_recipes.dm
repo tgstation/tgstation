@@ -273,7 +273,7 @@
 /datum/chemical_reaction/drink/acidspit
 	results = list(/datum/reagent/consumable/ethanol/acid_spit = 6)
 	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/consumable/ethanol/wine = 5)
-	optimal_ph_min = 0 //Our reaction is very acidic, so lets shift our range	        	
+	optimal_ph_min = 0 //Our reaction is very acidic, so lets shift our range
 
 /datum/chemical_reaction/drink/amasec
 	results = list(/datum/reagent/consumable/ethanol/amasec = 10)
@@ -358,7 +358,7 @@
 /datum/chemical_reaction/drink/triple_citrus
 	results = list(/datum/reagent/consumable/triple_citrus = 5)
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/orangejuice = 1)
-	optimal_ph_min = 0//Our reaction is very acidic, so lets shift our range    	
+	optimal_ph_min = 0//Our reaction is very acidic, so lets shift our range
 
 /datum/chemical_reaction/drink/grape_soda
 	results = list(/datum/reagent/consumable/grape_soda = 2)
@@ -419,7 +419,7 @@
 	results = list(/datum/reagent/consumable/hot_coco = 3)
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 1, /datum/reagent/consumable/milk = 2)
 	required_temp = 320
-	
+
 /datum/chemical_reaction/drink/coffee
 	results = list(/datum/reagent/consumable/coffee = 5)
 	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, /datum/reagent/water = 5)
@@ -607,4 +607,4 @@
 /datum/chemical_reaction/drink/ginger_amaretto
 	results = list(/datum/reagent/consumable/ethanol/ginger_amaretto = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/sol_dry = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/lemonjuice = 1)
-	
+

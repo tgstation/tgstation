@@ -27,6 +27,7 @@
 	failed_chem = null
 	var/helbent = FALSE
 	var/reaping = FALSE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
@@ -98,6 +99,7 @@
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
 	impure_chem = /datum/reagent/impurity/libitoil
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3*REM)
@@ -115,7 +117,7 @@
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/medicine/metafactor //Seems thematically intact
 	failed_chem = /datum/reagent/impurity/probital_failed
-	//Todo: if/when running/workout skill is added - add inverse chem effects
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss((-2.25*REM*normalise_creation_purity()), FALSE)
@@ -163,6 +165,7 @@
 	failed_chem = /datum/reagent/inverse/ichiyuri //I do hope cobby won't take this personally
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/lenturi/on_mob_add(mob/living/owner, amount)
 	. = ..()
@@ -188,6 +191,7 @@
 	impure_chem = /datum/reagent/impurity/aiuri //blurriness
 	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
 	var/message_cd = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M)
@@ -204,6 +208,9 @@
 	overdose_threshold = 25
 	reagent_weight = 0.6
 	ph = 8.9
+	inverse_chem = /datum/reagent/inverse/hercuri
+	inverse_chem_val = 0.32
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 50)
@@ -239,7 +246,7 @@
 
 /******OXY******/
 /*Suffix: -mol*/
-#define	CONVERMOL_RATIO 5		//# Oxygen damage to result in 1 tox
+#define CONVERMOL_RATIO 5 //# Oxygen damage to result in 1 tox
 
 /datum/reagent/medicine/c2/convermol
 	name = "Convermol"
@@ -250,6 +257,7 @@
 	ph = 5.6
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
@@ -267,7 +275,7 @@
 	..()
 	return TRUE
 
-#undef	CONVERMOL_RATIO
+#undef CONVERMOL_RATIO
 
 /datum/reagent/medicine/c2/tirimol
 	name = "Tirimol"
@@ -275,6 +283,7 @@
 	color = "#FF6464"
 	ph = 5.6
 	var/drowsycd = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-3*normalise_creation_purity())
@@ -303,6 +312,7 @@
 	ph = 3.7
 	inverse_chem = /datum/reagent/inverse/technetium
 	inverse_chem_val = 0.4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/M)
 	. = ..()
@@ -344,6 +354,7 @@
 	inverse_chem_val = 0.35
 	failed_chem = null //Reaction uses a special method - so we don't want this for now.
 	ph = 9.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/M)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
@@ -371,7 +382,7 @@
 	. = ..()
 	mytray.adjustToxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
-#define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
+#define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
 /datum/reagent/medicine/c2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
@@ -383,13 +394,14 @@
 	impure_chem = /datum/reagent/inverse/healing/syriniver
 	ph = 8.6
 	var/conversion_amount
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
 	if(!(methods & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM)*normalise_creation_purity(), 0)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), 0)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return
@@ -425,6 +437,7 @@
 	overdose_threshold = 25
 	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/U
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/M) //This is always purity 1
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
@@ -461,6 +474,7 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 	ph = 7.2
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -504,6 +518,7 @@
 	ph = 12.7
 	inverse_chem = /datum/reagent/inverse/penthrite
 	inverse_chem_val = 0.25
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()

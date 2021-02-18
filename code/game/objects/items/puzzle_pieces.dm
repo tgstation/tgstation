@@ -1,6 +1,6 @@
 //**************
 //*****Keys*******************
-//**************		**  **
+//************** **  **
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."

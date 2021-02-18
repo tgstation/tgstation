@@ -518,7 +518,7 @@
 
 	return ..()
 
-/*	ref tg-git issue #45036
+/* ref tg-git issue #45036
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */

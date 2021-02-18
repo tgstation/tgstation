@@ -52,20 +52,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/creation_purity = 1
 	/// color it looks in containers etc
 	var/color = "#000000" // rgb: 0, 0, 0
-	/// can this reagent be synthesized? (for example: odysseus syringe gun)
-	var/can_synth = TRUE
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
 	/// appears unused
 	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
-	///Overrides what addiction this chemicals feeds into, allowing you to have multiple chems that treat a single addiction.
-	var/addiction_type
-	/// above this amount addictions start
-	var/addiction_threshold = 0
-	/// increases as addiction gets worse
-	var/addiction_stage = 0
 	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/overdosed = FALSE
 	///if false stops metab in liverless mobs
@@ -82,24 +74,23 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
-	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL
+	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH
 	var/chemical_flags = NONE
 	///impure chem values (see fermi_readme.dm for more details on impure/inverse/failed mechanics):
 	/// What chemical path is made when metabolised as a function of purity
-	var/impure_chem = /datum/reagent/impurity/isomer
+	var/impure_chem = /datum/reagent/impurity
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
 	/// What chem is metabolised when purity is below inverse_chem_val
-	var/inverse_chem = /datum/reagent/impurity/isomer/toxic
+	var/inverse_chem = /datum/reagent/impurity/toxic
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction
+	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
+	var/list/addiction_types = null
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-
-	if(!addiction_type)
-		addiction_type = type
 
 	if(material)
 		material = GET_MATERIAL_REF(material)
@@ -163,6 +154,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
+	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
@@ -210,34 +202,6 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
-	return
-
-/// Called when addiction hits stage1, see [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_light, name)
-	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
-	return
-
-/// Called when addiction hits stage2, see [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/addiction_act_stage2(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_medium, name)
-	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
-	return
-
-/// Called when addiction hits stage3, see [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/addiction_act_stage3(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_severe, name)
-	if(prob(30))
-		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
-	return
-
-/// Called when addiction hits stage4, see [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/addiction_act_stage4(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_critical, name)
-	if(prob(30))
-		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return
 
 /**

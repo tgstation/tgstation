@@ -26,8 +26,8 @@
 	var/cooldowntimehorn = 10
 	var/mob/living/carbon/target
 	var/oldtarget_name
-	var/target_lastloc = FALSE	//Loc of target when arrested.
-	var/last_found = FALSE	//There's a delay
+	var/target_lastloc = FALSE //Loc of target when arrested.
+	var/last_found = FALSE //There's a delay
 	var/threatlevel = FALSE
 	var/declare_arrests = FALSE // speak, you shall not, unless to Honk
 	var/idcheck = TRUE
@@ -94,7 +94,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		dat += text({"<BR> Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return	dat
+	return dat
 
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
 	var/final = NONE
@@ -112,9 +112,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = H
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/H)
-	if(H.combat_mode)
-		retaliate(H)
+/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(user.combat_mode)
+		retaliate(user)
 		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	return ..()
 
@@ -140,7 +140,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		retaliate(Proj.firer)
 	return ..()
 
-/mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!on)
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
@@ -228,7 +228,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 	switch(mode)
 
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 
 			walk_to(src,0)
 			look_for_perp()
@@ -243,7 +243,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				back_to_idle()
 				return
 
-			if(target)		// make sure target exists
+			if(target) // make sure target exists
 				if(Adjacent(target) && isturf(target.loc))
 
 					if(threatlevel <= 4)
@@ -256,7 +256,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 							target_lastloc = target.loc
 					return
 
-				else	// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))
@@ -342,7 +342,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	..()
 	if(!isalien(target))
 		target = user

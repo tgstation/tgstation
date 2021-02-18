@@ -13,7 +13,6 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -49,6 +48,7 @@
 	. = ..()
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/pet/cat/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -315,8 +315,8 @@
 		if(!D.is_decorated)
 			D.decorate_donut()
 
-/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
+/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/user, list/modifiers)
 	..()
-	if(L.combat_mode && L.reagents && !stat)
-		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
-		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+	if(user.combat_mode && user.reagents && !stat)
+		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
+		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)

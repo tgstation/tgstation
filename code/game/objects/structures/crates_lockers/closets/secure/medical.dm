@@ -80,7 +80,7 @@
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
-	new /obj/item/clothing/shoes/sneakers/brown	(src)
+	new /obj/item/clothing/shoes/sneakers/brown (src)
 	new /obj/item/cartridge/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
 	new /obj/item/megaphone/command(src)
@@ -97,6 +97,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/box/skillchips/quicker(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"

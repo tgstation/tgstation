@@ -20,18 +20,18 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/camera_view, 				//-errorage
-	/client/proc/sec_camera_report, 		//-errorage
-	/client/proc/intercom_view, 			//-errorage
+	/client/proc/camera_view, //-errorage
+	/client/proc/sec_camera_report, //-errorage
+	/client/proc/intercom_view, //-errorage
 	/client/proc/air_status, //Air things
 	/client/proc/Cell, //More air things
 	/client/proc/atmosscan, //check plumbing
 	/client/proc/powerdebug, //check power
 	/client/proc/count_objects_on_z_level,
 	/client/proc/count_objects_all,
-	/client/proc/cmd_assume_direct_control,	//-errorage
+	/client/proc/cmd_assume_direct_control, //-errorage
 	/client/proc/cmd_give_direct_control,
-	/client/proc/set_server_fps,	//allows you to set the ticklag.
+	/client/proc/set_server_fps, //allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,

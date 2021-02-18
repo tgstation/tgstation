@@ -53,28 +53,36 @@
 			M = Restore(M)
 		else
 			M = Shapeshift(M)
-		if(M.movement_type & (VENTCRAWLING))
-			if(!M.ventcrawler) //you're shapeshifting into something that can't fit into a vent
-				var/obj/machinery/atmospherics/pipeyoudiein = M.loc
-				var/datum/pipeline/ourpipeline
-				var/pipenets = pipeyoudiein.returnPipenets()
-				if(islist(pipenets))
-					ourpipeline = pipenets[1]
-				else
-					ourpipeline = pipenets
+		// Are we currently ventcrawling?
+		if(!M.movement_type & (VENTCRAWLING))
+			return
 
-				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
-				var/gibtype = /obj/effect/gibspawner/generic
-				if(isalien(M))
-					gibtype = /obj/effect/gibspawner/xeno
-				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
-					if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
-						new gibtype(get_turf(possiblevent))
-						playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
-				priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
-				M.death()
-				qdel(M)
-				return
+		// Can our new form support ventcrawling?
+		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+		if(ventcrawler)
+			return
+
+		//you're shapeshifting into something that can't fit into a vent
+
+		var/obj/machinery/atmospherics/pipeyoudiein = M.loc
+		var/datum/pipeline/ourpipeline
+		var/pipenets = pipeyoudiein.returnPipenets()
+		if(islist(pipenets))
+			ourpipeline = pipenets[1]
+		else
+			ourpipeline = pipenets
+
+		to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
+		var/gibtype = /obj/effect/gibspawner/generic
+		if(isalien(M))
+			gibtype = /obj/effect/gibspawner/xeno
+		for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
+			if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
+				new gibtype(get_turf(possiblevent))
+				playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
+		priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
+		M.death()
+		qdel(M)
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu

@@ -47,7 +47,7 @@
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
 	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
-	var/thermic_constant = 100
+	var/thermic_constant = 50
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
 	/// Optimal/max rate possible if all conditions are perfect
