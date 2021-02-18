@@ -60,7 +60,6 @@ export const ReagentLookup = (props, context) => {
           {reagent.impureReagent && (
             <LabeledList.Item label="Impure reagent">
               <Button
-                key={reagent.impureReagent}
                 icon="vial"
                 tooltip="This reagent will partially convert into this when the purity is above the Inverse purity on consumption."
                 tooltipPosition="left"
@@ -73,7 +72,6 @@ export const ReagentLookup = (props, context) => {
           {reagent.inverseReagent && (
             <LabeledList.Item label="Inverse reagent">
               <Button
-                key={reagent.inverseReagent}
                 icon="vial"
                 content={reagent.inverseReagent}
                 tooltip="This reagent will convert into this when the purity is below the Inverse purity on consumption."
@@ -86,7 +84,6 @@ export const ReagentLookup = (props, context) => {
           {reagent.failedReagent && (
             <LabeledList.Item label="Failed reagent">
               <Button
-                key={reagent.failedReagent}
                 icon="vial"
                 tooltip="This reagent will turn into this if the purity of the reaction is below the minimum purity on completion."
                 tooltipPosition="left"
@@ -117,7 +114,6 @@ export const ReagentLookup = (props, context) => {
       </LabeledList.Item>
       <LabeledList.Item>
         <Button
-          key={reagent.id}
           icon="flask"
           mt={2}
           content={"Find associated reaction"}
