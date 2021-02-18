@@ -1,4 +1,0 @@
-author: "Kryson, Qustinnus"
-delete-after: True
-changes: 
-  - rscadd: "All drug addictions are now put into 5 categories: Stimulants, Opiods, Alcohol, hallucinogens, and maintenance drugs. There is no longer an addiction threshold and becoming addicted is done by gaining addiction points from doing drugs in a specific category, if you become addicted you can stop being addicted by lowering your addiction points until it reaches a low enough value."

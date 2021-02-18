@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Viewing your playtime panel as a non-admin should no longer yell at you in chat that you have insufficient rights."

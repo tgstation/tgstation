@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a very rare edgecase that could cause spawned ghosts to be unable to move"

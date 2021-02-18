@@ -531,6 +531,7 @@
 #include "code\datums\components\plumbing\_plumbing.dm"
 #include "code\datums\components\plumbing\chemical_acclimator.dm"
 #include "code\datums\components\plumbing\filter.dm"
+#include "code\datums\components\plumbing\IV_drip.dm"
 #include "code\datums\components\plumbing\reaction_chamber.dm"
 #include "code\datums\components\plumbing\splitter.dm"
 #include "code\datums\components\riding\riding.dm"

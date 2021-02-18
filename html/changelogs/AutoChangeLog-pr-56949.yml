@@ -1,4 +1,0 @@
-author: "drongood12"
-delete-after: True
-changes: 
-  - bugfix: "the BRPED beam now hits exactly the object"

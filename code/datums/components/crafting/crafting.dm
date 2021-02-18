@@ -147,36 +147,48 @@
 			LAZYADDASSOC(.["machinery"], object.type, object)
 
 
-/datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
-	if(!R.tools.len)
+
+/// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
+/datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
-	var/list/possible_tools = list()
+	var/list/available_tools = list()
 	var/list/present_qualities = list()
-	present_qualities |= contents["tool_behaviour"]
-	for(var/obj/item/I in a.contents)
-		if(istype(I, /obj/item/storage))
-			for(var/obj/item/SI in I.contents)
-				possible_tools += SI.type
-				if(SI.tool_behaviour)
-					present_qualities.Add(SI.tool_behaviour)
 
-		possible_tools += I.type
+	for(var/obj/item/contained_item in source.contents)
+		if(contained_item.GetComponent(/datum/component/storage))
+			for(var/obj/item/subcontained_item in contained_item.contents)
+				available_tools[subcontained_item.type] = TRUE
+				if(subcontained_item.tool_behaviour)
+					present_qualities[subcontained_item.tool_behaviour] = TRUE
+		available_tools[contained_item.type] = TRUE
+		if(contained_item.tool_behaviour)
+			present_qualities[contained_item.tool_behaviour] = TRUE
 
-		if(I.tool_behaviour)
-			present_qualities.Add(I.tool_behaviour)
+	for(var/quality in surroundings["tool_behaviour"])
+		present_qualities[quality] = TRUE
 
-	possible_tools |= contents["other"]
+	for(var/path in surroundings["other"])
+		available_tools[path] = TRUE
 
-	main_loop:
-		for(var/A in R.tools)
-			if(A in present_qualities)
+	for(var/required_quality in recipe.tool_behaviors)
+		if(present_qualities[required_quality])
+			continue
+		return FALSE
+
+	for(var/required_path in recipe.tool_paths)
+		var/found_this_tool = FALSE
+		for(var/tool_path in available_tools)
+			if(!ispath(required_path, tool_path))
 				continue
-			else
-				for(var/I in possible_tools)
-					if(ispath(I, A))
-						continue main_loop
-			return FALSE
+			found_this_tool = TRUE
+			break
+		if(found_this_tool)
+			continue
+		return FALSE
+
 	return TRUE
+
 
 /datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(a,R.blacklist)
@@ -464,13 +476,12 @@
 		catalyst_text += "[R.chem_catalysts[req_catalyst]] [initial(req_catalyst.name)]"
 	data["catalyst_text"] = catalyst_text.Join(", ")
 
-	for(var/path_or_text in R.tools)
-		if(ispath(path_or_text, /obj/item))
-			var/obj/item/tool = path_or_text
-			tool_text += "[initial(tool.name)]"
-		else
-			tool_text += "[path_or_text]"
-	data["tool_text"] = tool_text.Join(", ")
+	var/list/tool_list = list()
+	for(var/required_quality in R.tool_behaviors)
+		tool_list += required_quality
+	for(var/obj/item/required_path as anything in R.tool_paths)
+		tool_list += initial(required_path.name)
+	data["tool_text"] = tool_list.Join(", ")
 
 	return data
 

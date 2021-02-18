@@ -1,50 +1,57 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random,
-/area/icemoon/surface/outdoors/unexplored)
+/turf/open/genturf,
+/area/mine/unexplored)
 "b" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored)
+/area/icemoon/surface)
 "c" = (
 /turf/closed/wall/mineral/bronze,
 /area/icemoon/surface)
 "d" = (
 /obj/structure/fluff/clockwork/fallen_armor,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "i" = (
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "k" = (
 /obj/structure/fluff/clockwork/alloy_shards,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "n" = (
 /obj/effect/mob_spawn/human/skeleton,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "p" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "r" = (
 /obj/structure/fluff/clockwork/blind_eye,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "u" = (
 /obj/structure/table/bronze,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "v" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
+/area/icemoon/surface)
+"w" = (
+/turf/open/floor/bronze{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/icemoon/surface)
 "x" = (
 /obj/effect/mob_spawn/human/skeleton,
 /obj/item/clothing/suit/bronze,
 /obj/item/clothing/shoes/bronze,
 /obj/item/clothing/head/bronze,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/icemoon/surface)
 "z" = (
 /obj/structure/table/bronze,
@@ -52,38 +59,38 @@
 	desc = "You can still feel the embers of a once great empire in your hand...";
 	name = "drained clockwork slab"
 	},
-/turf/open/floor/bronze/icemoon,
-/area/icemoon/surface)
-"H" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/structure/fans/tiny,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "P" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "Q" = (
 /obj/item/paper{
 	info = "We tried to use the power of this moon to bring him back, but we've failed... I've contained what remains of his power here... if you find this, make sure those Nar-Sian Dogs don't last a second."
 	},
 /obj/item/pen,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/icemoon/surface)
 "R" = (
 /obj/item/nullrod/spear{
 	name = "empowered bronze spear"
 	},
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/icemoon/surface)
 "U" = (
-/obj/machinery/door/airlock/bronze,
-/obj/structure/fans/tiny,
-/turf/open/floor/bronze/icemoon,
+/obj/machinery/door/airlock/bronze{
+	use_power = 0
+	},
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 "V" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
-/turf/open/floor/bronze/icemoon,
+/turf/open/floor/bronze,
 /area/icemoon/surface)
 
 (1,1,1) = {"
@@ -274,8 +281,8 @@ a
 c
 c
 c
-H
-H
+U
+U
 c
 c
 c
@@ -862,8 +869,8 @@ a
 a
 a
 c
-i
-i
+w
+w
 c
 a
 a
@@ -889,7 +896,7 @@ b
 U
 k
 n
-H
+U
 a
 a
 a
@@ -903,10 +910,10 @@ a
 a
 a
 a
-i
+w
 x
-i
-i
+w
+w
 a
 a
 a
@@ -920,7 +927,7 @@ a
 a
 a
 a
-H
+U
 n
 i
 U
@@ -931,7 +938,7 @@ b
 U
 i
 P
-H
+U
 a
 a
 a
@@ -945,10 +952,10 @@ a
 a
 a
 a
-i
+w
 R
 Q
-i
+w
 a
 a
 a
@@ -962,7 +969,7 @@ a
 a
 a
 a
-H
+U
 v
 d
 U
@@ -988,8 +995,8 @@ a
 a
 a
 c
-i
-i
+w
+w
 c
 a
 a
@@ -1576,8 +1583,8 @@ a
 c
 c
 c
-H
-H
+U
+U
 c
 c
 c
