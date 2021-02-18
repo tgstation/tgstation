@@ -124,3 +124,20 @@
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
 	exception_hold = exception_cache
+
+/datum/component/storage/concrete/pockets/concealed_holster
+    max_items = 1
+    max_w_class = WEIGHT_CLASS_SMALL
+    var/atom/original_parent
+
+/datum/component/storage/concrete/pockets/concealed_holster/Initialize()
+    original_parent = parent
+    . = ..()
+    set_holdable(list(
+        /obj/item/gun/syringe/syndicate,
+        /obj/item/gun/ballistic/automatic/toy/pistol/riot,
+        /obj/item/gun/ballistic/automatic/pistol)
+        )
+
+/datum/component/storage/concrete/pockets/concealed_holster/real_location()
+    return original_parent

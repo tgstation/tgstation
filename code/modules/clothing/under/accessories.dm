@@ -302,6 +302,7 @@
 ////////////////
 //HA HA! NERD!//
 ////////////////
+
 /obj/item/clothing/accessory/pocketprotector
 	name = "pocket protector"
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
@@ -318,6 +319,16 @@
 	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/lipstick/random(src)
+
+//////////////////////////
+//WHO YOU CALLIN' NERD?!//
+//////////////////////////
+
+/obj/item/clothing/accessory/concealed_holster
+	name = "pocket protector"
+	desc = "Upon closer inspection this pocket protecter appears use bluespace tech to be bigger on the inside and seems to be well shaped to hold a small pistol."
+	icon_state = "pocketprotector"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/concealed_holster
 
 ////////////////
 //REAL BIG FAN//
