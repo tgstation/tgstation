@@ -1,7 +1,8 @@
 import { round, toFixed } from 'common/math';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon, TextArea } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, NumberInput, ProgressBar, RoundGauge, Section, Table } from '../components';
+import { COLORS } from '../constants';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
 
@@ -103,7 +104,7 @@ export const ChemHeater = (props, context) => {
                     target: 1,
                   })} />
               </Table.Cell>
-              <Table.Cell color={acidicpH} textAlign="center">
+              <Table.Cell color={COLORS.reagent.acidicbuffer} textAlign="center">
                 {acidicBufferVol + "u"}
               </Table.Cell>
               <Table.Cell>
@@ -145,7 +146,7 @@ export const ChemHeater = (props, context) => {
                     target: 1,
                   })} />
               </Table.Cell>
-              <Table.Cell color={basicpH} textAlign="center">
+              <Table.Cell color={COLORS.reagent.basicbuffer} textAlign="center">
                 {basicBufferVol + "u"}
               </Table.Cell>
               <Table.Cell>
