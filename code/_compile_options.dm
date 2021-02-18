@@ -22,11 +22,6 @@
 */
 //#define REAGENTS_TESTING
 
-///Method of tracking references without using extools. Slower, kept to avoid over-reliance on extools.
-//#define LEGACY_REFERENCE_TRACKING
-#ifdef LEGACY_REFERENCE_TRACKING
-
-///Use the legacy reference on things hard deleting by default.
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP

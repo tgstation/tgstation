@@ -44,13 +44,6 @@
 		beaker.forceMove(drop_location())
 		beaker = null
 
-/obj/machinery/chem_heater/Initialize()
-	. = ..()
-	create_reagents(100, NO_REACT)//Lets save some calculations here
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
-	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
-
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)

@@ -55,6 +55,9 @@
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 
+///The default purity of all non reacted reagents
+#define REAGENT_STANDARD_PUIRTY 0.75
+
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
 #define REAGENT_DEAD_PROCESS (1<<0)

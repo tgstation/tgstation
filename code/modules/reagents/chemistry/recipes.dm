@@ -436,7 +436,7 @@
 		if(!(istype(any_turf, /turf/open)))
 			continue
 		var/turf/open/open_turf = any_turf
-		open_turf.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = freeze_duration/2, freeze_duration = 5)
+		open_turf.MakeSlippery(TURF_WET_PERMAFROST, max_wet_time = freeze_duration)
 		open_turf.temperature = temp
 
 ///Clears the beaker of the reagents only

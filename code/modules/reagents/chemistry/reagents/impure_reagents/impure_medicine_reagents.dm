@@ -1,29 +1,7 @@
-//Reagents produced by metabolising/reacting fermichems inoptimally, i.e. inverse_chems or impure_chems
+//Reagents produced by metabolising/reacting fermichems inoptimally these specifically are for medicines
 //Inverse = Splitting
 //Invert = Whole conversion
 //Failed = End reaction below purity_min
-
-
-/datum/reagent/impurity
-	name = "Impure reagent"
-	description = "Impure reagents are created by either ingesting reagents - which will then split them, or some can be created as the result in a reaction."
-	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
-	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
-	impure_chem = null
-	inverse_chem = null
-	failed_chem = null
-	metabolization_rate = 0.1 * REM //default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
-
-//Basically just so people don't forget to adjust metabolization_rate
-/datum/reagent/inverse
-	name = "Inverse chem"
-	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
-	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
-	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
-	impure_chem = null
-	inverse_chem = null
-	failed_chem = null
 
 ////START SUBTYPES
 
@@ -32,48 +10,15 @@
 	name = "Healing impure reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
+	addiction_types = list(/datum/addiction/medicine = 2.5)
 
 /datum/reagent/inverse/healing
 	name = "Healing inverse reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
+	addiction_types = list(/datum/addiction/medicine = 1)
 
 //// END SUBTYPES
-
-//Causes slight liver damage, and that's it.
-/datum/reagent/impurity/isomer
-	name = "Chemical Isomers"
-	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
-	ph = 3
-
-/datum/reagent/impurity/isomer/on_mob_life(mob/living/carbon/C)
-	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-	if(!L)//Though, lets be safe
-		C.adjustToxLoss(1, FALSE)//Incase of no liver!
-		return ..()
-	C.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.5*REM)
-	return ..()
-
-//Does the same as above, but also causes toxin damage
-/datum/reagent/impurity/isomer/toxic
-	name = "Toxic sludge"
-	description = "Toxic chemical isomers made from impure reactions. Causes toxin damage"
-	ph = 2
-
-/datum/reagent/impurity/isomer/toxic/on_mob_life(mob/living/carbon/C)
-	C.adjustToxLoss(1, FALSE)
-	return ..()
-
-//technically not a impure chem, but it's here because it can only be made with a failed impure reaction
-/datum/reagent/consumable/failed_reaction
-	name = "Viscous sludge"
-	description = "A off smelling sludge that's created when a reaction gets too impure."
-	nutriment_factor = -1
-	quality = -1
-	ph = 1.5
-	taste_description = "an awful, strongly chemical taste"
-	color = "#270d03"
-
 
 ////////////////////MEDICINES///////////////////////////
 
@@ -82,7 +27,7 @@
 	name = "Insolvent medicinal precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 1 * REM//This is fast
-	can_synth = TRUE
+	addiction_types = list(/datum/addiction/medicine = 7.5)
 	ph = 11
 
 //Random healing of the 4 main groups
@@ -138,8 +83,8 @@
 	name = "Libitoil"
 	description = "Temporarilly interferes a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
-	can_synth = TRUE
 	ph = 13.5
+	addiction_types = list(/datum/addiction/medicine = 4)
 
 /datum/reagent/impurity/libitoil/on_mob_add(mob/living/L, amount)
 	. = ..()
@@ -168,6 +113,7 @@
 	color = "#b3ff00"
 	overdose_threshold = 10
 	ph = 1
+	addiction_types = list(/datum/addiction/medicine = 5)
 
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 4  * REAGENTS_METABOLISM
@@ -187,7 +133,7 @@
 /datum/reagent/impurity/lentslurri //Okay maybe I should outsource names for these
 	name = "lentslurri"//This is a really bad name please replace
 	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong."
-	addiction_threshold = 7.5 //30u of 0.75 purity
+	addiction_types = list(/datum/addiction/medicine = 8)
 
 /datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/M)
 	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
@@ -196,18 +142,6 @@
 /datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/M)
 	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 	return ..()
-
-/datum/reagent/impurity/lentslurri/addiction_act_stage1(mob/living/M)
-	. = ..()
-	to_chat(M, "<span class='notice'>Your muscles feel sore.... And that Lenturi was really moreish though. You should really get some more.</span>")
-	addiction_stage = 10//So we jump right to stage 2
-	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-
-/datum/reagent/impurity/lentslurri/addiction_act_stage4(mob/living/M)
-	. = ..()
-	if(addiction_stage == 40)
-		M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-		to_chat(M, "<span class='notice'>Your muscles feel normal again.</span>")
 
 //failed
 /datum/reagent/inverse/ichiyuri
@@ -218,6 +152,7 @@
 	var/resetting_probability = 0
 	var/spammer = 0
 	ph = 1.7
+	addiction_types = list(/datum/addiction/medicine = 2.5)
 
 //Just the removed itching mechanism - omage to it's origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/M)
@@ -240,6 +175,7 @@
 	name = "Aivime"
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
+	addiction_types = list(/datum/addiction/medicine = 1)
 	//blurriness at the start of taking the med
 	var/cached_blurriness
 
@@ -261,6 +197,7 @@
 	name = "Herignis"
 	description = "This reagent causes a dramatic raise in a patient's body temperature."
 	ph = 0.8
+	addiction_types = list(/datum/addiction/medicine = 2)
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner)
 	. = ..()
@@ -284,6 +221,7 @@
 	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
 	ph = 12.5 //sleeping is a basic need of all lifeforms
 	var/cached_reagent_list = list()
+	addiction_types = list(/datum/addiction/medicine = 5)
 
 //Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
 /datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner)
@@ -329,10 +267,11 @@
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
-	name = "please name me"
-	description = "I'm sleepy"
+	name = "Syrinifergus"
+	description = "This reagent reduces the impurity of all non medicines within the patient, reducing their negative effects."
 	///The list of reagents we've affected
 	var/cached_reagent_list = list()
+	addiction_types = list(/datum/addiction/medicine = 1.75)
 
 /datum/reagent/inverse/healing/syriniver/on_mob_add(mob/living/living_mob)
 	if(!(iscarbon(living_mob)))
@@ -365,6 +304,7 @@
 	name = "Monover"
 	description = "A toxin treating reagent, that only is effective if it's the only reagent present in the patient."
 	ph = 0.5
+	addiction_types = list(/datum/addiction/medicine = 3.5)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/M)
@@ -384,6 +324,7 @@
 	description = "A reagent that is known to stimulate the heart in a dead patient, bringing them ."
 	ph = 14
 	metabolization_rate = 1 * REM
+	addiction_types = list(/datum/addiction/medicine = 12)
 	///If we brought someone back from the dead
 	var/back_from_the_dead
 

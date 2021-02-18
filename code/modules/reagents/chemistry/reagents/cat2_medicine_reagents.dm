@@ -94,7 +94,7 @@
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
 	description = "A bruise reliever. Does minor liver damage."
-	color = "#ECEC8D" // rgb: 236	236	141
+	color = "#ECEC8D" // rgb: 236 236 141
 	ph = 8.2
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
@@ -166,13 +166,6 @@
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/c2/lenturi/on_mob_add(mob/living/owner, amount)
-	. = ..()
-	if(creation_purity == 1)
-		for(var/addiction in owner.reagents.addiction_list) //maybe worth adding a has_addiction() check?
-			if(addiction == /datum/reagent/impurity/lentslurri)
-				to_chat(owner, "<span class='notice'>Something was off about that dose, it doesn't quite hit the spot. You still want more!</span>")//impure chem free!
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/owner)
 	owner.adjustFireLoss(-3 * REM*normalise_creation_purity())
