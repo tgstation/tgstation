@@ -241,6 +241,7 @@
 			W.registered_age = H.age
 		W.registered_name = H.real_name
 		W.update_label()
+		W.update_icon()
 
 //Instant version - use when spawning corpses during runtime
 /obj/effect/mob_spawn/human/corpse

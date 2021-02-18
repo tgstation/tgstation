@@ -83,6 +83,7 @@
 	W.assignment = "Police Officer"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/russiancorpse/hunter
 	ears = /obj/item/radio/headset
@@ -115,6 +116,7 @@
 	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/bountyhook
 	name = "Bounty Hunter - Hook"
@@ -140,6 +142,7 @@
 	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/bountysynth
 	name = "Bounty Hunter - Synth"
@@ -169,3 +172,4 @@
 	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()

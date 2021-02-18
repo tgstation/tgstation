@@ -29,6 +29,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
@@ -136,6 +137,7 @@
 	if(outfit_id)
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
+		outfit_id.update_icon()
 
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
@@ -196,6 +198,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/psycho
 	name = "Masked Killer"
@@ -259,6 +262,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/centcom/commander
 	name = "CentCom Commander"
@@ -285,6 +289,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/ghost_cultist
@@ -360,6 +365,7 @@
 
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/mobster
@@ -382,6 +388,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/plasmaman
 	name = "Plasmaman"
@@ -432,6 +439,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/centcom/death_commando/officer
@@ -475,6 +483,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/admin //for admeem shenanigans and testing things that arent related to equipment, not a subtype of debug just in case debug changes things
 	name = "Admin outfit"
@@ -505,3 +514,4 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()

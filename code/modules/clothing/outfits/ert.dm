@@ -19,6 +19,7 @@
 	if(W)
 		W.registered_name = H.real_name
 		W.update_label()
+		W.update_icon()
 	return ..()
 
 /datum/outfit/centcom/ert/commander
@@ -190,6 +191,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	return ..()
 
 /datum/outfit/centcom/ert/commander/inquisitor
@@ -341,6 +343,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	return ..()
 
 /datum/outfit/centcom/centcom_intern/unarmed

@@ -208,6 +208,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				var/obj/item/card/id/advanced/debug/ID = new(usr.loc)
 				ID.registered_name = usr.real_name
 				ID.update_label()
+				ID.update_icon()
 
 			//
 			// RCD - starts with full clip

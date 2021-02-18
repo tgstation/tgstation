@@ -162,9 +162,21 @@
 			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
 
+			var/old_name = target_id_card.registered_name
+
 			// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
 			// would not pass as a formal character name, but would still be valid on an ID card created by a player.
 			var/new_name = sanitize(params["name"])
+
+			if(!new_name)
+				target_id_card.registered_name = null
+				playsound(computer, "terminal_type", 50, FALSE)
+				target_id_card.update_label()
+				// We had a name before and now we have no name, so this will unassign the card and we update the icon.
+				if(old_name)
+					target_id_card.update_icon()
+				return TRUE
+
 			// However, we are going to reject bad names overall including names with invalid characters in them, while allowing numbers.
 			new_name = reject_bad_name(new_name, allow_numbers = TRUE)
 
@@ -175,6 +187,9 @@
 			target_id_card.registered_name = new_name
 			playsound(computer, "terminal_type", 50, FALSE)
 			target_id_card.update_label()
+			// Card wasn't assigned before and now it is, so update the icon accordingly.
+			if(!old_name)
+				target_id_card.update_icon()
 			return TRUE
 		// Change age
 		if("PRG_age")

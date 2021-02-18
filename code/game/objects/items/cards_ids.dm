@@ -98,12 +98,12 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	// Applying the trim updates the label, so we don't need to do it twice.
+	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
 		SSid_access.apply_trim_to_card(src, trim)
-		update_icon()
 	else
 		update_label()
+		update_icon()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
@@ -313,6 +313,7 @@
 		switch(var_name)
 			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
+				update_icon()
 			if(NAMEOF(src, trim))
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)

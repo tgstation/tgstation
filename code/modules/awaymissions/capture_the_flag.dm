@@ -567,6 +567,7 @@
 	no_drops += W
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)

@@ -57,8 +57,8 @@
 		var/mob/living/carbon/human/H = loc
 		if(H.wear_id == src)
 			H.sec_hud_set_ID()
-	update_icon()
 	update_label()
+	update_icon()
 
 /obj/item/storage/wallet/Entered(atom/movable/AM)
 	. = ..()

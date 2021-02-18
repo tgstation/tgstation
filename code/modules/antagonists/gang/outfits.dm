@@ -5,6 +5,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/families_police/beatcop
