@@ -34,8 +34,6 @@
 #define METALLIC_VOID_CONDUCTIVITY 0.15
 ///Conduction of heat near the external cooling loop
 #define HIGH_EFFICIENCY_CONDUCTIVITY 0.95
-///Sets the range of the hallucinations
-#define HALLUCINATION_RANGE(P) (min(7, round(abs(P) ** 0.25)))
 ///Sets the minimum amount of power the machine uses
 #define MIN_POWER_USAGE 50000
 ///Sets the multiplier for the damage
