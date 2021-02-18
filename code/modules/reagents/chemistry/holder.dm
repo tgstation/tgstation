@@ -66,7 +66,7 @@
 	var/list/datum/equilibrium/reaction_list
 	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
 	var/list/datum/reagent/previous_reagent_list
-	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled. 
+	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.
 	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
@@ -483,7 +483,7 @@
 		return
 	if(amount < 0)
 		return
-	
+
 	var/cached_amount = amount
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
@@ -640,7 +640,7 @@
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C, delta_time, times_fired)
 
-				need_mob_update += R.on_mob_life(C)
+				need_mob_update += R.on_mob_life(C, delta_time, times_fired)
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
 		C.update_stamina()
@@ -773,7 +773,7 @@
 
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
-			
+
 			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
 				meets_ph_requirement = TRUE
 
@@ -797,7 +797,7 @@
 			for(var/_equilibrium in reaction_list)
 				var/datum/equilibrium/E_exist = _equilibrium
 				if(ispath(E_exist.reaction.type, selected_reaction.type)) //Don't add duplicates
-					exists = TRUE 
+					exists = TRUE
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
@@ -849,7 +849,7 @@
 				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
-	
+
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, delta_time)
 
@@ -883,7 +883,7 @@
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
-	qdel(equilibrium) 
+	qdel(equilibrium)
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -958,7 +958,7 @@
 		var/exists = FALSE
 		for(var/reaction2 in target.reaction_list) //Don't add duplicates
 			var/datum/equilibrium/reaction_target = reaction2
-			if(reaction_source.reaction.type == reaction_target.reaction.type) 
+			if(reaction_source.reaction.type == reaction_target.reaction.type)
 				exists = TRUE
 		if(exists)
 			continue
@@ -971,7 +971,7 @@
 
 	target.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	target.is_reacting = is_reacting
-	
+
 
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 ///Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change
@@ -983,7 +983,7 @@
 			total_matching_reagents++
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
-	
+
 	//Check our last reactions
 	for(var/_reaction in failed_but_capable_reactions)
 		var/datum/chemical_reaction/reaction = _reaction
@@ -1178,7 +1178,7 @@
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			return round(R.purity, 0.01)
-	return 0 
+	return 0
 
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()
