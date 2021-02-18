@@ -3,6 +3,7 @@
 	var/modifier = 0
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
+	required_temp = 0 //Prevent impromptu RPGs
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	explode(holder, created_volume)
@@ -241,7 +242,7 @@
 	strengthdiv = 12
 	modifier = 5
 	mob_react = FALSE
-	
+
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)

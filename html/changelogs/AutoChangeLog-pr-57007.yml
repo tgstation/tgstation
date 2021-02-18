@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - admin: "build mode fill tool now asks for confirmation when filling an area greater than 150 tiles"
