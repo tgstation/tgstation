@@ -334,7 +334,7 @@ export const Reagents = (props, context) => {
                           {flagIcons
                             .filter(meta => reaction.bitflags & meta.flag)
                             .map(meta => (
-                              <Icon name={meta.icon} mr={1} />
+                              <Icon key={meta.flag} name={meta.icon} mr={1} />
                             ))}
                         </Table.Cell>
                         <Table.Cell width="20px">
@@ -381,7 +381,7 @@ export const Reagents = (props, context) => {
                           {flagIcons
                             .filter(meta => reaction.bitflags & meta.flag)
                             .map(meta => (
-                              <Icon name={meta.icon} mr={1} />
+                              <Icon key={meta.flag} name={meta.icon} mr={1} />
                             ))}
                         </Table.Cell>
                         <Table.Cell width="20px">
