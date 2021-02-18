@@ -110,7 +110,7 @@
 		return OXYLOSS
 
 /obj/item/gun/ballistic/foamfinger
-	name = "foamfinger"
+	name = "foam finger"
 	desc = "pull my finger. unless your hand has gotten blown off by it"
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger"
