@@ -409,7 +409,7 @@
 					obj_integrity -= 50
 				else
 					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
-				qdel(F)
+				QDEL_NULL(F)
 				hunger = 0
 				return
 		///no food found: it bites you and loses some hp
