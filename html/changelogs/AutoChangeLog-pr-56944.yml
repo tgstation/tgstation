@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "Fixes reaction chambers eatting beakers, and lets users eject beakers when out of power with alt."
