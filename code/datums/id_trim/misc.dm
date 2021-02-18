@@ -13,7 +13,7 @@
 
 /datum/id_trim/highlander/New()
 	. = ..()
-	access = SSid_access.get_region_access_list(list(REGION_ACCESS_CENTCOM, REGION_ALL_STATION))
+	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
 
 /datum/id_trim/reaper_assassin
 	assignment = "Reaper"
