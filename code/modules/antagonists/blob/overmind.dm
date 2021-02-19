@@ -36,8 +36,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = TRUE //if the blob needs nodes to place resource and factory blobs
 	var/placed = FALSE
-	var/manualplace_min_time = OVERMIND_STARTING_MIN_PLACE_TIME	// Some time to get your bearings
-	var/autoplace_max_time = OVERMIND_STARTING_AUTO_PLACE_TIME	// Automatically place the core in a random spot
+	var/manualplace_min_time = OVERMIND_STARTING_MIN_PLACE_TIME // Some time to get your bearings
+	var/autoplace_max_time = OVERMIND_STARTING_AUTO_PLACE_TIME // Automatically place the core in a random spot
 	var/list/blobs_legit = list()
 	var/max_count = 0 //The biggest it got before death
 	var/blobwincount = OVERMIND_WIN_CONDITION_AMOUNT
@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	set_strain(BS)
 	color = blobstrain.complementary_color
 	if(blob_core)
-		blob_core.update_icon()
+		blob_core.update_appearance()
 	SSshuttle.registerHostileEnvironment(src)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -182,7 +182,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
 			B.overmind = null
-			B.update_icon() //reset anything that was ours
+			B.update_appearance() //reset anything that was ours
 	for(var/BLO in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
 		if(BM)

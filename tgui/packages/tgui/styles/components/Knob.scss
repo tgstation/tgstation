@@ -117,7 +117,7 @@ $pi: 3.1416;
   stroke-width: 8;
   stroke-linecap: round;
   stroke-dasharray: 100 * $pi;
-  transition: stroke 50ms;
+  transition: stroke 50ms ease-out;
 }
 
 @each $color-name, $color-value in $fg-map {

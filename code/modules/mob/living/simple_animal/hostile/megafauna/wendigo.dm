@@ -30,6 +30,7 @@ Difficulty: Hard
 	ranged = TRUE
 	pixel_x = -16
 	base_pixel_x = -16
+	gps_name = "Berserk Signal"
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)
@@ -115,7 +116,7 @@ Difficulty: Hard
 		if(3)
 			disorienting_scream()
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Life()
+/mob/living/simple_animal/hostile/megafauna/wendigo/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.)
 		return

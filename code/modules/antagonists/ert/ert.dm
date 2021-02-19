@@ -38,6 +38,33 @@
 /datum/antagonist/ert/proc/update_name()
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")
 
+/datum/antagonist/ert/official
+	name = "CentCom Official"
+	show_name_in_check_antagonists = TRUE
+	var/datum/objective/mission
+	role = "Inspector"
+	random_names = FALSE
+	outfit = /datum/outfit/centcom/centcom_official
+
+/datum/antagonist/ert/official/greet()
+	to_chat(owner, "<B><font size=3 color=red>You are a CentCom Official.</font></B>")
+	if (ert_team)
+		to_chat(owner, "Central Command is sending you to [station_name()] with the task: [ert_team.mission.explanation_text]")
+	else
+		to_chat(owner, "Central Command is sending you to [station_name()] with the task: [mission.explanation_text]")
+
+/datum/antagonist/ert/official/forge_objectives()
+	if (ert_team)
+		return ..()
+	if(mission)
+		return
+	var/datum/objective/missionobj = new ()
+	missionobj.owner = owner
+	missionobj.explanation_text = "Conduct a routine performance review of [station_name()] and its Captain."
+	missionobj.completed = TRUE
+	mission = missionobj
+	objectives |= mission
+
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
 /datum/antagonist/ert/security/red
@@ -128,7 +155,14 @@
 /datum/antagonist/ert/intern/leader
 	name = "CentCom Head Intern"
 	outfit = /datum/outfit/centcom/centcom_intern/leader
+	random_names = FALSE
 	role = "Head Intern"
+
+/datum/antagonist/ert/intern/unarmed
+	outfit = /datum/outfit/centcom/centcom_intern/unarmed
+
+/datum/antagonist/ert/intern/leader/unarmed
+	outfit = /datum/outfit/centcom/centcom_intern/leader/unarmed
 
 /datum/antagonist/ert/clown
 	role = "Clown"

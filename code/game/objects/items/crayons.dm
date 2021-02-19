@@ -10,9 +10,9 @@
 #define RANDOM_RUNE "Random Rune"
 #define RANDOM_ANY "Random Anything"
 
-#define PAINT_NORMAL	1
-#define PAINT_LARGE_HORIZONTAL	2
-#define PAINT_LARGE_HORIZONTAL_ICON	'icons/effects/96x32.dmi'
+#define PAINT_NORMAL 1
+#define PAINT_LARGE_HORIZONTAL 2
+#define PAINT_LARGE_HORIZONTAL_ICON 'icons/effects/96x32.dmi'
 
 /*
  * Crayons
@@ -162,7 +162,7 @@
 	if(has_cap && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		is_capped = !is_capped
 		to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
-		update_icon()
+		update_appearance()
 
 /obj/item/toy/crayon/CtrlClick(mob/user)
 	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
@@ -257,7 +257,7 @@
 			. = TRUE
 			paint_mode = PAINT_NORMAL
 			drawtype = "a"
-	update_icon()
+	update_appearance()
 
 /obj/item/toy/crayon/proc/select_colour(mob/user)
 	var/chosen_colour = input(user, "", "Choose Color", paint_color) as color|null
@@ -352,16 +352,16 @@
 			else
 				graf_rot = 0
 
-	var/list/click_params = params2list(params)
+	var/list/modifiers = params2list(params)
 	var/clickx
 	var/clicky
 
-	if(click_params && click_params["icon-x"] && click_params["icon-y"])
-		clickx = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-		clicky = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+		clickx = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 
 	if(!instant)
-		to_chat(user, "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>")
+		to_chat(user, "<span class='notice'>You start drawing a [temp] on the [target.name]...</span>")
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -605,7 +605,7 @@
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
 	new /obj/item/toy/crayon/black(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/crayons/update_overlays()
 	. = ..()
@@ -685,7 +685,7 @@
 			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		if(can_change_colour)
 			paint_color = "#C0C0C0"
-		update_icon()
+		update_appearance()
 		if(actually_paints)
 			H.update_lips("spray_face", paint_color)
 		var/used = use_charges(user, 10, FALSE)
@@ -700,7 +700,7 @@
 		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
 		"#DA00FF")
 	refill()
-	update_icon()
+	update_appearance()
 
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
@@ -769,6 +769,7 @@
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
+	return ..()
 
 /obj/item/toy/crayon/spraycan/update_overlays()
 	. = ..()

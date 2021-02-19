@@ -137,12 +137,12 @@
 	phantom_owner.update_body()
 	phantom_owner.update_hair()
 
-	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!Tsec) // Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
 	if(is_pseudopart)
-		drop_organs(phantom_owner)	//Psuedoparts shouldn't have organs, but just in case
+		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 		return
 
@@ -199,7 +199,7 @@
 	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	Remove(C)	//Changeling brain concerns are now handled in Remove
+	Remove(C) //Changeling brain concerns are now handled in Remove
 	forceMove(LB)
 	LB.brain = src
 	if(brainmob)
@@ -236,7 +236,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 			if(R)
-				R.update_icon()
+				R.update_appearance()
 		if(C.gloves)
 			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -254,7 +254,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 			if(L)
-				L.update_icon()
+				L.update_appearance()
 		if(C.gloves)
 			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -341,7 +341,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
-				hand.update_icon()
+				hand.update_appearance()
 		C.update_inv_gloves()
 
 	if(special) //non conventional limb attachment

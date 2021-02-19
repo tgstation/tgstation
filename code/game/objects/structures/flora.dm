@@ -70,7 +70,7 @@
 	if(!took_presents)
 		took_presents = list()
 
-/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -145,7 +145,7 @@
 	name = "grass"
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
-	gender = PLURAL	//"this is grass" not "this is a grass"
+	gender = PLURAL //"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"

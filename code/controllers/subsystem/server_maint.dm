@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(server_maint)
 			continue
 		var/client/C = thing
 		C?.tgui_panel?.send_roundrestart()
-		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		if(server) //if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
 	var/datum/tgs_version/tgsversion = world.TgsVersion()
 	if(tgsversion)

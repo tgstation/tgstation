@@ -410,7 +410,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown) // We're already doing it go away
 		return
 	final_countdown = TRUE
-	update_icon()
+	update_appearance()
 
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
@@ -418,7 +418,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
-			update_icon()
+			update_appearance()
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
 			sleep(10)
@@ -870,20 +870,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
-/obj/machinery/power/supermatter_crystal/attack_paw(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_paw(mob/user, list/modifiers)
 	dust_mob(user, cause = "monkey attack")
 
-/obj/machinery/power/supermatter_crystal/attack_alien(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_alien(mob/user, list/modifiers)
 	dust_mob(user, cause = "alien attack")
 
-/obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/S)
+/obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	var/murder
-	if(!S.melee_damage_upper && !S.melee_damage_lower)
-		murder = S.friendly_verb_continuous
+	if(!user.melee_damage_upper && !user.melee_damage_lower)
+		murder = user.friendly_verb_continuous
 	else
-		murder = S.attack_verb_continuous
-	dust_mob(S, \
-	"<span class='danger'>[S] unwisely [murder] [src], and [S.p_their()] body burns brilliantly before flashing into ash!</span>", \
+		murder = user.attack_verb_continuous
+	dust_mob(user, \
+	"<span class='danger'>[user] unwisely [murder] [src], and [user.p_their()] body burns brilliantly before flashing into ash!</span>", \
 	"<span class='userdanger'>You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.</span>", \
 	"simple animal attack")
 
@@ -894,7 +894,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_ai(mob/user)
 	return
 
-/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user)
+/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

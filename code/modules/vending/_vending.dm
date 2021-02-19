@@ -77,23 +77,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/**
 	  * List of products this machine sells
 	  *
-	  *	form should be list(/type/path = amount, /type/path2 = amount2)
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
 	  */
-	var/list/products	= list()
+	var/list/products = list()
 
 	/**
 	  * List of products this machine sells when you hack it
 	  *
-	  *	form should be list(/type/path = amount, /type/path2 = amount2)
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
 	  */
-	var/list/contraband	= list()
+	var/list/contraband = list()
 
 	/**
 	  * List of premium products this machine sells
 	  *
-	  *	form should be list(/type/path, /type/path2) as there is only ever one in stock
+	  * form should be list(/type/path, /type/path2) as there is only ever one in stock
 	  */
-	var/list/premium 	= list()
+	var/list/premium = list()
 
 	///String of slogans separated by semicolons, optional
 	var/product_slogans = ""
@@ -242,24 +242,26 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	else
 		..()
 
+/obj/machinery/vending/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & BROKEN)
+		set_light(0)
+		return
+	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
+
+
 /obj/machinery/vending/update_icon_state()
 	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
-		set_light(0)
-	else if(powered())
-		icon_state = initial(icon_state)
-		set_light(1.4)
-	else
-		icon_state = "[initial(icon_state)]-off"
-		set_light(0)
+		return ..()
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	return ..()
 
 
 /obj/machinery/vending/update_overlays()
 	. = ..()
 	if(!light_mask)
 		return
-
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!(machine_stat & BROKEN) && powered())
 		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 
@@ -974,7 +976,7 @@ GLOBAL_LIST_EMPTY(vending_products)
  * * prb - probability the shock happens
  */
 /obj/machinery/vending/proc/shock(mob/living/user, prb)
-	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

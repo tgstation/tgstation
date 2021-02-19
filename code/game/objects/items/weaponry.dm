@@ -81,6 +81,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
+//statistically similar to e-cutlasses
+/obj/item/claymore/cutlass
+	name = "cutlass"
+	desc = "A piratey sword used by buckaneers to \"negotiate\" the transfer of treasure."
+	icon_state = "cutlass"
+	inhand_icon_state = "cutlass"
+	worn_icon_state = "cutlass"
+	slot_flags = ITEM_SLOT_BACK
+	force = 30
+	throwforce = 20
+	throw_speed = 3
+	throw_range = 5
+	armour_penetration = 35
+
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	flags_1 = CONDUCT_1
@@ -334,7 +348,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/throwing_star/toy
 	name = "toy throwing star"
 	desc = "An aerodynamic disc strapped with adhesive for sticking to people, good for playing pranks and getting yourself killed by security."
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	force = 0
 	throwforce = 0
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
@@ -378,7 +392,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_continuous = list("stubs", "pokes")
 		attack_verb_simple = list("stub", "poke")
 		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = SHARP_NONE
+		sharpness = NONE
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -472,6 +486,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/ectoplasm/angelic
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "angelplasm"
+
+/obj/item/ectoplasm/mystic
+	icon_state = "revenantEctoplasm"
+
 
 /obj/item/mounted_chainsaw
 	name = "mounted chainsaw"
@@ -769,6 +787,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 //HF blade
 /obj/item/vibro_weapon
 	icon_state = "hfrequency0"
+	base_icon_state = "hfrequency"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
@@ -794,7 +813,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="hfrequency1")
+	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="[base_icon_state]1")
 
 /// triggered on wield of two handed item
 /obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
@@ -809,7 +828,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	wielded = FALSE
 
 /obj/item/vibro_weapon/update_icon_state()
-	icon_state = "hfrequency0"
+	icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)

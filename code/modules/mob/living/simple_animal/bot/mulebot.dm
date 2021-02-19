@@ -41,14 +41,14 @@
 	var/base_icon = "mulebot" /// icon_state to use in update_icon_state
 	var/atom/movable/load /// what we're transporting
 	var/mob/living/passenger /// who's riding us
-	var/turf/target				/// this is turf to navigate to (location of beacon)
-	var/loaddir = 0				/// this the direction to unload onto/load from
-	var/home_destination = "" 	/// tag of home delivery beacon
+	var/turf/target /// this is turf to navigate to (location of beacon)
+	var/loaddir = 0 /// this the direction to unload onto/load from
+	var/home_destination = "" /// tag of home delivery beacon
 
-	var/reached_target = TRUE 	///true if already reached the target
+	var/reached_target = TRUE ///true if already reached the target
 
-	var/auto_return = TRUE		/// true if auto return to home beacon after unload
-	var/auto_pickup = TRUE 	/// true if auto-pickup at beacon
+	var/auto_return = TRUE /// true if auto return to home beacon after unload
+	var/auto_pickup = TRUE /// true if auto-pickup at beacon
 	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
 	var/obj/item/stock_parts/cell/cell /// Internal Powercell
@@ -137,7 +137,7 @@
 		if(open)
 			turn_off()
 		else
-			update_icon() //this is also handled by turn_off(), so no need to call this twice.
+			update_appearance() //this is also handled by turn_off(), so no need to call this twice.
 	else if(istype(I, /obj/item/stock_parts/cell) && open)
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a power cell!</span>")
@@ -184,6 +184,7 @@
 	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
+	. = ..()
 	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
@@ -433,7 +434,7 @@
 	if(!istype(crate))
 		if(!wires.is_cut(WIRE_LOADCHECK))
 			buzz(SIGH)
-			return	// if not hacked, only allow crates to be loaded
+			return // if not hacked, only allow crates to be loaded
 		crate = null
 
 	if(crate || isobj(AM))
@@ -453,7 +454,7 @@
 
 	load = AM
 	mode = BOT_IDLE
-	update_icon()
+	update_appearance()
 
 ///resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.
 /mob/living/simple_animal/bot/mulebot/proc/get_load_name()
@@ -478,7 +479,7 @@
 	if(QDELETED(load))
 		if(load) //if our thing was qdel'd, there's likely a leftover reference. just clear it and remove the overlay. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
 			load = null
-			update_icon()
+			update_appearance()
 		return
 
 	mode = BOT_IDLE
@@ -497,7 +498,7 @@
 	if(dirn) //move the thing to the delivery point.
 		cached_load.Move(get_step(loc,dirn), dirn)
 
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/get_status_tab_items()
 	. = ..()
@@ -578,8 +579,8 @@
 					return
 				if(isturf(next))
 					var/oldloc = loc
-					var/moved = step_towards(src, next)	// attempt to move
-					if(moved && oldloc!=loc)	// successful move
+					var/moved = step_towards(src, next) // attempt to move
+					if(moved && oldloc!=loc) // successful move
 						blockcount = 0
 						path -= loc
 
@@ -588,14 +589,14 @@
 						else
 							mode = BOT_DELIVER
 
-					else		// failed to move
+					else // failed to move
 
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
 							buzz(ANNOYED)
 
-						if(blockcount > 10)	// attempt 10 times before recomputing
+						if(blockcount > 10) // attempt 10 times before recomputing
 							// find new path excluding blocked turf
 							buzz(SIGH)
 							mode = BOT_WAIT_FOR_NAV
@@ -611,7 +612,7 @@
 				mode = BOT_NAV
 				return
 
-		if(BOT_NAV)	// calculate new path
+		if(BOT_NAV) // calculate new path
 			mode = BOT_WAIT_FOR_NAV
 			INVOKE_ASYNC(src, .proc/process_nav)
 
@@ -682,7 +683,7 @@
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
-		if(load)		// if loaded, unload at target
+		if(load) // if loaded, unload at target
 			if(report_delivery)
 				speak("Destination <b>[destination]</b> reached. Unloading [load].",radio_channel)
 			unload(loaddir)
@@ -695,7 +696,7 @@
 						if(!A.anchored)
 							AM = A
 							break
-				else			// otherwise, look for crates only
+				else // otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
 				if(AM?.Adjacent(src))
 					load(AM)
@@ -708,7 +709,7 @@
 			start_home()
 			mode = BOT_BLOCKED
 		else
-			bot_reset()	// otherwise go idle
+			bot_reset() // otherwise go idle
 
 
 /mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
@@ -760,11 +761,11 @@
 		return
 
 	for(var/obj/machinery/navbeacon/NB in GLOB.deliverybeacons)
-		if(NB.location == new_destination)	// if the beacon location matches the set destination
+		if(NB.location == new_destination) // if the beacon location matches the set destination
 									// the we will navigate there
 			destination = new_destination
 			target = NB.loc
-			var/direction = NB.dir	// this will be the load/unload dir
+			var/direction = NB.dir // this will be the load/unload dir
 			if(direction)
 				loaddir = text2num(direction)
 			else
@@ -790,7 +791,7 @@
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
-		cell.update_icon()
+		cell.update_appearance()
 		cell = null
 
 	do_sparks(3, TRUE, src)
@@ -806,7 +807,7 @@
 	if(load)
 		unload()
 
-/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
@@ -851,7 +852,7 @@
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
 		buzz(SIGH)
-		return	// if not hacked, only allow ghosts to be loaded
+		return // if not hacked, only allow ghosts to be loaded
 
 	else if(isobj(AM))
 		var/obj/O = AM
@@ -871,7 +872,7 @@
 
 	load = AM
 	mode = BOT_IDLE
-	update_icon()
+	update_appearance()
 
 
 /mob/living/simple_animal/bot/mulebot/paranormal/update_overlays()

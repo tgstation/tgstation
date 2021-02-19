@@ -10,9 +10,9 @@
 	var/icon_on = "potato_active"
 	var/detonation_timerid
 	var/activation_time = 0
-	var/timer = 600			//deciseconds
+	var/timer = 600 //deciseconds
 	var/show_timer = FALSE
-	var/reusable = FALSE		//absolute madman
+	var/reusable = FALSE //absolute madman
 	var/sticky = TRUE
 	var/forceful_attachment = TRUE
 	var/stimulant = TRUE
@@ -80,7 +80,7 @@
 	L.SetImmobilized(0)
 	L.SetParalyzed(0)
 	L.SetUnconscious(0)
-	L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
+	L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5)) //If you don't have legs or get bola'd, tough luck!
 
 
 /obj/item/hot_potato/examine(mob/user)
@@ -137,7 +137,7 @@
 /obj/item/hot_potato/proc/activate(delay, mob/user)
 	if(active)
 		return
-	update_icon()
+	update_appearance()
 	if(sticky)
 		ADD_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	name = "primed [name]"
@@ -151,7 +151,7 @@
 	active = TRUE
 
 /obj/item/hot_potato/proc/deactivate()
-	update_icon()
+	update_appearance()
 	name = initial(name)
 	REMOVE_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	deltimer(detonation_timerid)
@@ -161,7 +161,8 @@
 	active = FALSE
 
 /obj/item/hot_potato/update_icon_state()
-	icon_state = active? icon_on : icon_off
+	icon_state = active ? icon_on : icon_off
+	return ..()
 
 /obj/item/hot_potato/syndicate
 	detonate_light_range = 4

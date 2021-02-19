@@ -35,7 +35,7 @@
 
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
 	showpipe = !covered
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
@@ -100,7 +100,7 @@
 	 *  is projected to have no member and cause GC problems.
 	 *  We have to do this because components don't qdel pipelines
 	 *  while pipes must and will happily wreck and rebuild everything
-	 *	again every time they are qdeleted.
+	 * again every time they are qdeleted.
 	 */
 	if(!length(reference.other_atmosmch) && !length(reference.members))
 		if(QDESTROYING(reference))

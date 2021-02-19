@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/meson/engine/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/glasses/meson/engine/ComponentInitialize()
 	. = ..()
@@ -66,7 +66,7 @@
 		if(H.glasses == src)
 			H.update_sight()
 
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -101,7 +101,7 @@
 
 	for(var/i in rad_places)
 		var/turf/place = i
-		if(get_dist(user, place) >= range*5)	//Rads are easier to see than wires under the floor
+		if(get_dist(user, place) >= range*5) //Rads are easier to see than wires under the floor
 			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
 		var/image/pic = image(loc = place)
@@ -133,6 +133,7 @@
 
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
+	return ..()
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
 	name = "optical t-ray scanner"

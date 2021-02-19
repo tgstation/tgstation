@@ -12,7 +12,7 @@
 
 /obj/machinery/atmospherics
 	anchored = TRUE
-	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
+	move_resist = INFINITY //Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = AREA_USAGE_ENVIRON
@@ -158,7 +158,7 @@
 			if(can_be_node(target, i))
 				nodes[i] = target
 				break
-	update_icon()
+	update_appearance()
 
 /**
  * setter for pipe layers
@@ -169,7 +169,7 @@
  */
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
 	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/update_icon()
 	layer = initial(layer) + piping_layer / 1000
@@ -280,7 +280,7 @@
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
 	nodes[nodes.Find(reference)] = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
