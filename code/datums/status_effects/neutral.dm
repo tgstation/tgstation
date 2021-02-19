@@ -377,15 +377,15 @@
 	//If we have a reagent that blocks the effects
 	var/block_effects = FALSE
 	if(owner.has_reagent(/datum/reagent/bluespace))
-		current_cycle = max(-250, (current_cycle - 2)) //cap to -250
+		current_cycle = max(-250, (current_cycle - 7.5)) //cap to -250
 		block_effects = TRUE
 	if(owner.has_reagent(/datum/reagent/stabilizing_agent))
-		current_cycle = max(-250, (current_cycle - 2.5))
+		current_cycle = max(-250, (current_cycle - 5))
 		block_effects = TRUE
 	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
 	if(eigen)
 		if(!eigen.overdosed)
-			current_cycle = max(-250, (current_cycle - 3))
+			current_cycle = max(-250, (current_cycle - 10))
 			block_effects = TRUE
 		else
 			block_effects = FALSE
