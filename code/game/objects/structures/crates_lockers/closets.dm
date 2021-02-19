@@ -185,7 +185,7 @@
 	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted))
 		return TRUE
 	inserted.forceMove(src)
-		return TRUE
+	return TRUE
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))

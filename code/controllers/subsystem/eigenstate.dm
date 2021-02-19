@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(eigenstates)
 ///Creates a new link of targets unique to their own id
 /datum/controller/subsystem/eigenstates/proc/create_new_link(targets)
 	if(length(targets) <= 1)
-		return
+		return FALSE
 	for(var/atom/target as anything in targets) //Clear out any connected
 		var/already_linked = eigen_id[target]
 		if(already_linked)
@@ -25,9 +25,11 @@ SUBSYSTEM_DEF(eigenstates)
 			target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
 			remove_eigen_entry(target) //clearup for new stuff
 	//Do we still have targets?
-	if(length(targets) <= 1)
-		targets.[1]?.visible_message("[targets[1]] fizzes, there's nothing it can link to!")
-		return
+	if(!length(targets))
+		return FALSE
+	if(length(targets) == 1)
+		targets.[1].visible_message("[targets[1]] fizzes, there's nothing it can link to!")
+		return FALSE
 
 	eigen_targets["[id_counter]"] = list() //Add to the master list
 	for(var/atom/target as anything in targets)
@@ -44,6 +46,7 @@ SUBSYSTEM_DEF(eigenstates)
 
 	eigen_targets["[id_counter]"][1].visible_message("The items' eigenstates spilt and merge, linking each of them together.")
 	id_counter++
+	return TRUE
 
 ///reverts everything back to start
 /datum/controller/subsystem/eigenstates/Destroy()
@@ -87,17 +90,20 @@ SUBSYSTEM_DEF(eigenstates)
 /datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
 	var/id = eigen_id[object_sent_from]
 	if(!id)
-		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")
+		stack_trace("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")
+		return FALSE
 	if(!repair_eigenlink(id)) //safety
 		return FALSE
 	var/index = (eigen_targets[id].Find(object_sent_from))+1 //index + 1
 	if(!index)
-		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't contain it!")
+		stack_trace("[object_sent_from] Attempted to eigenlink to something that didn't contain it!")
+		return FALSE
 	if(index > length(eigen_targets[id]))//If we're at the end of the list (or we're 1 length long)
 		index = 1
 	var/eigen_target = eigen_targets[id][index]
 	if(!eigen_target)
-		CRASH("No eigen target set for the eigenstate component!")
+		stack_trace("No eigen target set for the eigenstate component!")
+		return FALSE
 	thing_to_send.forceMove(get_turf(eigen_target))
 	//Create ONE set of sparks for ALL times in iteration
 	if(!(spark_time == world.time))
