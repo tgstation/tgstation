@@ -22,9 +22,10 @@
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
-/datum/job/captain/announce(mob/living/carbon/human/H)
+/datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
+	if(announce_captaincy)
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
 
 /datum/outfit/job/captain
 	name = "Captain"

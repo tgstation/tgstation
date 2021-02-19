@@ -316,7 +316,10 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/character = create_character(TRUE) //creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, TRUE)
+
+	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
+	var/is_new_captain = !SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank]
+	var/equip = SSjob.EquipRank(character, rank, TRUE, is_new_captain)
 	if(isliving(equip)) //Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 

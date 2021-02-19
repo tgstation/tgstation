@@ -124,7 +124,7 @@
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-/datum/job/proc/announce(mob/living/carbon/human/H)
+/datum/job/proc/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	if(head_announce)
 		announce_head(H, head_announce)
 
@@ -141,7 +141,7 @@
 		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source, is_captain = FALSE)
 	if(!H)
 		return FALSE
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
@@ -159,10 +159,14 @@
 	if(outfit_override || outfit)
 		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
 
+	if(!visualsOnly && is_captain)
+		var/is_acting_captain =  (title != "Captain")
+		SSjob.promote_to_captain(H, is_acting_captain)
+
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
 	if(!visualsOnly && announce)
-		announce(H)
+		announce(H, is_captain)
 
 /datum/job/proc/announce_head(mob/living/carbon/human/H, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)

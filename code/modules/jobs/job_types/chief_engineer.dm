@@ -24,6 +24,11 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
+/datum/job/chief_engineer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
+	..()
+	if(announce_captaincy)
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
+
 /datum/outfit/job/ce
 	name = "Chief Engineer"
 	jobtype = /datum/job/chief_engineer

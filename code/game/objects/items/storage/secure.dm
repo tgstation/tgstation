@@ -187,3 +187,16 @@
 
 /obj/item/storage/secure/safe/hos
 	name = "head of security's safe"
+
+/obj/item/storage/secure/safe/caps_spare
+	name = "captain's spare ID safe"
+	desc = "In case of emergency, do not break glass. All Captains and Acting Captains are provided with codes to access this safe."
+
+/obj/item/storage/secure/safe/caps_spare/Initialize()
+	. = ..()
+
+	l_code = SSid_access.spare_id_safe_code
+	l_set = TRUE
+
+/obj/item/storage/secure/safe/PopulateContents()
+	new /obj/item/card/id/advanced/gold/captains_spare(src)

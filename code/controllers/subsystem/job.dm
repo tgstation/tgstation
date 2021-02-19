@@ -23,6 +23,25 @@ SUBSYSTEM_DEF(job)
 	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
 	var/list/centcom_jobs
 
+	/**
+	 * Keys should be assigned job roles. Values should be >= 1.
+	 * Represents the chain of command on the station. Lower numbers mean higher priority.
+	 * Used to give the Cap's Spare safe code to a an appropriate player.
+	 * Assumed Captain is always the highest in the chain of command.
+	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
+	 */
+	var/list/chain_of_command = list(
+		"Captain" = 1,
+		"Head of Personnel" = 2,
+		"Research Director" = 3,
+		"Chief Engineer" = 4,
+		"Chief Medical Officer" = 5,
+		"Head of Security" = 6,
+		"Quartermaster" = 7)
+
+	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
+	var/assigned_captain = FALSE
+
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.HACK_LoadMapConfig()
 	setup_job_lists()
@@ -411,9 +430,8 @@ SUBSYSTEM_DEF(job)
 		message_admins(message)
 		RejectPlayer(player)
 
-
 //Gives the player the stuff he should have with his rank
-/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE)
+/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE, is_captain = FALSE)
 	var/mob/dead/new_player/newplayer
 	var/mob/living/living_mob
 	if(!joined_late)
@@ -463,7 +481,7 @@ SUBSYSTEM_DEF(job)
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
-		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client)//silicons override this proc to return a mob
+		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client, is_captain)//silicons override this proc to return a mob
 		if(ismob(new_mob))
 			living_mob = new_mob
 			if(!joined_late)
@@ -744,3 +762,35 @@ SUBSYSTEM_DEF(job)
 
 	centcom_jobs = list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer", \
 		"Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
+
+/obj/item/paper/fluff/spare_id_safe_code
+	name = "Nanotrasen-Approved Spare ID Safe Code"
+	desc = "Proof that you have been approved for Captaincy, with all its glory and all its horror."
+
+/obj/item/paper/fluff/spare_id_safe_code/Initialize()
+	. = ..()
+	var/safe_code = SSid_access.spare_id_safe_code
+
+	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
+
+/datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
+	var/id_safe_code = SSid_access.spare_id_safe_code
+
+	if(!id_safe_code)
+		CRASH("Cannot promote [new_captain.real_name] to Captain, there is no id_safe_code.")
+
+	var/paper = new /obj/item/paper/fluff/spare_id_safe_code()
+	var/list/slots = list(
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
+	)
+	var/where = new_captain.equip_in_one_of_slots(paper, slots, FALSE) || "at your feet"
+
+	if(acting_captain)
+		to_chat(new_captain, "<span class='notice'>Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where].</span>")
+	else
+		to_chat(new_captain, "<span class='notice'>You can find the code to obtain your spare ID from the secure safe on the Bridge [where].</span>")
+
+	assigned_captain = TRUE
