@@ -1299,6 +1299,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/science/breakroom
+	name = "Science Break Room"
+
 /area/science/lab
 	name = "Research and Development"
 	icon_state = "research"

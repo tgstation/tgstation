@@ -410,8 +410,19 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/travel_direction
 	var/time_inbetween_moves = 1
 
-/obj/structure/industrial_lift/tram/use(mob/user)
-	if(!isliving(user) || !in_range(src, user) || user.combat_mode)
+/obj/structure/industrial_lift/tram/console
+	name = "tram console"
+	desc = "This lets you tell the tram where to go and hopefully it makes it there."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "computer"
+	layer = 2.3
+	density = TRUE
+
+/obj/structure/industrial_lift/tram/use(mob/user) //dont click the floor dingus we use computers now
+	return
+
+/obj/structure/industrial_lift/tram/console/use(mob/user)
+	if(!isliving(user) || !in_range(src, user))
 		return
 
 	if(controls_locked || travelling)
