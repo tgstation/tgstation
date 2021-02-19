@@ -170,7 +170,7 @@
 				var/new_angle_s = P.Angle + rand(120,240)
 				while(new_angle_s > 180) // Translate to regular projectile degrees
 					new_angle_s -= 360
-				P.setAngle(new_angle_s)
+				P.set_angle(new_angle_s)
 
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 

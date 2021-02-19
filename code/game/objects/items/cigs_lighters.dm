@@ -157,12 +157,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
-	if(!lit && smoketime > 0)
-		var/lighting_text = W.ignition_effect(src, user)
-		if(lighting_text)
-			light(lighting_text)
-	else
+	if(lit || smoketime <= 0)
 		return ..()
+	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
+		var/datum/gas_mixture/air = return_air()
+		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+			to_chat(user, "<span class='notice'>Your [name] needs a source of oxygen to burn.</span>")
+			return ..()
+	var/lighting_text = W.ignition_effect(src, user)
+	if(lighting_text)
+		light(lighting_text)
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
 	. = ..()
@@ -176,7 +180,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is full!</span>")
-
 
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
@@ -269,6 +272,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/M = loc
 	if(isliving(loc))
 		M.IgniteMob()
+	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
+		var/datum/gas_mixture/air = return_air()
+		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+			extinguish()
+			return
 	smoketime -= delta_time
 	if(smoketime <= 0)
 		new type_butt(location)
@@ -315,7 +323,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 // Cigarette brands.
 
 /obj/item/clothing/mask/cigarette/space_cigarette
-	desc = "A Space Cigarette brand cigarette."
+	desc = "A Space brand cigarette that can be smoked anywhere."
+	list_reagents = list(/datum/reagent/drug/nicotine = 9, /datum/reagent/oxygen = 9)
+	smoketime = 240 // space cigs have a shorter burn time than normal cigs
+	smoke_all = TRUE // so that it doesn't runout of oxygen while being smoked in space
 
 /obj/item/clothing/mask/cigarette/dromedary
 	desc = "A DromedaryCo brand cigarette. Contrary to popular belief, does not contain Calomel, but is reported to have a watery taste."
