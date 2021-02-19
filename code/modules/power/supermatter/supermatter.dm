@@ -410,7 +410,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown) // We're already doing it go away
 		return
 	final_countdown = TRUE
-	update_icon()
+	update_appearance()
 
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
@@ -418,7 +418,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
-			update_icon()
+			update_appearance()
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
 			sleep(10)

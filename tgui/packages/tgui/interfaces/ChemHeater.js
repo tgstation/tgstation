@@ -1,11 +1,10 @@
-import { resolveAsset } from '../assets';
 import { round, toFixed } from 'common/math';
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon, TextArea } from '../components';
-import { TableCell, TableRow } from '../components/Table';
+import { AnimatedNumber, Box, Button, Flex, Icon, NumberInput, ProgressBar, RoundGauge, Section, Table } from '../components';
+import { COLORS } from '../constants';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
-
 
 export const ChemHeater = (props, context) => {
   const { act, data } = useBackend(context);
@@ -51,17 +50,15 @@ export const ChemHeater = (props, context) => {
           )}>
           <Table>
             <Table.Row>
-              <Table.Cell
-                bold
-                collapsing color="label">
+              <Table.Cell bold collapsing color="label">
                 Heat
               </Table.Cell>
-              <TableCell />
+              <Table.Cell />
               <Table.Cell bold collapsing color="label">
                 Buffers
               </Table.Cell>
-              <TableCell />
-              <TableCell>
+              <Table.Cell />
+              <Table.Cell>
                 <NumberInput
                   width="45px"
                   unit="u"
@@ -73,13 +70,13 @@ export const ChemHeater = (props, context) => {
                   onDrag={(e, value) => act('disp_vol', {
                     target: value,
                   })} />
-              </TableCell>
+              </Table.Cell>
             </Table.Row>
-            <TableRow>
-              <TableCell collapsing color="label">
+            <Table.Row>
+              <Table.Cell collapsing color="label">
                 Target:
-              </TableCell>
-              <TableCell>
+              </Table.Cell>
+              <Table.Cell>
                 <NumberInput
                   width="65px"
                   unit="K"
@@ -91,11 +88,11 @@ export const ChemHeater = (props, context) => {
                   onDrag={(e, value) => act('temperature', {
                     target: value,
                   })} />
-              </TableCell>
-              <TableCell collapsing color="label">
+              </Table.Cell>
+              <Table.Cell collapsing color="label">
                 Acidic:
-              </TableCell>
-              <TableCell>
+              </Table.Cell>
+              <Table.Cell>
                 <Button
                   icon={'syringe'}
                   disabled={!acidicBufferVol}
@@ -104,11 +101,11 @@ export const ChemHeater = (props, context) => {
                   onClick={() => act('acidBuffer', {
                     target: 1,
                   })} />
-              </TableCell>
-              <TableCell color={"#fbc314"} textAlign="center">
-                {acidicBufferVol+"u"}
-              </TableCell>
-              <TableCell>
+              </Table.Cell>
+              <Table.Cell color={COLORS.reagent.acidicbuffer} textAlign="center">
+                {acidicBufferVol + "u"}
+              </Table.Cell>
+              <Table.Cell>
                 <Button
                   icon={'upload'}
                   tooltip={'Draw all'}
@@ -117,13 +114,13 @@ export const ChemHeater = (props, context) => {
                   onClick={() => act('acidBuffer', {
                     target: -100,
                   })} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell collapsing color="label">
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell collapsing color="label">
                 Reading:
-              </TableCell>
-              <TableCell collapsing color="default">
+              </Table.Cell>
+              <Table.Cell collapsing color="default">
                 <Box
                   width="60px"
                   textAlign="right">
@@ -133,11 +130,11 @@ export const ChemHeater = (props, context) => {
                       format={value => toFixed(value) + ' K'} />
                   ) || '—'}
                 </Box>
-              </TableCell>
-              <TableCell collapsing color="label">
+              </Table.Cell>
+              <Table.Cell collapsing color="label">
                 Basic:
-              </TableCell>
-              <TableCell>
+              </Table.Cell>
+              <Table.Cell>
                 <Button
                   icon={'syringe'}
                   tooltip={'Inject'}
@@ -146,11 +143,11 @@ export const ChemHeater = (props, context) => {
                   onClick={() => act('basicBuffer', {
                     target: 1,
                   })} />
-              </TableCell>
-              <TableCell color={"#3853a4"} textAlign="center">
-                {basicBufferVol+"u"}
-              </TableCell>
-              <TableCell>
+              </Table.Cell>
+              <Table.Cell color={COLORS.reagent.basicbuffer} textAlign="center">
+                {basicBufferVol + "u"}
+              </Table.Cell>
+              <Table.Cell>
                 <Button
                   icon={'upload'}
                   tooltip={'Draw all'}
@@ -158,8 +155,8 @@ export const ChemHeater = (props, context) => {
                   onClick={() => act('basicBuffer', {
                     target: -100,
                   })} />
-              </TableCell>
-            </TableRow>
+              </Table.Cell>
+            </Table.Row>
           </Table>
         </Section>
         {!!isBeakerLoaded && (
@@ -205,29 +202,29 @@ export const ChemHeater = (props, context) => {
                 No active reactions.
               </Box>
             ) || (
-              <Table collapsing={false} key={"reactions"}>
-                <TableRow>
-                  <TableCell bold color="label">
+              <Table>
+                <Table.Row>
+                  <Table.Cell bold color="label">
                     Reaction
-                  </TableCell>
-                  <TableCell bold color="label">
+                  </Table.Cell>
+                  <Table.Cell bold color="label">
                     {upgradeLevel < 4 ? "Status" : "Reaction quality"}
-                  </TableCell>
-                  <TableCell bold color="label">
+                  </Table.Cell>
+                  <Table.Cell bold color="label">
                     Target
-                  </TableCell>
-                </TableRow>
+                  </Table.Cell>
+                </Table.Row>
                 {activeReactions.map(reaction => (
-                  <TableRow key="reactions">
-                    <TableCell width={'60px'} color={reaction.danger ? "red" : "white"}>
+                  <Table.Row key="reactions">
+                    <Table.Cell width={'60px'} color={reaction.danger && "red"}>
                       {reaction.name}
-                    </TableCell>
-                    <TableCell width={'100px'} pr={'10px'}>
+                    </Table.Cell>
+                    <Table.Cell width={'100px'} pr={'10px'}>
                       {upgradeLevel < 4 && (
                         <Icon
                           name={reaction.danger ? "exclamation-triangle" : "spinner"}
-                          color={reaction.danger ? "red" : "white"}
-                          spin={reaction.danger ? false : true}
+                          color={reaction.danger && "red"}
+                          spin={!reaction.danger}
                           ml={2.5} />
                       ) || (
                         <AnimatedNumber value={reaction.quality}>
@@ -250,30 +247,30 @@ export const ChemHeater = (props, context) => {
                           )}
                         </AnimatedNumber>
                       )}
-                    </TableCell>
-                    <TableCell width={'70px'}>
+                    </Table.Cell>
+                    <Table.Cell width={'70px'}>
                       {upgradeLevel > 2 && (
                         <ProgressBar
                           value={reaction.reactedVol}
                           minValue={0}
                           maxValue={reaction.targetVol}
                           textAlign={'center'}
-                          icon={reaction.overheat ? "thermometer-full" : ""}
+                          icon={reaction.overheat && "thermometer-full"}
                           width={7}
                           color={reaction.overheat ? "red" : "label"}>
                           {reaction.targetVol}u
                         </ProgressBar>
                       ) || (
                         <Box
-                          color={reaction.danger ? "red" : "white"}
+                          color={reaction.danger && "red"}
                           ml={2}>
                           {reaction.targetVol}u
                         </Box>
                       )}
-                    </TableCell>
-                  </TableRow>
+                    </Table.Cell>
+                  </Table.Row>
                 ))}
-                <TableRow />
+                <Table.Row />
               </Table>
             )}
           </Section>
@@ -284,7 +281,9 @@ export const ChemHeater = (props, context) => {
             style={{
               'white-space': 'pre-wrap',
             }}>
-            <img left={-1} mx={-1} src={resolveAsset("chem_help_advisor.gif")} width={"30px"} />
+            <img
+              src={resolveAsset("chem_help_advisor.gif")}
+              width="30px" />
             {tutorialMessage}
           </Section>
         )}

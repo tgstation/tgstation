@@ -30,7 +30,7 @@
 			on = !on
 			if(!always_noslip)
 				clothing_flags &= ~NOSLIP
-			update_icon()
+			update_appearance()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 		else
 			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(wearer.dir, 180))) //honk
@@ -52,7 +52,7 @@
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
-		update_icon()
+		update_appearance()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
 		if(!always_noslip)
 			if(on)
@@ -63,7 +63,5 @@
 		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon_state()
-	if(on)
-		icon_state = "clown_prototype_on"
-	else
-		icon_state = "clown_prototype_off"
+	icon_state = "clown_prototype_[on ? "on" : "off"]"
+	return ..()

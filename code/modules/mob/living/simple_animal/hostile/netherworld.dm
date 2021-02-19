@@ -115,11 +115,11 @@
 	var/chosen_sound = pick(migo_sounds)
 	playsound(src, chosen_sound, 50, TRUE)
 
-/mob/living/simple_animal/hostile/netherworld/migo/Life()
+/mob/living/simple_animal/hostile/netherworld/migo/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
-	if(prob(10))
+	if(DT_PROB(5, delta_time))
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 50, TRUE)
 

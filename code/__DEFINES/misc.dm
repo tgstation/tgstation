@@ -462,7 +462,12 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
-#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
+/// The gravity strength threshold for high gravity damage.
+#define GRAVITY_DAMAGE_THRESHOLD 3
+/// The scaling factor for high gravity damage.
+#define GRAVITY_DAMAGE_SCALING 0.5
+/// The maximum [BRUTE] damage a mob can take from high gravity per second.
+#define GRAVITY_DAMAGE_MAXIMUM 1.5
 
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1

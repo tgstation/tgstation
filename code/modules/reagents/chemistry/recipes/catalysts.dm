@@ -6,6 +6,7 @@
 	required_reagents = list(/datum/reagent/medicine/c2/libital = 3, /datum/reagent/medicine/c2/probital = 4, /datum/reagent/toxin/plasma = 2)
 	mix_message = "The reaction evaporates slightly as the mixture solidifies"
 	mix_sound = 'sound/chemistry/catalyst.ogg'
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_UNIQUE | REACTION_TAG_CHEMICAL
 	required_temp = 320
 	optimal_temp = 600
 	overheat_temp = 800 

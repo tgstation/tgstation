@@ -20,7 +20,7 @@
 	rate_up_lim = 55
 	purity_min = 0.55
 	reaction_flags = REACTION_PH_VOL_CONSTANT
-
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
 	explode_fire_vortex(holder, equilibrium, 1, 1)
@@ -64,6 +64,7 @@
 	rate_up_lim = 40
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/probital
 	results = list(/datum/reagent/medicine/c2/probital = 4)
@@ -81,6 +82,7 @@
 	rate_up_lim = 30
 	purity_min = 0.35//15% window
 	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /*****BURN*****/
 //These are all endothermic!
@@ -103,6 +105,7 @@
 	rate_up_lim = 30
 	purity_min = 0.25
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/aiuri
 	results = list(/datum/reagent/medicine/c2/aiuri = 4)
@@ -120,6 +123,7 @@
 	rate_up_lim = 35
 	purity_min = 0.25
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/aiuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
@@ -134,6 +138,7 @@
 /datum/chemical_reaction/medicine/hercuri
 	results = list(/datum/reagent/medicine/c2/hercuri = 5)
 	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
+
 	is_cold_recipe = TRUE
 	required_temp = 47
 	optimal_temp = 10
@@ -146,6 +151,7 @@
 	H_ion_release = 3.7
 	rate_up_lim = 50
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	if(off_cooldown(holder, equilibrium, 2, "hercuri_freeze"))
@@ -176,6 +182,7 @@
 	rate_up_lim = 50
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
 /datum/chemical_reaction/medicine/convermol/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
@@ -216,6 +223,7 @@
 	rate_up_lim = 50
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
 /datum/chemical_reaction/medicine/tirimol/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
@@ -261,6 +269,7 @@
 	rate_up_lim = 60
 	purity_min = 0.35
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/medicine/seiver/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
@@ -286,6 +295,7 @@
 	rate_up_lim = 25
 	purity_min = 0.1 //Fire is our worry for now
 	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
 //You get nothing! I'm serious about staying under the heating requirements!
 /datum/chemical_reaction/medicine/multiver/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
@@ -322,6 +332,7 @@
 	rate_up_lim = 20 //affected by pH too
 	purity_min = 0.3
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/medicine/syriniver/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
@@ -343,6 +354,7 @@
 	rate_up_lim = 15
 	purity_min = 0.55
 	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
 //overheat beats like a heart! (or is it overbeat?)
 /datum/chemical_reaction/medicine/penthrite/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)

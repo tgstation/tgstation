@@ -21,7 +21,6 @@
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
-
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
@@ -56,6 +55,9 @@
 	var/purity_min = 0.15
 	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 	var/reaction_flags = NONE
+	///Tagging vars
+	///A bitflag var for tagging reagents for the reagent loopup functon
+	var/reaction_tags = NONE
 
 /datum/chemical_reaction/New()
 	. = ..()
