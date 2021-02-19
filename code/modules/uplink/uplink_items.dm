@@ -662,12 +662,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Holster"
 	desc = "A useful little device that allows for inconspicuous carrying of guns using chameleon technology. It also allows for badass gun-spinning."
 	item = /obj/item/storage/belt/holster/chameleon
-	cost = 2
-
-/datum/uplink_item/stealthy_weapons/concealed_holster
-	name = "Bluespace Pocket Holster"
-	desc = "Who you calling nerd?! This compact holster is disguised as a pocket protector that uses bluespace technology to fit small sidearms. Best paired with the Makarov or Dart Gun."
-	item = /obj/item/clothing/accessory/concealed_holster
 	cost = 1
 
 // Ammunition
