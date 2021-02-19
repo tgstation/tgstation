@@ -13,17 +13,23 @@ SUBSYSTEM_DEF(eigenstates)
 /datum/controller/subsystem/eigenstates/proc/create_new_link(targets)
 	if(length(targets) <= 1)
 		return
-	eigen_targets["[id_counter]"] = list()
-	for(var/atom/target as anything in targets)
+	for(var/atom/target as anything in targets) //Clear out any connected
 		var/already_linked = eigen_id[target]
 		if(already_linked)
-			if(!(length(eigen_targets[already_linked]) > 1)) //Eigenstates are notorious for having cliques!
+			if(length(eigen_targets[already_linked]) > 1) //Eigenstates are notorious for having cliques!
 				target.visible_message("[target] fizzes, it's already linked to something else!")
+				targets -= target
 				continue
 			target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
 			remove_eigen_entry(target) //clearup for new stuff
+	//Do we still have targets?
+	if(length(targets) <= 1)
+		return
+
+	eigen_targets["[id_counter]"] = list() //Add to the master list
+	for(var/atom/target as anything in targets)
 		eigen_targets["[id_counter]"] += target
-		eigen_id += list(target = "[id_counter]")
+		eigen_id[target] = "[id_counter]"
 		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
 		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
@@ -32,9 +38,7 @@ SUBSYSTEM_DEF(eigenstates)
 			item.color = "#9999FF" //Tint the locker slightly.
 			item.alpha = 200
 			do_sparks(3, FALSE, item)
-	if(length(eigen_targets["[id_counter]"]) <= 1)
-		eigen_targets["[id_counter]"] = null
-		return
+
 	eigen_targets["[id_counter]"][1].visible_message("The items' eigenstates spilt and merge, linking each of them together.")
 	id_counter++
 
@@ -70,25 +74,26 @@ SUBSYSTEM_DEF(eigenstates)
 	UnregisterSignal(entry, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(entry, COMSIG_CLOSET_INSERT)
 	UnregisterSignal(entry, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
-	if(!length(eigen_targets))
-		eigen_targets -= id
+	if(!length(eigen_targets))//If we're empty - delete the entry
+		eigen_targets -= eigen_targets[id]
+		eigen_id -= eigen_id[entry]
 
 ///Finds the object within the master list, then sends the thing to the object's location
-/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/thing_to_send)
+/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
 	var/id = eigen_id[object_sent_from]
 	if(!id)
 		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")
 	if(!repair_eigenlink(id)) //safety
 		return FALSE
-	var/index = eigen_targets[id].Find(object_sent_from)
+	var/index = (eigen_targets[id].Find(object_sent_from))+1 //index + 1
 	if(!index)
 		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't contain it!")
-	if(index+1 > length(eigen_targets[id]))//If we're at the end of the list (or we're 1 length long)
+	if(index > length(eigen_targets[id]))//If we're at the end of the list (or we're 1 length long)
 		index = 1
 	var/eigen_target = eigen_targets[id][index]
 	if(!eigen_target)
 		CRASH("No eigen target set for the eigenstate component!")
-	do_teleport(thing_to_send, get_turf(eigen_target), 0)
+	thing_to_send.forceMove(get_turf(eigen_target))
 	if(istype(eigen_target, /obj/structure/closet)) //locker snowflake code
 		var/obj/structure/closet/closet = eigen_target
 		closet.bust_open()
