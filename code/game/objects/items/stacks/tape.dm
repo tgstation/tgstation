@@ -19,8 +19,15 @@
 	var/list/conferred_embed = EMBED_HARMLESS
 	var/overwrite_existing = FALSE
 
-/obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
+/obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user, proximity)
+	if(!proximity)
+		return
+
 	if(!istype(I))
+		return
+
+	if(I.embedding)
+		to_chat(user, "<span class='warning'>[I] is already capable of sticking to people!</span>")
 		return
 
 	if(I.embedding && I.embedding == conferred_embed)
@@ -30,7 +37,10 @@
 	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
 
 	if(do_after(user, 30, target=I))
-		use(1)
+		if(!proximity)
+			to_chat(user, "<span class='notice'>You couldn't hold down [I] long enough to tape it down.</span>")
+			return
+		
 		if(istype(I, /obj/item/clothing/gloves/fingerless))
 			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
 			to_chat(user, "<span class='notice'>You turn [I] into [O] with [src].</span>")
@@ -38,10 +48,14 @@
 			user.put_in_hands(O)
 			return
 
+		if(I.embedding)
+			to_chat(user, "<span class='warning'>[I] is already capable of sticking to people!</span>")
+
 		if(I.embedding && I.embedding == conferred_embed)
 			to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
 			return
-
+		
+		use(1)
 		I.embedding = conferred_embed
 		I.updateEmbedding()
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
