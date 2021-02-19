@@ -289,7 +289,7 @@
 	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
 
 	//you're hot
-	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time //max 5 tox healing a tick
+	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time //max 2.5 tox healing per second
 	if(toxcalc > 0)
 		M.adjustToxLoss(-toxcalc)
 		healypoints += toxcalc

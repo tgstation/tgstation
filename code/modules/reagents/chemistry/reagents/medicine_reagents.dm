@@ -307,7 +307,7 @@
 	taste_description = "sweetness and salt"
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10 //So that normal blood regeneration can continue with salglu active
-	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
+	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add about half this much to their actual blood per second
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -319,7 +319,7 @@
 		var/amount_to_add = min(M.blood_volume, 5*volume)
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
-		M.blood_volume = new_blood_level + extra_regen
+		M.blood_volume = new_blood_level + (extra_regen * REM * delta_time)
 	if(DT_PROB(18, delta_time))
 		M.adjustBruteLoss(-0.5, 0)
 		M.adjustFireLoss(-0.5, 0)
@@ -1347,7 +1347,7 @@
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
-	/// The bloodiest wound that the patient has will have its blood_flow reduced by this much each tick
+	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second
 	var/clot_rate = 0.3
 	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
 	var/passive_bleed_modifier = 0.7
