@@ -4,6 +4,7 @@
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
+	base_icon_state = "hygienebot"
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -39,7 +40,7 @@
 
 /mob/living/simple_animal/bot/hygienebot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
@@ -67,22 +68,16 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	if(on)
-		icon_state = "hygienebot-on"
-	else
-		icon_state = "hygienebot"
+	icon_state = "[base_icon_state][on ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
 	if(on)
-		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "hygienebot-flame")
-		. +=fire_overlay
-
+		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
-		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
-		. += water_overlay
+		. += mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
@@ -205,11 +200,11 @@
 
 /mob/living/simple_animal/bot/hygienebot/proc/start_washing()
 	washing = TRUE
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/hygienebot/proc/stop_washing()
 	washing = FALSE
-	update_icon()
+	update_appearance()
 
 
 

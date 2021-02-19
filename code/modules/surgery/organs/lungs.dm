@@ -485,13 +485,13 @@
 	// The air you breathe out should match your body temperature
 	breath.temperature = H.bodytemperature
 
-/obj/item/organ/lungs/on_life()
+/obj/item/organ/lungs/on_life(delta_time, times_fired)
 	. = ..()
 	if(failed && !(organ_flags & ORGAN_FAILING))
 		failed = FALSE
 		return
 	if(damage >= low_threshold)
-		var/do_i_cough = damage < high_threshold ? prob(5) : prob(10) // between : past high
+		var/do_i_cough = DT_PROB((damage < high_threshold) ? 2.5 : 5, delta_time) // between : past high
 		if(do_i_cough)
 			owner.emote("cough")
 	if(organ_flags & ORGAN_FAILING && owner.stat == CONSCIOUS)

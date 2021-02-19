@@ -4,6 +4,7 @@
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
+	base_icon_state = "pdapainter"
 	density = TRUE
 	max_integrity = 200
 	/// Current ID card inserted into the machine.
@@ -28,13 +29,10 @@
 
 /obj/machinery/pdapainter/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
-		return
-
-	if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
+		icon_state = "[base_icon_state]-broken"
+		return ..()
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
+	return ..()
 
 /obj/machinery/pdapainter/update_overlays()
 	. = ..()
@@ -88,10 +86,10 @@
 /obj/machinery/pdapainter/handle_atom_del(atom/A)
 	if(A == stored_pda)
 		stored_pda = null
-		update_icon()
+		update_appearance(UPDATE_ICON)
 	if(A == stored_id_card)
 		stored_id_card = null
-		update_icon()
+		update_appearance(UPDATE_ICON)
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
@@ -107,7 +105,7 @@
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 				set_machine_stat(machine_stat & ~BROKEN)
 				obj_integrity = max_integrity
-				update_icon()
+				update_appearance(UPDATE_ICON)
 			return
 		return ..()
 
@@ -138,7 +136,7 @@
 
 		stored_id_card = O
 		O.add_fingerprint(user)
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		return
 
 	return ..()
@@ -228,7 +226,7 @@
 			stored_id_card.forceMove(drop_location())
 
 		stored_id_card = null
-		update_icon(user)
+		update_appearance(UPDATE_ICON)
 
 /obj/machinery/pdapainter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

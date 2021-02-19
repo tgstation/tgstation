@@ -39,7 +39,7 @@
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	auto_patrol = TRUE
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
@@ -52,7 +52,7 @@
 
 /mob/living/simple_animal/bot/honkbot/proc/sensor_blink()
 	icon_state = "honkbot-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 5, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 0.5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 //honkbots react with sounds.
 /mob/living/simple_animal/bot/honkbot/proc/react_ping()
@@ -135,7 +135,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
-		update_icon()
+		update_appearance()
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/projectile/Proj)
 	if((istype(Proj,/obj/projectile/beam)) || (istype(Proj,/obj/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
@@ -180,7 +180,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			playsound(src, "honkbot_e", 50, FALSE)
 			limiting_spam = TRUE // prevent spam
 			icon_state = "honkbot-e"
-			addtimer(CALLBACK(src, /atom/.proc/update_icon), 30, TIMER_OVERRIDE|TIMER_UNIQUE)
+			addtimer(CALLBACK(src, /atom/.proc/update_appearance), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack

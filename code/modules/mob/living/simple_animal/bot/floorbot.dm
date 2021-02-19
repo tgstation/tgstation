@@ -43,7 +43,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	toolbox_color = new_toolbox_color
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
@@ -67,11 +67,11 @@
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/bot_reset()
 	..()
@@ -391,7 +391,8 @@
 	if(!QDELETED(src))
 		go_idle()
 
-/mob/living/simple_animal/bot/floorbot/update_icon()
+/mob/living/simple_animal/bot/floorbot/update_icon_state()
+	. = ..()
 	icon_state = "[toolbox_color]floorbot[on]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
