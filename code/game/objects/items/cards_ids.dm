@@ -213,6 +213,7 @@
 			var/list/wildcard_usage = wildcard_info["usage"]
 			wildcard_usage |= wildcard
 			access |= wildcard
+			wildcard_info["count"] += 1
 
 /**
  * Removes wildcards from the ID card.
@@ -240,7 +241,7 @@
 		if(!wildcard_removed)
 			// If the card has no info for historic forced wildcards, that's an error state.
 			if(!wildcard_slots[WILDCARD_NAME_FORCED])
-				stack_trace("Wildcard ([wildcard]) could not be removed from [src]. This card has no forced wildcard data.")
+				stack_trace("Wildcard ([wildcard]) could not be removed from [src]. This card has no forced wildcard data and the wildcard is not in this card's wildcard lists.")
 
 			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
 			var/wildcard_usage = wildcard_info["usage"]
@@ -250,6 +251,10 @@
 
 			wildcard_usage -= wildcard
 			access -= wildcard
+			wildcard_info["count"] = length(wildcard_usage)
+
+			if(!wildcard_info["count"])
+				wildcard_slots -= WILDCARD_NAME_FORCED
 
 /**
  * Attempts to add the given accesses to the ID card as non-wildcards.
