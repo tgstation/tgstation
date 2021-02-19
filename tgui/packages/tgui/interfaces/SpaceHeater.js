@@ -31,7 +31,6 @@ export const SpaceHeater = (props, context) => {
                 selected={data.on}
                 disabled={!data.hasPowercell}
                 onClick={() => act('power')} />
-              
             </>
           )}>
           <LabeledList>
