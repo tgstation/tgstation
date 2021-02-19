@@ -66,7 +66,7 @@
 /datum/action/innate/construction/switch_mode/Activate()
 	if(..())
 		return
-	var/list/buildlist = list("Walls and Floors" = 0, "Airlocks" = 1, "Deconstruction" = 2, "Windows and Grilles" = 3)
+	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
 	var/buildmode = input(owner, "Set construction mode.", "Base Console", null) in buildlist
 	check_rcd()
 	base_console.internal_rcd.construction_mode = buildlist[buildmode]
