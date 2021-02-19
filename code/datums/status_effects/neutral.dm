@@ -339,3 +339,163 @@
 	tick_interval = INFINITY
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
+
+/datum/status_effect/eigenstasium
+	id = "eigenstasium"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	///So we know what cycle we're in during the status
+	var/current_cycle = 0 //keep track of our calls
+	///The addiction looper for addiction stage 3
+	var/phase_3_cycle = 0
+	///Your clone from another reality
+	var/mob/living/carbon/alt_clone = null
+
+///Convert this effect to process slowly instead
+/datum/status_effect/eigenstasium/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSprocessing, src) //this lasts a while, so SSfastprocess isn't needed.
+
+/datum/status_effect/eigenstasium/Destroy()
+	QDEL_NULL(alt_clone)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+
+/datum/status_effect/eigenstasium/tick()
+	. = ..()
+	//This stuff runs every cycle
+	if(prob(5)
+		do_sparks(5, FALSE, owner)
+	if(owner.has_reagent(/datum/reagent/bluespace) || owner.has_reagent(/datum/reagent/eigenstate))
+		current_cycle = max(-25, (current_cycle - 0.5)) //cap to -25
+		return ..()
+
+	switch(current_cycle)
+		if(0)
+			to_chat(owner, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
+		//phase 1
+		if(1 to 10)
+			owner.Jitter(10)
+			owner.adjust_nutrition(-owner.nutrition/15)
+
+		//phase 2
+		if(10 to 30)
+			if(current_cycle == 11)
+				to_chat(owner, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
+				owner.Jitter(200)
+				owner.Stun(80)
+			var/items = owner.get_contents()
+			if(!LAZYLEN(items))
+				return ..()
+			var/obj/item/item = pick(items)
+			owner.dropItemToGround(item, TRUE)
+			do_sparks(5,FALSE,item)
+			do_teleport(item, get_turf(item), 5, no_effects=TRUE);
+			do_sparks(5,FALSE,item)
+
+		//phase 3
+		if(30 to 42)
+			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
+			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
+				if(0)
+					owner.Jitter(100)
+					to_chat(owner, "<span class='userdanger'>Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!</span>")
+				if(1)
+					var/typepath = owner.type
+					alt_clone = new typepath(owner.loc)
+					var/mob/living/carbon/clone = alt_clone
+					alt_clone.appearance = owner.appearance
+					alt_clone.real_name = owner.real_name
+					owner.visible_message("[owner] collapses in from an alternative reality!")
+					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+					do_sparks(5,FALSE,alt_clone)
+					alt_clone.emote("spin")
+					owner.emote("spin")
+					var/static/list/say_phrases = list(
+						"Bugger me, whats all this then?",
+						"Sacre bleu! Ou suis-je?!",
+						"I knew powering the station using a singularity engine would lead to something like this...",
+						"Wow, I can't believe in your universe Cencomm got rid of cloning.",
+						"WHAT IS HAPPENING?!",
+						"YOU'VE CREATED A TIME PARADOX!",
+						"You trying to steal my job?",
+						"So that's what I'd look like if I was ugly...",
+						"So, two alternate universe twins walk into a bar...",
+						"YOU'VE DOOMED THE TIMELINE!",
+						"Ruffle a cat once in a while!",
+						"Why haven't you gotten around to starting that band?!",
+						"I bet we can finally take the clown now.",
+						"LING DISGUISED AS ME!",
+						"At long last! My evil twin!",
+						"Keep going lets see if more of us show up.",
+						"No! Dark spirits, do not torment me with these visions of my future self! It's horrible!",
+						"Good. Now that the council is assembled the meeting can begin.",
+						"Listen! I only have so much time before I'm ripped away. The secret behind the gas giants are...",
+						"Das ist nicht deutschland. Das ist nicht akzeptabel!!!",
+						"I've come from the future to warn you about eigenstasium! Oh no! I'm too late!",
+						"You fool! You took too much eigenstasium! You've doomed us all!",
+						"What...what's with these teleports? It's like one of my Japanese animes...!",
+						"Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?",
+						"Wake the fuck up spaceman we have a gas giant to burn",
+						"This is one hell of a beepsky smash.",
+						"Now neither of us will be virgins!")
+					alt_clone.say(pick(say_phrases))
+				if(2)
+					do_sparks(5,FALSE,alt_clone)
+					qdel(alt_clone) //Deletes CLONE, or was that you?
+					owner.visible_message("[owner] is snapped across to a different alternative reality!")
+					addictCyc3 = 0 //counter
+					alt_clone = null
+			addictCyc3++
+			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //Teleports player randomly
+			do_sparks(5, FALSE, owner)
+
+		//phase 4
+		if(42 to INFINITY)
+			if(alt_clone)//catch any stragilers
+				do_sparks(5,FALSE,alt_clone)
+				qdel(alt_clone)
+				owner.visible_message("[owner] is snapped across to a different alternative reality!")
+				alt_clone = null
+			//clean up and remove status
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip, creation_purity)
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "Eigenstasium wild rides ridden")
+			do_sparks(5, FALSE, owner)
+			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+			do_sparks(5, FALSE, owner)
+			owner.Sleeping(100)
+			owner.Jitter(50)
+			to_chat(owner, "<span class='warning'>You feel your eigenstate settle, snapping an alternative version of yourself into reality.</span>")
+			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
+			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")
+			//new you new stuff
+			SSquirks.randomise_quirks(owner)
+			owner.reagents.remove_all(1000)
+			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
+			mood.remove_temp_moods() //New you, new moods.
+			var/mob/living/carbon/human/human_mob = owner
+			if(!human_mob)
+				return
+			if(prob(1))//low chance of the alternative reality returning to monkey
+				var/obj/item/organ/tail/monkey/monkey_tail = new (human_mob.loc)
+				monkey_tail.Insert(human_mob)
+			if(!creator)
+				human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
+				human_mob.dna?.species?.randomize_active_underwear(human_mob)
+			else
+				human_mob.appearance = creator.appearance
+				human_mob.name = creator.name
+			owner.remove_status_effect(STATUS_EFFECT_EIGEN)
+
+	//Finally increment cycle
+	current_cycle++
+
+/datum/status_effect/eigenstasium/on_remove()
+	if(alt_clone)//catch any stragilers
+		do_sparks(5,FALSE,alt_clone)
+		qdel(alt_clone)
+		owner.visible_message("[owner] is snapped across to a different alternative reality!")
+		alt_clone = null
+	. = ..()

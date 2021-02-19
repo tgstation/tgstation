@@ -116,6 +116,8 @@
 #define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
 
 #define STATUS_EFFECT_SURRENDER /datum/status_effect/grouped/surrender // gives an alert to quickly surrender
+
+#define STATUS_EFFECT_EIGEN /datum/status_effect/eigenstasium
 /////////////
 //  SLIME  //
 /////////////
