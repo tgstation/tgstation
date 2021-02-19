@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(eigenstates)
 			remove_eigen_entry(target) //clearup for new stuff
 	//Do we still have targets?
 	if(length(targets) <= 1)
+		targets.[1]?.visible_message("[targets[1]] fizzes, there's nothing it can link to!")
 		return
 
 	eigen_targets["[id_counter]"] = list() //Add to the master list
@@ -71,12 +72,13 @@ SUBSYSTEM_DEF(eigenstates)
 /datum/controller/subsystem/eigenstates/proc/remove_eigen_entry(entry)
 	var/id = eigen_id[entry]
 	eigen_targets[id] -= entry
+	eigen_id -= eigen_id[entry]
 	UnregisterSignal(entry, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(entry, COMSIG_CLOSET_INSERT)
 	UnregisterSignal(entry, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
 	if(!length(eigen_targets))//If we're empty - delete the entry
 		eigen_targets -= eigen_targets[id]
-		eigen_id -= eigen_id[entry]
+
 
 ///Finds the object within the master list, then sends the thing to the object's location
 /datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
