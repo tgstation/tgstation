@@ -116,7 +116,7 @@
 	inhand_icon_state = "foamfinger"
 	mag_type = /obj/item/ammo_box/magazine/internal/foamfinger
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin
 	burst_size = 1
