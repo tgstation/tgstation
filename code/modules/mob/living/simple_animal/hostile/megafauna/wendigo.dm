@@ -116,7 +116,7 @@ Difficulty: Hard
 		if(3)
 			disorienting_scream()
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Life()
+/mob/living/simple_animal/hostile/megafauna/wendigo/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.)
 		return

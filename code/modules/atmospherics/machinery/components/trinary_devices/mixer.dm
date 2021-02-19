@@ -20,7 +20,7 @@
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
@@ -28,25 +28,17 @@
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You maximize the pressure output on [src] to [target_pressure] kPa.</span>")
-		update_icon()
+		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/mixer/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/components/trinary/mixer/update_overlays()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue
+
 		var/obj/machinery/atmospherics/node = findConnecting(direction)
-
-		var/image/cap
-		if(node)
-			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer, trinary = TRUE)
-		else
-			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer, trinary = TRUE)
-
-		add_overlay(cap)
-
-	return ..()
+		. += getpipeimage(icon, "cap", direction, node?.pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
@@ -170,7 +162,7 @@
 			adjust_node1_value(100 - value)
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(newValue)
 	node1_concentration = newValue / 100

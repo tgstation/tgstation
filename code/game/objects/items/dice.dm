@@ -62,7 +62,7 @@
 	. = ..()
 	if(!result)
 		result = roll(sides)
-	update_icon()
+	update_appearance()
 
 /obj/item/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -203,7 +203,7 @@
 		comment = "NAT 20!"
 	else if(sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
-	update_icon()
+	update_appearance()
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
 	if(special_faces.len == sides)

@@ -47,10 +47,10 @@
 	else
 		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
-/mob/living/simple_animal/hostile/mushroom/Life()
+/mob/living/simple_animal/hostile/mushroom/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		adjustBruteLoss(-2)
+		adjustBruteLoss(-1 * delta_time)
 
 /mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)

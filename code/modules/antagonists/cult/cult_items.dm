@@ -372,6 +372,7 @@
 
 /obj/item/sharpener/cult/update_icon_state()
 	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
+	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -639,8 +640,7 @@
 	name = "bloody halberd"
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
 	icon_state = "occultpoleaxe0"
-	inhand_icon_state = "occultpoleaxe0"
-	base_icon_state = "occultpoleaxe0"
+	base_icon_state = "occultpoleaxe"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 17
 	throwforce = 40
@@ -663,7 +663,7 @@
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_wielded = "[base_icon_state]1")
 
 /// triggered on wield of two handed item
 /obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
@@ -678,12 +678,8 @@
 	wielded = FALSE
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
-	if(wielded)
-		icon_state = "occultpoleaxe1"
-		inhand_icon_state = "occultpoleaxe1"
-	else
-		icon_state = "[base_icon_state]"
-		inhand_icon_state = "[base_icon_state]"
+	icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/item/melee/cultblade/halberd/Destroy()
 	if(halberd_act)
