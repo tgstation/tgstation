@@ -13,11 +13,11 @@
 /obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
 	. = ..()
 	if(modified)
-		icon_state = "foamdart_empty"
-		BB?.icon_state = "foamdart_empty"
+		icon_state = "[base_icon_state]_empty"
+		loaded_projectile?.icon_state = "[base_icon_state]_empty"
 		return
-	icon_state = initial(icon_state)
-	BB?.icon_state = initial(BB.icon_state)
+	icon_state = "[base_icon_state]"
+	loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]"
 
 /obj/item/ammo_casing/caseless/foam_dart/update_desc()
 	. = ..()
@@ -62,4 +62,5 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+	base_icon_state = "foamdart_riot"
 	custom_materials = list(/datum/material/iron = 1125)

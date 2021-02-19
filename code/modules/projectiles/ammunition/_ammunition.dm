@@ -55,12 +55,12 @@
 	QDEL_NULL(loaded_projectile)
 
 /obj/item/ammo_casing/update_icon_state()
-	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : ""]"
+	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : null]"
 	return ..()
 
 /obj/item/ammo_casing/update_desc()
-	. = ..()
-	desc = "[initial(desc)][BB ? null : " This one is spent."]"
+	desc = "[initial(desc)][loaded_projectile ? null : " This one is spent."]"
+	return ..()
 
 /*
  * On accidental consumption, 'spend' the ammo, and add in some gunpowder
