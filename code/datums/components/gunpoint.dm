@@ -135,21 +135,21 @@
 		qdel(src)
 		return
 
-	if(weapon.chambered && weapon.chambered.BB)
-		weapon.chambered.BB.damage *= damage_mult
-		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
-			weapon.chambered.BB.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			weapon.chambered.BB.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(weapon.chambered && weapon.chambered.loaded_projectile)
+		weapon.chambered.loaded_projectile.damage *= damage_mult
+		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			weapon.chambered.loaded_projectile.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.loaded_projectile.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	if(weapon.check_botched(shooter))
 		return
 
 	var/fired = weapon.process_fire(target, shooter)
-	if(!fired && weapon.chambered?.BB)
-		weapon.chambered.BB.damage /= damage_mult
-		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
-			weapon.chambered.BB.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			weapon.chambered.BB.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(!fired && weapon.chambered?.loaded_projectile)
+		weapon.chambered.loaded_projectile.damage /= damage_mult
+		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			weapon.chambered.loaded_projectile.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.loaded_projectile.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	qdel(src)
 
