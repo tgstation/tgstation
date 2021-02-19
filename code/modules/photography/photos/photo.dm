@@ -22,7 +22,7 @@
 	if(!istype(P))
 		return
 	picture = P
-	update_icon()
+	update_appearance()
 	if(P.caption)
 		scribble = P.caption
 	if(setname && P.picture_name)
@@ -43,10 +43,11 @@
 
 /obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
-		return
+		return ..()
 	var/icon/I = picture.get_small_icon(initial(icon_state))
 	if(I)
 		icon = I
+	return ..()
 
 /obj/item/photo/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...

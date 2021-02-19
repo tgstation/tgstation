@@ -25,12 +25,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	))
 
 
-/mob/living/carbon/proc/handle_hallucinations()
+/mob/living/carbon/proc/handle_hallucinations(delta_time, times_fired)
 	if(!hallucination)
 		return
 
-	hallucination = max(hallucination - 1, 0)
-
+	hallucination = max(hallucination - (0.5 * delta_time), 0)
 	if(world.time < next_hallucination)
 		return
 
@@ -135,7 +134,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(target.client)
 			target.client.images |= current_image
 
-/obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
+/obj/effect/hallucination/simple/update_icon(updates=ALL, new_state, new_icon, new_px=0, new_py=0)
 	image_state = new_state
 	if(new_icon)
 		image_icon = new_icon
@@ -143,6 +142,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		image_icon = initial(image_icon)
 	px = new_px
 	py = new_py
+	. = ..()
 	Show()
 
 /obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	name = "alien hunter ([rand(1, 1000)])"
 
 /obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	update_icon("alienh_pounce")
+	update_icon(ALL, "alienh_pounce")
 	if(hit_atom == target && target.stat!=DEAD)
 		target.Paralyze(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class='userdanger'>[name] pounces on you!</span>")

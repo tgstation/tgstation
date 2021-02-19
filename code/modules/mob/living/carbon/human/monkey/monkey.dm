@@ -67,7 +67,7 @@
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
 
-/mob/living/carbon/human/species/monkey/punpun/Life()
+/mob/living/carbon/human/species/monkey/punpun/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE

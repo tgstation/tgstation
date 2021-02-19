@@ -27,7 +27,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
+/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(target && ranged_cooldown > world.time && iscarbon(target))
 		var/mob/living/carbon/C = target

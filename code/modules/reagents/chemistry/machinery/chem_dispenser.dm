@@ -17,6 +17,7 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
+	base_icon_state = "dispenser"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
@@ -94,7 +95,7 @@
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
 	if(is_operational)
 		begin_processing()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/chem_dispenser/Destroy()
 	QDEL_NULL(beaker)
@@ -138,12 +139,13 @@
 		flick(working_state,src)
 
 /obj/machinery/chem_dispenser/update_icon_state()
-	icon_state = "[(nopower_state && !powered()) ? nopower_state : initial(icon_state)]"
+	icon_state = "[(nopower_state && !powered()) ? nopower_state : base_icon_state]"
+	return ..()
 
 /obj/machinery/chem_dispenser/update_overlays()
 	. = ..()
 	if(has_panel_overlay && panel_open)
-		. += mutable_appearance(icon, "[initial(icon_state)]_panel-o")
+		. += mutable_appearance(icon, "[base_icon_state]_panel-o")
 
 	if(beaker)
 		beaker_overlay = display_beaker()
@@ -224,11 +226,17 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "pH" = temp.ph, "pHCol" = ConvertpHToCol(temp.ph))))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "pH" = temp.ph, "pHCol" = convert_ph_to_readable_color(temp.ph))))
 	data["chemicals"] = chemicals
 	data["recipes"] = saved_recipes
 
 	data["recordingRecipe"] = recording_recipe
+	data["recipeReagents"] = list()
+	if(beaker?.reagents.ui_reaction_id)
+		var/datum/chemical_reaction/reaction = get_chemical_reaction(beaker.reagents.ui_reaction_id)
+		for(var/_reagent in reaction.required_reagents)
+			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+			data["recipeReagents"] += ckey(reagent.name)
 	return data
 
 /obj/machinery/chem_dispenser/ui_act(action, params)
@@ -337,12 +345,15 @@
 				return
 			recording_recipe = null
 			. = TRUE
+		if("reaction_lookup")
+			if(beaker)
+				beaker.reagents.ui_interact(usr)
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_icon()
+		update_appearance()
 		return
 	if(default_deconstruction_crowbar(I))
 		return
@@ -405,34 +416,8 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	update_icon()
+	update_appearance()
 	return TRUE
-
-//Converts the pH into a tgui readable color
-/obj/machinery/chem_dispenser/proc/ConvertpHToCol(pH)
-	switch(pH)
-		if(-INFINITY to 1)
-			return "red"
-		if(1 to 2)
-			return "orange"
-		if(2 to 3)
-			return "average"
-		if(3 to 4)
-			return "yellow" 
-		if(4 to 5)
-			return "olive"
-		if(5 to 6)
-			return "good"
-		if(6 to 8)
-			return "green"
-		if(8 to 9.5)
-			return "teal"
-		if(9.5 to 11)
-			return "blue"
-		if(11 to 12.5)
-			return "violet"
-		if(12.5 to INFINITY)
-			return "purple"
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null
@@ -455,7 +440,7 @@
 	var/old = dir
 	. = ..()
 	if(dir != old)
-		update_icon()  // the beaker needs to be re-positioned if we rotate
+		update_appearance()  // the beaker needs to be re-positioned if we rotate
 
 /obj/machinery/chem_dispenser/drinks/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
@@ -479,6 +464,7 @@
 	desc = "Contains a large reservoir of soft drinks."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
+	base_icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
 	amount = 10
 	pixel_y = 6
@@ -551,6 +537,7 @@
 	desc = "Contains a large reservoir of the good stuff."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
+	base_icon_state = "booze_dispenser"
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
 		/datum/reagent/consumable/ethanol/beer,
@@ -685,6 +672,7 @@
 	desc = "Synthesizes a variety of reagents using proto-matter."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "chem_dispenser"
+	base_icon_state = "chem_dispenser"
 	has_panel_overlay = FALSE
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
 	working_state = null
