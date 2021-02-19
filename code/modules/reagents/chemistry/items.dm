@@ -197,8 +197,8 @@
 			user.visible_message("<span class='notice'>[user] lights up the [src].</span>")
 
 /obj/item/burner/update_icon_state()
+	. = ..()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-
 
 /obj/item/burner/proc/set_lit(new_lit)
 	if(lit == new_lit)
