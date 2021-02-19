@@ -78,6 +78,8 @@
 	material = /datum/material/plasma
 	penetrates_skin = NONE
 	ph = 4
+	burning_temperature = 4500//plasma is hot!!
+	burning_volume = 0.3//But burns fast
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/plasma/on_new(data)

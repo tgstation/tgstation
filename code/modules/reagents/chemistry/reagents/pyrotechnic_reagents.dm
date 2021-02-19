@@ -216,8 +216,14 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	self_consuming = TRUE
+	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/cryostylane/burn(datum/reagents/holder)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		burning_temperature = 0//king chilly
+		return
+	burning_temperature = null
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent(/datum/reagent/oxygen))
@@ -242,6 +248,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	self_consuming = TRUE
+	burning_temperature = null
+	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -252,6 +260,12 @@
 			var/mob/living/carbon/human/humi = M
 			humi.adjust_coretemperature(15 * REM * delta_time)
 	..()
+
+/datum/reagent/pyrosium/burn(datum/reagents/holder)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		burning_temperature = 3500
+		return
+	burning_temperature = null
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"

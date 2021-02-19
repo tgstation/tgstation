@@ -89,3 +89,38 @@
 		return
 	for(var/mob/M in viewers(5, location))
 		to_chat(M, notification)
+
+#define CONVERT_PH_TO_COLOR(pH, color) \
+	switch(pH) {\
+		if(14 to INFINITY)\
+			{ color = "#462c83" }\
+		if(13 to 14)\
+			{ color = "#63459b" }\
+		if(12 to 13)\
+			{ color = "#5a51a2" }\
+		if(11 to 12)\
+			{ color = "#3853a4" }\
+		if(10 to 11)\
+			{ color = "#3f93cf" }\
+		if(9 to 10)\
+			{ color = "#0bb9b7" }\
+		if(8 to 9)\
+			{ color = "#23b36e" }\
+		if(7 to 8)\
+			{ color = "#3aa651" }\
+		if(6 to 7)\
+			{ color = "#4cb849" }\
+		if(5 to 6)\
+			{ color = "#b5d335" }\
+		if(4 to 5)\
+			{ color = "#f7ec1e" }\
+		if(3 to 4)\
+			{ color = "#fbc314" }\
+		if(2 to 3)\
+			{ color = "#f26724" }\
+		if(1 to 2)\
+			{ color = "#ef1d26" }\
+		if(-INFINITY to 1)\
+			{ color = "#c6040c" }\
+		}
+			

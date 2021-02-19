@@ -643,3 +643,50 @@
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/silver(location)
 
+//////////////////////////////////// Water ////////////////////////////////////////////////
+
+/datum/chemical_reaction/ice
+	results = list(/datum/reagent/consumable/ice = 1.09)//density
+	required_reagents = list(/datum/reagent/water = 1)
+	is_cold_recipe = TRUE
+	required_temp = 274 // So we can be sure that basic ghetto rigged stuff can freeze
+	optimal_temp = 200
+	overheat_temp = 0
+	optimal_ph_min = 0
+	optimal_ph_max = 14
+	thermic_constant = 0
+	H_ion_release = 0
+	rate_up_lim = 50
+	purity_min = 0
+	mix_message = "The solution freezes up into ice!"
+	reaction_flags = REACTION_COMPETITIVE
+
+/datum/chemical_reaction/water
+	results = list(/datum/reagent/water = 0.92)//rough density excahnge
+	required_reagents = list(/datum/reagent/consumable/ice = 1)
+	required_temp = 275
+	optimal_temp = 350
+	overheat_temp = 99999
+	optimal_ph_min = 0
+	optimal_ph_max = 14
+	thermic_constant = 0
+	H_ion_release = 0
+	rate_up_lim = 50
+	purity_min = 0
+	mix_message = "The ice melts back into water!"
+
+////////////////////////////////////
+
+/datum/chemical_reaction/universal_indicator
+	results = list(/datum/reagent/universal_indicator = 3)//rough density excahnge
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/ethanol = 1, /datum/reagent/iodine = 1)
+	required_temp = 274
+	optimal_temp = 350
+	overheat_temp = 99999
+	optimal_ph_min = 0
+	optimal_ph_max = 14
+	thermic_constant = 0
+	H_ion_release = 0
+	rate_up_lim = 50
+	purity_min = 0
+	mix_message = "The mixture's colors swirl together."
