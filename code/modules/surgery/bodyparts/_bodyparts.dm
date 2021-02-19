@@ -739,6 +739,13 @@
 		should_draw_greyscale = FALSE
 		no_update = TRUE
 
+	if(HAS_TRAIT(src, TRAIT_PLASMABURNT) && is_organic_limb())
+		species_id = "plasmaman"
+		dmg_overlay_type = ""
+		should_draw_gender = FALSE
+		should_draw_greyscale = FALSE
+		no_update = TRUE
+
 	if(no_update)
 		return
 
