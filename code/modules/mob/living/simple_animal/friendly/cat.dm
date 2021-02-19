@@ -18,7 +18,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	minbodytemp = 200
 	maxbodytemp = 400
-	unsuitable_atmos_damage = 1
+	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
@@ -32,7 +32,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
-	var/emote_cooldown = 0
+	COOLDOWN_DECLARE(emote_cooldown)
 	///Can this cat catch special mice?
 	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -126,7 +126,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/runtime/Life()
+/mob/living/simple_animal/pet/cat/runtime/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -202,17 +202,17 @@
 	regenerate_icons()
 
 
-/mob/living/simple_animal/pet/cat/Life()
+/mob/living/simple_animal/pet/cat/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && !buckled && !client)
-		if(prob(1))
+		if(DT_PROB(0.5, delta_time))
 			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			set_resting(TRUE)
-		else if (prob(1))
+		else if(DT_PROB(0.5, delta_time))
 			manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			set_resting(TRUE)
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
-		else if (prob(1))
+		else if(DT_PROB(0.5, delta_time))
 			if (resting)
 				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
 				set_resting(FALSE)
@@ -224,10 +224,10 @@
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
-					if (emote_cooldown < (world.time - 600))
+					if(COOLDOWN_FINISHED(src, emote_cooldown))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
 						step(M, pick(GLOB.cardinals))
-						emote_cooldown = world.time
+						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 					break
 				if(!M.stat && Adjacent(M))
 					manual_emote("splats \the [M]!")
@@ -247,7 +247,7 @@
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
-			walk_to(src,0)
+			walk_to(src, 0)
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
@@ -305,18 +305,18 @@
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/Life()
+/mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 	if(health < maxHealth)
-		adjustBruteLoss(-8) //Fast life regen
+		adjustBruteLoss(-4 * delta_time) //Fast life regen
 	for(var/obj/item/food/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()
 
-/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
+/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/user, list/modifiers)
 	..()
-	if(L.combat_mode && L.reagents && !stat)
-		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
-		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+	if(user.combat_mode && user.reagents && !stat)
+		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
+		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)

@@ -89,11 +89,11 @@
 	else
 		. += "<span class='danger'>This casing doesn't support power cells for backup power.</span>"
 
-/obj/structure/light_construct/attack_hand(mob/user)
+/obj/structure/light_construct/attack_hand(mob/user, list/modifiers)
 	if(cell)
 		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
 		user.put_in_hands(cell)
-		cell.update_icon()
+		cell.update_appearance()
 		cell = null
 		add_fingerprint(user)
 
@@ -356,6 +356,7 @@
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -397,18 +398,21 @@
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
+	return ..()
 
 /obj/machinery/light/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(on && status == LIGHT_OK)
-		var/area/A = get_area(src)
-		if(emergency_mode || (A?.fire))
-			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
-		else if (nightshift_enabled)
-			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
-		else
-			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
+	if(!on || status != LIGHT_OK)
+		return
+
+	var/area/A = get_area(src)
+	if(emergency_mode || (A?.fire))
+		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		return
+	if(nightshift_enabled)
+		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		return
+	SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -449,7 +453,7 @@
 	else
 		use_power = IDLE_POWER_USE
 		set_light(0)
-	update_icon()
+	update_appearance()
 
 	active_power_usage = (brightness * 10)
 	if(on != on_gs)
@@ -691,7 +695,7 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+/obj/machinery/light/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -842,6 +846,15 @@
 	explosion(T, 0, 0, 2, 2)
 	sleep(1)
 	qdel(src)
+
+/obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
+	SIGNAL_HANDLER
+	. = COMPONENT_BLOCK_LIGHT_EATER
+	if(status == LIGHT_EMPTY)
+		return
+	var/obj/item/light/tube = drop_light_tube()
+	tube?.burn()
+	return
 
 // the light item
 // can be tube or bulb subtypes

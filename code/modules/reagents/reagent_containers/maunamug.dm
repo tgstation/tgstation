@@ -3,6 +3,7 @@
 	desc = "A drink served in a classy mug. Now with built-in heating!"
 	icon = 'icons/obj/mauna_mug.dmi'
 	icon_state = "maunamug"
+	base_icon_state = "maunamug"
 	spillable = TRUE
 	reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
@@ -35,7 +36,7 @@
 	var/max_temp = min(500 + (500 * (0.2 * cell.rating)), 1000) // 373 to 1000
 	reagents.adjust_thermal_energy(0.4 * cell.maxcharge * reagents.total_volume * delta_time, max_temp = max_temp) // 4 kelvin every tick on a basic cell. 160k on bluespace
 	reagents.handle_reactions()
-	update_icon()
+	update_appearance()
 	if(reagents.chem_temp >= max_temp)
 		change_power_status(FALSE)
 		audible_message("<span class='notice'>The Mauna Mug lets out a happy beep and turns off!</span>")
@@ -62,13 +63,13 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/glass/maunamug/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	open = !open
 	to_chat(user, "<span class='notice'>You screw the battery case on [src] [open ? "open" : "closed"] .</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/glass/maunamug/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -84,32 +85,32 @@
 		return
 	cell = I
 	user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
-	update_icon()
+	update_appearance()
 
-/obj/item/reagent_containers/glass/maunamug/attack_hand(mob/living/user)
+/obj/item/reagent_containers/glass/maunamug/attack_hand(mob/living/user, list/modifiers)
 	if(cell && open)
-		cell.update_icon()
+		cell.update_appearance()
 		user.put_in_hands(cell)
 		cell = null
 		to_chat(user, "<span class='notice'>You remove the power cell from [src].</span>")
 		on = FALSE
-		update_icon()
+		update_appearance()
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/glass/maunamug/update_icon()
-	..()
+/obj/item/reagent_containers/glass/maunamug/update_icon_state()
 	if(open)
-		if(cell)
-			icon_state = "maunamug_bat"
-		else
-			icon_state = "maunamug_no_bat"
-	else if(on)
-		icon_state = "maunamug_on"
-	else
-		icon_state = "maunamug"
-	if(reagents.total_volume && reagents.chem_temp >= 400)
-		var/intensity = (reagents.chem_temp - 400) * 1 / 600 //Get the opacity of the incandescent overlay. Ranging from 400 to 1000
-		var/mutable_appearance/mug_glow = mutable_appearance(icon, "maunamug_incand")
-		mug_glow.alpha = 255 * intensity
-		add_overlay(mug_glow)
+		icon_state = "[base_icon_state][cell ? null : "_no"]_bat"
+		return ..()
+	icon_state = "[base_icon_state][on ? "_on" : null]"
+	return ..()
+
+/obj/item/reagent_containers/glass/maunamug/update_overlays()
+	. = ..()
+	if(!reagents.total_volume || reagents.chem_temp < 400)
+		return
+
+	var/intensity = (reagents.chem_temp - 400) * 1 / 600 //Get the opacity of the incandescent overlay. Ranging from 400 to 1000
+	var/mutable_appearance/mug_glow = mutable_appearance(icon, "maunamug_incand")
+	mug_glow.alpha = 255 * intensity
+	. += mug_glow

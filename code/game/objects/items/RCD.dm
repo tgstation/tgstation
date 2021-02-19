@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon() //ensures that ammo counters (if present) get updated
+		update_appearance() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -145,7 +145,7 @@ RLD
 				to_chat(user, no_ammo_message)
 			return FALSE
 		matter -= amount
-		update_icon()
+		update_appearance()
 		return TRUE
 	else
 		if(silo_mats.on_hold())
@@ -674,7 +674,7 @@ RLD
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
@@ -825,6 +825,7 @@ RLD
 
 /obj/item/construction/rld/update_icon_state()
 	icon_state = "rld-[round(matter/matter_divisor)]"
+	return ..()
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -1009,18 +1010,20 @@ RLD
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/pill_press = 20,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/iv_drip/plumbing = 20
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type

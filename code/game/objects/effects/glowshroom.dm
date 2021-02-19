@@ -168,7 +168,7 @@
 			if(shroomCount >= placeCount)
 				continue
 
-			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
+			Decay(TRUE, GLOWCAP_ENDURANCE_SPREAD_COST) // Decay before spawning new mushrooms to reduce their endurance
 			if(QDELETED(src)) //Decay can end us
 				return
 			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)

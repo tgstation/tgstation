@@ -43,7 +43,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	toolbox_color = new_toolbox_color
-	update_icon()
+	update_appearance()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
@@ -64,11 +64,11 @@
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/bot_reset()
 	..()
@@ -388,7 +388,8 @@
 	if(!QDELETED(src))
 		go_idle()
 
-/mob/living/simple_animal/bot/floorbot/update_icon()
+/mob/living/simple_animal/bot/floorbot/update_icon_state()
+	. = ..()
 	icon_state = "[toolbox_color]floorbot[on]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
@@ -415,7 +416,7 @@
 /obj/machinery/bot_core/floorbot
 	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
-/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A))

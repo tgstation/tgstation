@@ -35,7 +35,7 @@
 	var/max_skillchip_slots = 5
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
-	..()
+	. = ..()
 
 	name = "brain"
 
@@ -74,7 +74,7 @@
 			// Run the try_ proc with force = TRUE.
 			skillchip.try_deactivate_skillchip(FALSE, TRUE)
 
-	..()
+	. = ..()
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
@@ -229,7 +229,7 @@
 		owner.mind.current = null
 	return ..()
 
-/obj/item/organ/brain/on_life()
+/obj/item/organ/brain/on_life(delta_time, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()

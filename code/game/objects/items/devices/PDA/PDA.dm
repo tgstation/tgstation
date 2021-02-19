@@ -116,7 +116,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item = new inserted_item(src)
 	else
 		inserted_item = new /obj/item/pen(src)
-	update_icon()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	update_appearance()
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
@@ -317,7 +318,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (pai)
 					if(pai.loc != src)
 						pai = null
-						update_icon()
+						update_appearance()
 					else
 						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=1'>pAI Device Configuration</a></li>"
 						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=2'>Eject pAI Device</a></li>"
@@ -616,7 +617,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				sort_by_job = !sort_by_job
 
 			if("MessageAll")
-				send_to_all(U)
+				if(cartridge?.spam_enabled)
+					send_to_all(U)
 
 			if("cart")
 				if(cartridge)
@@ -668,7 +670,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2 || mode == 21)//To clear message overlays.
-		update_icon()
+		update_appearance()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -699,7 +701,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = id
 	id = null
 	updateSelfDialog()
-	update_icon()
+	update_appearance()
 	playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
 
 	if(ishuman(loc))
@@ -815,7 +817,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
-	update_icon()
+	update_appearance()
 	add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
@@ -885,10 +887,19 @@ GLOBAL_LIST_EMPTY(PDAs)
 		set_light_on(FALSE)
 	else if(light_range)
 		set_light_on(TRUE)
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/// Special light eater handling
+/obj/item/pda/proc/on_light_eater(obj/item/pda/source, datum/light_eater)
+	SIGNAL_HANDLER
+	set_light_on(FALSE)
+	set_light_range(0) //We won't be turning on again.
+	update_icon()
+	visible_message("<span class='danger'>The light in [src] shorts out!</span>")
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/item/pda/proc/remove_pen(mob/user)
 
@@ -899,7 +910,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		user.put_in_hands(inserted_item)
 		to_chat(user, "<span class='notice'>You remove [inserted_item] from [src].</span>")
 		inserted_item = null
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
 		to_chat(user, "<span class='warning'>This PDA does not have a pen in it!</span>")
@@ -914,7 +925,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		cartridge.host_pda = null
 		cartridge = null
 		updateSelfDialog()
-		update_icon()
+		update_appearance()
 
 //trying to insert or remove an id
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
@@ -931,7 +942,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		insert_id(I, user)
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 	return TRUE
 
@@ -984,7 +995,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		cartridge.host_pda = src
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		updateSelfDialog()
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
 	else if(istype(C, /obj/item/card/id))
@@ -1014,7 +1025,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return
 		pai = C
 		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
-		update_icon()
+		update_appearance()
 		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
@@ -1024,7 +1035,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				return
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
-			update_icon()
+			update_appearance()
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C

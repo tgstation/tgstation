@@ -4,6 +4,7 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
+	base_icon_state = "door"
 	opacity = TRUE
 	density = TRUE
 	move_resist = MOVE_FORCE_VERY_STRONG
@@ -168,7 +169,7 @@
 		else
 			do_animate("deny")
 
-/obj/machinery/door/attack_hand(mob/user)
+/obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -221,7 +222,8 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
+	var/list/modifiers = params2list(params)
+	if((!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I
@@ -276,10 +278,8 @@
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon_state()
-	if(density)
-		icon_state = "door1"
-	else
-		icon_state = "door0"
+	icon_state = "[base_icon_state][density]"
+	return ..()
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -311,7 +311,7 @@
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
-	update_icon()
+	update_appearance()
 	set_opacity(0)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
@@ -340,7 +340,7 @@
 	density = TRUE
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	sleep(5)
-	update_icon()
+	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE

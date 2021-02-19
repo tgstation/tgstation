@@ -35,7 +35,6 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
-	hud_type = /datum/hud/constructs
 	var/list/construct_spells = list()
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
@@ -49,7 +48,6 @@
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_health_hud()
 	var/spellnum = 1
 	for(var/spell in construct_spells)
 		var/the_spell = new spell(null)
@@ -86,28 +84,28 @@
 			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
 	. += "*---------*</span>"
 
-/mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(isconstruct(M)) //is it a construct?
-		var/mob/living/simple_animal/hostile/construct/C = M
-		if(!C.can_repair_constructs || (C == src && !C.can_repair_self))
+/mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(isconstruct(user)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/doll = user
+		if(!doll.can_repair_constructs || (doll == src && !doll.can_repair_self))
 			return ..()
-		if(theme != C.theme)
+		if(theme != doll.theme)
 			return ..()
 		if(health < maxHealth)
 			adjustHealth(-5)
-			if(src != M)
-				Beam(M, icon_state="sendbeam", time = 4)
-				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
+			if(src != user)
+				Beam(user, icon_state="sendbeam", time = 4)
+				user.visible_message("<span class='danger'>[user] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
-				M.visible_message("<span class='danger'>[M] repairs some of [p_their()] own dents.</span>", \
-						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
+				user.visible_message("<span class='danger'>[user] repairs some of [p_their()] own dents.</span>", \
+						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health.</span>")
 		else
-			if(src != M)
-				to_chat(M, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>")
+			if(src != user)
+				to_chat(user, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>")
 			else
-				to_chat(M, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
-	else if(src != M)
+				to_chat(user, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
+	else if(src != user)
 		return ..()
 
 /mob/living/simple_animal/hostile/construct/narsie_act()
@@ -115,11 +113,6 @@
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0
-
-/mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(updating_health)
-		update_health_hud()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/juggernaut
@@ -177,7 +170,7 @@
 				var/new_angle_s = P.Angle + rand(120,240)
 				while(new_angle_s > 180) // Translate to regular projectile degrees
 					new_angle_s -= 360
-				P.setAngle(new_angle_s)
+				P.set_angle(new_angle_s)
 
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
@@ -493,21 +486,3 @@
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"
 		the_construct.seeking = TRUE
-
-
-/////////////////////////////ui stuff/////////////////////////////
-
-/mob/living/simple_animal/hostile/construct/update_health_hud()
-	if(hud_used)
-		if(health >= maxHealth)
-			hud_used.healths.icon_state = "[icon_state]_health0"
-		else if(health > maxHealth*0.8)
-			hud_used.healths.icon_state = "[icon_state]_health2"
-		else if(health > maxHealth*0.6)
-			hud_used.healths.icon_state = "[icon_state]_health3"
-		else if(health > maxHealth*0.4)
-			hud_used.healths.icon_state = "[icon_state]_health4"
-		else if(health > maxHealth*0.2)
-			hud_used.healths.icon_state = "[icon_state]_health5"
-		else
-			hud_used.healths.icon_state = "[icon_state]_health6"

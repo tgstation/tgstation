@@ -29,16 +29,19 @@
 			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
 		if (SP_UNREADY)
 			ready = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/item/supplypod_beacon/update_overlays()
 	. = ..()
-	if (launched)
+	if(launched)
 		. += "sp_green"
-	else if (ready)
+		return
+	if(ready)
 		. += "sp_yellow"
-	else if (linked)
+		return
+	if(linked)
 		. += "sp_orange"
+		return
 
 /obj/item/supplypod_beacon/proc/endLaunch()
 	launched = FALSE

@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			return
 		prizevend(user)
 		T.pay_tickets()
-		T.update_icon()
+		T.update_appearance()
 		O = T
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
@@ -1539,7 +1539,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
-/obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
+/obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user

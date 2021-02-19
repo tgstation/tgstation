@@ -28,57 +28,60 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/pet/dog/Life()
+/mob/living/simple_animal/pet/dog/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = FALSE
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = FALSE
-				for(var/obj/item/potential_snack in oview(src,3))
-					if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
-						movement_target = potential_snack
-						break
-			if(movement_target)
-				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
+	if(stat || resting || buckled)
+		return
 
-				if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					var/turf/T = get_turf(movement_target)
-					if(!T)
-						return
-					if (T.x < src.x)
-						setDir(WEST)
-					else if (T.x > src.x)
-						setDir(EAST)
-					else if (T.y < src.y)
-						setDir(SOUTH)
-					else if (T.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
+	turns_since_scan++
+	if(turns_since_scan > 5)
+		turns_since_scan = 0
+		if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc)))
+			movement_target = null
+			stop_automated_movement = FALSE
+		if(!movement_target || !(movement_target.loc in oview(src, 3)))
+			movement_target = null
+			stop_automated_movement = FALSE
+			for(var/obj/item/potential_snack in oview(src,3))
+				if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+					movement_target = potential_snack
+					break
 
-					if(!Adjacent(movement_target)) //can't reach food through windows.
-						return
+	if(movement_target)
+		stop_automated_movement = TRUE
+		step_to(src, movement_target, 1)
+		sleep(3)
+		step_to(src, movement_target, 1)
+		sleep(3)
+		step_to(src, movement_target, 1)
 
-					if(isturf(movement_target.loc))
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+		if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
+			var/turf/T = get_turf(movement_target)
+			if(!T)
+				return
+			if(T.x < src.x)
+				setDir(WEST)
+			else if (T.x > src.x)
+				setDir(EAST)
+			else if (T.y < src.y)
+				setDir(SOUTH)
+			else if (T.y > src.y)
+				setDir(NORTH)
+			else
+				setDir(SOUTH)
 
-		if(prob(1))
+			if(!Adjacent(movement_target)) //can't reach food through windows.
+				return
+
+			if(isturf(movement_target.loc))
+				movement_target.attack_animal(src)
+			else if(ishuman(movement_target.loc))
+				if(DT_PROB(10, delta_time))
+					manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+
+		if(DT_PROB(0.5, delta_time))
 			manual_emote(pick("dances around.","chases its tail!"))
 			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
@@ -448,7 +451,7 @@
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
-/mob/living/simple_animal/pet/dog/corgi/ian/Life()
+/mob/living/simple_animal/pet/dog/corgi/ian/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -519,7 +522,7 @@
 	unique_pet = TRUE
 	held_state = "narsian"
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
@@ -656,7 +659,6 @@
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
-	..()
-
+/mob/living/simple_animal/pet/dog/corgi/lisa/Life(delta_time = SSMOBS_DT, times_fired)
+	. = ..()
 	make_babies()
