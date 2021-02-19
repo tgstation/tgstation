@@ -232,7 +232,7 @@
 		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
 		if(istype(W))
 			W.gun = src
-			var/obj/projectile/beam/wormhole/WH = W.BB
+			var/obj/projectile/beam/wormhole/WH = W.loaded_projectile
 			if(istype(WH))
 				WH.gun = src
 

@@ -574,7 +574,8 @@
 	if (!reagent_type)
 		reagent_type = pick(drug_list)
 	reagent_instance = new reagent_type()
-	LAZYADD(H.reagents.addiction_list, reagent_instance)
+	for(var/addiction in reagent_instance.addiction_types)
+		H.mind.add_addiction_points(addiction, 1000) ///Max that shit out
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
@@ -606,7 +607,8 @@
 
 /datum/quirk/junkie/remove()
 	if(quirk_holder && reagent_instance)
-		quirk_holder.reagents.remove_addiction(reagent_instance) //chat feedback here. No need of lose_text.
+		for(var/addiction_type in subtypesof(/datum/addiction))
+			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //chat feedback here. No need of lose_text.
 
 /datum/quirk/junkie/proc/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out...</span>")
@@ -618,13 +620,17 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		var/deleted = QDELETED(reagent_instance)
-		if(deleted || !LAZYFIND(H.reagents.addiction_list, reagent_instance))
+		var/missing_addiction = FALSE
+		for(var/addiction_type in reagent_instance.addiction_types)
+			if(!LAZYACCESS(H.mind.active_addictions, addiction_type))
+				missing_addiction = TRUE
+		if(deleted || missing_addiction)
 			if(deleted)
 				reagent_instance = new reagent_type()
-			else
-				reagent_instance.addiction_stage = 0
-			LAZYADD(H.reagents.addiction_list, reagent_instance)
-			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you feel like you're falling back onto bad habits..</span>")
+			for(var/addiction in reagent_instance.addiction_types)
+				H.mind.add_addiction_points(addiction, 1000) ///Max that shit out
+
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"

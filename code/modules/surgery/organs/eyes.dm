@@ -48,6 +48,24 @@
 	if(M.has_dna() && ishuman(M))
 		M.dna.species.handle_body(M) //updates eye icon
 
+/obj/item/organ/eyes/proc/refresh()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/affected_human = owner
+		old_eye_color = affected_human.eye_color
+		if(eye_color)
+			affected_human.eye_color = eye_color
+			affected_human.regenerate_icons()
+		else
+			eye_color = affected_human.eye_color
+		if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_alpha)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+	owner.update_tint()
+	owner.update_sight()
+	if(owner.has_dna() && ishuman(owner))
+		var/mob/living/carbon/human/affected_human = owner
+		affected_human.dna.species.handle_body(affected_human) //updates eye icon
+
+
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(ishuman(M) && eye_color)

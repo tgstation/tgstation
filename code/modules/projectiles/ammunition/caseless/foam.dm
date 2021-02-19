@@ -14,17 +14,17 @@
 	if (modified)
 		icon_state = "foamdart_empty"
 		desc = "It's Donk or Don't! ... Although, this one doesn't look too safe."
-		if(BB)
-			BB.icon_state = "foamdart_empty"
+		if(loaded_projectile)
+			loaded_projectile.icon_state = "foamdart_empty"
 	else
 		icon_state = initial(icon_state)
 		desc = "It's Donk or Don't! Ages 8 and up."
-		if(BB)
-			BB.icon_state = initial(BB.icon_state)
+		if(loaded_projectile)
+			loaded_projectile.icon_state = initial(loaded_projectile.icon_state)
 
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = BB
+	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
 	if (A.tool_behaviour == TOOL_SCREWDRIVER && !modified)
 		modified = TRUE
 		FD.modified = TRUE
@@ -49,7 +49,7 @@
 		return ..()
 
 /obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = BB
+	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
 		FD.nodamage = initial(FD.nodamage)

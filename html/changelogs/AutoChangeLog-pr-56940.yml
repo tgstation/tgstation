@@ -1,5 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "fixes the lag compensator not discharging properly in reactions"
-  - refactor: "refactored equilibrium.dm to fit as anything requirements"
