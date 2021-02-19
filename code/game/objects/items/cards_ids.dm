@@ -207,13 +207,13 @@
 
 			// If the card has no info for historic forced wildcards, create the list.
 			if(!wildcard_slots[WILDCARD_NAME_FORCED])
-				wildcard_slots[WILDCARD_NAME_FORCED] = list(count = 0, usage = list())
+				wildcard_slots[WILDCARD_NAME_FORCED] = list(limit = 0, usage = list())
 
 			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
 			var/list/wildcard_usage = wildcard_info["usage"]
 			wildcard_usage |= wildcard
 			access |= wildcard
-			wildcard_info["count"] += 1
+			wildcard_info["limit"] = length(wildcard_usage)
 
 /**
  * Removes wildcards from the ID card.
@@ -251,9 +251,9 @@
 
 			wildcard_usage -= wildcard
 			access -= wildcard
-			wildcard_info["count"] = length(wildcard_usage)
+			wildcard_info["limit"] = length(wildcard_usage)
 
-			if(!wildcard_info["count"])
+			if(!wildcard_info["limit"])
 				wildcard_slots -= WILDCARD_NAME_FORCED
 
 /**
