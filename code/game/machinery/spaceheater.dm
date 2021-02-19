@@ -62,7 +62,8 @@
 
 /obj/machinery/space_heater/update_icon_state()
 	icon_state = "[base_icon_state]-[on ? mode : "off"]"
-	return ..()
+	. = ..()
+	return
 
 /obj/machinery/space_heater/update_overlays()
 	. = ..()
@@ -371,6 +372,7 @@
 	replace_beaker(user)
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
+	. = ..()
 	if(!on || !beaker || !cell)
 		icon_state = "sheater-off"
 		return
