@@ -227,6 +227,9 @@
 	for(var/wildcard in wildcard_list)
 		wildcard_removed = FALSE
 		for(var/flag_name in wildcard_slots)
+			if(flag_name == WILDCARD_NAME_FORCED)
+				continue
+
 			var/list/wildcard_info = wildcard_slots[flag_name]
 			var/wildcard_usage = wildcard_info["usage"]
 
