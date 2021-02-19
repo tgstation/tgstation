@@ -80,6 +80,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_icon()
+	. = ..()
 	cut_overlays()
 
 	if(panel_open)
