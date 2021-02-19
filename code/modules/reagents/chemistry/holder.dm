@@ -519,13 +519,18 @@
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+
+	var/datum/reagents/R
+	if(istype(target, /datum/reagents))
+		R = target
+	else if(target.reagents && src.total_volume>0 && src.get_reagent_amount(reagent))
+		R = target.reagents
+	else
 		return
 	if(amount < 0)
 		return
 
 	var/cached_amount = amount
-	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
 
