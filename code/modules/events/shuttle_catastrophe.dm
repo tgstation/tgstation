@@ -25,8 +25,7 @@
 
 	if(SSshuttle.shuttle_insurance)
 		message += "Luckily, your shuttle insurance has covered the costs of repair!"
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
+		if(SSeconomy.get_dep_account(ACCOUNT_CAR))
 			message += "You have been awarded a bonus from [command_name()] for smart spending."
 	else
 		message += "Your replacement shuttle will be the [new_shuttle.name] until further notice."
@@ -44,9 +43,8 @@
 
 /datum/round_event/shuttle_catastrophe/start()
 	if(SSshuttle.shuttle_insurance)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			D.adjust_money(8000)
+		var/datum/bank_account/station_balance = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		station_balance?.adjust_money(8000)
 		return
 	SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
 	SSshuttle.unload_preview()
