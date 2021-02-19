@@ -9,14 +9,13 @@
  * Arguments:
  * * caller: The movable atom that's trying to find the path
  * * end: What we're trying to path to. It doesn't matter if this is a turf or some other atom, we're gonna just path to the turf it's on anyway
- * * maxnodes: The maximum number of nodes the returned path can be (0 = infinite)
- * * maxnodedepth: The maximum number of nodes to search (default: 30, 0 = infinite)
+ * * max_distance: The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * * mintargetdistance: Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
  * * id: An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  */
-/proc/get_path_to(caller, end, maxnodes, maxnodedepth = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude)
+/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude)
 	if(!get_turf(end))
 		return
 
@@ -26,7 +25,7 @@
 		l = SSpathfinder.mobs.getfree(caller)
 
 	var/list/path
-	var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only, exclude)
+	var/datum/pathfind/pathfind_datum = new(caller, end, id, max_distance, mintargetdist, simulated_only, exclude)
 	path = pathfind_datum.start_search()
 	qdel(pathfind_datum)
 
@@ -110,10 +109,8 @@
 	var/obj/item/card/id/id
 	/// How far away we have to get to the end target before we can call it quits
 	var/mintargetdist = 0
-	/// I don't know what this does vs maxnodes, but they limit how far we can search before giving up on a path
-	var/maxnodedepth = 30
-	/// I don't know what this does vs maxnodedepth, but they limit how far we can search before giving up on a path
-	var/maxnodes = 30
+	/// I don't know what this does vs , but they limit how far we can search before giving up on a path
+	var/max_distance = 30
 	/// The proc we use to tell the distance between two turfs. Currently ignored in favor of get_dist/get_dist
 	///var/dist = /turf/proc/Distance
 	/// Do we only worry about turfs with simulated atmos, most notably things that aren't space?
@@ -123,15 +120,14 @@
 	/// A specific turf we're avoiding
 	var/turf/avoid
 
-/datum/pathfind/New(atom/movable/caller, atom/goal, id, maxnodes, maxnodedepth, mintargetdist, simulated_only, avoid)
+/datum/pathfind/New(atom/movable/caller, atom/goal, id, max_distance, mintargetdist, simulated_only, avoid)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new()
 	open_associative = new() //open list for node check
 	sources = new() //open list for node check
 	src.id = id
-	src.maxnodes = maxnodes
-	src.maxnodedepth = maxnodedepth
+	src.max_distance = max_distance
 	src.mintargetdist = mintargetdist
 	src.simulated_only = simulated_only
 	src.avoid = avoid
@@ -144,8 +140,8 @@
 		return FALSE
 	if(start.z != end.z || start == end ) //no pathfinding between z levels
 		return FALSE
-	if(maxnodes) //if start turf is farther than maxnodes from end turf, no need to do anything
-		maxnodedepth = maxnodes
+	if(max_distance && (max_distance < get_dist(start, end))) //if start turf is farther than max_distance from end turf, no need to do anything
+		return FALSE
 
 	//initialization
 	var/datum/jps_node/current_processed_node = new (start, null, 0, end)
@@ -158,7 +154,7 @@
 			return
 		current_processed_node = open.pop() //get the lower f_value turf in the open list
 
-		if((maxnodedepth)&&(current_processed_node.number_tiles > maxnodedepth))//if too many steps, don't process that path
+		if(max_distance && (current_processed_node.number_tiles > max_distance))//if too many steps, don't process that path
 			continue
 
 		var/turf/current_turf = current_processed_node.tile
@@ -229,7 +225,7 @@
 		else
 			sources[current_turf] = original_turf
 
-		if(unwind_node.number_tiles + steps_taken > maxnodedepth)
+		if(unwind_node.number_tiles + steps_taken > max_distance)
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
@@ -289,7 +285,7 @@
 		else
 			sources[current_turf] = original_turf
 
-		if(unwind_node.number_tiles + steps_taken > maxnodedepth)
+		if(unwind_node.number_tiles + steps_taken > max_distance)
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
