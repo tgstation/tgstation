@@ -21,7 +21,7 @@
 	. += image(charging.icon, charging.icon_state)
 	. += "ccharger-on"
 	if(!(machine_stat & (BROKEN|NOPOWER)))
-		var/newlevel = 	round(charging.percent() * 4 / 100)
+		var/newlevel = round(charging.percent() * 4 / 100)
 		. += "ccharger-o[newlevel]"
 
 /obj/machinery/cell_charger/examine(mob/user)
@@ -79,7 +79,7 @@
 	charging = null
 	update_icon()
 
-/obj/machinery/cell_charger/attack_hand(mob/user)
+/obj/machinery/cell_charger/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

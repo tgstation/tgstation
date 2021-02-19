@@ -87,7 +87,7 @@
 	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
 	else if(replace_spent)
 		for(var/obj/item/ammo_casing/AC in stored_ammo)
-			if(!AC.BB)//found a spent ammo
+			if(!AC.loaded_projectile)//found a spent ammo
 				stored_ammo -= AC
 				AC.forceMove(get_turf(src.loc))
 
@@ -131,7 +131,7 @@
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		A.forceMove(drop_location())
-		if(!user.is_holding(src) || !user.put_in_hands(A))	//incase they're using TK
+		if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 			A.bounce_away(FALSE, NONE)
 		playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
@@ -157,7 +157,7 @@
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
 	var/boolets = 0
 	for(var/obj/item/ammo_casing/bullet in stored_ammo)
-		if(bullet && (bullet.BB || countempties))
+		if(bullet && (bullet.loaded_projectile || countempties))
 			boolets++
 	return boolets
 

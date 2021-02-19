@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
-	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
+	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	worn_icon_state = null
 	shaded_charge = TRUE
 	can_flashlight = TRUE
@@ -232,7 +232,7 @@
 		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
 		if(istype(W))
 			W.gun = src
-			var/obj/projectile/beam/wormhole/WH = W.BB
+			var/obj/projectile/beam/wormhole/WH = W.loaded_projectile
 			if(istype(WH))
 				WH.gun = src
 

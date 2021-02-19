@@ -15,6 +15,7 @@
 	reagent_state = SOLID
 	var/helbent = FALSE
 	var/reaping = FALSE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
@@ -81,9 +82,10 @@
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
 	description = "A bruise reliever. Does minor liver damage."
-	color = "#ECEC8D" // rgb: 236	236	141
+	color = "#ECEC8D" // rgb: 236 236 141
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3*REM)
@@ -97,6 +99,7 @@
 	reagent_state = SOLID
 	color = "#FFFF6B"
 	overdose_threshold = 20
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2.25*REM, FALSE)
@@ -141,6 +144,7 @@
 	color = "#6171FF"
 	var/resetting_probability = 0
 	var/spammer = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-3 * REM)
@@ -163,6 +167,7 @@
 	color = "#8C93FF"
 	var/resetting_probability = 0
 	var/message_cd = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-2*REM)
@@ -177,6 +182,7 @@
 	color = "#F7FFA5"
 	overdose_threshold = 25
 	reagent_weight = 0.6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 50)
@@ -212,7 +218,7 @@
 
 /******OXY******/
 /*Suffix: -mol*/
-#define	CONVERMOL_RATIO 5		//# Oxygen damage to result in 1 tox
+#define CONVERMOL_RATIO 5 //# Oxygen damage to result in 1 tox
 
 /datum/reagent/medicine/c2/convermol
 	name = "Convermol"
@@ -220,6 +226,7 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
@@ -237,13 +244,14 @@
 	..()
 	return TRUE
 
-#undef	CONVERMOL_RATIO
+#undef CONVERMOL_RATIO
 
 /datum/reagent/medicine/c2/tirimol
 	name = "Tirimol"
 	description = "An oxygen deprivation medication that causes fatigue. Prolonged exposure causes the patient to fall asleep once the medicine metabolizes."
 	color = "#FF6464"
 	var/drowsycd = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-3)
@@ -268,6 +276,7 @@
 	name = "Seiver"
 	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/M)
 	. = ..()
@@ -305,6 +314,7 @@
 /datum/reagent/medicine/c2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/M)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
@@ -330,7 +340,7 @@
 	. = ..()
 	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
 
-#define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
+#define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
 /datum/reagent/medicine/c2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
@@ -340,13 +350,14 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	overdose_threshold = 6
 	var/conversion_amount
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
 	if(!(methods & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)   //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return
@@ -381,6 +392,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	var/datum/brain_trauma/mild/muscle_weakness/U
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
@@ -416,6 +428,7 @@
 	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). 100u or more can restore corpses husked by burns. Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -456,6 +469,7 @@
 	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. Mixing it with epinephrine or atropine will cause an explosion."
 	color = "#F5F5F5"
 	overdose_threshold = 50
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()

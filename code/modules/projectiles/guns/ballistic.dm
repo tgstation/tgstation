@@ -91,7 +91,7 @@
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 
 	///Gun internal magazine modification and misfiring
-	
+
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
 	///our initial ammo type. Should match initial caliber, but a bit of redundency doesn't hurt.
@@ -106,7 +106,7 @@
 	var/alternative_ammo_misfires = FALSE
 	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
 	var/can_misfire = FALSE
-	///How likely is our gun to misfire? 
+	///How likely is our gun to misfire?
 	var/misfire_probability = 0
 	///How much does shooting the gun increment the misfire probability?
 	var/misfire_percentage_increment = 0
@@ -153,6 +153,10 @@
 		. += MA
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
+
+	if(gun_flags & TOY_FIREARM_OVERLAY)
+		. += "[icon_state]_toy"
+
 	if (magazine && !internal_magazine)
 		if (special_mags)
 			. += "[icon_state]_mag_[initial(magazine.icon_state)]"
@@ -176,7 +180,6 @@
 					capacity_number = 20
 			if (capacity_number)
 				. += "[icon_state]_mag_[capacity_number]"
-
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -208,7 +211,7 @@
 	if (bolt_type == BOLT_TYPE_NO_BOLT) //If there's no bolt, nothing to rack
 		return
 	if (bolt_type == BOLT_TYPE_OPEN)
-		if(!bolt_locked)	//If it's an open bolt, racking again would do nothing
+		if(!bolt_locked) //If it's an open bolt, racking again would do nothing
 			if (user)
 				to_chat(user, "<span class='notice'>\The [src]'s [bolt_wording] is already cocked!</span>")
 			return
@@ -293,7 +296,7 @@
 		return
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
-			if (chambered && !chambered.BB)
+			if (chambered && !chambered.loaded_projectile)
 				chambered.forceMove(drop_location())
 				chambered = null
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
@@ -323,16 +326,16 @@
 	if (can_be_sawn_off)
 		if (sawoff(user, A))
 			return
-	
+
 	if(can_misfire && istype(A, /obj/item/stack/sheet/cloth))
 		if(guncleaning(user, A))
 			return
-	
+
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 
-	if(magazine && chambered.BB && can_misfire && misfire_probability > 0)
+	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
 		if(prob(misfire_probability))
 			if(blow_up(user))
 				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
@@ -344,7 +347,7 @@
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
-	
+
 	. = ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
@@ -398,7 +401,7 @@
 	postfire_empty_checks(.)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/attack_hand(mob/user)
+/obj/item/gun/ballistic/attack_hand(mob/user, list/modifiers)
 	if(!internal_magazine && loc == user && user.is_holding(src) && magazine)
 		eject_magazine(user)
 		return
@@ -487,7 +490,7 @@
 #define BRAINS_BLOWN_THROW_SPEED 1
 /obj/item/gun/ballistic/suicide_act(mob/user)
 	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-	if (B && chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
+	if (B && chambered && chambered.loaded_projectile && can_trigger_gun(user) && !chambered.loaded_projectile.nodamage)
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
@@ -543,8 +546,8 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		w_class = WEIGHT_CLASS_NORMAL
 		inhand_icon_state = "gun"
 		worn_icon_state = "gun"
-		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
-		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+		slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		recoil = SAWN_OFF_RECOIL
 		sawn_off = TRUE
 		update_icon()
@@ -554,10 +557,10 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(misfire_probability == 0)
 		to_chat(user, "<span class='notice'>\The [src] seems to be already clean of fouling.</span>")
 		return
-	
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
-	
+
 	if(do_after(user, 100, target = src))
 		var/original_misfire_value = initial(misfire_probability)
 		if(misfire_probability > original_misfire_value)
@@ -569,15 +572,15 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!user.is_holding(src))
 		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
 		return TRUE
-	
+
 	if(!can_modify_ammo)
 		return
-	
+
 	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())	
+		if(get_ammo())
 			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
 			return
-		
+
 		else if(!bolt_locked)
 			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
 			return
@@ -586,7 +589,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-	
+
 	if(blow_up(user))
 		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
 		return
@@ -609,7 +612,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
 	. = FALSE
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.BB)
+		if(AC.loaded_projectile)
 			process_fire(user, user, FALSE)
 			. = TRUE
 

@@ -45,7 +45,7 @@
 	if(manifest)
 		. += "manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user)
+/obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -113,7 +113,7 @@
 	for(var/i in 1 to rand(7,15))
 		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
 		if(prob(12))
-			new	/obj/item/storage/bag/trash/filled(src)
+			new /obj/item/storage/bag/trash/filled(src)
 	new /obj/effect/spawner/scatter/grime(loc)
 
 /obj/structure/closet/crate/internals

@@ -91,7 +91,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
 	if(can_jam)
-		if(chambered.BB)
+		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
 				jammed = TRUE
 			jamming_chance  += jamming_increment
@@ -110,7 +110,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
-	if(chambered?.BB)
+	if(chambered?.loaded_projectile)
 		process_fire(user, user, FALSE)
 		. = TRUE
 
@@ -123,6 +123,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
+	can_jam = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	name = "Mosin Nagant"

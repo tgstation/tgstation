@@ -113,7 +113,7 @@
 		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can block bullets with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
-		P.setAngle(rand(0, 360))//SHING
+		P.set_angle(rand(0, 360))//SHING
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
@@ -212,7 +212,7 @@
 		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
 		return
 	var/list/modifiers = params2list(params)
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(!wielded)
 			return ..()
 		if(!ishuman(target))

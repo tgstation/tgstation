@@ -94,7 +94,7 @@
 
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
+/obj/item/assembly/mousetrap/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(armed)
 		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = BODY_ZONE_PRECISE_L_HAND
@@ -131,7 +131,7 @@
 			finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
 			triggered(finder, (finder.active_hand_index % 2 == 0) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
-			return TRUE	//end the search!
+			return TRUE //end the search!
 		else
 			visible_message("<span class='warning'>[src] snaps shut!</span>")
 			triggered(loc)

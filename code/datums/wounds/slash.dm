@@ -149,7 +149,7 @@
 		suture(I, user)
 
 /datum/wound/slash/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.can_inject(user, TRUE))
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
@@ -201,9 +201,9 @@
 	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
 	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
-	var/damage = lasgun.chambered.BB.damage
-	lasgun.chambered.BB.wound_bonus -= 30
-	lasgun.chambered.BB.damage *= self_penalty_mult
+	var/damage = lasgun.chambered.loaded_projectile.damage
+	lasgun.chambered.loaded_projectile.wound_bonus -= 30
+	lasgun.chambered.loaded_projectile.damage *= self_penalty_mult
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")

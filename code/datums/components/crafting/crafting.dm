@@ -50,7 +50,7 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
-/*	This is what procs do:
+/* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
 	get_surroundings - takes a list of things and makes a list of key-types to values-amounts of said type in the list
 	check_contents - takes a recipe and a key-type list and checks if said recipe can be done with available stuff
@@ -138,36 +138,48 @@
 						.["other"][A.type] += A.volume
 			.["other"][I.type] += 1
 
-/datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
-	if(!R.tools.len)
+
+/// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
+/datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
-	var/list/possible_tools = list()
+	var/list/available_tools = list()
 	var/list/present_qualities = list()
-	present_qualities |= contents["tool_behaviour"]
-	for(var/obj/item/I in a.contents)
-		if(istype(I, /obj/item/storage))
-			for(var/obj/item/SI in I.contents)
-				possible_tools += SI.type
-				if(SI.tool_behaviour)
-					present_qualities.Add(SI.tool_behaviour)
 
-		possible_tools += I.type
+	for(var/obj/item/contained_item in source.contents)
+		if(contained_item.GetComponent(/datum/component/storage))
+			for(var/obj/item/subcontained_item in contained_item.contents)
+				available_tools[subcontained_item.type] = TRUE
+				if(subcontained_item.tool_behaviour)
+					present_qualities[subcontained_item.tool_behaviour] = TRUE
+		available_tools[contained_item.type] = TRUE
+		if(contained_item.tool_behaviour)
+			present_qualities[contained_item.tool_behaviour] = TRUE
 
-		if(I.tool_behaviour)
-			present_qualities.Add(I.tool_behaviour)
+	for(var/quality in surroundings["tool_behaviour"])
+		present_qualities[quality] = TRUE
 
-	possible_tools |= contents["other"]
+	for(var/path in surroundings["other"])
+		available_tools[path] = TRUE
 
-	main_loop:
-		for(var/A in R.tools)
-			if(A in present_qualities)
+	for(var/required_quality in recipe.tool_behaviors)
+		if(present_qualities[required_quality])
+			continue
+		return FALSE
+	
+	for(var/required_path in recipe.tool_paths)
+		var/found_this_tool = FALSE
+		for(var/tool_path in available_tools)
+			if(!ispath(required_path, tool_path))
 				continue
-			else
-				for(var/I in possible_tools)
-					if(ispath(I, A))
-						continue main_loop
-			return FALSE
+			found_this_tool = TRUE
+			break
+		if(found_this_tool)
+			continue
+		return FALSE
+	
 	return TRUE
+
 
 /datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(a,R.blacklist)
@@ -430,7 +442,6 @@
 	data["name"] = R.name
 	data["ref"] = "[REF(R)]"
 	var/req_text = ""
-	var/tool_text = ""
 	var/catalyst_text = ""
 
 	for(var/a in R.reqs)
@@ -449,14 +460,12 @@
 	catalyst_text = replacetext(catalyst_text,",","",-1)
 	data["catalyst_text"] = catalyst_text
 
-	for(var/a in R.tools)
-		if(ispath(a, /obj/item))
-			var/obj/item/b = a
-			tool_text += " [initial(b.name)],"
-		else
-			tool_text += " [a],"
-	tool_text = replacetext(tool_text,",","",-1)
-	data["tool_text"] = tool_text
+	var/list/tool_list = list()
+	for(var/required_quality in R.tool_behaviors)
+		tool_list += required_quality
+	for(var/obj/item/required_path as anything in R.tool_paths)
+		tool_list += initial(required_path.name)
+	data["tool_text"] = tool_list.Join(", ")
 
 	return data
 
