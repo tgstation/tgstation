@@ -120,11 +120,9 @@
 	//Reagents check should be handled in the calculate_yield() from multiplier
 
 	//If the product/reactants are too impure
-	for(var/r in holder.reagent_list)
-		var/datum/reagent/reagent = r
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
-		for(var/c in reaction.required_catalysts)
-			var/datum/reagent/catalyst = c
+		for(var/datum/reagent/catalyst as anything in reaction.required_catalysts)
 			if(catalyst == reagent.type)
 				total_matching_catalysts++
 		if(istype(reagent, /datum/reagent/catalyst_agent))
@@ -198,7 +196,7 @@
 			time_deficit = 0
 		else
 			delta_time += 0.25
-			time_deficit = 0.25
+			time_deficit -= 0.25
 	return delta_time
 
 /*

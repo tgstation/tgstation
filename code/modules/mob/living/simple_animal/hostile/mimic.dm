@@ -252,9 +252,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			..()
 	else if(Pewgun)
 		if(Pewgun.chambered)
-			if(Pewgun.chambered.BB)
-				qdel(Pewgun.chambered.BB)
-				Pewgun.chambered.BB = null //because qdel takes too long, ensures icon update
+			if(Pewgun.chambered.loaded_projectile)
+				qdel(Pewgun.chambered.loaded_projectile)
+				Pewgun.chambered.loaded_projectile = null //because qdel takes too long, ensures icon update
 				Pewgun.chambered.update_icon()
 				..()
 			else
@@ -304,9 +304,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(M.combat_mode)
+	if(user.combat_mode)
 		return
 	toggle_open()
 

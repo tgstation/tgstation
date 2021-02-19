@@ -174,7 +174,7 @@
 	else
 		. += "There are no paper cups left."
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
