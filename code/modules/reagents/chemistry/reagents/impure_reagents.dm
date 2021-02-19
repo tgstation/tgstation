@@ -11,12 +11,12 @@
 	ph = 3
 	overdose_threshold = 0 //So that they're shown as a problem (?)
 
-/datum/reagent/impurity/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impurity/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)//Though, lets be safe
-		C.adjustToxLoss(1, FALSE)//Incase of no liver!
+		C.adjustToxLoss(1 * REM * delta_time, FALSE)//Incase of no liver!
 		return ..()
-	C.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.5*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.5 * REM * delta_time)
 	return ..()
 
 /datum/reagent/impurity/toxic
@@ -24,8 +24,8 @@
 	description = "Toxic chemical isomers made from impure reactions. Causes toxin damage"
 	ph = 2
 
-/datum/reagent/impurity/toxic/on_mob_life(mob/living/carbon/C)
-	C.adjustToxLoss(1, FALSE)
+/datum/reagent/impurity/toxic/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+	C.adjustToxLoss(1 * REM * delta_time, FALSE)
 	return ..()
 
 //technically not a impure chem, but it's here because it can only be made with a failed impure reaction

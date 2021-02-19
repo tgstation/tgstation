@@ -25,7 +25,7 @@
 	if(P && !bin_pen)
 		P.forceMove(src)
 		bin_pen = P
-		update_icon()
+		update_appearance()
 
 /obj/item/paper_bin/Destroy()
 	if(papers)
@@ -37,7 +37,7 @@
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(total_paper)
 		total_paper = 0
-		update_icon()
+		update_appearance()
 	..()
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
@@ -72,10 +72,10 @@
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
-		update_icon()
+		update_appearance()
 	else if(total_paper >= 1)
 		total_paper--
-		update_icon()
+		update_appearance()
 		// If there's any custom paper on the stack, use that instead of creating a new paper.
 		var/obj/item/paper/P
 		if(papers.len > 0)
@@ -105,14 +105,14 @@
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
 		total_paper++
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		bin_pen = P
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -129,6 +129,7 @@
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
+	return ..()
 
 /obj/item/paper_bin/update_overlays()
 	. = ..()
