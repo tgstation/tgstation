@@ -46,7 +46,6 @@
 
 //Main functions
 /datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
-	. = ..()
 	//make hologram at return point
 	eigenstate = new (living_mob.loc)
 	eigenstate.appearance = creator ? creator.appearance : living_mob.appearance //Blood lets you set your eigenstate icon
@@ -61,10 +60,13 @@
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
 
-/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
 	. = ..()
+
+/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
+
+	. = ..()
 
 /datum/reagent/eigenstate/on_mob_delete(mob/living/living_mob) //returns back to original location
 	do_sparks(5,FALSE,living_mob)
@@ -73,7 +75,7 @@
 		do_teleport(living_mob, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 		do_sparks(5,FALSE,living_mob)
 	qdel(eigenstate)
-	..()
+	. = ..()
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
 	to_chat(living_mob, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
@@ -84,11 +86,11 @@
 		carbon_mob.apply_status_effect(STATUS_EFFECT_EIGEN)
 	. = ..()
 
-/datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly, probably one of my favourite effects.
+/datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly
 	do_sparks(5,FALSE,living_mob)
 	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,living_mob)
-	..()
+	. = ..()
 
 //FOR ADDICTION EFFECTS, SEE datum/status_effect/eigenstasium
 

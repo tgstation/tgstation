@@ -1149,6 +1149,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return TRUE
 	if(chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
 		chem.overdosed = TRUE
+		chem.overdose_start(H)
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value

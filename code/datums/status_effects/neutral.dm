@@ -348,11 +348,13 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	///So we know what cycle we're in during the status
-	var/current_cycle = 0 //Consider it your stability
+	var/current_cycle = -250 //Consider it your stability
 	///The addiction looper for addiction stage 3
-	var/phase_3_cycle = -20 //start off delayed
+	var/phase_3_cycle = -0 //start off delayed
 	///Your clone from another reality
 	var/mob/living/carbon/alt_clone = null
+	///If we display the stabilised message or not
+	var/stable_message = FALSE
 
 ///Convert this effect to process slowly instead
 /datum/status_effect/eigenstasium/on_creation(mob/living/new_owner, ...)
@@ -375,15 +377,15 @@
 	//If we have a reagent that blocks the effects
 	var/block_effects = FALSE
 	if(owner.has_reagent(/datum/reagent/bluespace))
-		current_cycle = max(-25, (current_cycle - 0.5)) //cap to -25
+		current_cycle = max(-250, (current_cycle - 2)) //cap to -250
 		block_effects = TRUE
 	if(owner.has_reagent(/datum/reagent/stabilizing_agent))
-		current_cycle = max(-25, (current_cycle - 0.35))
+		current_cycle = max(-250, (current_cycle - 1))
 		block_effects = TRUE
 	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
 	if(eigen)
 		if(!eigen.overdosed)
-			current_cycle = max(-25, (current_cycle - 0.75))
+			current_cycle = max(-250, (current_cycle - 3))
 			block_effects = TRUE
 		else
 			block_effects = FALSE
@@ -395,22 +397,26 @@
 		alt_clone = null
 
 	if(block_effects)
+		if(!stable_message)
+			owner.visible_message("You feel stable... For now.")
+			stable_message = TRUE
 		return
+	stable_message = FALSE
 
 	//These run on specific cycles
 	switch(current_cycle)
 		if(0)
-			to_chat(owner, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
+			to_chat(owner, "<span class='userdanger'>You feel like you're being pulled across to somewhere else. You feel empty inside.</span>")
 
 		//phase 1
-		if(1 to 10)
-			owner.Jitter(10)
-			owner.adjust_nutrition(-owner.nutrition/15)
+		if(1 to 50)
+			owner.Jitter(2)
+			owner.adjust_nutrition(-1)
 
 		//phase 2
-		if(10 to 30)
-			if(current_cycle == 11)
-				to_chat(owner, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
+		if(50 to 80)
+			if(current_cycle == 51)
+				to_chat(owner, "<span class='userdanger'>You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!</span>")
 				owner.Jitter(200)
 				owner.Stun(80)
 			var/items = owner.get_contents()
@@ -419,11 +425,11 @@
 			var/obj/item/item = pick(items)
 			owner.dropItemToGround(item, TRUE)
 			do_sparks(5,FALSE,item)
-			do_teleport(item, get_turf(item), 5, no_effects=TRUE);
+			do_teleport(item, get_turf(item), 3, no_effects=TRUE);
 			do_sparks(5,FALSE,item)
 
 		//phase 3
-		if(30 to 45)
+		if(80 to 125)
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
@@ -475,7 +481,7 @@
 			do_sparks(5, FALSE, owner)
 
 		//phase 4
-		if(45 to INFINITY)
+		if(125 to INFINITY)
 			//clean up and remove status
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "Eigenstasium wild rides ridden")

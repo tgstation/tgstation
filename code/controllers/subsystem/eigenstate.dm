@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(eigenstates)
 /datum/controller/subsystem/eigenstates/proc/remove_eigen_entry(entry)
 	var/id = eigen_id[entry]
 	eigen_targets[id] -= entry
-	eigen_id -= eigen_id[entry]
+	eigen_id -= entry
 	UnregisterSignal(entry, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(entry, COMSIG_CLOSET_INSERT)
 	UnregisterSignal(entry, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
