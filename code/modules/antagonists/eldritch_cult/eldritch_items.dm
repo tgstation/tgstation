@@ -289,9 +289,9 @@
 		if(DT_PROB(25,delta_time))
 			human_in_range.Dizzy(5)
 
-/obj/item/melee/rune_knife
-	name = "Carving Knife"
-	desc = "Cold Steel, pure, perfect, this knife can carve the floor in many ways, but only few can evoke the dangers that lurk beneath reality."
+/obj/item/melee/rune_carver
+	name = "\improper Painter's Carver"
+	desc = "A sharpened coldiron painting knife. Serrated tip, wrought perfect and precise. Eager to split the layers, and let pour out ephermiral hues."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "rune_carver"
 	flags_1 = CONDUCT_1
@@ -315,35 +315,61 @@
 	///Linked action
 	var/datum/action/innate/rune_shatter/linked_action
 
-/obj/item/melee/rune_knife/examine(mob/user)
+/obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
-	. += "This item can carve 'Alert carving' - nearly invisible rune that when stepped on gives you a prompt about where someone stood on it and who it was, doesn't get destroyed by being stepped on."
-	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
-	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
+	
+	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+		. += "This item can carve 'Alert carving' - nearly invisible rune that when stepped on gives you a prompt about where someone stood on it and who it was, doesn't get destroyed by being stepped on."
+		. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
+		. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_knife/Initialize()
+/obj/item/melee/rune_carver/Initialize()
 	. = ..()
 	linked_action = new(src)
 
-/obj/item/melee/rune_knife/Destroy()
+/obj/item/melee/rune_carver/Destroy()
 	. = ..()
 	QDEL_NULL(linked_action)
 
-/obj/item/melee/rune_knife/pickup(mob/user)
+/obj/item/melee/rune_carver/pickup(mob/user)
 	. = ..()
-	linked_action.Grant(user, src)
+	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+		linked_action.Grant(user, src)
 
-/obj/item/melee/rune_knife/dropped(mob/user, silent)
+/obj/item/melee/rune_carver/dropped(mob/user, silent)
 	. = ..()
 	linked_action.Remove(user, src)
 
-/obj/item/melee/rune_knife/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/rune_carver/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!is_type_in_typecache(target,blacklisted_turfs) && !drawing && proximity_flag)
+	if(isturf(target) && !is_type_in_typecache(target,blacklisted_turfs) && !drawing && proximity_flag)
 		carve_rune(target,user,proximity_flag,click_parameters)
 
 ///Action of carving runes, gives you the ability to click on floor and choose a rune of your need.
-/obj/item/melee/rune_knife/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/rune_carver/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!isturf(target))
+		to_chat(user,"<span class='warning'>The knife doesn't seem capable of 'piercing' anything but the floor...</span>")
+	
+	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)) && isliving(user))
+		var/mob/living/moron = user
+		to_chat(moron,"<span class='warning'>You lower the knife towards the floor...</span>")
+		if(!do_after(moron,5 SECONDS,target = target))
+			to_chat(moron,"<span class='warning'>You were so close, just need more carving...</span>")
+			return
+		
+		if(!HAS_TRAIT(moron, TRAIT_NAIVE))
+			to_chat(moron,"<span class='reallybig hypnophrase'>THE COLORS! THE COLORS! THE COLORS!</span>")
+			SEND_SIGNAL(moron, COMSIG_ADD_MOOD_EVENT, "saw_empherimal_hues_bad", /datum/mood_event/saw_empherimal_hues_bad)
+			playsound(moron, 'sound/magic/mandswap.ogg', 50, TRUE)
+			moron.Paralyze(40)
+			moron.emote("scream")
+			return
+		else
+			to_chat(moron, "<span class='notice'>Ooooh, what wonderful colors and hues! But I can't get this painting knife to work...</span>")
+			SEND_SIGNAL(moron, COMSIG_ADD_MOOD_EVENT, "saw_empherimal_hues_good", /datum/mood_event/saw_empherimal_hues_good)
+			playsound(moron, 'sound/items/airhorn2.ogg', 50, TRUE)
+			return
+	
 	var/obj/structure/trap/eldritch/elder = locate() in range(1,target)
 	if(elder)
 		to_chat(user,"<span class='notice'>You can't draw runes that close to each other!</span>")
@@ -389,7 +415,7 @@
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	///Reference to the rune knife it is inside of
-	var/obj/item/melee/rune_knife/sword
+	var/obj/item/melee/rune_carver/sword
 
 /datum/action/innate/rune_shatter/Grant(mob/user, obj/object)
 	sword = object
@@ -412,7 +438,7 @@
 	. = ..()
 	to_chat(user,"<span class='notice'>You drink the potion and with the viscous liquid, the glass dematerializes.</span>")
 	effect(user)
-	qdel(src)
+	QDEL_NULL(src)
 
 ///The effect of the potion if it has any special one, in general try not to override this and utilize the status_effect var to make custom effects.
 /obj/item/eldritch_potion/proc/effect(mob/user)

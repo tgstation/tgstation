@@ -236,3 +236,8 @@
 /datum/mood_event/kiss/add_effects(mob/beau)
 	if(beau)
 		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"
+
+/datum/mood_event/saw_empherimal_hues_good
+	description = "<span class='nicegreen'>I feel inspired to paint the pretty things I saw!</span>\n"
+	mood_change = 20
+	timeout = 10 MINUTES

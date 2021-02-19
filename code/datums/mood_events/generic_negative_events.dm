@@ -338,3 +338,8 @@
 	description = "<span class='boldwarning'>MY PRECIOUS WINGS!!</span>\n"
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/saw_empherimal_hues_bad
+	description = "<span class='hypnophrase'>THE COLORS! THE COLORS! THE COLORS! THE COLORS!\nTHE COLORS! THE COLORS! THE COLORS! THE COLORS!\nTHE COLORS! THE COLORS! THE COLORS! THE COLORS!</span>"
+	mood_change = -30
+	timeout = 20 MINUTES
