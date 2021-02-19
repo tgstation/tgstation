@@ -44,7 +44,13 @@
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 /// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
 #define PATH_START	-1
-
+/// Helper for inserting a node into the open list
+#define QUEUE_NODE(the_turf, parent_node, steps) \
+	do { \
+		var/datum/jps_node/newnode = new(the_turf, parent_node, steps); \
+		open_associative[the_turf] = newnode; \
+		open.insert(newnode); \
+	} while(0)
 
 /// The JPS Node datum represents a turf that we find interesting enough to add to the open list and possibly search for new tiles from
 /datum/jps_node
@@ -225,7 +231,8 @@
 		switch(heading)
 			if(NORTH)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST))
-					interesting = TRUE
+					QUEUE_NODE(current_turf, unwind_node, steps_taken)
+					return
 			if(SOUTH)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST))
 					interesting = TRUE
@@ -295,7 +302,6 @@
 			if(SOUTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					interesting = TRUE
-					return
 				else
 					lateral_scan_spec(current_turf, SOUTH)
 					lateral_scan_spec(current_turf, WEST)
