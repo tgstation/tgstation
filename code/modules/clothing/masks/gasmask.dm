@@ -11,6 +11,7 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	tint = 1.1
+	different_overlay = TRUE
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter

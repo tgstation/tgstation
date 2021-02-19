@@ -644,18 +644,23 @@
 /mob/living/carbon/proc/update_tint()
 	if(!GLOB.tinted_weldhelh)
 		return
+
+	var/change_overlay = FALSE
+	if(wear_mask && wear_mask.different_overlay)
+		change_overlay = TRUE
+
 	tinttotal = get_total_tint()
 	if(tinttotal >= TINT_BLIND)
 		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2, clamp(tinttotal * 100, 0, 255))
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, (change_overlay ? 4 : 2), clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal >= TINT_LIGHTER)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 100, 0, 255))
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, (change_overlay ? 4 : 1), clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal > TINT_LIGHT)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 100, 0, 255))
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, (change_overlay ? 4 : 1), clamp(tinttotal * 100, 0, 255))
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
