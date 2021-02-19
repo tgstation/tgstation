@@ -50,9 +50,7 @@ export const ChemHeater = (props, context) => {
           )}>
           <Table>
             <Table.Row>
-              <Table.Cell
-                bold
-                collapsing color="label">
+              <Table.Cell bold collapsing color="label">
                 Heat
               </Table.Cell>
               <Table.Cell />
@@ -204,7 +202,7 @@ export const ChemHeater = (props, context) => {
                 No active reactions.
               </Box>
             ) || (
-              <Table collapsing={false} key={"reactions"}>
+              <Table>
                 <Table.Row>
                   <Table.Cell bold color="label">
                     Reaction
