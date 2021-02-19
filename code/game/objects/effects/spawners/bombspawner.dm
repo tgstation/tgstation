@@ -43,7 +43,7 @@
 		ttv.attached_device = detonator
 		detonator.holder = ttv
 
-	V.update_appearance()
+	ttv.update_appearance()
 
 	return INITIALIZE_HINT_QDEL
 
