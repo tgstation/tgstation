@@ -38,13 +38,13 @@
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			C.adjustBruteLoss(-0.5)
+			owner.adjustBruteLoss(-0.5)
 		if("burn")
-			C.adjustFireLoss(-0.5)
+			owner.adjustFireLoss(-0.5)
 		if("tox")
-			C.adjustToxLoss(-0.5)
+			owner.adjustToxLoss(-0.5)
 		if("oxy")
-			C.adjustOxyLoss(-0.5)
+			owner.adjustOxyLoss(-0.5)
 
 ////// C2 medications
 //// Helbital
@@ -157,12 +157,12 @@ datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 	addiction_types = list(/datum/addiction/medicine = 8)
 	liver_damage = 0
 
-/datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+/datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/owner)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 	return
 
-/datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+/datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/owner)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 	return
 
 //failed
@@ -181,13 +181,13 @@ datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 
 //Just the removed itching mechanism - omage to it's origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	if(prob(resetting_probability) && !(HAS_TRAIT(M, TRAIT_RESTRAINED) || M.incapacitated()))
+	if(prob(resetting_probability) && !(HAS_TRAIT(owner, TRAIT_RESTRAINED) || owner.incapacitated()))
 		if(spammer < world.time)
-			to_chat(M,"<span class='warning'>You can't help but itch yourself.</span>")
+			to_chat(owner,"<span class='warning'>You can't help but itch yourself.</span>")
 			spammer = world.time + (10 SECONDS)
 		var/scab = rand(1,7)
-		M.adjustBruteLoss(scab*REM)
-		M.bleed(scab)
+		owner.adjustBruteLoss(scab*REM)
+		owner.bleed(scab)
 		resetting_probability = 0
 	resetting_probability += (5*(current_cycle/10) * delta_time) // 10 iterations = >51% to itch
 	..()
@@ -338,10 +338,10 @@ datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	if(M.reagents.reagent_list > 1)
-		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time) //Hey! It's everyone's favourite drawback from multiver!
+	if(owner.reagents.reagent_list > 1)
+		owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	M.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0)
+	owner.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0)
 	..()
 	return TRUE
 
@@ -386,6 +386,11 @@ datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
 	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
+	if(owner.health < -500)//Honestly commendable
+		var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+		explosion(owner, 1, 1, 1)
+		qdel(heart)
+		owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
