@@ -134,7 +134,6 @@
 
 /// The proc you use to start the search, returns FALSE if it's invalid, an empty list if no path could be found, or a valid path to the target
 /datum/pathfind/proc/start_search()
-	caller.calculating_path = TRUE
 	start = get_turf(caller)
 	if(!start || !end)
 		stack_trace("Invalid A* start or destination")
@@ -172,7 +171,6 @@
 			path.Swap(i, length(path) - i + 1)
 	open_associative = null //cleaning after us
 	sources = null
-	caller.calculating_path = FALSE
 	return path
 
 /// Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by [datum/pathfind/proc/start_search]
