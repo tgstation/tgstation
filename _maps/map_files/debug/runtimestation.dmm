@@ -2472,10 +2472,10 @@
 /turf/open/floor/iron,
 /area/medical/chemistry)
 "Df" = (
-/mob/living/carbon/human,
 /obj/machinery/light{
 	dir = 4
 	},
+/mob/living/carbon/human,
 /turf/open/floor/iron/dark,
 /area/science/nanite)
 "DW" = (
@@ -2798,6 +2798,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"XZ" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Ym" = (
 /obj/structure/table,
 /obj/item/storage/box/disks_nanite,
@@ -7917,7 +7921,7 @@ dD
 dJ
 dI
 dJ
-dJ
+XZ
 dJ
 dJ
 dJ
