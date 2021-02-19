@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(eigenstates)
 	var/list/eigen_id = list()
 	///Unique id counter
 	var/id_counter = 1
+	///Limit the number of sparks created when teleporting an atom to 1
+	var/spark_time = 0
 
 ///Creates a new link of targets unique to their own id
 /datum/controller/subsystem/eigenstates/proc/create_new_link(targets)
@@ -61,6 +63,7 @@ SUBSYSTEM_DEF(eigenstates)
 	for(var/item in eigen_targets[id])
 		if(item == null)
 			eigen_targets[id] -= item
+			eigen_id -= null
 			continue
 		counter++
 	if(counter == 0)
@@ -96,7 +99,13 @@ SUBSYSTEM_DEF(eigenstates)
 	if(!eigen_target)
 		CRASH("No eigen target set for the eigenstate component!")
 	thing_to_send.forceMove(get_turf(eigen_target))
-	if(istype(eigen_target, /obj/structure/closet)) //locker snowflake code
+	//Create ONE set of sparks for ALL times in iteration
+	if(!(spark_time == world.time))
+		do_sparks(5, FALSE, eigen_target)
+		do_sparks(5, FALSE, object_sent_from)
+	spark_time = world.time
+	//locker snowflake code so people don't get stuck in them
+	if(istype(eigen_target, /obj/structure/closet))
 		var/obj/structure/closet/closet = eigen_target
 		closet.bust_open()
 	return TRUE

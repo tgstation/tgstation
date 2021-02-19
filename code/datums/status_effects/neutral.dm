@@ -380,7 +380,7 @@
 		current_cycle = max(-250, (current_cycle - 2)) //cap to -250
 		block_effects = TRUE
 	if(owner.has_reagent(/datum/reagent/stabilizing_agent))
-		current_cycle = max(-250, (current_cycle - 1))
+		current_cycle = max(-250, (current_cycle - 2.5))
 		block_effects = TRUE
 	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
 	if(eigen)
@@ -411,14 +411,14 @@
 		//phase 1
 		if(1 to 50)
 			owner.Jitter(2)
-			owner.adjust_nutrition(-1)
+			owner.adjust_nutrition(-4)
 
 		//phase 2
 		if(50 to 80)
 			if(current_cycle == 51)
 				to_chat(owner, "<span class='userdanger'>You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!</span>")
 				owner.Jitter(200)
-				owner.Stun(80)
+				owner.Knockdown(10)
 			var/items = owner.get_contents()
 			if(!LAZYLEN(items))
 				return ..()
@@ -428,8 +428,8 @@
 			do_teleport(item, get_turf(item), 3, no_effects=TRUE);
 			do_sparks(5,FALSE,item)
 
-		//phase 3
-		if(80 to 125)
+		//phase 3 - little break to get your items
+		if(100 to 150)
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
@@ -457,9 +457,16 @@
 						"So, two alternate universe twins walk into a bar...",
 						"YOU'VE DOOMED THE TIMELINE!",
 						"Ruffle a cat once in a while!",
+						"I'm starting to get why no one wants to hang out with me.",
 						"Why haven't you gotten around to starting that band?!",
+						"No!! I was just about to greentext!",
+						"Kept you waiting huh?",
+						"Oh god I think I'm ODing I'm seeing a fake version of me.",
+						"Hey, I remember that phase, glad I grew out of it.",
+						"Keep going lets see if more of us show up.",
 						"I bet we can finally take the clown now.",
 						"LING DISGUISED AS ME!",
+						"El psy congroo.",
 						"At long last! My evil twin!",
 						"Keep going lets see if more of us show up.",
 						"No! Dark spirits, do not torment me with these visions of my future self! It's horrible!",
@@ -468,6 +475,7 @@
 						"Das ist nicht deutschland. Das ist nicht akzeptabel!!!",
 						"I've come from the future to warn you about eigenstasium! Oh no! I'm too late!",
 						"You fool! You took too much eigenstasium! You've doomed us all!",
+						"Don't trust any bagels you see until next month!",
 						"What...what's with these teleports? It's like one of my Japanese animes...!",
 						"Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?",
 						"Wake the fuck up spaceman we have a gas giant to burn",
@@ -481,7 +489,7 @@
 			do_sparks(5, FALSE, owner)
 
 		//phase 4
-		if(125 to INFINITY)
+		if(151 to INFINITY)
 			//clean up and remove status
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "Eigenstasium wild rides ridden")

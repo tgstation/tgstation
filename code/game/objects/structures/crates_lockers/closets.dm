@@ -178,14 +178,14 @@
 	return
 
 /obj/structure/closet/proc/insert(atom/movable/inserted)
-  if(length(contents) >= storage_capacity)
-    return LOCKER_FULL //this should be a define or something
-  if(!insertion_allowed(inserted))
-    return FALSE
-  if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted))
-    return TRUE
-  inserted.forceMove(src)
-  return TRUE
+	if(length(contents) >= storage_capacity)
+		return LOCKER_FULL
+	if(!insertion_allowed(inserted))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted))
+		return TRUE
+	inserted.forceMove(src)
+  		return TRUE
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
