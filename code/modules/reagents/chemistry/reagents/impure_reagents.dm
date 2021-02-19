@@ -27,6 +27,7 @@
 /datum/reagent/inverse
 	name = "Toxic monomers"
 	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
+	ph = 2
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
 	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
 	impure_chem = null
@@ -34,9 +35,9 @@
 	failed_chem = null
 	///how much this reagent does for tox damage too
 	var/tox_damage = 1
-	ph = 2
 
-/datum/reagent/inverse/on_mob_life(mob/living/carbon/C)
+
+/datum/reagent/inverse/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	C.adjustToxLoss(tox_damage * REM * delta_time, FALSE)
 	return ..()
 

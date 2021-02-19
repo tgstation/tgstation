@@ -33,7 +33,7 @@
 	ph = 11
 
 //Random healing of the 4 main groups
-/datum/reagent/impure/healing/medicine_failure/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	. = ..()
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
@@ -56,16 +56,22 @@ datum/reagent/inverse/helgrasp
 	metabolization_rate = 1*REM //This is fast
 	tox_damage = 0.25
 	ph = 14
+	//Compensates for delta_time lag by spawning multiple hands at the end
+	var/lag_compensate = 0
 
 //Warns you about the impenting hands
 datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
-	. = ..()
 	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
 	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
+	. = ..()
 
 //Sends hands after you for your hubris
-datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
+datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	spawn_hands(owner)
+	lag_compensate += 1 - max(delta_time, 1)
 	. = ..()
+
+datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
 	//Adapted from the end of the curse - but lasts a short time
 	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 8)//Larger range so you have more time to dodge
@@ -76,6 +82,13 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
 	hand.preparePixelProjectile(owner, spawn_turf)
 	hand.fire()
+
+datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
+	var/hands = 0
+	while(lag_compensate > hands)
+		spawn_hands(owner)
+		hands++
+	. = ..()
 
 ////libital
 
@@ -129,10 +142,10 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	description = "These inhibitory peptides slow down wound healing and also cost nutrition as well!"
 	ph = 2.1
 
-/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner)
-	owner.adjustFireLoss(-0.5)
-	owner.adjustBruteLoss(-1.5)
-	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM)
+/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	owner.adjustFireLoss(-0.5 * delta_time)
+	owner.adjustBruteLoss(-1.5* delta_time)
+	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * delta_time)
 	. = ..()
 
 ////Lenturi
@@ -167,7 +180,7 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	var/spammer = 0
 
 //Just the removed itching mechanism - omage to it's origins.
-/datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/M)
+/datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(prob(resetting_probability) && !(HAS_TRAIT(M, TRAIT_RESTRAINED) || M.incapacitated()))
 		if(spammer < world.time)
 			to_chat(M,"<span class='warning'>You can't help but itch yourself.</span>")
@@ -176,7 +189,7 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 		M.adjustBruteLoss(scab*REM)
 		M.bleed(scab)
 		resetting_probability = 0
-	resetting_probability += (5*(current_cycle/10)) // 10 iterations = >51% to itch
+	resetting_probability += (5*(current_cycle/10) * delta_time) // 10 iterations = >51% to itch
 	..()
 	return TRUE
 
@@ -213,10 +226,10 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 2.5)
 
-/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner)
+/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	. = ..()
 	var/heating = rand(creation_purity*10, creation_purity*30)
-	owner.reagents?.chem_temp += (heating*REM)*normalise_creation_purity()
+	owner.reagents?.chem_temp += (heating * REM *normalise_creation_purity() * delta_time)
 	owner.adjust_bodytemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
@@ -238,7 +251,7 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	addiction_types = list(/datum/addiction/medicine = 5)
 
 //Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
-/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner)
+/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	switch(current_cycle)
 		if(1 to 10)//same delay as chloral hydrate
 			if(prob(50))
@@ -279,8 +292,8 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 	tox_damage = 0
 
-/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner)
-	owner.radiation += creation_purity // 0 - 1
+/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	owner.radiation += creation_purity * delta_time // 0 - 1
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
@@ -324,11 +337,11 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
-/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/M)
+/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(M.reagents.reagent_list > 1)
-		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //Hey! It's everyone's favourite drawback from multiver!
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	M.adjustToxLoss((-2*REM)*creation_purity, 0)
+	M.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0)
 	..()
 	return TRUE
 
@@ -359,11 +372,11 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
 
-/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner)
+/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
 	if(back_from_the_dead)
-		owner.adjustBruteLoss(5*(1-creation_purity))
-		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2.5*(1-creation_purity))
+		owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
+		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2.5 * (1-creation_purity) * delta_time)
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
 		iter_wound.blood_flow += (1-creation_purity)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
@@ -379,11 +392,11 @@ datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	. = ..()
 
-/datum/reagent/inverse/penthrite/overdose_process(mob/living/carbon/owner)
+/datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
 	if(!back_from_the_dead)
 		return ..()
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
-	explosion(owner, 1, 0, 1)
+	explosion(owner, 1, 1, 1)
 	qdel(heart)
 	owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
 	. = ..()
