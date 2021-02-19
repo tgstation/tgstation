@@ -27,8 +27,9 @@ SUBSYSTEM_DEF(eigenstates)
 	//Do we still have targets?
 	if(!length(targets))
 		return FALSE
+	var/atom/visible_atom = targets[1] //The object that'll handle the messages
 	if(length(targets) == 1)
-		targets.[1].visible_message("[targets[1]] fizzes, there's nothing it can link to!")
+		visible_atom.visible_message("[targets[1]] fizzes, there's nothing it can link to!")
 		return FALSE
 
 	eigen_targets["[id_counter]"] = list() //Add to the master list
@@ -44,7 +45,7 @@ SUBSYSTEM_DEF(eigenstates)
 			item.alpha = 200
 			do_sparks(3, FALSE, item)
 
-	eigen_targets["[id_counter]"][1].visible_message("The items' eigenstates spilt and merge, linking each of them together.")
+	visible_atom.visible_message("The items' eigenstates spilt and merge, linking each of them together.")
 	id_counter++
 	return TRUE
 
@@ -94,7 +95,8 @@ SUBSYSTEM_DEF(eigenstates)
 		return FALSE
 	if(!repair_eigenlink(id)) //safety
 		return FALSE
-	var/index = (eigen_targets[id].Find(object_sent_from))+1 //index + 1
+	var/list/items = eigen_targets[id]
+	var/index = (items.Find(object_sent_from))+1 //index + 1
 	if(!index)
 		stack_trace("[object_sent_from] Attempted to eigenlink to something that didn't contain it!")
 		return FALSE
