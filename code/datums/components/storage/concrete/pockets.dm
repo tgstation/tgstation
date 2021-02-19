@@ -63,11 +63,12 @@
     set_holdable(list(
         /obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
         /obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-        /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-        /obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-        /obj/item/firing_pin, /obj/item/suppressor, /obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m45,
-        /obj/item/ammo_casing, /obj/item/lipstick, /obj/item/clothing/mask/cigarette, /obj/item/lighter,
-        /obj/item/match, /obj/item/holochip, /obj/item/toy/crayon),
+        /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper, /obj/item/implanter,
+        /obj/item/screwdriver, /obj/item/weldingtool/mini, /obj/item/firing_pin,
+        /obj/item/suppressor, /obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m45,
+        /obj/item/ammo_casing, /obj/item/lipstick, /obj/item/clothing/mask/cigarette,
+        /obj/item/lighter, /obj/item/match, /obj/item/holochip,
+		/obj/item/toy/crayon),
         list(/obj/item/screwdriver/power, /obj/item/ammo_casing/caseless/rocket, /obj/item/clothing/mask/cigarette/pipe, /obj/item/toy/crayon/spraycan)
         )
 
@@ -76,11 +77,12 @@
     set_holdable(list(
         /obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
         /obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-        /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-        /obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-        /obj/item/firing_pin, /obj/item/suppressor, /obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m45,
-        /obj/item/ammo_casing, /obj/item/lipstick, /obj/item/clothing/mask/cigarette, /obj/item/lighter,
-        /obj/item/match, /obj/item/holochip, /obj/item/toy/crayon, /obj/item/bikehorn),
+        /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper, /obj/item/implanter,
+        /obj/item/screwdriver, /obj/item/weldingtool/mini, /obj/item/firing_pin,
+        /obj/item/suppressor, /obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m45,
+        /obj/item/ammo_casing, /obj/item/lipstick, /obj/item/clothing/mask/cigarette,
+        /obj/item/lighter, /obj/item/match, /obj/item/holochip,
+		/obj/item/toy/crayon, /obj/item/bikehorn),
         list(/obj/item/screwdriver/power, /obj/item/ammo_casing/caseless/rocket, /obj/item/clothing/mask/cigarette/pipe, /obj/item/toy/crayon/spraycan)
         )
 
