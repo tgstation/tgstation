@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /// Checks to see if gas amount exists in mixture.
 /// Do NOT use this in code where performance matters!
-/// It's faster to just manually check the gas with a direct var lookup
+/// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
 /datum/gas_mixture/proc/has_gas(gas_id, amount=0)
 	ASSERT_GAS(gas_id, src)
 	var/is_there_gas = amount < gases[gas_id][MOLES]
