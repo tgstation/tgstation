@@ -847,6 +847,7 @@ function checkchangelog($payload, $compile = true) {
 					$tags[] = 'Documentation';
 					$currentchangelogblock[] = array('type' => 'doc', 'body' => $item);
 				}
+				break;
 			case 'refactor':
 				if($item != 'refactored some code'){
 					$tags[] = 'Refactor';
