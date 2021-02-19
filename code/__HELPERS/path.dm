@@ -43,7 +43,11 @@
 #define CAN_STEP(cur_turf, next) (next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
-
+/**
+ * This helper reverses directions for the purposes of [turf/proc/LinkBlockedWithAccess], which uses it for [obj/proc/CanAStarPass]
+ * The 85 flips the odd bits, while the 170 flips the even bits
+ */
+#define PATH_REVERSE_DIR(adir) (((adir & 85)<<1)|((adir & 170)>>1))
 /// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
 #define PATH_START	-1
 
@@ -323,55 +327,33 @@
 			open.insert(newnode)
 			return
 
-#undef PATH_START
-#undef CAN_STEP
-#undef STEP_NOT_HERE_BUT_THERE
-
-// and then the rest are holdovers from the A* file
-
-// These two defines are used for turf adjacency directional window nonsense
-#define MASK_ODD 85
-#define MASK_EVEN 170
-
 /**
- * Returns adjacent turfs to this turf that are reachable, in all 8 directions
+ * For seeing if we can actually move between 2 given turfs while accounting for our access and the caller's pass_flags
  *
  * Arguments:
- * * caller: The atom, if one exists, being used for mobility checks to see what tiles it can reach
+ * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
 */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
-	var/list/L = new()
-	var/turf/T
-	var/static/space_type_cache = typecacheof(/turf/open/space)
+/turf/proc/LinkBlockedWithAccess(turf/destination_turf, caller, ID)
+	var/actual_dir = get_dir(src, destination_turf)
 
-	for(var/iter_dir in GLOB.alldirs)
-		T = get_step(src,iter_dir)
-		if(!T || (simulated_only && space_type_cache[T.type]))
-			continue
-		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
-			L.Add(T)
-	return L
-
-//Returns adjacent turfs in cardinal directions that are reachable via atmos
-/turf/proc/reachableAdjacentAtmosTurfs()
-	return atmos_adjacent_turfs
-
-/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
-	var/adir = get_dir(src, T)
-	var/rdir = ((adir & MASK_ODD)<<1)|((adir & MASK_EVEN)>>1)
-	for(var/obj/structure/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
+	for(var/obj/structure/window/iter_window in src)
+		if(!iter_window.CanAStarPass(ID, actual_dir))
 			return TRUE
-	for(var/obj/machinery/door/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
+
+	for(var/obj/machinery/door/window/iter_windoor in src)
+		if(!iter_windoor.CanAStarPass(ID, actual_dir))
 			return TRUE
-	for(var/obj/O in T)
-		if(!O.CanAStarPass(ID, rdir, caller))
+
+	var/reverse_dir = PATH_REVERSE_DIR(actual_dir)
+	for(var/obj/iter_object in destination_turf)
+		if(!iter_object.CanAStarPass(ID, reverse_dir, caller))
 			return TRUE
 
 	return FALSE
 
-#undef MASK_ODD
-#undef MASK_EVEN
+#undef PATH_START
+#undef CAN_STEP
+#undef STEP_NOT_HERE_BUT_THERE
+#undef PATH_REVERSE_DIR
