@@ -12,7 +12,7 @@
 #define TRANSPARENT (1<<5) // Used on containers which you want to be able to see the reagents off.
 #define AMOUNT_VISIBLE (1<<6) // For non-transparent containers that still have the general amount of reagents in them visible.
 #define NO_REACT (1<<7) // Applied to a reagent holder, the contents will not react with each other.
-#define REAGENT_HOLDER_INSTANT_REACT   (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+#define REAGENT_HOLDER_INSTANT_REACT (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
 
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
@@ -83,7 +83,9 @@
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
 #define REACTION_COMPETITIVE (1<<5)
 
-///Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
+///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
+#define NO_OVERHEAT 99999
+////Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
 #define END_REACTION "end_reaction"
 
 ///Minimum requirement for addiction buzz to be met
@@ -96,3 +98,49 @@
 #define WITHDRAWAL_STAGE2_START_CYCLE 61
 #define WITHDRAWAL_STAGE2_END_CYCLE 120
 #define WITHDRAWAL_STAGE3_START_CYCLE 121
+
+///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
+/// This reagent does brute effects (BOTH damaging and healing)
+#define REACTION_TAG_BRUTE (1<<0)
+/// This reagent does burn effects (BOTH damaging and healing)
+#define REACTION_TAG_BURN (1<<1)
+/// This reagent does toxin effects (BOTH damaging and healing)
+#define REACTION_TAG_TOXIN (1<<2)
+/// This reagent does oxy effects (BOTH damaging and healing)
+#define REACTION_TAG_OXY (1<<3)
+/// This reagent does clone effects (BOTH damaging and healing)
+#define REACTION_TAG_CLONE (1<<4)
+/// This reagent primarily heals, or it's supposed to be used for healing (in the case of c2 - they are healing)
+#define REACTION_TAG_HEALING (1<<5)
+/// This reagent primarily damages
+#define REACTION_TAG_DAMAGING (1<<6)
+/// This reagent explodes as a part of it's intended effect (i.e. not overheated/impure)
+#define REACTION_TAG_EXPLOSIVE (1<<7)
+/// This reagent does things that are unique and special
+#define REACTION_TAG_OTHER (1<<8)
+/// This reagent's reaction is dangerous to create (i.e. explodes if you fail it)
+#define REACTION_TAG_DANGEROUS (1<<9)
+/// This reagent's reaction is easy
+#define REACTION_TAG_EASY (1<<10)
+/// This reagent's reaction is difficult/involved
+#define REACTION_TAG_MODERATE (1<<11)
+/// This reagent's reaction is hard
+#define REACTION_TAG_HARD (1<<12)
+/// This reagent affects organs
+#define REACTION_TAG_ORGAN (1<<13)
+/// This reaction creates a drink reagent
+#define REACTION_TAG_DRINK (1<<14)
+/// This reaction has something to do with food
+#define REACTION_TAG_FOOD (1<<15)
+/// This reaction is a slime reaction
+#define REACTION_TAG_SLIME (1<<16)
+/// This reaction is a drug reaction
+#define REACTION_TAG_DRUG (1<<17)
+/// This reaction is a unique reaction
+#define REACTION_TAG_UNIQUE (1<<18)
+/// This reaction is produces a product that affects reactions
+#define REACTION_TAG_CHEMICAL (1<<19)
+/// This reaction is produces a product that affects plants
+#define REACTION_TAG_PLANT (1<<20)
+/// This reaction is produces a product that affects plants
+#define REACTION_TAG_COMPETITIVE (1<<21)
