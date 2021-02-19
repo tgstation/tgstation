@@ -109,10 +109,3 @@
 	SSeigenstates.create_new_link(lockers)
 
 //eigenstate END
-
-/datum/reagent/test
-	name = "testchem"
-
-/datum/reagent/test/on_mob_add(mob/living/L, amount)
-	. = ..()
-	SSquirks.randomise_quirks(L)
