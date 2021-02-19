@@ -405,8 +405,8 @@
 			found_cell.charge = newcharge
 			if(isobj(found_cell.loc))
 				var/obj/cell_location = found_cell.loc
-				cell_location.update_icon() //update power meters and such
-			found_cell.update_icon()
+				cell_location.update_appearance() //update power meters and such
+			found_cell.update_appearance()
 			batteries_recharged = TRUE
 	if(batteries_recharged)
 		to_chat(eater, "<span class='notice'>Your batteries are recharged!</span>")
@@ -752,7 +752,7 @@
 	target_tray.harvest = FALSE
 	target_tray.weedlevel = 0 // Reset
 	target_tray.pestlevel = 0 // Reset
-	target_tray.update_icon()
+	target_tray.update_appearance()
 	target_tray.visible_message("<span class='warning'>The [origin_tray.myseed.plantname] spreads!</span>")
 	if(target_tray.myseed)
 		target_tray.name = "[initial(target_tray.name)] ([target_tray.myseed.plantname])"

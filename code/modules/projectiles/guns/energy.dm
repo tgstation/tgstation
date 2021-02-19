@@ -26,7 +26,7 @@
 		cell.use(round(cell.charge / severity))
 		chambered = null //we empty the chamber
 		recharge_newshot() //and try to charge a new shot
-		update_icon()
+		update_appearance()
 
 /obj/item/gun/energy/get_cell()
 	return cell
@@ -43,7 +43,7 @@
 	recharge_newshot(TRUE)
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 /obj/item/gun/energy/ComponentInitialize()
@@ -69,7 +69,7 @@
 /obj/item/gun/energy/handle_atom_del(atom/A)
 	if(A == cell)
 		cell = null
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/item/gun/energy/process(delta_time)
@@ -81,12 +81,12 @@
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
-		update_icon()
+		update_appearance()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1)
 		select_fire(user)
-		update_icon()
+		update_appearance()
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -137,7 +137,7 @@
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
 	recharge_newshot(TRUE)
-	update_icon()
+	update_appearance()
 	return
 
 /obj/item/gun/energy/update_icon_state()
@@ -145,7 +145,7 @@
 	var/skip_worn_icon = initial(worn_icon_state) //only build if we aren't using a preset worn icon
 
 	if(skip_inhand && skip_worn_icon) //if we don't have either, don't do the math.
-		return
+		return ..()
 
 	var/ratio = get_charge_ratio()
 	var/temp_icon_to_use = initial(icon_state)
@@ -158,29 +158,33 @@
 		inhand_icon_state = temp_icon_to_use
 	if(!skip_worn_icon)
 		worn_icon_state = temp_icon_to_use
+	return ..()
 
 
 /obj/item/gun/energy/update_overlays()
 	. = ..()
 	if(!automatic_charge_overlays)
 		return
+
 	var/overlay_icon_state = "[icon_state]_charge"
-	var/ratio = get_charge_ratio()
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		overlay_icon_state += "_[shot.select_name]"
 		. += "[icon_state]_[shot.select_name]"
+
+	var/ratio = get_charge_ratio()
 	if(ratio == 0)
 		. += "[icon_state]_empty"
-	else
-		if(!shaded_charge)
-			var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
-			for(var/i = ratio, i >= 1, i--)
-				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
-				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
-				. += new /mutable_appearance(charge_overlay)
-		else
-			. += "[icon_state]_charge[ratio]"
+		return
+	if(shaded_charge)
+		. += "[icon_state]_charge[ratio]"
+		return
+	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
+	for(var/i = ratio, i >= 1, i--)
+		charge_overlay.pixel_x = ammo_x_offset * (i - 1)
+		charge_overlay.pixel_y = ammo_y_offset * (i - 1)
+		. += new /mutable_appearance(charge_overlay)
+
 
 ///Used by update_icon_state() and update_overlays()
 /obj/item/gun/energy/proc/get_charge_ratio()
@@ -196,7 +200,7 @@
 			playsound(loc, fire_sound, 50, TRUE, -1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
-			update_icon()
+			update_appearance()
 			return(FIRELOSS)
 		else
 			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
@@ -250,4 +254,4 @@
 		return
 	cell.charge = cell.maxcharge
 	recharge_newshot(no_cyborg_drain = TRUE)
-	update_icon()
+	update_appearance()

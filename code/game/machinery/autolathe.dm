@@ -224,7 +224,7 @@
 
 	if(is_stack)
 		var/obj/item/stack/N = new being_built.build_path(A, multiplier, FALSE)
-		N.update_icon()
+		N.update_appearance()
 		N.autolathe_crafted(src)
 	else
 		for(var/i=1, i<=multiplier, i++)

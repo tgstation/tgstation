@@ -1,6 +1,7 @@
 /obj/item/organ/appendix
 	name = "appendix"
 	icon_state = "appendix"
+	base_icon_state = "appendix"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_APPENDIX
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/bad_food = 5)
@@ -13,13 +14,13 @@
 
 	var/inflamed
 
-/obj/item/organ/appendix/update_icon()
-	if(inflamed)
-		icon_state = "appendixinflamed"
-		name = "inflamed appendix"
-	else
-		icon_state = "appendix"
-		name = "appendix"
+/obj/item/organ/appendix/update_name()
+	. = ..()
+	name = "[inflamed ? "inflamed " : null][initial(name)]"
+
+/obj/item/organ/appendix/update_icon_state()
+	icon_state = "[base_icon_state][inflamed ? "inflamed" : ""]"
+	return ..()
 
 /obj/item/organ/appendix/on_life()
 	..()
@@ -36,7 +37,7 @@
 	for(var/datum/disease/appendicitis/A in M.diseases)
 		A.cure()
 		inflamed = TRUE
-	update_icon()
+	update_appearance()
 	..()
 
 /obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0)

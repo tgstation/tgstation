@@ -395,6 +395,7 @@
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
 	action.UpdateButtonIcon()
+	return ..()
 
 /obj/effect/proc_holder/wrap/Click()
 	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
@@ -452,6 +453,7 @@
 /obj/effect/proc_holder/tarantula_charge/update_icon()
 	action.button_icon_state = "wrap_[active]"
 	action.UpdateButtonIcon()
+	return ..()
 
 /obj/effect/proc_holder/tarantula_charge/Click()
 	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/tarantula))
