@@ -66,7 +66,7 @@
 		new /obj/item/food/chocolatebar(location)
 	return
 
-/datum/chemical_reaction/soysauce
+/datum/chemical_reaction/food/soysauce
 	results = list(/datum/reagent/consumable/soysauce = 5)
 	required_reagents = list(/datum/reagent/consumable/soymilk = 4, /datum/reagent/toxin/acid = 1)
 
