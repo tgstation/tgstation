@@ -50,8 +50,8 @@
 		if(PIRATES_ROGUES)
 			ship_template = /datum/map_template/shuttle/pirate/default
 			threat.title = "Sector protection offer"
-			threat.content = "Greetings from the [ship_name]. Your sector needs protection, how about you pay us [payoff] credits, or else you may be left wide open to an attack."
-			threat.possible_answers = list("We'll pay.","That sounds like a scam.")
+			threat.content = "Hey, pal, this is the [ship_name]. Can't help but notice you're rocking a wild and crazy shuttle there with NO INSURANCE! Crazy. What if something happened to it, huh?! We've done a quick evaluation on your rates in this sector and we're offering [payoff] to cover for your shuttle in case of any disaster."
+			threat.possible_answers = list("Purchase Insurance.","Reject Offer.")
 		if(PIRATES_SILVERSCALES)
 			ship_template = /datum/map_template/shuttle/pirate/silverscale
 			threat.title = "Tribute to high society"
