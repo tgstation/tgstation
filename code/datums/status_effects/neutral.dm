@@ -345,9 +345,9 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	///So we know what cycle we're in during the status
-	var/current_cycle = 0 //keep track of our calls
+	var/current_cycle = 0 //Consider it your stability
 	///The addiction looper for addiction stage 3
-	var/phase_3_cycle = 0
+	var/phase_3_cycle = -20 //start off delayed
 	///Your clone from another reality
 	var/mob/living/carbon/alt_clone = null
 
@@ -366,15 +366,39 @@
 /datum/status_effect/eigenstasium/tick()
 	. = ..()
 	//This stuff runs every cycle
-	if(prob(5)
+	if(prob(5))
 		do_sparks(5, FALSE, owner)
-	if(owner.has_reagent(/datum/reagent/bluespace) || owner.has_reagent(/datum/reagent/eigenstate))
-		current_cycle = max(-25, (current_cycle - 0.5)) //cap to -25
-		return ..()
 
+	//If we have a reagent that blocks the effects
+	var/block_effects = FALSE
+	if(owner.has_reagent(/datum/reagent/bluespace))
+		current_cycle = max(-25, (current_cycle - 0.5)) //cap to -25
+		block_effects = TRUE
+	if(owner.has_reagent(/datum/reagent/stabilizing_agent))
+		current_cycle = max(-25, (current_cycle - 0.35))
+		block_effects = TRUE
+	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
+	if(eigen)
+		if(!eigen.overdosed)
+			current_cycle = max(-25, (current_cycle - 0.75))
+			block_effects = TRUE
+		else
+			block_effects = FALSE
+
+	if(alt_clone)//catch any stragilers
+		do_sparks(5,FALSE,alt_clone)
+		qdel(alt_clone)
+		owner.visible_message("[owner] is snapped across to a different alternative reality!")
+		alt_clone = null
+
+	if(block_effects)
+		return
+
+	//These run on specific cycles
 	switch(current_cycle)
 		if(0)
 			to_chat(owner, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
+
 		//phase 1
 		if(1 to 10)
 			owner.Jitter(10)
@@ -396,7 +420,7 @@
 			do_sparks(5,FALSE,item)
 
 		//phase 3
-		if(30 to 42)
+		if(30 to 45)
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
@@ -405,7 +429,6 @@
 				if(1)
 					var/typepath = owner.type
 					alt_clone = new typepath(owner.loc)
-					var/mob/living/carbon/clone = alt_clone
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
 					owner.visible_message("[owner] collapses in from an alternative reality!")
@@ -443,24 +466,15 @@
 						"Now neither of us will be virgins!")
 					alt_clone.say(pick(say_phrases))
 				if(2)
-					do_sparks(5,FALSE,alt_clone)
-					qdel(alt_clone) //Deletes CLONE, or was that you?
-					owner.visible_message("[owner] is snapped across to a different alternative reality!")
-					addictCyc3 = 0 //counter
-					alt_clone = null
-			addictCyc3++
+					phase_3_cycle = 0 //counter
+			phase_3_cycle++
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //Teleports player randomly
 			do_sparks(5, FALSE, owner)
 
 		//phase 4
-		if(42 to INFINITY)
-			if(alt_clone)//catch any stragilers
-				do_sparks(5,FALSE,alt_clone)
-				qdel(alt_clone)
-				owner.visible_message("[owner] is snapped across to a different alternative reality!")
-				alt_clone = null
+		if(45 to INFINITY)
 			//clean up and remove status
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip, creation_purity)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "Eigenstasium wild rides ridden")
 			do_sparks(5, FALSE, owner)
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
@@ -481,12 +495,9 @@
 			if(prob(1))//low chance of the alternative reality returning to monkey
 				var/obj/item/organ/tail/monkey/monkey_tail = new (human_mob.loc)
 				monkey_tail.Insert(human_mob)
-			if(!creator)
-				human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
-				human_mob.dna?.species?.randomize_active_underwear(human_mob)
-			else
-				human_mob.appearance = creator.appearance
-				human_mob.name = creator.name
+			human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
+			human_mob.dna?.species?.randomize_active_underwear(human_mob)
+
 			owner.remove_status_effect(STATUS_EFFECT_EIGEN)
 
 	//Finally increment cycle

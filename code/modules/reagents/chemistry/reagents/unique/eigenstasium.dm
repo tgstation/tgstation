@@ -15,7 +15,6 @@
 	taste_description = "wiggly cosmic dust."
 	color = "#5020F4"
 	overdose_threshold = 15
-	addiction_threshold = 16
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	ph = 3.7
 	impure_chem = /datum/reagent/impurity/eigenswap
@@ -77,11 +76,13 @@
 	..()
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
-	. = ..()
 	to_chat(living_mob, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
 	living_mob.Jitter(20)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
-	//add status effect
+	var/mob/living/carbon/carbon_mob = living_mob
+	if(carbon_mob)
+		carbon_mob.apply_status_effect(STATUS_EFFECT_EIGEN)
+	. = ..()
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly, probably one of my favourite effects.
 	do_sparks(5,FALSE,living_mob)
