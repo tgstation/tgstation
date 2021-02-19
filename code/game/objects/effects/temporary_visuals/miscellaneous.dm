@@ -480,22 +480,26 @@
 	status = rcd_status
 	delay = rcd_delay
 	if (status == RCD_DECONSTRUCT)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 11)
+		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1.1 SECONDS)
 		delay -= 11
 		icon_state = "rcd_end_reverse"
 	else
-		update_icon()
+		update_appearance()
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
-	if (delay < 10)
+	if(delay < 10)
 		icon_state += "_shortest"
-	else if (delay < 20)
+		return ..()
+	if (delay < 20)
 		icon_state += "_shorter"
-	else if (delay < 37)
+		return ..()
+	if (delay < 37)
 		icon_state += "_short"
-	if (status == RCD_DECONSTRUCT)
+		return ..()
+	if(status == RCD_DECONSTRUCT)
 		icon_state += "_reverse"
+	return ..()
 
 /obj/effect/constructing_effect/proc/end_animation()
 	if (status == RCD_DECONSTRUCT)

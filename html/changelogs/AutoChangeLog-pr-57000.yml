@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "fixes explosive chems without temperature requirements to explode at any temperature"

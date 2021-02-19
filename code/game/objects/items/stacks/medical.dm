@@ -129,7 +129,7 @@
 	amount = 6
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = PAYCHECK_ASSISTANT * 2
-	absorption_rate = 0.25
+	absorption_rate = 0.125
 	absorption_capacity = 5
 	splint_factor = 0.35
 	merge_type = /obj/item/stack/medical/gauze
@@ -191,7 +191,7 @@
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
 	self_delay = 6 SECONDS
 	other_delay = 3 SECONDS
-	absorption_rate = 0.15
+	absorption_rate = 0.075
 	absorption_capacity = 4
 	merge_type = /obj/item/stack/medical/gauze/improvised
 
@@ -282,13 +282,12 @@
 	. = ..()
 	if(amount == max_amount)  //only seal full mesh packs
 		is_open = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/item/stack/medical/mesh/update_icon_state()
-	if(!is_open)
-		icon_state = "regen_mesh_closed"
-	else
+	if(is_open)
 		return ..()
+	icon_state = "regen_mesh_closed"
 
 /obj/item/stack/medical/mesh/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!is_open)
@@ -312,7 +311,7 @@
 	if(!is_open)
 		is_open = TRUE
 		to_chat(user, "<span class='notice'>You open the sterile mesh package.</span>")
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
 		return
 	return ..()
@@ -330,10 +329,9 @@
 	merge_type = /obj/item/stack/medical/mesh/advanced
 
 /obj/item/stack/medical/mesh/advanced/update_icon_state()
-	if(!is_open)
-		icon_state = "aloe_mesh_closed"
-	else
+	if(is_open)
 		return ..()
+	icon_state = "aloe_mesh_closed"
 
 /obj/item/stack/medical/aloe
 	name = "aloe cream"

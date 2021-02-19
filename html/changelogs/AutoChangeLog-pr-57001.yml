@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - code_imp: "improves holder.dm readability"

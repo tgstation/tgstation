@@ -1,5 +1,6 @@
 /obj/item/pitchfork
 	icon_state = "pitchfork0"
+	base_icon_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "pitchfork"
@@ -23,7 +24,7 @@
 
 /obj/item/pitchfork/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="pitchfork1")
+	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="[base_icon_state]1")
 
 /// triggered on wield of two handed item
 /obj/item/pitchfork/proc/on_wield(obj/item/source, mob/user)
@@ -38,4 +39,5 @@
 	wielded = FALSE
 
 /obj/item/pitchfork/update_icon_state()
-	icon_state = "pitchfork0"
+	icon_state = "[base_icon_state]0"
+	return ..()

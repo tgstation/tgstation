@@ -1,4 +1,0 @@
-author: "NotRanged"
-delete-after: True
-changes: 
-  - bugfix: "Fixes hitscan beams not reflecting off of certain tiles (e.g. reflective blob) properly."

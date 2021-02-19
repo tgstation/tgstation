@@ -1,5 +1,5 @@
 /// How many life ticks are required for the nightmare's heart to revive the nightmare.
-#define HEART_RESPAWN_THRESHHOLD 40
+#define HEART_RESPAWN_THRESHHOLD (80 SECONDS)
 /// A special flag value used to make a nightmare heart not grant a light eater. Appears to be unused.
 #define HEART_SPECIAL_SHADOWIFY 2
 
@@ -73,14 +73,14 @@
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
 
-/obj/item/organ/heart/nightmare/on_death()
+/obj/item/organ/heart/nightmare/on_death(delta_time, times_fired)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			respawn_progress++
+			respawn_progress += delta_time SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
