@@ -3,11 +3,11 @@
 
 /obj/machinery/atmospherics/components
 	hide = FALSE
-	///Check if the component should be welded (mainly used by scrubbers and vents)
+	///Is the component welded?
 	var/welded = FALSE
-	///Check if the component should show the pipe underneat the component
+	///Should the component should show the pipe underneath it?
 	var/showpipe = TRUE
-	///When the component is in another layer other than the default one, should be shifted only the underlay pipe or the whole component?
+	///When the component is on a non default layer should we shift everything? Or just the underlay pipe
 	var/shift_underlay_only = TRUE
 	///Stores the component pipeline
 	var/list/datum/pipeline/parents
