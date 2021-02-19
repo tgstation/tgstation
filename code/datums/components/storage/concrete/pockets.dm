@@ -60,31 +60,26 @@
 
 /datum/component/storage/concrete/pockets/shoes/Initialize()
     . = ..()
-    set_holdable(list(
-        /obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-        /obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-        /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper, /obj/item/implanter,
-        /obj/item/screwdriver, /obj/item/weldingtool/mini, /obj/item/firing_pin,
-        /obj/item/suppressor, /obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m45,
-        /obj/item/ammo_casing, /obj/item/lipstick, /obj/item/clothing/mask/cigarette,
-        /obj/item/lighter, /obj/item/match, /obj/item/holochip,
-		/obj/item/toy/crayon),
-        list(/obj/item/screwdriver/power, /obj/item/ammo_casing/caseless/rocket, /obj/item/clothing/mask/cigarette/pipe, /obj/item/toy/crayon/spraycan)
-        )
+	set_holdable(list(
+		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
+		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
+		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
+		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
+		/obj/item/firing_pin
+		),
+		list(/obj/item/screwdriver/power)
+		)
 
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
     . = ..()
-    set_holdable(list(
-        /obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-        /obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-        /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper, /obj/item/implanter,
-        /obj/item/screwdriver, /obj/item/weldingtool/mini, /obj/item/firing_pin,
-        /obj/item/suppressor, /obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m45,
-        /obj/item/ammo_casing, /obj/item/lipstick, /obj/item/clothing/mask/cigarette,
-        /obj/item/lighter, /obj/item/match, /obj/item/holochip,
-		/obj/item/toy/crayon, /obj/item/bikehorn),
-        list(/obj/item/screwdriver/power, /obj/item/ammo_casing/caseless/rocket, /obj/item/clothing/mask/cigarette/pipe, /obj/item/toy/crayon/spraycan)
-        )
+	set_holdable(list(
+		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
+		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
+		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
+		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
+		/obj/item/firing_pin, /obj/item/bikehorn),
+		list(/obj/item/screwdriver/power)
+		)
 
 /datum/component/storage/concrete/pockets/pocketprotector
 	max_items = 3
@@ -126,3 +121,20 @@
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
 	exception_hold = exception_cache
+
+/datum/component/storage/concrete/pockets/concealed_holster
+    max_items = 1
+    max_w_class = WEIGHT_CLASS_SMALL
+    var/atom/original_parent
+
+/datum/component/storage/concrete/pockets/concealed_holster/Initialize()
+    original_parent = parent
+    . = ..()
+    set_holdable(list(
+        /obj/item/gun/syringe/syndicate,
+        /obj/item/gun/ballistic/automatic/toy/pistol/riot,
+        /obj/item/gun/ballistic/automatic/pistol)
+        )
+
+/datum/component/storage/concrete/pockets/concealed_holster/real_location()
+    return original_parent
