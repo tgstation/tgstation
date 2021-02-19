@@ -317,9 +317,15 @@
 
 	var/mob/living/character = create_character(TRUE) //creates the human and transfers vars and mind
 
+	var/is_captain = FALSE
 	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
-	var/is_new_captain = !SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank]
-	var/equip = SSjob.EquipRank(character, rank, TRUE, is_new_captain)
+	if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank])
+		is_captain = TRUE
+	// If we already have a captain, are they a "Captain" rank are we allowing multiple of them to be assigned?
+	else if(SSjob.always_promote_captain_job && (rank == "Captain"))
+		is_captain = TRUE
+
+	var/equip = SSjob.EquipRank(character, rank, TRUE, is_captain)
 	if(isliving(equip)) //Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 

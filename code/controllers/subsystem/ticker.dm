@@ -409,7 +409,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
 			var/player_assigned_role = new_player_human.mind.assigned_role
-			var/player_is_captain = (picked_spare_id_candidate == new_player_mob) || (player_assigned_role == "Captain")
+			var/player_is_captain = (picked_spare_id_candidate == new_player_mob) || (SSjob.always_promote_captain_job && (player_assigned_role == "Captain"))
 			if(player_is_captain)
 				captainless = FALSE
 			if(player_assigned_role != new_player_human.mind.special_role)

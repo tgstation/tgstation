@@ -160,7 +160,7 @@
 		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
 
 	if(!visualsOnly && is_captain)
-		var/is_acting_captain =  (title != "Captain")
+		var/is_acting_captain = (title != "Captain")
 		SSjob.promote_to_captain(H, is_acting_captain)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
