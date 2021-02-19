@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 //use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
 
 ///assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
-//Must be used before adding to a gas. May be used before reading from a gas.
+///Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
 	ASSERT_GAS(gas_id, src)
 
