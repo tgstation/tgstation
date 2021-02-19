@@ -129,7 +129,7 @@
 	for(var/obj/object in get_environment(a, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
-			LAZYADDASSOC(.["instances"], item.type, item)
+			LAZYADDASSOCLIST(.["instances"], item.type, item)
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
@@ -144,7 +144,7 @@
 							.["other"][reagent.type] += reagent.volume
 				.["other"][item.type] += 1
 		else if (ismachinery(object))
-			LAZYADDASSOC(.["machinery"], object.type, object)
+			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 
 
 
