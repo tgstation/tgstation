@@ -96,6 +96,9 @@
 	f_value = number_tiles + heuristic
 	tile.maptext = "[number_tiles],[heuristic],[f_value]"
 
+/proc/HeapPathWeightCompare(datum/jps_node/a, datum/jps_node/b)
+	return b.f_value - a.f_value
+
 /// The datum used to handle the JPS pathfinding, completely self-contained
 /datum/pathfind
 	/// The thing that we're actually trying to path for
@@ -105,7 +108,7 @@
 	/// The turf we're trying to path to (note that this won't track a moving target)
 	var/turf/end
 	/// The open list/stack we pop nodes out from
-	var/datum/heap/path/open
+	var/datum/heap/open
 	/// An assoc list that matches turfs (the key) to their nodes if said turf has one
 	var/list/open_associative
 	/**
@@ -139,7 +142,7 @@
 /datum/pathfind/New(atom/movable/caller, atom/goal, id, max_distance, mintargetdist, simulated_only, avoid)
 	src.caller = caller
 	end = get_turf(goal)
-	open = new()
+	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	open_associative = new() //open list for node check
 	sources = new() //open list for node check
 	src.id = id
