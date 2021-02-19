@@ -23,6 +23,7 @@ imageadd: added some icons and images
 imagedel: deleted some icons and images
 spellcheck: fixed a few typos
 code: changed some code
+documentation: documented some stuff
 refactor: refactored some code
 config: changed some config setting
 admin: messed with admin stuff

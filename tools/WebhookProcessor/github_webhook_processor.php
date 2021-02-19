@@ -585,6 +585,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Balance/Rebalance' => -8,
 		'Sound' => 1,
 		'Sprites' => 1,
+		'Documentation' => 5,
 		'GBP: Reset' => $startingPRBalance - $oldbalance,
 	);
 
@@ -840,6 +841,12 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
 				}
 				break;
+			case 'doc'
+			case 'documentation':
+				if($item != 'documented some stuff'){
+					$tags[] = 'Documentation';
+					$currentchangelogblock[] = array('type' => 'doc', 'body' => $item);
+				}
 			case 'refactor':
 				if($item != 'refactored some code'){
 					$tags[] = 'Refactor';
