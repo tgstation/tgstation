@@ -221,24 +221,12 @@
 	. = ..()
 	if(creation_purity < 0.8)
 		return
-	var/obj/structure/closet/first
-	var/obj/structure/closet/previous
-	for(var/obj/structure/closet/closet in exposed_turf.contents)
-		if(closet.eigen_target)
-			closet.visible_message("[closet] fizzes, it's already linked to something else!")
+	var/list/lockers = list()
+	for(var/obj/structure/closet/closet as anything in exposed_turf.contents)
+		if(!istype(closet, /obj/structure/closet))
 			continue
-		if(!previous)
-			first = closet
-			previous = closet
-			continue
-		closet.convert_to_eigenlocker(previous)
-		previous = closet
-	if(!first)
-		return
-	if(previous == first)
-		return
-	first.convert_to_eigenlocker(previous)
-	first.visible_message("The lockers' eigenstates spilt and merge, linking each of their contents together.")
+		lockers += closet
+	SSeigenstates.create_new_link(lockers)
 
 //eigenstate END
 

@@ -1,0 +1,95 @@
+///Subsystem used to teleport people to a linked web of itterative entries. If one entry is deleted, the 2 around it will forge a link instead.
+SUBSYSTEM_DEF(eigenstates)
+	name = "Eigenstates"
+	flags = SS_NO_INIT | SS_NO_FIRE
+	///The list of objects that something is linked to indexed by UID
+	var/list/eigen_targets = list()
+	///UID to object reference
+	var/list/eigen_id = list()
+	///Unique id counter
+	var/id_counter = 1
+
+///Creates a new link of targets unique to their own id
+/datum/controller/subsystem/eigenstates/proc/create_new_link(targets)
+	eigen_targets[id_counter] = list()
+	for(var/atom/target as anything in targets)
+		var/already_linked = eigen_id[target]
+		if(already_linked)
+			if(!(length(eigen_targets[already_linked]) > 1)) //Eigenstates are notorious for having cliques!
+				target.visible_message("[target] fizzes, it's already linked to something else!")
+				continue
+			target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
+			remove_eigen_entry(target) //clearup for new stuff
+		eigen_targets[id_counter] += target
+		eigen_id += list(target = id_counter)
+		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
+		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
+		var/obj/item = target
+		if(item)
+			item.color = "#9999FF" //Tint the locker slightly.
+			item.alpha = 200
+			do_sparks(3, FALSE, item)
+	eigen_targets[id_counter][1].visible_message("The items' eigenstates spilt and merge, linking each of them together.")
+	id_counter++
+
+///reverts everything back to start
+/datum/controller/subsystem/eigenstates/Destroy()
+	. = ..()
+	var/index = 1
+	while(index < id_counter)
+		for(var/entry in eigen_targets[index])
+			remove_eigen_entry(entry)
+		index++
+	eigen_targets = null
+	eigen_id = null
+	id_counter = 1
+
+///Processes through eigenlinks to ensure that there are no nulls
+/datum/controller/subsystem/eigenstates/proc/repair_eigenlink(id)
+	var/counter = 0
+	for(var/item in eigen_targets[id])
+		if(item == null)
+			eigen_targets[id] -= item
+			continue
+		counter++
+	if(counter == 0)
+		eigen_targets -= id
+		return FALSE
+	return TRUE
+
+///removes an object reference from the master list
+/datum/controller/subsystem/eigenstates/proc/remove_eigen_entry(entry)
+	var/id = eigen_id[entry]
+	eigen_targets[id] -= entry
+	UnregisterSignal(entry, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(entry, COMSIG_CLOSET_INSERT)
+	UnregisterSignal(entry, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
+	if(!length(eigen_targets))
+		eigen_targets -= id
+
+///Finds the object within the master list, then sends the thing to the object's location
+/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/thing_to_send, atom/object_sent_from)
+	var/id = eigen_id[object_sent_from]
+	if(!id)
+		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")
+	if(!repair_eigenlink(id)) //safety
+		return FALSE
+	var/index = eigen_targets[id].Find(object_sent_from)
+	if(!index)
+		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't contain it!")
+	if(index+1 > length(eigen_targets[id]))//If we're at the end of the list (or we're 1 length long)
+		index = 1
+	var/eigen_target = eigen_targets[id][index]
+	if(!eigen_target)
+		CRASH("No eigen target set for the eigenstate component!")
+	do_teleport(thing_to_send, get_turf(eigen_target), 0)
+	if(istype(eigen_target, /obj/structure/closet)) //locker snowflake code
+		var/obj/structure/closet/closet = eigen_target
+		closet.bust_open()
+	return TRUE
+
+///Prevents tool use on the item
+/datum/controller/subsystem/eigenstates/proc/tool_interact(atom/source, mob/user, obj/item/item)
+	to_chat(user, "<span class='notice'>The unstable nature of \the [source] makes it impossible to use the [item] on it!</span>")
+	return COMPONENT_BLOCK_TOOL_ATTACK

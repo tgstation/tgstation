@@ -1,3 +1,5 @@
+#define LOCKER_FULL -1
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -39,9 +41,6 @@
 	var/icon_welded = "welded"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-	/// If this locker has it's eigenstate set to collapse to another linked locker on closure
-	var/obj/structure/closet/eigen_target = null //Hello Mr Tumnus
-
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
@@ -152,7 +151,7 @@
 /obj/structure/closet/proc/take_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in L)
-		if(AM != src && insert(AM) == -1) // limit reached
+		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
 			break
 	for(var/i in reverseRange(L.GetAllContents()))
 		var/atom/movable/thing = i
@@ -178,19 +177,15 @@
 /obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
 	return
 
-/obj/structure/closet/proc/insert(atom/movable/AM)
-	if(contents.len >= storage_capacity)
-		return -1
-	if(insertion_allowed(AM))
-		if(eigen_target) // For teleporting people with linked lockers.
-			do_teleport(AM, get_turf(eigen_target), 0)
-			if(!eigen_target.opened)
-				eigen_target.bust_open()
-			return FALSE
-		AM.forceMove(src)
-		return TRUE
-	else
-		return FALSE
+/obj/structure/closet/proc/insert(atom/movable/inserted)
+  if(length(contents) >= storage_capacity)
+    return LOCKER_FULL //this should be a define or something
+  if(!insertion_allowed(inserted))
+    return FALSE
+  if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted))
+    return TRUE
+  inserted.forceMove(src)
+  return TRUE
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
@@ -265,9 +260,6 @@
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
-	if(eigen_target)
-		to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to use the [W] on it!</span>")
-		return
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(W.tool_behaviour == TOOL_WELDER)
@@ -525,19 +517,12 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += thing
 
-/obj/structure/closet/proc/convert_to_eigenlocker(obj/structure/closet/target)
-	eigen_target = target
-	color = "#9999FF" //Tint the locker slightly.
-	alpha = 200
-	do_sparks(5,FALSE,src)
-
 /obj/structure/closet/singularity_act()
 	dump_contents()
 	..()
 
 /obj/structure/closet/AllowDrop()
 	return TRUE
-
 
 /obj/structure/closet/return_temperature()
 	return

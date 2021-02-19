@@ -637,6 +637,10 @@
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
+///Closets
+///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
+#define COMSIG_CLOSET_INSERT "closet_insert"
+
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
 #define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
