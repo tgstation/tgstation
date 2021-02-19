@@ -11,7 +11,9 @@ SUBSYSTEM_DEF(eigenstates)
 
 ///Creates a new link of targets unique to their own id
 /datum/controller/subsystem/eigenstates/proc/create_new_link(targets)
-	eigen_targets[id_counter] = list()
+	if(length(targets) <= 1)
+		return
+	eigen_targets["[id_counter]"] = list()
 	for(var/atom/target as anything in targets)
 		var/already_linked = eigen_id[target]
 		if(already_linked)
@@ -20,8 +22,8 @@ SUBSYSTEM_DEF(eigenstates)
 				continue
 			target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
 			remove_eigen_entry(target) //clearup for new stuff
-		eigen_targets[id_counter] += target
-		eigen_id += list(target = id_counter)
+		eigen_targets["[id_counter]"] += target
+		eigen_id += list(target = "[id_counter]")
 		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
 		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
@@ -30,7 +32,10 @@ SUBSYSTEM_DEF(eigenstates)
 			item.color = "#9999FF" //Tint the locker slightly.
 			item.alpha = 200
 			do_sparks(3, FALSE, item)
-	eigen_targets[id_counter][1].visible_message("The items' eigenstates spilt and merge, linking each of them together.")
+	if(length(eigen_targets["[id_counter]"]) <= 1)
+		eigen_targets["[id_counter]"] = null
+		return
+	eigen_targets["[id_counter]"][1].visible_message("The items' eigenstates spilt and merge, linking each of them together.")
 	id_counter++
 
 ///reverts everything back to start
@@ -38,7 +43,7 @@ SUBSYSTEM_DEF(eigenstates)
 	. = ..()
 	var/index = 1
 	while(index < id_counter)
-		for(var/entry in eigen_targets[index])
+		for(var/entry in eigen_targets["[index]"])
 			remove_eigen_entry(entry)
 		index++
 	eigen_targets = null
@@ -69,7 +74,7 @@ SUBSYSTEM_DEF(eigenstates)
 		eigen_targets -= id
 
 ///Finds the object within the master list, then sends the thing to the object's location
-/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/thing_to_send, atom/object_sent_from)
+/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/thing_to_send)
 	var/id = eigen_id[object_sent_from]
 	if(!id)
 		CRASH("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")

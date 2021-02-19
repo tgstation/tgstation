@@ -226,6 +226,8 @@
 		if(!istype(closet, /obj/structure/closet))
 			continue
 		lockers += closet
+	if(!length(lockers))
+		return
 	SSeigenstates.create_new_link(lockers)
 
 //eigenstate END
