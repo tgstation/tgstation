@@ -660,7 +660,7 @@
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, (change_overlay ? 4 : 1), clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal > TINT_LIGHT)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, (change_overlay ? 4 : 1), clamp(tinttotal * 100, 0, 255))
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, (change_overlay ? 4 : 3), clamp(tinttotal * 100, 0, 255))
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
