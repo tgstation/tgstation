@@ -197,6 +197,7 @@
 
 	l_code = SSid_access.spare_id_safe_code
 	l_set = TRUE
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)
