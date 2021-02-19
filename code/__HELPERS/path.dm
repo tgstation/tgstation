@@ -42,11 +42,6 @@
 #define CAN_STEP(cur_turf, next) (next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
-/**
- * This helper reverses directions for the purposes of [turf/proc/LinkBlockedWithAccess], which uses it for [obj/proc/CanAStarPass]
- * The 85 flips the odd bits, while the 170 flips the even bits
- */
-#define PATH_REVERSE_DIR(adir) (((adir & 85)<<1)|((adir & 170)>>1))
 /// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
 #define PATH_START	-1
 
@@ -212,10 +207,7 @@
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
 
-		var/closeenough
-		if(mintargetdist)
-			closeenough = (get_dist(current_turf, end) <= mintargetdist)
-		if(current_turf == end || closeenough)
+		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
 			var/datum/jps_node/final_node = new(current_turf, unwind_node, steps_taken)
 			sources[current_turf] = original_turf
 			unwind_path(final_node)
@@ -272,11 +264,8 @@
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
 
-		var/closeenough
-		if(mintargetdist)
-			closeenough = (get_dist(current_turf, end) <= mintargetdist)
-		if(current_turf == end || closeenough)
-			var/datum/jps_node/final_node = new(current_turf,unwind_node, steps_taken)
+		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
+			var/datum/jps_node/final_node = new(current_turf, unwind_node, steps_taken)
 			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
@@ -342,7 +331,7 @@
 		if(!iter_windoor.CanAStarPass(ID, actual_dir))
 			return TRUE
 
-	var/reverse_dir = PATH_REVERSE_DIR(actual_dir)
+	var/reverse_dir = get_dir(destination_turf, src)
 	for(var/obj/iter_object in destination_turf)
 		if(!iter_object.CanAStarPass(ID, reverse_dir, caller))
 			return TRUE
@@ -352,4 +341,3 @@
 #undef PATH_START
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE
-#undef PATH_REVERSE_DIR
