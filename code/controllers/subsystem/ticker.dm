@@ -403,7 +403,8 @@ SUBSYSTEM_DEF(ticker)
 					spare_id_candidates += new_player_mob
 			CHECK_TICK
 
-	picked_spare_id_candidate = pick(spare_id_candidates)
+	if(length(spare_id_candidates))
+		picked_spare_id_candidate = pick(spare_id_candidates)
 
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
