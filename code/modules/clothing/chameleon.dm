@@ -282,7 +282,7 @@
 	var/obj/item/pda/agent_pda = target
 	if(istype(agent_pda))
 		agent_pda.update_label()
-		agent_pda.update_icon()
+		agent_pda.update_appearance()
 
 /datum/action/item_action/chameleon/change/pda/apply_job_data(datum/job/job_datum)
 	..()

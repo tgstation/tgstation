@@ -39,11 +39,11 @@
 	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent
 
-/mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/mob/living/simple_animal/hostile/retaliate/clown/Life()
+/mob/living/simple_animal/hostile/retaliate/clown/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(banana_time && banana_time < world.time)
 		var/turf/T = get_turf(src)
@@ -334,7 +334,7 @@
 		return ..()
 	eat_atom(attacked_target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)

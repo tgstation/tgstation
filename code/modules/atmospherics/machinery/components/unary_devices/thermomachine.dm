@@ -31,7 +31,7 @@
 	. = ..()
 	initialize_directions = dir
 	RefreshParts()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/proc/swap_function()
 	cooling = !cooling
@@ -45,7 +45,7 @@
 		icon_state_open = "heater-o"
 	target_temperature = T20C
 	RefreshParts()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
@@ -72,17 +72,19 @@
 			calculated_laser_rating += laser.rating
 		max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 
-/obj/machinery/atmospherics/components/unary/thermomachine/update_icon()
-	cut_overlays()
-
+/obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(on && is_operational)
+		return ..()
+	if(on && is_operational)
 		icon_state = icon_state_on
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
-	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
+/obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
+	. = ..()
+	. += getpipeimage(icon, "pipe", dir, , piping_layer)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()
@@ -221,14 +223,14 @@
 				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
 	if(!can_interact(user))
 		return
 	on = !on
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	icon_state = "freezer"

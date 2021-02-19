@@ -30,12 +30,12 @@
 		var/datum/bank_account/bank_account = new /datum/bank_account(inserted_id.registered_name)
 		inserted_id.registered_account = bank_account
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
-		update_icon()
+		update_appearance()
 		return
 	return ..()
 
 
-/obj/machinery/accounting/attack_hand(mob/user)
+/obj/machinery/accounting/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -51,21 +51,26 @@
 /obj/machinery/accounting/proc/remove_card()
 	UnregisterSignal(inserted_id, COMSIG_PARENT_QDELETING)
 	inserted_id = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/accounting/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	luminosity = 0
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-open", layer, plane, dir, alpha)
 		return
-	luminosity = 1
 	if(inserted_id)
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
-	else
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		return
+
+	SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
+	SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+
+/obj/machinery/accounting/update_appearance(updates)
+	. = ..()
+	if((machine_stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
+		luminosity = 0
+		return
+	luminosity = 1

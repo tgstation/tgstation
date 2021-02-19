@@ -6,7 +6,6 @@
 // These three defines control how fast and efficient cryo is
 #define CRYO_MULTIPLY_FACTOR 25
 #define CRYO_TX_QTY 0.5
-#define CRYO_THROTTLE_CTR_MAX 10
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
 #define CRYO_BREAKOUT_TIME 30 SECONDS
@@ -90,7 +89,6 @@
 	var/conduction_coefficient = 0.3
 
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/reagent_transfer = 0
 	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
@@ -124,7 +122,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/set_occupant(atom/movable/new_occupant)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
@@ -185,10 +183,13 @@
 		beaker.forceMove(drop_location())
 		beaker = null
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_icon_state()
+	icon_state = (state_open) ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	. = ..()
 	plane = initial(plane)
-	icon_state = (state_open) ? "pod-open" : (on && is_operational) ? "pod-on" : "pod-off"
 
 GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_WINDOW_LAYER + 0.02))
 GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_WINDOW_LAYER + 0.02))
@@ -199,10 +200,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		. += "pod-panel"
 	if(state_open)
 		return
-	if(on && is_operational)
-		. += GLOB.cryo_overlay_cover_on
-	else
-		. += GLOB.cryo_overlay_cover_off
+	. += (on && is_operational) ? GLOB.cryo_overlay_cover_on : GLOB.cryo_overlay_cover_off
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
@@ -214,7 +212,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
 	. = on
 	on = new_value
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -268,14 +266,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 1000 * delta_time)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 1000 * delta_time)
 		if(beaker)
-			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, CRYO_TX_QTY * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
-				consume_gas = TRUE
-			reagent_transfer += 1
-			if(reagent_transfer >= CRYO_THROTTLE_CTR_MAX * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
-				reagent_transfer = 0
-
-	return 1
+			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+			consume_gas = TRUE
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos(delta_time)
 	..()
@@ -322,7 +315,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
-		
+
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
@@ -337,7 +330,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		M.forceMove(get_turf(src))
 	set_occupant(null)
 	flick("pod-open-anim", src)
-	reagent_transfer = efficiency * CRYO_THROTTLE_CTR_MAX * 0.5 // wait before injecting the next occupant
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
@@ -400,7 +392,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		|| default_change_direction_wrench(user, I) \
 		|| default_pry_open(I) \
 		|| default_deconstruction_crowbar(I))
-		update_icon()
+		update_appearance()
 		return
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
@@ -547,6 +539,5 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
 #undef CRYO_TX_QTY
-#undef CRYO_THROTTLE_CTR_MAX
 #undef CRYO_MIN_GAS_MOLES
 #undef CRYO_BREAKOUT_TIME

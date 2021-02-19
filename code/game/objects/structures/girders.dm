@@ -165,7 +165,7 @@
 					qdel(src)
 				return
 
-		if(S.sheettype != "runed")
+		if(!S.has_unique_girder)
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
@@ -212,7 +212,7 @@
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
-		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return
 			to_chat(user, "<span class='notice'>You fit the pipe into \the [src].</span>")
@@ -424,8 +424,8 @@
 			transfer_fingerprints_to(B)
 			qdel(src)
 
-	else if(istype(W, /obj/item/stack/tile/bronze))
-		var/obj/item/stack/tile/bronze/B = W
+	else if(istype(W, /obj/item/stack/sheet/bronze))
+		var/obj/item/stack/sheet/bronze/B = W
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
 			return
