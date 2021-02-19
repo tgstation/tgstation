@@ -82,7 +82,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life()
+/mob/living/simple_animal/hostile/statue/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()

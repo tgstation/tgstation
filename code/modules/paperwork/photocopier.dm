@@ -243,7 +243,7 @@
 	copied_paper.info += copied_info
 	copied_paper.info += "</font>"
 	copied_paper.name = paper_copy.name
-	copied_paper.update_icon()
+	copied_paper.update_appearance()
 	copied_paper.stamps = paper_copy.stamps
 	if(paper_copy.stamped)
 		copied_paper.stamped = paper_copy.stamped.Copy()
