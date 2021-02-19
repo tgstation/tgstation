@@ -490,3 +490,18 @@
 	key_third_person = "exhales"
 	message = "breathes out."
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/amogus
+	key = "amogus"
+	key_third_person = "amogus"
+	message = "spews amogus."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/amogus/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			return 'sound/voice/human/amogus.ogg'
