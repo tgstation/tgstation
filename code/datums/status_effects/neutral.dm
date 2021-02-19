@@ -491,7 +491,6 @@
 		//phase 4
 		if(151 to INFINITY)
 			//clean up and remove status
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "Eigenstasium wild rides ridden")
 			do_sparks(5, FALSE, owner)
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
@@ -507,6 +506,7 @@
 			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
 			mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
 			if(!human_mob)
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
