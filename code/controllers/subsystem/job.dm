@@ -41,6 +41,8 @@ SUBSYSTEM_DEF(job)
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
+	/// If TRUE, the "Captain" job will always be given the
+	var/always_promote_captain_job = TRUE
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.HACK_LoadMapConfig()
@@ -771,7 +773,7 @@ SUBSYSTEM_DEF(job)
 	. = ..()
 	var/safe_code = SSid_access.spare_id_safe_code
 
-	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
+	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
 
 /datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
 	var/id_safe_code = SSid_access.spare_id_safe_code
@@ -792,5 +794,12 @@ SUBSYSTEM_DEF(job)
 		to_chat(new_captain, "<span class='notice'>Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where].</span>")
 	else
 		to_chat(new_captain, "<span class='notice'>You can find the code to obtain your spare ID from the secure safe on the Bridge [where].</span>")
+
+	// Force-give their ID card bridge access.
+	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)
+	if(id_slot)
+		var/obj/item/card/id/id_card = id_slot.GetID()
+		if(!(ACCESS_HEADS in id_card.access))
+			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
 
 	assigned_captain = TRUE
