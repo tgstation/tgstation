@@ -90,11 +90,11 @@
 	/// The open list/stack we pop nodes out from
 	var/datum/heap/path/open
 	/// An assoc list that matches turfs (the key) to their nodes if said turf has one
-	var/list/openc
+	var/list/open_associative
 	/**
 	 * An assoc list that serves as the closed list & tracks what turfs came from where. Key is the turf, and the value is what turf it came from
 	 *
-	 * Nodes are only created & added to the heap/openc once a turf is found "interesting", but due to recursion, we may not know it's interesting until we finish processing its children.
+	 * Nodes are only created & added to the heap/open_associative once a turf is found "interesting", but due to recursion, we may not know it's interesting until we finish processing its children.
 	 * Inserting to this list is cheaper than making a node datum + inserting into the heap, so everything goes in here immediately, and what we use to recreate the path at the end
 	 */
 	var/list/sources
@@ -123,7 +123,7 @@
 	src.caller = caller
 	end = get_turf(goal)
 	open = new()
-	openc = new() //open list for node check
+	open_associative = new() //open list for node check
 	sources = new() //open list for node check
 	src.id = id
 	src.maxnodes = maxnodes
@@ -145,20 +145,20 @@
 		maxnodedepth = maxnodes
 
 	//initialization
-	var/datum/jps_node/cur = new (start,null,0,end)//current processed turf
-	open.Insert(cur)
-	openc[start] = cur
+	var/datum/jps_node/current_processed_node = new (start, null, 0, end)
+	open.insert(current_processed_node)
+	open_associative[start] = current_processed_node
 	sources[start] = PATH_START
 	//then run the main loop
-	while(!open.IsEmpty() && !path)
+	while(!open.is_empty() && !path)
 		if(!caller)
 			return
-		cur = open.Pop() //get the lower f_value turf in the open list
+		current_processed_node = open.pop() //get the lower f_value turf in the open list
 
-		if((maxnodedepth)&&(cur.number_tiles > maxnodedepth))//if too many steps, don't process that path
+		if((maxnodedepth)&&(current_processed_node.number_tiles > maxnodedepth))//if too many steps, don't process that path
 			continue
 
-		var/turf/current_turf = cur.tile
+		var/turf/current_turf = current_processed_node.tile
 		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
 			lateral_scan_spec(current_turf, scan_direction)
 
@@ -168,9 +168,9 @@
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
-		for(var/i = 1 to round(0.5*path.len))
-			path.Swap(i,length(path)-i+1)
-	openc = null //cleaning after us
+		for(var/i = 1 to round(0.5 * length(path)))
+			path.Swap(i, length(path) - i + 1)
+	open_associative = null //cleaning after us
 	sources = null
 	caller.calculating_path = FALSE
 	return path
@@ -195,12 +195,12 @@
 /// For performing a scan in a given lateral direction
 /datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
-	var/datum/jps_node/unwind_node = openc[original_turf]
+	var/datum/jps_node/unwind_node = open_associative[original_turf]
 	while(!unwind_node)
 		var/turf/older = sources[original_turf]
 		if(!older)
 			CRASH("JPS error: Lateral scan couldn't find a home node")
-		unwind_node = openc[older]
+		unwind_node = open_associative[older]
 
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
@@ -218,7 +218,7 @@
 		if(mintargetdist)
 			closeenough = (get_dist(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
-			var/datum/jps_node/final_node = new(current_turf,unwind_node, steps_taken)
+			var/datum/jps_node/final_node = new(current_turf, unwind_node, steps_taken)
 			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
@@ -248,14 +248,14 @@
 
 		if(interesting)
 			var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
-			openc[current_turf] = newnode
-			open.Insert(newnode)
+			open_associative[current_turf] = newnode
+			open.insert(newnode)
 			return
 
 /// For performing a scan in a given diagonal direction
 /datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
-	var/datum/jps_node/unwind_node = openc[original_turf]
+	var/datum/jps_node/unwind_node = open_associative[original_turf]
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
@@ -263,7 +263,7 @@
 		var/turf/older = sources[original_turf]
 		if(!older)
 			CRASH("JPS error: Diagonal scan couldn't find a home node")
-		unwind_node = openc[older]
+		unwind_node = open_associative[older]
 
 	while(TRUE)
 		if(path) // lazy way to force out when done, do better
@@ -306,7 +306,7 @@
 					lateral_scan_spec(current_turf, EAST)
 					lateral_scan_spec(current_turf, NORTH)
 			if(SOUTHWEST)
-				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					interesting = TRUE
 					return
 				else
@@ -321,8 +321,8 @@
 
 		if(interesting)
 			var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
-			openc[current_turf] = newnode
-			open.Insert(newnode)
+			open_associative[current_turf] = newnode
+			open.insert(newnode)
 			return
 
 #undef PATH_START

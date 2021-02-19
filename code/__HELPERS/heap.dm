@@ -10,18 +10,18 @@
 	L = new()
 	cmp = compare
 
-/datum/heap/proc/IsEmpty()
+/datum/heap/proc/is_empty()
 	return !length(L)
 
-//Insert and place at its position a new node in the heap
-/datum/heap/proc/Insert(atom/A)
+//insert and place at its position a new node in the heap
+/datum/heap/proc/insert(atom/A)
 
 	L.Add(A)
-	Swim(length(L))
+	swim(length(L))
 
 //removes and returns the first element of the heap
 //(i.e the max or the min dependant on the comparison function)
-/datum/heap/proc/Pop()
+/datum/heap/proc/pop()
 	if(!length(L))
 		return 0
 	. = L[1]
@@ -29,10 +29,10 @@
 	L[1] = L[length(L)]
 	L.Cut(length(L))
 	if(length(L))
-		Sink(1)
+		sink(1)
 
 //Get a node up to its right position in the heap
-/datum/heap/proc/Swim(index)
+/datum/heap/proc/swim(index)
 	var/parent = round(index * 0.5)
 
 	while(parent > 0 && (call(cmp)(L[index],L[parent]) > 0))
@@ -41,17 +41,17 @@
 		parent = round(index * 0.5)
 
 //Get a node down to its right position in the heap
-/datum/heap/proc/Sink(index)
-	var/g_child = GetGreaterChild(index)
+/datum/heap/proc/sink(index)
+	var/g_child = get_greater_child(index)
 
 	while(g_child > 0 && (call(cmp)(L[index],L[g_child]) < 0))
 		L.Swap(index,g_child)
 		index = g_child
-		g_child = GetGreaterChild(index)
+		g_child = get_greater_child(index)
 
 //Returns the greater (relative to the comparison proc) of a node children
 //or 0 if there's no child
-/datum/heap/proc/GetGreaterChild(index)
+/datum/heap/proc/get_greater_child(index)
 	if(index * 2 > length(L))
 		return 0
 
@@ -64,11 +64,11 @@
 		return index * 2
 
 //Replaces a given node so it verify the heap condition
-/datum/heap/proc/ReSort(atom/A)
+/datum/heap/proc/resort(atom/A)
 	var/index = L.Find(A)
 
-	Swim(index)
-	Sink(index)
+	swim(index)
+	sink(index)
 
 /datum/heap/proc/List()
 	. = L.Copy()
@@ -76,7 +76,7 @@
 /// A specific implementation of a heap with the procs for dealing with pathfinding baked in, for maximum performance
 /datum/heap/path
 
-/datum/heap/path/Swim(index)
+/datum/heap/path/swim(index)
 	var/parent = round(index * 0.5)
 
 	while(parent > 0)
@@ -88,8 +88,8 @@
 		index = parent
 		parent = round(index * 0.5)
 
-/datum/heap/path/Sink(index)
-	var/g_child = GetGreaterChild(index)
+/datum/heap/path/sink(index)
+	var/g_child = get_greater_child(index)
 
 	while(g_child > 0)
 		var/datum/jps_node/a_node = L[index]
@@ -98,9 +98,9 @@
 			break
 		L.Swap(index,g_child)
 		index = g_child
-		g_child = GetGreaterChild(index)
+		g_child = get_greater_child(index)
 
-/datum/heap/path/GetGreaterChild(index)
+/datum/heap/path/get_greater_child(index)
 	if(index * 2 > length(L))
 		return 0
 
