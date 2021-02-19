@@ -71109,6 +71109,10 @@
 	},
 /obj/item/healthanalyzer,
 /obj/item/hand_labeler,
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = 5;
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "mzV" = (
@@ -85433,10 +85437,6 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
-	},
-/obj/machinery/status_display/evac{
-	pixel_x = 32;
-	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)

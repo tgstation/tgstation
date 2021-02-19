@@ -39760,9 +39760,6 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "gOe" = (
-/obj/item/radio/intercom{
-	pixel_y = 29
-	},
 /obj/machinery/modular_computer/console/preset/engineering,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -41684,6 +41681,9 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = -27
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -54425,6 +54425,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_y = 35
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
