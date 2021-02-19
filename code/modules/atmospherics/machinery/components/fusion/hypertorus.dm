@@ -108,14 +108,15 @@
 			node.addMember(src)
 		SSair.add_to_rebuild_queue(src)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/update_icon()
-	. = ..()
+/obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(active)
+		return ..()
+	if(active)
 		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
@@ -411,22 +412,22 @@
 		return
 	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
 	active = TRUE
-	update_icon()
+	update_appearance()
 	linked_interface.active = TRUE
-	linked_interface.update_icon()
+	linked_interface.update_appearance()
 	RegisterSignal(linked_interface, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	linked_input.active = TRUE
-	linked_input.update_icon()
+	linked_input.update_appearance()
 	RegisterSignal(linked_input, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	linked_output.active = TRUE
-	linked_output.update_icon()
+	linked_output.update_appearance()
 	RegisterSignal(linked_output, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	linked_moderator.active = TRUE
-	linked_moderator.update_icon()
+	linked_moderator.update_appearance()
 	RegisterSignal(linked_moderator, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
-		corner.update_icon()
+		corner.update_appearance()
 		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	soundloop = new(list(src), TRUE)
 	soundloop.volume = 5
@@ -445,27 +446,27 @@
 	if(!active)
 		return
 	active = FALSE
-	update_icon()
+	update_appearance()
 	if(linked_interface)
 		linked_interface.active = FALSE
-		linked_interface.update_icon()
+		linked_interface.update_appearance()
 		linked_interface = null
 	if(linked_input)
 		linked_input.active = FALSE
-		linked_input.update_icon()
+		linked_input.update_appearance()
 		linked_input = null
 	if(linked_output)
 		linked_output.active = FALSE
-		linked_output.update_icon()
+		linked_output.update_appearance()
 		linked_output = null
 	if(linked_moderator)
 		linked_moderator.active = FALSE
-		linked_moderator.update_icon()
+		linked_moderator.update_appearance()
 		linked_moderator = null
 	if(corners.len)
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
-			corner.update_icon()
+			corner.update_appearance()
 		corners = list()
 	QDEL_NULL(soundloop)
 
@@ -1154,13 +1155,15 @@
 		return
 	return ..()
 
-/obj/machinery/hypertorus/update_icon()
+/obj/machinery/hypertorus/update_icon_state()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(active)
+		return ..()
+	if(active)
 		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"

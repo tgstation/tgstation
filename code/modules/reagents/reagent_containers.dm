@@ -196,23 +196,25 @@
 /// Updates the icon of the container when the reagents change. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
-	update_icon()
+	update_appearance()
 	return NONE
 
 /obj/item/reagent_containers/update_overlays()
 	. = ..()
 	if(!fill_icon_thresholds)
 		return
-	if(reagents.total_volume)
-		var/fill_name = fill_icon_state? fill_icon_state : icon_state
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
+	if(!reagents.total_volume)
+		return
 
-		var/percent = round((reagents.total_volume / volume) * 100)
-		for(var/i in 1 to fill_icon_thresholds.len)
-			var/threshold = fill_icon_thresholds[i]
-			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
-			if(threshold <= percent && percent < threshold_end)
-				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
+	var/fill_name = fill_icon_state? fill_icon_state : icon_state
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
 
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling
+	var/percent = round((reagents.total_volume / volume) * 100)
+	for(var/i in 1 to fill_icon_thresholds.len)
+		var/threshold = fill_icon_thresholds[i]
+		var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
+		if(threshold <= percent && percent < threshold_end)
+			filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
+
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling

@@ -1824,7 +1824,7 @@
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
 				fourfiveeight.boxtag_set = TRUE
-				fourfiveeight.update_icon()
+				fourfiveeight.update_appearance()
 				qdel(P)
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
@@ -1859,7 +1859,7 @@
 			P.pizza = new replacement_type
 			P.boxtag = P.pizza.boxtag
 			P.boxtag_set = TRUE
-			P.update_icon()
+			P.update_appearance()
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \

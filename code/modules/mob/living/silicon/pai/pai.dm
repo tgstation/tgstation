@@ -97,7 +97,7 @@
 	if(A == hacking_cable)
 		hacking_cable = null
 		if(!QDELETED(card))
-			card.update_icon()
+			card.update_appearance()
 	if(A == internal_instrument)
 		internal_instrument = null
 	if(A == newscaster)
@@ -121,7 +121,7 @@
 		card.forceMove(drop_location())
 		card.pai = null //these are otherwise handled by paicard/handle_atom_del()
 		card.emotion_icon = initial(card.emotion_icon)
-		card.update_icon()
+		card.update_appearance()
 	GLOB.pai_list -= src
 	return ..()
 
@@ -175,7 +175,7 @@
 		hackdoor = null
 		QDEL_NULL(hacking_cable)
 		if(!QDELETED(card))
-			card.update_icon()
+			card.update_appearance()
 		return
 	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
 		paiInterface()
@@ -303,7 +303,7 @@
 			T.visible_message("<span class='warning'>[hacking_cable] rapidly retracts back into its spool.</span>", "<span class='hear'>You hear a click and the sound of wire spooling rapidly.</span>")
 			QDEL_NULL(hacking_cable)
 			if(!QDELETED(card))
-				card.update_icon()
+				card.update_appearance()
 		else if(hacking)
 			process_hack(delta_time, times_fired)
 	silent = max(silent - (0.5 * delta_time), 0)

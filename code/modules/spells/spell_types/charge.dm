@@ -89,7 +89,7 @@
 						if(istype(C.loc, /obj/item/gun))
 							var/obj/item/gun/G = C.loc
 							G.process_chamber()
-						item.update_icon()
+						item.update_appearance()
 						charged_item = item
 						break
 		if(!charged_item)

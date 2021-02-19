@@ -321,7 +321,7 @@
 		icon_state = "rust_walker_n"
 	else if(newdir == SOUTH)
 		icon_state = "rust_walker_s"
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
 	. = ..()
