@@ -2358,7 +2358,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustAllImmobility(-40)
 		M.adjustStaminaLoss(-10, FALSE)
-		M.adjustToxLoss(-2, FALSE)
+		M.adjustToxLoss(-2, FALSE, TRUE)
 		M.adjustOxyLoss(-2, FALSE)
 		M.adjustBruteLoss(-2, FALSE)
 		M.adjustFireLoss(-2, FALSE)
