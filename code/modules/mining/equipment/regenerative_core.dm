@@ -64,7 +64,7 @@
 		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 	qdel(src)
 
-/obj/item/organ/regenerative_core/on_life()
+/obj/item/organ/regenerative_core/on_life(delta_time, times_fired)
 	..()
 	if(owner.health <= owner.crit_threshold)
 		ui_action_click()

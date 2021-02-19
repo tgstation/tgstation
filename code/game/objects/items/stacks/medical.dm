@@ -129,7 +129,7 @@
 	amount = 6
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = PAYCHECK_ASSISTANT * 2
-	absorption_rate = 0.25
+	absorption_rate = 0.125
 	absorption_capacity = 5
 	splint_factor = 0.35
 	merge_type = /obj/item/stack/medical/gauze
@@ -191,7 +191,7 @@
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
 	self_delay = 6 SECONDS
 	other_delay = 3 SECONDS
-	absorption_rate = 0.15
+	absorption_rate = 0.075
 	absorption_capacity = 4
 	merge_type = /obj/item/stack/medical/gauze/improvised
 

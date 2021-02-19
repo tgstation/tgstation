@@ -22,13 +22,13 @@
 	icon_state = "[base_icon_state][inflamed ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/appendix/on_life()
+/obj/item/organ/appendix/on_life(delta_time, times_fired)
 	..()
 	if(!(organ_flags & ORGAN_FAILING))
 		return
 	var/mob/living/carbon/M = owner
 	if(M)
-		M.adjustToxLoss(4, TRUE, TRUE) //forced to ensure people don't use it to gain tox as slime person
+		M.adjustToxLoss(2 * delta_time, TRUE, TRUE) //forced to ensure people don't use it to gain tox as slime person
 
 /obj/item/organ/appendix/get_availability(datum/species/S)
 	return !(TRAIT_NOHUNGER in S.inherent_traits)

@@ -229,7 +229,7 @@
 		owner.mind.current = null
 	return ..()
 
-/obj/item/organ/brain/on_life()
+/obj/item/organ/brain/on_life(delta_time, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
