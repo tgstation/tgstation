@@ -16,22 +16,30 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/centcom/officer
-	name = "\improper CentCom Turtleneck Suit"
+	name = "\improper CentCom turtleneck suit"
 	desc = "A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe."
 	icon_state = "officer"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/centcom/officer/replica
+	name = "\improper CentCom turtleneck replica"
+	desc = "A cheap copy of the CentCom turtleneck! A Donk Co. logo can be seen on the collar."
+
 /obj/item/clothing/under/rank/centcom/officer_skirt
-	name = "\improper CentCom Turtleneck Skirt"
-	desc = "A skirt version of the CentCom Turtleneck, rarer and more sought after than the original."
+	name = "\improper CentCom turtleneck skirt"
+	desc = "A skirt version of the CentCom turtleneck, rarer and more sought after than the original."
 	icon_state = "officer_skirt"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/rank/centcom/officer_skirt/replica
+	name = "\improper CentCom turtleneck skirt replica"
+	desc = "A cheap copy of the CentCom turtleneck skirt! A Donk Co. logo can be seen on the collar."
+
 /obj/item/clothing/under/rank/centcom/centcom_skirt
-	name = "\improper CentCom Officer's Jumpskirt"
+	name = "\improper CentCom officer's jumpskirt"
 	desc = "It's a jumpskirt worn by CentCom's highest-tier Commanders."
 	icon_state = "centcom_skirt"
 	inhand_icon_state = "dg_suit"
