@@ -413,8 +413,8 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/console
 	name = "tram console"
 	desc = "This lets you tell the tram where to go and hopefully it makes it there."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "computer"
+	icon = 'icons/obj/modular_console.dmi'
+	icon_state = "console"
 	layer = 2.3
 	density = TRUE
 
