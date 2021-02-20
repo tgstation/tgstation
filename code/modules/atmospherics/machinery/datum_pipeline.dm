@@ -96,7 +96,7 @@
 	other_atmosmch |= considered_component
 	var/list/returned_airs = considered_component.returnPipenetAirs(src)
 	if (!length(returned_airs) || (null in returned_airs))
-		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [considered_component] \
+		stack_trace("addMachineryMember: Nonexistent (empty list) or null machinery gasmix added to pipeline datum from [considered_component] \
 		which is of type [considered_component.type]. Nearby: ([considered_component.x], [considered_component.y], [considered_component.z])")
 	other_airs |= returned_airs
 

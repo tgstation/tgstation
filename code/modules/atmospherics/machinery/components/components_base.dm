@@ -90,26 +90,16 @@
 			P.build_pipeline(src)
 
 /obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
-	// Crash when we call a null pipenet here. Pretty straightforward.
 	if(!reference)
 		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
 
-	// Disconnect each air mixtures from the other_airs list in the pipeline. 
-	// Also nullifies the specific entry in the parents list. This is mainly used when a machinery is rotated.
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)
-			reference.other_airs -= airs[i]
-			parents[i] = null
+			reference.other_airs -= airs[i] // Disconnects from the pieline side
+			parents[i] = null // Disconnects from the machinery side.
 
-	// Deletes any reference of the atmos machinery as listed in the other_atmosmch list from the pipeine.
 	reference.other_atmosmch -= src
-
-	// Cleans pipenet up
-	if(!length(reference.other_atmosmch) && !length(reference.members))
-		if(QDESTROYING(reference))
-			CRASH("nullifyPipenet() called on qdeleting [reference]")
-		qdel(reference)
-
+	
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline
 	 *  is projected to have no member and cause GC problems.
@@ -118,13 +108,13 @@
 	 *	again every time they are qdeleted.
 	 */
 
+	if(!length(reference.other_atmosmch) && !length(reference.members))
+		if(QDESTROYING(reference))
+			CRASH("nullifyPipenet() called on qdeleting [reference]")
+		qdel(reference)
+
 /obj/machinery/atmospherics/components/returnPipenetAirs(datum/pipeline/reference)
 	var/list/returned_air = list()
-	// We return a list filled with a single null entry if we dont have a proper parents list.
-	// This will get picked up by addMachineryMember to call a stack_trace.
-	if (!parents || !length(parents))
-		returned_air += null
-		return returned_air
 
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)
