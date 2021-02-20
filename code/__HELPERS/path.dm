@@ -182,10 +182,10 @@
 
 		var/turf/current_turf = current_processed_node.tile
 		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
-			lateral_scan_spec(current_turf, scan_direction, TRUE)
+			lateral_scan_spec(current_turf, scan_direction, TRUE, parent_node = current_processed_node)
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
-			diag_scan_spec(current_turf, scan_direction)
+			diag_scan_spec(current_turf, scan_direction, current_processed_node)
 
 		CHECK_TICK
 	//reverse the path to get it from start to finish
@@ -226,7 +226,7 @@
 		unwind_node = unwind_node.previous_node
 
 /// For performing a scan in a given lateral direction
-/datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading, base_level = FALSE)
+/datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading, base_level = FALSE, datum/jps_node/parent_node)
 	var/steps_taken = 0
 	var/datum/jps_node/unwind_node = open_associative[original_turf]
 	while(!unwind_node)
@@ -248,7 +248,7 @@
 			return
 
 		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
-			var/datum/jps_node/final_node = new(current_turf, (base_level ? unwind_node : null), steps_taken)
+			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			sources[current_turf] = original_turf
 			if(base_level)
 				unwind_path(final_node)
@@ -258,7 +258,7 @@
 		else
 			sources[current_turf] = original_turf
 
-		if(unwind_node.number_tiles + steps_taken > max_distance)
+		if(parent_node && parent_node.number_tiles + steps_taken > max_distance)
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
@@ -279,14 +279,15 @@
 
 		if(interesting)
 			current_turf.color = COLOR_ORANGE
-			var/datum/jps_node/newnode = new(current_turf, (base_level ? unwind_node : null), steps_taken)
-			open_associative[current_turf] = newnode
+			var/datum/jps_node/newnode = new(current_turf, parent_node, steps_taken)
+			if(base_level)
+				open_associative[current_turf] = newnode
 			if(base_level)
 				open.insert(newnode)
 			return newnode
 
 /// For performing a scan in a given diagonal direction
-/datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading)
+/datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
 	var/steps_taken = 0
 	var/datum/jps_node/unwind_node = open_associative[original_turf]
 	var/turf/current_turf = original_turf
