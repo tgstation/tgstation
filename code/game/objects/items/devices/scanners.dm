@@ -252,16 +252,16 @@ GENE SCANNER
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			var/dmgreport = "<span class='info ml-1'>General status:</span>\
 							<table class='ml-2'><tr><font face='Verdana'>\
-							<td style='width:7em;'><font color='#66cccc'>Damage:</font></td>\
+							<td style='width:7em;'><font color='#66cccc'><b>Damage:</b></font></td>\
 							<td style='width:5em;'><font color='#cc3333'><b>Brute</b></font></td>\
 							<td style='width:4em;'><font color='#ff9933'><b>Burn</b></font></td>\
 							<td style='width:4em;'><font color='#00cc66'><b>Toxin</b></font></td>\
 							<td style='width:8em;'><font color='#00cccc'><b>Suffocation</b></font></td></tr>\
-							<tr><td><font color='#66cc99'>Overall:</font></td>\
-							<td><font color='#cc3333'>[CEILING(brute_loss,1)]</font></td>\
-							<td><font color='#ff9933'>[CEILING(fire_loss,1)]</font></td>\
-							<td><font color='#00cc66'>[CEILING(tox_loss,1)]</font></td>\
-							<td><font color='#33ccff'>[CEILING(oxy_loss,1)]</font></td></tr>"
+							<tr><td><font color='#66cc99'><b>Overall:</b></font></td>\
+							<td><font color='#cc3333'><b>[CEILING(brute_loss,1)]</b></font></td>\
+							<td><font color='#ff9933'><b>[CEILING(fire_loss,1)]</b></font></td>\
+							<td><font color='#00cc66'><b>[CEILING(tox_loss,1)]</b></font></td>\
+							<td><font color='#33ccff'><b>[CEILING(oxy_loss,1)]</b></font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
@@ -318,7 +318,7 @@ GENE SCANNER
 			var/render = FALSE
 			var/toReport = "<span class='info ml-1'>Organs:</span>\
 				<table class='ml-2'><tr>\
-				<td style='width:6em;'><font color='#66cccc'><b>Organ</b></font></td>\
+				<td style='width:6em;'><font color='#66cccc'><b>Organ:</b></font></td>\
 				[advanced ? "<td style='width:3em;'><font color='#66cccc'><b>Dmg</b></font></td>" : ""]\
 				<td style='width:12em;'><font color='#66cccc'><b>Status</b></font></td>"
 
@@ -329,7 +329,7 @@ GENE SCANNER
 				else if (organ.damage > organ.low_threshold) status = "<font color='#ffcc33'>Mildly Damaged</font>"
 				if (status != "")
 					render = TRUE
-					toReport += "<tr><td><font color='#66cc99'>[organ.name]</font></td>\
+					toReport += "<tr><td><font color='#66cc99'>[organ.name]:</font></td>\
 						[advanced ? "<td><font color='#cc3333'>[CEILING(organ.damage,1)]</font></td>" : ""]\
 						<td>[status]</td></tr>"
 
