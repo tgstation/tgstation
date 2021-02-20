@@ -94,16 +94,16 @@
 	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
 
 
-/datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/target, turf/location, control, params)
+/datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
-	if(modifiers["shift"] && (world.time <= source.mob.next_click || source.mob.ShiftClickOn(target)))
+	if(modifiers["shift"] && (world.time <= source.mob.next_click || source.mob.ShiftClickOn(_target)))
 		source.click_intercept_time = world.time
 		return
 	if(modifiers["ctrl"])
 		return
 	if(modifiers["middle"])
 		return
-	if(modifiers["alt"] && (world.time <= source.mob.next_click || source.mob.AltClickOn(target)))
+	if(modifiers["alt"] && (world.time <= source.mob.next_click || source.mob.AltClickOn(_target)))
 		source.click_intercept_time = world.time
 		return
 
@@ -111,18 +111,18 @@
 		return
 	if(!isturf(source.mob.loc)) //No firing inside lockers and stuff.
 		return
-	if(get_dist(source.mob, target) < 2) //Adjacent clicking.
+	if(get_dist(source.mob, _target) < 2) //Adjacent clicking.
 		return
 
 	if(isnull(location)) //Clicking on a screen object.
-		if(target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
+		if(_target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
 			return //If we click and drag on our worn backpack, for example, we want it to open instead.
-		target = params2turf(modifiers["screen-loc"], get_turf(source.eye), source)
-		if(!target)
+		_target = params2turf(modifiers["screen-loc"], get_turf(source.eye), source)
+		if(!_target)
 			CRASH("Failed to get the turf under clickcatcher")
 		//icon-x/y is relative to the object clicked. click_catcher may occupy several tiles. Here we convert them to the proper offsets relative to the tile.
 
-	if(SEND_SIGNAL(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, source, target, location, control, params) & COMPONENT_AUTOFIRE_ONMOUSEDOWN_BYPASS)
+	if(SEND_SIGNAL(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, source, _target, location, control, params) & COMPONENT_AUTOFIRE_ONMOUSEDOWN_BYPASS)
 		return
 
 	source.click_intercept_time = world.time //From this point onwards Click() will no longer be triggered.
@@ -132,7 +132,7 @@
 	if(autofire_stat & AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //This can happen if we click and hold and then alt+tab, printscreen or other such action. MouseUp won't be called then and it will keep autofiring.
 
-	src.target = target
+	target = _target
 	target_loc = get_turf(target)
 	mouse_parameters = params
 	start_autofiring()
