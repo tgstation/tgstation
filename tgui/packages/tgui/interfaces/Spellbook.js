@@ -58,7 +58,6 @@ const BUYWORD2ICON = {
   Learn: 'plus',
   Summon: 'hat-wizard',
   Cast: 'meteor',
-
 };
 
 const EnscribedName = (props, context) => {
@@ -349,8 +348,6 @@ const Randomize = (props, context) => {
     </Stack>
   );
 };
-
-
 
 const widthSection = "466px";
 const heightSection = "456px";
