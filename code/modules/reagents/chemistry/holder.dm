@@ -536,8 +536,8 @@
 
 	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), holder.maximum_volume - holder.total_volume)
 	var/trans_data = null
-	for (var/CR in cached_reagents)
-		var/datum/reagent/current_reagent = CR
+	for (var/looping_through_reagents in cached_reagents)
+		var/datum/reagent/current_reagent = looping_through_reagents
 		if(current_reagent.type == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
