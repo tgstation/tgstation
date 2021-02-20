@@ -34,4 +34,5 @@
 /obj/projectile/energy/tesla_cannon/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
-		target.electrocute_act(15, src, siemens_coeff = 1, flags = SHOCK_NOSTUN)
+		var/mob/living/victim = target
+		victim.electrocute_act(15, src, siemens_coeff = 1, flags = SHOCK_NOSTUN)
