@@ -319,9 +319,9 @@
 
 	var/is_captain = FALSE
 	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
-	if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank])
+	if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank] && !is_banned_from(ckey, list("Captain")))
 		is_captain = TRUE
-	// If we already have a captain, are they a "Captain" rank are we allowing multiple of them to be assigned?
+	// If we already have a captain, are they a "Captain" rank and are we allowing multiple of them to be assigned?
 	else if(SSjob.always_promote_captain_job && (rank == "Captain"))
 		is_captain = TRUE
 

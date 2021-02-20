@@ -388,6 +388,9 @@ SUBSYSTEM_DEF(ticker)
 
 	// Find a suitable player to hold captaincy.
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		if(is_banned_from(new_player_mob.ckey, list("Captain")))
+			CHECK_TICK
+			continue
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
 			// Keep a rolling tally of who'll get the cap's spare ID vault code.
