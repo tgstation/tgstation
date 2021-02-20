@@ -21,6 +21,7 @@
 /obj/item/minigunpack/Initialize()
 	. = ..()
 	gun = new(src)
+	battery = new(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/minigunpack/Destroy()
@@ -104,7 +105,7 @@
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus
+	cell_type = /obj/item/stock_parts/cell/crap
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack

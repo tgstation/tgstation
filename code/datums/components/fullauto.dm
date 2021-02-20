@@ -40,24 +40,18 @@
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
 
-	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/sleep_up)
+	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/autofire_off)
 
 	if(iscarbon(user))
 		var/mob/living/carbon/shooter = user
 		if(shooter.is_holding(parent))
 			autofire_on(shooter.client)
 		else
-			sleep_up()
+			autofire_off()
 
-/datum/component/automatic_fire/proc/sleep_up()
-	SIGNAL_HANDLER
-
-	autofire_stat = AUTOFIRE_STAT_IDLE
-	autofire_off()
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
 
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
-/datum/component/automatic_fire/proc/autofire_on(client/usercli)
+/datum/component/automatic_fire/proc/autofire_on(datum/source, client/usercli)
 	SIGNAL_HANDLER
 	if(autofire_stat & (AUTOFIRE_STAT_ALERT|AUTOFIRE_STAT_FIRING))
 		return
@@ -65,7 +59,6 @@
 	clicker = usercli
 	shooter = clicker.mob
 	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/autofire_off)
 	RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
 	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
 	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
@@ -86,7 +79,7 @@
 	clicker = null
 	if(!QDELETED(shooter))
 		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
-	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
+	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
 	shooter = null
 	parent.UnregisterSignal(parent, COMSIG_AUTOFIRE_SHOT)
 	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
@@ -147,7 +140,7 @@
 			addtimer(CALLBACK(src, .proc/keep_trying_to_delete_timer, auto_delay_timer), 1)
 		auto_delay_timer = null
 
-	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
 	clicker.mouse_pointer_icon = clicker.mouse_override_icon
 
 	if(mouse_status == AUTOFIRE_MOUSEUP) //See mouse_status definition for the reason for this.
