@@ -7,22 +7,17 @@ import { round, toFixed } from 'common/math';
 
 export const ChemReactionChamber = (props, context) => {
   const { act, data } = useBackend(context);
-  const [
-    reagentName,
-    setReagentName,
-  ] = useLocalState(context, 'reagentName', '');
-  const [
-    reagentQuantity,
-    setReagentQuantity,
-  ] = useLocalState(context, 'reagentQuantity', 1);
+
   const {
     emptying,
     temperature,
     ph,
     targetTemp,
     isReacting,
+    reagentQuantity,
+    reagentAcidic,
+    reagentAlkaline,
   } = data;
-  const reagents = data.reagents || [];
   return (
     <Window
       width={250}
@@ -58,7 +53,7 @@ export const ChemReactionChamber = (props, context) => {
               <Flex position="relative">
                 <AnimatedNumber value={ph}>
                   {(_, value) => (
-                    <RoundGauge 
+                    <RoundGauge
                       value={value}
                       minValue={0}
                       maxValue={14}
@@ -91,7 +86,7 @@ export const ChemReactionChamber = (props, context) => {
           </LabeledList>
         </Section>
         <Section
-          title="Reagents"
+          title="Settings"
           buttons={(
             isReacting && (
               <Box
@@ -111,15 +106,8 @@ export const ChemReactionChamber = (props, context) => {
           )}>
           <LabeledList>
             <tr className="LabledList__row">
-              <td
-                colSpan="2"
-                className="LabeledList__cell">
-                <Input
-                  fluid
-                  value=""
-                  placeholder="Reagent Name"
-                  onInput={(e, value) => setReagentName(value)} />
-              </td>
+              <LabeledList.Item label="Reaction Volume">
+              </LabeledList.Item>
               <td
                 className={classes([
                   "LabeledList__buttons",
@@ -132,31 +120,56 @@ export const ChemReactionChamber = (props, context) => {
                   step={1}
                   stepPixelSize={3}
                   width="39px"
-                  onDrag={(e, value) => setReagentQuantity(value)} />
-                <Box inline mr={1} />
-                <Button
-                  icon="plus"
-                  onClick={() => act('add', {
-                    chem: reagentName,
-                    amount: reagentQuantity,
+                  onDrag={(e, value) => act('volume', {
+                    target: value,
                   })} />
+
+                <Box inline mr={1} />
               </td>
             </tr>
-            {map((amount, reagent) => (
-              <LabeledList.Item
-                key={reagent}
-                label={reagent}
-                buttons={(
-                  <Button
-                    icon="minus"
-                    color="bad"
-                    onClick={() => act('remove', {
-                      chem: reagent,
-                    })} />
-                )}>
-                {amount}
+            <tr className="LabledList__row">
+              <LabeledList.Item label="Acidic pH limit">
               </LabeledList.Item>
-            ))(reagents)}
+              <td
+                className={classes([
+                  "LabeledList__buttons",
+                  "LabeledList__cell",
+                ])}>
+                <NumberInput
+                  value={reagentAcidic}
+                  minValue={1}
+                  maxValue={100}
+                  step={1}
+                  stepPixelSize={3}
+                  width="39px"
+                  onDrag={(e, value) => act('acidic', {
+                    target: value,
+                  })} />
+
+                <Box inline mr={1} />
+              </td>
+            </tr>
+            <tr className="LabledList__row">
+              <LabeledList.Item label="Alkaline pH limit">
+              </LabeledList.Item>
+              <td
+                className={classes([
+                  "LabeledList__buttons",
+                  "LabeledList__cell",
+                ])}>
+                <NumberInput
+                  value={reagentAlkaline}
+                  minValue={1}
+                  maxValue={100}
+                  step={1}
+                  stepPixelSize={3}
+                  width="39px"
+                  onDrag={(e, value) => act('alkaline', {
+                    target: value,
+                  })} />
+                <Box inline mr={1} />
+              </td>
+            </tr>
           </LabeledList>
         </Section>
       </Window.Content>

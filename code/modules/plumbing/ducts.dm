@@ -89,10 +89,10 @@ All the important duct code:
 	if(istype(AM, /obj/machinery/duct))
 		return connect_duct(AM, direction, ignore_color)
 
-	var/plumber = AM.GetComponent(/datum/component/plumbing)
-	if(!plumber)
-		return
-	return connect_plumber(plumber, direction)
+	for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+		if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+			return
+		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
