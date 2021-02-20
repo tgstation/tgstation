@@ -60,6 +60,8 @@
 	shooter = clicker.mob
 	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
 	RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
+	if(!QDELETED(shooter))
+		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
 	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
 	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
 
@@ -77,6 +79,7 @@
 		UnregisterSignal(clicker, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
 	mouse_status = AUTOFIRE_MOUSEUP //In regards to the component there's no click anymore to care about.
 	clicker = null
+	RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
 	if(!QDELETED(shooter))
 		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
 	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
@@ -84,11 +87,17 @@
 	parent.UnregisterSignal(parent, COMSIG_AUTOFIRE_SHOT)
 	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
 
+/datum/component/automatic_fire/proc/on_client_login(datum/source)
+	SIGNAL_HANDLER
+	if(!shooter.client)
+		return
+	if(shooter.is_holding(parent))
+		autofire_on(shooter.client)
 
 /datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		return
