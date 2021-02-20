@@ -120,7 +120,7 @@
 
 /obj/item/gun/ballistic/minigun/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/minigun/attack_self(mob/living/user)
 	return

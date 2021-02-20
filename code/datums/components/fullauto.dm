@@ -147,7 +147,8 @@
 			addtimer(CALLBACK(src, .proc/keep_trying_to_delete_timer, auto_delay_timer), 1)
 		auto_delay_timer = null
 
-	clicker.mouse_pointer_icon = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	clicker.mouse_pointer_icon = mouse_override_icon
 
 	if(mouse_status == AUTOFIRE_MOUSEUP) //See mouse_status definition for the reason for this.
 		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEUP, .proc/on_mouse_up)
@@ -190,7 +191,8 @@
 			addtimer(CALLBACK(src, .proc/keep_trying_to_delete_timer, auto_delay_timer), 1)
 		auto_delay_timer = null
 	if(clicker)
-		clicker.mouse_pointer_icon = initial(clicker.mouse_pointer_icon)
+		clicker.mouse_override_icon = null
+		clicker.mouse_pointer_icon = mouse_override_icon
 		UnregisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG)
 	if(!QDELETED(shooter))
 		UnregisterSignal(shooter, COMSIG_MOB_SWAP_HANDS)
