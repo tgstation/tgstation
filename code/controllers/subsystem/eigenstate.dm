@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(eigenstates)
 	if(istype(eigen_target, /obj/structure/closet))
 		var/obj/structure/closet/closet = eigen_target
 		closet.bust_open()
-	return TRUE
+	return COMPONENT_CLOSET_INSERT_INTERRUPT
 
 ///Prevents tool use on the item
 /datum/controller/subsystem/eigenstates/proc/tool_interact(atom/source, mob/user, obj/item/item)

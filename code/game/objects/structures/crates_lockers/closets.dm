@@ -178,7 +178,7 @@
 		return LOCKER_FULL
 	if(!insertion_allowed(inserted))
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted))
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted) & COMPONENT_CLOSET_INSERT_INTERRUPT)
 		return TRUE
 	inserted.forceMove(src)
 	return TRUE

@@ -44,7 +44,7 @@
 	var/thermic_mod = 1
 	///Allow us to deal with lag by "charging" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
 	var/time_deficit
-	///Used to store specific data needed for a reaction
+	///Used as a method to store data that moght be needed during the reaction, or for overheat/overly_impure procs. See datum/chemical_recipies/off_cooldown() for an example.
 	var/data = list()
 
 /*

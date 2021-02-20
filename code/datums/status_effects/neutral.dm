@@ -347,6 +347,7 @@
 	id = "eigenstasium"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
+	processing_flags = STATUS_EFFECT_NORMAL_PROCESS
 	///So we know what cycle we're in during the status
 	var/current_cycle = -250 //Consider it your stability
 	///The addiction looper for addiction stage 3
@@ -356,17 +357,9 @@
 	///If we display the stabilised message or not
 	var/stable_message = FALSE
 
-///Convert this effect to process slowly instead
-/datum/status_effect/eigenstasium/on_creation(mob/living/new_owner, ...)
-	. = ..()
-	STOP_PROCESSING(SSfastprocess, src)
-	START_PROCESSING(SSprocessing, src) //this lasts a while, so SSfastprocess isn't needed.
-
 /datum/status_effect/eigenstasium/Destroy()
 	QDEL_NULL(alt_clone)
 	. = ..()
-	STOP_PROCESSING(SSprocessing, src)
-
 
 /datum/status_effect/eigenstasium/tick()
 	. = ..()

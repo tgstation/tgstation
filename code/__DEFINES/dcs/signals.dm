@@ -677,6 +677,8 @@
 ///Closets
 ///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
 #define COMSIG_CLOSET_INSERT "closet_insert"
+	///used to interrupt insertion
+	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
 
 // /obj signals for economy
 ///called when the payment component tries to charge an account.

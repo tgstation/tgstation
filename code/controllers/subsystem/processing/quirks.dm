@@ -78,7 +78,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(!loop_preventer)//Lets not get stuck
 			break
 		var/quirk = pick(quirks) //quirk is a string
-		if((quirk in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+		if((quirk in quirk_blacklist) && (quirk in quirks_to_add)) //prevent blacklisted
 			loop_preventer--
 			continue
 		if(quirk in quirks_to_add)
@@ -96,7 +96,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(!loop_preventer)//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
-		if((quirk in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+		if((quirk in quirk_blacklist) && (quirk in quirks_to_add)) //prevent blacklisted
 			loop_preventer--
 			continue
 		if(quirk in quirks_to_add)
@@ -115,7 +115,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(!loop_preventer)//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
-		if((quirk in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+		if((quirk in quirk_blacklist) && (quirk in quirks_to_add)) //prevent blacklisted
 			loop_preventer--
 			continue
 		if(quirk in quirks_to_add)
