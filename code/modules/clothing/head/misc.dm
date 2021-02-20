@@ -498,4 +498,4 @@
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
-	strip_delay = 80
+	strip_delay = (8 SECONDS)
