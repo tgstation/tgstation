@@ -414,7 +414,7 @@ RLD
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -455,7 +455,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
