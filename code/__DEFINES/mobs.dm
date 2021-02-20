@@ -28,6 +28,9 @@
 #define BLOOD_VOLUME_BAD 224
 #define BLOOD_VOLUME_SURVIVE 122
 
+/// How efficiently humans regenerate blood.
+#define BLOOD_REGEN_FACTOR 0.25
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -71,17 +74,17 @@
 #define MAX_LIVING_HEALTH 100
 
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
 #define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
 
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
+#define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
+#define COLD_DAMAGE_LEVEL_1 0.25 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 0.75 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 1.5 //Amount of damage applied when your body temperature passes the 120K point
 
 //Note that gas heat damage is only applied once every FOUR ticks.
 #define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
@@ -295,9 +298,9 @@
 #define POCKET_STRIP_DELAY 40 //time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
-#define HUNGER_FACTOR 0.1 //factor at which mob nutrition decreases
-#define ETHEREAL_CHARGE_FACTOR 1.6 //factor at which ethereal's charge decreases
-#define REAGENTS_METABOLISM 0.4 //How many units of reagent are consumed per tick, by default.
+#define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
+#define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
+#define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
 // Eye protection

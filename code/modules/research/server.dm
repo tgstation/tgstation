@@ -3,6 +3,7 @@
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
+	base_icon_state = "RD-server"
 	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE //temperature should break it.
@@ -35,11 +36,10 @@
 
 /obj/machinery/rnd/server/update_icon_state()
 	if(machine_stat & EMPED || machine_stat & NOPOWER)
-		icon_state = "RD-server-off"
-	else if(research_disabled)
-		icon_state = "RD-server-halt"
-	else
-		icon_state = "RD-server-on"
+		icon_state = "[base_icon_state]-off"
+		return ..()
+	icon_state = "[base_icon_state]-[research_disabled ? "halt" : "on"]"
+	return ..()
 
 /obj/machinery/rnd/server/power_change()
 	. = ..()
@@ -51,7 +51,7 @@
 		working = FALSE
 	else
 		working = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()

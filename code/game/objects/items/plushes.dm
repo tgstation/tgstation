@@ -3,6 +3,7 @@
 	desc = "This is the special coder plush, do not steal."
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
+	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
 	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
@@ -374,8 +375,9 @@
 			mood_message = null
 	cheer_up()
 
-/obj/item/toy/plush/proc/update_desc()
+/obj/item/toy/plush/update_desc()
 	desc = normal_desc
+	. = ..()
 	if(mood_message)
 		desc += mood_message
 
