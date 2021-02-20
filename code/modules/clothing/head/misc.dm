@@ -56,7 +56,7 @@
 			if(prob(20))
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
-		magician.visible_message("<b>[magician]</b> taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!", "<span class='notice'>You tap [src] with your [hitby_wand.name] and pull out a cute bunny!</span>")
+		magician.visible_message("<span class='notice'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!</span>", "<span class='notice'>You tap [src] with your [hitby_wand.name] and pull out a cute bunny!</span>")
 		var/mob/living/simple_animal/chicken/rabbit/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 
