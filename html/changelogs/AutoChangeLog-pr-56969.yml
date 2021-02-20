@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a case where certain Auxiliary Base construction options were not working properly. Better get building!"
