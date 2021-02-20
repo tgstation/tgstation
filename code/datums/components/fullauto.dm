@@ -87,17 +87,17 @@
 
 /datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
-	if(modifiers["shift"] && (world.time <= source.mob.next_click || source.mob.ShiftClickOn(_target)))
-		source.click_intercept_time = world.time
-		return
-	if(modifiers["ctrl"])
-		return
-	if(modifiers["middle"])
-		return
-	if(modifiers["alt"] && (world.time <= source.mob.next_click || source.mob.AltClickOn(_target)))
-		source.click_intercept_time = world.time
-		return
 
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		return
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		return
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		return
 	if(source.mob.in_throw_mode)
 		return
 	if(!isturf(source.mob.loc)) //No firing inside lockers and stuff.
