@@ -90,8 +90,10 @@
 #define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
 /// a hack for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1
-/// a hack to help make vacuums "cold", sacrificing realism for gameplay
-#define HEAT_CAPACITY_VACUUM 7000
+/// vacuum thermoconductivity has been a thorn in many a crew's side for too long
+#define HEAT_CAPACITY_VACUUM 0
+/// a hack to keep heat exchangers functional in vacuum
+#define RADIATIVE_EFFECTIVE_HEAT_CAPACITY_VACUUM 7000
 
 //FIRE
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD (150+T0C)

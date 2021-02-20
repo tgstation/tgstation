@@ -56,6 +56,8 @@
 
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/partner_air_contents = partner.airs[1]
+	if(istype(partner,/turf/open/space))
+		other_air_heat_capacity = RADIATIVE_EFFECTIVE_HEAT_CAPACITY_VACUUM
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
