@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "Binary Encryption keys work in pAIs that have downloaded the encryption key software."
