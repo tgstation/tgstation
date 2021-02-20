@@ -10,6 +10,12 @@
 	L = new()
 	cmp = compare
 
+/datum/heap/Destroy(force, ...)
+	for(var/i in L) // because this is before the list helpers are loaded
+		qdel(i)
+	L = null
+	return ..()
+
 /datum/heap/proc/is_empty()
 	return !length(L)
 

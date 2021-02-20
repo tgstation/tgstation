@@ -1,6 +1,7 @@
 /**
  * This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
- * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions.
+ * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
+ * cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.
  */
 
 /**
@@ -16,7 +17,7 @@
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  */
 /proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude)
-	if(!get_turf(end))
+	if(!caller || !get_turf(end))
 		return
 
 	var/l = SSpathfinder.mobs.getfree(caller)
@@ -26,7 +27,7 @@
 
 	var/list/path
 	var/datum/pathfind/pathfind_datum = new(caller, end, id, max_distance, mintargetdist, simulated_only, exclude)
-	path = pathfind_datum.start_search()
+	path = pathfind_datum.search()
 	qdel(pathfind_datum)
 
 	SSpathfinder.mobs.found(l)
@@ -42,15 +43,6 @@
 #define CAN_STEP(cur_turf, next) (next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
-/// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
-#define PATH_START	-1
-
-#define QUEUE_NODE(the_turf, parent_node, steps) \
-	do { \
-		var/datum/jps_node/newnode = new(the_turf, parent_node, steps); \
-		open_associative[the_turf] = newnode; \
-		open.insert(newnode); \
-	} while(0)
 
 /// The JPS Node datum represents a turf that we find interesting enough to add to the open list and possibly search for new tiles from
 /datum/jps_node
@@ -72,20 +64,19 @@
 /datum/jps_node/New(turf/our_tile, datum/jps_node/incoming_previous_node, jumps_taken, turf/incoming_goal)
 	tile = our_tile
 	jumps = jumps_taken
-	if(incoming_previous_node == null)
-		number_tiles = 0
-	else if(incoming_previous_node == -1)
-		number_tiles = 0
+	if(incoming_goal) // if we have the goal argument, this must be the first/starting node
 		node_goal = incoming_goal
-		heuristic = get_dist(tile, node_goal)
-		f_value = number_tiles + heuristic
-	else
+	else if(incoming_previous_node) // if we have the parent, this is from a direct lateral/diagonal scan, we can fill it all out now
 		previous_node = incoming_previous_node
 		number_tiles = previous_node.number_tiles + jumps
 		node_goal = previous_node.node_goal
 		heuristic = get_dist(tile, node_goal)
 		f_value = number_tiles + heuristic
-	tile.maptext = "[number_tiles],[heuristic],[f_value]"
+	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
+
+/datum/jps_node/Destroy(force, ...)
+	previous_node = null
+	return ..()
 
 /datum/jps_node/proc/update_parent(datum/jps_node/new_parent)
 	previous_node = new_parent
@@ -94,8 +85,8 @@
 	number_tiles = previous_node.number_tiles + jumps
 	heuristic = get_dist(tile, node_goal)
 	f_value = number_tiles + heuristic
-	tile.maptext = "[number_tiles],[heuristic],[f_value]"
 
+/// TODO: Macro this to reduce proc overhead
 /proc/HeapPathWeightCompare(datum/jps_node/a, datum/jps_node/b)
 	return b.f_value - a.f_value
 
@@ -107,16 +98,9 @@
 	var/turf/start
 	/// The turf we're trying to path to (note that this won't track a moving target)
 	var/turf/end
-	/// The open list/stack we pop nodes out from
+	/// The open list/stack we pop nodes out from (TODO: make this a normal list and macro-ize the heap operations to reduce proc overhead)
 	var/datum/heap/open
-	/// An assoc list that matches turfs (the key) to their nodes if said turf has one
-	var/list/open_associative
-	/**
-	 * An assoc list that serves as the closed list & tracks what turfs came from where. Key is the turf, and the value is what turf it came from
-	 *
-	 * Nodes are only created & added to the heap/open_associative once a turf is found "interesting", but due to recursion, we may not know it's interesting until we finish processing its children.
-	 * Inserting to this list is cheaper than making a node datum + inserting into the heap, so everything goes in here immediately, and what we use to recreate the path at the end
-	 */
+	///An assoc list that serves as the closed list & tracks what turfs came from where. Key is the turf, and the value is what turf it came from
 	var/list/sources
 	/// The list we compile at the end if successful to pass back
 	var/list/path
@@ -128,34 +112,24 @@
 	var/mintargetdist = 0
 	/// I don't know what this does vs , but they limit how far we can search before giving up on a path
 	var/max_distance = 30
-	/// The proc we use to tell the distance between two turfs. Currently ignored in favor of get_dist/get_dist
-	///var/dist = /turf/proc/Distance
-	/// Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+	/// Space is big and empty, if this is TRUE then we ignore pathing through unsimulated tiles
 	var/simulated_only
-	/// Did we succeed?
-	var/success = FALSE
-	/// A specific turf we're avoiding
+	/// A specific turf we're avoiding, like if a mulebot is being blocked by someone t-posing in a doorway we're trying to get through
 	var/turf/avoid
-
-	var/halt = FALSE
 
 /datum/pathfind/New(atom/movable/caller, atom/goal, id, max_distance, mintargetdist, simulated_only, avoid)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
-	open_associative = new() //open list for node check
-	sources = new() //open list for node check
+	sources = new()
 	src.id = id
 	src.max_distance = max_distance
 	src.mintargetdist = mintargetdist
 	src.simulated_only = simulated_only
 	src.avoid = avoid
-	for(var/turf/t in world)
-		t.maptext = null
-		t.color = null
 
-/// The proc you use to start the search, returns FALSE if it's invalid, an empty list if no path could be found, or a valid path to the target
-/datum/pathfind/proc/start_search()
+/// The proc you use to run the search, returns FALSE if it's invalid, an empty list if no path could be found, or a valid path to the target
+/datum/pathfind/proc/search()
 	start = get_turf(caller)
 	if(!start || !end)
 		stack_trace("Invalid A* start or destination")
@@ -168,78 +142,67 @@
 	//initialization
 	var/datum/jps_node/current_processed_node = new (start, -1, 0, end)
 	open.insert(current_processed_node)
-	open_associative[start] = current_processed_node
-	sources[start] = PATH_START
+	sources[start] = start // i'm sure this is fine
+
 	//then run the main loop
 	while(!open.is_empty() && !path)
-		if(!caller || halt)
+		if(!caller)
 			return
 		current_processed_node = open.pop() //get the lower f_value turf in the open list
-		current_processed_node.tile.color = COLOR_RED
-
 		if(max_distance && (current_processed_node.number_tiles > max_distance))//if too many steps, don't process that path
 			continue
 
 		var/turf/current_turf = current_processed_node.tile
 		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
-			lateral_scan_spec(current_turf, scan_direction, TRUE, parent_node = current_processed_node)
+			lateral_scan_spec(current_turf, scan_direction, current_processed_node)
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
 			diag_scan_spec(current_turf, scan_direction, current_processed_node)
 
 		CHECK_TICK
-	//reverse the path to get it from start to finish
+
+	//we're done! reverse the path to get it from start to finish
 	if(path)
 		for(var/i = 1 to round(0.5 * length(path)))
 			path.Swap(i, length(path) - i + 1)
-	open_associative = null //cleaning after us
 	sources = null
+	qdel(open)
 	return path
 
-/// Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by [datum/pathfind/proc/start_search]
+/// Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by [datum/pathfind/proc/search]
 /datum/pathfind/proc/unwind_path(datum/jps_node/unwind_node)
-	success = unwind_node.tile == end
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
 	path.Add(iter_turf)
 
-	var/num_nodes = 0
-	var/num_steps = 0
-	var/datum/jps_node/iter = unwind_node
-	while(iter.previous_node)
-		num_nodes++
-		num_steps += iter.jumps
-		testing("unwind pretally: nodes: [num_nodes] steps: [num_steps]")
-		iter = iter.previous_node
-	testing("final pretally: nodes: [num_nodes] steps: [num_steps]")
-
-	var/num = 0
 	while(unwind_node.previous_node)
-		num++
-		testing("unwind node #[num]")
 		var/dir_goal = get_dir(iter_turf, unwind_node.previous_node.tile)
 		for(var/i = 1 to unwind_node.jumps)
 			iter_turf = get_step(iter_turf,dir_goal)
 			path.Add(iter_turf)
-			iter_turf.color = COLOR_YELLOW
-		iter_turf.color = COLOR_PINK
 		unwind_node = unwind_node.previous_node
 
-/// For performing a scan in a given lateral direction
-/datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading, base_level = FALSE, datum/jps_node/parent_node)
+/**
+ * For performing lateral scans from a given starting turf.
+ *
+ * These scans are called from both the main search loop, as well as subscans for diagonal scans, and they treat finding interesting turfs slightly differently.
+ * If we're doing a normal lateral scan, we already have a parent node supplied, so we just create the new node and immediately insert it into the heap, ezpz.
+ * If we're part of a subscan, we still need for the diagonal scan to generate a parent node, so we return a node datum with just the turf and let the diag scan
+ * proc handle transferring the values and inserting them into the heap.
+ *
+ * Arguments:
+ * * original_turf: What turf did we start this scan at?
+ * * heading: What direction are we going in? Obviously, should be cardinal
+ * * parent_node: Only given for normal lateral scans, if we don't have one, we're a diagonal subscan.
+*/
+/datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
 	var/steps_taken = 0
-	var/datum/jps_node/unwind_node = open_associative[original_turf]
-	while(!unwind_node)
-		var/turf/older = sources[original_turf]
-		if(!older)
-			CRASH("JPS error: Lateral scan couldn't find a home node")
-		unwind_node = open_associative[older]
 
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
 	while(TRUE)
-		if(path) // lazy way to force out when done, do better
+		if(path)
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
@@ -250,7 +213,7 @@
 		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			sources[current_turf] = original_turf
-			if(base_level)
+			if(parent_node) // if this is a direct lateral scan we can wrap up, if it's a subscan from a diag, we need to let the diag make their node first, then finish
 				unwind_path(final_node)
 			return final_node
 		else if(sources[current_turf]) // already visited, essentially in the closed list
@@ -278,29 +241,29 @@
 					interesting = TRUE
 
 		if(interesting)
-			current_turf.color = COLOR_ORANGE
 			var/datum/jps_node/newnode = new(current_turf, parent_node, steps_taken)
-			if(base_level)
-				open_associative[current_turf] = newnode
-			if(base_level)
+			if(parent_node) // if we're a diagonal subscan, we'll handle adding ourselves to the heap in the diag
 				open.insert(newnode)
 			return newnode
 
-/// For performing a scan in a given diagonal direction
+/**
+ * For performing diagonal scans from a given starting turf.
+ *
+ * Unlike lateral scans, these only are called from the main search loop, so we don't need to worry about returning anything,
+ * though we do need to handle the return values of our lateral subscans of course.
+ *
+ * Arguments:
+ * * original_turf: What turf did we start this scan at?
+ * * heading: What direction are we going in? Obviously, should be diagonal
+ * * parent_node: We should always have a parent node for diagonals
+*/
 /datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
 	var/steps_taken = 0
-	var/datum/jps_node/unwind_node = open_associative[original_turf]
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
-	while(!unwind_node)
-		var/turf/older = sources[original_turf]
-		if(!older)
-			CRASH("JPS error: Diagonal scan couldn't find a home node")
-		unwind_node = open_associative[older]
-
 	while(TRUE)
-		if(path) // lazy way to force out when done, do better
+		if(path)
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
@@ -309,7 +272,7 @@
 			return
 
 		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
-			var/datum/jps_node/final_node = new(current_turf, unwind_node, steps_taken)
+			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
@@ -318,11 +281,11 @@
 		else
 			sources[current_turf] = original_turf
 
-		if(unwind_node.number_tiles + steps_taken > max_distance)
+		if(parent_node.number_tiles + steps_taken > max_distance)
 			return
 
 		var/interesting = FALSE // have we found a forced neighbor that would make us add this turf to the open list?
-		var/datum/jps_node/possible_child_node
+		var/datum/jps_node/possible_child_node // otherwise, did one of our lateral subscans turn up something?
 
 		switch(heading)
 			if(NORTHWEST)
@@ -330,33 +293,24 @@
 					interesting = TRUE
 				else
 					possible_child_node = (lateral_scan_spec(current_turf, WEST) || lateral_scan_spec(current_turf, NORTH))
-					if(possible_child_node)
-						interesting = TRUE
 			if(NORTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
 					interesting = TRUE
 				else
 					possible_child_node = (lateral_scan_spec(current_turf, EAST) || lateral_scan_spec(current_turf, NORTH))
-					if(possible_child_node)
-						interesting = TRUE
 			if(SOUTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					interesting = TRUE
 				else
 					possible_child_node = (lateral_scan_spec(current_turf, SOUTH) || lateral_scan_spec(current_turf, WEST))
-					if(possible_child_node)
-						interesting = TRUE
 			if(SOUTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
 					interesting = TRUE
 				else
 					possible_child_node = (lateral_scan_spec(current_turf, SOUTH) || lateral_scan_spec(current_turf, EAST))
-					if(possible_child_node)
-						interesting = TRUE
 
-		if(interesting)
-			var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
-			open_associative[current_turf] = newnode
+		if(interesting || possible_child_node)
+			var/datum/jps_node/newnode = new(current_turf, parent_node, steps_taken)
 			open.insert(newnode)
 			if(possible_child_node)
 				possible_child_node.update_parent(newnode)
@@ -391,6 +345,5 @@
 
 	return FALSE
 
-#undef PATH_START
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE
