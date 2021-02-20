@@ -51,7 +51,7 @@
 
 
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
-/datum/component/automatic_fire/proc/autofire_on(datum/source, client/usercli)
+/datum/component/automatic_fire/proc/autofire_on(client/usercli)
 	SIGNAL_HANDLER
 	if(autofire_stat & (AUTOFIRE_STAT_ALERT|AUTOFIRE_STAT_FIRING))
 		return
