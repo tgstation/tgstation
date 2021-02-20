@@ -243,7 +243,8 @@
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
-	var/cover_open = FALSE
+	burst_size = 1
+	actions_types = list()
 	can_suppress = FALSE
 	spread = 7
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -255,15 +256,15 @@
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
 	rack_sound = 'sound/weapons/gun/l6/l6_rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
 
-
 /obj/item/gun/ballistic/automatic/l6_saw/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	. = ..()

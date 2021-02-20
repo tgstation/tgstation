@@ -29,10 +29,11 @@
 	name = "tesla orb"
 	icon_state = "ice_1"
 	damage = 0
-	var/shock_damage = 15
+	speed = 1.5
+	var/shock_damage = 5
 
 /obj/projectile/energy/tesla_cannon/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/victim = target
-		victim.electrocute_act(15, src, siemens_coeff = 1, flags = SHOCK_NOSTUN)
+		victim.electrocute_act(shock_damage, src, siemens_coeff = 1, flags = SHOCK_NOSTUN)

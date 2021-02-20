@@ -69,12 +69,6 @@
 /obj/item/ammo_casing/energy/instakill/red
 	projectile_type = /obj/projectile/beam/instakill/red
 
-/obj/item/ammo_casing/energy/tesla_revolver
-	fire_sound = 'sound/magic/lightningbolt.ogg'
-	e_cost = 200
-	select_name = "stun"
-	projectile_type = /obj/projectile/energy/tesla/revolver
-
 /obj/item/ammo_casing/energy/tesla_cannon
 	fire_sound = 'sound/magic/lightningshock.ogg'
 	e_cost = 50

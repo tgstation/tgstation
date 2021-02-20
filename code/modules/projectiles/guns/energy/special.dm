@@ -371,7 +371,8 @@
 
 /obj/item/gun/energy/tesla_cannon
 	name = "tesla cannon"
-	icon_state = "teslagun"
+	icon_state = "tesla"
+	inhand_icon_state = "tesla"
 	desc = "A gun that shoots balls of \"tesla\", whatever that is."
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = 1
