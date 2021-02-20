@@ -84,8 +84,8 @@
 	air.volume = volume
 
 	/**
-	 *  For a machinery to properly "connect" to a pipenet and share gasses, 
-	 *  the pipenet needs to acknowledge a gas mixture as it's member.
+	 *  For a machine to properly "connect" to a pipeline and share gases, 
+	 *  the pipeline needs to acknowledge a gas mixture as it's member.
 	 *  This is currently handled by the other_airs list in the pipeline datum.
 	 *  
 	 *	Other_airs itself is populated by gas mixtures through the parents list that each machineries have.
