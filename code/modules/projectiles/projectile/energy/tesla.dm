@@ -24,3 +24,13 @@
 	name = "tesla orb"
 	power = 20000
 	damage = 15 //Mech man big
+
+/obj/projectile/energy/tesla_cannon
+	name = "tesla orb"
+	icon_state = "ice_1"
+	damage = 0
+	var/shock_damage = 15
+
+/obj/projectile/energy/tesla_cannon/on_hit(atom/target)
+	. = ..()
+	target.electrocute_act(15, src, siemens_coeff = 1, flags = SHOCK_NOSTUN)

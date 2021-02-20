@@ -369,3 +369,12 @@
 		return FALSE
 	return ..()
 
+/obj/item/gun/energy/tesla_cannon
+	name = "tesla cannon"
+	icon_state = "teslagun"
+	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
+	shaded_charge = 1
+
+/obj/item/gun/energy/tesla_cannon
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
