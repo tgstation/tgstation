@@ -291,7 +291,7 @@
 			return
 	else
 		if (cached_temp > reaction.optimal_temp && cached_temp <= reaction.required_temp)
-			delta_t = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
+			delta_t = (((reaction.required_temp - cached_temp)**reaction.temp_exponent_factor)/((reaction.required_temp - reaction.optimal_temp)**reaction.temp_exponent_factor))
 		else if (cached_temp <= reaction.optimal_temp)
 			delta_t = 1
 		else //Too cold
