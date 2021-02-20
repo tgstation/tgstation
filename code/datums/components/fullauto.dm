@@ -264,7 +264,7 @@
 
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 	recharge_newshot()
 	chambered.loaded_projectile = null //Projectiles live and die fast. It's better to null the reference early so the GC can handle it immediately.
 	if(!can_shoot())
