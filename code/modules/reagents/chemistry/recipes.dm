@@ -405,7 +405,7 @@
 * * id - a string phrase so that multiple cooldowns can be applied if needed
 */
 /datum/chemical_reaction/proc/off_cooldown(datum/reagents/holder, datum/equilibrium/equilibrium, seconds = 1, id = "default")
-	id = id+"_cooldown"
+	id = "[id]_cooldown"
 	if(isnull(equilibrium.data[id]))
 		equilibrium.data[id] = 0
 		return TRUE//first time we know we can go
@@ -414,4 +414,3 @@
 		equilibrium.data[id] = 0
 		return TRUE
 	return FALSE
-

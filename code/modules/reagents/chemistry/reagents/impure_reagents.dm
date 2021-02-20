@@ -48,15 +48,15 @@
 
 /datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/carbon_mob)
 	. = ..()
-	if(prob(creation_purity*100))
-		var/list/cached_hand_items = carbon_mob.held_items
-		var/index = 1
-		for(var/thing in cached_hand_items)
-			index++
-			if(index > length(cached_hand_items))//If we're past the end of the list, go back to start
-				index = 1
-			if(!thing)
-				continue
-			carbon_mob.put_in_hand(thing, index, TRUE, TRUE)
-			playsound(carbon_mob, 'sound/effects/phasein.ogg', 20, TRUE)
-
+	if(!prob(creation_purity * 100))
+		return
+	var/list/cached_hand_items = carbon_mob.held_items
+	var/index = 1
+	for(var/thing in cached_hand_items)
+		index++
+		if(index > length(cached_hand_items))//If we're past the end of the list, go back to start
+			index = 1
+		if(!thing)
+			continue
+		carbon_mob.put_in_hand(thing, index, TRUE, TRUE)
+		playsound(carbon_mob, 'sound/effects/phasein.ogg', 20, TRUE)
