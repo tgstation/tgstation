@@ -1,4 +1,3 @@
-
 /obj/item/soulstone
 	name = "soulstone shard"
 	icon = 'icons/obj/wizard.dmi'
@@ -15,10 +14,10 @@
 	/// This controls the color of the soulstone as well as restrictions for who can use it. THEME_CULT is red and is the default of cultist THEME_WIZARD is purple and is the default of wizard and THEME_HOLY is for purified soul stone
 	var/theme = THEME_CULT
 	/// Role check, if any needed
-	var/role_to_check = /datum/antagonist/cult
+	var/required_role = /datum/antagonist/cult
 
 /obj/item/soulstone/proc/role_check(mob/who)
-	return who.mind && who.mind.has_antag_datum(role_to_check, TRUE)
+	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
@@ -29,12 +28,12 @@
 			whatever spark it once held long extinguished."
 
 /obj/item/soulstone/anybody
-	role_to_check = null
+	required_role = null
 
 /obj/item/soulstone/mystic
 	icon_state = "mystic_soulstone"
 	theme = THEME_WIZARD
-	role_to_check = /datum/antagonist/wizard
+	required_role = /datum/antagonist/wizard
 
 /obj/item/soulstone/anybody/revolver
 	old_shard = TRUE
@@ -88,10 +87,9 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if(iscultist(M))
-		if(iscultist(user))
-			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
-			return
+	if(iscultist(M) && iscultist(user))
+		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
+		return
 	if(theme == THEME_HOLY && iscultist(user))
 		hot_potato(user)
 		return
@@ -380,12 +378,13 @@
 			icon_state = "mystic_soulstone2"
 		if(THEME_CULT)
 			icon_state = "soulstone2"
-	if(user && iscultist(user))
-		to_chat(S, "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs.")
-	else if(user && role_check(user))
-		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
-	if(message_user && user)
-		to_chat(user, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within [src].")
+	if(user)
+		if(iscultist(user))
+			to_chat(S, "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs.")
+		else if(role_check(user))
+			to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
+		if(message_user)
+			to_chat(user, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within [src].")
 
 
 /obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/user)

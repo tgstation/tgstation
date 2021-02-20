@@ -3,20 +3,25 @@
 	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
 
 	school = "transmutation"
-	charge_max = 300
+	charge_max = 30 SECONDS
 	clothes_req = TRUE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	cooldown_min = 100 //50 deciseconds reduction per rank
+	cooldown_min = 10 SECONDS
 	include_user = TRUE
 	nonabstract_req = TRUE
-	var/jaunt_duration = 50 //in deciseconds
-	var/jaunt_in_time = 5
-	var/jaunt_out_time = 0 //time for immobilization
-	var/jaunt_in_type = /obj/effect/temp_visual/wizard
-	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
+	/// For how long are we jaunting?
+	var/jaunt_duration = 5 SECONDS
+	/// For how long we become immobilized after exiting the jaunt.
+	var/jaunt_in_time = 0.5 SECONDS
+	/// For how long we become immobilized when using this spell.
+	var/jaunt_out_time = 0 SECONDS
+	/// Visual for jaunting
+	var/jaunt_in_type = /obj/effect/temp_visual/wizard
+	/// Visual for exiting the jaunt
+	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast_check(skipcharge = 0,mob/user = usr)
 	. = ..()

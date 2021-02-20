@@ -97,10 +97,10 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/soulstone/anybody)
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/purified
 	summon_type = list(/obj/item/soulstone/anybody/purified)
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/mystic
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/mystic
 	summon_type = list(/obj/item/soulstone/mystic)
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
