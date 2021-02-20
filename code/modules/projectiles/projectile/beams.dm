@@ -10,9 +10,15 @@
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_system = MOVABLE_LIGHT
-	light_range = 1
-	light_power = 1
-	light_color = COLOR_SOFT_RED
+	hitscan_light_intensity = 2
+	hitscan_light_range = 0.50
+	hitscan_light_color_override = COLOR_SOFT_RED
+	muzzle_flash_intensity = 4
+	muzzle_flash_range = 1
+	muzzle_flash_color_override = COLOR_SOFT_RED
+	impact_light_intensity = 5
+	impact_light_range = 1.25
+	impact_light_color_override = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
@@ -24,19 +30,19 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
+	hitscan = TRUE
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
+	hitscan_light_color_override = COLOR_DARK_RED
+	muzzle_flash_color_override = COLOR_DARK_RED
+	impact_light_color_override = COLOR_DARK_RED
 	wound_bonus = 0
 	damage = 25
-	speed = 0.6 // higher power = faster, that's how light works right
-
-/obj/projectile/beam/laser/hellfire/Initialize()
-	. = ..()
-	transform *= 2
+	hitscan = TRUE
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -55,20 +61,32 @@
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
 /obj/projectile/beam/weak
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
 	damage = 15
+	hitscan = TRUE
 
 /obj/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
 /obj/projectile/beam/practice
 	name = "practice laser"
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
 	damage = 0
 	nodamage = TRUE
+	hitscan = TRUE
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
 	damage = 5
+	hitscan = TRUE
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -78,9 +96,12 @@
 	irradiate = 300
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
+	hitscan = TRUE
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-	light_color = LIGHT_COLOR_GREEN
+	hitscan_light_color_override = LIGHT_COLOR_GREEN
+	muzzle_flash_color_override = LIGHT_COLOR_GREEN
+	impact_light_color_override = LIGHT_COLOR_GREEN
 	tracer_type = /obj/effect/projectile/tracer/xray
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
@@ -94,10 +115,13 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	light_color = LIGHT_COLOR_BLUE
+	hitscan_light_color_override = LIGHT_COLOR_BLUE
+	muzzle_flash_color_override = LIGHT_COLOR_BLUE
+	impact_light_color_override = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
+	hitscan = TRUE
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -151,13 +175,13 @@
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
 	impact_type = /obj/effect/projectile/impact/laser/emitter
 	impact_effect_type = null
-	hitscan_light_intensity = 3
+	hitscan_light_intensity = 2
 	hitscan_light_range = 0.75
 	hitscan_light_color_override = COLOR_LIME
-	muzzle_flash_intensity = 6
+	muzzle_flash_intensity = 4
 	muzzle_flash_range = 2
 	muzzle_flash_color_override = COLOR_LIME
-	impact_light_intensity = 7
+	impact_light_intensity = 5
 	impact_light_range = 2.5
 	impact_light_color_override = COLOR_LIME
 
