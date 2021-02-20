@@ -6,7 +6,7 @@
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
-		"whiteship": "whiteship_box",
+		"whiteship": "whiteship_tram",
 		"emergency": "emergency_tram"
 	},
 	"traits": [

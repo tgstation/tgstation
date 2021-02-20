@@ -51475,7 +51475,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/north{
-	areastring = "/area/engine/supermatter"
+	areastring = "/area/engineering/supermatter"
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -56844,6 +56844,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "skL" = (
@@ -60284,9 +60287,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/goonplaque{
-	desc = "\"This is a plaque in honour of the fallen spacemen and spacewomen who gave their lives to bravely test our state-of-the-art monorail system. They sacrificed themselves so the future may be safer for us all.";
-	name = "tram casualities remembrance plaque"
-	},
+	desc = "\"This is a plaque in honour of the fallen spacemen and spacewomen who gave their lives to bravely test our state-of-the-art monorail system. They sacrificed themselves so the future may be safer for us all.";name = "tram casualities remembrance plaque"},
 /area/hallway/secondary/exit)
 "tIj" = (
 /obj/structure/ore_box,
