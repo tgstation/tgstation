@@ -31,7 +31,7 @@ const TAB2NAME = [
 ];
 
 const lineHeightNormal = 2.79;
-const buttonWidthNormal = 12.9
+const buttonWidthNormal = 12.9;
 const lineHeightDebug = 6.09;
 
 const DebuggingTab = (props, context) => {
@@ -253,27 +253,27 @@ const FunTab = (props, context) => {
         <Stack fill>
           <Stack.Item>
             <NoticeBox
-                mb={-0.5}
-                width={buttonWidthNormal}
-                height={lineHeightNormal}>
-                Your admin button here, coder!
-              </NoticeBox>
+              mb={-0.5}
+              width={buttonWidthNormal}
+              height={lineHeightNormal}>
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <NoticeBox
-                mb={-0.5}
-                width={buttonWidthNormal}
-                height={lineHeightNormal}>
-                Your admin button here, coder!
-              </NoticeBox>
+              mb={-0.5}
+              width={buttonWidthNormal}
+              height={lineHeightNormal}>
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <NoticeBox
-                mb={0.0}
-                width={buttonWidthNormal}
-                height={lineHeightNormal}>
-                Your admin button here, coder!
-              </NoticeBox>
+              mb={0.0}
+              width={buttonWidthNormal}
+              height={lineHeightNormal}>
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -457,7 +457,7 @@ const FunForYouTab = (props, context) => {
             fluid
             content="Change everyone's species"
             onClick={() => act("traitor_all")} />
-          </NoticeBox>
+        </NoticeBox>
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger mb={0}>
@@ -477,7 +477,7 @@ const FunForYouTab = (props, context) => {
             fluid
             content="The floor is lava! (DANGEROUS: extremely lame)"
             onClick={() => act("floorlava")} />
-          </NoticeBox>
+        </NoticeBox>
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger mb={0}>
@@ -487,7 +487,7 @@ const FunForYouTab = (props, context) => {
             fluid
             content="Chinese Cartoons! (DANGEROUS: no going back, also fuck you)"
             onClick={() => act("anime")} />
-          </NoticeBox>
+        </NoticeBox>
       </Stack.Item>
       <Stack.Item>
         <Stack fill>
@@ -499,7 +499,7 @@ const FunForYouTab = (props, context) => {
                 fluid
                 content="Mass Purrbation"
                 onClick={() => act("masspurrbation")} />
-              </NoticeBox>
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <NoticeBox info width={19.6} mb={0}>
@@ -509,7 +509,7 @@ const FunForYouTab = (props, context) => {
                 fluid
                 content="Cure Purrbation"
                 onClick={() => act("massremovepurrbation")} />
-              </NoticeBox>
+            </NoticeBox>
           </Stack.Item>
         </Stack>
       </Stack.Item>
