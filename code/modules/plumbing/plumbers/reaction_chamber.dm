@@ -17,10 +17,20 @@
 	var/target_temperature = 300
 	///cool/heat power
 	var/heater_coefficient = 0.05 //same lvl as acclimator
+	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a seperate thing. It's a small (50u) beaker
+	var/obj/item/reagent_containers/glass/beaker/acidic_beaker
+	///beaker that holds the alkaline buffer.
+	var/obj/item/reagent_containers/glass/beaker/alkaline_beaker
 
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
+
+	acidic_beaker = new (src)
+	alkaline_beaker = new (src)
+
+	AddComponent(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
+	AddComponent(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
 
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
 	. = ..()

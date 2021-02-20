@@ -1,6 +1,6 @@
 /datum/component/plumbing/reaction_chamber
-	demand_connects = WEST
-	supply_connects = EAST
+	demand_connects = NORTH
+	supply_connects = SOUTH
 
 /datum/component/plumbing/reaction_chamber/Initialize(start=TRUE, _turn_connects=TRUE)
 	. = ..()
@@ -42,3 +42,21 @@
 	if(reagents.is_reacting == TRUE) //Let the thing react in peace
 		return
 	return ..()
+
+///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs seperate, like into a special internal acid container
+/datum/component/plumbing/acidic_input
+	demand_connects = WEST
+	demand_color = "yellow"
+
+/datum/component/plumbing/acidic_input/send_request(dir)
+	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
+
+///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs seperate, like into a special internal base container
+/datum/component/plumbing/alkaline_input
+	demand_connects = EAST
+	demand_color = "green"
+
+/datum/component/plumbing/alkaline_input/send_request(dir)
+	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/alkaline_buffer, dir = dir)
+
+
