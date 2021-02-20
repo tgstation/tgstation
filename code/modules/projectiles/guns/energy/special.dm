@@ -376,5 +376,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = 1
 
-/obj/item/gun/energy/tesla_cannon
+/obj/item/gun/energy/tesla_cannon/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
