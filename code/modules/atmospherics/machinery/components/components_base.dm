@@ -95,10 +95,10 @@
 
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)
-			reference.other_airs -= airs[i] // Disconnects from the pieline side
+			reference.other_airs -= airs[i] // Disconnects from the pipeline side
 			parents[i] = null // Disconnects from the machinery side.
 
-	reference.other_atmosmch -= src
+	reference.other_atmosmch -= src 
 	
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline
