@@ -78,7 +78,6 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 
 /obj/item/ammo_casing/energy/laser/minigun
-	name = "gatling gun fusion core"
 	select_name = "kill"
 	projectile_type = /obj/projectile/beam/weak/penetrator
 	variance = 0.8

@@ -12,6 +12,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/energy/minigun/gun
+	var/obj/item/stock_parts/cell/minigun/battery
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
@@ -103,6 +104,7 @@
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
@@ -131,14 +133,25 @@
 		qdel(src)
 
 /obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(ammo_pack)
-		if(ammo_pack.overheat < ammo_pack.overheat_max)
-			ammo_pack.overheat += burst_size
-			..()
-		else
-			to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
+	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
+		to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
+		return
+	..()
+	ammo_pack.overheat += burst_size
+	if(ammo_pack.battery)
+		var/totransfer = min(100, ammo_pack.battery.charge)
+		var/transferred = cell.give(totransfer)
+		ammo_pack.battery.use(transferred)
+
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, "<span class='warning'>You need the backpack power source to fire the gun!</span>")
 	. = ..()
+
+/obj/item/stock_parts/cell/minigun
+	name = "gatling gun fusion core"
+	desc = "Where did these come from?"
+	icon_state = "h+cell"
+	maxcharge = 500000
+	chargerate = 5000
