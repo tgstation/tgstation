@@ -1544,7 +1544,7 @@
 /obj/item/toy/foamfinger
 	name = "foam finger"
 	desc = "root for the home team! wait, does this station even have a sports team?"
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "foamfinger"
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
