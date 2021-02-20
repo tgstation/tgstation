@@ -57,14 +57,15 @@
 			node.addMember(src)
 		SSair.add_to_rebuild_queue(src)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/update_icon()
-	. = ..()
+/obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(active)
+		return ..()
+	if(active)
 		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
@@ -126,13 +127,15 @@
 		return
 	return ..()
 
-/obj/machinery/hypertorus/update_icon()
+/obj/machinery/hypertorus/update_icon_state()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(active)
+		return ..()
+	if(active)
 		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"
@@ -314,13 +317,13 @@
 /obj/item/paper/guides/jobs/atmos/hypertorus
 	name = "paper- 'Quick guide to safe handling of the HFR'"
 	info = "<B>How to safely(TM) operate the Hypertorus</B><BR>\
-	-Build the machine as it’s shown in the main guide.<BR>\
+	-Build the machine as itï¿½s shown in the main guide.<BR>\
 	-Make a 50/50 gasmix of tritium and hydrogen totalling around 2000 moles.<BR>\
 	-Start the machine, fill up the cooling loop with plasma/hypernoblium and use space or freezers to cool it.<BR>\
 	-Connect the fuel mix into the fuel injector port, allow only 1000 moles into the machine to ease the kickstart of the reaction<BR>\
 	-Set the Heat conductor to 500 when starting the reaction, reset it to 100 when power level is higher than 1<BR>\
 	-In the event of a meltdown, set the heat conductor to max and set the current damper to max. Set the fuel injection to min. \
-	If the heat output doesn’t go negative, try changing the magnetic costrictors untill heat output goes negative. \
+	If the heat output doesnï¿½t go negative, try changing the magnetic costrictors untill heat output goes negative. \
 	Make the cooling stronger, put high heat capacity gases inside the moderator (hypernoblium will help dealing with the problem)<BR><BR>\
 	<B>Warnings:</B><BR>\
 	-You cannot dismantle the machine if the power level is over 0<BR>\

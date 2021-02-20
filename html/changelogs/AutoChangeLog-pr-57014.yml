@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - code_imp: "Tidies up some of the code in living duffel bags to meet contribution guidelines."

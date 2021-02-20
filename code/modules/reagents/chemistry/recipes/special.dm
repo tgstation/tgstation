@@ -314,4 +314,4 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "</ul>"
 	dat += "."
 	info = dat.Join("")
-	update_icon()
+	update_appearance()

@@ -13,6 +13,7 @@
 	desc = "A high fidelity testing device which unlocks the secrets of the known universe using the two most powerful substances available to man: excessive amounts of electricity and capital."
 	icon = 'icons/obj/machines/bepis.dmi'
 	icon_state = "chamber"
+	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
 	use_power = IDLE_POWER_USE
@@ -44,7 +45,7 @@
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
-		update_icon()
+		update_appearance()
 		return
 	if(default_deconstruction_crowbar(O))
 		return
@@ -56,7 +57,7 @@
 		banked_cash += deposit_value
 		qdel(O)
 		say("Deposited [deposit_value] credits into storage.")
-		update_icon()
+		update_appearance()
 		return
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/Card = O
@@ -91,7 +92,7 @@
 	var/deposit_value = 0
 	deposit_value = banking_amount
 	if(deposit_value == 0)
-		update_icon()
+		update_appearance()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
 	deposit_value = clamp(round(deposit_value, 1), 1, 10000)
@@ -107,7 +108,7 @@
 	banked_cash += deposit_value
 	use_power(1000 * power_saver)
 	say("Cash deposit successful. There is [banked_cash] in the chamber.")
-	update_icon()
+	update_appearance()
 	return
 
 /obj/machinery/rnd/bepis/proc/withdrawcash()
@@ -119,7 +120,7 @@
 		banked_cash -= withdraw_value
 		new /obj/item/holochip(src.loc, withdraw_value)
 		say("Withdrawing [withdraw_value] credits from the chamber.")
-	update_icon()
+	update_appearance()
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
@@ -142,7 +143,7 @@
 	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset) //this is the randomized profit value that your experiment expects to give.
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	flick("chamber_flash",src)
-	update_icon()
+	update_appearance()
 	banked_cash = 0
 	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
 		say("Experiment concluded with major success. New technology node discovered on technology disc.")
@@ -167,20 +168,21 @@
 
 /obj/machinery/rnd/bepis/update_icon_state()
 	if(panel_open == TRUE)
-		icon_state = "chamber_open"
-		return
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
-		icon_state = "chamber_active_loaded"
-		return
+		icon_state = "[base_icon_state]_active_loaded"
+		return ..()
 	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
-		icon_state = "chamber_loaded"
-		return
+		icon_state = "[base_icon_state]_loaded"
+		return ..()
 	if(use_power == ACTIVE_POWER_USE && is_operational)
-		icon_state = "chamber_active"
-		return
+		icon_state = "[base_icon_state]_active"
+		return ..()
 	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
-		icon_state = "chamber"
-		return
+		icon_state = base_icon_state
+		return ..()
+	return ..()
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -254,7 +256,7 @@
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
 			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
-			update_icon()
+			update_appearance()
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)
@@ -264,7 +266,7 @@
 				use_power = IDLE_POWER_USE
 			else
 				use_power = ACTIVE_POWER_USE
-			update_icon()
+			update_appearance()
 		if("account_reset")
 			if(use_power == IDLE_POWER_USE)
 				return

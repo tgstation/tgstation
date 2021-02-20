@@ -200,7 +200,7 @@
 
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life(stam_regen)
+/obj/item/bodypart/proc/on_life(delta_time, times_fired, stam_regen)
 	if(stamina_dam > DAMAGE_PRECISION && stam_regen) //DO NOT update health here, it'll be done in the carbon's life.
 		heal_damage(0, 0, INFINITY, null, FALSE)
 		. |= BODYPART_LIFE_UPDATE_HEALTH
@@ -739,6 +739,13 @@
 		should_draw_greyscale = FALSE
 		no_update = TRUE
 
+	if(HAS_TRAIT(src, TRAIT_PLASMABURNT) && is_organic_limb())
+		species_id = "plasmaman"
+		dmg_overlay_type = ""
+		should_draw_gender = FALSE
+		should_draw_greyscale = FALSE
+		no_update = TRUE
+
 	if(no_update)
 		return
 
@@ -911,13 +918,13 @@
 
 	var/bleed_rate = 0
 	if(generic_bleedstacks > 0)
-		bleed_rate++
+		bleed_rate += 0.5
 
 	//We want an accurate reading of .len
 	listclearnulls(embedded_objects)
 	for(var/obj/item/embeddies in embedded_objects)
 		if(!embeddies.isEmbedHarmless())
-			bleed_rate += 0.5
+			bleed_rate += 0.25
 
 	for(var/thing in wounds)
 		var/datum/wound/W = thing

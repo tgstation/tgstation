@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "Crafting menu will now tell you which colour of crayon is needed (useful for recipes like the crazy burger)"
