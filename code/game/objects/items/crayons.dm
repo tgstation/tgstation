@@ -19,7 +19,7 @@
  */
 
 /obj/item/toy/crayon
-	name = "crayon"
+	name = "red crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
@@ -81,9 +81,6 @@
 
 /obj/item/toy/crayon/Initialize()
 	. = ..()
-	// Makes crayons identifiable in things like grinders
-	if(name == "crayon")
-		name = "[crayon_color] crayon"
 
 	dye_color = crayon_color
 
@@ -502,6 +499,7 @@
 			return G
 
 /obj/item/toy/crayon/red
+	name = "red crayon"
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	crayon_color = "red"
@@ -509,6 +507,7 @@
 	dye_color = DYE_RED
 
 /obj/item/toy/crayon/orange
+	name = "orange crayon"
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	crayon_color = "orange"
@@ -516,6 +515,7 @@
 	dye_color = DYE_ORANGE
 
 /obj/item/toy/crayon/yellow
+	name = "yellow crayon"
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	crayon_color = "yellow"
@@ -523,6 +523,7 @@
 	dye_color = DYE_YELLOW
 
 /obj/item/toy/crayon/green
+	name = "green crayon"
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	crayon_color = "green"
@@ -530,6 +531,7 @@
 	dye_color = DYE_GREEN
 
 /obj/item/toy/crayon/blue
+	name = "blue crayon"
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	crayon_color = "blue"
@@ -537,6 +539,7 @@
 	dye_color = DYE_BLUE
 
 /obj/item/toy/crayon/purple
+	name = "purple crayon"
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	crayon_color = "purple"
@@ -544,6 +547,7 @@
 	dye_color = DYE_PURPLE
 
 /obj/item/toy/crayon/black
+	name = "black crayon"
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	crayon_color = "black"
@@ -551,6 +555,7 @@
 	dye_color = DYE_BLACK
 
 /obj/item/toy/crayon/white
+	name = "white crayon"
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	crayon_color = "white"
@@ -558,6 +563,7 @@
 	dye_color = DYE_WHITE
 
 /obj/item/toy/crayon/mime
+	name = "mime crayon"
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
@@ -567,6 +573,7 @@
 	dye_color = DYE_MIME
 
 /obj/item/toy/crayon/rainbow
+	name = "rainbow crayon"
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
 	crayon_color = "rainbow"
