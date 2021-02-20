@@ -229,8 +229,7 @@
 		switch(heading)
 			if(NORTH)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST))
-					QUEUE_NODE(current_turf, unwind_node, steps_taken)
-					return
+					interesting = TRUE
 			if(SOUTH)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST))
 					interesting = TRUE
