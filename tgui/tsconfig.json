@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es3",
+    "noEmit": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "ScriptHost"
+    ],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "./global.d.ts",
+    "./packages"
+  ]
+}
