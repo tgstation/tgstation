@@ -17,13 +17,14 @@ SUBSYSTEM_DEF(eigenstates)
 		return FALSE
 	for(var/atom/target as anything in targets) //Clear out any connected
 		var/already_linked = eigen_id[target]
-		if(already_linked)
-			if(length(eigen_targets[already_linked]) > 1) //Eigenstates are notorious for having cliques!
-				target.visible_message("[target] fizzes, it's already linked to something else!")
-				targets -= target
-				continue
-			target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
-			remove_eigen_entry(target) //clearup for new stuff
+		if(!already_linked)
+			continue
+		if(length(eigen_targets[already_linked]) > 1) //Eigenstates are notorious for having cliques!
+			target.visible_message("[target] fizzes, it's already linked to something else!")
+			targets -= target
+			continue
+		target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
+		remove_eigen_entry(target) //clearup for new stuff
 	//Do we still have targets?
 	if(!length(targets))
 		return FALSE
@@ -51,7 +52,6 @@ SUBSYSTEM_DEF(eigenstates)
 
 ///reverts everything back to start
 /datum/controller/subsystem/eigenstates/Destroy()
-	. = ..()
 	var/index = 1
 	while(index < id_counter)
 		for(var/entry in eigen_targets["[index]"])
@@ -60,6 +60,7 @@ SUBSYSTEM_DEF(eigenstates)
 	eigen_targets = null
 	eigen_id = null
 	id_counter = 1
+	return ..()
 
 ///Processes through eigenlinks to ensure that there are no nulls
 /datum/controller/subsystem/eigenstates/proc/repair_eigenlink(id)

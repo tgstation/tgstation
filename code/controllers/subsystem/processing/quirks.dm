@@ -129,7 +129,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks_to_add += quirk
 
 	for(var/datum/quirk/quirk as anything in user.roundstart_quirks)
-		if(quirk.name in quirks_to_add)//Don't delete ones we keep
+		if(quirk.name in quirks_to_add) //Don't delete ones we keep
+			quirks_to_add -= quirk.name //Already there, no need to add.
 			continue
 		user.remove_quirk(quirk.type) //these quirks are objects
 
