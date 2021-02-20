@@ -102,9 +102,6 @@
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = null
-	burst_size = 3
-	automatic = 0
-	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
@@ -120,6 +117,10 @@
 		return INITIALIZE_HINT_QDEL //No pack, no gun
 
 	return ..()
+
+/obj/item/gun/ballistic/minigun/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
 
 /obj/item/gun/ballistic/minigun/attack_self(mob/living/user)
 	return

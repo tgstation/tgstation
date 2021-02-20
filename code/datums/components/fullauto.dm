@@ -31,16 +31,14 @@
 	return ..()
 
 
-/datum/component/automatic_fire/proc/wake_up(datum/source, fire_mode, mob/user)
+/datum/component/automatic_fire/proc/wake_up(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(autofire_stat & (AUTOFIRE_STAT_IDLE|AUTOFIRE_STAT_ALERT))
+	if(autofire_stat & (AUTOFIRE_STAT_ALERT))
 		return //We've updated the firemode. No need for more.
 	if(autofire_stat & AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
-
-	autofire_stat = AUTOFIRE_STAT_IDLE
 
 	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/sleep_up)
 
@@ -120,7 +118,6 @@
 		_target = params2turf(modifiers["screen-loc"], get_turf(source.eye), source)
 		if(!_target)
 			CRASH("Failed to get the turf under clickcatcher")
-		//icon-x/y is relative to the object clicked. click_catcher may occupy several tiles. Here we convert them to the proper offsets relative to the tile.
 
 	if(SEND_SIGNAL(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, source, _target, location, control, params) & COMPONENT_AUTOFIRE_ONMOUSEDOWN_BYPASS)
 		return
@@ -252,7 +249,11 @@
 // Gun procs.
 
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
-	if(!can_shoot(shooter) || semicd)
+	if(!can_shoot(shooter) || !can_trigger_gun(shooter) || semicd)
+		return FALSE
+	var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
+	if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
+		to_chat(shooter, "<span class='warning'>You need two hands to fire [src]!</span>")
 		return FALSE
 	return TRUE
 
@@ -265,16 +266,15 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
 	SIGNAL_HANDLER_DOES_SLEEP
-	recharge_newshot()
-	chambered.loaded_projectile = null //Projectiles live and die fast. It's better to null the reference early so the GC can handle it immediately.
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
 		return NONE
 	var/obj/item/gun/akimbo_gun = shooter.get_inactive_held_item()
-	var/bonus_spread
-	if(istype(akimbo_gun))
-		bonus_spread = dual_wield_spread
-		addtimer(CALLBACK(akimbo_gun, /obj/item/gun.proc/process_fire, target, shooter, TRUE, params, null, bonus_spread), 1)
+	var/bonus_spread = 0
+	if(istype(akimbo_gun) && weapon_weight < WEAPON_MEDIUM)
+		if(akimbo_gun.weapon_weight < WEAPON_MEDIUM && akimbo_gun.can_trigger_gun(shooter))
+			bonus_spread = dual_wield_spread
+			addtimer(CALLBACK(akimbo_gun, /obj/item/gun.proc/process_fire, target, shooter, TRUE, params, null, bonus_spread), 1)
 	process_fire(target, shooter, TRUE, params, null, bonus_spread)
 	return COMPONENT_AUTOFIRE_SHOT_SUCCESS //All is well, we can continue shooting.
 

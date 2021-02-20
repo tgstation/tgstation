@@ -83,9 +83,6 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
-/obj/item/gun/CanItemAutoclick(object, location, params)
-	. = automatic
-
 /atom/proc/IsAutoclickable()
 	return TRUE
 
