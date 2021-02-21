@@ -91,7 +91,7 @@
 	SIGNAL_HANDLER
 	if(!source.client)
 		return
-	if(source.mob.is_holding(parent))
+	if(source.is_holding(parent))
 		autofire_on(source.client)
 
 /datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
