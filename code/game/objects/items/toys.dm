@@ -68,7 +68,7 @@
 			A.reagents.trans_to(src, 10, transfered_by = user)
 			to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
-			update_icon()
+			update_appearance()
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
@@ -81,7 +81,7 @@
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
 				I.reagents.trans_to(src, 10, transfered_by = user)
-				update_icon()
+				update_appearance()
 	else if(I.get_sharpness())
 		balloon_burst()
 	else
@@ -106,12 +106,13 @@
 		qdel(src)
 
 /obj/item/toy/waterballoon/update_icon_state()
-	if(src.reagents.total_volume >= 1)
+	if(reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		inhand_icon_state = "balloon"
 	else
 		icon_state = "waterballoon-e"
 		inhand_icon_state = "balloon-empty"
+	return ..()
 
 #define BALLOON_COLORS list("red", "blue", "green", "yellow")
 
@@ -272,7 +273,7 @@
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
-		A.update_icon()
+		A.update_appearance()
 		return 1
 	else
 		return ..()
@@ -306,6 +307,7 @@
 
 /obj/item/toy/ammo/gun/update_icon_state()
 	icon_state = "357OLD-[amount_left]"
+	return ..()
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
@@ -719,7 +721,7 @@
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
-	update_icon()
+	update_appearance()
 	return H
 
 /obj/item/toy/cards/deck/update_icon_state()
@@ -732,6 +734,7 @@
 			icon_state = "deck_[deckstyle]_low"
 		else
 			icon_state = "deck_[deckstyle]_empty"
+	return ..()
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -752,7 +755,7 @@
 			qdel(SC)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/CH = I
 		if(CH.parentdeck == src)
@@ -764,7 +767,7 @@
 			qdel(CH)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -1514,10 +1517,11 @@
 
 /obj/item/toy/eldritch_book/attack_self(mob/user)
 	book_open = !book_open
-	update_icon()
+	update_appearance()
 
 /obj/item/toy/eldritch_book/update_icon_state()
 	icon_state = book_open ? "book_open" : "book"
+	return ..()
 
 /*
  * Fake tear
@@ -1536,3 +1540,34 @@
 /obj/item/storage/box/heretic_box/PopulateContents()
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
+
+/obj/item/toy/foamfinger
+	name = "foam finger"
+	desc = "root for the home team! wait, does this station even have a sports team?"
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "foamfinger"
+	inhand_icon_state = "foamfinger_inhand"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	COOLDOWN_DECLARE(foamfinger_cooldown)
+
+/obj/item/toy/foamfinger/attack_self(mob/living/carbon/human/user)
+	if(!COOLDOWN_FINISHED(src, foamfinger_cooldown))
+		return
+	COOLDOWN_START(src, foamfinger_cooldown, 5 SECONDS)
+	user.manual_emote("waves around the foam finger.")
+	var/direction = prob(50) ? -1 : 1
+	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
+		animate(user, pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+	else
+		animate(user, pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+	user.changeNext_move(CLICK_CD_MELEE)

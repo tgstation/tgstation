@@ -217,10 +217,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		if(do_after(user, 40, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/SS in sword.contents)
-				SS.usability = TRUE
+				SS.required_role = null
 				for(var/mob/living/simple_animal/shade/EX in SS)
 					SSticker.mode.remove_cultist(EX.mind, 1, 0)
-					EX.icon_state = "ghost1"
+					EX.icon_state = "shade_holy"
 					EX.name = "Purified [EX.name]"
 				SS.release_shades(user)
 				qdel(SS)
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			SS.usability = TRUE
+			SS.required_role = null
 			SS.theme = THEME_HOLY
 			SS.icon_state = "purified_soulstone"
 			for(var/mob/M in SS.contents)

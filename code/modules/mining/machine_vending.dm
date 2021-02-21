@@ -46,6 +46,7 @@
 		new /datum/data/mining_equipment("Diamond Pickaxe", /obj/item/pickaxe/diamond, 2000),
 		new /datum/data/mining_equipment("Super Resonator", /obj/item/resonator/upgraded, 2500),
 		new /datum/data/mining_equipment("Jump Boots", /obj/item/clothing/shoes/bhop, 2500),
+		new /datum/data/mining_equipment("Ice Hiking Boots", /obj/item/clothing/shoes/winterboots/ice_boots, 2500),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule", /obj/item/survivalcapsule/luxury, 3000),
 		new /datum/data/mining_equipment("Luxury Bar Capsule", /obj/item/survivalcapsule/luxuryelite, 10000),
 		new /datum/data/mining_equipment("Nanotrasen Minebot", /mob/living/simple_animal/hostile/mining_drone, 800),
@@ -84,10 +85,8 @@
 		GLOB.vending_products[M.equipment_path] = 1
 
 /obj/machinery/mineral/equipment_vendor/update_icon_state()
-	if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)
 	return list(

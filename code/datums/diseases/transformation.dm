@@ -7,7 +7,7 @@
 	agent = "Shenanigans"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/alien)
 	severity = DISEASE_SEVERITY_BIOHAZARD
-	stage_prob = 10
+	stage_prob = 5
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 	disease_flags = CURABLE
 	var/list/stage1 = list("You feel unremarkable.")
@@ -30,23 +30,23 @@
 	return D
 
 
-/datum/disease/transformation/stage_act()
+/datum/disease/transformation/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(1)
-			if (stage1 && prob(stage_prob))
+			if (stage1 && DT_PROB(stage_prob, delta_time))
 				to_chat(affected_mob, pick(stage1))
 		if(2)
-			if (stage2 && prob(stage_prob))
+			if (stage2 && DT_PROB(stage_prob, delta_time))
 				to_chat(affected_mob, pick(stage2))
 		if(3)
-			if (stage3 && prob(stage_prob * 2))
+			if (stage3 && DT_PROB(stage_prob * 2, delta_time))
 				to_chat(affected_mob, pick(stage3))
 		if(4)
-			if (stage4 && prob(stage_prob * 2))
+			if (stage4 && DT_PROB(stage_prob * 2, delta_time))
 				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
@@ -105,11 +105,11 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
-	cure_chance = 1
+	cure_chance = 0.5
 	disease_flags = CAN_CARRY|CAN_RESIST
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = DISEASE_SEVERITY_BIOHAZARD
-	stage_prob = 4
+	stage_prob = 2
 	visibility_flags = NONE
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/human/species/monkey
@@ -130,21 +130,21 @@
 		ADD_TRAIT(affected_mob, TRAIT_VENTCRAWLER_ALWAYS, type)
 
 
-/datum/disease/transformation/jungle_fever/stage_act()
+/datum/disease/transformation/jungle_fever/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>")
 		if(3)
-			if(prob(4))
+			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.add_confusion(10)
 		if(4)
-			if(prob(3))
+			if(DT_PROB(1.5, delta_time))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
 
 
@@ -167,7 +167,7 @@
 	name = "Robotic Transformation"
 	cure_text = "An injection of copper."
 	cures = list(/datum/reagent/copper)
-	cure_chance = 5
+	cure_chance = 2.5
 	agent = "R2D2 Nanomachines"
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -182,20 +182,20 @@
 	bantype = "Cyborg"
 
 
-/datum/disease/transformation/robot/stage_act()
+/datum/disease/transformation/robot/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(3)
-			if (prob(8))
+			if (DT_PROB(4, delta_time))
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"), forced = "robotic transformation")
-			if (prob(4))
+			if (DT_PROB(2, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Unconscious(40)
 		if(4)
-			if (prob(20))
+			if (DT_PROB(10, delta_time))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."), forced = "robotic transformation")
 
 
@@ -204,7 +204,7 @@
 	name = "Xenomorph Transformation"
 	cure_text = "Spaceacillin & Glycerol"
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
-	cure_chance = 5
+	cure_chance = 2.5
 	agent = "Rip-LEY Alien Microbes"
 	desc = "This disease changes the victim into a xenomorph."
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -218,18 +218,18 @@
 	bantype = ROLE_ALIEN
 
 
-/datum/disease/transformation/xeno/stage_act()
+/datum/disease/transformation/xeno/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(3)
-			if (prob(4))
+			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Unconscious(40)
 		if(4)
-			if (prob(20))
+			if(DT_PROB(10, delta_time))
 				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"), forced = "xenomorph transformation")
 
 
@@ -237,7 +237,7 @@
 	name = "Advanced Mutation Transformation"
 	cure_text = "frost oil"
 	cures = list(/datum/reagent/consumable/frostoil)
-	cure_chance = 80
+	cure_chance = 55
 	agent = "Advanced Mutation Toxin"
 	desc = "This highly concentrated extract converts anything into more of itself."
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -250,7 +250,7 @@
 	new_form = /mob/living/simple_animal/slime/random
 
 
-/datum/disease/transformation/slime/stage_act()
+/datum/disease/transformation/slime/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -283,16 +283,16 @@
 	new_form = /mob/living/simple_animal/pet/dog/corgi
 
 
-/datum/disease/transformation/corgi/stage_act()
+/datum/disease/transformation/corgi/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 	switch(stage)
 		if(3)
-			if (prob(8))
+			if (DT_PROB(4, delta_time))
 				affected_mob.say(pick("YAP", "Woof!"), forced = "corgi transformation")
 		if(4)
-			if (prob(20))
+			if (DT_PROB(10, delta_time))
 				affected_mob.say(pick("Bark!", "AUUUUUU"), forced = "corgi transformation")
 
 
@@ -302,7 +302,7 @@
 	cures = list(/datum/reagent/consumable/nothing)
 	agent = "Gluttony's Blessing"
 	desc = "A 'gift' from somewhere terrible."
-	stage_prob = 20
+	stage_prob = 10
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = NONE
 	stage1 = list("Your stomach rumbles.")
@@ -318,8 +318,8 @@
 	name = "Gondola Transformation"
 	cure_text = "Condensed Capsaicin, ingested or injected." //getting pepper sprayed doesn't help
 	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie crap right out of your system
-	cure_chance = 80
-	stage_prob = 5
+	cure_chance = 55
+	stage_prob = 2.5
 	agent = "Tranquility"
 	desc = "Consuming the flesh of a Gondola comes at a terrible price."
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -332,28 +332,28 @@
 	new_form = /mob/living/simple_animal/pet/gondola
 
 
-/datum/disease/transformation/gondola/stage_act()
+/datum/disease/transformation/gondola/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if (prob(5))
+			if(DT_PROB(2.5, delta_time))
 				affected_mob.emote("smile")
-			if (prob(20))
+			if(DT_PROB(10, delta_time))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 		if(3)
-			if (prob(5))
+			if(DT_PROB(2.5, delta_time))
 				affected_mob.emote("smile")
-			if (prob(20))
+			if(DT_PROB(10, delta_time))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 		if(4)
-			if (prob(5))
+			if(DT_PROB(2.5, delta_time))
 				affected_mob.emote("smile")
-			if (prob(20))
+			if(DT_PROB(10, delta_time))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
-			if (prob(2))
+			if(DT_PROB(1, delta_time))
 				var/obj/item/held_item = affected_mob.get_active_held_item()
 				if(held_item)
 					to_chat(affected_mob, "<span class='danger'>You let go of what you were holding.</span>")

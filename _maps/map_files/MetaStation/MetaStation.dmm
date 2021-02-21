@@ -30781,14 +30781,14 @@
 	},
 /area/engineering/atmos)
 "dss" = (
-/obj/machinery/light_switch{
-	pixel_x = -22;
-	pixel_y = 8
-	},
 /obj/machinery/button/door/incinerator_vent_toxmix{
 	id = "toxinsaccess";
 	name = "Toxins Access";
 	pixel_x = -26;
+	pixel_y = -24
+	},
+/obj/machinery/light_switch{
+	pixel_x = -38;
 	pixel_y = -24
 	},
 /turf/open/floor/iron/white,

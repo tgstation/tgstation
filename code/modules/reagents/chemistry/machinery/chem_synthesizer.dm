@@ -3,6 +3,7 @@
 	desc = "If you see this, yell at adminbus."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
+	base_icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	flags_1 = NODECONSTRUCT_1
@@ -28,15 +29,8 @@
 				beaker = null
 				. = TRUE
 		if("input")
-			var/input_reagent = replacetext(lowertext(input("Enter the name of any reagent", "Input") as text|null), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
-
-			if (isnull(input_reagent))
-				return
-
-			if(shortcuts[input_reagent])
-				input_reagent = shortcuts[input_reagent]
-			else
-				input_reagent = find_reagent(input_reagent)
+			var/input_reagent = (input("Enter the name of any reagent", "Input") as text|null)
+			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			if(!input_reagent)
 				say("REAGENT NOT FOUND")
 				return
@@ -55,7 +49,7 @@
 			var/input = text2num(params["amount"])
 			if(input)
 				amount = input
-	update_icon()
+	update_appearance()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE

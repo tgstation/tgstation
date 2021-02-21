@@ -130,7 +130,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-	update_icon()
+	update_appearance()
 	usr.update_action_buttons()
 
 /atom/movable/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -151,14 +151,11 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-	update_icon()
+	update_appearance()
 
 /atom/movable/screen/movable/action_button/hide_toggle/update_overlays()
 	. = ..()
-	if(hidden)
-		. += show_appearance
-	else
-		. += hide_appearance
+	. += hidden ? show_appearance : hide_appearance
 
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	if(!QDELETED(src))
