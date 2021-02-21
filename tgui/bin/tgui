@@ -71,6 +71,11 @@ task-lint() {
   echo "tgui: eslint check passed"
 }
 
+task-test() {
+  cd "${base_dir}"
+  yarn run jest
+}
+
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
@@ -164,6 +169,13 @@ if [[ ${1} == '--fix' ]]; then
   shift 1
   task-install
   task-lint --fix "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--test' ]]; then
+  shift 1
+  task-install
+  task-test "${@}"
   exit 0
 fi
 

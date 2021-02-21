@@ -58,6 +58,10 @@ function task-lint {
   Write-Output "tgui: eslint check passed"
 }
 
+function task-test {
+  yarn run jest
+}
+
 ## Mr. Proper
 function task-clean {
   ## Build artifacts
@@ -111,6 +115,13 @@ if ($Args.Length -gt 0) {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-lint --fix @Rest
+    exit 0
+  }
+
+  if ($Args[0] -eq "--test") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-test @Rest
     exit 0
   }
 
