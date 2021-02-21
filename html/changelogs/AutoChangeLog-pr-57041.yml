@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "Rust Heritec slime people will no longer be hurt by rust"

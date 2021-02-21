@@ -1,0 +1,4 @@
+author: "theOOZ"
+delete-after: True
+changes: 
+  - qol: "Better visual clarity of the health scanner's text colors."
