@@ -3,3 +3,6 @@
 
 /datum/actionspeed_modifier/blunt_wound
 	variable = TRUE
+
+/datum/actionspeed_modifier/nooartium
+	multiplicative_slowdown = 0.5
