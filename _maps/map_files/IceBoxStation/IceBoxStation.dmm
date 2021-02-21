@@ -12622,11 +12622,8 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bga" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
 /obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bgb" = (
@@ -102407,7 +102404,7 @@ nhQ
 iMW
 csr
 pXx
-aYV
+bga
 qXW
 aYV
 bfX
@@ -103952,7 +103949,7 @@ vVm
 aYV
 qXW
 gdd
-bga
+bfX
 bgc
 bgc
 bgc

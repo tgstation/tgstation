@@ -33699,7 +33699,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/destructive_scanner,
 /turf/open/floor/iron/white,
 /area/science/research)
 "euv" = (
@@ -43064,16 +43063,16 @@
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
 "ikF" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/purple/warning{
 	dir = 6
 	},
 /obj/effect/turf_decal/trimline/purple/warning{
 	dir = 6
 	},
-/obj/effect/turf_decal/siding/purple,
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
 /turf/open/floor/iron/white,
 /area/science/research)
 "ikK" = (

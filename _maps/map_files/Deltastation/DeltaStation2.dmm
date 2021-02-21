@@ -13647,16 +13647,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
-"bgN" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/machinery/destructive_scanner,
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/science/research)
 "bgU" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -33817,10 +33807,11 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPd" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPe" = (
@@ -149848,7 +149839,7 @@ cNp
 cOW
 cQH
 dgv
-bgN
+cUe
 cWb
 cXr
 cOR

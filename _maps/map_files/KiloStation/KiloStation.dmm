@@ -11443,6 +11443,9 @@
 	dir = 1
 	},
 /obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/iron/dark,
 /area/hallway/primary/starboard)
 "ayV" = (
