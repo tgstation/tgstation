@@ -1151,10 +1151,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 			last_slogan = world.time + rand(0, slogan_delay)
 			return
 
-	if(panel_open && is_wire_tool(I))
-		wires.interact(user)
-		return
-
 	return ..()
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
