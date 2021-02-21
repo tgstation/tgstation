@@ -18,6 +18,7 @@
 	reflectable = REFLECT_NORMAL
 	wound_bonus = -20
 	bare_wound_bonus = 10
+	speed = 0.6
 
 
 /obj/projectile/beam/laser
@@ -26,13 +27,14 @@
 	impact_type = /obj/effect/projectile/impact/laser
 	wound_bonus = -30
 	bare_wound_bonus = 40
+	speed = 0.6
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
 	damage = 25
-	speed = 0.6 // higher power = faster, that's how light works right
+	speed = 0.4 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize()
 	. = ..()
@@ -56,19 +58,23 @@
 
 /obj/projectile/beam/weak
 	damage = 15
+	speed = 0.6
 
 /obj/projectile/beam/weak/penetrator
 	armour_penetration = 50
+	speed = 0.6
 
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
 	nodamage = TRUE
+	speed = 0.6
 
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
+	speed = 0.6
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -78,6 +84,7 @@
 	irradiate = 300
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
+	speed = 0.6
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
@@ -98,6 +105,7 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
+	speed = 0.6
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -109,6 +117,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/pulse
 	impact_type = /obj/effect/projectile/impact/pulse
 	wound_bonus = 10
+	speed = 0.6
 
 /obj/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -120,12 +129,14 @@
 
 /obj/projectile/beam/pulse/shotgun
 	damage = 30
+	speed = 0.6
 
 /obj/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
 	icon_state = "pulse1_bl"
 	projectile_piercing = ALL
 	var/pierce_hits = 2
+	speed = 0.6
 
 /obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	if(pierce_hits <= 0)
@@ -171,6 +182,7 @@
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
+	speed = 0.6
 
 /obj/projectile/beam/lasertag/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -188,6 +200,7 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
+	speed = 0.6
 
 /obj/projectile/beam/lasertag/redtag/hitscan
 	hitscan = TRUE
@@ -198,6 +211,7 @@
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
 	impact_type = /obj/effect/projectile/impact/laser/blue
+	speed = 0.6
 
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
