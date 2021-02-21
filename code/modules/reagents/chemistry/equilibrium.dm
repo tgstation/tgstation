@@ -205,16 +205,16 @@
 * This was moved from the start, to the end - after a reaction, so post reaction temperature changes aren't ignored.
 * overheated() is first - so double explosions can't happen (i.e. explosions that blow up the holder)
 */
-/datum/equilibrium/proc/check_fail_states()
+/datum/equilibrium/proc/check_fail_states(vol_added)
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src)
+			reaction.overheated(holder, src, vol_added)
 	else
 		if(holder.chem_temp > reaction.overheat_temp)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src)
+			reaction.overheated(holder, src, vol_added)
 
 	//is our product too impure?
 	for(var/product in reaction.results)
@@ -223,7 +223,7 @@
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
-			reaction.overly_impure(holder, src)
+			reaction.overly_impure(holder, src, vol_added)
 
 	//did we explode?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
@@ -394,7 +394,7 @@
 	reaction_quality = purity
 
 	//post reaction checks
-	if(!(check_fail_states()))
+	if(!(check_fail_states(total_step_added)))
 		to_delete = TRUE
 
 	//end reactions faster so plumbing is faster

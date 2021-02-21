@@ -44,6 +44,10 @@
 	var/list/reaction_names = list()
 	///If it's started
 	var/reaction_stated = FALSE
+	///If we spawn a beaker at the end of a reaction or not
+	var/beaker_spawn = FALSE
+	///If we force min temp on reaction setup
+	var/min_temp = FALSE
 
 ///Create reagents datum
 /obj/machinery/chem_recipe_debug/Initialize()
@@ -74,7 +78,7 @@
 	begin_processing()
 
 ///Resets the index, and creates the cached_reaction list from all possible reactions
-/obj/machinery/chem_recipe_debug/proc/setup_reactions())
+/obj/machinery/chem_recipe_debug/proc/setup_reactions()
 	cached_reactions = list()
 	if(!process_all)
 		cached_reactions = reaction_names
@@ -104,8 +108,9 @@
 	if(reaction_stated == TRUE)
 		reaction_stated = FALSE
 		relay_ended_reaction()
-	if(index >= cached_reactions.len)
+	if(index > cached_reactions.len)
 		relay_all_reactions()
+		return
 	setup_reaction()
 	reaction_stated = TRUE
 
@@ -116,6 +121,10 @@
 	say("[impure_string]")
 	say("Reactions with minor impurity: [minorImpurity], reactions with major impurity: [majorImpurity]")
 	processing = FALSE
+	problem_string = null
+	impure_string = null
+	minorImpurity = null
+	majorImpurity = null
 	end_processing()
 
 /obj/machinery/chem_recipe_debug/proc/relay_ended_reaction()
@@ -144,12 +153,15 @@
 				minorImpurity++
 			if(R2.volume < C.results[R])
 				impure_string += "Reaction [cached_reactions[index]] has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
+		if(beaker_spawn && reagents.total_volume)
+			var/obj/item/reagent_containers/glass/beaker/bluespace/B = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
+			reagents.trans_to(B)
+			B.name = "[cached_reactions[index]]"
 		reagents.clear_reagents()
+		reagents.chem_temp = 300
 		if(failed > 1)
 			index++
 			failed = 0
-		if(failed == 0)
-			index++
 	else
 		say("No reagents left in beaker!")
 
@@ -167,17 +179,20 @@
 		reagents.add_reagent(R, C.required_reagents[R]*vol_multi)
 	for(var/cat in C.required_catalysts)
 		reagents.add_reagent(cat, C.required_catalysts[cat])
-	if(force_temp)
+	if(force_temp && !min_temp)
 		say("Using forced temperatures.")
 		reagents.chem_temp = f_temp ? f_temp : C.optimal_temp
 	if(force_ph)
 		say("Using forced pH.")
 		reagents.ph = f_ph ? f_ph : (C.optimal_ph_max + C.optimal_ph_min)/2
-	if(failed == 0)
+	if(failed == 0 && !force_temp)
 		reagents.chem_temp = C.optimal_temp
-	if(failed == 1)
+	if(failed == 1 && !force_temp)
 		reagents.chem_temp = C.required_temp+25
 		failed++
+	if(min_temp)
+		say("Overriding temperature to required temp.")
+		reagents.chem_temp = C.is_cold_recipe ? C.required_temp - 1 : C.required_temp + 1
 	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.ph] index [index] of [cached_reactions.len]")
 
 /obj/machinery/chem_recipe_debug/ui_data(mob/user)
@@ -194,6 +209,8 @@
 	data["processing"] = processing
 	data["index"] = index
 	data["endIndex"] = cached_reactions.len
+	data["beakerSpawn"] = beaker_spawn
+	data["minTemp"] = min_temp
 
 	var/list/beaker_contents = list()
 	for(var/r in reagents.reagent_list)
@@ -203,11 +220,11 @@
 	data["chamberContents"] = beaker_contents
 
 	var/list/queued_reactions = list()
-	for(var/datum/chemical_reaction/react as anything in cached_reactions)
-		var/reagent = react.results[1]
-		var/datum/reagent/R = find_reagent(reagent)
+	for(var/datum/chemical_reaction/react as anything in reaction_names)
+		var/datum/reagent/R = find_reagent_object_from_type(react.results[1])
 		queued_reactions.len++
-		queued_reactions[length(beaker_contents)] = list("name" = R.name)
+		queued_reactions[length(queued_reactions)] = list("name" = R.name)
+	data["queuedReactions"] = queued_reactions
 
 	var/list/active_reactions = list()
 	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
@@ -286,17 +303,25 @@
 		if("all")
 			process_all = !process_all
 			return TRUE
+		if("beakerSpawn")
+			beaker_spawn = !beaker_spawn
+			return TRUE
 		if("setTargetList")
-			var/text = stripped_input(usr,"List","Enter a list of Recipe product names separated by commas", "Recipe", MAX_NAME_LEN)
+			var/text = stripped_input(usr,"List","Enter a list of Recipe product names separated by commas", "Recipe", MAX_MESSAGE_LEN)
+			reaction_names = list()
 			if(!text)
 				say("Could not find reaction")
 			var/list/names = splittext("[text]", ",")
 			for(var/name in names)
 				var/datum/reagent/R = find_reagent_object_from_type(get_chem_id(name))
-				if(!text)
+				if(!R)
 					say("Could not find [name]")
 					continue
-				cached_reactions += GLOB.chemical_reactions_list_product_index[R]
+				var/datum/chemical_reaction/reac = GLOB.chemical_reactions_list_product_index[R.type]
+				if(!reac)
+					say("Could not find [name] reaction!")
+					continue
+				reaction_names += reac
 		if("vol")
 			var/target = params["target"]
 			if(text2num(target) != null)
@@ -309,9 +334,14 @@
 				say("currently processing reaction [index]: [cached_reactions[index]] of [cached_reactions.len]")
 				return
 			say("Starting processing")
+			index = 1
 			setup_reactions()
 			begin_processing()
 			return TRUE
+		if("stop")
+			relay_all_reactions()
+		if("minTemp")
+			min_temp = !min_temp
 
 
 /obj/machinery/chem_recipe_debug/ui_interact(mob/user, datum/tgui/ui)

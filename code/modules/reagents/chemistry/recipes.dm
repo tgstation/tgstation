@@ -191,7 +191,7 @@
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
  */
-/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	for(var/id in results)
 		var/datum/reagent/reagent = holder.get_reagent(id)
 		if(!reagent)
@@ -209,7 +209,7 @@
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
  */
-/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/affected_list = results + required_reagents
 	for(var/_reagent in affected_list)
 		var/datum/reagent/reagent = holder.get_reagent(_reagent)

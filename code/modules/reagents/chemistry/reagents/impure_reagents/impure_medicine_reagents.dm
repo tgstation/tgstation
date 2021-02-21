@@ -50,7 +50,7 @@
 //// Helbital
 
 //Inverse:
-datum/reagent/inverse/helgrasp
+/datum/reagent/inverse/helgrasp
 	name = "Helgrasp"
 	description = "This rare and forbidden concoction is thought to bring you closer to the grasp of the Norse goddess Hel."
 	metabolization_rate = 1*REM //This is fast
@@ -60,18 +60,18 @@ datum/reagent/inverse/helgrasp
 	var/lag_compensate = 0
 
 //Warns you about the impenting hands
-datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
+/datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
 	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
 	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 	. = ..()
 
 //Sends hands after you for your hubris
-datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	spawn_hands(owner)
 	lag_compensate += 1 - max(delta_time, 1)
 	. = ..()
 
-datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
+/datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
 	//Adapted from the end of the curse - but lasts a short time
 	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 8)//Larger range so you have more time to dodge
@@ -83,7 +83,7 @@ datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
 	hand.preparePixelProjectile(owner, spawn_turf)
 	hand.fire()
 
-datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
+/datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 	var/hands = 0
 	while(lag_compensate > hands)
 		spawn_hands(owner)

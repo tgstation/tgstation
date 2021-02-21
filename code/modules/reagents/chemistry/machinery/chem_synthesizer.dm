@@ -57,6 +57,11 @@
 				amount = purity
 	update_appearance()
 
+/obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
+	var/data = list()
+	data["purity"] = purity
+	return data
+
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!

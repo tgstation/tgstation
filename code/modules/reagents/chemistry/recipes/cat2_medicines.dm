@@ -22,7 +22,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
-/datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	explode_fire_vortex(holder, equilibrium, 1, 1)
 	holder.chem_temp += 2.5
 	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
@@ -35,7 +35,7 @@
 			holder.chem_temp += 5
 			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing the [src] to let out a hearty burst of flame, evaporating part of the product!</span>")
 
-/datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()//drains product
 	explode_fire_vortex(holder, equilibrium, 2, 2, "overheat", TRUE)
 
@@ -125,7 +125,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
-/datum/chemical_reaction/medicine/aiuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/aiuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	for(var/mob/living/living_mob as anything in orange(3, get_turf(holder.my_atom)))
 		if(!isliving(living_mob))
@@ -153,7 +153,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
-/datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	if(off_cooldown(holder, equilibrium, 2, "hercuri_freeze"))
 		return
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
@@ -170,15 +170,15 @@
 	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/fuel/oil = 1)
 	required_temp = 370
 	mix_message = "The mixture rapidly turns into a dense pink liquid."
-	optimal_temp = 500
-	overheat_temp = 720
-	optimal_ph_min = 5
-	optimal_ph_max = 10
+	optimal_temp = 420
+	overheat_temp = 720 //Ash will be created before this - so it's pretty rare that overheat is actually triggered
+	optimal_ph_min = 2
+	optimal_ph_max = 7
 	determin_ph_range = 2
 	temp_exponent_factor = 0.75
 	ph_exponent_factor = 1.25
-	thermic_constant = 25
-	H_ion_release = 4
+	thermic_constant = 15
+	H_ion_release = -1
 	rate_up_lim = 50
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -199,7 +199,7 @@
 	else
 		explode_shockwave(holder, equilibrium, range, damage = 2)
 
-/datum/chemical_reaction/medicine/convermol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/convermol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	overheated(holder, equilibrium, TRUE)
 	clear_reactants(holder, 2)
@@ -209,12 +209,12 @@
 	results = list(/datum/reagent/medicine/c2/tirimol = 5)
 	required_reagents = list(/datum/reagent/nitrogen = 3, /datum/reagent/acetone = 2)
 	required_catalysts = list(/datum/reagent/toxin/acid = 1)
-	mix_message = "The mixture sluggishly turns into a sleepy blue liquid."
+	mix_message = "The mixture turns into a tired reddish pink liquid."
 	optimal_temp = 1
 	optimal_temp = 900
 	overheat_temp = 720
-	optimal_ph_min = 5
-	optimal_ph_max = 10
+	optimal_ph_min = 2
+	optimal_ph_max = 7
 	determin_ph_range = 2
 	temp_exponent_factor = 4
 	ph_exponent_factor = 2
@@ -229,7 +229,7 @@
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
 	if(!oxy)
-		holder.ph += 0.05//pH drifts faster
+		holder.ph += 0.2*step_reaction_vol//pH drifts faster
 	else
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
 
@@ -243,7 +243,7 @@
 	else
 		explode_invert_smoke(holder, equilibrium)
 
-/datum/chemical_reaction/medicine/tirimol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/tirimol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	overheated(holder, equilibrium, TRUE)
 	clear_reactants(holder, 2)
@@ -251,27 +251,27 @@
 /*****TOX*****/
 //These all care about purity in their reactions
 
-/datum/chemical_reaction/medicine/seiver //add alt that lowers temperature from reaction, make this one exothermic
+/datum/chemical_reaction/medicine/seiver
 	results = list(/datum/reagent/medicine/c2/seiver = 3)
 	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/potassium = 1, /datum/reagent/aluminium = 1)
 	mix_message = "The mixture gives out a goopy slorp."
 	is_cold_recipe = TRUE
 	required_temp = 320
-	optimal_temp = 50
-	overheat_temp = 99999
-	optimal_ph_min = 2
-	optimal_ph_max = 5
+	optimal_temp = 280
+	overheat_temp = NO_OVERHEAT
+	optimal_ph_min = 4
+	optimal_ph_max = 7
 	determin_ph_range = 6
-	temp_exponent_factor = 2
+	temp_exponent_factor = 1
 	ph_exponent_factor = 0.5
 	thermic_constant = -500
 	H_ion_release = -5
-	rate_up_lim = 60
+	rate_up_lim = 45
 	purity_min = 0.35
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
-/datum/chemical_reaction/medicine/seiver/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/seiver/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "seiver_rads"))
 		return
@@ -298,7 +298,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
 //You get nothing! I'm serious about staying under the heating requirements!
-/datum/chemical_reaction/medicine/multiver/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/multiver/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	var/datum/reagent/monover = holder.has_reagent(/datum/reagent/inverse/healing/monover)
 	if(monover)
@@ -321,7 +321,7 @@
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
 	required_temp = 250
 	optimal_temp = 310
-	overheat_temp = 99999
+	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 5
 	optimal_ph_max = 9
 	determin_ph_range = 6
@@ -357,7 +357,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
 //overheat beats like a heart! (or is it overbeat?)
-/datum/chemical_reaction/medicine/penthrite/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/penthrite/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "lub"))
 		explode_shockwave(holder, equilibrium, 3, 2)
@@ -368,5 +368,5 @@
 	explode_fire_vortex(holder, equilibrium, 1, 1)
 
 //enabling hardmode
-/datum/chemical_reaction/medicine/penthrite/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/medicine/penthrite/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	holder.chem_temp += 15
