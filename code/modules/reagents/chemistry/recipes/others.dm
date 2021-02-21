@@ -732,6 +732,7 @@
 	purity_min = 0
 	mix_message = "The solution freezes up into ice!"
 	reaction_flags = REACTION_COMPETITIVE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_DRINK
 
 /datum/chemical_reaction/water
 	results = list(/datum/reagent/water = 0.92)//rough density excahnge
@@ -746,6 +747,7 @@
 	rate_up_lim = 50
 	purity_min = 0
 	mix_message = "The ice melts back into water!"
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_DRINK
 
 ////////////////////////////////////
 
@@ -762,6 +764,7 @@
 	rate_up_lim = 50
 	purity_min = 0
 	mix_message = "The mixture's colors swirl together."
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/eigenstate
 	results = list(/datum/reagent/eigenstate = 1)
@@ -782,6 +785,7 @@
 	rate_up_lim = 10
 	purity_min = 0.4
 	reaction_flags = REACTION_HEAT_ARBITARY
+	reaction_tags = REACTION_TAG_HARD | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/eigenstate/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
