@@ -277,11 +277,11 @@
 	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
-		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
-		if (node.required_experiments.len > 0)
-			add_experiments(node.required_experiments)
-		if (node.discount_experiments.len > 0)
-			add_experiments(node.discount_experiments)
+		var/datum/techweb_node/unlocked_node = SSresearch.techweb_node_by_id(id)
+		if (unlocked_node.required_experiments.len > 0)
+			add_experiments(unlocked_node.required_experiments)
+		if (unlocked_node.discount_experiments.len > 0)
+			add_experiments(unlocked_node.discount_experiments)
 		update_node_status(node)
 	for(var/id in node.design_ids)
 		add_design_by_id(id)

@@ -64,7 +64,7 @@
 		exp_to_process += stored_research.completed_experiments[comp_experi]
 	for (var/process_experi in exp_to_process)
 		var/datum/experiment/unf_experi = process_experi
-		data["experiments"][ex.type] = list(
+		data["experiments"][unf_experi.type] = list(
 			"name" = unf_experi.name,
 			"description" = unf_experi.description,
 			"tag" = unf_experi.exp_tag,
@@ -116,15 +116,15 @@
 	var/node_cache = list()
 	for (var/nid in SSresearch.techweb_nodes)
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[nid] || SSresearch.error_node
-		var/cid = "[compress_id(n.id)]"
+		var/cid = "[compress_id(node.id)]"
 		node_cache[cid] = list(
 			"name" = node.display_name,
 			"description" = node.description
 		)
 		if (node.research_costs?.len)
 			node_cache[cid]["costs"] = list()
-			for (var/cost in n.research_costs)
-				node_cache[cid]["costs"]["[compress_id(c)]"] = node.research_costs[cost]
+			for (var/cost in node.research_costs)
+				node_cache[cid]["costs"]["[compress_id(cid)]"] = node.research_costs[cost]
 		if (node.prereq_ids?.len)
 			node_cache[cid]["prereq_ids"] = list()
 			for (var/pre_node in node.prereq_ids)
@@ -209,7 +209,7 @@
 						logname = "User: [ID.registered_name]"
 			var/sci_log_len = stored_research.research_logs.len
 			stored_research.research_logs += null
-			stored_research.research_logs[++sci_log_len] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])")
+			stored_research.research_logs[++sci_log_len] = list(tech_node.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])")
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")

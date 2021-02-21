@@ -39,7 +39,7 @@
 	var/destructive = traits & EXP_TRAIT_DESTRUCTIVE
 	for (var/req_atom in required_atoms)
 		var/list/seen = scanned[req_atom]
-		if (destructive && (!(req_atom in scanned) || scanned[req_atom] != required_atoms[areq_atom]))
+		if (destructive && (!(req_atom in scanned) || scanned[req_atom] != required_atoms[req_atom]))
 			return FALSE
 		if (!destructive && (!seen || seen.len != required_atoms[req_atom]))
 			return FALSE
