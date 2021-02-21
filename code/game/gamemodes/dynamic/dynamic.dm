@@ -647,7 +647,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("DYNAMIC: Checking for midround injection.")
 		log_game("DYNAMIC: Checking for midround injection.")
 
-		if (get_injection_chance())
+		if (prob(get_injection_chance()))
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (!rule.weight)
