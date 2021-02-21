@@ -22,7 +22,7 @@
 	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.
 	var/list/structures = list()
 	///Internal RCD. Some construction actions rely on having this.
-	var/obj/item/construction/rcd/internal/internal_rcd 
+	var/obj/item/construction/rcd/internal/internal_rcd
 	///Actions given to the console user to help with base building. Actions are generally carried out at the location of the eyeobj
 	var/list/datum/action/innate/construction_actions
 
@@ -37,7 +37,7 @@
 /**
  * Fill the construction_actios list with actions
  *
- * Instantiate each action object that we'll be giving to users of 
+ * Instantiate each action object that we'll be giving to users of
  * this console, and put it in the construction actions list.
  */
 /obj/machinery/computer/camera_advanced/base_construction/proc/populate_actions_list()
@@ -46,8 +46,8 @@
 /**
  * Reload materials used by the console
  *
- * Restocks any materials used by the base construction console. 
- * This might mean refilling the internal RCD (should it be initialized), or 
+ * Restocks any materials used by the base construction console.
+ * This might mean refilling the internal RCD (should it be initialized), or
  * giving the structures list default values.
  */
 /obj/machinery/computer/camera_advanced/base_construction/proc/restock_materials()
@@ -70,7 +70,7 @@
 /obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
 	//If we have an internal RCD, we can refill it by slapping the console with some materials
 	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
-		internal_rcd.attackby(W, user, params) 
+		internal_rcd.attackby(W, user, params)
 	else
 		return ..()
 
@@ -98,14 +98,14 @@
  * A mob used by [/obj/machinery/computer/camera_advanced/base_construction] for building in specific areas.
  *
  * Controlled by a user who is using a base construction console.
- * The user will be granted a set of building actions by the console, and the actions will be carried out by this mob. 
+ * The user will be granted a set of building actions by the console, and the actions will be carried out by this mob.
  * The mob is constrained to a given area defined by the base construction console.
  *
  */
 /mob/camera/ai_eye/remote/base_construction
 	name = "construction holo-drone"
 	//Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
-	move_on_shuttle = TRUE 
+	move_on_shuttle = TRUE
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
 	///Reference to the camera console controlling this drone
@@ -127,7 +127,7 @@
 	return ..()
 
 ///[Base console's][/obj/machinery/computer/camera_advanced/base_construction] internal RCD. Has a large material capacity and a fast buildspeed.
-/obj/item/construction/rcd/internal 
+/obj/item/construction/rcd/internal
 	name = "internal RCD"
 	max_matter = 600
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
