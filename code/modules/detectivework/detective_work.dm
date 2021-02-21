@@ -81,6 +81,8 @@
 	return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	if(HAS_TRAIT(src, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
+		return TRUE
 	if(wear_suit)
 		wear_suit.add_blood_DNA(blood_dna)
 		update_inv_wear_suit()
