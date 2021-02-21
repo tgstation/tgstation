@@ -206,9 +206,9 @@
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getFireLoss() > 50)
-		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
+		M.adjustFireLoss(-2 * REM * delta_time * normalise_creation_purity(), FALSE)
 	else
-		M.adjustFireLoss(-1.25 * REM * delta_time, FALSE)
+		M.adjustFireLoss(-1.25 * REM * delta_time * normalise_creation_purity(), FALSE)
 	M.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
@@ -256,7 +256,7 @@
 	if(!overdosed)
 		oxycalc = min(oxycalc, M.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	M.adjustOxyLoss(-oxycalc * delta_time * normalise_creation_purity(), 0)
-	M.adjustToxLoss(oxycalc * normalise_creation_purity() * delta_time / CONVERMOL_RATIO, 0)
+	M.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, 0)
 	if(DT_PROB(current_cycle / 2, delta_time) && M.losebreath)
 		M.losebreath--
 	..()

@@ -242,7 +242,6 @@
 		return
 	exposed_mob.adjust_bodytemperature((reac_volume*creation_purity) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 
-
 /datum/reagent/inverse/healing/tirimol
 	name = "Super Melatonin"//It's melatonin, but super!
 	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
@@ -280,6 +279,11 @@
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/owner)
 	if(owner.IsSleeping())
 		owner.visible_message("<span class='notice'>[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!</span>")//small way of letting people know the supersnooze is ended
+	for(var/datum/reagent/reagent as anything in cached_reagent_list)
+		if(!reagent)
+			continue
+		reagent.creation_purity *= 0.8
+	cached_reagent_list = list()
 	..()
 
 //seiver
@@ -380,9 +384,9 @@
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
 		iter_wound.blood_flow += (1-creation_purity)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
-		owner.adjustStaminaLoss((-owner.health)/10)
-	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
+		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartium)
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
 	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
@@ -395,6 +399,7 @@
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartium)
 	. = ..()
 
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
