@@ -282,7 +282,7 @@
 			add_experiments(unlocked_node.required_experiments)
 		if (unlocked_node.discount_experiments.len > 0)
 			add_experiments(unlocked_node.discount_experiments)
-		update_node_status(node)
+		update_node_status(unlocked_node)
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)

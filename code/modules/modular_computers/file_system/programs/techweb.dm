@@ -124,7 +124,7 @@
 		if (node.research_costs?.len)
 			node_cache[cid]["costs"] = list()
 			for (var/cost in node.research_costs)
-				node_cache[cid]["costs"]["[compress_id(cid)]"] = node.research_costs[cost]
+				node_cache[cid]["costs"]["[compress_id(cost)]"] = node.research_costs[cost]
 		if (node.prereq_ids?.len)
 			node_cache[cid]["prereq_ids"] = list()
 			for (var/pre_node in node.prereq_ids)
