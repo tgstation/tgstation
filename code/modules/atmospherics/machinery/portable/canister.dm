@@ -614,8 +614,8 @@
 							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
-				release_log += logmsg
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
+			release_log += logmsg
 			. = TRUE
 		if("timer")
 			var/change = params["change"]
