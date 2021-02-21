@@ -20,6 +20,8 @@
 
 	///Is the valve open?
 	var/valve_open = FALSE
+	///Used to log opening and closing of the valve, available on VV
+	var/release_log = ""
 	///How much the canister should be filled (recommended from 0 to 1)
 	var/filled = 0.5
 	///Maximum pressure allowed on initialize inside the canister, multiplied by the filled var
@@ -612,6 +614,7 @@
 							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
+				release_log += logmsg
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
 			. = TRUE
 		if("timer")
