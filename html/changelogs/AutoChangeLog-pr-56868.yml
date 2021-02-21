@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new reaction lookup window to the chem dispenser"

@@ -45,6 +45,7 @@
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
+#include "crayons.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "emoting.dm"
