@@ -4,11 +4,16 @@
  * @license MIT
  */
 
-import { classes, pureComponentHooks } from 'common/react';
+import { BooleanLike, classes, pureComponentHooks } from 'common/react';
+import { InfernoNode } from 'inferno';
 import { Box, unit } from './Box';
 import { Divider } from './Divider';
 
-export const LabeledList = props => {
+type LabeledListProps = {
+  children: InfernoNode;
+};
+
+export const LabeledList = (props: LabeledListProps) => {
   const { children } = props;
   return (
     <table className="LabeledList">
@@ -19,7 +24,19 @@ export const LabeledList = props => {
 
 LabeledList.defaultHooks = pureComponentHooks;
 
-export const LabeledListItem = props => {
+type LabeledListItemProps = {
+  className?: string | BooleanLike;
+  label?: string | BooleanLike;
+  labelColor?: string | BooleanLike;
+  color?: string | BooleanLike;
+  textAlign?: string | BooleanLike;
+  buttons?: InfernoNode,
+  /** @deprecated */
+  content?: any,
+  children?: InfernoNode;
+};
+
+const LabeledListItem = (props: LabeledListItemProps) => {
   const {
     className,
     label,
@@ -68,7 +85,11 @@ export const LabeledListItem = props => {
 
 LabeledListItem.defaultHooks = pureComponentHooks;
 
-export const LabeledListDivider = props => {
+type LabeledListDividerProps = {
+  size?: number;
+};
+
+const LabeledListDivider = (props: LabeledListDividerProps) => {
   const padding = props.size
     ? unit(Math.max(0, props.size - 1))
     : 0;

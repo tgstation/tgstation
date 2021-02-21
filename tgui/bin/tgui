@@ -65,9 +65,9 @@ task-dev-server() {
 ## Run a linter through all packages
 task-lint() {
   cd "${base_dir}"
-  time yarn run tsc
+  yarn run tsc
   echo "tgui: type check passed"
-  time yarn run eslint packages --ext .js,.jsx,.ts,.tsx,.cjs,.mjs "${@}"
+  yarn run eslint packages --ext .js,.jsx,.ts,.tsx,.cjs,.mjs "${@}"
   echo "tgui: eslint check passed"
 }
 

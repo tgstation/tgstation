@@ -248,7 +248,7 @@ export const sendAct = (action: string, payload: object = {}) => {
   });
 };
 
-type BackendState = {
+type BackendState<TData> = {
   config: {
     title: string,
     status: number,
@@ -269,7 +269,7 @@ type BackendState = {
       observer: number,
     },
   },
-  data: any,
+  data: TData,
   shared: Record<string, any>,
   suspending: boolean,
   suspended: boolean,
@@ -278,7 +278,7 @@ type BackendState = {
 /**
  * Selects a backend-related slice of Redux state
  */
-export const selectBackend = (state: any): BackendState => (
+export const selectBackend = <TData>(state: any): BackendState<TData> => (
   state.backend || {}
 );
 
@@ -287,10 +287,12 @@ export const selectBackend = (state: any): BackendState => (
  *
  * This is supposed to be replaced with a real React Hook, which can only
  * be used in functional components.
+ *
+ * You can make
  */
-export const useBackend = (context: any) => {
+export const useBackend = <TData>(context: any) => {
   const { store } = context;
-  const state = selectBackend(store.getState());
+  const state = selectBackend<TData>(store.getState());
   return {
     ...state,
     act: sendAct,

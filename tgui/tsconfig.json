@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "es3",
     "noEmit": true,
+    "strict": false,
     "allowJs": true,
+    "checkJs": false,
     "jsx": "preserve",
     "lib": [
       "dom",
@@ -17,7 +19,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": false
   },
   "include": [
     "./global.d.ts",
