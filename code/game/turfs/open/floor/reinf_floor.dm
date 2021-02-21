@@ -87,10 +87,10 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/open/floor/engine/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/turf/open/floor/engine/attack_hand(mob/user)
+/turf/open/floor/engine/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

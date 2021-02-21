@@ -168,13 +168,13 @@
 	pull_icon.icon = 'icons/hud/screen_cyborg.dmi'
 	pull_icon.screen_loc = ui_borg_pull
 	pull_icon.hud = src
-	pull_icon.update_icon()
+	pull_icon.update_appearance()
 	hotkeybuttons += pull_icon
 
 
 	zone_select = new /atom/movable/screen/zone_sel/robot()
 	zone_select.hud = src
-	zone_select.update_icon()
+	zone_select.update_appearance()
 	static_inventory += zone_select
 
 
@@ -203,7 +203,7 @@
 
 	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
-		screenmob.client.screen += module_store_icon	//"store" icon
+		screenmob.client.screen += module_store_icon //"store" icon
 
 		if(!R.model.modules)
 			to_chat(usr, "<span class='warning'>Selected model has no modules to select!</span>")
@@ -216,7 +216,7 @@
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
-		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/x = -4 //Start at CENTER-4,SOUTH+1
 		var/y = 1
 
 		for(var/atom/movable/A in R.model.get_inactive_modules())
@@ -236,7 +236,7 @@
 
 	else
 		//Modules display is hidden
-		screenmob.client.screen -= module_store_icon	//"store" icon
+		screenmob.client.screen -= module_store_icon //"store" icon
 
 		for(var/atom/A in R.model.get_inactive_modules())
 			//Module is not currently active
@@ -273,6 +273,7 @@
 /atom/movable/screen/robot/lamp
 	name = "headlamp"
 	icon_state = "lamp_off"
+	base_icon_state = "lamp"
 	var/mob/living/silicon/robot/robot
 
 /atom/movable/screen/robot/lamp/Click()
@@ -280,13 +281,11 @@
 	if(.)
 		return
 	robot?.toggle_headlamp()
-	update_icon()
+	update_appearance()
 
-/atom/movable/screen/robot/lamp/update_icon()
-	if(robot?.lamp_enabled)
-		icon_state = "lamp_on"
-	else
-		icon_state = "lamp_off"
+/atom/movable/screen/robot/lamp/update_icon_state()
+	icon_state = "[base_icon_state]_[robot?.lamp_enabled ? "on" : "off"]"
+	return ..()
 
 /atom/movable/screen/robot/modPC
 	name = "Modular Interface"

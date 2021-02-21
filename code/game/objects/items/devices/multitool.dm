@@ -48,7 +48,7 @@
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
 	var/detect_state = PROXIMITY_NONE
-	var/rangealert = 8	//Glows red when inside
+	var/rangealert = 8 //Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
 	var/hud_type = DATA_HUD_AI_DETECT
 	var/hud_on = FALSE
@@ -89,7 +89,7 @@
 	if(eye.eye_user)
 		eye.setLoc(get_turf(src))
 	multitool_detect()
-	update_icon()
+	update_appearance()
 	track_cooldown = world.time + track_delay
 
 /obj/item/multitool/ai_detect/proc/toggle_hud(mob/user)

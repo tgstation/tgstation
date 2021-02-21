@@ -1,8 +1,8 @@
 
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
-//	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
-//	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
+// leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
+// to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/reagent_containers/food/condiment
@@ -25,14 +25,16 @@
 
 /obj/item/reagent_containers/food/condiment/update_icon_state()
 	. = ..()
-	if (reagents.reagent_list.len)
-		if (icon_preempty)
+	if(reagents.reagent_list.len)
+		if(icon_preempty)
 			icon_state = icon_preempty
 			icon_preempty = null
-	else
-		if (icon_empty && !icon_preempty)
-			icon_preempty = icon_state
-			icon_state = icon_empty
+		return ..()
+
+	if(icon_empty && !icon_preempty)
+		icon_preempty = icon_state
+		icon_state = icon_empty
+	return ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
@@ -109,8 +111,8 @@
 	list_reagents = list(/datum/reagent/consumable/sugar = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/food/condiment/saltshaker		//Separate from above since it's a small shaker rather then
-	name = "salt shaker"											//	a large one.
+/obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
+	name = "salt shaker" // a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	icon_empty = "emptyshaker"
@@ -243,6 +245,7 @@
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del, TRUE)
 
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.

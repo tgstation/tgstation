@@ -17,12 +17,12 @@
 	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
 	var/previous_assembly = /obj/structure/door_assembly
 	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
-	var/material_type = /obj/item/stack/sheet/metal
+	var/material_type = /obj/item/stack/sheet/iron
 	var/material_amt = 4
 
 /obj/structure/door_assembly/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	update_name()
 
 /obj/structure/door_assembly/examine(mob/user)
@@ -263,12 +263,12 @@
 					door.name = base_name
 				door.previous_airlock = previous_assembly
 				electronics.forceMove(door)
-				door.update_icon()
+				door.update_appearance()
 				qdel(src)
 	else
 		return ..()
 	update_name()
-	update_icon()
+	update_appearance()
 
 /obj/structure/door_assembly/update_overlays()
 	. = ..()
@@ -278,7 +278,7 @@
 		. += get_airlock_overlay("glass_construction", overlays_file)
 	. += get_airlock_overlay("panel_c[state+1]", overlays_file)
 
-/obj/structure/door_assembly/proc/update_name()
+/obj/structure/door_assembly/update_name()
 	name = ""
 	switch(state)
 		if(AIRLOCK_ASSEMBLY_NEEDS_WIRES)
@@ -289,6 +289,7 @@
 		if(AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
 			name = "near finished "
 	name += "[heat_proof_finished ? "heat-proofed " : ""][glass ? "window " : ""][base_name] assembly"
+	return ..()
 
 /obj/structure/door_assembly/proc/transfer_assembly_vars(obj/structure/door_assembly/source, obj/structure/door_assembly/target, previous = FALSE)
 	target.glass = source.glass
@@ -301,7 +302,7 @@
 	if(electronics)
 		target.electronics = source.electronics
 		source.electronics.forceMove(target)
-	target.update_icon()
+	target.update_appearance()
 	target.update_name()
 	qdel(source)
 

@@ -150,7 +150,7 @@
 		mask = new mask_type(src)
 	if(storage_type)
 		storage = new storage_type(src)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/suit_storage_unit/Destroy()
 	QDEL_NULL(suit)
@@ -165,30 +165,38 @@
 	if(uv)
 		if(uv_super)
 			. += "super"
-		else if(occupant)
+			return
+		if(occupant)
 			. += "uvhuman"
-		else
-			. += "uv"
-	else if(state_open)
+			return
+
+		. += "uv"
+		return
+
+	if(state_open)
 		if(machine_stat & BROKEN)
 			. += "broken"
-		else
-			. += "open"
-			if(suit)
-				. += "suit"
-			if(helmet)
-				. += "helm"
-			if(storage)
-				. += "storage"
-	else if(occupant)
+			return
+
+		. += "open"
+		if(suit)
+			. += "suit"
+		if(helmet)
+			. += "helm"
+		if(storage)
+			. += "storage"
+		return
+
+	if(occupant)
 		. += "human"
+		return
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
 	if(!is_operational && state_open)
 		open_machine()
 		dump_inventory_contents()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/suit_storage_unit/dump_inventory_contents()
 	. = ..()
@@ -202,7 +210,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_inventory_contents()
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
@@ -352,7 +360,7 @@
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
-		update_icon()
+		update_appearance()
 		if(mob_occupant)
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
@@ -503,7 +511,7 @@
 			storage = I
 
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
-		update_icon()
+		update_appearance()
 		return
 
 	if(panel_open && is_wire_tool(I))
@@ -518,7 +526,7 @@
 
 	return ..()
 
-/*	ref tg-git issue #45036
+/* ref tg-git issue #45036
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */

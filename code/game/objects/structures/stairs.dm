@@ -39,19 +39,19 @@
 	listeningTo = null
 	return ..()
 
-/obj/structure/stairs/Move()			//Look this should never happen but...
+/obj/structure/stairs/Move() //Look this should never happen but...
 	. = ..()
 	if(force_open_above)
 		build_signal_listener()
 	update_surrounding()
 
 /obj/structure/stairs/proc/update_surrounding()
-	update_icon()
+	update_appearance()
 	for(var/i in GLOB.cardinals)
 		var/turf/T = get_step(get_turf(src), i)
 		var/obj/structure/stairs/S = locate() in T
 		if(S)
-			S.update_icon()
+			S.update_appearance()
 
 /obj/structure/stairs/Uncross(atom/movable/AM, atom/newloc)
 	if(!newloc || !AM)
@@ -67,10 +67,8 @@
 	return ..()
 
 /obj/structure/stairs/update_icon_state()
-	if(isTerminator())
-		icon_state = "stairs_t"
-	else
-		icon_state = "stairs"
+	icon_state = "stairs[isTerminator() ? "_t" : null]"
+	return ..()
 
 /obj/structure/stairs/proc/stair_ascend(atom/movable/AM)
 	var/turf/checking = get_step_multiz(get_turf(src), UP)
@@ -79,7 +77,7 @@
 	if(!checking.zPassIn(AM, UP, get_turf(src)))
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
-	if(istype(target) && !target.can_zFall(AM, null, get_step_multiz(target, DOWN)))			//Don't throw them into a tile that will just dump them back down.
+	if(istype(target) && !target.can_zFall(AM, null, get_step_multiz(target, DOWN))) //Don't throw them into a tile that will just dump them back down.
 		if(isliving(AM))
 			var/mob/living/L = AM
 			var/pulling = L.pulling
@@ -129,7 +127,7 @@
 	if(isTerminator())
 		. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
 
-/obj/structure/stairs/proc/isTerminator()			//If this is the last stair in a chain and should move mobs up
+/obj/structure/stairs/proc/isTerminator() //If this is the last stair in a chain and should move mobs up
 	if(terminator_mode != STAIR_TERMINATOR_AUTOMATIC)
 		return (terminator_mode == STAIR_TERMINATOR_YES)
 	var/turf/T = get_turf(src)

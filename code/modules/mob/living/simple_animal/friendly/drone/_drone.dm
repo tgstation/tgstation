@@ -9,13 +9,13 @@
 #define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
 
 /// Maintenance Drone icon_state (multiple colors)
-#define MAINTDRONE	"drone_maint"
+#define MAINTDRONE "drone_maint"
 /// Repair Drone icon_state
-#define REPAIRDRONE	"drone_repair"
+#define REPAIRDRONE "drone_repair"
 /// Scout Drone icon_state
-#define SCOUTDRONE	"drone_scout"
+#define SCOUTDRONE "drone_scout"
 /// Clockwork Drone icon_state
-#define CLOCKDRONE	"drone_clock"
+#define CLOCKDRONE "drone_clock"
 
 /// [MAINTDRONE] hacked icon_state
 #define MAINTDRONE_HACKED "drone_maint_red"
@@ -52,7 +52,6 @@
 	maxbodytemp = 0
 	wander = 0
 	speed = 0
-	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
@@ -143,6 +142,8 @@
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]

@@ -1,11 +1,11 @@
 /* Tables and Racks
  * Contains:
- *		Tables
- *		Glass Tables
- *		Wooden Tables
- *		Reinforced Tables
- *		Racks
- *		Rack Parts
+ * Tables
+ * Glass Tables
+ * Wooden Tables
+ * Reinforced Tables
+ * Racks
+ * Rack Parts
  */
 
 /*
@@ -14,7 +14,7 @@
 
 /obj/structure/table
 	name = "table"
-	desc = "A square piece of metal standing on four metal legs. It can not move."
+	desc = "A square piece of iron standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table-0"
 	base_icon_state = "table"
@@ -24,7 +24,7 @@
 	layer = TABLE_LAYER
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
-	var/buildstack = /obj/item/stack/sheet/metal
+	var/buildstack = /obj/item/stack/sheet/iron
 	var/busy = FALSE
 	var/buildstackamount = 1
 	var/framestackamount = 2
@@ -50,6 +50,7 @@
 	return "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>"
 
 /obj/structure/table/update_icon()
+	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
@@ -59,10 +60,10 @@
 	qdel(src)
 	new /obj/structure/table/wood(A)
 
-/obj/structure/table/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/table/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/table/attack_hand(mob/living/user)
+/obj/structure/table/attack_hand(mob/living/user, list/modifiers)
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -164,7 +165,7 @@
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(!(flags_1 & NODECONSTRUCT_1) && modifiers && modifiers["right"])
+	if(!(flags_1 & NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
@@ -215,13 +216,12 @@
 
 	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 			AfterPutItemOnTable(I, user)
 			return TRUE
 	else
@@ -294,8 +294,8 @@
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
 	. = ..()
-	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
-		M.forceMove(loc)
+	for(var/mob/living/living_mob in OldLoc.contents)//Kidnap everyone on top
+		living_mob.forceMove(loc)
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
 		if(!AM.Move(loc))
@@ -511,7 +511,7 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(W.tool_behaviour == TOOL_WELDER && modifiers && modifiers["right"])
+	if(W.tool_behaviour == TOOL_WELDER && LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -633,7 +633,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && modifiers && modifiers["right"])
+	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
@@ -642,10 +642,10 @@
 	if(user.transferItemToLoc(W, drop_location()))
 		return 1
 
-/obj/structure/rack/attack_paw(mob/living/user)
-	attack_hand(user)
+/obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
+	attack_hand(user, modifiers)
 
-/obj/structure/rack/attack_hand(mob/living/user)
+/obj/structure/rack/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -693,7 +693,7 @@
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_WRENCH)
-		new /obj/item/stack/sheet/metal(user.loc)
+		new /obj/item/stack/sheet/iron(user.loc)
 		qdel(src)
 	else
 		. = ..()

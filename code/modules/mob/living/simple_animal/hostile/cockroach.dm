@@ -22,7 +22,6 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	obj_damage = 0
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
@@ -37,6 +36,8 @@
 	. = ..()
 	add_cell_sample()
 	make_squashable()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
 	AddElement(/datum/element/squashable, squash_chance = 50, squash_damage = 1)

@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(communications)
 		minor_announce(html_decode(input),"[user.name] Announces:")
 		silicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
-		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain")
+		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain", has_important_message = TRUE)
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(communications)
 				var/obj/item/paper/P = new /obj/item/paper(C.loc)
 				P.name = "paper - '[sending.title]'"
 				P.info = sending.content
-				P.update_icon()
+				P.update_appearance()
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI

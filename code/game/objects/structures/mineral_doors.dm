@@ -2,7 +2,7 @@
 //machineryness
 
 /obj/structure/mineral_door
-	name = "metal door"
+	name = "iron door"
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
@@ -23,7 +23,7 @@
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 
-	var/sheetType = /obj/item/stack/sheet/metal //what we're made of
+	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
 	var/sheetAmount = 7 //how much we drop when deconstructed
 
 /obj/structure/mineral_door/Initialize()
@@ -53,10 +53,10 @@
 		if(get_dist(user,src) <= 1) //not remotely though
 			return TryToSwitchState(user)
 
-/obj/structure/mineral_door/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/mineral_door/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/mineral_door/attack_hand(mob/user)
+/obj/structure/mineral_door/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -100,7 +100,7 @@
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
 	air_update_turf(TRUE, FALSE)
-	update_icon()
+	update_appearance()
 	isSwitchingStates = FALSE
 
 	if(close_delay != -1)
@@ -121,11 +121,12 @@
 	door_opened = FALSE
 	layer = initial(layer)
 	air_update_turf(TRUE, TRUE)
-	update_icon()
+	update_appearance()
 	isSwitchingStates = FALSE
 
 /obj/structure/mineral_door/update_icon_state()
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
+	return ..()
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
 	if(pickaxe_door(user, I))
