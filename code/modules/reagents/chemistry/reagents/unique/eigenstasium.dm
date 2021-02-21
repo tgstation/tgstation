@@ -60,13 +60,13 @@
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
 
-	. = ..()
+	return ..()
 
 /datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
 
-	. = ..()
+	return ..()
 
 /datum/reagent/eigenstate/on_mob_delete(mob/living/living_mob) //returns back to original location
 	do_sparks(5,FALSE,living_mob)
@@ -75,7 +75,7 @@
 		do_teleport(living_mob, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 		do_sparks(5,FALSE,living_mob)
 	qdel(eigenstate)
-	. = ..()
+	return ..()
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
 	to_chat(living_mob, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
@@ -84,13 +84,13 @@
 	var/mob/living/carbon/carbon_mob = living_mob
 	if(carbon_mob)
 		carbon_mob.apply_status_effect(STATUS_EFFECT_EIGEN)
-	. = ..()
+	return ..()
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly
 	do_sparks(5,FALSE,living_mob)
 	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,living_mob)
-	. = ..()
+	return ..()
 
 //FOR ADDICTION EFFECTS, SEE datum/status_effect/eigenstasium
 

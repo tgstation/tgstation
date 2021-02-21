@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(eigenstates)
 	var/list/eigen_id = list()
 	///Unique id counter
 	var/id_counter = 1
-	///Limit the number of sparks created when teleporting an atom to 1
+	///Limit the number of sparks created when teleporting multiple atoms to 1
 	var/spark_time = 0
 
 ///Creates a new link of targets unique to their own id
@@ -67,6 +67,7 @@ SUBSYSTEM_DEF(eigenstates)
 	var/counter = 0
 	for(var/item in eigen_targets[id])
 		if(item == null)
+			stack_trace("SSeigenstates found a missing entry. Somehow an object reference was removed without calling it's destroy signaler.")
 			eigen_targets[id] -= item
 			eigen_id -= null
 			continue
