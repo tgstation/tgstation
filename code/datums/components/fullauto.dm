@@ -87,12 +87,12 @@
 	parent.UnregisterSignal(parent, COMSIG_AUTOFIRE_SHOT)
 	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
 
-/datum/component/automatic_fire/proc/on_client_login(client/source)
+/datum/component/automatic_fire/proc/on_client_login(mob/source)
 	SIGNAL_HANDLER
-	if(!source)
+	if(!source.client)
 		return
 	if(source.mob.is_holding(parent))
-		autofire_on(source)
+		autofire_on(source.client)
 
 /datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
