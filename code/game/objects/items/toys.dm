@@ -238,7 +238,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -299,7 +299,7 @@
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -1540,3 +1540,34 @@
 /obj/item/storage/box/heretic_box/PopulateContents()
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
+
+/obj/item/toy/foamfinger
+	name = "foam finger"
+	desc = "root for the home team! wait, does this station even have a sports team?"
+	icon = 'icons/obj/guns/ballistic.dmi'
+	icon_state = "foamfinger"
+	inhand_icon_state = "foamfinger_inhand"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	COOLDOWN_DECLARE(foamfinger_cooldown)
+
+/obj/item/toy/foamfinger/attack_self(mob/living/carbon/human/user)
+	if(!COOLDOWN_FINISHED(src, foamfinger_cooldown))
+		return
+	COOLDOWN_START(src, foamfinger_cooldown, 5 SECONDS)
+	user.manual_emote("waves around the foam finger.")
+	var/direction = prob(50) ? -1 : 1
+	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
+		animate(user, pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+	else
+		animate(user, pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+	user.changeNext_move(CLICK_CD_MELEE)

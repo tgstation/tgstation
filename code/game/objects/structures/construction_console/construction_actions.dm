@@ -1,7 +1,7 @@
 /datum/action/innate/camera_off/base_construction
 	name = "Log out"
 
-///Generic construction action for base [construction consoles][/obj/machinery/computer/camera_advanced/base_construction]. 
+///Generic construction action for base [construction consoles][/obj/machinery/computer/camera_advanced/base_construction].
 /datum/action/innate/construction
 	icon_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
@@ -56,7 +56,7 @@
 			rcd_target = S //If we don't break out of this loop we'll get the last placed thing
 	owner.changeNext_move(CLICK_CD_RANGE)
 	check_rcd()
-	base_console.internal_rcd.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
+	base_console.internal_rcd.pre_attack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
 
 /datum/action/innate/construction/switch_mode
@@ -66,10 +66,10 @@
 /datum/action/innate/construction/switch_mode/Activate()
 	if(..())
 		return
-	var/list/buildlist = list("Walls and Floors" = 1,"Airlocks" = 2,"Deconstruction" = 3,"Windows and Grilles" = 4)
-	var/buildmode = input("Set construction mode.", "Base Console", null) in buildlist
+	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
+	var/buildmode = input(owner, "Set construction mode.", "Base Console", null) in buildlist
 	check_rcd()
-	base_console.internal_rcd.mode = buildlist[buildmode]
+	base_console.internal_rcd.construction_mode = buildlist[buildmode]
 	to_chat(owner, "Build mode is now [buildmode].")
 
 /datum/action/innate/construction/airlock_type
@@ -80,7 +80,7 @@
 	if(..())
 		return
 	check_rcd()
-	base_console.internal_rcd.change_airlock_setting()
+	base_console.internal_rcd.change_airlock_setting(owner, remote_eye)
 
 /datum/action/innate/construction/window_type
 	name = "Select Window Glass"
@@ -90,7 +90,7 @@
 	if(..())
 		return
 	check_rcd()
-	base_console.internal_rcd.toggle_window_glass()
+	base_console.internal_rcd.toggle_window_glass(owner)
 
 ///Generic action used with base construction consoles to build anything that can't be built with an RCD
 /datum/action/innate/construction/place_structure

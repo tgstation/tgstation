@@ -162,7 +162,8 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 
 	),
 	/obj/item/bodypart = list(
-		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS
+		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS,
+		"TRAIT_PLASMABURNT" = TRAIT_PLASMABURNT
 		),
 	/obj/item = list(
 		"TRAIT_NODROP" = TRAIT_NODROP,
