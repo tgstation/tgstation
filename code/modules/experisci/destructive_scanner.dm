@@ -26,9 +26,9 @@
 
 ///Activates the machine; checks if it can actually scan, then starts.
 /obj/machinery/destructive_scanner/proc/activate()
-	var/atom/L = drop_location()
+	var/atom/pickup_zone = drop_location()
 	var/aggressive = FALSE
-	for(var/mob/living/living_mob in L)
+	for(var/mob/living/living_mob in pickup_zone)
 		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emagged.
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 			say("Cannot scan with humans inside.")
@@ -40,9 +40,9 @@
 /obj/machinery/destructive_scanner/proc/start_closing(aggressive)
 	if(scanning)
 		return
-	var/atom/L = drop_location()
-	for(var/atom/movable/AM in L)
-		AM.forceMove(src)
+	var/atom/pickup_zone = drop_location()
+	for(var/atom/movable/to_pickup in pickup_zone)
+		to_pickup.forceMove(src)
 	flick("tube_down", src)
 	scanning = TRUE
 	update_icon()
@@ -88,15 +88,15 @@
 		return
 	obj_flags |= EMAGGED
 	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
+	to_chat(user, "<span class='notice'>You disable the safety sensor BIOS on [src].</span>")
 
 /obj/machinery/destructive_scanner/update_icon_state()
 	. = ..()
 	icon_state = scanning ? "tube_on" : "tube_open"
 
-/obj/machinery/destructive_scanner/attackby(obj/item/I, mob/user, params)
-	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", I) \
-		|| default_deconstruction_crowbar(I))
+/obj/machinery/destructive_scanner/attackby(obj/item/object, mob/user, params)
+	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", object) \
+		|| default_deconstruction_crowbar(object))
 		update_icon()
 		return
 	return ..()

@@ -25,8 +25,8 @@
  */
 /datum/experiment/scanning/New()
 	. = ..()
-	for (var/a in required_atoms)
-		scanned[a] = traits & EXP_TRAIT_DESTRUCTIVE ? 0 : list()
+	for (var/req_atom in required_atoms)
+		scanned[req_atom] = traits & EXP_TRAIT_DESTRUCTIVE ? 0 : list()
 
 /**
  * Checks if the scanning experiment is complete
@@ -37,11 +37,11 @@
 /datum/experiment/scanning/is_complete()
 	. = TRUE
 	var/destructive = traits & EXP_TRAIT_DESTRUCTIVE
-	for (var/a in required_atoms)
-		var/list/seen = scanned[a]
-		if (destructive && (!(a in scanned) || scanned[a] != required_atoms[a]))
+	for (var/req_atom in required_atoms)
+		var/list/seen = scanned[req_atom]
+		if (destructive && (!(req_atom in scanned) || scanned[req_atom] != required_atoms[areq_atom]))
 			return FALSE
-		if (!destructive && (!seen || seen.len != required_atoms[a]))
+		if (!destructive && (!seen || seen.len != required_atoms[req_atom]))
 			return FALSE
 
 /**
@@ -53,9 +53,9 @@
 /datum/experiment/scanning/check_progress()
 	. = list()
 	for (var/a_type in required_atoms)
-		var/atom/a = a_type
-		var/list/seen = scanned[a]
-		. += serialize_progress_stage(a, seen)
+		var/atom/req_atom = a_type
+		var/list/seen = scanned[req_atom]
+		. += serialize_progress_stage(req_atom, seen)
 
 /**
  * Serializes a progress stage into a list to be sent to the UI
@@ -100,17 +100,17 @@
  */
 /datum/experiment/scanning/proc/get_contributing_index(atom/target)
 	var/destructive = traits & EXP_TRAIT_DESTRUCTIVE
-	for (var/a in required_atoms)
-		if (!istype(target, a))
+	for (var/req_atom in required_atoms)
+		if (!istype(target, req_atom))
 			continue
 
 		// Try to select a required atom that this scanned atom would contribute towards
 		var/selected
-		var/list/seen = scanned[a]
-		if (destructive && (a in scanned) && scanned[a] < required_atoms[a])
-			selected = a
-		else if (!destructive && seen.len < required_atoms[a] && !(target in seen))
-			selected = a
+		var/list/seen = scanned[req_atom]
+		if (destructive && (req_atom in scanned) && scanned[req_atom] < required_atoms[req_atom])
+			selected = req_atom
+		else if (!destructive && seen.len < required_atoms[req_atom] && !(target in seen))
+			selected = req_atom
 
 		// Run any additonal checks if necessary
 		if (selected && final_contributing_index_checks(target, selected))

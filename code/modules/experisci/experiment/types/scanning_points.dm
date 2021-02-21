@@ -14,10 +14,10 @@
 	var/complete = is_complete()
 	var/point_val_cache = list()
 	for (var/a_type in required_atoms)
-		var/atom/a = a_type
+		var/atom/req_atom = a_type
 		if (!point_val_cache["[required_atoms[a_type]]"])
 			point_val_cache["[required_atoms[a_type]]"] = list()
-		point_val_cache["[required_atoms[a_type]]"] += initial(a.name)
+		point_val_cache["[required_atoms[a_type]]"] += initial(req_atom.name)
 
 	for (var/point_amt in point_val_cache)
 		var/list/types = point_val_cache[point_amt]
@@ -26,16 +26,16 @@
 
 /datum/experiment/scanning/points/get_contributing_index(atom/target)
 	var/destructive = traits & EXP_TRAIT_DESTRUCTIVE
-	for (var/a in required_atoms)
-		if (!istype(target, a))
+	for (var/req_atom in required_atoms)
+		if (!istype(target, req_atom))
 			continue
 
 		// Try to select a required atom that this scanned atom would contribute towards
 		var/selected
-		if (destructive && (a in scanned))
-			selected = a
-		else if (!destructive && !(target in scanned[a]))
-			selected = a
+		if (destructive && (req_atom in scanned))
+			selected = req_atom
+		else if (!destructive && !(target in scanned[req_atom]))
+			selected = req_atom
 
 		// Run any additonal checks if necessary
 		if (selected && final_contributing_index_checks(target, selected))

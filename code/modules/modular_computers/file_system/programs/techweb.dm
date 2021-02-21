@@ -45,32 +45,32 @@
 	)
 
 	// Serialize all nodes to display
-	for(var/v in stored_research.tiers)
-		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
+	for(var/tier in stored_research.tiers)
+		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(tier)
 
 		// Ensure node is supposed to be visible
-		if (stored_research.hidden_nodes[v])
+		if (stored_research.hidden_nodes[tier])
 			continue
 
 		data["nodes"] += list(list(
-			"id" = n.id,
-			"can_unlock" = stored_research.can_unlock_node(n),
-			"tier" = stored_research.tiers[n.id]
+			"id" = node.id,
+			"can_unlock" = stored_research.can_unlock_node(node),
+			"tier" = stored_research.tiers[node.id]
 		))
 
 	// Get experiments and serialize them
 	var/list/exp_to_process = stored_research.available_experiments.Copy()
-	for (var/e in stored_research.completed_experiments)
-		exp_to_process += stored_research.completed_experiments[e]
-	for (var/e in exp_to_process)
-		var/datum/experiment/ex = e
+	for (var/comp_experi in stored_research.completed_experiments)
+		exp_to_process += stored_research.completed_experiments[comp_experi]
+	for (var/process_experi in exp_to_process)
+		var/datum/experiment/unf_experi = process_experi
 		data["experiments"][ex.type] = list(
-			"name" = ex.name,
-			"description" = ex.description,
-			"tag" = ex.exp_tag,
-			"progress" = ex.check_progress(),
-			"completed" = ex.completed,
-			"performance_hint" = ex.performance_hint
+			"name" = unf_experi.name,
+			"description" = unf_experi.description,
+			"tag" = unf_experi.exp_tag,
+			"progress" = unf_experi.check_progress(),
+			"completed" = unf_experi.completed,
+			"performance_hint" = unf_experi.performance_hint
 		)
 	return data
 
@@ -115,44 +115,44 @@
 	// hanging when the user opens the UI
 	var/node_cache = list()
 	for (var/nid in SSresearch.techweb_nodes)
-		var/datum/techweb_node/n = SSresearch.techweb_nodes[nid] || SSresearch.error_node
+		var/datum/techweb_node/node = SSresearch.techweb_nodes[nid] || SSresearch.error_node
 		var/cid = "[compress_id(n.id)]"
 		node_cache[cid] = list(
-			"name" = n.display_name,
-			"description" = n.description
+			"name" = node.display_name,
+			"description" = node.description
 		)
-		if (n.research_costs?.len)
+		if (node.research_costs?.len)
 			node_cache[cid]["costs"] = list()
-			for (var/c in n.research_costs)
-				node_cache[cid]["costs"]["[compress_id(c)]"] = n.research_costs[c]
-		if (n.prereq_ids?.len)
+			for (var/cost in n.research_costs)
+				node_cache[cid]["costs"]["[compress_id(c)]"] = node.research_costs[cost]
+		if (node.prereq_ids?.len)
 			node_cache[cid]["prereq_ids"] = list()
-			for (var/pn in n.prereq_ids)
-				node_cache[cid]["prereq_ids"] += compress_id(pn)
-		if (n.design_ids?.len)
+			for (var/pre_node in node.prereq_ids)
+				node_cache[cid]["prereq_ids"] += compress_id(pre_node)
+		if (node.design_ids?.len)
 			node_cache[cid]["design_ids"] = list()
-			for (var/d in n.design_ids)
-				node_cache[cid]["design_ids"] += compress_id(d)
-		if (n.unlock_ids?.len)
+			for (var/design in node.design_ids)
+				node_cache[cid]["design_ids"] += compress_id(design)
+		if (node.unlock_ids?.len)
 			node_cache[cid]["unlock_ids"] = list()
-			for (var/un in n.unlock_ids)
-				node_cache[cid]["unlock_ids"] += compress_id(un)
-		if (n.required_experiments?.len)
-			node_cache[cid]["required_experiments"] = n.required_experiments
-		if (n.discount_experiments?.len)
-			node_cache[cid]["discount_experiments"] = n.discount_experiments
+			for (var/unlock_node in node.unlock_ids)
+				node_cache[cid]["unlock_ids"] += compress_id(unlock_node)
+		if (node.required_experiments?.len)
+			node_cache[cid]["required_experiments"] = node.required_experiments
+		if (node.discount_experiments?.len)
+			node_cache[cid]["discount_experiments"] = node.discount_experiments
 
 	// Build design cache
 	var/design_cache = list()
-	var/datum/asset/spritesheet/research_designs/ss = get_asset_datum(/datum/asset/spritesheet/research_designs)
-	var/size32x32 = "[ss.name]32x32"
+	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/size32x32 = "[spritesheet.name]32x32"
 	for (var/did in SSresearch.techweb_designs)
-		var/datum/design/d = SSresearch.techweb_designs[did] || SSresearch.error_design
-		var/cid = "[compress_id(d.id)]"
-		var/size = ss.icon_size_id(d.id)
+		var/datum/design/design = SSresearch.techweb_designs[did] || SSresearch.error_design
+		var/cid = "[compress_id(design.id)]"
+		var/size = spritesheet.icon_size_id(design.id)
 		design_cache[cid] = list(
-			d.name,
-			"[size == size32x32 ? "" : "[size] "][d.id]"
+			design.name,
+			"[size == size32x32 ? "" : "[size] "][design.id]"
 		)
 
 	// Ensure id cache is included for decompression
@@ -182,17 +182,17 @@
 	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		computer.say("Node unlock failed: Either already researched or not available!")
 		return FALSE
-	var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
-	if(!istype(TN))
+	var/datum/techweb_node/tech_node = SSresearch.techweb_node_by_id(id)
+	if(!istype(tech_node))
 		computer.say("Node unlock failed: Unknown error.")
 		return FALSE
-	var/list/price = TN.get_price(stored_research)
+	var/list/price = tech_node.get_price(stored_research)
 	if(stored_research.can_afford(price))
 		computer.investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
-			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
+			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))
-			computer.say("Successfully researched [TN.display_name].")
+			computer.say("Successfully researched [tech_node.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
@@ -202,14 +202,14 @@
 					logname = "User: [idcard.registered_name]"
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				var/obj/item/I = H.wear_id
-				if(istype(I))
-					var/obj/item/card/id/ID = I.GetID()
+				var/obj/item/worn = H.wear_id
+				if(istype(worn))
+					var/obj/item/card/id/ID = worn.GetID()
 					if(istype(ID))
 						logname = "User: [ID.registered_name]"
-			var/i = stored_research.research_logs.len
+			var/sci_log_len = stored_research.research_logs.len
 			stored_research.research_logs += null
-			stored_research.research_logs[++i] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])")
+			stored_research.research_logs[++sci_log_len] = list(TN.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])")
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")

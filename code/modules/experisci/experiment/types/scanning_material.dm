@@ -11,9 +11,9 @@
 
 /datum/experiment/scanning/random/material/New()
 	. = ..()
-	for(var/i in required_atoms)
+	for(var/req_atom in required_atoms)
 		var/chosen_material = pick(possible_material_types)
-		required_materials[i] = chosen_material
+		required_materials[req_atom] = chosen_material
 
 /datum/experiment/scanning/random/material/final_contributing_index_checks(atom/target, typepath)
 	return ..() && target.custom_materials && target.has_material_type(required_materials[typepath])

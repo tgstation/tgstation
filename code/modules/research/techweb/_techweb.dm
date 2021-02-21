@@ -238,22 +238,22 @@
 /datum/techweb/proc/add_experiment(experiment_type)
 	. = TRUE
 	// check active experiments for experiment of this type
-	for (var/i in available_experiments)
-		var/datum/experiment/E = i
-		if (E.type == experiment_type)
+	for (var/avail_experi in available_experiments)
+		var/datum/experiment/Experi = avail_experi
+		if (Experi.type == experiment_type)
 			return FALSE
 	// check completed experiments for experiments of this type
-	for (var/i in completed_experiments)
-		var/datum/experiment/E = i
-		if (E == experiment_type)
+	for (var/comp_experi in completed_experiments)
+		var/datum/experiment/Experi = comp_experi
+		if (Experi == experiment_type)
 			return FALSE
 	available_experiments += new experiment_type()
 
 /datum/techweb/proc/add_experiments(list/experiment_list)
 	. = TRUE
-	for (var/e in experiment_list)
-		var/datum/experiment/E = e
-		. = . && add_experiment(E)
+	for (var/experi_increment in experiment_list)
+		var/datum/experiment/Experi = experi_increment
+		. = . && add_experiment(Experi)
 
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
@@ -277,19 +277,19 @@
 	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
-		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(id)
-		if (n.required_experiments.len > 0)
-			add_experiments(n.required_experiments)
-		if (n.discount_experiments.len > 0)
-			add_experiments(n.discount_experiments)
-		update_node_status(n)
+		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
+		if (node.required_experiments.len > 0)
+			add_experiments(node.required_experiments)
+		if (node.discount_experiments.len > 0)
+			add_experiments(node.discount_experiments)
+		update_node_status(node)
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
 	if(get_that_dosh)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
-		if(D)
-			D.adjust_money(SSeconomy.techweb_bounty)
+		var/datum/bank_account/sci_dept = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(sci_dept)
+			sci_dept.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only

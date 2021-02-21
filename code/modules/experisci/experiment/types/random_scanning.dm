@@ -13,9 +13,9 @@
 	if (possible_types.len)
 		var/picked = 0
 		while (picked < total_requirement)
-			var/r = min(rand(1, total_requirement - picked), max_requirement_per_type)
-			required_atoms[pick(possible_types)] += r
-			picked += r
+			var/randum = min(rand(1, total_requirement - picked), max_requirement_per_type) //Short for "random num" and not "this is dum that I have to rename 100 different variable names"
+			required_atoms[pick(possible_types)] += randum
+			picked += randum
 
 	// Fill the experiment as per usual
 	..()

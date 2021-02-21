@@ -176,8 +176,8 @@
  * * message - The message to announce
  */
 /datum/component/experiment_handler/proc/announce_message_to_all(message)
-	for(var/i in GLOB.experiment_handlers)
-		var/datum/component/experiment_handler/experi_handler = i
+	for(var/experiment in GLOB.experiment_handlers)
+		var/datum/component/experiment_handler/experi_handler = experiment
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 
@@ -263,9 +263,9 @@
  * Arguments:
  * * e - The experiment to attempt to link to
  */
-/datum/component/experiment_handler/proc/link_experiment(datum/experiment/e)
-	if (e && can_select_experiment(e))
-		selected_experiment = e
+/datum/component/experiment_handler/proc/link_experiment(datum/experiment/experi)
+	if (experi && can_select_experiment(experi))
+		selected_experiment = experi
 
 /**
  * Unlinks this handler from the selected experiment
@@ -283,10 +283,10 @@
 	if (!pos)
 		pos = get_turf(parent)
 	var/list/local_servers = list()
-	for (var/obj/machinery/rnd/server/s in SSresearch.servers)
-		var/turf/s_pos = get_turf(s)
+	for (var/obj/machinery/rnd/server/serv in SSresearch.servers)
+		var/turf/s_pos = get_turf(serv)
 		if (pos && s_pos && s_pos.z == pos.z)
-			local_servers += s
+			local_servers += serv
 	return local_servers
 
 /**
@@ -295,33 +295,33 @@
  * Arguments:
  * * e - The experiment to check
  */
-/datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/e)
+/datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/experi)
 	// Check that this experiments has no disallowed traits
-	if (e.traits & disallowed_traits)
+	if (experi.traits & disallowed_traits)
 		return FALSE
 
 	// Check against the list of allowed experimentors
-	if (e.allowed_experimentors && e.allowed_experimentors.len)
+	if (experi.allowed_experimentors && experi.allowed_experimentors.len)
 		var/matched = FALSE
-		for (var/t in e.allowed_experimentors)
-			if (istype(parent, t))
+		for (var/experimentor in experi.allowed_experimentors)
+			if (istype(parent, experimentor))
 				matched = TRUE
 				break
 		if (!matched)
 			return FALSE
 
 	// Check that this experiment is visible currently
-	if (!linked_web || !(e in linked_web.available_experiments))
+	if (!linked_web || !(experi in linked_web.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted
-	for (var/t in blacklisted_experiments)
-		if (istype(e, t))
+	for (var/badsci in blacklisted_experiments)
+		if (istype(experi, badsci))
 			return FALSE
 
 	// Check against the allowed experiment types
-	for (var/t in allowed_experiments)
-		if (istype(e, t))
+	for (var/goodsci in allowed_experiments)
+		if (istype(experi, goodsci))
 			return TRUE
 
 	// If we haven't returned yet then this shouldn't be allowed
@@ -339,28 +339,28 @@
 		"always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE,
 		"has_start_callback" = !!start_experiment_callback)
 	.["servers"] = list()
-	for (var/obj/machinery/rnd/server/s in get_available_servers())
+	for (var/obj/machinery/rnd/server/serv in get_available_servers())
 		var/list/data = list(
-			name = s.name,
-			web_id = s.stored_research ? s.stored_research.id : null,
-			web_org = s.stored_research ? s.stored_research.organization : null,
-			location = get_area(s),
-			selected = linked_web && s.stored_research ? s.stored_research == linked_web : FALSE,
-			ref = REF(s)
+			name = serv.name,
+			web_id = serv.stored_research ? serv.stored_research.id : null,
+			web_org = serv.stored_research ? serv.stored_research.organization : null,
+			location = get_area(serv),
+			selected = linked_web && serv.stored_research ? serv.stored_research == linked_web : FALSE,
+			ref = REF(serv)
 		)
 		.["servers"] += list(data)
 	.["experiments"] = list()
 	if (linked_web)
-		for (var/datum/experiment/e in linked_web.available_experiments)
+		for (var/datum/experiment/experi in linked_web.available_experiments)
 			var/list/data = list(
-				name = e.name,
-				description = e.description,
-				tag = e.exp_tag,
-				selectable = can_select_experiment(e),
-				selected = selected_experiment == e,
-				progress = e.check_progress(),
-				performance_hint = e.performance_hint,
-				ref = REF(e)
+				name = experi.name,
+				description = experi.description,
+				tag = experi.exp_tag,
+				selectable = can_select_experiment(experi),
+				selected = selected_experiment == experi,
+				progress = experi.check_progress(),
+				performance_hint = experi.performance_hint,
+				ref = REF(experi)
 			)
 			.["experiments"] += list(data)
 
@@ -371,9 +371,9 @@
 	switch (action)
 		if ("select_server")
 			. = TRUE
-			var/obj/machinery/rnd/server/s = locate(params["ref"])
-			if (s)
-				link_techweb(s.stored_research)
+			var/obj/machinery/rnd/server/serv = locate(params["ref"])
+			if (serv)
+				link_techweb(serv.stored_research)
 				return
 		if ("clear_server")
 			. = TRUE
@@ -383,9 +383,9 @@
 			// Don't allow selection for always actives (no concept of active)
 			if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 				return
-			var/datum/experiment/e = locate(params["ref"])
-			if (e)
-				link_experiment(e)
+			var/datum/experiment/experi = locate(params["ref"])
+			if (experi)
+				link_experiment(experi)
 		if ("clear_experiment")
 			. = TRUE
 			unlink_experiment()

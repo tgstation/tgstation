@@ -105,14 +105,14 @@
 	if(host)
 		var/list/actual_costs = research_costs
 		if(host.boosted_nodes[id])
-			var/list/L = host.boosted_nodes[id]
-			for(var/i in L)
-				if(actual_costs[i])
-					actual_costs[i] -= L[i]
-		for(var/i in actual_costs)
+			var/list/boostlist = host.boosted_nodes[id]
+			for(var/booster in boostlist)
+				if(actual_costs[booster])
+					actual_costs[booster] -= boostlist[booster]
+		for(var/actual_inc in actual_costs)
 			for(var/experi_type in discount_experiments)
 				if(host.completed_experiments[experi_type]) //do we have this discount_experiment unlocked?
-					actual_costs[i] -= discount_experiments[experi_type]
+					actual_costs[actual_inc] -= discount_experiments[experi_type]
 		return actual_costs
 	else
 		return research_costs
