@@ -745,7 +745,7 @@
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
-	if(prob(final_block_chance))
+	if(iscultist(owner) && prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(get_turf(owner), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
@@ -756,7 +756,8 @@
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 			return TRUE
-	return FALSE
+	else
+		return FALSE
 
 /datum/action/innate/cult/halberd
 	name = "Bloody Bond"
