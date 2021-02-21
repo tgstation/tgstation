@@ -617,11 +617,11 @@
 					user.visible_message("<span class='danger'>The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
 						if("Juggernaut")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, candidate, user, FALSE, T)
 						if("Wraith")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, FALSE, T)
 						if("Artificer")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, candidate, user, FALSE, T)
 						else
 							return
 					uses--
@@ -805,7 +805,7 @@
 	if(iscultist(user))
 		var/static/list/spells = list(
 			"Bloody Halberd (150)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
-			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/guns/projectile.dmi', icon_state = "arcane_barrage"),
+			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/guns/ballistic.dmi', icon_state = "arcane_barrage"),
 			"Blood Beam (500)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "disintegrate")
 			)
 		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)

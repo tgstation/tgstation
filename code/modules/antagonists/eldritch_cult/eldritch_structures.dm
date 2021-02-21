@@ -122,7 +122,7 @@
 
 /obj/structure/trap/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I,/obj/item/melee/rune_knife) || istype(I,/obj/item/nullrod))
+	if(istype(I,/obj/item/melee/rune_carver) || istype(I,/obj/item/nullrod))
 		qdel(src)
 
 ///Proc that sets the owner
