@@ -312,7 +312,7 @@
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 4
