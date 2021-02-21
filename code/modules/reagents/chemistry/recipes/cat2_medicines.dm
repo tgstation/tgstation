@@ -1,6 +1,6 @@
 
 /*****BRUTE*****/
-//oops no theme
+//oops no theme - standard reactions with no whistles
 
 /datum/chemical_reaction/medicine/helbital
 	results = list(/datum/reagent/medicine/c2/helbital = 3)
@@ -275,7 +275,7 @@
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "seiver_rads"))
 		return
-	var/modifier = max((200 - holder.chem_temp)*0.1, 0) //0 - 20 based off temperature(colder is more)
+	var/modifier = max((200 - holder.chem_temp)*0.025, 0)*vol_added //0 - 5 * volume based off temperature(colder is more)
 	radiation_pulse(holder.my_atom, modifier, 0.5, can_contaminate=FALSE) //Please advise on this, I don't have a good handle on the numbers
 
 /datum/chemical_reaction/medicine/multiver
