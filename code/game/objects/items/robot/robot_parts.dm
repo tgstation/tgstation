@@ -34,7 +34,7 @@
 
 /obj/item/robot_suit/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/robot_suit/prebuilt/Initialize()
 	. = ..()
@@ -48,7 +48,7 @@
 	chest = new(src)
 	chest.wired = TRUE
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
-	update_icon()
+	update_appearance()
 
 /obj/item/robot_suit/update_overlays()
 	. = ..()
@@ -106,7 +106,7 @@
 			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
 	else
 		to_chat(user, "<span class='warning'>There is nothing to remove from the endoskeleton!</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -148,8 +148,8 @@
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = W
+	if(istype(W, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
 				var/obj/item/bot_assembly/ed209/B = new
@@ -160,7 +160,7 @@
 				if (holding_this)
 					user.put_in_inactive_hand(B)
 			else
-				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
+				to_chat(user, "<span class='warning'>You need one sheet of iron to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(l_leg)
@@ -170,7 +170,7 @@
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		l_leg = W
-		update_icon()
+		update_appearance()
 
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
@@ -180,7 +180,7 @@
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		r_leg = W
-		update_icon()
+		update_appearance()
 
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
 		if(l_arm)
@@ -190,7 +190,7 @@
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
 		l_arm = W
-		update_icon()
+		update_appearance()
 
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
 		if(r_arm)
@@ -200,7 +200,7 @@
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
 		W.cut_overlays()
 		r_arm = W
-		update_icon()
+		update_appearance()
 
 	else if(istype(W, /obj/item/bodypart/chest/robot))
 		var/obj/item/bodypart/chest/robot/CH = W
@@ -212,7 +212,7 @@
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
 			CH.cut_overlays()
 			chest = CH
-			update_icon()
+			update_appearance()
 		else if(!CH.wired)
 			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
@@ -232,7 +232,7 @@
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
 			HD.cut_overlays()
 			head = HD
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 

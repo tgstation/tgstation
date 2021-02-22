@@ -27,4 +27,4 @@
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
 		spell.charge_counter = spell.charge_max
 		spell.recharging = FALSE
-		spell.update_icon()
+		spell.update_appearance()

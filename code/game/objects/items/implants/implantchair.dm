@@ -24,7 +24,7 @@
 /obj/machinery/implantchair/Initialize()
 	. = ..()
 	open_machine()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/implantchair/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -84,7 +84,7 @@
 			addtimer(CALLBACK(src,.proc/set_ready),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/I = new implant_type
@@ -105,6 +105,7 @@
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+	return ..()
 
 /obj/machinery/implantchair/update_overlays()
 	. = ..()
@@ -121,7 +122,7 @@
 
 /obj/machinery/implantchair/proc/set_ready()
 	ready = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/implantchair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -199,5 +200,7 @@
 		return FALSE
 	brainwash(C, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
+	C.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using \the [src]", LOG_ATTACK)
+	user.log_message("has brainwashed [key_name(C)] with the objective '[objective]' using \the [src]", LOG_ATTACK, log_globally = FALSE)
 	log_game("[key_name(user)] brainwashed [key_name(C)] with objective '[objective]'.")
 	return TRUE

@@ -160,10 +160,9 @@
 /datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
 	if(!istype(C))
 		return
-	C.reagents.metabolize(C, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	if(triple_metabolism)
-		C.reagents.metabolize(C, can_overdose=TRUE)
-	C.overeatduration = max(C.overeatduration - 2, 0)
+	var/metabolic_boost = triple_metabolism ? 2 : 1
+	C.reagents.metabolize(C, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	C.overeatduration = max(C.overeatduration - 4 SECONDS, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
@@ -417,12 +416,13 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
-	if(M.bodytemperature > M.get_body_temp_normal())
-		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	var/target_temp = M.get_body_temp_normal()
+	if(M.bodytemperature > target_temp)
+		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
 	else if(M.bodytemperature < (M.get_body_temp_normal() + 1))
-		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0, M.get_body_temp_normal())
+		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 

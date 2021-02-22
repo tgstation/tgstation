@@ -52,8 +52,8 @@
 
 /datum/view_data/proc/setTo(toAdd)
 	var/list/shitcode = getviewsize(toAdd)  //Backward compatability to account
-	width = shitcode[1]						//for a change in how sizes get calculated. we used to include world.view in
-	height = shitcode[2]					//this, but it was jank, so I had to move it
+	width = shitcode[1] //for a change in how sizes get calculated. we used to include world.view in
+	height = shitcode[2] //this, but it was jank, so I had to move it
 	apply()
 
 /datum/view_data/proc/setBoth(wid, hei)

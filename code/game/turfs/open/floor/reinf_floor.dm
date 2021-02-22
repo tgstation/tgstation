@@ -3,6 +3,7 @@
 	name = "reinforced floor"
 	desc = "Extremely sturdy."
 	icon_state = "engine"
+	holodeck_compatible = TRUE
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
@@ -11,6 +12,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
@@ -85,10 +87,10 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/open/floor/engine/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/turf/open/floor/engine/attack_hand(mob/user)
+/turf/open/floor/engine/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

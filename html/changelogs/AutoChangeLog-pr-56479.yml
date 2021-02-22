@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - rscdel: "Some redundant code from Oztek boomerangs has been removed. This should have pretty much no gameplay effect."

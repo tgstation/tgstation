@@ -32,7 +32,7 @@
 
 	if(!proximity)
 		return
-	if(source.a_intent != INTENT_HARM)
+	if(!source.combat_mode)
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))
@@ -65,7 +65,7 @@
 		if(35 to 41)
 			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
-/datum/mutation/human/hulk/on_life()
+/datum/mutation/human/hulk/on_life(delta_time, times_fired)
 	if(owner.health < 0)
 		on_losing(owner)
 		to_chat(owner, "<span class='danger'>You suddenly feel very weak.</span>")
@@ -102,7 +102,7 @@
 
 	/// Basically, we only proceed if we're in throw mode with a tailed carbon in our grasp with at least a neck grab and we're not restrained in some way
 	var/list/modifiers = params2list(params)
-	if(modifiers["alt"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["middle"])
+	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 	if(!user.in_throw_mode || user.get_active_held_item() || user.zone_selected != BODY_ZONE_PRECISE_GROIN)
 		return

@@ -24,9 +24,9 @@
 	var/created_name = null
 
 	//Vars to help with the icon's name
-	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = FALSE		//Whether or not this creates a secure windoor
-	var/state = "01"	//How far the door assembly has progressed
+	var/facing = "l" //Does the windoor open to the left or right?
+	var/secure = FALSE //Whether or not this creates a secure windoor
+	var/state = "01" //How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/New(loc, set_dir)
@@ -47,6 +47,7 @@
 
 /obj/structure/windoor_assembly/update_icon_state()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
+	return ..()
 
 /obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -302,7 +303,7 @@
 				return ..()
 
 	//Update to reflect changes(if applicable)
-	update_icon()
+	update_appearance()
 
 
 
@@ -323,7 +324,7 @@
 	return TRUE
 
 /obj/structure/windoor_assembly/proc/after_rotation(mob/user)
-	update_icon()
+	update_appearance()
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
@@ -345,5 +346,5 @@
 		facing = "l"
 		to_chat(usr, "<span class='notice'>The windoor will now slide to the left.</span>")
 
-	update_icon()
+	update_appearance()
 	return

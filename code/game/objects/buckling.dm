@@ -13,7 +13,7 @@
 	var/buckle_prevents_pull = FALSE
 
 //Interaction
-/atom/movable/attack_hand(mob/living/user)
+/atom/movable/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -92,9 +92,9 @@
 		return FALSE
 
 	// This signal will check if the mob is mounting this atom to ride it. There are 3 possibilities for how this goes
-	//	1. This movable doesn't have a ridable element and can't be ridden, so nothing gets returned, so continue on
-	//	2. There's a ridable element but we failed to mount it for whatever reason (maybe it has no seats left, for example), so we cancel the buckling
-	//	3. There's a ridable element and we were successfully able to mount, so keep it going and continue on with buckling
+	// 1. This movable doesn't have a ridable element and can't be ridden, so nothing gets returned, so continue on
+	// 2. There's a ridable element but we failed to mount it for whatever reason (maybe it has no seats left, for example), so we cancel the buckling
+	// 3. There's a ridable element and we were successfully able to mount, so keep it going and continue on with buckling
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PREBUCKLE, M, force, buckle_mob_flags) & COMPONENT_BLOCK_BUCKLE)
 		return FALSE
 
@@ -115,7 +115,7 @@
 	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.throw_alert("buckled", /atom/movable/screen/alert/restrained/buckled)
+	M.throw_alert("buckled", /atom/movable/screen/alert/buckled)
 	M.set_glide_size(glide_size)
 	post_buckle_mob(M)
 

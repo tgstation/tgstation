@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/food/carpmeat = 2)
+	butcher_results = list(/obj/item/food/fishmeat/carp = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -116,7 +116,7 @@
 		adjustBruteLoss(5)
 		qdel(tasty_plastic)
 
-/mob/living/simple_animal/hostile/carp/Life()
+/mob/living/simple_animal/hostile/carp/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		chomp_plastic()
@@ -214,10 +214,10 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 
-/mob/living/simple_animal/hostile/carp/megacarp/Life()
+/mob/living/simple_animal/hostile/carp/megacarp/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(regen_cooldown < world.time)
-		heal_overall_damage(4)
+		heal_overall_damage(2 * delta_time)
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"

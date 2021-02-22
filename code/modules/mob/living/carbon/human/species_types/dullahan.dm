@@ -48,7 +48,7 @@
 	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
 	..()
 
-/datum/species/dullahan/spec_life(mob/living/carbon/human/H)
+/datum/species/dullahan/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(QDELETED(myhead))
 		myhead = null
 		H.gib()

@@ -268,14 +268,15 @@
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	if(usr != owner)
+	if(!.)
 		return
+
 	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
 	if(do_after(owner, 3.5 SECONDS, owner))
 		if(isliving(owner))
-			var/mob/living/L = owner
-			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
-			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			var/mob/living/living_owner = owner
+			to_chat(living_owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			living_owner.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify
@@ -381,13 +382,13 @@
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
-		owner.update_icon()
+		owner.update_appearance()
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
 	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
-	owner.update_icon()
+	owner.update_appearance()
 	return ..()
 
 /datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
@@ -615,9 +616,8 @@
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
-	var/turf/ownerloc = get_turf(owner)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.preparePixelProjectile(ownerloc, spawn_turf)
+	C.preparePixelProjectile(owner, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -635,16 +635,17 @@
 	alert_type = null
 
 /datum/status_effect/gonbola_pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
-	ADD_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
-	ADD_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
+	ADD_TRAIT(owner, TRAIT_MUTE, type)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
-	return ..()
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
-	REMOVE_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
+	return ..()
 
 /datum/status_effect/trance
 	id = "trance"
@@ -692,10 +693,14 @@
 
 	if(!owner.can_hear())
 		return
-	if(hearing_args[HEARING_SPEAKER] == owner)
+	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
+	if(hearing_speaker == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
+	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_ATTACK)
+	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
@@ -721,8 +726,7 @@
 					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
 					I.attack_self(owner)
 			if(3)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
+				owner.set_combat_mode(TRUE)
 
 				var/range = 1
 				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
@@ -736,14 +740,13 @@
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
 					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 					owner.ClickOn(pick(targets))
-				owner.a_intent = prev_intent
+				owner.set_combat_mode(FALSE)
 			if(4)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
+				owner.set_combat_mode(TRUE)
 				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
 				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
 				owner.ClickOn(owner)
-				owner.a_intent = prev_intent
+				owner.set_combat_mode(FALSE)
 			if(5)
 				if(owner.incapacitated())
 					return
@@ -758,7 +761,7 @@
 
 /datum/status_effect/convulsing
 	id = "convulsing"
-	duration = 	150
+	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
 
@@ -919,8 +922,8 @@
 
 /datum/status_effect/amok/tick()
 	. = ..()
-	var/prev_intent = owner.a_intent
-	owner.a_intent = INTENT_HARM
+	var/prev_combat_mode = owner.combat_mode
+	owner.set_combat_mode(TRUE)
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
@@ -930,7 +933,7 @@
 	if(LAZYLEN(targets))
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
-	owner.a_intent = prev_intent
+	owner.set_combat_mode(prev_combat_mode)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"
@@ -948,7 +951,7 @@
 /datum/status_effect/cloudstruck/on_apply()
 	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 	owner.overlays += mob_overlay
-	owner.update_icon()
+	owner.update_appearance()
 	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	return TRUE
 
@@ -959,7 +962,7 @@
 	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	if(owner)
 		owner.overlays -= mob_overlay
-		owner.update_icon()
+		owner.update_appearance()
 
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()

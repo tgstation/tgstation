@@ -74,10 +74,10 @@
 /turf/closed/indestructible/fakeglass,
 /area/mafia)
 "q" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "r" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "s" = (
 /turf/closed/wall/ice,
@@ -111,7 +111,7 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "y" = (
 /obj/effect/landmark/mafia,
@@ -132,7 +132,7 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "B" = (
 /obj/effect/landmark/mafia,

@@ -4,7 +4,6 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
-	ventcrawler = VENTCRAWLER_ALWAYS
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
@@ -32,7 +31,8 @@
 
 	create_internal_organs()
 
-	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	. = ..()
 
@@ -48,7 +48,7 @@
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
@@ -58,23 +58,23 @@
 		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+				apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
 			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 			if(460 to INFINITY)
 				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
 				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 	else
 		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return 0
+/mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
+	return FALSE
 
 /mob/living/carbon/alien/get_status_tab_items()
 	. = ..()
-	. += "Intent: [a_intent]"
+	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
