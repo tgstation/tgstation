@@ -128,10 +128,13 @@
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"
+	icon = 'icons/obj/machines/restaurant_portal.dmi'
+	icon_state = "restaurant_pda"
 	creation_time = 1 SECONDS
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/
 
 /obj/item/holosign_creator/robot_seat/attack_self(mob/user)
 	return
