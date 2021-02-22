@@ -25,7 +25,7 @@
 ////////////////////MEDICINES///////////////////////////
 
 //Catch all failed reaction for medicines - supposed to be non punishing
-/datum/reagent/impure/healing/medicine_failure
+/datum/reagent/impurity/healing/medicine_failure
 	name = "Insolvent medicinal precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 1 * REM//This is fast
@@ -33,7 +33,7 @@
 	ph = 11
 
 //Random healing of the 4 main groups
-/datum/reagent/impure/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+/datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	. = ..()
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
@@ -262,11 +262,12 @@
 				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 					if(reagent in cached_reagent_list)
 						continue
-					if(istype(reagent, /datum/reagent/medicine))
-						if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
-							continue
-						reagent.creation_purity *= 1.25
-						cached_reagent_list += reagent
+					if(!(istype(reagent, /datum/reagent/medicine)))
+						continue
+					if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
+						continue
+					reagent.creation_purity *= 1.25
+					cached_reagent_list += reagent
 
 			else if(!owner.IsSleeping() && cached_reagent_list)
 				for(var/datum/reagent/reagent as anything in cached_reagent_list)
@@ -312,6 +313,8 @@
 		return ..()
 	var/mob/living/carbon/owner = living_mob
 	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+		if(reagent in cached_reagent_list)
+			continue
 		if(!(istype(reagent, /datum/reagent/medicine)))
 			continue
 		if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
@@ -361,8 +364,9 @@
 	metabolization_rate = 1 * REM
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
+	self_consuming = TRUE //No pesky liver shenanigans
 	///If we brought someone back from the dead
-	var/back_from_the_dead
+	var/back_from_the_dead = FALSE
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
@@ -372,41 +376,55 @@
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
+	ADD_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.stat = CONSCIOUS
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
-	if(back_from_the_dead)
-		owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
-		owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2.5 * (1-creation_purity) * delta_time)
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
 		iter_wound.blood_flow += (1-creation_purity)
+	if(!back_from_the_dead)
+		return ..()
+	//Following is for those brough back from the dead only
+	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
+	owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2 * (1-creation_purity) * delta_time)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
 		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartium)
+	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	if(!heart || heart.organ_flags & ORGAN_FAILING)
+		remove_buffs()
+
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
 	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
-	if(owner.health < -500)//Honestly commendable
-		var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
-		explosion(owner, 1, 1, 1)
+	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
+		explosion(owner, 0, 0, 1)
 		qdel(heart)
 		owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
-	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
-	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
-	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartium)
-	. = ..()
+	return ..()
 
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
 	if(!back_from_the_dead)
 		return ..()
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
-	explosion(owner, 1, 1, 1)
+	if(!heart) //No heart? No life!
+		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
+		stat = DEAD
+		return ..()
+	explosion(owner, 0, 0, 1)
 	qdel(heart)
 	owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
-	. = ..()
+	return..()
+
+/datum/reagent/inverse/penthrite/proc/remove_buffs()
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
+	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
+	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)

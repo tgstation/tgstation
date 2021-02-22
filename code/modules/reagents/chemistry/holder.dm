@@ -5,8 +5,6 @@
 /////////////These are used in the reagents subsystem init() and the reagent_id_typos.dm////////
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
-	///Blacklists these reagents from being added to the master list. the exact type only. Children are not blacklisted.
-	var/list/blacklist = list(/datum/reagent/impurity, /datum/reagent/impurity/healing, /datum/reagent/inverse, /datum/reagent/inverse/healing)
 
 	if(GLOB.chemical_reagents_list)
 		return
@@ -15,7 +13,7 @@
 	GLOB.chemical_reagents_list = list()
 
 	for(var/path in paths)
-		if(path in blacklist)
+		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
 		GLOB.chemical_reagents_list[path] = D
