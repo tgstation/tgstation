@@ -34,7 +34,7 @@ export const ChemRecipeDebug = (props, context) => {
         <Section
           title="Controls"
           buttons={(
-            <Flex>
+            <>
               <Button
                 icon={beakerSpawn ? 'power-off' : 'times'}
                 selected={beakerSpawn}
@@ -45,7 +45,7 @@ export const ChemRecipeDebug = (props, context) => {
                 selected={processAll}
                 content={"All"}
                 onClick={() => act('all')} />
-            </Flex>
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item label="Reactions">
