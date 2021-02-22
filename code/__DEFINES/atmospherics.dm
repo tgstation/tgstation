@@ -92,7 +92,7 @@
 
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1
 /// current temperature capacity of space, used to make it cool down exposed areas, lower it to make it affect temperature less, increase to make it affect area temperature more
-#define HEAT_CAPACITY_VACUUM				5400
+#define HEAT_CAPACITY_VACUUM 5400
 
 //FIRE
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD (150+T0C)
