@@ -116,7 +116,7 @@ export const ChemReactionChamber = (props, context) => {
                 <NumberInput
                   value={reagentQuantity}
                   minValue={1}
-                  maxValue={100}
+                  maxValue={200}
                   step={1}
                   stepPixelSize={3}
                   width="39px"
@@ -137,8 +137,8 @@ export const ChemReactionChamber = (props, context) => {
                 ])}>
                 <NumberInput
                   value={reagentAcidic}
-                  minValue={1}
-                  maxValue={100}
+                  minValue={-1000}
+                  maxValue={1000}
                   step={1}
                   stepPixelSize={3}
                   width="39px"
@@ -159,8 +159,8 @@ export const ChemReactionChamber = (props, context) => {
                 ])}>
                 <NumberInput
                   value={reagentAlkaline}
-                  minValue={1}
-                  maxValue={100}
+                  minValue={-1000}
+                  maxValue={1000}
                   step={1}
                   stepPixelSize={3}
                   width="39px"
