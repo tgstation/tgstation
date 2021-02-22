@@ -1,7 +1,6 @@
 /////RESTAURANT/////
 /datum/venue/restaurant
 	name = "restaurant"
-	max_guests = 5
 	req_access = ACCESS_KITCHEN
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
@@ -18,6 +17,7 @@
 	I.pixel_y = 32
 	I.pixel_x = 16
 	I.plane = HUD_PLANE
+	I.appearance_flags = RESET_COLOR
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", I)
 
 	. = object_to_order.type
@@ -45,7 +45,6 @@
 /obj/structure/holosign/robot_seat/restaurant
 	name = "restaurant seating"
 	linked_venue = /datum/venue/restaurant
-	icon_state = "eating_zone_small"
 
 
 
@@ -53,7 +52,6 @@
 /////BAR/////
 /datum/venue/bar
 	name = "bar"
-	max_guests = 4
 	req_access = ACCESS_BAR
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
@@ -77,6 +75,7 @@
 	I.pixel_y = 32
 	I.pixel_x = 16
 	I.plane = HUD_PLANE
+	I.appearance_flags = RESET_COLOR
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", I)
 
 	return reagent_to_order

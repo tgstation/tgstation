@@ -3,7 +3,7 @@
 	///Name of the venue, also used for the icon state of any radials it can be selected in
 	var/name = "unnamed venue"
 	///Max amount of guests at any time
-	var/max_guests = 5
+	var/max_guests = 6
 	///Weighted list of customer types
 	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3)
 	///Is the venue open at the moment?
@@ -17,7 +17,7 @@
 	///Min time between new visits
 	var/min_time_between_visitor = 20 SECONDS
 	///Max time between new visits
-	var/max_time_between_visitor = 2 MINUTES
+	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
 
@@ -103,10 +103,12 @@
 		. += mutable_appearance(icon, "portal_door")
 
 /obj/machinery/restaurant_portal/attack_hand(mob/living/user)
-	. = ..()
 	var/obj/item/card/id/used_id = user.get_idcard(TRUE)
 
-	if(!(chosen_venue.req_access in used_id.GetAccess()))
+	if(!used_id)
+		return ..()
+
+	if(!(linked_venue.req_access in used_id.GetAccess()))
 		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
 		return
 
@@ -117,18 +119,28 @@
 	if(!istype(I,  /obj/item/card/id))
 		return ..()
 
+	var/obj/item/card/id/used_id = I
+
+	if(!(linked_venue.req_access in used_id.GetAccess()))
+		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
+		return
+
 	var/list/radial_items = list()
 	var/list/radial_results = list()
 
 	for(var/type_key in SSrestaurant.all_venues)
 		var/datum/venue/venue = SSrestaurant.all_venues[type_key]
-		radial_items[name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
-		radial_results[name] = venue
+		radial_items[venue.name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
+		radial_results[venue.name] = venue
 
 	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
+
+	if(!choice)
+		return
+
 	var/datum/venue/chosen_venue = radial_results[choice]
 
-	var/obj/item/card/id/used_id = I
+
 
 	if(!(chosen_venue.req_access in used_id.GetAccess()))
 		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
@@ -141,7 +153,7 @@
 			linked_venue.close()
 		linked_venue.restaurant_portal.linked_venue = null
 
-	linked_venue = SSrestaurant.all_venues[chosen_venue]
+	linked_venue = chosen_venue
 	linked_venue.restaurant_portal = src
 
 
