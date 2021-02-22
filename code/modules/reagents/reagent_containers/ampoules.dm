@@ -31,10 +31,14 @@
 	inhand_icon_state = "beaker"
 	worn_icon_state = "bottle"
 	custom_materials = list(/datum/material/glass = 25)
-	fill_icon_thresholds = list(0, 20, 30, 45, 60, 70, 85)
-	fill_icon_state = "ampoule"
 	max_integrity = 10
 	integrity_failure = 0.5
+	force = DAMAGE_PRECISION
+	throwforce = DAMAGE_PRECISION
+	throw_speed = 4
+	throw_range = 7
+	fill_icon_thresholds = list(0, 20, 30, 45, 60, 70, 85)
+	fill_icon_state = "ampoule"
 	volume = 15
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
@@ -322,7 +326,7 @@
 		to_chat(user, "<span class='warning'>[src] is broken and can't be resealed!</span>")
 		return FALSE
 
-	to_chat(user, "<span class='notice'>You start to soften [src] with [tool]...</span>")
+	to_chat(user, "<span class='notice'>You start to soften the neck of [src] with [tool]...</span>")
 	if(!tool.use_tool(src, user, 5 SECONDS))
 		return FALSE
 
@@ -367,6 +371,8 @@
 	icon_state = "ampoule-white"
 	base_icon_state = "ampoule-white"
 	custom_materials = list(/datum/material/plastic)
+	force = 0
+	throwforce = 0
 
 /obj/item/reagent_containers/glass/ampoule/plastic/open
 	sealed = FALSE
