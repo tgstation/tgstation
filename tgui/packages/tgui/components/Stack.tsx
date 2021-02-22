@@ -5,9 +5,14 @@
  */
 
 import { classes } from 'common/react';
-import { Flex } from './Flex';
+import { Flex, FlexItemProps, FlexProps } from './Flex';
 
-export const Stack = props => {
+interface StackProps extends FlexProps {
+  vertical?: boolean;
+  fill?: boolean;
+}
+
+export const Stack = (props: StackProps) => {
   const { className, vertical, fill, ...rest } = props;
   return (
     <Flex
@@ -24,7 +29,7 @@ export const Stack = props => {
   );
 };
 
-const StackItem = props => {
+const StackItem = (props: FlexProps) => {
   const { className, ...rest } = props;
   return (
     <Flex.Item
@@ -38,7 +43,11 @@ const StackItem = props => {
 
 Stack.Item = StackItem;
 
-const StackDivider = props => {
+interface StackDividerProps extends FlexItemProps {
+  hidden?: boolean;
+}
+
+const StackDivider = (props: StackDividerProps) => {
   const { className, hidden, ...rest } = props;
   return (
     <Flex.Item

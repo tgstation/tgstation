@@ -45,11 +45,11 @@
 	var/list/burn_turfs = getline(src, target_fire_turf) - get_turf(src)
 	dragon_fire_line(src, burn_turfs, frozen = TRUE)
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-maxHealth*0.025)
+	adjustHealth(-0.0125 * maxHealth * delta_time)
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

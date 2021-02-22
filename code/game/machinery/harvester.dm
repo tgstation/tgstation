@@ -4,6 +4,7 @@
 	density = TRUE
 	icon = 'icons/obj/machines/harvester.dmi'
 	icon_state = "harvester"
+	base_icon_state = "harvester"
 	verb_say = "states"
 	state_open = FALSE
 	idle_power_usage = 50
@@ -30,13 +31,16 @@
 
 /obj/machinery/harvester/update_icon_state()
 	if(state_open)
-		icon_state = initial(icon_state)+"-open"
-	else if(warming_up)
-		icon_state = initial(icon_state)+"-charging"
-	else if(harvesting)
-		icon_state = initial(icon_state)+"-active"
-	else
-		icon_state = initial(icon_state)
+		icon_state = "[base_icon_state]-open"
+		return ..()
+	if(warming_up)
+		icon_state = "[base_icon_state]-charging"
+		return ..()
+	if(harvesting)
+		icon_state = "[base_icon_state]-active"
+		return ..()
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/harvester/open_machine(drop = TRUE)
 	if(panel_open)
@@ -89,12 +93,12 @@
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
 	say("Initializing harvest protocol.")
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
 /obj/machinery/harvester/proc/harvest()
 	warming_up = FALSE
-	update_icon()
+	update_appearance()
 	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)

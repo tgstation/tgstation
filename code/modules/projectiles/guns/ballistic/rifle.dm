@@ -27,7 +27,7 @@
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 		process_chamber(FALSE, FALSE, FALSE)
 		bolt_locked = TRUE
-		update_icon()
+		update_appearance()
 		return
 	drop_bolt(user)
 
@@ -74,7 +74,7 @@
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
 	if(can_jam)
@@ -91,7 +91,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
 	if(can_jam)
-		if(chambered.BB)
+		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
 				jammed = TRUE
 			jamming_chance  += jamming_increment
@@ -110,7 +110,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
-	if(chambered?.BB)
+	if(chambered?.loaded_projectile)
 		process_fire(user, user, FALSE)
 		. = TRUE
 
@@ -167,6 +167,7 @@
 	worn_icon_state = "musket_prime"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	can_misfire = FALSE
+	can_jam = FALSE
 	misfire_probability = 0
 	misfire_percentage_increment = 0
 	projectile_damage_multiplier = 1

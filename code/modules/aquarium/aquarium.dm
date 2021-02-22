@@ -42,7 +42,7 @@
 
 /obj/structure/aquarium/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, .proc/feed_feedback)
 
 
@@ -96,7 +96,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return ..()
 	panel_open = !panel_open
-	update_icon()
+	update_appearance()
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/I)
 	if(default_unfasten_wrench(user,I))
@@ -114,7 +114,7 @@
 				glass.use(2)
 				broken = FALSE
 				obj_integrity = max_integrity
-				update_icon()
+				update_appearance()
 			return TRUE
 	else
 		// This signal exists so we common items instead of adding component on init can just register creation of one in response.
@@ -123,7 +123,7 @@
 		var/datum/component/aquarium_content/content_component = I.GetComponent(/datum/component/aquarium_content)
 		if(content_component && content_component.is_ready_to_insert(src))
 			if(user.transferItemToLoc(I,src))
-				update_icon()
+				update_appearance()
 				return TRUE
 		else
 			return ..()
@@ -163,7 +163,7 @@
 				return
 			user.visible_message("<span class='danger'>[user] stuffs [living_pulled] into [src]!</span>")
 			living_pulled.forceMove(src)
-			update_icon()
+			update_appearance()
 
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/user)
@@ -250,7 +250,7 @@
 		var/datum/reagents/reagent_splash = new()
 		reagent_splash.add_reagent(/datum/reagent/water, 30)
 		chem_splash(droploc, 3, list(reagent_splash))
-	update_icon()
+	update_appearance()
 
 #undef AQUARIUM_LAYER_STEP
 #undef AQUARIUM_MIN_OFFSET

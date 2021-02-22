@@ -80,7 +80,7 @@
 	M.update_sight()
 
 
-/obj/item/organ/eyes/on_life()
+/obj/item/organ/eyes/on_life(delta_time, times_fired)
 	..()
 	var/mob/living/carbon/C = owner
 	//since we can repair fully damaged eyes, check if healing has occurred

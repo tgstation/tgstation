@@ -243,7 +243,7 @@
 /obj/machinery/light,
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "bd" = (
 /obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
@@ -1143,7 +1143,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "dM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron,
@@ -1863,7 +1863,7 @@
 /area/mine/living_quarters)
 "fw" = (
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "fy" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/meson,
@@ -2069,7 +2069,7 @@
 "fT" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "ga" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
@@ -2114,7 +2114,7 @@
 "gq" = (
 /obj/structure/closet/crate,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "gs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -2171,7 +2171,7 @@
 	},
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "hv" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "gulag";
@@ -2223,13 +2223,13 @@
 	req_access_txt = "35"
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "hT" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "hY" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "gulag3";
@@ -2247,7 +2247,7 @@
 	pixel_x = -22
 	},
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "ia" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -2256,7 +2256,7 @@
 "ic" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "ie" = (
 /obj/machinery/vending/sustenance,
 /obj/effect/decal/cleanable/dirt,
@@ -2276,7 +2276,7 @@
 "ij" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "ip" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -2287,7 +2287,7 @@
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "ix" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -2301,11 +2301,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/service/hydroponics)
 "iC" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "iG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 9
@@ -2342,7 +2342,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "je" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -2421,7 +2421,7 @@
 "jT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "jU" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
@@ -2466,7 +2466,7 @@
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "kh" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -2493,7 +2493,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "ks" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2574,7 +2574,7 @@
 /obj/effect/landmark/start/botanist,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "kS" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
@@ -2607,13 +2607,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/mine/storage)
 "lL" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/hydroponics)
+/area/service/hydroponics)
 "lO" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -2644,7 +2644,7 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "mi" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
@@ -2657,13 +2657,13 @@
 	req_access_txt = "35"
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "mm" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "mu" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -2676,7 +2676,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "mG" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -2708,11 +2708,11 @@
 "mV" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "mW" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "na" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2732,7 +2732,7 @@
 /obj/structure/closet/crate,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "nl" = (
 /obj/machinery/button/door{
 	id = "xenobio2";
@@ -2765,7 +2765,7 @@
 /area/mine/laborcamp)
 "ny" = (
 /turf/closed/wall,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "nE" = (
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_y = 32
@@ -2790,7 +2790,7 @@
 /area/mine/living_quarters)
 "nJ" = (
 /turf/closed/wall,
-/area/hydroponics)
+/area/service/hydroponics)
 "nM" = (
 /turf/closed/wall,
 /area/mine/mechbay)
@@ -2831,7 +2831,7 @@
 /obj/structure/cable,
 /obj/structure/closet/crate/secure/freezer/pizza,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "oh" = (
 /turf/open/openspace/icemoon,
 /area/icemoon/underground/explored)
@@ -2974,7 +2974,7 @@
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "pu" = (
 /obj/structure/sign/poster/official/obey{
 	pixel_y = 32
@@ -3086,7 +3086,7 @@
 "qw" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "qC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3102,7 +3102,7 @@
 "qG" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/storage/mining)
+/area/mine/storage)
 "qN" = (
 /obj/structure/chair/stool,
 /obj/machinery/flasher{
@@ -3131,7 +3131,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "rj" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -3164,7 +3164,7 @@
 "rQ" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "rS" = (
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas{
@@ -3332,7 +3332,7 @@
 /obj/structure/rack,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "tD" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -3393,7 +3393,7 @@
 	name = "Public Mining Storage"
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "tZ" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -3404,7 +3404,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "ub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
@@ -3452,7 +3452,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "uk" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
@@ -3486,7 +3486,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "uz" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -3521,7 +3521,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "uZ" = (
 /obj/structure/railing,
 /turf/open/openspace/icemoon/keep_below,
@@ -3541,7 +3541,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/ore/glass,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "vq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron,
@@ -3660,7 +3660,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "wR" = (
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
@@ -3677,7 +3677,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "wX" = (
 /obj/machinery/door/airlock{
 	name = "Labor Camp Library"
@@ -3739,12 +3739,12 @@
 "xz" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "xB" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "xU" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -3763,7 +3763,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "yj" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/end{
@@ -3773,7 +3773,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "yk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -3814,18 +3814,18 @@
 	},
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "yK" = (
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "yL" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/end{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "zb" = (
 /obj/structure/sign/warning/coldtemp,
 /obj/effect/spawner/structure/window/reinforced,
@@ -3899,14 +3899,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hydroponics)
+/area/service/hydroponics)
 "zM" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
-/area/hydroponics)
+/area/service/hydroponics)
 "zQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
@@ -3966,7 +3966,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Aw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -3985,7 +3985,7 @@
 /area/mine/production)
 "AF" = (
 /turf/closed/wall,
-/area/storage/mining)
+/area/mine/storage)
 "AL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -3993,7 +3993,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "AN" = (
 /obj/structure/railing{
 	dir = 1
@@ -4074,7 +4074,7 @@
 /area/mine/laborcamp)
 "BJ" = (
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "BL" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -4097,7 +4097,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "Cc" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -4162,7 +4162,7 @@
 "CT" = (
 /obj/structure/stairs/south,
 /turf/open/floor/iron,
-/area/hydroponics)
+/area/service/hydroponics)
 "CV" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -4189,7 +4189,7 @@
 	pixel_y = 30
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Dh" = (
 /obj/machinery/light{
 	dir = 4
@@ -4200,7 +4200,7 @@
 "Dm" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Dn" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -4328,7 +4328,7 @@
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Ez" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -4403,10 +4403,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Fi" = (
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "Fk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
@@ -4462,7 +4462,7 @@
 "FE" = (
 /obj/structure/table,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "FF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -4489,7 +4489,7 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "FK" = (
 /obj/machinery/button/door{
 	id = "misclab";
@@ -4522,7 +4522,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/mine/storage)
 "FU" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/tile/green{
@@ -4682,7 +4682,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Hd" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp/security)
@@ -4695,12 +4695,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Hn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/service/hydroponics)
 "Ho" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -4722,7 +4722,7 @@
 "Hy" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "HF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
@@ -4792,11 +4792,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Io" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "Iq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4814,7 +4814,7 @@
 /area/mine/laborcamp)
 "Iw" = (
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "Iy" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
@@ -4864,7 +4864,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "Jd" = (
 /obj/structure/table,
 /turf/open/floor/engine,
@@ -4872,7 +4872,7 @@
 "Jk" = (
 /obj/structure/stairs/north,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "Jo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -4985,7 +4985,7 @@
 	req_access_txt = "35"
 	},
 /turf/open/floor/iron,
-/area/hydroponics)
+/area/service/hydroponics)
 "Kn" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -5025,7 +5025,7 @@
 "KF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "KN" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "misclab";
@@ -5067,7 +5067,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "Ls" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_x = -32
@@ -5091,7 +5091,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "LC" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
@@ -5139,7 +5139,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "Mk" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Kill Chamber";
@@ -5226,7 +5226,7 @@
 	},
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "MZ" = (
 /obj/machinery/door/window/southleft{
 	dir = 4;
@@ -5245,7 +5245,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "Ni" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
@@ -5318,7 +5318,7 @@
 /area/maintenance/aft)
 "NH" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/mine/storage)
 "NI" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -5418,7 +5418,7 @@
 /area/mine/laborcamp)
 "Ox" = (
 /turf/open/floor/iron/elevatorshaft,
-/area/storage/mining)
+/area/mine/storage)
 "Oy" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -5616,7 +5616,7 @@
 "Ql" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/service/hydroponics)
 "Qv" = (
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -5695,7 +5695,7 @@
 	slogan_delay = 700
 	},
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Rx" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -5735,7 +5735,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/service/hydroponics)
 "RN" = (
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
@@ -5781,11 +5781,11 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
-/area/storage/mining)
+/area/mine/storage)
 "Sy" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/service/hydroponics)
 "SE" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -5818,7 +5818,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/mine/storage)
 "SV" = (
 /obj/machinery/computer/security/labor,
 /obj/structure/cable,
@@ -5850,7 +5850,7 @@
 "Tm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "Tn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -5863,7 +5863,7 @@
 /area/mine/living_quarters)
 "Tq" = (
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Tt" = (
 /obj/machinery/light_switch{
 	pixel_x = 27
@@ -5924,7 +5924,7 @@
 "TE" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/mine/storage)
 "TK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -5944,7 +5944,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "TP" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -6025,7 +6025,7 @@
 "UL" = (
 /obj/structure/beebox,
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "UM" = (
 /obj/structure/table,
 /obj/item/paper,
@@ -6181,7 +6181,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /turf/open/floor/iron,
-/area/quartermaster/warehouse)
+/area/cargo/warehouse)
 "Wt" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine,
@@ -6229,7 +6229,7 @@
 "WJ" = (
 /obj/structure/sign/warning/xeno_mining,
 /turf/closed/wall,
-/area/hydroponics)
+/area/service/hydroponics)
 "WM" = (
 /obj/machinery/shower{
 	pixel_y = 22
@@ -6330,7 +6330,7 @@
 "XV" = (
 /obj/structure/sign/warning,
 /turf/closed/wall,
-/area/storage/mining)
+/area/mine/storage)
 "XW" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -6445,7 +6445,7 @@
 "Ze" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/hydroponics)
+/area/service/hydroponics)
 "Zf" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningbathroom";
@@ -6524,18 +6524,17 @@
 	req_access_txt = "35"
 	},
 /turf/open/floor/grass,
-/area/hydroponics)
+/area/service/hydroponics)
 "ZB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = /area/storage/mining;
 	dir = 1;
 	name = "Public Mining APC";
 	pixel_y = 23
 	},
 /obj/item/reagent_containers/food/drinks/bottle/hooch,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/mine/storage)
 "ZK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -6559,7 +6558,7 @@
 "ZZ" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/hydroponics)
+/area/service/hydroponics)
 
 (1,1,1) = {"
 wS

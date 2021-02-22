@@ -63,10 +63,17 @@ task-dev-server() {
 }
 
 ## Run a linter through all packages
-task-eslint() {
+task-lint() {
   cd "${base_dir}"
-  yarn run eslint packages "${@}"
+  yarn run tsc
+  echo "tgui: type check passed"
+  yarn run eslint packages --ext .js,.jsx,.ts,.tsx,.cjs,.mjs "${@}"
   echo "tgui: eslint check passed"
+}
+
+task-test() {
+  cd "${base_dir}"
+  yarn run jest
 }
 
 ## Mr. Proper
@@ -147,21 +154,28 @@ fi
 if [[ ${1} == '--lint' ]]; then
   shift 1
   task-install
-  task-eslint "${@}"
+  task-lint "${@}"
   exit 0
 fi
 
 if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
-  task-eslint -c .eslintrc-harder.yml "${@}"
+  task-lint -c .eslintrc-harder.yml "${@}"
   exit 0
 fi
 
 if [[ ${1} == '--fix' ]]; then
   shift 1
   task-install
-  task-eslint --fix "${@}"
+  task-lint --fix "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--test' ]]; then
+  shift 1
+  task-install
+  task-test "${@}"
   exit 0
 fi
 
@@ -182,7 +196,7 @@ fi
 ## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-eslint --fix
+  task-lint --fix
   task-webpack --mode=production
   exit 0
 fi

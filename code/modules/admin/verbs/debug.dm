@@ -216,7 +216,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					var/obj/item/storage/wallet/W = worn
 					W.front_id = id
 					id.forceMove(W)
-					W.update_icon()
+					W.update_appearance()
 			else
 				H.equip_to_slot(id,ITEM_SLOT_ID)
 
