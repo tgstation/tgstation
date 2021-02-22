@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/core": "^7.12.17",
     "@babel/eslint-parser": "^7.12.17",
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-transform-jscript": "^7.12.13",
     "@babel/preset-env": "^7.12.17",
     "@babel/preset-typescript": "^7.12.17",

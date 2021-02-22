@@ -22,6 +22,9 @@ const createBabelConfig = options => {
       ...presets,
     ],
     plugins: [
+      ['@babel/plugin-proposal-class-properties', {
+        loose: true,
+      }],
       '@babel/plugin-transform-jscript',
       'babel-plugin-inferno',
       'babel-plugin-transform-remove-console',
