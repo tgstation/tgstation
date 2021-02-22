@@ -2965,6 +2965,7 @@
 #include "code\modules\reagents\chemistry\recipes\slime_extracts.dm"
 #include "code\modules\reagents\chemistry\recipes\special.dm"
 #include "code\modules\reagents\chemistry\recipes\toxins.dm"
+#include "code\modules\reagents\reagent_containers\ampoules.dm"
 #include "code\modules\reagents\reagent_containers\blood_pack.dm"
 #include "code\modules\reagents\reagent_containers\borghydro.dm"
 #include "code\modules\reagents\reagent_containers\bottle.dm"

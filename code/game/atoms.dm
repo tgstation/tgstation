@@ -452,10 +452,7 @@
 
 ///Return the current air environment in this atom
 /atom/proc/return_air()
-	if(loc)
-		return loc.return_air()
-	else
-		return null
+	return loc?.return_air()
 
 ///Return the air if we can analyze it
 /atom/proc/return_analyzable_air()

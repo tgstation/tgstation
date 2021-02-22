@@ -71,6 +71,24 @@
 	build_path = /obj/item/reagent_containers/glass/beaker/meta
 	category = list("Medical Designs")
 
+/datum/design/ampoule
+	name = "Ampoule"
+	id = "ampoule"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/glass = 25)
+	build_path = /obj/item/reagent_containers/glass/ampoule/medical/open
+	category = list("initial", "Medical Designs")
+
+/datum/design/plastic_ampoule
+	name = "Plastic Ampoule"
+	id = "plastic_ampoule"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/plastic = 25)
+	build_path = /obj/item/reagent_containers/glass/ampoule/plastic/open
+	category = list("Medical Designs")
+
 /datum/design/ph_meter
 	name = "Chemical analyser"
 	id = "ph_meter"

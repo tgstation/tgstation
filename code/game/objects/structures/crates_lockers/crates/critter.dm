@@ -41,10 +41,7 @@
 		. += "manifest"
 
 /obj/structure/closet/crate/critter/return_air()
-	if(tank)
-		return tank.air_contents
-	else
-		return loc.return_air()
+	return tank ? tank.air_contents : ..()
 
 /obj/structure/closet/crate/critter/return_analyzable_air()
 	if(tank)

@@ -47,17 +47,17 @@
 		reagents.add_reagent_list(list_reagents)
 
 /obj/item/reagent_containers/attack_self(mob/user)
-	if(possible_transfer_amounts.len)
-		var/i=0
-		for(var/A in possible_transfer_amounts)
-			i++
-			if(A == amount_per_transfer_from_this)
-				if(i<possible_transfer_amounts.len)
-					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
-				else
-					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
-				return
+	. = ..()
+	if(!LAZYLEN(possible_transfer_amounts))
+		return
+
+	var/amount_index = possible_transfer_amounts.Find(amount_per_transfer_from_this)
+	if(!amount_index)
+		return
+
+	amount_per_transfer_from_this = possible_transfer_amounts[((amount_index + 1) % possible_transfer_amounts.len) + 1] // +1 so we don't index to 0 because BYOND is such a snowflake it doesn't use 0-indexed lists.
+	to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+	return
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if (try_splash(user, target))
