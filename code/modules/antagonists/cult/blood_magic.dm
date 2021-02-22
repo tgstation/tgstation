@@ -670,7 +670,7 @@
 //Armor: Gives the target (cultist) a basic cultist combat loadout
 /obj/item/melee/blood_magic/armor
 	name = "Arming Aura"
-	desc = "Will equipt cult combat gear onto a cultist on contact."
+	desc = "Will equip cult combat gear onto a cultist on contact."
 	color = "#33cc33" // green
 
 /obj/item/melee/blood_magic/armor/afterattack(atom/target, mob/living/carbon/user, proximity)
@@ -684,7 +684,7 @@
 		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), ITEM_SLOT_BACK)
 		if(C == user)
 			qdel(src) //Clears the hands
-		C.put_in_hands(new /obj/item/melee/cultblade(user))
+		C.put_in_hands(new /obj/item/melee/cultblade/dagger(user))
 		C.put_in_hands(new /obj/item/restraints/legcuffs/bola/cult(user))
 		..()
 
