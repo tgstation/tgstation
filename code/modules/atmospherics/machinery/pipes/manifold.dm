@@ -14,7 +14,7 @@
 
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "manifold"
-
+	can_burst = FALSE
 	var/mutable_appearance/center
 
 /* We use New() instead of Initialize() because these values are used in update_icon()

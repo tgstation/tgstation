@@ -14,6 +14,7 @@
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "multiz"
+	can_burst = FALSE
 
 	var/mutable_appearance/center = null
 	var/mutable_appearance/pipe = null

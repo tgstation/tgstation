@@ -13,7 +13,7 @@
 
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
-
+	can_burst = FALSE
 	var/mutable_appearance/center
 
 /obj/machinery/atmospherics/pipe/manifold4w/New()

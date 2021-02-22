@@ -12,6 +12,7 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = FALSE
+	can_burst = FALSE
 
 	var/list/front_nodes
 	var/list/back_nodes
