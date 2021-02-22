@@ -23,13 +23,10 @@
 /turf/open/floor/mineral/setup_broken_states()
 	return list("[initial(icon_state)]_dam")
 
-/turf/open/floor/mineral/update_icon()
-	. = ..()
-	if(!.)
-		return
-	if(!broken && !burnt)
-		if( !(icon_state in icons) )
-			icon_state = initial(icon_state)
+/turf/open/floor/mineral/update_icon_state()
+	if(!broken && !burnt && !(icon_state in icons))
+		icon_state = initial(icon_state)
+	return ..()
 
 //PLASMA
 
@@ -209,12 +206,12 @@
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_hand(mob/user)
+/turf/open/floor/mineral/bananium/attack_hand(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_paw(mob/user)
+/turf/open/floor/mineral/bananium/attack_paw(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		honk()
@@ -262,12 +259,12 @@
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_hand(mob/user)
+/turf/open/floor/mineral/uranium/attack_hand(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_paw(mob/user)
+/turf/open/floor/mineral/uranium/attack_paw(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		radiate()

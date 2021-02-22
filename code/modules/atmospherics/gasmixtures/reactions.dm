@@ -514,7 +514,7 @@ nobiliumsuppression = INFINITY
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2 * reaction_efficency
 
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2) * BZ_RESEARCH_SCALE), BZ_RESEARCH_MAX_AMOUNT)
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2) * BZ_RESEARCH_SCALE, BZ_RESEARCH_MAX_AMOUNT))
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -530,7 +530,7 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/metalhydrogen/init_reqs()
 	min_requirements = list(
 		/datum/gas/hydrogen = 100,
-		/datum/gas/bz		= 5,
+		/datum/gas/bz = 5,
 		"TEMP" = METAL_HYDROGEN_MINIMUM_HEAT
 		)
 
@@ -658,7 +658,7 @@ nobiliumsuppression = INFINITY
 			air.temperature = max(((air.temperature * old_heat_capacity + energy_produced) / new_heat_capacity), TCMB)
 
 
-/datum/gas_reaction/miaster	//dry heat sterilization: clears out pathogens in the air
+/datum/gas_reaction/miaster //dry heat sterilization: clears out pathogens in the air
 	priority = -10 //after all the heating from fires etc. is done
 	name = "Dry Heat Sterilization"
 	id = "sterilization"

@@ -78,7 +78,7 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/latetoggle)
 
-/obj/machinery/door/firedoor/attack_hand(mob/user)
+/obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -128,7 +128,7 @@
 		welded = !welded
 		to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
-		update_icon()
+		update_appearance()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
@@ -152,7 +152,7 @@
 /obj/machinery/door/firedoor/attack_robot(mob/user)
 	return attack_ai(user)
 
-/obj/machinery/door/firedoor/attack_alien(mob/user)
+/obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(welded)
 		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
@@ -167,19 +167,14 @@
 			flick("door_closing", src)
 
 /obj/machinery/door/firedoor/update_icon_state()
-	if(density)
-		icon_state = "door_closed"
-	else
-		icon_state = "door_open"
+	. = ..()
+	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
 	if(!welded)
 		return
-	if(density)
-		. += "welded"
-	else
-		. += "welded_open"
+	. += density ? "welded" : "welded_open"
 
 /obj/machinery/door/firedoor/open()
 	. = ..()
@@ -199,7 +194,7 @@
 			else
 				F.constructionStep = CONSTRUCTION_NO_CIRCUIT
 				F.obj_integrity = F.max_integrity * 0.5
-			F.update_icon()
+			F.update_appearance()
 		else
 			new /obj/item/electronics/firelock (T)
 	qdel(src)
@@ -263,6 +258,7 @@
 	desc = "A partially completed firelock."
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "frame1"
+	base_icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
@@ -279,7 +275,8 @@
 			. += "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .</span>"
 
 /obj/structure/firelock_frame/update_icon_state()
-	icon_state = "frame[constructionStep]"
+	icon_state = "[base_icon_state][constructionStep]"
+	return ..()
 
 /obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
 	switch(constructionStep)
@@ -297,7 +294,7 @@
 					"<span class='notice'>You remove the circuit board from [src].</span>")
 				new /obj/item/electronics/firelock(drop_location())
 				constructionStep = CONSTRUCTION_NO_CIRCUIT
-				update_icon()
+				update_appearance()
 				return
 			if(C.tool_behaviour == TOOL_WRENCH)
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
@@ -366,7 +363,7 @@
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
 						"<span class='notice'>You cut [src] into metal.</span>")
 					var/turf/T = get_turf(src)
-					new /obj/item/stack/sheet/metal(T, 3)
+					new /obj/item/stack/sheet/iron(T, 3)
 					if(reinforced)
 						new /obj/item/stack/sheet/plasteel(T, 2)
 					qdel(src)
@@ -378,7 +375,7 @@
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 				"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 				constructionStep = CONSTRUCTION_PANEL_OPEN
-				update_icon()
+				update_appearance()
 				return
 	return ..()
 
@@ -395,7 +392,7 @@
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 			constructionStep = CONSTRUCTION_PANEL_OPEN
-			update_icon()
+			update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")

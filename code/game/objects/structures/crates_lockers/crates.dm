@@ -15,15 +15,17 @@
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
-	var/climb_time = 20
+	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/Initialize()
 	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
-	update_icon()
-	AddElement(/datum/element/climbable, climb_time = opened ? climb_time : climb_time * 0.5, climb_stun = 0)
+		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	else
+		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	update_appearance()
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -37,13 +39,14 @@
 
 /obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
+	return ..()
 
 /obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user)
+/obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -52,13 +55,13 @@
 
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
-	RemoveElement(/datum/element/climbable)
-	AddElement(/datum/element/climbable, climb_time = climb_time * 0.5, climb_stun = 0)
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 
-/obj/structure/closet/crate/after_close(mob/living/user)
+/obj/structure/closet/crate/after_close(mob/living/user, force)
 	. = ..()
-	RemoveElement(/datum/element/climbable)
-	AddElement(/datum/element/climbable, climb_time = climb_time, climb_stun = 0)
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
@@ -68,7 +71,7 @@
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
-		update_icon()
+		update_appearance()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
@@ -78,7 +81,7 @@
 	if(ishuman(user))
 		user.put_in_hands(manifest)
 	manifest = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"
@@ -111,7 +114,7 @@
 	for(var/i in 1 to rand(7,15))
 		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
 		if(prob(12))
-			new	/obj/item/storage/bag/trash/filled(src)
+			new /obj/item/storage/bag/trash/filled(src)
 	new /obj/effect/spawner/scatter/grime(loc)
 
 /obj/structure/closet/crate/internals

@@ -94,7 +94,7 @@
 	icon_state = "signmaker_atmos"
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
-	max_signs = 3
+	max_signs = 6
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"

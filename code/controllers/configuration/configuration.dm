@@ -4,16 +4,16 @@
 	var/directory = "config"
 
 	var/warned_deprecated_configs = FALSE
-	var/hiding_entries_by_type = TRUE	//Set for readability, admins can set this to FALSE if they want to debug it
+	var/hiding_entries_by_type = TRUE //Set for readability, admins can set this to FALSE if they want to debug it
 	var/list/entries
 	var/list/entries_by_type
 
 	var/list/maplist
 	var/datum/map_config/defaultmap
 
-	var/list/modes			// allowed modes
+	var/list/modes // allowed modes
 	var/list/gamemode_cache
-	var/list/votable_modes		// votable modes
+	var/list/votable_modes // votable modes
 	var/list/mode_names
 	var/list/mode_reports
 	var/list/mode_false_report_weight
@@ -35,7 +35,7 @@
 	Load(world.params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 /datum/controller/configuration/proc/Load(_directory)
-	if(IsAdminAdvancedProcCall())		//If admin proccall is detected down the line it will horribly break everything.
+	if(IsAdminAdvancedProcCall()) //If admin proccall is detected down the line it will horribly break everything.
 		return
 	if(_directory)
 		directory = _directory
@@ -83,7 +83,7 @@
 	var/list/_entries_by_type = list()
 	entries_by_type = _entries_by_type
 
-	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
+	for(var/I in typesof(/datum/config_entry)) //typesof is faster in this case
 		var/datum/config_entry/E = I
 		if(initial(E.abstract_type) == I)
 			continue
@@ -235,7 +235,7 @@
 		var/datum/game_mode/M = new T()
 
 		if(M.config_tag)
-			if(!(M.config_tag in modes))		// ensure each mode is added only once
+			if(!(M.config_tag in modes)) // ensure each mode is added only once
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
