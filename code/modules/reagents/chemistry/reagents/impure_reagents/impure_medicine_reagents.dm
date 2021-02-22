@@ -393,14 +393,13 @@
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
-		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartium)
+		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
-		remove_buffs()
-
+		remove_buffs(owner)
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
-	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
+	remove_buffs(owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
 		explosion(owner, 0, 0, 1)
@@ -414,14 +413,15 @@
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart) //No heart? No life!
 		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
-		stat = DEAD
+		owner.stat = DEAD
 		return ..()
 	explosion(owner, 0, 0, 1)
 	qdel(heart)
 	owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
 	return..()
 
-/datum/reagent/inverse/penthrite/proc/remove_buffs()
+/datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
+	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)

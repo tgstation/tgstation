@@ -34,9 +34,9 @@
 
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
-	GLOB.chemical_reactions_list = list()
-	GLOB.chemical_reactions_results_lookup_list = list()
-	GLOB.chemical_reactions_list_product_index = list()
+	GLOB.chemical_reactions_list = list() //reagents to reaction list
+	GLOB.chemical_reactions_results_lookup_list = list() //UI glob
+	GLOB.chemical_reactions_list_product_index = list() //product to reaction list
 
 	for(var/path in paths)
 		var/datum/chemical_reaction/D = new path()
