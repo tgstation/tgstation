@@ -1,6 +1,6 @@
 /datum/customer_data
-	///Name of the robot by default. Can be overriden at runtime
-	var/list/name = "Generic Robot"
+	///Name of the robot's origin
+	var/nationality = "Generic"
 	///The types of food this robot likes in a assoc list of venue type | weighted list. does NOT include subtypes.
 	var/list/orderable_objects = list()
 	///The amount a robot pays for each food he likes in an assoc list type | payment
@@ -21,23 +21,44 @@
 	var/list/wait_for_food_lines = list("I'm still waiting for food")
 	///Clothing sets to pick from when dressing the robot.
 	var/list/clothing_sets = list("amerifat_clothes")
+	///List of prefixes for our robots name
+	var/list/name_prefixes
+	///Prefix file to uise
+	var/prefix_file = "strings/names/american_prefix.txt"
+	///Base icon for the customer
+	var/base_icon = "amerifat"
+
+/datum/customer_data/New()
+	. = ..()
+	name_prefixes = world.file2list("strings/names/american_prefix.txt")
 
 /datum/customer_data/american
-	name = "Space-American Robot"
+	nationality = "Space-American"
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/burger/plain = 15, /obj/item/food/burger/cheese = 8, /obj/item/food/burger/superbite = 1),
+	/datum/venue/restaurant = list(/obj/item/food/burger/plain = 15, /obj/item/food/burger/cheese = 8, /obj/item/food/burger/superbite = 1, /obj/item/food/fries = 10, /obj/item/food/cheesyfries = 6, /obj/item/food/pie/applepie = 4, /obj/item/food/pie/pumpkinpie = 2, /obj/item/food/hotdog = 8, /obj/item/food/pizza/pineapple = 1, /obj/item/food/burger/baconburger = 6, /obj/item/food/pancakes = 4),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer/light = 15, /datum/reagent/consumable/ethanol/beer = 25))
-	order_prices = list(/obj/item/food/burger/plain = 100, /obj/item/food/burger/cheese = 125, /obj/item/food/burger/superbite = 400, /datum/reagent/consumable/ethanol/b52 = 250, /datum/reagent/consumable/ethanol/manhattan = 250, /datum/reagent/consumable/ethanol/atomicbomb = 250, /datum/reagent/consumable/ethanol/beer/light = 50, /datum/reagent/consumable/ethanol/beer = 50)
+
+
 	found_seat_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
 	cant_find_seat_lines = list("I'm so tired from standing...", "I have chronic back pain, please hurry up and get me a seat!", "I'm not going to tip if I don't get a seat.")
 	leave_mad_lines = list("NO TIP FOR YOU. GOODBYE!", "At least at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager!", "I'll be sure to leave a bad Yelp review.")
 	leave_happy_lines = list("An extra tip for you my friend.", "Thanks for the great food!", "Diabetes is a myth anyway!")
 	wait_for_food_lines = list("Listen buddy, I'm getting real impatient over here!", "I've been waiting for ages...")
 
+
 /datum/customer_data/italian
-	name = "Italian Robot"
-	orderable_objects = list(/datum/venue/restaurant = list(/obj/item/food/burger/plain = 1), /datum/venue/bar = list(/obj/item/food/burger/plain = 1))
+	nationality = "Space-Italian"
+	prefix_file = "strings/names/italian_prefix.txt"
+	base_icon = "italian"
+	clothing_sets = list("italian_pison", "italian_godfather")
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 10, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 5, /datum/reagent/consumable/ethanol/beer = 6, /datum/reagent/consumable/ethanol/beer/light = 6, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5,  /datum/reagent/consumable/hot_ice_coffee = 5))
+
 
 /datum/customer_data/french
-	name = "French Robot"
-	orderable_objects = list(/datum/venue/restaurant = list(/obj/item/food/burger/plain = 1), /datum/venue/bar = list(/obj/item/food/burger/plain = 1))
+	nationality = "Space-French"
+	prefix_file = "strings/names/french_prefix.txt"
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/food/baguette = 10, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 6),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 3, /datum/reagent/consumable/ethanol/beer/light = 5))

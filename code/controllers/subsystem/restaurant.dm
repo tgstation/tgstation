@@ -14,7 +14,6 @@ SUBSYSTEM_DEF(restaurant)
 	///Seats claimed by robots. They want these. Don't be rude about it to them. assoc list of seat key and robot mob value
 	var/list/claimed_seats = list()
 
-
 /datum/controller/subsystem/restaurant/Initialize(timeofday)
 	. = ..()
 	for(var/key in subtypesof(/datum/venue))

@@ -14,7 +14,6 @@
 	var/clothes_set = "amerifat_clothes"
 	var/datum/atom_hud/hud_to_show_on_hover
 
-
 /mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT) //dont push me bitch
 	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
@@ -25,6 +24,8 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
+	icon = customer_info.base_icon
+	name = "[pick(customer_info.name_prefixes)]-bot (customer_info.nationality)"
 	update_icon()
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
@@ -51,3 +52,15 @@
 
 	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
 	. += clothes
+
+/mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)
+	. = ..()
+	playsound(get_turf(src), 'sound/effects/tourist_talk.ogg', 100, TRUE)
+
+/mob/living/simple_animal/robot_customer/examine(mob/user)
+	. = ..()
+	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
+		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
+		. += "<span class='notice'>Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"</span>"
+
+

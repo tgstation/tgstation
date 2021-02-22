@@ -57,5 +57,14 @@
 #define FOOD_DISLIKED 2
 #define FOOD_TOXIC 3
 
-
+///Venue reagent requirement
 #define VENUE_BAR_MINIMUM_REAGENTS 10
+
+
+
+///Food price classes
+#define FOOD_PRICE_TRASH 10
+#define FOOD_PRICE_CHEAP 35 //Most typically, 1-2 ingredients from a roundstart kitchen.
+#define FOOD_PRICE_NORMAL 60 //May still be only a few ingredients, but may require some cooperation or prep-work to aquire.
+#define FOOD_PRICE_EXOTIC 125 //Themed foods that in most rounds requires botany or another department to go out on a limb for you. Contains most seafoods/exotic meats/unpopular foods.
+#define FOOD_PRICE_LEGENDARY 600 //If you can make one of these in an hour long round, without any help, then you'll surely be awarded.

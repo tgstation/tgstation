@@ -54,5 +54,5 @@
 	if(!blackboard[BB_CUSTOMER_EATING])
 		blackboard[BB_CUSTOMER_EATING] = TRUE
 		attending_venue.on_get_order(pawn, order_item)
-		qdel(order_item)
+
 
