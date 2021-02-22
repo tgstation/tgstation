@@ -10,7 +10,6 @@
 
 /obj/structure/chair/e_chair/Initialize()
 	. = ..()
-	add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
 	if(!stored_kit)
 		stored_kit = new(src)
 		stored_kit.master = src
@@ -36,18 +35,21 @@
 	var/mob/living/guinea_pig
 	///the guinea pig can only be shocked if this reaches 5 seconds
 	var/time_since_last_shock = 0
+	///this is casted to the overlay we put on parent_chair
+	var/mutable_appearance/shock_helmet_overlay
 
 /datum/component/electrified_chair/Initialize(obj/item/assembly/shock_kit/input_shock_kit)
 	if(!istype(parent, /obj/structure/chair) || !istype(input_shock_kit, /obj/item/assembly/shock_kit))
 		return COMPONENT_INCOMPATIBLE
 	parent_chair = parent
 	used_shock_kit = input_shock_kit
-	RegisterSignal(parent_chair, COMSIG_PARENT_PREQDELETED, .proc/UnregisterFromParent)
-	RegisterSignal(used_shock_kit, COMSIG_PARENT_PREQDELETED, .proc/UnregisterFromParent)
+	RegisterSignal(parent_chair, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
+	RegisterSignal(used_shock_kit, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
 
 	RegisterSignal(parent_chair, COMSIG_MOVABLE_BUCKLE, .proc/on_buckle)
 	RegisterSignal(parent_chair, COMSIG_ATOM_EXIT, .proc/check_shock_kit)
-	parent_chair.add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
+	shock_helmet_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER - 1)
+	parent_chair.add_overlay(shock_helmet_overlay)
 
 	if(parent_chair.has_buckled_mobs())
 		for(var/m in parent_chair.buckled_mobs)
@@ -56,8 +58,7 @@
 				break
 
 /datum/component/electrified_chair/UnregisterFromParent()
-	SIGNAL_HANDLER
-
+	parent_chair.cut_overlay(list(shock_helmet_overlay))
 	if(parent_chair)
 		UnregisterSignal(parent_chair, list(COMSIG_PARENT_PREQDELETED, COMSIG_MOVABLE_BUCKLE, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_EXIT))
 	if(used_shock_kit)
@@ -69,13 +70,15 @@
 	guinea_pig  = null
 	STOP_PROCESSING(SSprocessing, src)
 
+/datum/component/electrified_chair/proc/delete_self()
+	SIGNAL_HANDLER
 	qdel(src)
 
 ///checks if the shock kit connected to parent is still there and unregisters if it isnt
 /datum/component/electrified_chair/proc/check_shock_kit(datum/source, atom/movable/AM, atom/newLoc)
 	SIGNAL_HANDLER
 	if(used_shock_kit == AM && newLoc != parent_chair)
-		UnregisterFromParent()
+		delete_self()
 
 /datum/component/electrified_chair/proc/on_buckle(datum/source, mob/living/mob_to_buckle, _force)
 	SIGNAL_HANDLER
