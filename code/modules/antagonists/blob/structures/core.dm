@@ -11,7 +11,7 @@
 	resistance_flags = LAVA_PROOF
 	strong_reinforce_range = BLOB_CORE_STRONG_REINFORCE_RANGE
 	reflector_reinforce_range = BLOB_CORE_REFLECTOR_REINFORCE_RANGE
-	claim_range	= BLOB_CORE_CLAIM_RANGE
+	claim_range = BLOB_CORE_CLAIM_RANGE
 	pulse_range = BLOB_CORE_PULSE_RANGE
 	expand_range = BLOB_CORE_EXPAND_RANGE
 	max_spores = BLOB_CORE_MAX_SPORES
@@ -21,32 +21,35 @@
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	AddElement(/datum/element/point_of_interest)
-	update_icon() //so it atleast appears
+	update_appearance() //so it atleast appears
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
 	if(overmind)
 		overmind.blobstrain.on_gain()
-		update_icon()
+		update_appearance()
 	. = ..()
-
-/obj/structure/blob/special/core/scannerreport()
-	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
-
-/obj/structure/blob/special/core/update_icon()
-	cut_overlays()
-	color = null
-	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
-	if(overmind)
-		blob_overlay.color = overmind.blobstrain.color
-	add_overlay(blob_overlay)
-	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
 
 /obj/structure/blob/special/core/Destroy()
 	GLOB.blob_cores -= src
 	if(overmind)
 		overmind.blob_core = null
-	overmind = null
+		overmind = null
 	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/structure/blob/special/core/scannerreport()
+	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
+
+/obj/structure/blob/special/core/update_overlays()
+	. = ..()
+	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
+	if(overmind)
+		blob_overlay.color = overmind.blobstrain.color
+	. += blob_overlay
+	. += mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay")
+
+/obj/structure/blob/special/core/update_icon()
+	color = null
 	return ..()
 
 /obj/structure/blob/special/core/ex_act(severity, target)

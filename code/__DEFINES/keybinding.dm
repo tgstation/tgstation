@@ -74,7 +74,6 @@
 #define COMSIG_KB_SILICON_TOGGLEMODULEONE_DOWN "keybinding_silicon_togglemoduleone_down"
 #define COMSIG_KB_SILICON_TOGGLEMODULETWO_DOWN "keybinding_silicon_togglemoduletwo_down"
 #define COMSIG_KB_SILICON_TOGGLEMODULETHREE_DOWN "keybinding_silicon_togglemodulethree_down"
-#define COMSIG_KB_SILICON_CYCLEINTENT_DOWN "keybinding_silicon_cycleintent_down"
 #define COMSIG_KB_SILICON_UNEQUIPMODULE_DOWN "keybinding_silicon_unequipmodule_down"
 
 //Movement

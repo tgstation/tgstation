@@ -7,10 +7,11 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
+	robot_modules_background.layer = HUD_LAYER //Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
 	inv1 = new /atom/movable/screen/robot/module1()
@@ -59,7 +60,7 @@
 		mmi.brainmob.name = src.real_name
 		mmi.brainmob.real_name = src.real_name
 		mmi.brainmob.container = mmi
-		mmi.update_icon()
+		mmi.update_appearance()
 
 	INVOKE_ASYNC(src, .proc/updatename)
 
@@ -95,7 +96,7 @@
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.set_stat(CONSCIOUS)
 			mind.transfer_to(mmi.brainmob)
-			mmi.update_icon()
+			mmi.update_appearance()
 		else
 			to_chat(src, "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>")
 			ghostize()
@@ -172,7 +173,7 @@
 	real_name = changed_name
 	name = real_name
 	if(!QDELETED(builtInCamera))
-		builtInCamera.c_tag = real_name	//update the camera name too
+		builtInCamera.c_tag = real_name //update the camera name too
 
 /mob/living/silicon/robot/proc/get_standard_name()
 	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
@@ -426,6 +427,14 @@
 	else
 		clear_alert("hacked")
 
+/// Special handling for getting hit with a light eater
+/mob/living/silicon/robot/proc/on_light_eater(mob/living/silicon/robot/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(lamp_enabled)
+		smash_headlamp()
+	return COMPONENT_BLOCK_LIGHT_EATER
+
+
 /**
  * Handles headlamp smashing
  *
@@ -461,14 +470,14 @@
 		set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
 		lamp_enabled = FALSE
-		lampButton?.update_icon()
+		lampButton?.update_appearance()
 		update_icons()
 		return
 	set_light_range(lamp_intensity)
 	set_light_color(lamp_doom? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
-	lampButton?.update_icon()
+	lampButton?.update_appearance()
 	update_icons()
 
 /mob/living/silicon/robot/proc/deconstruct()
@@ -496,7 +505,7 @@
 		robot_suit.head.flash2.burn_out()
 		robot_suit.head.flash2 = null
 		robot_suit.head = null
-		robot_suit.update_icon()
+		robot_suit.update_appearance()
 	else
 		new /obj/item/robot_suit(T)
 		new /obj/item/bodypart/l_leg/robot(T)
@@ -769,7 +778,7 @@
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
-		builtInCamera.c_tag = real_name	//update the camera name too
+		builtInCamera.c_tag = real_name //update the camera name too
 	diag_hud_set_aishell()
 
 /**
@@ -800,7 +809,7 @@
 	real_name = "[AI.real_name] [designation] Shell-[ident]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
-		builtInCamera.c_tag = real_name	//update the camera name too
+		builtInCamera.c_tag = real_name //update the camera name too
 	mainframe = AI
 	deployed = TRUE
 	set_connected_ai(mainframe)
@@ -845,7 +854,7 @@
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
 	if(!QDELETED(builtInCamera))
-		builtInCamera.c_tag = real_name	//update the camera name too
+		builtInCamera.c_tag = real_name //update the camera name too
 	diag_hud_set_aishell()
 	mainframe.diag_hud_set_deployed()
 	if(mainframe.laws)

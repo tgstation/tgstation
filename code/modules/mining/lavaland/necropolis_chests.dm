@@ -608,10 +608,8 @@
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
-	if(reagents.total_volume)
-		icon_state = "potionflask"
-	else
-		icon_state = "potionflask_empty"
+	icon_state = "potionflask[reagents.total_volume ? null : "_empty"]"
+	return ..()
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
@@ -968,14 +966,14 @@
 	cures = list(/datum/reagent/medicine/adminordrazine)
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
-	stage_prob = 20
+	stage_prob = 10
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list("Your bones ache.")
-	stage2	= list("Your skin feels scaly.")
-	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
-	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
+	stage1 = list("Your bones ache.")
+	stage2 = list("Your skin feels scaly.")
+	stage3 = list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
+	stage4 = list("<span class='danger'>Your blood burns.</span>")
+	stage5 = list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -1127,13 +1125,13 @@
 		var/obj/item/hierophant_club/club = src.target
 		if(istype(club))
 			club.blink_charged = FALSE
-			club.update_icon()
+			club.update_appearance()
 
 /datum/action/innate/dash/hierophant/charge()
 	var/obj/item/hierophant_club/club = target
 	if(istype(club))
 		club.blink_charged = TRUE
-		club.update_icon()
+		club.update_appearance()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
 	holder.update_action_buttons_icon()
@@ -1212,6 +1210,7 @@
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport

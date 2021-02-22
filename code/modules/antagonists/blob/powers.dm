@@ -55,7 +55,7 @@
 		core.overmind = src
 		blobs_legit += src
 		blob_core = core
-		core.update_icon()
+		core.update_appearance()
 	update_health_hud()
 	placed = TRUE
 	announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
@@ -140,13 +140,13 @@
 	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return
 
-	B.naut = TRUE	//temporary placeholder to prevent creation of more than one per factory.
+	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
-		B.update_icon()
+		B.update_appearance()
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))

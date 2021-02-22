@@ -10,7 +10,7 @@
 
 #define NANITE_CLOUD_TOGGLE 1
 #define NANITE_CLOUD_DISABLE 2
-#define NANITE_CLOUD_ENABLE	3
+#define NANITE_CLOUD_ENABLE 3
 
 //Nanite excess thresholds
 #define NANITE_EXCESS_MINOR 25

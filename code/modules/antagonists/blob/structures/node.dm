@@ -7,7 +7,7 @@
 	health_regen = BLOB_NODE_HP_REGEN
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 65, ACID = 90)
 	point_return = BLOB_REFUND_NODE_COST
-	claim_range	= BLOB_NODE_CLAIM_RANGE
+	claim_range = BLOB_NODE_CLAIM_RANGE
 	pulse_range = BLOB_NODE_PULSE_RANGE
 	expand_range = BLOB_NODE_EXPAND_RANGE
 	resistance_flags = LAVA_PROOF
@@ -24,13 +24,16 @@
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."
 
 /obj/structure/blob/special/node/update_icon()
-	cut_overlays()
 	color = null
+	return ..()
+
+/obj/structure/blob/special/node/update_overlays()
+	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
-	add_overlay(blob_overlay)
-	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_node_overlay"))
+	. += blob_overlay
+	. += mutable_appearance('icons/mob/blob.dmi', "blob_node_overlay")
 
 /obj/structure/blob/special/node/creation_action()
 	if(overmind)

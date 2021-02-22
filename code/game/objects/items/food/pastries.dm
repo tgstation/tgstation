@@ -770,15 +770,22 @@
 
 /obj/item/food/pancakes/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
-/obj/item/food/pancakes/update_icon()
-	if(contents.len)
-		name = "stack of pancakes"
-	else
-		name = initial(name)
+/obj/item/food/pancakes/update_name()
+	name = contents.len ? "stack of pancakes" : initial(name)
+	return ..()
+
+/obj/item/food/pancakes/update_icon(updates=ALL)
+	if(!(updates & UPDATE_OVERLAYS))
+		return ..()
+
+	updates &= ~UPDATE_OVERLAYS
+	. = ..() // Don't update overlays. We're doing that here
+
 	if(contents.len < LAZYLEN(overlays))
-		overlays-=overlays[overlays.len]
+		overlays -= overlays[overlays.len]
+	. |= UPDATE_OVERLAYS
 
 /obj/item/food/pancakes/examine(mob/user)
 	var/ingredients_listed = ""
@@ -831,14 +838,14 @@
 	pancake_visual.pixel_x = rand(-1,1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
 	add_overlay(pancake_visual)
-	update_icon()
+	update_appearance()
 
 /obj/item/food/pancakes/attack(mob/M, mob/living/user, params, stacked = TRUE)
 	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
 	var/obj/item/O = contents[contents.len]
 	. = O.attack(M, user, params, FALSE)
-	update_icon()
+	update_appearance()
 
 #undef PANCAKE_MAX_STACK
 

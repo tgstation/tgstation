@@ -24,7 +24,7 @@
 	var/hijack_stage_time = 5 SECONDS
 	var/hijack_stage_cooldown = 5 SECONDS
 	var/hijack_flight_time_increase = 30 SECONDS
-	var/hijack_completion_flight_time_set = 10 SECONDS	//How long in deciseconds to set shuttle's timer after hijack is done.
+	var/hijack_completion_flight_time_set = 10 SECONDS //How long in deciseconds to set shuttle's timer after hijack is done.
 	var/hijack_hacking = FALSE
 	var/hijack_announce = TRUE
 
@@ -189,7 +189,7 @@
 		if(shuttle.hijack_status == HIJACKED)
 			shuttle.setTimer(hijack_completion_flight_time_set)
 		else
-			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase)		//give the guy more time to hijack if it's already in flight.
+			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase) //give the guy more time to hijack if it's already in flight.
 	return shuttle.hijack_status
 
 /obj/machinery/computer/emergency_shuttle/AltClick(user)
@@ -253,7 +253,7 @@
 	if(!IS_DOCKED)
 		return
 
-	if((obj_flags & EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+	if((obj_flags & EMAGGED) || ENGINES_STARTED) //SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
 		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
@@ -388,7 +388,7 @@
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
 					//Non-antag present. Can't hijack.
-					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/iron/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
 						return FALSE
 					//Antag present, doesn't stop but let's see if we actually want to hijack
 					var/prevent = FALSE
@@ -680,7 +680,7 @@
 	if (can_interact(user))
 		return ..()
 
-/obj/item/storage/pod/attack_hand(mob/user)
+/obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
 	return TRUE

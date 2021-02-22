@@ -76,10 +76,10 @@
 	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
 	var/obj/effect/rune/parent_rune
 
-/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user, modifiers)
+/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user, list/modifiers)
 	parent_rune.attack_hand(user, modifiers)
 
-/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user)
+/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(iscultist(user))
 		parent_rune.attack_animal(user)
 	else
@@ -134,7 +134,7 @@
 
 /obj/machinery/shieldgen/proc/shields_up()
 	active = TRUE
-	update_icon()
+	update_appearance()
 	move_resist = INFINITY
 
 	for(var/turf/target_tile in range(shield_range, src))
@@ -145,7 +145,7 @@
 /obj/machinery/shieldgen/proc/shields_down()
 	active = FALSE
 	move_resist = initial(move_resist)
-	update_icon()
+	update_appearance()
 	QDEL_LIST(deployed_shields)
 
 /obj/machinery/shieldgen/process(delta_time)
@@ -205,7 +205,7 @@
 			obj_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
-			update_icon()
+			update_appearance()
 
 	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(locked)
@@ -245,10 +245,8 @@
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon_state()
-	if(active)
-		icon_state = (machine_stat & BROKEN) ? "shieldonbr":"shieldon"
-	else
-		icon_state = (machine_stat & BROKEN) ? "shieldoffbr":"shieldoff"
+	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
+	return ..()
 
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
@@ -270,7 +268,7 @@
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
 
-/obj/machinery/power/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
+/obj/machinery/power/shieldwallgen/xenobiologyaccess //use in xenobiology containment
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
 	req_access = list(ACCESS_XENOBIOLOGY)

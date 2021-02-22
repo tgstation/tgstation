@@ -6,19 +6,19 @@
 #define KEY_MODE_TYPE 1
 
 /datum/config_entry
-	var/name	//read-only, this is determined by the last portion of the derived entry type
+	var/name //read-only, this is determined by the last portion of the derived entry type
 	var/config_entry_value
-	var/default	//read-only, just set value directly
+	var/default //read-only, just set value directly
 
-	var/resident_file	//the file which this was loaded from, if any
-	var/modified = FALSE	//set to TRUE if the default has been overridden by a config entry
+	var/resident_file //the file which this was loaded from, if any
+	var/modified = FALSE //set to TRUE if the default has been overridden by a config entry
 
-	var/deprecated_by	//the /datum/config_entry type that supercedes this one
+	var/deprecated_by //the /datum/config_entry type that supercedes this one
 
 	var/protection = NONE
-	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
+	var/abstract_type = /datum/config_entry //do not instantiate if type matches this
 
-	var/vv_VAS = TRUE		//Force validate and set on VV. VAS proccall guard will run regardless.
+	var/vv_VAS = TRUE //Force validate and set on VV. VAS proccall guard will run regardless.
 
 	var/dupes_allowed = FALSE
 
@@ -156,7 +156,7 @@
 	abstract_type = /datum/config_entry/keyed_list
 	config_entry_value = list()
 	dupes_allowed = TRUE
-	vv_VAS = FALSE			//VAS will not allow things like deleting from lists, it'll just bug horribly.
+	vv_VAS = FALSE //VAS will not allow things like deleting from lists, it'll just bug horribly.
 	var/key_mode
 	var/value_mode
 	var/splitter = " "

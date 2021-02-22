@@ -143,6 +143,7 @@
 /obj/machinery/sleeper/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "sleeper"
+	base_icon_state = "sleeper"
 
 /obj/machinery/sleeper/survival_pod/update_overlays()
 	. = ..()
@@ -175,7 +176,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

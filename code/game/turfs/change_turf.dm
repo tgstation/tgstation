@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
 		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
+		if(underlays.len) //we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		comp.RemoveComponent()
 
 	changing_turf = TRUE
-	qdel(src)	//Just get the side effects and call Destroy
+	qdel(src) //Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
 	for(var/i in transferring_comps)

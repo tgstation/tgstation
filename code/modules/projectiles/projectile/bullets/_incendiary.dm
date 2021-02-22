@@ -22,7 +22,7 @@
 	range = 10 // actually overwritten in the backblast element
 	alpha = 0
 	pass_flags = PASSTABLE | PASSMOB
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	shrapnel_type = null
 	embedding = null
 	ricochet_chance = 10000
@@ -43,7 +43,7 @@
 	var/list/launched_items
 
 /// we only try to knock back the first 6 items per tile
-#define BACKBLAST_MAX_ITEM_KNOCKBACK	6
+#define BACKBLAST_MAX_ITEM_KNOCKBACK 6
 
 /obj/projectile/bullet/incendiary/backblast/Move()
 	. = ..()

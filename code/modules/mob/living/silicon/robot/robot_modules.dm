@@ -100,7 +100,7 @@
 			var/obj/item/assembly/flash/F = I
 			F.times_used = 0
 			F.burnt_out = FALSE
-			F.update_icon()
+			F.update_appearance()
 		else if(istype(I, /obj/item/melee/baton))
 			var/obj/item/melee/baton/B = I
 			if(B.cell)
@@ -211,7 +211,7 @@
 		/obj/item/paint/anycolor,
 		/obj/item/soap/nanotrasen,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
-		/obj/item/razor,					//killbait material
+		/obj/item/razor, //killbait material
 		/obj/item/lipstick/purple,
 		/obj/item/reagent_containers/spray/waterflower/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
@@ -251,7 +251,7 @@
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/iron,
 		/obj/item/stack/cable_coil)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
@@ -267,7 +267,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/iron,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
@@ -445,7 +445,7 @@
 		if(T.cell.charge < T.cell.maxcharge)
 			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
 			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
+			T.update_appearance()
 		else
 			T.charge_timer = 0
 
@@ -590,7 +590,7 @@
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/iron,
 		/obj/item/dest_tagger/borg,
 		/obj/item/stack/cable_coil,
 		/obj/item/pinpointer/syndicate_cyborg,
