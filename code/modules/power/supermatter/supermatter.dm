@@ -1249,6 +1249,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
 
+
 /obj/overlay/psy/shard
 	icon_state = "psy_shard"
 #undef HALLUCINATION_RANGE
