@@ -11,10 +11,10 @@ const absRequire = (createRequire || createRequireFromPath)(absPnpApiPath);
 
 if (existsSync(absPnpApiPath)) {
   if (!process.versions.pnp) {
-    // Setup the environment to be able to require eslint/bin/eslint.js
+    // Setup the environment to be able to require typescript/bin/tsc
     require(absPnpApiPath).setup();
   }
 }
 
-// Defer to the real eslint/bin/eslint.js your application uses
-module.exports = absRequire(`eslint/bin/eslint.js`);
+// Defer to the real typescript/bin/tsc your application uses
+module.exports = absRequire(`typescript/bin/tsc`);
