@@ -139,8 +139,9 @@
 
 /obj/structure/holosign/robot_seat
 	density = FALSE
+	desc = "Used to indicate a place to sit for a robot tourist. I better be careful."
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "holosign"
+	icon_state = "eating_zone"
 	layer = BELOW_MOB_LAYER
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
