@@ -718,7 +718,7 @@
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8	//Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
@@ -1824,7 +1824,7 @@
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
 				fourfiveeight.boxtag_set = TRUE
-				fourfiveeight.update_icon()
+				fourfiveeight.update_appearance()
 				qdel(P)
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
@@ -1859,7 +1859,7 @@
 			P.pizza = new replacement_type
 			P.boxtag = P.pizza.boxtag
 			P.boxtag_set = TRUE
-			P.update_icon()
+			P.update_appearance()
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
@@ -2176,8 +2176,8 @@
 	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/gun/ballistic/automatic/toy/pistol,
-					/obj/item/gun/ballistic/automatic/toy/pistol,
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/toy,
+					/obj/item/gun/ballistic/automatic/pistol/toy,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
@@ -2356,7 +2356,7 @@
 		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
 			new /obj/item/clothing/mask/fakemoustache/italian(C)
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
-		new	/obj/item/switchblade(C)
+		new /obj/item/switchblade(C)
 
 /datum/supply_pack/costumes_toys/randomised/tcg
 	name = "Big-Ass Booster Pack Pack"
@@ -2519,7 +2519,7 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = CARGO_CRATE_VALUE * 6	// it costs so much because the Space Church needs funding to build a cathedral
+	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,

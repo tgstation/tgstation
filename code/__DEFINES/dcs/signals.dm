@@ -82,13 +82,30 @@
 	#define EXAMINE_POSITION_BEFORE (1<<1)
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED (1<<0)
-///from base of atom/update_icon(): ()
+
+///from base of [/atom/proc/update_appearance]: (updates)
+#define COMSIG_ATOM_UPDATE_APPEARANCE "atom_update_appearance"
+	/// If returned from [COMSIG_ATOM_UPDATE_APPEARANCE] it prevents the atom from updating its name.
+	#define COMSIG_ATOM_NO_UPDATE_NAME UPDATE_NAME
+	/// If returned from [COMSIG_ATOM_UPDATE_APPEARANCE] it prevents the atom from updating its desc.
+	#define COMSIG_ATOM_NO_UPDATE_DESC UPDATE_DESC
+	/// If returned from [COMSIG_ATOM_UPDATE_APPEARANCE] it prevents the atom from updating its icon.
+	#define COMSIG_ATOM_NO_UPDATE_ICON UPDATE_ICON
+///from base of [/atom/proc/update_name]: (updates)
+#define COMSIG_ATOM_UPDATE_NAME "atom_update_name"
+///from base of [/atom/proc/update_desc]: (updates)
+#define COMSIG_ATOM_UPDATE_DESC "atom_update_desc"
+///from base of [/atom/update_icon]: ()
 #define COMSIG_ATOM_UPDATE_ICON "atom_update_icon"
-	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE	(1<<0)
-	#define COMSIG_ATOM_NO_UPDATE_OVERLAYS		(1<<1)
-///from base of atom/update_overlays(): (list/new_overlays)
+	/// If returned from [COMSIG_ATOM_UPDATE_ICON] it prevents the atom from updating its icon state.
+	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE UPDATE_ICON_STATE
+	/// If returned from [COMSIG_ATOM_UPDATE_ICON] it prevents the atom from updating its overlays.
+	#define COMSIG_ATOM_NO_UPDATE_OVERLAYS UPDATE_OVERLAYS
+///from base of [atom/update_icon_state]: ()
+#define COMSIG_ATOM_UPDATE_ICON_STATE "atom_update_icon_state"
+///from base of [/atom/update_overlays]: (list/new_overlays)
 #define COMSIG_ATOM_UPDATE_OVERLAYS "atom_update_overlays"
-///from base of atom/update_icon(): (signalOut, did_anything)
+///from base of [/atom/update_icon]: (signalOut, did_anything)
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
 ///from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
@@ -130,8 +147,6 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
-///from base of atom/set_light(): (l_range, l_power, l_color, l_on)
-#define COMSIG_ATOM_SET_LIGHT "atom_set_light"
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 ///from base of atom/handle_atom_del(): (atom/deleted)
@@ -181,56 +196,72 @@
 	/// Prevents the atom from being exposed to reagents if returned on [COMSIG_ATOM_EXPOSE_REAGENTS]
 	#define COMPONENT_NO_EXPOSE_REAGENTS (1<<0)
 ///from base of [/datum/reagent/proc/expose_atom]: (/datum/reagent, reac_volume)
-#define COMSIG_ATOM_EXPOSE_REAGENT	"atom_expose_reagent"
+#define COMSIG_ATOM_EXPOSE_REAGENT "atom_expose_reagent"
 ///from base of [/datum/reagent/proc/expose_atom]: (/atom, reac_volume)
-#define COMSIG_REAGENT_EXPOSE_ATOM	"reagent_expose_atom"
+#define COMSIG_REAGENT_EXPOSE_ATOM "reagent_expose_atom"
 ///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume)
-#define COMSIG_REAGENT_EXPOSE_OBJ	"reagent_expose_obj"
+#define COMSIG_REAGENT_EXPOSE_OBJ "reagent_expose_obj"
 ///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/camera/blob) // ovemind arg is only used by blob reagents.
-#define COMSIG_REAGENT_EXPOSE_MOB	"reagent_expose_mob"
+#define COMSIG_REAGENT_EXPOSE_MOB "reagent_expose_mob"
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
-#define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
+#define COMSIG_REAGENT_EXPOSE_TURF "reagent_expose_turf"
 
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
-#define COMSIG_MATERIALS_INIT_MAT	"SSmaterials_init_mat"
+#define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
-#define COMSIG_REAGENTS_NEW_REAGENT		"reagents_new_reagent"
+#define COMSIG_REAGENTS_NEW_REAGENT "reagents_new_reagent"
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
-#define COMSIG_REAGENTS_ADD_REAGENT		"reagents_add_reagent"
+#define COMSIG_REAGENTS_ADD_REAGENT "reagents_add_reagent"
 ///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
-#define COMSIG_REAGENTS_DEL_REAGENT		"reagents_del_reagent"
+#define COMSIG_REAGENTS_DEL_REAGENT "reagents_del_reagent"
 ///from base of [/datum/reagents/proc/clear_reagents]: ()
-#define COMSIG_REAGENTS_REM_REAGENT		"reagents_rem_reagent"
+#define COMSIG_REAGENTS_REM_REAGENT "reagents_rem_reagent"
 ///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
-#define COMSIG_REAGENTS_CLEAR_REAGENTS	"reagents_clear_reagents"
+#define COMSIG_REAGENTS_CLEAR_REAGENTS "reagents_clear_reagents"
 ///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
-#define COMSIG_REAGENTS_TEMP_CHANGE		"reagents_temp_change"
+#define COMSIG_REAGENTS_TEMP_CHANGE "reagents_temp_change"
 ///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
-#define COMSIG_REAGENTS_REACTED			"reagents_reacted"
+#define COMSIG_REAGENTS_REACTED "reagents_reacted"
 ///from base of [/datum/reagents/proc/process]: (num_reactions)
-#define COMSIG_REAGENTS_REACTION_STEP	"reagents_time_step"
+#define COMSIG_REAGENTS_REACTION_STEP "reagents_time_step"
 ///from base of [/atom/proc/expose_reagents]: (/atom, /list, methods, volume_modifier, show_message)
-#define COMSIG_REAGENTS_EXPOSE_ATOM		"reagents_expose_atom"
+#define COMSIG_REAGENTS_EXPOSE_ATOM "reagents_expose_atom"
 ///from base of [/obj/proc/expose_reagents]: (/obj, /list, methods, volume_modifier, show_message)
-#define COMSIG_REAGENTS_EXPOSE_OBJ		"reagents_expose_obj"
+#define COMSIG_REAGENTS_EXPOSE_OBJ "reagents_expose_obj"
 ///from base of [/mob/living/proc/expose_reagents]: (/mob/living, /list, methods, volume_modifier, show_message, touch_protection)
-#define COMSIG_REAGENTS_EXPOSE_MOB		"reagents_expose_mob"
+#define COMSIG_REAGENTS_EXPOSE_MOB "reagents_expose_mob"
 ///from base of [/turf/proc/expose_reagents]: (/turf, /list, methods, volume_modifier, show_message)
-#define COMSIG_REAGENTS_EXPOSE_TURF		"reagents_expose_turf"
+#define COMSIG_REAGENTS_EXPOSE_TURF "reagents_expose_turf"
 ///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
-#define COMSIG_REAGENTS_CRAFTING_PING	"reagents_crafting_ping"
+#define COMSIG_REAGENTS_CRAFTING_PING "reagents_crafting_ping"
 
-///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
-#define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
-///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
+// Lighting:
+///from base of [atom/proc/set_light]: (l_range, l_power, l_color, l_on)
+#define COMSIG_ATOM_SET_LIGHT "atom_set_light"
+	/// Blocks [/atom/proc/set_light], [/atom/proc/set_light_power], [/atom/proc/set_light_range], [/atom/proc/set_light_color], [/atom/proc/set_light_on], and [/atom/proc/set_light_flags].
+	#define COMPONENT_BLOCK_LIGHT_UPDATE (1<<0)
+///Called right before the atom changes the value of light_power to a different one, from base [atom/proc/set_light_power]: (new_power)
 #define COMSIG_ATOM_SET_LIGHT_POWER "atom_set_light_power"
-///Called right before the atom changes the value of light_color to a different one, from base atom/set_light_color(): (new_color)
+///Called right after the atom changes the value of light_power to a different one, from base of [/atom/proc/set_light_power]: (old_power)
+#define COMSIG_ATOM_UPDATE_LIGHT_POWER "atom_update_light_power"
+///Called right before the atom changes the value of light_range to a different one, from base [atom/proc/set_light_range]: (new_range)
+#define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
+///Called right after the atom changes the value of light_range to a different one, from base of [/atom/proc/set_light_range]: (old_range)
+#define COMSIG_ATOM_UPDATE_LIGHT_RANGE "atom_update_light_range"
+///Called right before the atom changes the value of light_color to a different one, from base [atom/proc/set_light_color]: (new_color)
 #define COMSIG_ATOM_SET_LIGHT_COLOR "atom_set_light_color"
-///Called right before the atom changes the value of light_on to a different one, from base atom/set_light_on(): (new_value)
+///Called right after the atom changes the value of light_color to a different one, from base of [/atom/proc/set_light_color]: (old_color)
+#define COMSIG_ATOM_UPDATE_LIGHT_COLOR "atom_update_light_color"
+///Called right before the atom changes the value of light_on to a different one, from base [atom/proc/set_light_on]: (new_value)
 #define COMSIG_ATOM_SET_LIGHT_ON "atom_set_light_on"
-///Called right before the atom changes the value of light_flags to a different one, from base atom/set_light_flags(): (new_value)
+///Called right after the atom changes the value of light_on to a different one, from base of [/atom/proc/set_light_on]: (old_value)
+#define COMSIG_ATOM_UPDATE_LIGHT_ON "atom_update_light_on"
+///Called right before the atom changes the value of light_flags to a different one, from base [atom/proc/set_light_flags]: (new_flags)
 #define COMSIG_ATOM_SET_LIGHT_FLAGS "atom_set_light_flags"
+///Called right after the atom changes the value of light_flags to a different one, from base of [/atom/proc/set_light_flags]: (old_flags)
+#define COMSIG_ATOM_UPDATE_LIGHT_FLAGS "atom_update_light_flags"
+
 ///called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
@@ -256,7 +287,7 @@
 #define COMSIG_CLICK "atom_click"
 ///from base of atom/ShiftClick(): (/mob)
 #define COMSIG_CLICK_SHIFT "shift_click"
-	#define COMPONENT_ALLOW_EXAMINATE (1<<0) 							//Allows the user to examinate regardless of client.eye.
+	#define COMPONENT_ALLOW_EXAMINATE (1<<0) //Allows the user to examinate regardless of client.eye.
 ///from base of atom/CtrlClickOn(): (/mob)
 #define COMSIG_CLICK_CTRL "ctrl_click"
 ///from base of atom/AltClick(): (/mob)
@@ -311,13 +342,13 @@
 #define COMSIG_MOVABLE_BUMP "movable_bump"
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"
-	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0)				//if true, flip if the impact will push what it hits
-	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1)					//return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
+	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits
+	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1) //return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
 ///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
 #define COMSIG_MOVABLE_PREBUCKLE "prebuckle" // this is the last chance to interrupt and block a buckle before it finishes
-	#define COMPONENT_BLOCK_BUCKLE	(1<<0)
+	#define COMPONENT_BLOCK_BUCKLE (1<<0)
 ///from base of atom/movable/buckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 ///from base of atom/movable/unbuckle_mob(): (mob, force)
@@ -390,7 +421,7 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
-#define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"
+#define COMSIG_MOB_APPLY_DAMGE "mob_apply_damage"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
 ///from base of /mob/verb/examinate(): (atom/target)
@@ -475,7 +506,7 @@
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
 ///from base of mob/living/Sleeping() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"
-	#define COMPONENT_NO_STUN (1<<0)									//For all of them
+	#define COMPONENT_NO_STUN (1<<0) //For all of them
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
@@ -497,14 +528,14 @@
 ///When a carbon gets a vending machine tilted on them
 #define COMSIG_ON_VENDOR_CRUSH "carbon_vendor_crush"
 // /mob/living/carbon physiology signals
-#define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound"				//from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
-#define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound"				//from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+#define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound" //from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+#define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound" //from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
 ///from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
-#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"			//from base of /obj/item/bodypart/proc/drop_limb(special, dismembered)
-#define COMSIG_BODYPART_GAUZED	"bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
-#define COMSIG_BODYPART_GAUZE_DESTROYED	"bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
+#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb" //from base of /obj/item/bodypart/proc/drop_limb(special, dismembered)
+#define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
+#define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
 
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
@@ -535,15 +566,15 @@
 // /obj signals
 
 ///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
-#define COMSIG_OBJ_TAKE_DAMAGE	"obj_take_damage"
+#define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
-	#define COMPONENT_NO_TAKE_DAMAGE	(1<<0)
+	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
-#define COMSIG_OBJ_HIDE	"obj_hide"
+#define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
 
@@ -557,6 +588,12 @@
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
 ///from /obj/machinery/set_occupant(atom/movable/O): (new_occupant)
 #define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
+
+///from obj/machinery/iv_drip/IV_attach(target, usr) : (attachee)
+#define COMSIG_IV_ATTACH "iv_attach"
+///from obj/machinery/iv_drip/IV_detach() : (detachee)
+#define COMSIG_IV_DETACH "iv_detach"
+
 
 // /obj/machinery/computer/teleporter
 /// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
@@ -748,7 +785,7 @@
 // /mob/living/carbon/human signals
 
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
-#define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"
+#define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 
@@ -762,9 +799,9 @@
 // /datum/song signals
 
 ///sent to the instrument when a song starts playing
-#define COMSIG_SONG_START 	"song_start"
+#define COMSIG_SONG_START "song_start"
 ///sent to the instrument when a song stops playing
-#define COMSIG_SONG_END		"song_end"
+#define COMSIG_SONG_END "song_end"
 
 /*******Component Specific Signals*******/
 //Janitor
@@ -777,7 +814,7 @@
 ///Called on an object to "clean it", such as removing blood decals/overlays, etc. The clean types bitfield is sent with it. Return TRUE if any cleaning was necessary and thus performed.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"
 	///Returned by cleanable components when they are cleaned.
-	#define COMPONENT_CLEANED	(1<<0)
+	#define COMPONENT_CLEANED (1<<0)
 
 
 //Creamed
@@ -870,7 +907,7 @@
 ///() deletes the nanite component
 #define COMSIG_NANITE_DELETE "nanite_delete"
 ///(list/nanite_programs) - makes the input list a copy the nanites' program list
-#define COMSIG_NANITE_GET_PROGRAMS	"nanite_get_programs"
+#define COMSIG_NANITE_GET_PROGRAMS "nanite_get_programs"
 ///(amount) Returns nanite amount
 #define COMSIG_NANITE_GET_VOLUME "nanite_get_volume"
 ///(amount) Sets current nanite volume to the given amount
@@ -898,9 +935,9 @@
 ///(datum/nanite_program/new_program, datum/nanite_program/source_program) Called when adding a program to a nanite component
 #define COMSIG_NANITE_ADD_PROGRAM "nanite_add_program"
 	///Installation successful
-	#define COMPONENT_PROGRAM_INSTALLED		(1<<0)
+	#define COMPONENT_PROGRAM_INSTALLED (1<<0)
 	///Installation failed, but there are still nanites
-	#define COMPONENT_PROGRAM_NOT_INSTALLED	(1<<1)
+	#define COMPONENT_PROGRAM_NOT_INSTALLED (1<<1)
 ///(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component
 #define COMSIG_NANITE_SYNC "nanite_sync"
 
@@ -934,7 +971,7 @@
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"
 
 // /datum/component/swabbing signals
-#define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples"						///Called when you try to swab something using the swabable component, includes a mutable list of what has been swabbed so far so it can be modified.
+#define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples" ///Called when you try to swab something using the swabable component, includes a mutable list of what has been swabbed so far so it can be modified.
 	#define COMPONENT_SWAB_FOUND (1<<0)
 
 // /datum/component/two_handed signals
@@ -980,6 +1017,16 @@
 // /datum/component/container_item
 /// (atom/container, mob/user) - returns bool
 #define COMSIG_CONTAINER_TRY_ATTACH "container_try_attach"
+
+// /datum/element/light_eater
+///from base of [/datum/element/light_eater/proc/table_buffet]: (list/light_queue, datum/light_eater)
+#define COMSIG_LIGHT_EATER_QUEUE "light_eater_queue"
+///from base of [/datum/element/light_eater/proc/devour]: (datum/light_eater)
+#define COMSIG_LIGHT_EATER_ACT "light_eater_act"
+	///Prevents the default light eater behavior from running in case of immunity or custom behavior
+	#define COMPONENT_BLOCK_LIGHT_EATER (1<<0)
+///from base of [/datum/element/light_eater/proc/devour]: (atom/eaten_light)
+#define COMSIG_LIGHT_EATER_DEVOUR "light_eater_devour"
 
 /* Attack signals. They should share the returned flags, to standardize the attack chain. */
 /// tool_act -> pre_attack -> target.attackby (item.attack) -> afterattack

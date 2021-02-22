@@ -58,10 +58,8 @@
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
-	if(density)
-		icon_state = base_state
-	else
-		icon_state = "[base_state]open"
+	. = ..()
+	icon_state = "[base_state][density ? null : "open"]"
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())
@@ -260,7 +258,7 @@
 						WA.set_anchored(TRUE)
 						WA.state= "02"
 						WA.setDir(dir)
-						WA.update_icon()
+						WA.update_appearance()
 						WA.created_name = name
 
 						if(obj_flags & EMAGGED)
@@ -287,7 +285,7 @@
 				return
 	return ..()
 
-/obj/machinery/door/window/interact(mob/user)		//for sillycones
+/obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_activate_door(mob/user)

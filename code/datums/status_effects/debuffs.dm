@@ -268,14 +268,15 @@
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	if(usr != owner)
+	if(!.)
 		return
+
 	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
 	if(do_after(owner, 3.5 SECONDS, owner))
 		if(isliving(owner))
-			var/mob/living/L = owner
-			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
-			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			var/mob/living/living_owner = owner
+			to_chat(living_owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			living_owner.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify
@@ -381,13 +382,13 @@
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
-		owner.update_icon()
+		owner.update_appearance()
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
 	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
-	owner.update_icon()
+	owner.update_appearance()
 	return ..()
 
 /datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
@@ -760,7 +761,7 @@
 
 /datum/status_effect/convulsing
 	id = "convulsing"
-	duration = 	150
+	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
 
@@ -950,7 +951,7 @@
 /datum/status_effect/cloudstruck/on_apply()
 	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 	owner.overlays += mob_overlay
-	owner.update_icon()
+	owner.update_appearance()
 	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	return TRUE
 
@@ -961,7 +962,7 @@
 	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	if(owner)
 		owner.overlays -= mob_overlay
-		owner.update_icon()
+		owner.update_appearance()
 
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()

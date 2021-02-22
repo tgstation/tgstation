@@ -67,7 +67,7 @@
 		new /obj/item/stack/sheet/bone(src, 1)
 
 //***Oil well puddles.
-/obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
+/obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
@@ -79,10 +79,10 @@
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 
-/obj/structure/sink/oil_well/attack_hand(mob/M)
+/obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
-	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
-	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
+	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
+	to_chat(user, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
@@ -144,7 +144,7 @@
 			new /obj/item/storage/book/bible/booze(src)
 		if(5)
 			new /obj/item/clothing/neck/stethoscope(src)
-			new	/obj/item/scalpel(src)
+			new /obj/item/scalpel(src)
 			new /obj/item/hemostat(src)
 
 		if(6)
@@ -169,7 +169,7 @@
 					opened = TRUE
 					locked = TRUE
 					dump_contents()
-					update_icon()
+					update_appearance()
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -197,7 +197,7 @@
 /obj/structure/closet/crate/grave/bust_open()
 	..()
 	opened = TRUE
-	update_icon()
+	update_appearance()
 	dump_contents()
 	return
 

@@ -32,23 +32,27 @@
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
 
-/datum/species/jelly/spec_life(mob/living/carbon/human/H)
+/datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
+
 	if(!H.blood_volume)
-		H.blood_volume += 5
-		H.adjustBruteLoss(5)
+		H.blood_volume += 2.5 * delta_time
+		H.adjustBruteLoss(2.5 * delta_time)
 		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.blood_volume += 3
-			H.adjust_nutrition(-2.5)
+			H.blood_volume += 1.5 * delta_time
+			H.adjust_nutrition(-1.25 * delta_time)
+
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
-		if(prob(5))
+		if(DT_PROB(2.5, delta_time))
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
+
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
+
 	if(regenerate_limbs)
 		regenerate_limbs.UpdateButtonIcon()
 
@@ -166,13 +170,14 @@
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
+/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-		if(prob(5))
+		if(DT_PROB(2.5, delta_time))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
+
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.blood_volume += 3
-		H.adjust_nutrition(-2.5)
+		H.blood_volume += 1.5 * delta_time
+		H.adjust_nutrition(-1.25 * delta_time)
 
 	..()
 
@@ -361,24 +366,24 @@
 		return FALSE
 	var/datum/species/jelly/slime/SS = H.dna.species
 
-	if(QDELETED(dupe)) 					//Is there a body?
+	if(QDELETED(dupe)) //Is there a body?
 		SS.bodies -= dupe
 		return FALSE
 
-	if(!isslimeperson(dupe)) 			//Is it a slimeperson?
+	if(!isslimeperson(dupe)) //Is it a slimeperson?
 		SS.bodies -= dupe
 		return FALSE
 
-	if(dupe.stat == DEAD) 				//Is it alive?
+	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(dupe.stat != CONSCIOUS) 			//Is it awake?
+	if(dupe.stat != CONSCIOUS) //Is it awake?
 		return FALSE
 
-	if(dupe.mind && dupe.mind.active) 	//Is it unoccupied?
+	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
 		return FALSE
 
-	if(!(dupe in SS.bodies))			//Do we actually own it?
+	if(!(dupe in SS.bodies)) //Do we actually own it?
 		return FALSE
 
 	return TRUE

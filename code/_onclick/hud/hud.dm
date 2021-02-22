@@ -21,10 +21,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud
 	var/mob/mymob
 
-	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
-	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
-	var/inventory_shown = FALSE		//Equipped item inventory
-	var/hotkey_ui_hidden = FALSE	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/hud_shown = TRUE //Used for the HUD toggle (F12)
+	var/hud_version = HUD_STYLE_STANDARD //Current displayed version of the HUD
+	var/inventory_shown = FALSE //Equipped item inventory
+	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/atom/movable/screen/ling/chems/lingchemdisplay
 	var/atom/movable/screen/ling/sting/lingstingdisplay
@@ -55,6 +55,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
 
+	///UI for screentips that appear when you mouse over things
+	var/atom/movable/screen/screentip/screentip_text
+
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = FALSE
 
@@ -84,6 +87,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/atom/movable/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
+
+	screentip_text = new(null, src)
+	static_inventory += screentip_text
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(src)
@@ -126,6 +132,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(screenoverlays)
 	mymob = null
 
+	QDEL_NULL(screentip_text)
+
 	return ..()
 
 /mob/proc/create_mob_hud()
@@ -147,14 +155,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
-	if(!display_hud_version)	//If 0 or blank, display the next hud version
+	if(!display_hud_version) //If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
-	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
+	if(display_hud_version > HUD_VERSIONS) //If the requested version number is greater than the available versions, reset back to the first version
 		display_hud_version = 1
 
 	switch(display_hud_version)
-		if(HUD_STYLE_STANDARD)	//Default HUD
-			hud_shown = TRUE	//Governs behavior of other procs
+		if(HUD_STYLE_STANDARD) //Default HUD
+			hud_shown = TRUE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen += static_inventory
 			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
@@ -169,8 +177,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 
-		if(HUD_STYLE_REDUCED)	//Reduced HUD
-			hud_shown = FALSE	//Governs behavior of other procs
+		if(HUD_STYLE_REDUCED) //Reduced HUD
+			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
@@ -186,11 +194,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				if(hand)
 					screenmob.client.screen += hand
 			if(action_intent)
-				screenmob.client.screen += action_intent		//we want the intent switcher visible
-				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+				screenmob.client.screen += action_intent //we want the intent switcher visible
+				action_intent.screen_loc = ui_acti_alt //move this to the alternative position, where zone_select usually is.
 
-		if(HUD_STYLE_NOHUD)	//No HUD
-			hud_shown = FALSE	//Governs behavior of other procs
+		if(HUD_STYLE_NOHUD) //No HUD
+			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
@@ -289,7 +297,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		hand_slots["[i]"] = hand_box
 		hand_box.hud = src
 		static_inventory += hand_box
-		hand_box.update_icon()
+		hand_box.update_appearance()
 
 	var/i = 1
 	for(var/atom/movable/screen/swap_hand/SH in static_inventory)

@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			type_or_datum = new type_or_datum
 	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
 	if(existing)
-		if(existing == type_or_datum)		//same thing don't need to touch
+		if(existing == type_or_datum) //same thing don't need to touch
 			return TRUE
 		remove_movespeed_modifier(existing, FALSE)
 	if(length(movespeed_modification))
@@ -90,10 +90,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	var/key
 	if(ispath(type_id_datum))
-		key = initial(type_id_datum.id) || "[type_id_datum]"		//id if set, path set to string if not.
-	else if(!istext(type_id_datum))		//if it isn't text it has to be a datum, as it isn't a type.
+		key = initial(type_id_datum.id) || "[type_id_datum]" //id if set, path set to string if not.
+	else if(!istext(type_id_datum)) //if it isn't text it has to be a datum, as it isn't a type.
 		key = type_id_datum.id
-	else								//assume it's an id
+	else //assume it's an id
 		key = type_id_datum
 	if(!LAZYACCESS(movespeed_modification, key))
 		return FALSE
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		. += M.multiplicative_slowdown
 
 /// Checks if a move speed modifier is valid and not missing any data
-/proc/movespeed_data_null_check(datum/movespeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.
+/proc/movespeed_data_null_check(datum/movespeed_modifier/M) //Determines if a data list is not meaningful and should be discarded.
 	. = TRUE
 	if(M.multiplicative_slowdown)
 		. = FALSE

@@ -179,6 +179,7 @@
 		add_airtank()
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -196,7 +197,7 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	update_icon()
+	update_appearance()
 
 /obj/mecha/ComponentInitialize()
 	. = ..()
@@ -236,10 +237,12 @@
 /obj/vehicle/sealed/mecha/update_icon_state()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		icon_state = silicon_icon_state
-	else if(LAZYLEN(occupants))
+		return ..()
+	if(LAZYLEN(occupants))
 		icon_state = base_icon_state
-	else
-		icon_state = "[base_icon_state]-open"
+		return ..()
+	icon_state = "[base_icon_state]-open"
+	return ..()
 
 
 /obj/vehicle/sealed/mecha/get_cell()
@@ -488,7 +491,7 @@
 		var/mob/living/occupant = b
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
-			mob_exit(occupant)	//bye bye
+			mob_exit(occupant) //bye bye
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -890,7 +893,7 @@
 	LAZYSET(occupants, pilot_mob, NONE)
 	pilot_mob.mecha = src
 	pilot_mob.forceMove(src)
-	update_icon()
+	update_appearance()
 
 ///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
@@ -898,7 +901,7 @@
 	if(pilot_mob.mecha == src)
 		pilot_mob.mecha = null
 	pilot_mob.forceMove(get_turf(src))
-	update_icon()
+	update_appearance()
 
 
 /////////////////////////////////////
@@ -1103,7 +1106,7 @@
 				L.reset_perspective()
 				remove_occupant(L)
 			mmi.set_mecha(null)
-			mmi.update_icon()
+			mmi.update_appearance()
 		setDir(dir_in)
 	return ..()
 
@@ -1114,7 +1117,7 @@
 	RegisterSignal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_middlemouseclick) //For AIs
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_LIVING_DEATH)
@@ -1128,7 +1131,7 @@
 		M.client.view_size.resetToDefault()
 		zoom_mode = 0
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /////////////////////////
 ////// Access stuff /////
@@ -1223,3 +1226,15 @@
 		else
 			to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
 	return FALSE
+
+
+/// Special light eater handling
+/obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(mecha_flags & HAS_LIGHTS)
+		visible_message("<span class='danger'>[src]'s lights burn out!</span>")
+		mecha_flags &= ~HAS_LIGHTS
+	set_light_on(FALSE)
+	for(var/occupant in occupants)
+		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
+	return COMPONENT_BLOCK_LIGHT_EATER

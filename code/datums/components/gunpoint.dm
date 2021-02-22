@@ -5,7 +5,7 @@
 /// How long it takes from stage 2 starting to move up to stage 3
 #define GUNPOINT_DELAY_STAGE_3 7.5 SECONDS
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
-#define GUNPOINT_BASE_WOUND_BONUS	5
+#define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
 #define GUNPOINT_MULT_STAGE_1 1
 /// As above, for stage 2
@@ -41,8 +41,8 @@
 		"<span class='danger'>You aim [weapon] point blank at [target]!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] aims [weapon] point blank at you!</span>")
 
-	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP)
-	target.apply_status_effect(STATUS_EFFECT_HELDUP)
+	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP, shooter)
+	target.apply_status_effect(STATUS_EFFECT_HELDUP, shooter)
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
 		if(target.stat == CONSCIOUS && is_nuclear_operative(shooter) && !is_nuclear_operative(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
@@ -57,7 +57,7 @@
 /datum/component/gunpoint/Destroy(force, silent)
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP)
-	target.remove_status_effect(STATUS_EFFECT_HELDUP)
+	target.remove_status_effect(STATUS_EFFECT_HELDUP, shooter)
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
@@ -121,7 +121,7 @@
 
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
-	target.remove_status_effect(STATUS_EFFECT_HELDUP)
+	target.remove_status_effect(STATUS_EFFECT_HELDUP, shooter)
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 
 	if(point_of_no_return)
@@ -135,21 +135,21 @@
 		qdel(src)
 		return
 
-	if(weapon.chambered && weapon.chambered.BB)
-		weapon.chambered.BB.damage *= damage_mult
-		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
-			weapon.chambered.BB.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			weapon.chambered.BB.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(weapon.chambered && weapon.chambered.loaded_projectile)
+		weapon.chambered.loaded_projectile.damage *= damage_mult
+		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			weapon.chambered.loaded_projectile.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.loaded_projectile.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	if(weapon.check_botched(shooter))
 		return
 
 	var/fired = weapon.process_fire(target, shooter)
-	if(!fired && weapon.chambered?.BB)
-		weapon.chambered.BB.damage /= damage_mult
-		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
-			weapon.chambered.BB.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			weapon.chambered.BB.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(!fired && weapon.chambered?.loaded_projectile)
+		weapon.chambered.loaded_projectile.damage /= damage_mult
+		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			weapon.chambered.loaded_projectile.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.loaded_projectile.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	qdel(src)
 

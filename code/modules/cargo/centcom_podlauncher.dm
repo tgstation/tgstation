@@ -640,7 +640,7 @@
 /datum/centcom_podlauncher/proc/refreshBay() //Called whenever the bay is switched, as well as wheneber a pod is launched
 	bay = GLOB.supplypod_loading_bays[bayNumber]
 	orderedArea = createOrderedArea(bay) //Create an ordered list full of turfs form the bay
-	preLaunch()	//Fill acceptable turfs from orderedArea, then fill launchList from acceptableTurfs (see proc for more info)
+	preLaunch() //Fill acceptable turfs from orderedArea, then fill launchList from acceptableTurfs (see proc for more info)
 	refreshView()
 
 /area/centcom/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
@@ -709,7 +709,7 @@
 	if (isnull(target_turf))
 		return
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
-	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
+	toLaunch.update_appearance()//we update_appearance() here so that the door doesnt "flicker on" right after it lands
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those

@@ -2,6 +2,7 @@
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
+	base_icon_state = "syringe"
 	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -10,7 +11,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
-	var/busy = FALSE		// needed for delayed drawing of blood
+	var/busy = FALSE // needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
@@ -138,22 +139,21 @@
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
-	inhand_icon_state = "syringe_[rounded_vol]"
+	inhand_icon_state = "[base_icon_state]_[rounded_vol]"
+	return ..()
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
-	var/rounded_vol = get_rounded_vol()
 	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 
-///Used by update_icon() and update_overlays()
+///Used by update_appearance() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
-	if(reagents?.total_volume)
-		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
-	else
+	if(!reagents?.total_volume)
 		return 0
+	return clamp(round((reagents.total_volume / volume * 15), 5), 1, 15)
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

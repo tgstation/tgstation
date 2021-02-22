@@ -5,18 +5,18 @@
  *
  */
 /datum/component/two_handed
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS 		// Only one of the component can exist on an item
-	var/wielded = FALSE 							/// Are we holding the two handed item properly
-	var/force_multiplier = 0						/// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
-	var/force_wielded = 0	 						/// The force of the item when weilded
-	var/force_unwielded = 0		 					/// The force of the item when unweilded
-	var/wieldsound = FALSE 							/// Play sound when wielded
-	var/unwieldsound = FALSE 						/// Play sound when unwielded
-	var/attacksound = FALSE							/// Play sound on attack when wielded
-	var/require_twohands = FALSE					/// Does it have to be held in both hands
-	var/icon_wielded = FALSE						/// The icon that will be used when wielded
-	var/obj/item/offhand/offhand_item = null		/// Reference to the offhand created for the item
-	var/sharpened_increase = 0						/// The amount of increase recived from sharpening the item
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // Only one of the component can exist on an item
+	var/wielded = FALSE /// Are we holding the two handed item properly
+	var/force_multiplier = 0 /// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
+	var/force_wielded = 0 /// The force of the item when weilded
+	var/force_unwielded = 0 /// The force of the item when unweilded
+	var/wieldsound = FALSE /// Play sound when wielded
+	var/unwieldsound = FALSE /// Play sound when unwielded
+	var/attacksound = FALSE /// Play sound on attack when wielded
+	var/require_twohands = FALSE /// Does it have to be held in both hands
+	var/icon_wielded = FALSE /// The icon that will be used when wielded
+	var/obj/item/offhand/offhand_item = null /// Reference to the offhand created for the item
+	var/sharpened_increase = 0 /// The amount of increase recived from sharpening the item
 
 /**
  * Two Handed component
@@ -163,7 +163,7 @@
 	if(sharpened_increase)
 		parent_item.force += sharpened_increase
 	parent_item.name = "[parent_item.name] (Wielded)"
-	parent_item.update_icon()
+	parent_item.update_appearance()
 
 	if(iscyborg(user))
 		to_chat(user, "<span class='notice'>You dedicate your module to [parent].</span>")
@@ -215,7 +215,7 @@
 		parent_item.name = "[initial(parent_item.name)]"
 
 	// Update icons
-	parent_item.update_icon()
+	parent_item.update_appearance()
 
 	if(istype(user)) // tk showed that we might not have a mob here
 		if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
@@ -260,14 +260,14 @@
  *
  * Updates the icon using icon_wielded if set
  */
-/datum/component/two_handed/proc/on_update_icon(datum/source)
+/datum/component/two_handed/proc/on_update_icon(obj/item/source)
 	SIGNAL_HANDLER
-
-	if(icon_wielded && wielded)
-		var/obj/item/parent_item = parent
-		if(parent_item)
-			parent_item.icon_state = icon_wielded
-			return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	if(!wielded)
+		return NONE
+	if(!icon_wielded)
+		return NONE
+	source.icon_state = icon_wielded
+	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
 /**
  * on_moved Triggers on item moved

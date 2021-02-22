@@ -1,6 +1,6 @@
 /obj/item/organ/lungs
 	var/failed = FALSE
-	var/operated = FALSE	//whether we can still have our damages fixed through surgery
+	var/operated = FALSE //whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST
@@ -258,7 +258,7 @@
 
 	//-- TRACES --//
 
-	if(breath)	// If there's some other shit in the air lets deal with it here.
+	if(breath) // If there's some other shit in the air lets deal with it here.
 
 	// N2O
 
@@ -268,7 +268,7 @@
 			H.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 				H.Sleeping(min(H.AmountSleeping() + 100, 200))
-		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			H.clear_alert("too_much_n2o")
 			if(prob(20))
 				n2o_euphoria = EUPHORIA_ACTIVE
@@ -485,13 +485,13 @@
 	// The air you breathe out should match your body temperature
 	breath.temperature = H.bodytemperature
 
-/obj/item/organ/lungs/on_life()
+/obj/item/organ/lungs/on_life(delta_time, times_fired)
 	. = ..()
 	if(failed && !(organ_flags & ORGAN_FAILING))
 		failed = FALSE
 		return
 	if(damage >= low_threshold)
-		var/do_i_cough = damage < high_threshold ? prob(5) : prob(10) // between : past high
+		var/do_i_cough = DT_PROB((damage < high_threshold) ? 2.5 : 5, delta_time) // between : past high
 		if(do_i_cough)
 			owner.emote("cough")
 	if(organ_flags & ORGAN_FAILING && owner.stat == CONSCIOUS)
@@ -529,7 +529,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -560,5 +560,5 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

@@ -41,7 +41,7 @@
 	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
-	var/burn_reduction = 0	//Subtracted to burn damage taken
+	var/burn_reduction = 0 //Subtracted to burn damage taken
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -200,8 +200,8 @@
 
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life(stam_regen)
-	if(stamina_dam > DAMAGE_PRECISION && stam_regen)					//DO NOT update health here, it'll be done in the carbon's life.
+/obj/item/bodypart/proc/on_life(delta_time, times_fired, stam_regen)
+	if(stamina_dam > DAMAGE_PRECISION && stam_regen) //DO NOT update health here, it'll be done in the carbon's life.
 		heal_damage(0, 0, INFINITY, null, FALSE)
 		. |= BODYPART_LIFE_UPDATE_HEALTH
 
@@ -213,7 +213,7 @@
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
 	if(owner && (owner.status_flags & GODMODE))
-		return FALSE	//godmode
+		return FALSE //godmode
 
 	if(required_status && (status != required_status))
 		return FALSE
@@ -686,8 +686,8 @@
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
-	var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
-	var/tburn	= round( (burn_dam/max_damage)*3, 1 )
+	var/tbrute = round( (brute_dam/max_damage)*3, 1 )
+	var/tburn = round( (burn_dam/max_damage)*3, 1 )
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
@@ -735,6 +735,13 @@
 	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
+		should_draw_gender = FALSE
+		should_draw_greyscale = FALSE
+		no_update = TRUE
+
+	if(HAS_TRAIT(src, TRAIT_PLASMABURNT) && is_organic_limb())
+		species_id = "plasmaman"
+		dmg_overlay_type = ""
 		should_draw_gender = FALSE
 		should_draw_greyscale = FALSE
 		no_update = TRUE
@@ -897,7 +904,7 @@
 		dam_mul *= iter_wound.damage_mulitplier_penalty
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-		owner.visible_message("<span class='notice'>\The [current_gauze] on [owner]'s [name] fall away.</span>", "<span class='notice'>The [current_gauze] on your [name] fall away.</span>")
+		owner.visible_message("<span class='notice'>\The [current_gauze] on [owner]'s [name] falls away.</span>", "<span class='notice'>The [current_gauze] on your [name] falls away.</span>")
 		QDEL_NULL(current_gauze)
 
 	wound_damage_multiplier = dam_mul
@@ -911,13 +918,13 @@
 
 	var/bleed_rate = 0
 	if(generic_bleedstacks > 0)
-		bleed_rate++
+		bleed_rate += 0.5
 
 	//We want an accurate reading of .len
 	listclearnulls(embedded_objects)
 	for(var/obj/item/embeddies in embedded_objects)
 		if(!embeddies.isEmbedHarmless())
-			bleed_rate += 0.5
+			bleed_rate += 0.25
 
 	for(var/thing in wounds)
 		var/datum/wound/W = thing
@@ -960,7 +967,7 @@
 /**
  * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
  *
- * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages fall off and we're left with nothing.
+ * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages falls off and we're left with nothing.
  *
  * Arguments:
  * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
@@ -970,7 +977,7 @@
 		return
 	current_gauze.absorption_capacity -= seep_amt
 	if(current_gauze.absorption_capacity <= 0)
-		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] falls away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] falls away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 

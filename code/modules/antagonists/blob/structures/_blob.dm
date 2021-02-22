@@ -11,7 +11,7 @@
 	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	var/point_return = 0 
+	var/point_return = 0
 	max_integrity = 30
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	/// how much health this blob regens when pulsed
@@ -22,12 +22,12 @@
 	COOLDOWN_DECLARE(heal_timestamp)
 	/// Multiplies brute damage by this
 	var/brute_resist = BLOB_BRUTE_RESIST
-	/// Multiplies burn damage by this 
-	var/fire_resist = BLOB_FIRE_RESIST 
+	/// Multiplies burn damage by this
+	var/fire_resist = BLOB_FIRE_RESIST
 	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
-	var/atmosblock = FALSE 
+	var/atmosblock = FALSE
 	var/mob/camera/blob/overmind
 
 
@@ -41,7 +41,7 @@
 			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
-	update_icon()
+	update_appearance()
 	if(atmosblock)
 		air_update_turf(TRUE, TRUE)
 	ConsumeTile()
@@ -86,6 +86,7 @@
 	return !atmosblock
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
+	. = ..()
 	if(overmind)
 		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 	else
@@ -97,7 +98,7 @@
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
 			obj_integrity = min(max_integrity, obj_integrity+health_regen)
 			COOLDOWN_START(src, heal_timestamp, 20)
-		update_icon()
+		update_appearance()
 		COOLDOWN_START(src, pulse_timestamp, 10)
 		return TRUE//we did it, we were pulsed!
 	return FALSE //oh no we failed
@@ -161,7 +162,7 @@
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
 			B.forceMove(T)
-			B.update_icon()
+			B.update_appearance()
 			if(B.overmind && expand_reaction)
 				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
 			return B
@@ -232,8 +233,8 @@
 							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 
-/obj/structure/blob/attack_animal(mob/living/simple_animal/M)
-	if(ROLE_BLOB in M.faction) //sorry, but you can't kill the blob as a blobbernaut
+/obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(ROLE_BLOB in user.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	..()
 
@@ -267,7 +268,7 @@
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && obj_integrity > 0)
-		update_icon()
+		update_appearance()
 
 /obj/structure/blob/obj_destruction(damage_flag)
 	if(overmind)
@@ -279,7 +280,7 @@
 		CRASH("change_to(): invalid type for blob")
 	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()
-	B.update_icon()
+	B.update_appearance()
 	B.setDir(dir)
 	qdel(src)
 	return B
@@ -321,28 +322,35 @@
 		return "Currently weak to brute damage."
 	return "N/A"
 
-/obj/structure/blob/normal/update_icon()
-	..()
+/obj/structure/blob/normal/update_name()
+	. = ..()
+	name = "[(obj_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
+
+/obj/structure/blob/normal/update_desc()
+	. = ..()
 	if(obj_integrity <= 15)
-		icon_state = "blob_damaged"
-		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
+	else if(overmind)
+		desc = "A thick wall of writhing tendrils."
+	else
+		desc = "A thick wall of lifeless tendrils."
+
+/obj/structure/blob/normal/update_icon_state()
+	icon_state = "blob[(obj_integrity <= 15) ? "_damaged" : null]"
+
+	/// - [] TODO: Move this elsewhere
+	if(obj_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
-		icon_state = "blob"
-		name = "blob"
-		desc = "A thick wall of writhing tendrils."
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	else
-		icon_state = "blob"
-		name = "dead blob"
-		desc = "A thick wall of lifeless tendrils."
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
+	return ..()
 
-/obj/structure/blob/special	// Generic type for nodes/factories/cores/resource
+/obj/structure/blob/special // Generic type for nodes/factories/cores/resource
 	// Core and node vars: claiming, pulsing and expanding
 	/// The radius inside which (previously dead) blob tiles are 'claimed' again by the pulsing overmind. Very rarely used.
-	var/claim_range	= 0
+	var/claim_range = 0
 	/// The radius inside which blobs are pulsed by this overmind. Does stuff like expanding, making blob spores from factories, make resources from nodes etc.
 	var/pulse_range = 0
 	/// The radius up to which this special structure naturally grows normal blobs.
@@ -350,18 +358,18 @@
 
 	// Spore production vars: for core, factories, and nodes (with strains)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
-	var/max_spores = 0 
-	var/list/spores	= list()
+	var/max_spores = 0
+	var/list/spores = list()
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 
 	// Area reinforcement vars: used by cores and nodes, for strains to modify
 	/// Range this blob free upgrades to strong blobs at: for the core, and for strains
-	var/strong_reinforce_range = 0 
+	var/strong_reinforce_range = 0
 	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
 	var/reflector_reinforce_range = 0
 
-/obj/structure/blob/special/proc/reinforce_area(delta_time)	// Used by cores and nodes to upgrade their surroundings
+/obj/structure/blob/special/proc/reinforce_area(delta_time) // Used by cores and nodes to upgrade their surroundings
 	if(strong_reinforce_range)
 		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
 			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
@@ -386,7 +394,7 @@
 		var/obj/structure/blob/B = L
 		if(!B.overmind && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
-			B.update_icon()
+			B.update_appearance()
 		var/distance = get_dist(get_turf(src), get_turf(B))
 		var/expand_probablity = max(20 - distance * 8, 1)
 		if(B.Adjacent(src))

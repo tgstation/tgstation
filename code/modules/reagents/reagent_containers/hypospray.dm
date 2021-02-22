@@ -17,8 +17,8 @@
 	var/ignore_flags = NONE
 	var/infinite = FALSE
 
-/obj/item/reagent_containers/hypospray/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	inject(M, user)
@@ -78,14 +78,13 @@
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical nanites and a stimulant for rapid healing and a combat boost."
 	inhand_icon_state = "nanite_hypo"
 	icon_state = "nanite_hypo"
+	base_icon_state = "nanite_hypo"
 	volume = 100
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/combat/nanites/update_icon_state()
-	if(reagents.total_volume > 0)
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]0"
+	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? null : 0]"
+	return ..()
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water piercing injector"
@@ -104,6 +103,7 @@
 	icon_state = "medipen"
 	inhand_icon_state = "medipen"
 	worn_icon_state = "medipen"
+	base_icon_state = "medipen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 15
@@ -124,17 +124,15 @@
 	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagents.flags = NONE
-		update_icon()
+		update_appearance()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE, FLOOR_OKAY))
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
-	if(reagents.total_volume > 0)
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]0"
+	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? null : 0]"
+	return ..()
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
@@ -148,6 +146,7 @@
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
 	inhand_icon_state = "stimpen"
+	base_icon_state = "stimpen"
 	volume = 20
 	amount_per_transfer_from_this = 20
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/consumable/coffee = 10)
@@ -161,6 +160,7 @@
 	desc = "Contains a very large amount of an incredibly powerful stimulant, vastly increasing your movement speed and reducing stuns by a very large amount for around five minutes. Do not take if pregnant."
 	icon_state = "syndipen"
 	inhand_icon_state = "tbpen"
+	base_icon_state = "syndipen"
 	volume = 50
 	amount_per_transfer_from_this = 50
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
@@ -170,6 +170,7 @@
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	icon_state = "morphen"
 	inhand_icon_state = "morphen"
+	base_icon_state = "morphen"
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/oxandrolone
@@ -177,6 +178,7 @@
 	desc = "An autoinjector containing oxandrolone, used to treat severe burns."
 	icon_state = "oxapen"
 	inhand_icon_state = "oxapen"
+	base_icon_state = "oxapen"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/penacid
@@ -184,6 +186,7 @@
 	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
 	icon_state = "penacid"
 	inhand_icon_state = "penacid"
+	base_icon_state = "penacid"
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
@@ -191,6 +194,7 @@
 	desc = "An autoinjector containing salicylic acid, used to treat severe brute damage."
 	icon_state = "salacid"
 	inhand_icon_state = "salacid"
+	base_icon_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salbutamol
@@ -198,6 +202,7 @@
 	desc = "An autoinjector containing salbutamol, used to heal oxygen damage quickly."
 	icon_state = "salpen"
 	inhand_icon_state = "salpen"
+	base_icon_state = "salpen"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
@@ -205,23 +210,24 @@
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
+	base_icon_state = "tbpen"
 	volume = 20
 	amount_per_transfer_from_this = 10
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
+	. = ..()
 	if(reagents.total_volume >= volume)
-		icon_state = initial(icon_state)
-	else if (reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
-	else
-		icon_state = "[initial(icon_state)]0"
+		icon_state = base_icon_state
+		return
+	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? 1 : 0]"
 
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival emergency medipen"
 	desc = "A medipen for surviving in the harsh environments, heals most common damage sources. WARNING: May cause organ damage."
 	icon_state = "stimpen"
 	inhand_icon_state = "stimpen"
+	base_icon_state = "stimpen"
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8 ,/datum/reagent/medicine/leporazine = 6)
@@ -248,6 +254,7 @@
 	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
+	base_icon_state = "luxpen"
 	volume = 60
 	amount_per_transfer_from_this = 60
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
@@ -257,6 +264,7 @@
 	desc = "A rapid way to save a person from a critical injury state!"
 	icon_state = "atropen"
 	inhand_icon_state = "atropen"
+	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/atropine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/snail
@@ -264,6 +272,7 @@
 	desc = "All-purpose snail medicine! Do not use on non-snails!"
 	icon_state = "snail"
 	inhand_icon_state = "snail"
+	base_icon_state = "snail"
 	list_reagents = list(/datum/reagent/snail = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/magillitis
@@ -271,6 +280,7 @@
 	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or hardsuits, nor can the chemical inside be extracted."
 	icon_state = "gorillapen"
 	inhand_icon_state = "gorillapen"
+	base_icon_state = "gorillapen"
 	volume = 5
 	ignore_flags = 0
 	reagent_flags = NONE
@@ -283,11 +293,13 @@
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/drug/pumpup = 15)
 	icon_state = "maintenance"
+	base_icon_state = "maintenance"
 
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
 	desc = "An epinephrine medipen with extra coagulant and antibiotics to help stabilize bad cuts and burns."
 	icon_state = "firstaid"
+	base_icon_state = "firstaid"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
@@ -296,6 +308,7 @@
 	name = "hypovolemic-response autoinjector"
 	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
 	icon_state = "hypovolemic"
+	base_icon_state = "hypovolemic"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)
