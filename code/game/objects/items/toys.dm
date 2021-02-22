@@ -1545,6 +1545,22 @@
 #define HARM "harm"
 #define ICON_SPLIT world.icon_size/2
 
+// These states do not have any associated processing.
+#define STATE_AWAITING_PLAYER_INPUT "awaiting_player_input"
+#define STATE_OFF "off"
+
+// When the Intento is in one of these four states, it has an accompanying
+// set of code that runs in processing()
+#define STATE_STARTING "starting"
+#define STATE_DEMO "demo"
+#define STATE_END_OF_GAME "end_of_game"
+#define STATE_RETALIATION "retaliation"
+
+#define TIME_TO_BEGIN 1.6 SECONDS
+#define TIME_PER_DEMO_STEP 0.6 SECONDS
+#define TIME_TO_RESET_ICON 0.5 SECONDS
+
+
 /obj/item/toy/intento
 	name = "\improper Intento"
 	desc = "Fundamentally useless for all intentsive purposes."
@@ -1556,10 +1572,6 @@
 	var/list/player_sequence = list()
 	/// Score of the player
 	var/score = 0
-	/// Is this thing on?
-	var/on = FALSE
-	/// Can the player use this yet?
-	var/usable = FALSE
 	/// Associated list of intents to their sounds
 	var/static/list/sound_by_intent = list(
 		HELP = 'sound/items/intents/Help.ogg',
@@ -1568,20 +1580,28 @@
 		HARM = 'sound/items/intents/Harm.ogg',
 		)
 
-/obj/item/toy/intento/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You short-circuit [src], activating the negative feedback loop.</span>")
+	/// What state the toy is in.
+	var/state = STATE_OFF
+
+	/// Time to delay until we start processing whatever state we're in
+	var/next_process = 0
+	/// Time until we reset the icon of the Intento
+	var/next_icon_reset = 0
+	/// Index used for iteration of steps for both demo and retaliation states
+	var/index
 
 /obj/item/toy/intento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
 	..()
-	if(!on)
-		start()
+	if(state == STATE_OFF)
+		boot()
 		return
-	if(!modifiers || !usable)
+
+	if(!modifiers)
 		return
-	usable = FALSE
+
+	if(state != STATE_AWAITING_PLAYER_INPUT)
+		return
+
 	var/input
 	var/icon_x = text2num(modifiers["icon-x"])
 	var/icon_y = text2num(modifiers["icon-y"])
@@ -1593,75 +1613,166 @@
 		input = GRAB
 	if(icon_x < ICON_SPLIT && icon_y < ICON_SPLIT)
 		input = HARM
-	render(input)
-	player_sequence += input
-	for(var/i in 1 to player_sequence.len)
-		if(player_sequence[i] != current_sequence[i])
-			return end(user)
-	if(player_sequence.len == current_sequence.len)
-		score++
-		addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
-		return
-	usable = TRUE
 
-/obj/item/toy/intento/proc/start()
+	player_input(user, input)
+
+/obj/item/toy/intento/proc/boot()
 	say("Game starting!")
 	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
-	on = TRUE
-	addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
 
-/obj/item/toy/intento/proc/end(mob/user)
-	var/award_score = score
-	var/award_status = user.client.get_award_status(/datum/award/score/intento_score)
-	if(award_score - award_status > 0)
-		award_score -= award_status
-	user.client.give_award(/datum/award/score/intento_score, user, award_score, TRUE)
+	state = STATE_STARTING
+	next_process = world.time + TIME_TO_BEGIN
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/toy/intento/proc/player_input(mob/player, intent)
+	// All branches of this proc lead to us wanting to process
+	START_PROCESSING(SSfastprocess, src)
+
+	render(intent)
+
+	player_sequence += intent
+	for(var/i in 1 to player_sequence.len)
+		if(player_sequence[i] != current_sequence[i])
+			state = STATE_END_OF_GAME
+			next_process = world.time + TIME_TO_RESET_ICON
+			return
+
+	if(player_sequence.len == current_sequence.len)
+		score++
+
+		state = STATE_STARTING
+		next_process = world.time + TIME_TO_BEGIN
+
+
+/obj/item/toy/intento/process()
+	if(next_icon_reset && next_icon_reset <= world.time)
+		icon_state = initial(icon_state)
+		next_icon_reset = 0
+
+	if(next_process && next_process > world.time)
+		return
+
+	switch(state)
+		if(STATE_STARTING)
+			process_start()
+
+		if(STATE_DEMO)
+			process_demo()
+
+		if(STATE_END_OF_GAME)
+			var/mob/living/holder = null
+			if(isliving(loc))
+				holder = loc
+
+			process_end(holder)
+
+		if(STATE_RETALIATION)
+			process_retaliation()
+
+	if(!next_process && !next_icon_reset)
+		return PROCESS_KILL
+
+/obj/item/toy/intento/proc/process_start()
+	player_sequence.Cut()
+
+	current_sequence += pick(list(HELP, DISARM, GRAB, HARM))
+
+	state = STATE_DEMO
+	next_process = world.time
+	index = 1
+
+/obj/item/toy/intento/proc/process_demo()
+	if(index > length(current_sequence))
+		state = STATE_AWAITING_PLAYER_INPUT
+		next_process = 0
+		return
+
+	var/intent = current_sequence[index]
+	render(intent)
+
+	index += 1
+	next_process = world.time + TIME_PER_DEMO_STEP
+
+/obj/item/toy/intento/proc/process_end(mob/user)
+	if(user)
+		var/award_score = score
+		var/award_status = user.client.get_award_status(/datum/award/score/intento_score)
+		if(award_score - award_status > 0)
+			award_score -= award_status
+		user.client.give_award(/datum/award/score/intento_score, user, award_score, TRUE)
+
 	say("GAME OVER. Your score was [score]!")
 	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
-	if(obj_flags & EMAGGED)
-		retaliate(current_sequence.Copy(), user)
+
+	if(user && loc == user && obj_flags & EMAGGED)
+		ADD_TRAIT(src, TRAIT_NODROP, type)
+		to_chat(user, "<span class='userdanger'>Bad mistake.</span>")
+
+		state = STATE_RETALIATION
+		next_process = world.time
+		index = 1
+	else
+		cleanup()
+
+/obj/item/toy/intento/proc/process_retaliation()
+	var/mob/living/victim = loc
+	if(!isliving(victim) || index > length(current_sequence))
+		cleanup()
+		return
+
+	var/intent = current_sequence[index]
+	render(intent)
+	switch(intent)
+		if(HELP)
+			to_chat(victim, "<span class='danger'>[src] hugs you to make you feel better!</span>")
+			victim.Dizzy(20)
+		if(DISARM)
+			to_chat(victim, "<span class='danger'>You're knocked down from a shove by [src]!</span>")
+			victim.Knockdown(20)
+		if(GRAB)
+			to_chat(victim, "<span class='danger'>[src] grabs you aggressively!</span>")
+			victim.Stun(20)
+		if(HARM)
+			to_chat(victim, "<span class='danger'>You're punched by [src]!</span>")
+			victim.apply_damage(rand(20, 30), BRUTE)
+
+	index += 1
+	next_process = world.time + TIME_PER_DEMO_STEP
+
+/obj/item/toy/intento/proc/cleanup()
 	score = 0
+	index = 1
 	player_sequence.Cut()
 	current_sequence.Cut()
-	on = FALSE
+
+	state = STATE_OFF
+	next_process = 0
+	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 
 /obj/item/toy/intento/proc/render(input)
 	icon_state = input
 	playsound(src, sound_by_intent[input], 50, FALSE)
-	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 0.5 SECONDS)
 
-/obj/item/toy/intento/proc/start_round()
-	usable = FALSE
-	player_sequence.Cut()
-	current_sequence += pick(list(HELP, DISARM, GRAB, HARM))
-	for(var/input in current_sequence)
-		sleep(0.6 SECONDS)
-		render(input)
-	usable = TRUE
+	START_PROCESSING(SSfastprocess, src)
+	next_icon_reset = world.time + TIME_TO_RESET_ICON
 
-/obj/item/toy/intento/proc/retaliate(list/combo_inputs, mob/living/victim)
-	ADD_TRAIT(src, TRAIT_NODROP, "intento")
-	to_chat(victim, "<span class='userdanger'>Bad mistake.</span>")
-	for(var/input in combo_inputs)
-		sleep(0.6 SECONDS)
-		render(input)
-		switch(input)
-			if(HELP)
-				to_chat(victim, "<span class='danger'>[src] hugs you to make you feel better!</span>")
-				victim.Dizzy(20)
-			if(DISARM)
-				to_chat(victim, "<span class='danger'>You're knocked down from a shove by [src]!</span>")
-				victim.Knockdown(20)
-			if(GRAB)
-				to_chat(victim, "<span class='danger'>[src] grabs you aggressively!</span>")
-				victim.Stun(20)
-			if(HARM)
-				to_chat(victim, "<span class='danger'>You're punched by [src]!</span>")
-				victim.apply_damage(rand(20, 30), BRUTE)
-	REMOVE_TRAIT(src, TRAIT_NODROP, "intento")
+/obj/item/toy/intento/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You short-circuit [src], activating the negative feedback loop.</span>")
 
 #undef HELP
 #undef DISARM
 #undef GRAB
 #undef HARM
 #undef ICON_SPLIT
+#undef STATE_AWAITING_PLAYER_INPUT
+#undef STATE_OFF
+#undef STATE_STARTING
+#undef STATE_DEMO
+#undef STATE_END_OF_GAME
+#undef STATE_RETALIATION
+#undef TIME_TO_BEGIN
+#undef TIME_PER_DEMO_STEP
+#undef TIME_TO_RESET_ICON
