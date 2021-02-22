@@ -14,6 +14,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
+	var/obj/item/assembly/shock_kit/stored_kit
 
 
 /obj/structure/chair/examine(mob/user)
@@ -75,23 +76,24 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && stored_kit)
+		stored_kit.forceMove(loc)
+		stored_kit = null
+		return
+	if(W.tool_behaviour == TOOL_WRENCH)
 		W.play_tool_sound(src)
 		deconstruct()
-	else if(istype(W, /obj/item/assembly/shock_kit))
+		return
+	if(istype(W, /obj/item/assembly/shock_kit) && !stored_kit)
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
-		var/obj/item/assembly/shock_kit/SK = W
-		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		E.setDir(dir)
-		E.part = SK
-		SK.forceMove(E)
-		SK.master = E
-		qdel(src)
-	else
-		return ..()
-
+		stored_kit = W
+		stored_kit.forceMove(src)
+		to_chat(user, text="You connect the shock kit to the chair, turning it electric")
+		AddComponent(/datum/component/electrified_chair, stored_kit)
+		return
 
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
