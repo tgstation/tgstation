@@ -13,6 +13,7 @@
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 30

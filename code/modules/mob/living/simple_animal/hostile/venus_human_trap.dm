@@ -98,6 +98,7 @@
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "venus_human_trap"
 	health_doll_icon = "venus_human_trap"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
 	maxHealth = 50
