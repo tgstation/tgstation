@@ -82,6 +82,7 @@
 	if(!intentional)
 		return TRUE
 	if(user.emotes_used && user.emotes_used[src] + cooldown > world.time)
+		to_chat(user, "<span class='danger'>You must wait another [(user.emotes_used[src] - world.time + cooldown) * 0.1] seconds before using that emote.</span>")
 		return FALSE
 	if(!user.emotes_used)
 		user.emotes_used = list()
