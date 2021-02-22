@@ -72,7 +72,7 @@ If you decide to go this route, here are /tg/ specific details on hosting with T
 	- `data` should be initially created as an empty directory. The game stores persistent data here.
 - You should incorporate our [custom build scripts for TGS4](../tools/tgs4_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g on Linux.
 - Deployment security level must be set to `Trusted` or it will likely fail due to our native library usage.
-- We highly recommend using the BYOND version specified in [dependencies.sh](../dependecies.sh) to avoid potential unrecorded issues.
+- We highly recommend using the BYOND version specified in [dependencies.sh](../dependencies.sh) to avoid potential unrecorded issues.
 
 ## SQL SETUP
 
