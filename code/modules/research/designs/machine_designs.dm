@@ -618,7 +618,7 @@
 	category = list ("Misc. Machinery")
 
 
-/datum/design/board/sheetifier
+/datum/design/board/restaurant_portal
 	name = "Machine Design (Restaurant Portal)"
 	desc = "The circuit board for a restaurant portal"
 	id = "restaurant_portal"

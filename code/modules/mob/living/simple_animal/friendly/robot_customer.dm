@@ -24,8 +24,9 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
-	icon = customer_info.base_icon
-	name = "[pick(customer_info.name_prefixes)]-bot (customer_info.nationality)"
+	icon_state = customer_info.base_icon
+	name = "[pick(customer_info.name_prefixes)]-bot ([customer_info.nationality])"
+	color = rgb(rand(150,255), rand(150,255), rand(150,255))
 	update_icon()
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
@@ -45,12 +46,12 @@
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()
-	var/mutable_appearance/greyscale = mutable_appearance(icon, "[icon_state]_greyscale")
-	greyscale.color = rgb(rand(150,255), rand(150,255), rand(150,255)) //"#[random_color()]"
-	greyscale.appearance_flags = RESET_COLOR
-	. += greyscale
+	var/mutable_appearance/features = mutable_appearance(icon, "[icon_state]_features")
+	features.appearance_flags = RESET_COLOR
+	. += features
 
 	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
+	clothes.appearance_flags = RESET_COLOR
 	. += clothes
 
 /mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)

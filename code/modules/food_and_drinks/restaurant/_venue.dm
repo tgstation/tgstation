@@ -102,8 +102,14 @@
 	if(!linked_venue.open) //Any open venues
 		. += mutable_appearance(icon, "portal_door")
 
-/obj/machinery/restaurant_portal/attack_hand(mob/user)
+/obj/machinery/restaurant_portal/attack_hand(mob/living/user)
 	. = ..()
+	var/obj/item/card/id/used_id = user.get_idcard(TRUE)
+
+	if(!(chosen_venue.req_access in used_id.GetAccess()))
+		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
+		return
+
 	linked_venue.toggle_open()
 	update_icon()
 
@@ -119,7 +125,7 @@
 		radial_items[name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
 		radial_results[name] = venue
 
-	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
 	var/datum/venue/chosen_venue = radial_results[choice]
 
 	var/obj/item/card/id/used_id = I
@@ -135,14 +141,13 @@
 			linked_venue.close()
 		linked_venue.restaurant_portal.linked_venue = null
 
-	linked_venue = SSrestaurant.all_venues[linked_venue]
+	linked_venue = SSrestaurant.all_venues[chosen_venue]
 	linked_venue.restaurant_portal = src
 
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"
 	icon = 'icons/obj/machines/restaurant_portal.dmi'
-	icon_state = "restaurant_pda"
 	creation_time = 1 SECONDS
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
