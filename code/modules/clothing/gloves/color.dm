@@ -18,6 +18,8 @@
 	if(slot == SLOT_GLOVES)
 		if(user.mind?.assigned_role == "Assistant")
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "assistant_insulated_gloves", /datum/mood_event/assistant_insulated_gloves)
+			if(prob(1))
+				user.gib()
 		if(user.mind?.assigned_role in GLOB.security_positions)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "sec_insulated_gloves", /datum/mood_event/sec_insulated_gloves)
 
