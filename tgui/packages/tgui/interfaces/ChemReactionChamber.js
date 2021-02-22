@@ -107,68 +107,67 @@ export const ChemReactionChamber = (props, context) => {
           <LabeledList>
             <tr className="LabledList__row">
               <LabeledList.Item label="Reaction Volume">
-              </LabeledList.Item>
-              <td
-                className={classes([
-                  "LabeledList__buttons",
-                  "LabeledList__cell",
-                ])}>
-                <NumberInput
-                  value={reagentQuantity}
-                  minValue={1}
-                  maxValue={200}
-                  step={1}
-                  stepPixelSize={3}
-                  width="39px"
-                  onDrag={(e, value) => act('volume', {
-                    target: value,
-                  })} />
+                <td
+                  className={classes([
+                    "LabeledList__buttons",
+                    "LabeledList__cell",
+                  ])}>
+                  <NumberInput
+                    value={reagentQuantity}
+                    minValue={1}
+                    maxValue={200}
+                    step={1}
+                    stepPixelSize={3}
+                    width="39px"
+                    onDrag={(e, value) => act('volume', {
+                      target: value,
+                    })} />
 
-                <Box inline mr={1} />
-              </td>
+                  <Box inline mr={1} />
+                </td>
+              </LabeledList.Item>
             </tr>
             <tr className="LabledList__row">
               <LabeledList.Item label="Acidic pH limit">
+                <td
+                  className={classes([
+                    "LabeledList__buttons",
+                    "LabeledList__cell",
+                  ])}>
+                  <NumberInput
+                    value={reagentAcidic}
+                    minValue={-1000}
+                    maxValue={1000}
+                    step={1}
+                    stepPixelSize={3}
+                    width="39px"
+                    onDrag={(e, value) => act('acidic', {
+                      target: value,
+                    })} />
+                  <Box inline mr={1} />
+                </td>
               </LabeledList.Item>
-              <td
-                className={classes([
-                  "LabeledList__buttons",
-                  "LabeledList__cell",
-                ])}>
-                <NumberInput
-                  value={reagentAcidic}
-                  minValue={-1000}
-                  maxValue={1000}
-                  step={1}
-                  stepPixelSize={3}
-                  width="39px"
-                  onDrag={(e, value) => act('acidic', {
-                    target: value,
-                  })} />
-
-                <Box inline mr={1} />
-              </td>
             </tr>
             <tr className="LabledList__row">
               <LabeledList.Item label="Alkaline pH limit">
+                <td
+                  className={classes([
+                    "LabeledList__buttons",
+                    "LabeledList__cell",
+                  ])}>
+                  <NumberInput
+                    value={reagentAlkaline}
+                    minValue={-1000}
+                    maxValue={1000}
+                    step={1}
+                    stepPixelSize={3}
+                    width="39px"
+                    onDrag={(e, value) => act('alkaline', {
+                      target: value,
+                    })} />
+                  <Box inline mr={1} />
+                </td>
               </LabeledList.Item>
-              <td
-                className={classes([
-                  "LabeledList__buttons",
-                  "LabeledList__cell",
-                ])}>
-                <NumberInput
-                  value={reagentAlkaline}
-                  minValue={-1000}
-                  maxValue={1000}
-                  step={1}
-                  stepPixelSize={3}
-                  width="39px"
-                  onDrag={(e, value) => act('alkaline', {
-                    target: value,
-                  })} />
-                <Box inline mr={1} />
-              </td>
             </tr>
           </LabeledList>
         </Section>
