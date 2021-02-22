@@ -36,7 +36,7 @@ export const normalizeChildren = <T>(children: T | T[]) => {
  * Shallowly checks if two objects are different.
  * Credit: https://github.com/developit/preact-compat
  */
-export const shallowDiffers = (a: any, b: any) => {
+export const shallowDiffers = (a: object, b: object) => {
   let i;
   for (i in a) {
     if (!(i in b)) {
