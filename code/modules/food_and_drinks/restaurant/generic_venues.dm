@@ -90,7 +90,7 @@
 	for(var/datum/reagent/reagent as anything in order_item.reagents.reagent_list)
 		if(reagent.type != ordered_reagent_type)
 			continue
-		SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER)
+		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
 
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)

@@ -47,7 +47,7 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER)
+	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
@@ -78,7 +78,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	circuit = /obj/item/circuitboard/machine/sheetifier
+	circuit = /obj/item/circuitboard/machine/restaurant_portal
+
 	layer = BELOW_OBJ_LAYER
 	density = FALSE
 	anchored = TRUE
@@ -101,7 +102,7 @@
 	if(!linked_venue.open) //Any open venues
 		. += mutable_appearance(icon, "portal_door")
 
-/obj/structure/restaurant_portal/attack_hand(mob/user)
+/obj/machinery/restaurant_portal/attack_hand(mob/user)
 	. = ..()
 	linked_venue.toggle_open()
 	update_icon()
