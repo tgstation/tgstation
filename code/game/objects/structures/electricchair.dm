@@ -4,7 +4,6 @@
 	name = "electric chair"
 	desc = "Looks absolutely SHOCKING!"
 	icon_state = "echair0"
-	//var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1
 	item_chair = null
 
@@ -37,6 +36,8 @@
 	var/time_since_last_shock = 0
 	///this is casted to the overlay we put on parent_chair
 	var/mutable_appearance/shock_helmet_overlay
+	///the original name of parent_chair
+	var/original_name
 
 /datum/component/electrified_chair/Initialize(obj/item/assembly/shock_kit/input_shock_kit)
 	if(!istype(parent, /obj/structure/chair) || !istype(input_shock_kit, /obj/item/assembly/shock_kit))
@@ -48,8 +49,10 @@
 
 	RegisterSignal(parent_chair, COMSIG_MOVABLE_BUCKLE, .proc/on_buckle)
 	RegisterSignal(parent_chair, COMSIG_ATOM_EXIT, .proc/check_shock_kit)
-	shock_helmet_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER - 1)
+	shock_helmet_overlay = image('icons/obj/chairs.dmi', "echair_over", OBJ_LAYER)
 	parent_chair.add_overlay(shock_helmet_overlay)
+	original_name = parent_chair.name
+	parent_chair.name = "electrified [original_name]"
 
 	if(parent_chair.has_buckled_mobs())
 		for(var/m in parent_chair.buckled_mobs)
@@ -59,6 +62,7 @@
 
 /datum/component/electrified_chair/UnregisterFromParent()
 	parent_chair.cut_overlay(list(shock_helmet_overlay))
+	parent_chair.name = original_name
 	if(parent_chair)
 		UnregisterSignal(parent_chair, list(COMSIG_PARENT_PREQDELETED, COMSIG_MOVABLE_BUCKLE, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_EXIT))
 	if(used_shock_kit)
@@ -82,9 +86,8 @@
 
 /datum/component/electrified_chair/proc/on_buckle(datum/source, mob/living/mob_to_buckle, _force)
 	SIGNAL_HANDLER
-	. = FALSE
 	if(!istype(mob_to_buckle) || guinea_pig)
-		return
+		return FALSE
 	guinea_pig = mob_to_buckle
 	RegisterSignal(guinea_pig, COMSIG_PARENT_PREQDELETED, .proc/nullify_guinea_pig)
 	RegisterSignal(parent_chair, COMSIG_MOVABLE_UNBUCKLE, .proc/nullify_guinea_pig)
