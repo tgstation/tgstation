@@ -13,6 +13,21 @@
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
 
+/obj/item/clothing/gloves/color/yellow/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLOVES)
+		if(user.mind?.assigned_role == "Assistant")
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "assistant_insulated_gloves", /datum/mood_event/assistant_insulated_gloves)
+		if(user.mind?.assigned_role in GLOB.security_positions)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "sec_insulated_gloves", /datum/mood_event/sec_insulated_gloves)
+
+/obj/item/clothing/gloves/color/yellow/dropped(mob/user)
+	. = ..()
+	if(user.mind?.assigned_role == "Assistant")
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "assistant_insulated_gloves")
+	if(user.mind?.assigned_role in GLOB.security_positions)
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "sec_insulated_gloves")
+
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
 	desc = "What is the number one problem facing our station today?"
@@ -103,6 +118,17 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/fingerless
+
+/obj/item/clothing/gloves/color/black/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLOVES)
+		if(user.mind?.assigned_role in GLOB.security_positions)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "sec_black_gloves", /datum/mood_event/sec_black_gloves)
+
+/obj/item/clothing/gloves/color/black/dropped(mob/user)
+	. = ..()
+	if(user.mind?.assigned_role in GLOB.security_positions)
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "sec_black_gloves")
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"

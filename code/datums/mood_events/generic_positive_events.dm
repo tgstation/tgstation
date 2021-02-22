@@ -236,3 +236,11 @@
 /datum/mood_event/kiss/add_effects(mob/beau)
 	if(beau)
 		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"
+
+/datum/mood_event/sec_black_gloves
+	description = "<span class='nicegreen'>Black gloves look good on me.</span>\n"
+	mood_change = 1
+
+/datum/mood_event/assistant_insulated_gloves
+	description = "<span class='nicegreen'>Finally got my hands on a good pair of gloves!</span>\n"
+	mood_change = 1
