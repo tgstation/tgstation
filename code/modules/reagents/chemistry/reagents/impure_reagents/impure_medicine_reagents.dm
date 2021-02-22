@@ -377,7 +377,8 @@
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	ADD_TRAIT(owner, TRAIT_NODEATH, type)
-	owner.stat = CONSCIOUS
+	owner.set_stat(CONSCIOUS)
+	owner.updatehealth()
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
 
