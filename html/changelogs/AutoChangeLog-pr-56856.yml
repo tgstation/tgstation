@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "atmos devices with multiple ends that is hooked to the same line can now redistribute pressure more consistently. (can connect to a single pipeline in more than one nodes)"
