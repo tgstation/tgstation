@@ -345,7 +345,7 @@
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	if(owner.reagents.reagent_list > 1)
+	if(length(owner.reagents.reagent_list) > 1)
 		owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
 	owner.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0)
