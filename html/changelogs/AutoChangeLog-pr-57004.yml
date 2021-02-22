@@ -1,6 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "fire extinguisher particles can go through machinery, lockers, crates and extinguish the air on top of them"
-  - code_imp: "fire extinguisher uses modern pass_flags code instead of shit code"
-  - code_imp: "new passflag : PASSDOOR instead of being ''''PASSMACHINERY'''' added  it to xray , some sniper thing and crucible pot to have same effects as before"
