@@ -4,8 +4,13 @@
 	name = "exploded pipe"
 	desc = "It is an exploded pipe."
 
-	layer = GAS_SCRUBBER_LAYER
+	layer = GAS_PUMP_LAYER
 	showpipe = FALSE
+
+/obj/machinery/atmospherics/components/unary/burstpipe/New()
+	..()
+	var/datum/gas_mixture/air_contents = airs[1]
+	air_contents.volume = 2000
 
 /obj/machinery/atmospherics/components/unary/burstpipe/Initialize(mapload, set_dir, set_piping_layer)
 	. = ..()
@@ -13,8 +18,19 @@
 	piping_layer = set_piping_layer
 	PIPING_LAYER_SHIFT(src, piping_layer)
 	initialize_directions = dir
+
+/obj/machinery/atmospherics/components/unary/burstpipe/proc/do_connect()
+	SetInitDirections()
 	var/obj/machinery/atmospherics/node = nodes[1]
+	if(node)
+		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node.disconnect(src)
+		nodes[1] = null
+	if(parents[1])
+		nullifyPipenet(parents[1])
+
 	atmosinit()
+	node = nodes[1]
 	if(node)
 		node.atmosinit()
 		node.addMember(src)
@@ -24,7 +40,7 @@
 	if(!parents)
 		return
 	var/datum/gas_mixture/external = loc.return_air()
-	var/datum/gas_mixture/internal = parents[1].air
+	var/datum/gas_mixture/internal = airs[1]
 
 	if(internal.release_gas_to(external, INFINITY))
 		air_update_turf(FALSE, FALSE)

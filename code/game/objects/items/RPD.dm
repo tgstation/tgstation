@@ -16,6 +16,7 @@ RPD
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple, TRUE),
+		new /datum/pipe_info/pipe("ReinforcedPipe",		/obj/machinery/atmospherics/pipe/simple/reinforced, TRUE),
 		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/manifold, TRUE),
 		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/manifold4w, TRUE),
 		new /datum/pipe_info/pipe("Layer Adapter",		/obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
@@ -448,6 +449,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						to_chat(user, "<span class='notice'>You can't build this object on the layer...</span>")
 						return ..()
+					if(istype(queued_p_type, /obj/machinery/atmospherics/pipe/simple/reinforced))
+						atmos_build_speed += 0.5 SECONDS
 					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
