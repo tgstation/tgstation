@@ -14,8 +14,6 @@
 		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
 			continue
 
-		message_admins("gay walk")
-
 		var/current_loc = get_turf(movable_pawn)
 
 		var/turf/target_turf = get_step_towards(movable_pawn, controller.current_movement_target)

@@ -1,6 +1,6 @@
 
 /datum/ai_controller/haunted
-	movement_delay = 1 SECONDS
+	movement_delay = 0.4 SECONDS
 	blackboard = list(BB_TO_HAUNT_LIST = list(),
 	BB_HAUNT_TARGET,
 	BB_HAUNTED_THROW_ATTEMPT_COUNT)

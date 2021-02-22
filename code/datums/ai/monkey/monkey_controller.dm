@@ -5,7 +5,7 @@ have ways of interacting with a specific mob and control it.
 ///OOK OOK OOK
 
 /datum/ai_controller/monkey
-	movement_delay = 1 SECONDS
+	movement_delay = 0.4 SECONDS
 	blackboard = list(BB_MONKEY_AGRESSIVE = FALSE,\
 	BB_MONKEY_BEST_FORCE_FOUND = 0,\
 	BB_MONKEY_ENEMIES = list(),\
