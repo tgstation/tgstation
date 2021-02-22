@@ -1235,8 +1235,8 @@
 	assemblytype = initial(airlock.assemblytype)
 	update_appearance()
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/doorjack/D)

@@ -26,7 +26,7 @@
 	if(SSshuttle.shuttle_insurance)
 		message += "Luckily, your shuttle insurance has covered the costs of repair!"
 		if(SSeconomy.get_dep_account(ACCOUNT_CAR))
-			message += "You have been awarded a bonus from [command_name()] for smart spending."
+			message += " You have been awarded a bonus from [command_name()] for smart spending."
 	else
 		message += "Your replacement shuttle will be the [new_shuttle.name] until further notice."
 	priority_announce(message, "[command_name()] Spacecraft Engineering")

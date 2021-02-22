@@ -61378,9 +61378,8 @@
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "hev" = (
-/obj/structure/sink{
-	pixel_y = 26
-	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/food_cart,
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen)
 "hfA" = (

@@ -537,7 +537,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			rule = pickweight(drafted_rules)
 		// Check if the ruleset is high impact and if a high impact ruleset has been executed
 		else if(rule.flags & HIGH_IMPACT_RULESET)
-			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(high_impact_ruleset_executed)
 					drafted_rules -= rule
 					if(drafted_rules.len <= 0)
@@ -575,7 +575,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return FALSE
 		// Check if the ruleset is high impact and if a high impact ruleset has been executed
 		else if(new_rule.flags & HIGH_IMPACT_RULESET)
-			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(high_impact_ruleset_executed)
 					return FALSE
 
@@ -732,7 +732,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				continue
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
 				// No stacking : only one round-ender, unless threat level > stacking_limit.
-				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if (threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 					if(rule.flags & HIGH_IMPACT_RULESET && high_impact_ruleset_executed)
 						continue
 

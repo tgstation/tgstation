@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - code_imp: "Adds update_appearance, update_name, and update_icon"
