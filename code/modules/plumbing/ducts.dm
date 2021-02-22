@@ -402,8 +402,7 @@ All the important duct code:
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
-	var/list/layers = list("First Layer" = FIRST_DUCT_LAYER, "Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT,
-		"Fourth Layer" = FOURTH_DUCT_LAYER, "Fifth Layer" = FIFTH_DUCT_LAYER)
+	var/list/layers = list("Alternate Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()

@@ -35,6 +35,8 @@
 	demand_connects = WEST
 	demand_color = "yellow"
 
+	ducting_layer = SECOND_DUCT_LAYER
+
 /datum/component/plumbing/acidic_input/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/acidic_buffer, dir = dir)
 
@@ -42,6 +44,8 @@
 /datum/component/plumbing/alkaline_input
 	demand_connects = EAST
 	demand_color = "green"
+
+	ducting_layer = SECOND_DUCT_LAYER
 
 /datum/component/plumbing/alkaline_input/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
