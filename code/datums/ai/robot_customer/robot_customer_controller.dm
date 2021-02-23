@@ -1,5 +1,6 @@
 /datum/ai_controller/robot_customer
 	ai_movement = /datum/ai_movement/basic_avoidance
+	move_delay = 1 SECONDS
 	blackboard = list(BB_CUSTOMER_CURRENT_ORDER = null,
 	BB_CUSTOMER_MY_SEAT = null,
 	BB_CUSTOMER_PATIENCE = 999,
