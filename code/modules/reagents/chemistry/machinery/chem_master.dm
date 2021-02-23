@@ -290,48 +290,58 @@
 		if(reagents.total_volume == 0)
 			return FALSE
 		var/item_type = params["type"]
+
 		// Get amount of items
 		var/amount = text2num(params["amount"])
 		if(amount == null)
 			amount = text2num(input(usr,
 				"Max 10. Buffer content will be split evenly.",
-				"How many to make?", 1))
+				"How many to make?",
+				1
+			))
 		amount = clamp(round(amount), 0, 10)
 		if (amount <= 0)
 			return FALSE
+
 		// Get units per item
 		var/vol_each = text2num(params["volume"])
 		var/vol_each_text = params["volume"]
 		var/vol_each_max = reagents.total_volume / amount
 		var/list/style
 
-		if (item_type == "pill")
-			vol_each_max = min(50, vol_each_max)
-		else if (item_type == "patch")
-			vol_each_max = min(40, vol_each_max)
-		else if (item_type == "bottle")
-			vol_each_max = min(30, vol_each_max)
-		else if (item_type == "condimentPack")
-			vol_each_max = min(10, vol_each_max)
-		else if (item_type == "condimentBottle")
-			var/list/styles = get_condi_styles()
-			if (chosen_condi_style == CONDIMASTER_STYLE_AUTO || !(chosen_condi_style in styles))
-				style = guess_condi_style(reagents)
+		switch(item_type)
+			if("pill")
+				vol_each_max = min(50, vol_each_max)
+			if("patch")
+				vol_each_max = min(40, vol_each_max)
+			if("bottle")
+				vol_each_max = min(30, vol_each_max)
+			if("ampoule")
+				vol_each_max = min(15, vol_each_max)
+			if("condimentPack")
+				vol_each_max = min(10, vol_each_max)
+			if("condimentBottle")
+				vol_each_max = min(50, vol_each_max)
+				var/list/styles = get_condi_styles()
+				if(chosen_condi_style == CONDIMASTER_STYLE_AUTO || !(chosen_condi_style in styles))
+					style = guess_condi_style(reagents)
+				else
+					style = styles[chosen_condi_style]
 			else
-				style = styles[chosen_condi_style]
-			vol_each_max = min(50, vol_each_max)
-		else
-			return FALSE
+				return FALSE
+
 		if(vol_each_text == "auto")
 			vol_each = vol_each_max
 		if(vol_each == null)
 			vol_each = text2num(input(usr,
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
-				vol_each_max))
-		vol_each = round(clamp(vol_each, 0, vol_each_max), 0.01)
+				vol_each_max
+			))
+		vol_each = round(clamp(vol_each, 0, vol_each_max), CHEMICAL_VOLUME_ROUNDING)
 		if(vol_each <= 0)
 			return FALSE
+
 		// Get item name
 		var/name = params["name"]
 		var/name_has_units = item_type == "pill" || item_type == "patch"
@@ -347,70 +357,81 @@
 				"Name:",
 				"Give it a name!",
 				name_default,
-				MAX_NAME_LEN)
+				MAX_NAME_LEN
+			)
 		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 			return FALSE
+
 		// Start filling
-		if(item_type == "pill")
-			var/obj/item/reagent_containers/pill/P
-			var/target_loc = drop_location()
-			var/drop_threshold = INFINITY
-			if(bottle)
-				var/datum/component/storage/STRB = bottle.GetComponent(
-					/datum/component/storage)
-				if(STRB)
-					drop_threshold = STRB.max_items - bottle.contents.len
-					target_loc = bottle
-			for(var/i = 0; i < amount; i++)
-				if(i < drop_threshold)
-					P = new/obj/item/reagent_containers/pill(target_loc)
-				else
-					P = new/obj/item/reagent_containers/pill(drop_location())
-				P.name = trim("[name] pill")
-				if(chosen_pill_style == RANDOM_PILL_STYLE)
-					P.icon_state ="pill[rand(1,21)]"
-				else
-					P.icon_state = "pill[chosen_pill_style]"
-				if(P.icon_state == "pill4")
-					P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
-		if(item_type == "patch")
-			var/obj/item/reagent_containers/pill/patch/P
-			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/reagent_containers/pill/patch(drop_location())
-				P.name = trim("[name] patch")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
-		if(item_type == "bottle")
-			var/obj/item/reagent_containers/glass/bottle/P
-			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/reagent_containers/glass/bottle(drop_location())
-				P.name = trim("[name] bottle")
-				adjust_item_drop_location(P)
-				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
-		if(item_type == "condimentPack")
-			var/obj/item/reagent_containers/food/condiment/pack/P
-			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
-				P.originalname = name
-				P.name = trim("[name] pack")
-				P.desc = "A small condiment pack. The label says it contains [name]."
-				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
-		if(item_type == "condimentBottle")
-			var/obj/item/reagent_containers/food/condiment/P
-			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/reagent_containers/food/condiment(drop_location())
-				if (style)
-					apply_condi_style(P, style)
-				P.renamedByPlayer = TRUE
-				P.name = name
-				reagents.trans_to(P, vol_each, transfered_by = usr)
-			return TRUE
+		switch(item_type)
+			if("pill")
+				var/obj/item/reagent_containers/pill/pill
+				var/target_loc = drop_location()
+				var/drop_threshold = INFINITY
+				if(bottle)
+					var/datum/component/storage/STRB = bottle.GetComponent(
+						/datum/component/storage)
+					if(STRB)
+						drop_threshold = STRB.max_items - bottle.contents.len
+						target_loc = bottle
+				for(var/i in 1 to amount)
+					if(i < drop_threshold)
+						pill = new(target_loc)
+					else
+						pill = new(drop_location())
+					pill.name = trim("[name] pill")
+					if(chosen_pill_style == RANDOM_PILL_STYLE)
+						pill.icon_state ="pill[rand(1, 21)]"
+					else
+						pill.icon_state = "pill[chosen_pill_style]"
+					if(pill.icon_state == "pill4")
+						pill.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
+					adjust_item_drop_location(pill)
+					reagents.trans_to(pill, vol_each, transfered_by = usr)
+				return TRUE
+			if("patch")
+				var/obj/item/reagent_containers/pill/patch/patch
+				for(var/i in 1 to amount)
+					patch = new(drop_location())
+					patch.name = trim("[name] patch")
+					adjust_item_drop_location(patch)
+					reagents.trans_to(patch, vol_each, transfered_by = usr)
+				return TRUE
+			if("bottle")
+				var/obj/item/reagent_containers/glass/bottle/glass_bottle
+				for(var/i in 1 to amount)
+					glass_bottle = new(drop_location())
+					glass_bottle.name = trim("[name] bottle")
+					adjust_item_drop_location(glass_bottle)
+					reagents.trans_to(glass_bottle, vol_each, transfered_by = usr)
+				return TRUE
+			if("ampoule")
+				var/obj/item/reagent_containers/glass/ampoule/medical/ampoule
+				for(var/i in 1 to amount)
+					ampoule = new(drop_location())
+					ampoule.label_text = trim(name)
+					adjust_item_drop_location(ampoule)
+					reagents.trans_to(ampoule, vol_each, transfered_by = usr)
+				return TRUE
+			if("condimentPack")
+				var/obj/item/reagent_containers/food/condiment/pack/packet
+				for(var/i in 1 to amount)
+					packet = new(drop_location())
+					packet.originalname = name
+					packet.name = trim("[name] pack")
+					packet.desc = "A small condiment pack. The label says it contains [name]."
+					reagents.trans_to(packet, vol_each, transfered_by = usr)
+				return TRUE
+			if("condimentBottle")
+				var/obj/item/reagent_containers/food/condiment/condiment_bottle
+				for(var/i = 0; i < amount; i++)
+					condiment_bottle = new(drop_location())
+					if(style)
+						apply_condi_style(condiment_bottle, style)
+					condiment_bottle.renamedByPlayer = TRUE
+					condiment_bottle.name = name
+					reagents.trans_to(condiment_bottle, vol_each, transfered_by = usr)
+				return TRUE
 		return FALSE
 
 	if(action == "analyze")

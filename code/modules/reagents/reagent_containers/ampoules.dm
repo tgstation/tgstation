@@ -125,7 +125,7 @@
 	sharpness = SHARP_EDGED
 	if(!reagents.total_volume)
 		return
-	chem_splash(get_turf(src), 1, reagents)
+	chem_splash(get_turf(src), 0, list(reagents))
 
 /obj/item/reagent_containers/glass/ampoule/assume_air(datum/gas_mixture/giver)
 	return sealed ? air_contents.merge(giver) : ..()
