@@ -30,7 +30,7 @@
 	bare_wound_bonus = 10
 	var/damage_constant = 0.8
 
-obj/projectile/beam/Range()
+/obj/projectile/beam/Range()
 	if(hitscan != TRUE)
 		return ..()
 	var/turf/location = get_turf(src)
