@@ -102,7 +102,7 @@
 
 	if(istype(I, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/E = I
-		if(reagents)
+		if(reagents && (reagents.flags & REFILLABLE))
 			if(reagents.total_volume >= reagents.maximum_volume)
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else

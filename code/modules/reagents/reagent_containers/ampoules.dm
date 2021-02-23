@@ -42,6 +42,7 @@
 	volume = 15
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
+	reagent_flags = NONE
 	/// Are we currently sealed?
 	var/sealed = TRUE
 	/// Are we curently broken?
@@ -58,7 +59,7 @@
 
 /obj/item/reagent_containers/glass/ampoule/Initialize(mapload, vol)
 	. = ..()
-	air_contents = new(volume * 0.1)
+	air_contents = new(volume * 0.01)
 	if(!sealed)
 		unseal(FALSE)
 		return
@@ -66,21 +67,27 @@
 	populate_gases()
 
 /obj/item/reagent_containers/glass/ampoule/Destroy()
-	initial_gas_mix = null
+	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(air_contents)
 	return ..()
 
 /obj/item/reagent_containers/glass/ampoule/examine(mob/user)
 	. = ..()
-	if(dot_color && sealed && !broken)
-		. += "[p_theyre()] marked with a [dot_color] dot."
-	if(!isnull(label_text))
-		if(!istext(label_text))
-			. += "[p_theyre()] labeled, but the label is illegible."
-		else if(!length(label_text))
-			. += "[p_theyre()] labeled, but the label is blank."
-		else
-			. += "[p_theyre()] labeled as containing [label_text]."
+	if(sealed)
+		. += "[p_theyre()] sealed shut and can be unsealed by snapping the neck. Scoring [p_them()] with something sharp might help."
+		if(dot_color && !broken)
+			. += "[p_theyre()] marked with a [dot_color] dot."
+	else
+		. += "[p_theyre()] unsealed and can be sealed with a welding tool."
+
+	if(isnull(label_text))
+		return
+	if(!istext(label_text))
+		. += "[p_theyre()] labeled, but the label is illegible."
+	else if(!length(label_text))
+		. += "[p_theyre()] labeled, but the label is blank."
+	else
+		. += "[p_theyre()] labeled as containing [label_text]."
 
 /obj/item/reagent_containers/glass/ampoule/update_name(updates)
 	if(broken)
@@ -133,19 +140,17 @@
 	if(!sealed)
 		return ..()
 
-	var/clean = TRUE
-	if(prob(50))
-		clean = FALSE
-	else if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		clean = FALSE
+	var/clean_break = TRUE
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		clean_break = FALSE
 	else if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && prob(30))
-		clean = FALSE
+		clean_break = FALSE
 	else if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		if(prob(carbon_user.jitteriness))
-			clean = FALSE
+			clean_break = FALSE
 
-	if(clean)
+	if(clean_break)
 		snap()
 	else
 		obj_break()
@@ -154,46 +159,34 @@
 /obj/item/reagent_containers/glass/ampoule/welder_act(mob/living/user, obj/item/tool)
 	if(sealed || user.combat_mode)
 		return ..()
-	var/heat = tool.get_temperature()
-	if(heat)
-		reagents.expose_temperature(heat)
 	try_weld_shut(tool, user)
 	return TRUE
 
 /obj/item/reagent_containers/glass/ampoule/wirecutter_act(mob/living/user, obj/item/tool)
 	if(!sealed || user.combat_mode)
 		return ..()
-	var/heat = tool.get_temperature()
-	if(heat)
-		reagents.expose_temperature(heat, coeff = 0.01)
 	try_cut_open(tool, user)
 	return TRUE
 
 /obj/item/reagent_containers/glass/ampoule/attackby(obj/item/tool, mob/living/user, params)
 	if(!sealed || !tool.force || !tool.sharpness || user.combat_mode)
 		return ..()
-	var/heat = tool.get_temperature()
-	if(heat)
-		reagents.expose_temperature(heat, coeff = 0.01)
 	try_cut_open(tool, user)
 	return TRUE
 
-/obj/item/reagent_containers/glass/ampoule/try_splash(mob/user, atom/target)
-	if(sealed)
-		if(prob(20))
-			snap()
+/obj/item/reagent_containers/glass/ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(throwingdatum.speed > throw_speed)
+		if(prob(30 * (throwingdatum.speed - throw_speed)))
+			obj_break(MELEE)
+			return
 		else
-			obj_break()
+			snap()
 	return ..()
 
 /obj/item/reagent_containers/glass/ampoule/process(delta_time)
-	var/datum/gas_mixture/env = loc?.return_air()
-	if(env)
-		air_contents.archive()
-		air_contents.temperature_share(env)
-
 	air_contents.react(src)
 	reagents.expose_temperature(air_contents.temperature)
+	air_contents.temperature = max(reagents.chem_temp, TCMB)
 	if(air_contents.return_pressure() > TANK_LEAK_PRESSURE)
 		obj_break(BOMB)
 
@@ -203,25 +196,7 @@
 /obj/item/reagent_containers/glass/ampoule/proc/populate_gases(source = initial_gas_mix)
 	if(!source)
 		return FALSE
-
-	if(istext(source))
-		air_contents.parse_gas_string(source)
-	else if(istype(source, /datum/gas_mixture))
-		var/datum/gas_mixture/source_mix = source
-		air_contents.copy_from(source_mix, air_contents.volume / source_mix.volume)
-	else if(islist(source))
-		var/list/source_list = source
-		var/list/cached_gas = air_contents.gases
-		cached_gas &= source_list
-		for(var/gas_id in source_list)
-			if(gas_id == "TEMP")
-				air_contents.temperature = source_list[gas_id]
-				continue
-			ADD_GAS(gas_id, cached_gas)
-			cached_gas[gas_id][MOLES] = source_list[MOLES]
-	else
-		CRASH("Invalid source - [isnull(source) ? "NULL" : source] - passed to ampoule.populate_gas() .")
-
+	air_contents.parse_gas_string(source)
 	START_PROCESSING(SSobj, src)
 	return TRUE
 
@@ -244,14 +219,13 @@
 		return
 
 	/// Seal up some gases
-	var/atom/location = loc
 	var/datum/gas_mixture/env = loc?.return_air()
 	if(!env)
 		return
 
-	var/datum/gas_mixture/removed_gas = env.remove_ratio((volume * 0.1) / env.volume)
+	var/datum/gas_mixture/removed_gas = env.remove_ratio(air_contents.volume / env.volume)
 	air_contents.merge(removed_gas)
-	location.air_update_turf(FALSE, FALSE)
+	loc.air_update_turf(FALSE, FALSE)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -303,6 +277,11 @@
 			extra_delay *= 1 + (carbon_user.jitteriness / 30)
 
 	to_chat(user, "<span class='notice'>You begin to score [src] with [tool]...</span>")
+	var/heat = tool.get_temperature()
+	if(heat)
+		reagents.expose_temperature(heat, coeff = 0.01)
+		if(QDELETED(src))
+			return FALSE
 	if(!tool.use_tool(src, user, 1 SECONDS * extra_delay))
 		to_chat(user, "<span class='warning'>You can't keep [tool] steady enough and break [src]!</span>")
 		obj_break(MELEE)
@@ -327,6 +306,11 @@
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You start to soften the neck of [src] with [tool]...</span>")
+	var/heat = tool.get_temperature()
+	if(heat)
+		reagents.expose_temperature(heat)
+		if(QDELETED(src))
+			return FALSE
 	if(!tool.use_tool(src, user, 5 SECONDS))
 		return FALSE
 
@@ -341,6 +325,7 @@
 	unseal()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	return TRUE
+
 
 // Variants:
 

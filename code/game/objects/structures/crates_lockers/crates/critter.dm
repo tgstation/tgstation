@@ -44,7 +44,4 @@
 	return tank ? tank.air_contents : ..()
 
 /obj/structure/closet/crate/critter/return_analyzable_air()
-	if(tank)
-		return tank.return_analyzable_air()
-	else
-		return null
+	return tank?.return_analyzable_air()
