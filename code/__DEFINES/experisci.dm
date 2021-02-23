@@ -18,7 +18,7 @@
 /// Macro for boolean stages
 #define EXP_PROG_BOOL(desc, complete) EXP_PROGRESS(EXP_BOOL_STAGE, desc, complete)
 /// Macro for integer stages
-#define EXP_PROG_INT(desc, complete, total) EXP_PROGRESS(EXP_INT1_STAGE, desc, complete, total)
+#define EXP_PROG_INT(desc, complete, total) EXP_PROGRESS(EXP_INT_STAGE, desc, complete, total)
 /// Macro for float stages
 #define EXP_PROG_FLOAT(desc, complete) EXP_PROGRESS(EXP_FLOAT_STAGE, desc, complete)
 /// Macro for non-valued stages, details for exp stages
