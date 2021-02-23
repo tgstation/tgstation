@@ -30,7 +30,7 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
-	var/dispense_temperature = DEFAULT_REAGENT_TEMPERATURE
+	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	///If the UI has the pH meter shown
 	var/show_ph = TRUE
 	var/mutable_appearance/beaker_overlay
@@ -267,7 +267,7 @@
 					if(!cell.use(actual / powerefficiency))
 						say("Not enough energy to complete operation!")
 						return
-					R.add_reagent(reagent, actual, reagtemp = dispense_temperature)
+					R.add_reagent(reagent, actual, reagtemp = dispensed_temperature)
 
 					work_animation()
 			else
