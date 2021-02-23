@@ -159,6 +159,7 @@
 
 /obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
+	return ..()
 
 /obj/item/borg/charger/attack_self(mob/user)
 	if(mode == "draw")
@@ -166,7 +167,7 @@
 	else
 		mode = "draw"
 	to_chat(user, "<span class='notice'>You toggle [src] to \"[mode]\" mode.</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
 	. = ..()
@@ -229,7 +230,7 @@
 					break
 				if(!user.cell.give(draw))
 					break
-				target.update_icon()
+				target.update_appearance()
 
 			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
 
@@ -267,7 +268,7 @@
 				break
 			if(!cell.give(draw))
 				break
-			target.update_icon()
+			target.update_appearance()
 
 		to_chat(user, "<span class='notice'>You stop charging [target].</span>")
 
@@ -363,7 +364,7 @@
 	. = ..()
 	check_amount()
 
-/obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
+/obj/item/borg/lollipop/proc/check_amount() //Doesn't even use processing ticks.
 	if(charging)
 		return
 	if(candy < candymax)
@@ -431,7 +432,7 @@
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
 
-/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
+/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params) //Most certainly a good idea.
 	if(candy <= 0)
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
@@ -443,7 +444,7 @@
 	else
 		A = new /obj/item/ammo_casing/caseless/gumball(src)
 
-	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	A.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
@@ -518,7 +519,7 @@
 		S.color = color
 		dropped = TRUE
 
-/obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
+/obj/item/ammo_casing/caseless/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
 	projectile_type = /obj/projectile/bullet/reusable/lollipop
@@ -548,7 +549,7 @@
 	. = ..()
 	var/obj/item/food/chewable/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
-	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
+	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
 	head.color = color2
 	add_overlay(head)
 
@@ -590,7 +591,7 @@
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
-	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
+	var/projectile_speed_coefficient = 1.5 //Higher the coefficient slower the projectile.
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	var/list/obj/projectile/tracked
@@ -634,11 +635,12 @@
 			to_chat(user, "<span class='warning'>[src]'s safety cutoff prevents you from activating it due to living beings being ontop of you!</span>")
 	else
 		deactivate_field()
-	update_icon()
+	update_appearance()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
 /obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[initial(icon_state)][active]"
+	return ..()
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
 	if(istype(dampening_field))
@@ -693,7 +695,7 @@
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/projectile/P = I
-		if(!P.stun && P.nodamage)	//No damage
+		if(!P.stun && P.nodamage) //No damage
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
 		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * delta_time
@@ -812,7 +814,7 @@
 	if(A == stored) //sanity check
 		UnregisterSignal(stored, COMSIG_ATOM_UPDATE_ICON)
 		stored = null
-	update_icon()
+	update_appearance()
 	. = ..()
 
 ///A right-click verb, for those not using hotkey mode.
@@ -844,13 +846,18 @@
 			var/obj/item/O = A
 			O.forceMove(src)
 			stored = O
-			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
-			update_icon()
+			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+			update_appearance()
 			return
 	else
 		stored.melee_attack_chain(user, A, params)
 		return
 	. = ..()
+
+/// Exists to eat signal args
+/obj/item/borg/apparatus/proc/on_update_icon(datum/source, updates)
+	SIGNAL_HANDLER
+	return on_update_icon(updates)
 
 /obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
 	if(stored)
@@ -872,8 +879,8 @@
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
-	update_icon()
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	update_appearance()
 
 /obj/item/borg/apparatus/beaker/Destroy()
 	if(stored)
@@ -932,8 +939,8 @@
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
-	update_icon()
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	update_appearance()
 
 /////////////////////
 //organ storage bag//
@@ -997,7 +1004,7 @@
 
 /obj/item/borg/apparatus/circuit/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/borg/apparatus/circuit/update_overlays()
 	. = ..()

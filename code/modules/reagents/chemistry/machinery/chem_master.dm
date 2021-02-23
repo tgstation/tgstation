@@ -11,6 +11,7 @@
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
+	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -91,15 +92,13 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		update_icon()
+		update_appearance()
 	else if(A == bottle)
 		bottle = null
 
 /obj/machinery/chem_master/update_icon_state()
-	if(beaker)
-		icon_state = "mixer1"
-	else
-		icon_state = "mixer0"
+	icon_state = "[base_icon_state][beaker ? 1 : 0]"
+	return ..()
 
 /obj/machinery/chem_master/update_overlays()
 	. = ..()
@@ -131,7 +130,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
+		update_appearance()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
@@ -169,7 +168,7 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
@@ -426,7 +425,7 @@
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
-			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "pH" = initial(R.ph))
+			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "pH" = initial(R.ph))
 			screen = "analyze"
 			return TRUE
 
@@ -484,18 +483,18 @@
  * Uses typelist() for styles storage after initialization.
  * For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
  * Returns list(
- * 	<key> = list(
- * 		"icon_state" = <bottle icon_state>,
- * 		"name" = <bottle name>,
- * 		"desc" = <bottle desc>,
- * 		?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
- * 		?"icon_empty" = <icon_state when empty>,
- * 		?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
- * 		?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
- * 		?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
- * 		?"righthand_file" = <same as "lefthand_file" but for right hand>,
- * 	),
- * 	..
+ * <key> = list(
+ * "icon_state" = <bottle icon_state>,
+ * "name" = <bottle name>,
+ * "desc" = <bottle desc>,
+ * ?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
+ * ?"icon_empty" = <icon_state when empty>,
+ * ?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
+ * ?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
+ * ?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
+ * ?"righthand_file" = <same as "lefthand_file" but for right hand>,
+ * ),
+ * ..
  * )
  *
  */
@@ -585,7 +584,7 @@
 	for(var/e in holder.reaction_list)
 		var/datum/equilibrium/E = e
 		if(E.reaction.reaction_flags & REACTION_COMPETITIVE)
-			continue 
+			continue
 		for(var/result in E.reaction.required_reagents)
 			var/datum/reagent/R = result
 			if(R == reagent.type)

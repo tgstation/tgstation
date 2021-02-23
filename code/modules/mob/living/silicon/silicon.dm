@@ -43,7 +43,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7			//wireless control range
+	var/interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
@@ -352,7 +352,7 @@
 		Autochan += " ([radio.frequency])"
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
-	else	//For department channels, if any, given by the internal radio.
+	else //For department channels, if any, given by the internal radio.
 		for(var/key in GLOB.department_radio_keys)
 			if(GLOB.department_radio_keys[key] == Autochan)
 				radiomod = ":" + key
@@ -421,7 +421,7 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity)
+/mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
 	return
 
 /mob/living/silicon/rust_heretic_act()

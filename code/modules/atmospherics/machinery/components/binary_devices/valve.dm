@@ -1,27 +1,22 @@
 /*
 It's like a regular ol' straight pipe, but you can turn it on and off.
 */
+#define MANUAL_VALVE "m"
+#define DIGITAL_VALVE "d"
 
 /obj/machinery/atmospherics/components/binary/valve
 	icon_state = "mvalve_map-3"
-
 	name = "manual valve"
 	desc = "A pipe with a valve that can be used to disable flow of gas through it."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN //Intentionally no allow_silicon flag
 	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
-
-	var/frequency = 0
-	var/id = null
-
-	var/valve_type = "m" //lets us have a nice, clean, OOP update_icon_nopipes()
-
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
-
+	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()
+	var/valve_type = MANUAL_VALVE
+	///Bool to stop interactions while the opening/closing animation is going
 	var/switching = FALSE
 
 /obj/machinery/atmospherics/components/binary/valve/update_icon_nopipes(animation = FALSE)
@@ -30,6 +25,9 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		flick("[valve_type]valve_[on][!on]-[set_overlay_offset(piping_layer)]", src)
 	icon_state = "[valve_type]valve_[on ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
+/**
+ * Called by finish_interact(), switch between open and closed, reconcile the air between two pipelines
+ */
 /obj/machinery/atmospherics/components/binary/valve/proc/toggle()
 	if(on)
 		on = FALSE
@@ -49,19 +47,21 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		return
 	update_icon_nopipes(TRUE)
 	switching = TRUE
-	addtimer(CALLBACK(src, .proc/finish_interact), 10)
+	addtimer(CALLBACK(src, .proc/finish_interact), 1 SECONDS)
 
+/**
+ * Called by iteract() after a 1 second timer, calls toggle(), allows another interaction with the component.
+ */
 /obj/machinery/atmospherics/components/binary/valve/proc/finish_interact()
 	toggle()
 	switching = FALSE
-
 
 /obj/machinery/atmospherics/components/binary/valve/digital // can be controlled by AI
 	icon_state = "dvalve_map-3"
 
 	name = "digital valve"
 	desc = "A digitally controlled valve."
-	valve_type = "d"
+	valve_type = DIGITAL_VALVE
 	pipe_state = "dvalve"
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
@@ -71,8 +71,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		normalize_cardinal_directions()
 		icon_state = "dvalve_nopower-[set_overlay_offset(piping_layer)]"
 		return
-	..()
-
+	return..()
 
 /obj/machinery/atmospherics/components/binary/valve/layer2
 	piping_layer = 2
@@ -111,3 +110,6 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 /obj/machinery/atmospherics/components/binary/valve/digital/on/layer4
 	piping_layer = 4
 	icon_state = "dvalve_map-4"
+
+#undef MANUAL_VALVE
+#undef DIGITAL_VALVE

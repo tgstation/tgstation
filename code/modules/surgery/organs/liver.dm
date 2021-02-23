@@ -1,5 +1,5 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_LETHALITY 0.01 //lower values lower how harmful toxins are to the liver
+#define LIVER_DEFAULT_TOX_LETHALITY 0.005 //lower values lower how harmful toxins are to the liver
 
 /obj/item/organ/liver
 	name = "liver"
@@ -17,8 +17,10 @@
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
-	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
-	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
+	/// The maximum volume of toxins the liver will quickly purge
+	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE
+	/// Scaling factor for how much damage toxins deal to the liver
+	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
 
 /obj/item/organ/liver/Initialize()
@@ -72,9 +74,9 @@
 #define HAS_NO_TOXIN 1
 #define HAS_PAINFUL_TOXIN 2
 
-/obj/item/organ/liver/on_life()
+/obj/item/organ/liver/on_life(delta_time, times_fired)
 	var/mob/living/carbon/C = owner
-	..()	//perform general on_life()
+	..() //perform general on_life()
 	if(istype(C))
 		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 
@@ -87,20 +89,20 @@
 					if(belly)
 						thisamount += belly.reagents.get_reagent_amount(T.type)
 					if (thisamount && thisamount <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
-						C.reagents.remove_reagent(T.type, 1)
+						C.reagents.remove_reagent(T.type, 0.5 * delta_time)
 					else
-						damage += (thisamount*toxLethality)
+						damage += (thisamount * toxLethality * delta_time)
 						if(provide_pain_message != HAS_PAINFUL_TOXIN)
 							provide_pain_message = T.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 			//metabolize reagents
-			C.reagents.metabolize(C, can_overdose=TRUE)
+			C.reagents.metabolize(C, delta_time, times_fired, can_overdose=TRUE)
 
-			if(provide_pain_message && damage > 10 && prob(damage/3))//the higher the damage the higher the probability
+			if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
 				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
-		else	//for when our liver's failing
-			C.liver_failure()
+		else //for when our liver's failing
+			C.liver_failure(delta_time, times_fired)
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
@@ -136,7 +138,7 @@
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
 	icon_state = "liver-x" // Same sprite as fly-person liver.
 	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
-	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 2.5 // rejects its owner early after too much punishment
+	toxLethality = 2.5 * LIVER_DEFAULT_TOX_LETHALITY // rejects its owner early after too much punishment
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
 /obj/item/organ/liver/cybernetic
@@ -145,10 +147,10 @@
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
 	organ_flags = ORGAN_SYNTHETIC
 	toxTolerance = 2
-	toxLethality = 0.011
+	toxLethality = 1.1 * LIVER_DEFAULT_TOX_LETHALITY
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/liver/cybernetic/tier2
 	name = "cybernetic liver"
@@ -156,7 +158,7 @@
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5 //can shrug off up to 5u of toxins
-	toxLethality = 0.008 //20% less damage than a normal liver
+	toxLethality = 0.8 * LIVER_DEFAULT_TOX_LETHALITY //20% less damage than a normal liver
 	emp_vulnerability = 40
 
 /obj/item/organ/liver/cybernetic/tier3
@@ -166,7 +168,7 @@
 	alcohol_tolerance = 0.001
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 10 //can shrug off up to 10u of toxins
-	toxLethality = 0.008 //20% less damage than a normal liver
+	toxLethality = 0.8 * LIVER_DEFAULT_TOX_LETHALITY //20% less damage than a normal liver
 	emp_vulnerability = 20
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)

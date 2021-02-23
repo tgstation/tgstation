@@ -25,20 +25,23 @@
 /obj/item/stack/ore/update_overlays()
 	. = ..()
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
-	if(difference == 0)
+	if(!difference)
 		return
-	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
-		if (LAZYLEN(stack_overlays)-difference <= 0)
+
+	if(difference < 0 && LAZYLEN(stack_overlays)) //amount < stack_overlays, remove excess.
+		if(LAZYLEN(stack_overlays)-difference <= 0)
 			stack_overlays = null
-		else
-			stack_overlays.len += difference
-	else if(difference > 0)			//amount > stack_overlays, add some.
+			return
+		stack_overlays.len += difference
+
+	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
 			newore.pixel_x = rand(-8,8)
 			newore.pixel_y = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
-	if (stack_overlays)
+
+	if(stack_overlays)
 		. += stack_overlays
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)

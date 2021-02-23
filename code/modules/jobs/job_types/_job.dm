@@ -3,8 +3,8 @@
 	var/title = "NOPE"
 
 	//Job access. The use of minimal_access or access is determined by a config setting: config.jobs_have_minimal_access
-	var/list/minimal_access = list()		//Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
-	var/list/access = list()				//Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
+	var/list/minimal_access = list() //Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
+	var/list/access = list() //Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
 
 	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
 	var/list/skills
@@ -105,7 +105,7 @@
 	if(!ishuman(H))
 		return
 
-	if(!config)	//Needed for robots.
+	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
 
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
@@ -122,7 +122,7 @@
 	if(head_announce)
 		announce_head(H, head_announce)
 
-/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H)		//Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
+/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H) //Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
 	return FALSE
 
 //Used for a special check of whether to allow a client to latejoin as this job.
@@ -159,7 +159,7 @@
 		announce(H)
 
 /datum/job/proc/get_access()
-	if(!config)	//Needed for robots.
+	if(!config) //Needed for robots.
 		return src.minimal_access.Copy()
 
 	. = list()
@@ -180,7 +180,7 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0)
-		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+		return TRUE //Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
 

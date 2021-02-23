@@ -112,7 +112,7 @@
 		evolve()
 		return
 
-/mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	. = ..()

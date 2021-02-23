@@ -91,7 +91,7 @@
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
 			tab = "megafauna_kills_crusher"
-		if(!elimination)	//used so the achievment only occurs for the last legion to die.
+		if(!elimination) //used so the achievment only occurs for the last legion to die.
 			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
 			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 	return ..()
@@ -154,7 +154,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time, ranged_buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
-	if(ranged_buffer_time)
+	if(isnum(ranged_buffer_time))
 		ranged_cooldown = world.time + ranged_buffer_time
 
 /// Grants medals and achievements to surrounding players

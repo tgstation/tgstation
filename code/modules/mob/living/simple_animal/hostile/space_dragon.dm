@@ -1,11 +1,11 @@
 /// The carp rift is currently charging.
-#define CHARGE_ONGOING			0
+#define CHARGE_ONGOING 0
 /// The carp rift is currently charging and has output a final warning.
-#define CHARGE_FINALWARNING		1
+#define CHARGE_FINALWARNING 1
 /// The carp rift is now fully charged.
-#define CHARGE_COMPLETED		2
+#define CHARGE_COMPLETED 2
 /// The darkness threshold for space dragon when choosing a color
-#define DARKNESS_THRESHOLD		50
+#define DARKNESS_THRESHOLD 50
 
 /**
  * # Space Dragon
@@ -98,9 +98,9 @@
 		color_selection()
 
 
-/mob/living/simple_animal/hostile/space_dragon/Life(mapload)
+/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
-	tiredness = max(tiredness - 1, 0)
+	tiredness = max(tiredness - (0.5 * delta_time), 0)
 	for(var/mob/living/consumed_mob in src)
 		if(consumed_mob.stat == DEAD)
 			continue

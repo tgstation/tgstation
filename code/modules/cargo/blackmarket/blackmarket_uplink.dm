@@ -153,7 +153,7 @@
 	name = "Black Market Uplink"
 	result = /obj/item/blackmarket_uplink
 	time = 30
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	reqs = list(
 		/obj/item/stock_parts/subspace/amplifier = 1,
 		/obj/item/stack/cable_coil = 15,

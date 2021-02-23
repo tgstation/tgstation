@@ -31,7 +31,7 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
-/obj/structure/plaque/attack_hand(mob/user)
+/obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return

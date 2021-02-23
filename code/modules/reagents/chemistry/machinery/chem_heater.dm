@@ -15,6 +15,7 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
+	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -25,7 +26,7 @@
 	var/heater_coefficient = 0.05
 	var/on = FALSE
 	var/dispense_volume = 1
-	
+
 	//The list of active clients using this heater, so that we can update the UI on a reaction_step. I assume there are multiple clients possible.
 	var/list/ui_client_list
 	///If the user has the tutorial enabled
@@ -36,10 +37,15 @@
 /obj/machinery/chem_heater/Initialize()
 	. = ..()
 	create_reagents(200, NO_REACT)//Lets save some calculations here
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
-	
+
+/obj/machinery/chem_heater/deconstruct(disassembled)
+	. = ..()
+	if(beaker && disassembled)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		beaker.forceMove(drop_location())
+		beaker = null
+
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
@@ -51,17 +57,15 @@
 	. = ..()
 	if(A == beaker)
 		beaker = null
-		update_icon()
+		update_appearance()
 
 /obj/machinery/chem_heater/update_icon_state()
-	if(beaker)
-		icon_state = "mixer1b"
-	else
-		icon_state = "mixer0b"
+	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
+	return ..()
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
 
@@ -75,7 +79,7 @@
 	if(new_beaker)
 		beaker = new_beaker
 		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
@@ -103,7 +107,7 @@
 					return
 				if(beaker?.reagents.has_reagent(/datum/reagent/mercury, 10) || beaker?.reagents.has_reagent(/datum/reagent/chlorine, 10))
 					tutorial_state = TUT_HAS_REAGENTS
-			
+
 			if(TUT_HAS_REAGENTS)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury, 9)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine, 9)))
 					tutorial_state = TUT_MISSING
@@ -111,18 +115,18 @@
 				if(beaker?.reagents.chem_temp > 374)//If they heated it up as asked
 					tutorial_state = TUT_IS_ACTIVE
 					target_temperature = 375
-					beaker.reagents.chem_temp = 375					
-			
+					beaker.reagents.chem_temp = 375
+
 			if(TUT_IS_ACTIVE)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine))) //Slightly concerned that people might take ages to read and it'll react anyways
 					tutorial_state = TUT_MISSING
 					return
 				if(length(beaker?.reagents.reaction_list) == 1)//Only fudge numbers for our intentful reaction
 					beaker.reagents.chem_temp = 375
-				
+
 				if(target_temperature >= 390)
 					tutorial_state = TUT_IS_REACTING
-			
+
 			if(TUT_IS_REACTING)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine)))
 					tutorial_state = TUT_COMPLETE
@@ -143,7 +147,7 @@
 			//keep constant with the chemical acclimator please
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
-	
+
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
@@ -159,7 +163,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
+		update_appearance()
 		return
 
 	if(beaker)
@@ -171,7 +175,7 @@
 			var/obj/item/reagent_containers/syringe/S = I
 			S.afterattack(beaker, user, 1)
 			return
-	
+
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
@@ -278,7 +282,7 @@
 			if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
 				danger = TRUE
 				overheat = TRUE
-		if(equilibrium.reaction.reaction_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions 
+		if(equilibrium.reaction.reaction_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions
 			for(var/entry in active_reactions)
 				if(entry["name"] == reagent.name) //If we have multiple reaction methods for the same result - combine them
 					entry["reactedVol"] = equilibrium.reacted_vol
@@ -301,12 +305,12 @@
 			if(TUT_NO_BUFFER)//missing buffer
 				data["tutorialMessage"] = {"It looks like you’re a little low on buffers, here’s how to make more:
 
-Acidic buffer:	2 parts Sodium
+Acidic buffer: 2 parts Sodium
 			2 parts Hydrogen
 			2 parts Ethanol
 			2 parts Water
 
-Basic buffer:	3 parts Ammonia
+Basic buffer: 3 parts Ammonia
 			2 parts Chlorine
 			2 parts Hydrogen
 			2 parts Oxygen
@@ -331,7 +335,7 @@ When you’re ready, set your temperature to 375K and heat up the beaker to that
 			if(TUT_IS_ACTIVE) //heat 375K
 				data["tutorialMessage"] = {"Great! You should see your reaction slowly progressing.
 
-Notice the pH dial on the right; the sum pH should be slowly drifting towards the left on the dial. How pure your solution is at the end depends on how well you keep your reaction within the optimal pH range. The dial will flash if any of the present reactions are outside their optimal. "If you're getting sludge, give your pH a nudge"! 
+Notice the pH dial on the right; the sum pH should be slowly drifting towards the left on the dial. How pure your solution is at the end depends on how well you keep your reaction within the optimal pH range. The dial will flash if any of the present reactions are outside their optimal. "If you're getting sludge, give your pH a nudge"!
 
 In a moment, we’ll increase the temperature so that our rate is faster. It’s up to you to keep your pH within the limits, so keep an eye on that dial, and get ready to add basic buffer using the injection button to the left of the volume indicator.
 
@@ -430,7 +434,7 @@ To continue set your target temperature to 390K."}
 			var/datum/reagent/acid_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
 			var/cur_vol = 0
 			if(acid_reagent_heater)
-				cur_vol = acid_reagent_heater.volume 
+				cur_vol = acid_reagent_heater.volume
 			volume = 100 - cur_vol
 			beaker.reagents.trans_id_to(src, acid_reagent.type, volume)//negative because we're going backwards
 			return
@@ -447,7 +451,7 @@ To continue set your target temperature to 390K."}
 			var/datum/reagent/basic_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
 			var/cur_vol = 0
 			if(basic_reagent_heater)
-				cur_vol = basic_reagent_heater.volume 
+				cur_vol = basic_reagent_heater.volume
 			volume = 100 - cur_vol
 			beaker.reagents.trans_id_to(src, basic_reagent.type, volume)//negative because we're going backwards
 			return
@@ -478,6 +482,15 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/debug/Initialize()
 	. = ..()
 	reagents.maximum_volume = 2000
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 980)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 980)
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 1000)
 	heater_coefficient = 0.4 //hack way to upgrade
+
+//map load types
+/obj/machinery/chem_heater/withbuffer
+	desc = "This Reaction Chamber comes with a bit of buffer to help get you started."
+
+/obj/machinery/chem_heater/withbuffer/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)

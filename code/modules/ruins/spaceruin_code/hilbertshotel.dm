@@ -247,6 +247,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/open/space/bluespace
 	name = "\proper bluespace hyperzone"
 	icon_state = "bluespace"
+	base_icon_state = "bluespace"
 	baseturfs = /turf/open/space/bluespace
 	flags_1 = NOJAUNT_1
 	explosion_block = INFINITY
@@ -257,7 +258,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	update_icon_state()
 
 /turf/open/space/bluespace/update_icon_state()
-	icon_state = "bluespace"
+	icon_state = base_icon_state
+	return ..()
 
 /turf/open/space/bluespace/Entered(atom/movable/A)
 	. = ..()
@@ -293,13 +295,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/attack_tk(mob/user)
 	return //need to be close.
 
-/turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_hand(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_animal(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_animal(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_paw(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_paw(mob/user, list/modifiers)
 	promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)

@@ -80,6 +80,10 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	light_range = 1
 	light_color = COLOR_SOFT_RED
 
+/obj/structure/spawner/ice_moon/demonic_portal/Initialize()
+	. = ..()
+	AddComponent(/datum/component/gps, "Netheric Signal")
+
 /obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
 	for(var/turf/F in RANGE_TURFS(3, src))
 		if(abs(src.x - F.x) + abs(src.y - F.y) > 5)
