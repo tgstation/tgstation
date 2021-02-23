@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Icon, LabeledList, Section, Stack, Table } from '../components';
+import { Button, Icon, LabeledList, NumberInput, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 import { ReagentLookup } from './common/ReagentLookup';
 import { RecipeLookup } from './common/RecipeLookup';
@@ -7,6 +7,8 @@ import { RecipeLookup } from './common/RecipeLookup';
 const bookmarkedReactions = new Set();
 
 const matchBitflag = (a, b) => (a & b) && (a | b) === b;
+
+var page = 1
 
 export const Reagents = (props, context) => {
   const { act, data } = useBackend(context);
@@ -63,10 +65,18 @@ export const Reagents = (props, context) => {
                         tooltip="When enabled the displayed reaction will automatically display ongoing reactions in the associated beaker."
                         onClick={() => act('beaker_sync')} />
                       <Button
-                        content="Search recipes"
+                        content="Search"
                         icon="search"
                         color="purple"
+                        tooltip="Search for a recipe by product name"
                         onClick={() => act('search_recipe')} />
+                      <Button
+                        icon="times"
+                        color="red"
+                        disabled={!reagent_mode_recipe}
+                        onClick={() => act('recipe_click', {
+                          id: null,
+                        })} />
                     </>
                   )}>
                   <RecipeLookup
@@ -79,10 +89,21 @@ export const Reagents = (props, context) => {
                   title="Reagent lookup"
                   minWidth="300px"
                   buttons={(
-                    <Button
-                      content="Search reagents"
-                      icon="search"
-                      onClick={() => act('search_reagents')} />
+                    <>
+                      <Button
+                        content="Search"
+                        icon="search"
+                        tooltip="Search for a reagent by name"
+                        tooltipPosition="left"
+                        onClick={() => act('search_reagents')} />
+                      <Button
+                        icon="times"
+                        color="red"
+                        disabled={!reagent_mode_reagent}
+                        onClick={() => act('reagent_click', {
+                          id: null,
+                        })} />
+                    </>
                   )}>
                   <ReagentLookup reagent={reagent_mode_reagent} />
                 </Section>
@@ -116,55 +137,55 @@ const TagBox = (props, context) => {
         <Button
           color={selectedBitflags & bitflags.BRUTE ? "green" : "red"}
           icon="gavel"
-          onClick={() => act('toggle_tag_brute')}>
+          onClick={() => {act('toggle_tag_brute'); page = 1}}>
           Brute
         </Button>
         <Button
           color={selectedBitflags & bitflags.BURN ? "green" : "red"}
           icon="burn"
-          onClick={() => act('toggle_tag_burn')}>
+          onClick={() => {act('toggle_tag_burn'); page = 1}}>
           Burn
         </Button>
         <Button
           color={selectedBitflags & bitflags.TOXIN ? "green" : "red"}
           icon="biohazard"
-          onClick={() => act('toggle_tag_toxin')}>
+          onClick={() => {act('toggle_tag_toxin'); page = 1}}>
           Toxin
         </Button>
         <Button
           color={selectedBitflags & bitflags.OXY ? "green" : "red"}
           icon="wind"
-          onClick={() => act('toggle_tag_oxy')}>
+          onClick={() => {act('toggle_tag_oxy'); page = 1}}>
           Suffocation
         </Button>
         <Button
           color={selectedBitflags & bitflags.CLONE ? "green" : "red"}
           icon="male"
-          onClick={() => act('toggle_tag_clone')}>
+          onClick={() => {act('toggle_tag_clone'); page = 1}}>
           Clone
         </Button>
         <Button
           color={selectedBitflags & bitflags.ORGAN ? "green" : "red"}
           icon="brain"
-          onClick={() => act('toggle_tag_organ')}>
+          onClick={() => {act('toggle_tag_organ'); page = 1}}>
           Organ
         </Button>
         <Button
           icon="flask"
           color={selectedBitflags & bitflags.CHEMICAL ? "green" : "red"}
-          onClick={() => act('toggle_tag_chemical')}>
+          onClick={() => {act('toggle_tag_chemical'); page = 1}}>
           Chemical
         </Button>
         <Button
           icon="seedling"
           color={selectedBitflags & bitflags.PLANT ? "green" : "red"}
-          onClick={() => act('toggle_tag_plant')}>
+          onClick={() => {act('toggle_tag_plant'); page = 1}}>
           Plants
         </Button>
         <Button
           icon="question"
           color={selectedBitflags & bitflags.OTHER ? "green" : "red"}
-          onClick={() => act('toggle_tag_other')}>
+          onClick={() => {act('toggle_tag_other'); page = 1}}>
           Other
         </Button>
       </LabeledList.Item>
@@ -172,49 +193,49 @@ const TagBox = (props, context) => {
         <Button
           color={selectedBitflags & bitflags.DRINK ? "green" : "red"}
           icon="cocktail"
-          onClick={() => act('toggle_tag_drink')}>
+          onClick={() => {act('toggle_tag_drink'); page = 1}}>
           Drink
         </Button>
         <Button
           color={selectedBitflags & bitflags.FOOD ? "green" : "red"}
           icon="drumstick-bite"
-          onClick={() => act('toggle_tag_food')}>
+          onClick={() => {act('toggle_tag_food'); page = 1}}>
           Food
         </Button>
         <Button
           color={selectedBitflags & bitflags.HEALING ? "green" : "red"}
           icon="medkit"
-          onClick={() => act('toggle_tag_healing')}>
+          onClick={() => {act('toggle_tag_healing'); page = 1}}>
           Healing
         </Button>
         <Button
           icon="skull-crossbones"
           color={selectedBitflags & bitflags.DAMAGING ? "green" : "red"}
-          onClick={() => act('toggle_tag_damaging')}>
+          onClick={() => {act('toggle_tag_damaging'); page = 1}}>
           Toxic
         </Button>
         <Button
           icon="pills"
           color={selectedBitflags & bitflags.DRUG ? "green" : "red"}
-          onClick={() => act('toggle_tag_drug')}>
+          onClick={() => {act('toggle_tag_drug'); page = 1}}>
           Drugs
         </Button>
         <Button
           icon="microscope"
           color={selectedBitflags & bitflags.SLIME ? "green" : "red"}
-          onClick={() => act('toggle_tag_slime')}>
+          onClick={() => {act('toggle_tag_slime'); page = 1}}>
           Slime
         </Button>
         <Button
           icon="bomb"
           color={selectedBitflags & bitflags.EXPLOSIVE ? "green" : "red"}
-          onClick={() => act('toggle_tag_explosive')}>
+          onClick={() => {act('toggle_tag_explosive'); page = 1}}>
           Explosive
         </Button>
         <Button
           icon="puzzle-piece"
           color={selectedBitflags & bitflags.UNIQUE ? "green" : "red"}
-          onClick={() => act('toggle_tag_unique')}>
+          onClick={() => {act('toggle_tag_unique'); page = 1}}>
           Unique
         </Button>
       </LabeledList.Item>
@@ -222,31 +243,31 @@ const TagBox = (props, context) => {
         <Button
           icon="chess-pawn"
           color={selectedBitflags & bitflags.EASY ? "green" : "red"}
-          onClick={() => act('toggle_tag_easy')}>
+          onClick={() => {act('toggle_tag_easy'); page = 1}}>
           Easy
         </Button>
         <Button
           icon="chess-knight"
           color={selectedBitflags & bitflags.MODERATE ? "green" : "red"}
-          onClick={() => act('toggle_tag_moderate')}>
+          onClick={() => {act('toggle_tag_moderate'); page = 1}}>
           Moderate
         </Button>
         <Button
           icon="chess-queen"
           color={selectedBitflags & bitflags.HARD ? "green" : "red"}
-          onClick={() => act('toggle_tag_hard')}>
+          onClick={() => {act('toggle_tag_hard'); page = 1}}>
           Hard
         </Button>
         <Button
           icon="exclamation-triangle"
           color={selectedBitflags & bitflags.DANGEROUS ? "green" : "red"}
-          onClick={() => act('toggle_tag_dangerous')}>
+          onClick={() => {act('toggle_tag_dangerous'); page = 1}}>
           Dangerous
         </Button>
         <Button
           icon="recycle"
           color={selectedBitflags & bitflags.COMPETITIVE ? "green" : "red"}
-          onClick={() => act('toggle_tag_competitive')}>
+          onClick={() => {act('toggle_tag_competitive'); page = 1}}>
           Competitive
         </Button>
       </LabeledList.Item>
@@ -290,6 +311,12 @@ const RecipeLibrary = (props, context) => {
       && matchReagents(reaction)
     ));
 
+  const pageIndexMax = Math.ceil(visibleReactions.length/50)
+
+  const startIndex = 50 * (page-1)
+
+  const endIndex = 50 * page
+
   const addBookmark = bookmark => {
     bookmarkedReactions.add(bookmark);
   };
@@ -305,18 +332,40 @@ const RecipeLibrary = (props, context) => {
       title={bookmarkMode ? "Bookmarked recipes" : "Possible recipes"}
       buttons={(
         <>
-          Linked beaker: {linkedBeaker+"  "}
+          Beaker: {linkedBeaker+"  "}
           <Button
             content="Filter by reagents in beaker"
             icon="search"
             disabled={bookmarkMode}
             color={reagentFilter ? "green" : "red"}
-            onClick={() => setReagentFilter(!reagentFilter)} />
+            onClick={() => {setReagentFilter(!reagentFilter); page = 1}} />
           <Button
             content="Bookmarks"
             icon="book"
             color={bookmarkMode ? "green" : "red"}
-            onClick={() => setBookmarkMode(!bookmarkMode)} />
+            onClick={() => {setBookmarkMode(!bookmarkMode); page = 1}} />
+          <Button
+            icon="minus"
+            disabled={page == 1}
+            onClick={() => {
+              page = Math.max(page - 1, 1)
+              act('update_ui')
+              }} />
+          <NumberInput
+            width="25px"
+            step={1}
+            stepPixelSize={3}
+            value={page}
+            minValue={1}
+            maxValue={pageIndexMax}
+            onDrag={(e, value) => page = value} />
+          <Button
+            icon="plus"
+            disabled={page == pageIndexMax}
+            onClick={() => {
+              page = Math.min(page + 1, pageIndexMax);
+              act('update_ui');
+              }} />
         </>
       )}>
       <Table>
@@ -387,7 +436,7 @@ const RecipeLibrary = (props, context) => {
               </Table.Cell>
             </>
           </Table.Row>
-        ))}
+        )).slice(startIndex, endIndex)}
       </Table>
     </Section>
   );

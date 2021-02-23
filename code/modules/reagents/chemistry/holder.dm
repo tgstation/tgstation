@@ -1610,6 +1610,8 @@
 
 			if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 				data["reagent_mode_reagent"] += list("deadProcess" = TRUE)
+	else
+		data["reagent_mode_reagent"] = null
 
 	//reaction lookup data
 	if (ui_reaction_id)
@@ -1709,6 +1711,8 @@
 					tooltip_bool = TRUE
 			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_catalysts[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 		data["reagent_mode_recipe"]["isColdRecipe"] = reaction.is_cold_recipe
+	else
+		data["reagent_mode_recipe"] = null
 
 	return data
 
