@@ -58,7 +58,7 @@
 	P.info += "Rank: [orderer_rank]<br/>"
 	P.info += "Comment: [reason]<br/>"
 
-	P.update_icon()
+	P.update_appearance()
 	return P
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname) //generates-the-manifests.
@@ -96,13 +96,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-	P.update_icon()
+	P.update_appearance()
 	P.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = container
 		C.manifest = P
-		C.update_icon()
+		C.update_appearance()
 	else
 		container.contents += P
 

@@ -57,10 +57,10 @@
 	. = ..()
 	density = FALSE
 
-/obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user)
+/obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
-	power_cell.update_icon()
+	power_cell.update_appearance()
 	to_chat(user, "<span class='notice'>You remove [power_cell] from [src].</span>")
 	user.put_in_hands(power_cell)
 	power_cell = null

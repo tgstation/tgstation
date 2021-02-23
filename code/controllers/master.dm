@@ -45,7 +45,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	/// makes the mc main loop runtime
 	var/make_runtime = FALSE
 
-	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
+	var/initializations_finished_with_no_players_logged_in //I wonder what this could be?
 
 	/// The type of the last subsystem to be fire()'d.
 	var/last_type_processed
@@ -54,9 +54,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/datum/controller/subsystem/queue_tail //!End of queue linked list (used for appending to the list)
 	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
-	var/map_loading = FALSE	//!Are we loading in a new map?
+	var/map_loading = FALSE //!Are we loading in a new map?
 
-	var/current_runlevel	//!for scheduling different subsystems for different stages of the round
+	var/current_runlevel //!for scheduling different subsystems for different stages of the round
 	var/sleep_offline_after_initializations = TRUE
 
 	var/static/restart_clear = 0
@@ -113,7 +113,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	log_world("Shutdown complete")
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
-//	-1 if we encountered a runtime trying to recreate it
+// -1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
 	if (world.time < Master.restart_timeout)
@@ -165,7 +165,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	if (istype(Master.subsystems))
 		if(FireHim)
-			Master.subsystems += new BadBoy.type	//NEW_SS_GLOBAL will remove the old one
+			Master.subsystems += new BadBoy.type //NEW_SS_GLOBAL will remove the old one
 		subsystems = Master.subsystems
 		current_runlevel = Master.current_runlevel
 		StartProcessing(10)
@@ -175,7 +175,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 
 // Please don't stuff random bullshit here,
-// 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
+// Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/Initialize(delay, init_sss, tgs_prime)
 	set waitfor = 0
 
@@ -259,11 +259,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/proc/Loop()
 	. = -1
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
-	//	local vars rock
+	// local vars rock
 
 	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
 	var/list/tickersubsystems = list()
-	var/list/runlevel_sorted_subsystems = list(list())	//ensure we always have at least one runlevel
+	var/list/runlevel_sorted_subsystems = list(list()) //ensure we always have at least one runlevel
 	var/timer = world.time
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
@@ -325,7 +325,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 		//Anti-tick-contention heuristics:
 		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later.
-		//	(because sleeps are processed in the order received, longer sleeps are more likely to run first)
+		// (because sleeps are processed in the order received, longer sleeps are more likely to run first)
 		if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
 			sleep_delta *= 2
 			current_ticklimit = TICK_LIMIT_RUNNING * 0.5
@@ -452,7 +452,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/tick_usage
 
 	//keep running while we have stuff to run and we haven't gone over a tick
-	//	this is so subsystems paused eariler can use tick time that later subsystems never used
+	// this is so subsystems paused eariler can use tick time that later subsystems never used
 	while (ran && queue_head && TICK_USAGE < TICK_LIMIT_MC)
 		ran = FALSE
 		bg_calc = FALSE
@@ -471,7 +471,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			//if we can't run them this tick (without going over a tick)
 			//we bump up their priority and attempt to run them next tick
 			//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
-			//	in those cases, so we just let them run)
+			// in those cases, so we just let them run)
 			if (queue_node_flags & SS_NO_TICK_CHECK)
 				if (queue_node.tick_usage > TICK_LIMIT_RUNNING - TICK_USAGE && ran_non_ticker)
 					if (!(queue_node_flags & SS_BACKGROUND))
@@ -562,7 +562,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	. = 1
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
-//	called if any mc's queue procs runtime or exit improperly.
+// called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/runlevel_SS)
 	. = 0
 	log_world("MC: SoftReset called, resetting MC queue state.")

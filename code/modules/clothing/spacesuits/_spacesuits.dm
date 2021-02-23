@@ -61,7 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
-		update_hud_icon(user)		// update the hud
+		update_hud_icon(user) // update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
@@ -72,7 +72,7 @@
 		human.update_spacesuit_hud_icon("0")
 
 // Space Suit temperature regulation and power usage
-/obj/item/clothing/suit/space/process()
+/obj/item/clothing/suit/space/process(delta_time)
 	var/mob/living/carbon/human/user = src.loc
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
@@ -97,7 +97,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.16))
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * delta_time))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy

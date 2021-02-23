@@ -1,12 +1,12 @@
 /* Parrots!
  * Contains
- * 		Defines
- *		Inventory (headset stuff)
- *		Attack responces
- *		AI
- *		Procs / Verbs (usable by players)
- *		Sub-types
- *		Hear & say (the things we do for gimmicks)
+ * Defines
+ * Inventory (headset stuff)
+ * Attack responces
+ * AI
+ * Procs / Verbs (usable by players)
+ * Sub-types
+ * Hear & say (the things we do for gimmicks)
  */
 
 /*
@@ -15,15 +15,15 @@
 
 //Only a maximum of one action and one intent should be active at any given time.
 //Actions
-#define PARROT_PERCH	(1<<0)	//Sitting/sleeping, not moving
-#define PARROT_SWOOP	(1<<1)	//Moving towards or away from a target
-#define PARROT_WANDER	(1<<2)	//Moving without a specific target in mind
+#define PARROT_PERCH (1<<0) //Sitting/sleeping, not moving
+#define PARROT_SWOOP (1<<1) //Moving towards or away from a target
+#define PARROT_WANDER (1<<2) //Moving without a specific target in mind
 
 //Intents
-#define PARROT_STEAL	(1<<3)	//Flying towards a target to steal it/from it
-#define PARROT_ATTACK	(1<<4)	//Flying towards a target to attack it
-#define PARROT_RETURN	(1<<5)	//Flying towards its perch
-#define PARROT_FLEE		(1<<6)	//Flying away from its attacker
+#define PARROT_STEAL (1<<3) //Flying towards a target to steal it/from it
+#define PARROT_ATTACK (1<<4) //Flying towards a target to attack it
+#define PARROT_RETURN (1<<5) //Flying towards its perch
+#define PARROT_FLEE (1<<6) //Flying away from its attacker
 
 
 /mob/living/simple_animal/parrot
@@ -74,7 +74,7 @@
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
-	var/parrot_stuck = 0	//If parrot_lastmove hasn't changed, this will increment until it reaches parrot_stuck_threshold
+	var/parrot_stuck = 0 //If parrot_lastmove hasn't changed, this will increment until it reaches parrot_stuck_threshold
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
@@ -282,37 +282,37 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/user, list/modifiers)
 	..()
 	if(client)
 		return
-	if(!stat && M.combat_mode)
+	if(!stat && user.combat_mode)
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = M
+		parrot_interest = user
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
 		if(health > 30) //Let's get in there and squawk it up!
 			parrot_state |= PARROT_ATTACK
 		else
-			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
+			parrot_state |= PARROT_FLEE //Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && !M.combat_mode)
+	if(stat != DEAD && !user.combat_mode)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/human/M)
-	return attack_hand(M)
+/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/human/user, list/modifiers)
+	return attack_hand(modifiers)
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M)
-	return attack_hand(M)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 //Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
+/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..() //goodbye immortal parrots
 
 	if(client)
@@ -321,8 +321,8 @@
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-	if(M.melee_damage_upper > 0 && !stat)
-		parrot_interest = M
+	if(user.melee_damage_upper > 0 && !stat)
+		parrot_interest = user
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = icon_living
 
@@ -367,7 +367,7 @@
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/Life()
+/mob/living/simple_animal/parrot/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 
 	//Sprite update for when a parrot gets pulled
@@ -470,12 +470,12 @@
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
-				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
+				if(istype(AM, /obj/item) || isliving(AM)) //If stealable item
 					parrot_interest = AM
 					manual_emote("turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
-				else	//Else it's a perch
+				else //Else it's a perch
 					parrot_perch = AM
 					parrot_state = PARROT_SWOOP | PARROT_RETURN
 					return
@@ -644,7 +644,7 @@
 					item = I
 					break
 		if(item)
-			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
+			if(!get_path_to(src, item))
 				item = null
 				continue
 			return item
@@ -909,7 +909,7 @@
 
 	. = ..()
 
-/mob/living/simple_animal/parrot/poly/Life()
+/mob/living/simple_animal/parrot/poly/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -929,9 +929,9 @@
 /mob/living/simple_animal/parrot/poly/proc/Read_Memory()
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-		S["phrases"] 			>> speech_buffer
-		S["roundssurvived"]		>> rounds_survived
-		S["longestsurvival"]	>> longest_survival
+		S["phrases"] >> speech_buffer
+		S["roundssurvived"] >> rounds_survived
+		S["longestsurvival"] >> longest_survival
 		S["longestdeathstreak"] >> longest_deathstreak
 		fdel("data/npc_saves/Poly.sav")
 	else

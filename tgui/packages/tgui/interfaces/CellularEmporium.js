@@ -8,8 +8,7 @@ export const CellularEmporium = (props, context) => {
   return (
     <Window
       width={900}
-      height={480}
-      resizable>
+      height={480}>
       <Window.Content scrollable>
         <Section>
           <LabeledList>

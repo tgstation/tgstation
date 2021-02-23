@@ -3,6 +3,7 @@
 	desc = "Immortalized cast iron, the steel-like teeth holding it in place, it's vile extract has the power of rebirthing things, remaking them from the very beginning."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "crucible"
+	base_icon_state = "crucible"
 	anchored = FALSE
 	density = TRUE
 	///How much mass this currently holds
@@ -61,7 +62,7 @@
 
 	return ..()
 
-/obj/structure/eldritch_crucible/attack_hand(mob/user)
+/obj/structure/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	if(!IS_HERETIC(user) && !IS_HERETIC_MONSTER(user))
 		if(iscarbon(user))
 			devour(user)
@@ -100,11 +101,8 @@
 	update_icon_state()
 
 /obj/structure/eldritch_crucible/update_icon_state()
-	. = ..()
-	if(current_mass == max_mass)
-		icon_state = "crucible"
-	else
-		icon_state = "crucible_empty"
+	icon_state = "[base_icon_state][(current_mass == max_mass) ? null : "_empty"]"
+	return ..()
 
 /obj/structure/trap/eldritch
 	name = "elder carving"
@@ -124,7 +122,7 @@
 
 /obj/structure/trap/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I,/obj/item/melee/rune_knife) || istype(I,/obj/item/nullrod))
+	if(istype(I,/obj/item/melee/rune_carver) || istype(I,/obj/item/nullrod))
 		qdel(src)
 
 ///Proc that sets the owner

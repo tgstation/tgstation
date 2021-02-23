@@ -1,4 +1,4 @@
-///////////	bigderelict1 items
+/////////// bigderelict1 items
 
 /obj/item/paper/crumpled/ruins/bigderelict1/manifest
 	info = "<i>A crumpled piece of manifest paper, out of the barely legible pen writing, you can see something about a warning involving whatever was originally in the crate.</i>"

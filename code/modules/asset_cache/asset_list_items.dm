@@ -188,7 +188,7 @@
 	)
 
 /datum/asset/simple/namespaced/common
-	assets = list("padlock.png"	= 'html/padlock.png')
+	assets = list("padlock.png" = 'html/padlock.png')
 	parents = list("common.css" = 'html/browser/common.css')
 
 /datum/asset/simple/permissions
@@ -452,7 +452,7 @@
 
 /datum/asset/simple/orbit
 	assets = list(
-		"ghost.png"	= 'html/ghost.png'
+		"ghost.png" = 'html/ghost.png'
 	)
 
 /datum/asset/simple/vv
@@ -488,7 +488,8 @@
 		var/list/portrait = p
 		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
 		if(fexists(png))
-			assets[portrait["title"]] = png
+			var/asset_name = "[tab]_[portrait["md5"]]"
+			assets[asset_name] = png
 	..() //this is where it registers all these assets we added to the list
 
 /datum/asset/simple/portraits/library
@@ -523,3 +524,8 @@
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
 	return replacetext(name, regex, "")
+
+/datum/asset/simple/tutorial_advisors
+	assets = list(
+		"chem_help_advisor.gif" = 'icons/UI_Icons/Advisors/chem_help_advisor.gif',
+	)

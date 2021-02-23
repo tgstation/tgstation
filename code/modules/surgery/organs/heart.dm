@@ -2,11 +2,12 @@
 	name = "heart"
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
+	base_icon_state = "heart"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = 2.5 * STANDARD_ORGAN_DECAY		//designed to fail around 6 minutes after death
+	decay_factor = 2.5 * STANDARD_ORGAN_DECAY //designed to fail around 6 minutes after death
 
 	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
 	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
@@ -15,18 +16,15 @@
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
-	var/icon_base = "heart"
 	attack_verb_continuous = list("beats", "thumps")
 	attack_verb_simple = list("beat", "thump")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
-	var/failed = FALSE		//to prevent constantly running failing code
-	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
+	var/failed = FALSE //to prevent constantly running failing code
+	var/operated = FALSE //whether the heart's been operated on to fix some of its damages
 
 /obj/item/organ/heart/update_icon_state()
-	if(beating)
-		icon_state = "[icon_base]-on"
-	else
-		icon_state = "[icon_base]-off"
+	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
+	return ..()
 
 /obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -47,20 +45,20 @@
 
 /obj/item/organ/heart/proc/Stop()
 	beating = 0
-	update_icon()
+	update_appearance()
 	return 1
 
 /obj/item/organ/heart/proc/Restart()
 	beating = 1
-	update_icon()
+	update_appearance()
 	return 1
 
 /obj/item/organ/heart/OnEatFrom(eater, feeder)
 	. = ..()
 	beating = FALSE
-	update_icon()
+	update_appearance()
 
-/obj/item/organ/heart/on_life()
+/obj/item/organ/heart/on_life(delta_time, times_fired)
 	..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
@@ -76,7 +74,7 @@
 
 		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			H.playsound_local(get_turf(H), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			to_chat(owner, "<span class='notice'>You feel your heart slow down...</span>")
 		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -84,13 +82,13 @@
 
 		if(H.jitteriness)
 			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+				H.playsound_local(get_turf(H), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
+	if(organ_flags & ORGAN_FAILING) //heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
 				"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
@@ -104,7 +102,7 @@
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
-	icon_base = "cursedheart"
+	base_icon_state = "cursedheart"
 	decay_factor = 0
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
@@ -126,7 +124,7 @@
 	else
 		return ..()
 
-/obj/item/organ/heart/cursed/on_life()
+/obj/item/organ/heart/cursed/on_life(delta_time, times_fired)
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
@@ -190,7 +188,7 @@
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/heart/cybernetic/tier2
 	name = "cybernetic heart"
@@ -228,7 +226,7 @@
 						"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
 		addtimer(CALLBACK(src, .proc/Restart), 10 SECONDS)
 
-/obj/item/organ/heart/cybernetic/on_life()
+/obj/item/organ/heart/cybernetic/on_life(delta_time, times_fired)
 	. = ..()
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		used_dose()
@@ -245,12 +243,13 @@
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
 	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
-	var/min_next_adrenaline = 0
+	/// The cooldown until the next time this heart can give the host an adrenaline boost.
+	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/heart/freedom/on_life()
+/obj/item/organ/heart/freedom/on_life(delta_time, times_fired)
 	. = ..()
-	if(owner.health < 5 && world.time > min_next_adrenaline)
-		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
+	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
+		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
 		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
 		owner.heal_overall_damage(15, 15, 0, BODYPART_ORGANIC)
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
