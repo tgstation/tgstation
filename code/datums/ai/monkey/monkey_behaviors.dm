@@ -21,6 +21,10 @@
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 	var/best_force = controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND]
 
+	if(!isturf(living_pawn.loc))
+		finish_action(controller, FALSE)
+		return
+
 	if(!target)
 		finish_action(controller, FALSE)
 		return
