@@ -1734,7 +1734,7 @@
 		var/award_status = user.client.get_award_status(/datum/award/score/intento_score)
 		if(award_score - award_status > 0)
 			award_score -= award_status
-		user.client.give_award(/datum/award/score/intento_score, user, award_score, TRUE)
+		user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
 	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
