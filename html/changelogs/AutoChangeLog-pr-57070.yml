@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "fixes cold reactions not reacting in a few limited cases"

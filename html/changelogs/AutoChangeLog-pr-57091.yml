@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - balance: "Shielded Robes and Mirror Shields can no longer be made from daemon forges."
-  - balance: "Eldritch Longswords and True Nar'sian Hardened Armor can be made from daemon forges. True Nar'sian Hardened Armor has no slowdown, unlike the lavaland version."
-  - balance: "The equipment spell now grants you a cult dagger. Still separate from the other spell so that you can acquire a dagger without being slapped with a validsuit."
-  - balance: "Eldritch longswords and cult daggers have block chance (50% and 25% respectively). Cult daggers cannot block projectiles and the cult ghost longsword only has 25% block chance."
-  - balance: "The cult blindfold only stuns you if you actually are stupid enough to put it over your eyes."
