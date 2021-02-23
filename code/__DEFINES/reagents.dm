@@ -43,3 +43,5 @@
 #define CONDIMASTER_STYLE_FALLBACK "_"
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
+
+#define DEFAULT_REAGENT_TEMPERATURE 300 // the default temperature at which chemicals are added to reagent holders at
