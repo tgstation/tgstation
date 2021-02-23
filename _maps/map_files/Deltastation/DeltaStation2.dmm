@@ -88934,6 +88934,7 @@
 /obj/item/reagent_containers/glass/bowl,
 /obj/effect/turf_decal/bot,
 /obj/item/food/dough,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "oJI" = (
@@ -103598,6 +103599,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/toy/figure/bartender,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "udl" = (
