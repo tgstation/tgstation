@@ -22,7 +22,7 @@
 	tiled_dirt = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
-	///used for floor light that cycle colours
+	///used for light floors that cycle colours
 	var/cycle = FALSE
 
 /turf/open/floor/light/setup_broken_states()
