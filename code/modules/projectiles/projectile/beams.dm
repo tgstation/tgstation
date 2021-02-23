@@ -9,6 +9,9 @@
 	flag = LASER
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
 	light_system = MOVABLE_LIGHT
 	hitscan_light_intensity = 2
 	hitscan_light_range = 0.50
@@ -21,18 +24,28 @@
 	impact_light_color_override = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
+	range = 15
 	reflectable = REFLECT_NORMAL
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
+obj/projectile/beam/Range()
+	if(hitscan != TRUE)
+		return ..()
+	var/turf/location = get_turf(src)
+	if(!location)
+		return ..()
+	var/datum/gas_mixture/environment = location.return_air()
+	var/environment_pressure = environment.return_pressure()
+	if(environment_pressure >= 50)
+		if((decayedRange - range) >= 4)
+			damage *= 0.8
+	. = ..()
 
 /obj/projectile/beam/laser
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
-	hitscan = TRUE
 	wound_bonus = -30
 	bare_wound_bonus = 40
+	hitscan = TRUE
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
@@ -62,9 +75,6 @@
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
 /obj/projectile/beam/weak
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
 	damage = 15
 	hitscan = TRUE
 
@@ -73,9 +83,6 @@
 
 /obj/projectile/beam/practice
 	name = "practice laser"
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
 	damage = 0
 	nodamage = TRUE
 	hitscan = TRUE
@@ -83,9 +90,6 @@
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
 	damage = 5
 	hitscan = TRUE
 
@@ -95,7 +99,6 @@
 	flag = RAD
 	damage = 15
 	irradiate = 300
-	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	hitscan = TRUE
 
