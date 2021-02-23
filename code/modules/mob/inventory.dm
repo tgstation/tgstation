@@ -76,9 +76,7 @@
 	var/list/L
 	for(var/i in 1 to held_items.len)
 		if(!held_items[i])
-			if(!L)
-				L = list()
-			L += i
+			LAZYADD(L, i)
 	return L
 
 /mob/proc/get_held_index_of_item(obj/item/I)

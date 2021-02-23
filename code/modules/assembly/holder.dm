@@ -102,9 +102,9 @@
 	if(.)
 		return
 	if(a_left)
-		a_left.attack_hand(user, modifiers)
+		a_left.attack_hand()
 	if(a_right)
-		a_right.attack_hand(user, modifiers)
+		a_right.attack_hand()
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())

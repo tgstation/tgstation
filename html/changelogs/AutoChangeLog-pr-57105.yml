@@ -1,0 +1,5 @@
+author: "Dex"
+delete-after: True
+changes: 
+  - bugfix: "Push broom will no longer slip you up while sweeping slippery items."
+  - code_imp: "Push broom now sweeps on pre move rather than moved."
