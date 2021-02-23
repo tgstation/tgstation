@@ -80,7 +80,7 @@
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 3, /datum/reagent/consumable/ethanol/beer/light = 5))
 
 /datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
-	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.has_unique_exit)
+	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
 		var/mutable_appearance/flag = mutable_appearance(customer.icon, "french_flag")
 		flag.appearance_flags = RESET_COLOR
-		return
+		return flag

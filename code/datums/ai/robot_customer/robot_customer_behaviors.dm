@@ -95,6 +95,7 @@
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE
+	customer_pawn.update_icon() //They might have a special leaving accesoiry (french flag)
 	if(succeeded)
 		customer_pawn.say(pick(customer_data.leave_happy_lines))
 	else

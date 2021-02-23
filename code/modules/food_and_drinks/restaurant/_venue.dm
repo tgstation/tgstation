@@ -159,7 +159,6 @@
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"
-	icon = 'icons/obj/machines/restaurant_portal.dmi'
 	creation_time = 1 SECONDS
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
