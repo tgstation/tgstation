@@ -31,6 +31,7 @@
 
 	// Strong weapon
 	else if(target.force > best_force)
+		living_pawn.drop_all_held_items()
 		living_pawn.put_in_hands(target)
 		controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND] = target.force
 		finish_action(controller, TRUE)
