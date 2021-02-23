@@ -42,7 +42,7 @@
 	SIGNAL_HANDLER
 
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/sweep)
 
 /**
  * Handles unregistering the sweep proc when the broom is unwielded
@@ -54,13 +54,13 @@
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 /obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	sweep(user, A, FALSE)
+	sweep(user, A)
 
 /**
  * Attempts to push up to BROOM_PUSH_LIMIT atoms from a given location the user's faced direction
@@ -68,29 +68,26 @@
  * Arguments:
  * * user - The user of the pushbroom
  * * A - The atom which is located at the location to push atoms from
- * * moving - Boolean argument declaring if the sweep is from generated from movement or not
  */
-/obj/item/pushbroom/proc/sweep(mob/user, atom/A, moving = TRUE)
+/obj/item/pushbroom/proc/sweep(mob/user, atom/A)
 	SIGNAL_HANDLER
 
-	var/turf/target = moving ? user.loc : (isturf(A) ? A : A.loc)
-	if (!isturf(target))
+	var/turf/current_item_loc = isturf(A) ? A : A.loc
+	if (!isturf(current_item_loc))
 		return
-	if (locate(/obj/structure/table) in target.contents)
-		return
+	var/turf/new_item_loc = get_step(current_item_loc, user.dir)
+	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in new_item_loc.contents
 	var/i = 1
-	var/turf/target_turf = get_step(target, user.dir)
-	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in target_turf.contents
-	for(var/obj/item/garbage in target.contents)
-		if(!garbage.anchored)
+	for (var/obj/item/garbage in current_item_loc.contents)
+		if (!garbage.anchored)
 			if (target_bin)
 				garbage.forceMove(target_bin)
 			else
-				garbage.Move(target_turf, user.dir)
+				garbage.Move(new_item_loc, user.dir)
 			i++
-		if(i > BROOM_PUSH_LIMIT)
+		if (i > BROOM_PUSH_LIMIT)
 			break
-	if(i > 1)
+	if (i > 1)
 		if (target_bin)
 			target_bin.update_appearance()
 			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
