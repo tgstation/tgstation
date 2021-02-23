@@ -29135,8 +29135,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cqu" = (
-/obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29147,6 +29145,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "cqH" = (
@@ -69062,8 +69061,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "hzj" = (
-/obj/structure/table/wood,
-/obj/item/clothing/head/fedora,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -69074,6 +69071,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "hzE" = (
@@ -73925,6 +73923,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/head/fedora,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "jqu" = (
@@ -113571,6 +113570,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "xRL" = (

@@ -22819,13 +22819,12 @@
 /turf/open/floor/iron/dark,
 /area/security/office)
 "ciV" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/restaurant_sign/bar,
-/turf/open/floor/iron,
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/gambling,
+/turf/open/floor/wood,
 /area/service/bar)
 "ciX" = (
 /obj/structure/cable,
@@ -25760,9 +25759,6 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "cAS" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
@@ -40494,7 +40490,6 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
-/obj/structure/restaurant_sign/restaurant,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -42581,9 +42576,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
-	},
-/obj/structure/chair/stool{
-	pixel_y = 8
 	},
 /turf/open/floor/wood,
 /area/service/bar)
@@ -59823,8 +59815,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/service/bar)
 "pds" = (
@@ -68900,6 +68890,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
 /turf/open/floor/wood,
 /area/service/bar)
 "sGh" = (
@@ -74867,6 +74860,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
 /turf/open/floor/wood,
 /area/service/bar)
 "vih" = (
@@ -115819,7 +115815,7 @@ meu
 tIz
 iEa
 jKO
-ciV
+lde
 hmF
 lLh
 twX
@@ -117616,7 +117612,7 @@ rXA
 rSf
 oNP
 vic
-imL
+ciV
 sFA
 mio
 vlj
