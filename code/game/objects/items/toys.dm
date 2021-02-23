@@ -1695,11 +1695,7 @@
 			process_demo()
 
 		if(STATE_END_OF_GAME)
-			var/mob/living/holder = null
-			if(isliving(loc))
-				holder = loc
-
-			process_end(holder)
+			process_end(isliving(loc) ? loc : null)
 
 		if(STATE_RETALIATION)
 			process_retaliation()
