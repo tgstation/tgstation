@@ -1617,13 +1617,12 @@
 
 	/// What state the toy is in.
 	var/state = STATE_OFF
-
-	/// Time to delay until we start processing whatever state we're in
-	var/next_process = 0
-	/// Time until we reset the icon of the Intento
-	var/next_icon_reset = 0
 	/// Index used for iteration of steps for both demo and retaliation states
 	var/index
+	/// Time to delay until we start processing whatever state we're in
+	COOLDOWN_DECLARE(next_process)
+	/// Time until we reset the icon of the Intento
+	COOLDOWN_DECLARE(next_icon_reset)
 
 /obj/item/toy/intento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
 	..()
@@ -1656,7 +1655,7 @@
 	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 
 	state = STATE_STARTING
-	next_process = world.time + TIME_TO_BEGIN
+	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/toy/intento/proc/player_input(mob/player, intent)
@@ -1669,20 +1668,20 @@
 	for(var/i in 1 to player_sequence.len)
 		if(player_sequence[i] != current_sequence[i])
 			state = STATE_END_OF_GAME
-			next_process = world.time + TIME_TO_RESET_ICON
+			COOLDOWN_START(src, next_process, TIME_TO_RESET_ICON)
 			return
 
 	if(player_sequence.len == current_sequence.len)
 		score++
 
 		state = STATE_STARTING
-		next_process = world.time + TIME_TO_BEGIN
+		COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
 
 
 /obj/item/toy/intento/process()
 	if(next_icon_reset && next_icon_reset <= world.time)
 		icon_state = initial(icon_state)
-		next_icon_reset = 0
+		COOLDOWN_RESET(src, next_icon_reset)
 
 	if(next_process && next_process > world.time)
 		return
@@ -1715,14 +1714,14 @@
 /obj/item/toy/intento/proc/process_demo()
 	if(index > length(current_sequence))
 		state = STATE_AWAITING_PLAYER_INPUT
-		next_process = 0
+		COOLDOWN_RESET(src, next_process)
 		return
 
 	var/intent = current_sequence[index]
 	render(intent)
 
 	index += 1
-	next_process = world.time + TIME_PER_DEMO_STEP
+	COOLDOWN_START(src, next_process, TIME_PER_DEMO_STEP)
 
 /obj/item/toy/intento/proc/process_end(mob/user)
 	if(user)
@@ -1756,19 +1755,19 @@
 	switch(intent)
 		if(HELP)
 			to_chat(victim, "<span class='danger'>[src] hugs you to make you feel better!</span>")
-			victim.Dizzy(20)
+			SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 		if(DISARM)
 			to_chat(victim, "<span class='danger'>You're knocked down from a shove by [src]!</span>")
-			victim.Knockdown(20)
+			victim.Knockdown(2 SECONDS)
 		if(GRAB)
 			to_chat(victim, "<span class='danger'>[src] grabs you aggressively!</span>")
-			victim.Stun(20)
+			victim.Stun(2 SECONDS)
 		if(HARM)
 			to_chat(victim, "<span class='danger'>You're punched by [src]!</span>")
 			victim.apply_damage(rand(20, 30), BRUTE)
 
 	index += 1
-	next_process = world.time + TIME_PER_DEMO_STEP
+	COOLDOWN_START(src, next_process, TIME_PER_DEMO_STEP)
 
 /obj/item/toy/intento/proc/cleanup()
 	score = 0
@@ -1777,7 +1776,8 @@
 	current_sequence.Cut()
 
 	state = STATE_OFF
-	next_process = 0
+	COOLDOWN_RESET(src, next_process)
+	STOP_PROCESSING(SSfastprocess, src)
 	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 
 /obj/item/toy/intento/proc/render(input)
@@ -1785,7 +1785,7 @@
 	playsound(src, sound_by_intent[input], 50, FALSE)
 
 	START_PROCESSING(SSfastprocess, src)
-	next_icon_reset = world.time + TIME_TO_RESET_ICON
+	COOLDOWN_START(src, next_icon_reset, TIME_TO_RESET_ICON)
 
 /obj/item/toy/intento/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
