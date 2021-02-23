@@ -96,7 +96,7 @@
 		stored_kit = W
 		stored_kit.Move(src)
 		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
-		AddComponent(/datum/component/electrified_chair, stored_kit)
+		AddComponent(/datum/component/electrified_buckle, stored_kit)
 		return
 
 /obj/structure/chair/attack_tk(mob/user)
