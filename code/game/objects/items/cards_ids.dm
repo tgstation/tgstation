@@ -963,7 +963,7 @@
 	var/obj/item/card/id/target_card = theft_target.resolve()
 	if(target_card)
 		var/list/tgui_region_data = SSid_access.all_region_access_tgui
-		for(var/region in REGION_AREA_STATION)
+		for(var/region in SSid_access.station_regions)
 			regions += tgui_region_data[region]
 
 	data["accesses"] = regions

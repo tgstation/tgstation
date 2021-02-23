@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(id_access)
 
 	/// Dictionary of access flags. Keys are accesses. Values are their associated bitflags.
 	var/list/flags_by_access = list()
+	/// Dictionary of access lists. Keys are access flag names. Values are lists of all accesses as part of that access.
+	var/list/accesses_by_flag = list()
 	/// Dictionary of access flag string representations. Keys are bitflags. Values are their associated names.
 	var/list/access_flag_string_by_flag = list()
 	/// Dictionary of trim singletons. Keys are paths. Values are their associated singletons.
@@ -26,6 +28,8 @@ SUBSYSTEM_DEF(id_access)
 	var/list/station_job_templates = list()
 	/// Helper list containing all PDA paths that can be painted by station machines. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
 	var/list/station_pda_templates = list()
+	/// Helper list containing all station regions.
+	var/list/station_regions = list()
 
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
@@ -45,21 +49,36 @@ SUBSYSTEM_DEF(id_access)
 
 /// Build access flag lists.
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
-	for(var/access in COMMON_ACCESS)
+	accesses_by_flag["[ACCESS_FLAG_COMMON]"] = COMMON_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_COMMON]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_COMMON)
-	for(var/access in COMMAND_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_COMMAND]"] = COMMAND_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_COMMAND]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_COMMAND)
-	for(var/access in PRIVATE_COMMAND_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_PRV_COMMAND]"] = PRIVATE_COMMAND_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_PRV_COMMAND]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_PRV_COMMAND)
-	for(var/access in CAPTAIN_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_CAPTAIN]"] = CAPTAIN_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_CAPTAIN]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_CAPTAIN)
-	for(var/access in CENTCOM_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_CENTCOM]"] = CENTCOM_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_CENTCOM]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_CENTCOM)
-	for(var/access in SYNDICATE_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_SYNDICATE]"] = SYNDICATE_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_SYNDICATE]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_SYNDICATE)
-	for(var/access in AWAY_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_AWAY]"] = AWAY_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_AWAY]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_AWAY)
-	for(var/access in CULT_ACCESS)
+
+	accesses_by_flag["[ACCESS_FLAG_SPECIAL]"] = CULT_ACCESS
+	for(var/access in accesses_by_flag["[ACCESS_FLAG_SPECIAL]"])
 		flags_by_access |= list("[access]" = ACCESS_FLAG_SPECIAL)
 
 	access_flag_string_by_flag["[ACCESS_FLAG_COMMON]"] = ACCESS_FLAG_COMMON_NAME
@@ -88,6 +107,8 @@ SUBSYSTEM_DEF(id_access)
 	accesses_by_region[REGION_SUPPLY] = REGION_ACCESS_SUPPLY
 	accesses_by_region[REGION_COMMAND] = REGION_ACCESS_COMMAND
 	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
+
+	station_regions = REGION_AREA_STATION
 
 	for(var/region in accesses_by_region)
 		var/list/region_access = accesses_by_region[region]
@@ -312,6 +333,16 @@ SUBSYSTEM_DEF(id_access)
 		built_region_list |= accesses_by_region[region]
 
 	return built_region_list
+
+/**
+ * Returns the list of all accesses associated with any given access flag.
+ *
+ * In proc form due to accesses being stored in the list as text instead of numbers.
+ * Arguments:
+ * * flag - The flag to get access for as either a pure number of string representation of the flag.
+ */
+/datum/controller/subsystem/id_access/proc/get_flag_access_list(flag)
+	return accesses_by_flag["[flag]"]
 
 /**
  * Applies a trim singleton to a card.

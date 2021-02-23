@@ -105,10 +105,10 @@
 /datum/id_trim/job/captain/New()
 	. = ..()
 
-	access |= (COMMON_ACCESS + COMMAND_ACCESS)
-	wildcard_access |= (PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS)
-	minimal_access |= (COMMON_ACCESS + COMMAND_ACCESS)
-	minimal_wildcard_access |= (PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS)
+	access |= (SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON) + SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND))
+	wildcard_access |= (SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND) + SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN))
+	minimal_access |= (SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON) + SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND))
+	minimal_wildcard_access |= (SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND) + SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN))
 
 /datum/id_trim/job/cargo_technician
 	assignment = "Cargo Technician"

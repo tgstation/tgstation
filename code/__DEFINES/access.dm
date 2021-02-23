@@ -225,85 +225,243 @@
 /// Name associated with the wildcard bitflag that covers wildcards that have been forced onto an ID card that could not accept them.
 #define WILDCARD_NAME_FORCED "Hacked"
 
-/// Departmental/general/common area accesses.
-#define COMMON_ACCESS 			list(ACCESS_MECH_MINING, ACCESS_MECH_MEDICAL, ACCESS_MECH_SECURITY, ACCESS_MECH_SCIENCE, \
-								ACCESS_MECH_ENGINE, ACCESS_AUX_BASE, ACCESS_PSYCHOLOGY, ACCESS_PHARMACY, ACCESS_NETWORK, \
-								ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_SEC_DOORS, ACCESS_XENOBIOLOGY, \
-								ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_RESEARCH, ACCESS_THEATRE, \
-								ACCESS_SURGERY, ACCESS_COURT, ACCESS_QM, ACCESS_VIROLOGY, ACCESS_LAWYER, ACCESS_LIBRARY, \
-								ACCESS_HYDROPONICS, ACCESS_CHEMISTRY, ACCESS_CONSTRUCTION, ACCESS_CARGO, ACCESS_ROBOTICS, \
-								ACCESS_KITCHEN, ACCESS_CREMATORIUM, ACCESS_JANITOR, ACCESS_BAR, ACCESS_CHAPEL_OFFICE, \
-								ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS, ACCESS_ENGINE_EQUIP, ACCESS_ENGINE, \
-								ACCESS_GENETICS, ACCESS_RND, ACCESS_MORGUE, ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS, \
-								ACCESS_BRIG, ACCESS_SECURITY)
-/// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves.
-#define COMMAND_ACCESS 			list(ACCESS_TOXINS_STORAGE, ACCESS_MINISAT, ACCESS_TCOMSAT, ACCESS_KEYCARD_AUTH, \
-								ACCESS_RC_ANNOUNCE, ACCESS_VAULT, ACCESS_ATMOSPHERICS, ACCESS_TECH_STORAGE, ACCESS_HEADS, \
-								ACCESS_TELEPORTER, ACCESS_ARMORY, ACCESS_AI_UPLOAD, ACCESS_CHANGE_IDS, ACCESS_TOXINS, \
-								ACCESS_EVA, ACCESS_GATEWAY, ACCESS_ALL_PERSONAL_LOCKERS)
-/// Private head of staff offices, usually only granted to most cards by trimming
-#define PRIVATE_COMMAND_ACCESS 	list(ACCESS_HOS, ACCESS_HOP, ACCESS_CE, ACCESS_CMO, ACCESS_RD)
-/// Captains private rooms.
-#define CAPTAIN_ACCESS 			list(ACCESS_CAPTAIN)
-/// Centcom area stuff.
-#define CENTCOM_ACCESS 			list(ACCESS_CENT_BAR, ACCESS_CENT_CAPTAIN, ACCESS_CENT_TELEPORTER, ACCESS_CENT_STORAGE,\
-								ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_THUNDER, \
-								ACCESS_CENT_GENERAL)
-/// Syndicate areas off station.
-#define SYNDICATE_ACCESS 		list(ACCESS_SYNDICATE_LEADER, ACCESS_SYNDICATE)
-/// Away missions/gateway/space ruins.
-#define AWAY_ACCESS 			list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_MED, ACCESS_AWAY_SEC, ACCESS_AWAY_ENGINE, \
-								ACCESS_AWAY_GENERIC1, ACCESS_AWAY_GENERIC2, ACCESS_AWAY_GENERIC3, ACCESS_AWAY_GENERIC4)
-/// Weird internal Cult access that prevents non-cult from using their doors.
-#define CULT_ACCESS 			list(ACCESS_BLOODCULT)
+/// Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
+#define COMMON_ACCESS list( \
+	ACCESS_MECH_MINING, \
+	ACCESS_MECH_MEDICAL, \
+	ACCESS_MECH_SECURITY, \
+	ACCESS_MECH_SCIENCE, \
+	ACCESS_MECH_ENGINE, \
+	ACCESS_AUX_BASE, \
+	ACCESS_PSYCHOLOGY, \
+	ACCESS_PHARMACY, \
+	ACCESS_NETWORK, \
+	ACCESS_WEAPONS, \
+	ACCESS_MINERAL_STOREROOM, \
+	ACCESS_SEC_DOORS, \
+	ACCESS_XENOBIOLOGY, \
+	ACCESS_MINING_STATION, \
+	ACCESS_MAILSORTING, \
+	ACCESS_MINING, \
+	ACCESS_RESEARCH, \
+	ACCESS_THEATRE, \
+	ACCESS_SURGERY, \
+	ACCESS_COURT, \
+	ACCESS_QM, \
+	ACCESS_VIROLOGY, \
+	ACCESS_LAWYER, \
+	ACCESS_LIBRARY, \
+	ACCESS_HYDROPONICS, \
+	ACCESS_CHEMISTRY, \
+	ACCESS_CONSTRUCTION, \
+	ACCESS_CARGO, \
+	ACCESS_ROBOTICS, \
+	ACCESS_KITCHEN, \
+	ACCESS_CREMATORIUM, \
+	ACCESS_JANITOR, \
+	ACCESS_BAR, \
+	ACCESS_CHAPEL_OFFICE, \
+	ACCESS_EXTERNAL_AIRLOCKS, \
+	ACCESS_MAINT_TUNNELS, \
+	ACCESS_ENGINE_EQUIP, \
+	ACCESS_ENGINE, \
+	ACCESS_GENETICS, \
+	ACCESS_RND, \
+	ACCESS_MORGUE, \
+	ACCESS_MEDICAL, \
+	ACCESS_FORENSICS_LOCKERS, \
+	ACCESS_BRIG, \
+	ACCESS_SECURITY, \
+)
+
+/// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
+#define COMMAND_ACCESS list( \
+	ACCESS_TOXINS_STORAGE, \
+	ACCESS_MINISAT, \
+	ACCESS_TCOMSAT, \
+	ACCESS_KEYCARD_AUTH, \
+	ACCESS_RC_ANNOUNCE, \
+	ACCESS_VAULT, \
+	ACCESS_ATMOSPHERICS, \
+	ACCESS_TECH_STORAGE, \
+	ACCESS_HEADS, \
+	ACCESS_TELEPORTER, \
+	ACCESS_ARMORY, \
+	ACCESS_AI_UPLOAD, \
+	ACCESS_CHANGE_IDS, \
+	ACCESS_TOXINS, \
+	ACCESS_EVA, \
+	ACCESS_GATEWAY, \
+	ACCESS_ALL_PERSONAL_LOCKERS, \
+)
+
+/// Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)
+#define PRIVATE_COMMAND_ACCESS list( \
+	ACCESS_HOS, \
+	ACCESS_HOP, \
+	ACCESS_CE, \
+	ACCESS_CMO, \
+	ACCESS_RD, \
+)
+
+/// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
+#define CAPTAIN_ACCESS list( \
+	ACCESS_CAPTAIN, \
+)
+/// Centcom area stuff. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CENTCOM)
+#define CENTCOM_ACCESS list( \
+	ACCESS_CENT_BAR, \
+	ACCESS_CENT_CAPTAIN, \
+	ACCESS_CENT_TELEPORTER, \
+	ACCESS_CENT_STORAGE, \
+	ACCESS_CENT_LIVING, \
+	ACCESS_CENT_MEDICAL, \
+	ACCESS_CENT_SPECOPS, \
+	ACCESS_CENT_THUNDER, \
+	ACCESS_CENT_GENERAL, \
+)
+
+/// Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)
+#define SYNDICATE_ACCESS list( \
+	ACCESS_SYNDICATE_LEADER, \
+	ACCESS_SYNDICATE, \
+)
+
+/// Away missions/gateway/space ruins.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_AWAY)
+#define AWAY_ACCESS list( \
+	ACCESS_AWAY_GENERAL, \
+	ACCESS_AWAY_MAINT, \
+	ACCESS_AWAY_MED, \
+	ACCESS_AWAY_SEC, \
+	ACCESS_AWAY_ENGINE, \
+	ACCESS_AWAY_GENERIC1, \
+	ACCESS_AWAY_GENERIC2, \
+	ACCESS_AWAY_GENERIC3, \
+	ACCESS_AWAY_GENERIC4, \
+)
+
+/// Weird internal Cult access that prevents non-cult from using their doors.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SPECIAL)
+#define CULT_ACCESS list( \
+	ACCESS_BLOODCULT, \
+)
 
 /// Name for the Global region.
-#define REGION_ALL_GLOBAL				"All"
+#define REGION_ALL_GLOBAL "All"
 /// Used to seed the accesses_by_region list in SSid_access. A list of every single access in the game.
-#define REGION_ACCESS_ALL_GLOBAL 		REGION_ACCESS_ALL_STATION + CENTCOM_ACCESS + SYNDICATE_ACCESS + AWAY_ACCESS + CULT_ACCESS
+#define REGION_ACCESS_ALL_GLOBAL REGION_ACCESS_ALL_STATION + CENTCOM_ACCESS + SYNDICATE_ACCESS + AWAY_ACCESS + CULT_ACCESS
 /// Name for the Station All Access region.
-#define REGION_ALL_STATION				"Station"
+#define REGION_ALL_STATION "Station"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all station accesses.
-#define REGION_ACCESS_ALL_STATION 		COMMON_ACCESS + COMMAND_ACCESS + PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS
+#define REGION_ACCESS_ALL_STATION COMMON_ACCESS + COMMAND_ACCESS + PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS
 /// Name for the General region.
-#define REGION_GENERAL					"General"
+#define REGION_GENERAL "General"
 /// Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.
-#define REGION_ACCESS_GENERAL 			list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, \
-										ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER)
+#define REGION_ACCESS_GENERAL list( \
+	ACCESS_KITCHEN, \
+	ACCESS_BAR, \
+	ACCESS_HYDROPONICS, \
+	ACCESS_JANITOR, \
+	ACCESS_CHAPEL_OFFICE, \
+	ACCESS_CREMATORIUM, \
+	ACCESS_LIBRARY, \
+	ACCESS_THEATRE, \
+	ACCESS_LAWYER, \
+)
 /// Name for the Security region.
-#define REGION_SECURITY					"Security"
+#define REGION_SECURITY "Security"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all security regional accesses that are overseen by the HoS.
-#define REGION_ACCESS_SECURITY 			list(ACCESS_SEC_DOORS, ACCESS_WEAPONS, ACCESS_SECURITY, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, \
-										ACCESS_COURT, ACCESS_MECH_SECURITY, ACCESS_HOS)
+#define REGION_ACCESS_SECURITY list( \
+	ACCESS_SEC_DOORS, \
+	ACCESS_WEAPONS, \
+	ACCESS_SECURITY, \
+	ACCESS_BRIG, \
+	ACCESS_ARMORY, \
+	ACCESS_FORENSICS_LOCKERS, \
+	ACCESS_COURT, \
+	ACCESS_MECH_SECURITY, \
+	ACCESS_HOS, \
+)
 /// Name for the Medbay region.
-#define REGION_MEDBAY					"Medbay"
+#define REGION_MEDBAY "Medbay"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
-#define REGION_ACCESS_MEDBAY 			list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_SURGERY, ACCESS_MECH_MEDICAL, \
-										ACCESS_CMO, ACCESS_PHARMACY, ACCESS_PSYCHOLOGY)
+#define REGION_ACCESS_MEDBAY list( \
+	ACCESS_MEDICAL, \
+	ACCESS_MORGUE, \
+	ACCESS_CHEMISTRY, \
+	ACCESS_VIROLOGY, \
+	ACCESS_SURGERY, \
+	ACCESS_MECH_MEDICAL, \
+	ACCESS_CMO, \
+	ACCESS_PHARMACY, \
+	ACCESS_PSYCHOLOGY, \
+)
 /// Name for the Research region.
-#define REGION_RESEARCH					"Research"
+#define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
-#define REGION_ACCESS_RESEARCH 			list(ACCESS_RESEARCH, ACCESS_RND, ACCESS_TOXINS, ACCESS_TOXINS_STORAGE, ACCESS_GENETICS, ACCESS_ROBOTICS, \
-										ACCESS_XENOBIOLOGY, ACCESS_MECH_SCIENCE, ACCESS_MINISAT, ACCESS_RD, ACCESS_NETWORK)
+#define REGION_ACCESS_RESEARCH list( \
+	ACCESS_RESEARCH, \
+	ACCESS_RND, \
+	ACCESS_TOXINS, \
+	ACCESS_TOXINS_STORAGE, \
+	ACCESS_GENETICS, \
+	ACCESS_ROBOTICS, \
+	ACCESS_XENOBIOLOGY, \
+	ACCESS_MECH_SCIENCE, \
+	ACCESS_MINISAT, \
+	ACCESS_RD, \
+	ACCESS_NETWORK, \
+)
 /// Name for the Engineering region.
-#define REGION_ENGINEERING				"Engineering"
+#define REGION_ENGINEERING "Engineering"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
-#define REGION_ACCESS_ENGINEERING 		list(ACCESS_CONSTRUCTION, ACCESS_AUX_BASE, ACCESS_MAINT_TUNNELS, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, \
-										ACCESS_EXTERNAL_AIRLOCKS, ACCESS_TECH_STORAGE, ACCESS_ATMOSPHERICS, ACCESS_MECH_ENGINE, ACCESS_TCOMSAT, ACCESS_MINISAT, ACCESS_CE)
+#define REGION_ACCESS_ENGINEERING list( \
+	ACCESS_CONSTRUCTION, \
+	ACCESS_AUX_BASE, \
+	ACCESS_MAINT_TUNNELS, \
+	ACCESS_ENGINE, \
+	ACCESS_ENGINE_EQUIP, \
+	ACCESS_EXTERNAL_AIRLOCKS, \
+	ACCESS_TECH_STORAGE, \
+	ACCESS_ATMOSPHERICS, \
+	ACCESS_MECH_ENGINE, \
+	ACCESS_TCOMSAT, \
+	ACCESS_MINISAT, \
+	ACCESS_CE, \
+)
 /// Name for the Supply region.
-#define REGION_SUPPLY					"Supply"
+#define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
-#define REGION_ACCESS_SUPPLY 			list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM, \
-										ACCESS_CARGO, ACCESS_QM, ACCESS_VAULT)
+#define REGION_ACCESS_SUPPLY list( \
+	ACCESS_MAILSORTING, \
+	ACCESS_MINING, \
+	ACCESS_MINING_STATION, \
+	ACCESS_MECH_MINING, \
+	ACCESS_MINERAL_STOREROOM, \
+	ACCESS_CARGO, \
+	ACCESS_QM, \
+	ACCESS_VAULT, \
+)
 /// Name for the Command region.
-#define REGION_COMMAND					"Command"
+#define REGION_COMMAND "Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all command regional accesses that are overseen by the Captain.
-#define REGION_ACCESS_COMMAND 			list(ACCESS_HEADS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_TELEPORTER, \
-										ACCESS_EVA, ACCESS_GATEWAY, ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_HOP, ACCESS_CAPTAIN, ACCESS_VAULT)
+#define REGION_ACCESS_COMMAND list( \
+	ACCESS_HEADS, \
+	ACCESS_RC_ANNOUNCE, \
+	ACCESS_KEYCARD_AUTH, \
+	ACCESS_CHANGE_IDS, \
+	ACCESS_AI_UPLOAD, \
+	ACCESS_TELEPORTER, \
+	ACCESS_EVA, \
+	ACCESS_GATEWAY, \
+	ACCESS_ALL_PERSONAL_LOCKERS, \
+	ACCESS_HOP, \
+	ACCESS_CAPTAIN, \
+	ACCESS_VAULT, \
+)
 /// Name for the Centcom region.
-#define REGION_CENTCOM					"Central Command"
+#define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
-#define REGION_ACCESS_CENTCOM 			CENTCOM_ACCESS
+#define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
 
 /**
  * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
@@ -341,10 +499,19 @@
 	/obj/item/pda/bar = list(REGION_GENERAL), \
 	/obj/item/pda/atmos = list(REGION_ENGINEERING), \
 	/obj/item/pda/chemist = list(REGION_MEDBAY), \
-	/obj/item/pda/geneticist = list(REGION_RESEARCH), )
+	/obj/item/pda/geneticist = list(REGION_RESEARCH), \
+)
 
-/// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not.
-#define REGION_AREA_STATION	list(REGION_GENERAL, REGION_SECURITY, REGION_MEDBAY, REGION_RESEARCH, REGION_ENGINEERING, REGION_SUPPLY, REGION_COMMAND)
+/// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
+#define REGION_AREA_STATION list( \
+	REGION_GENERAL, \
+	REGION_SECURITY, \
+	REGION_MEDBAY, \
+	REGION_RESEARCH, \
+	REGION_ENGINEERING, \
+	REGION_SUPPLY, \
+	REGION_COMMAND, \
+)
 
 /// Used in ID card access adding procs. Will try to add all accesses and utilises free wildcards, skipping over any accesses it can't add.
 #define TRY_ADD_ALL 0

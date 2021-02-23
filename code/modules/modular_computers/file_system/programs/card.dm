@@ -275,7 +275,7 @@
 	if(is_centcom)
 		regions += list(tgui_region_data[REGION_CENTCOM])
 	else
-		for(var/region in REGION_AREA_STATION)
+		for(var/region in SSid_access.station_regions)
 			if((minor || target_dept) && !(region in region_access))
 				continue
 			regions += tgui_region_data[region]

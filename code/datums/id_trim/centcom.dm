@@ -36,7 +36,7 @@
 /datum/id_trim/centcom/intern/head/New()
 	. = ..()
 
-	access |= COMMON_ACCESS
+	access |= SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
 
 /// Trim for Centcom Bartenders.
 /datum/id_trim/centcom/bartender
