@@ -175,7 +175,8 @@
  */
 /datum/computer_file/program/science/proc/compress_id(id)
 	if (!id_cache[id])
-		id_cache[id] = id_cache_seq++
+		id_cache[id] = id_cache_seq
+		id_cache_seq += 1
 	return id_cache[id]
 
 /datum/computer_file/program/science/proc/research_node(id, mob/user)
@@ -201,15 +202,13 @@
 				if(istype(idcard))
 					logname = "User: [idcard.registered_name]"
 			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				var/obj/item/worn = H.wear_id
+				var/mob/living/carbon/human/human_user = user
+				var/obj/item/worn = human_user.wear_id
 				if(istype(worn))
-					var/obj/item/card/id/ID = worn.GetID()
-					if(istype(ID))
-						logname = "User: [ID.registered_name]"
-			var/sci_log_len = stored_research.research_logs.len
-			stored_research.research_logs += null
-			stored_research.research_logs[++sci_log_len] = list(tech_node.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])")
+					var/obj/item/card/id/id_card_of_human_user = worn.GetID()
+					if(istype(id_card_of_human_user))
+						logname = "User: [id_card_of_human_user.registered_name]"
+			stored_research.research_logs = list(list(tech_node.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])"))
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")

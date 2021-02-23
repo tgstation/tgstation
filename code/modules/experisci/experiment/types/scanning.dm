@@ -77,18 +77,16 @@
  * * target - The atom to attempt to scan
  */
 /datum/experiment/scanning/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
-	var/idx = get_contributing_index(target)
-	if (idx)
-		scanned[idx] += traits & EXP_TRAIT_DESTRUCTIVE ? 1 : target
+	var/contributing_index_value = get_contributing_index(target)
+	if (contributing_index_value)
+		scanned[contributing_index_value] += traits & EXP_TRAIT_DESTRUCTIVE ? 1 : target
 		if(traits & EXP_TRAIT_DESTRUCTIVE && !isliving(target))//only qdel things when destructive scanning and they're not living (living things get gibbed)
 			qdel(target)
-		do_after_experiment(target, idx)
+		do_after_experiment(target, contributing_index_value)
 		return TRUE
 
 /datum/experiment/scanning/actionable(datum/component/experiment_handler/experiment_handler, atom/target)
-	. = ..()
-	if (.)
-		return get_contributing_index(target)
+	return ..() && get_contributing_index(target)
 
 /**
  * Attempts to get the typepath for an atom that would contribute to the experiment

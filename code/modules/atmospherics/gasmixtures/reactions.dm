@@ -170,13 +170,13 @@ nobiliumsuppression = INFINITY
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
 		cached_results["fire"] += burned_fuel
-		
+
 	else
 		burned_fuel = cached_gases[/datum/gas/tritium][MOLES]
 
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
-		
+
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 
@@ -645,7 +645,7 @@ nobiliumsuppression = INFINITY
 		return NO_REACTION
 	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 10 * nob_formed
-	cached_gases[/datum/gas/hypernoblium][MOLES]+= nob_formed
+	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed
 
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()

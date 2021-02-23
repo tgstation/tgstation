@@ -159,6 +159,7 @@ export const ExperimentConfigure = (props, context) => {
                 fluid
                 className="ExperimentConfigure__PerformExperiment"
                 onClick={() => act("start_experiment_callback")}
+                disabled={!experiments.some(e => e.selected)}
                 icon="flask">
                 Perform Experiment
               </Button>

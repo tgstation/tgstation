@@ -226,15 +226,33 @@
 			return FALSE
 	return TRUE
 
+/**
+ * Checks if all experiments have been completed for a given node on this techweb
+ *
+ * Arguments:
+ * * node - the node to check
+ */
 /datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
 	. = TRUE
 	for (var/experiment_type in node.required_experiments)
 		if (!completed_experiments[experiment_type])
 			return FALSE
 
+/**
+ * Checks if a node can be unlocked on this techweb, having the required points and experiments
+ *
+ * Arguments:
+ * * node - the node to check
+ */
 /datum/techweb/proc/can_unlock_node(datum/techweb_node/node)
 	return can_afford(node.get_price(src)) && have_experiments_for_node(node)
 
+/**
+ * Adds an experiment to this techweb by its type, ensures that no duplicates are added.
+ *
+ * Arguments:
+ * * experiment_type - the type of the experiment to add
+ */
 /datum/techweb/proc/add_experiment(experiment_type)
 	. = TRUE
 	// check active experiments for experiment of this type
@@ -249,12 +267,24 @@
 			return FALSE
 	available_experiments += new experiment_type()
 
+/**
+ * Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.
+ *
+ * Arguments:
+ * * experiment_list - the list of types of experiments to add
+ */
 /datum/techweb/proc/add_experiments(list/experiment_list)
 	. = TRUE
-	for (var/experi_increment in experiment_list)
-		var/datum/experiment/Experi = experi_increment
-		. = . && add_experiment(Experi)
+	for (var/experiment_type in experiment_list)
+		var/datum/experiment/experiment = experiment_type
+		. = . && add_experiment(experiment)
 
+/**
+ * Notifies the techweb that an experiment has been completed, updating internal state of the techweb to reflect this.
+ *
+ * Arguments:
+ * * completed_experiment - the experiment which was completed
+ */
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
 	completed_experiments[completed_experiment.type] = completed_experiment
@@ -287,9 +317,8 @@
 		add_design_by_id(id)
 	update_node_status(node)
 	if(get_that_dosh)
-		var/datum/bank_account/sci_dept = SSeconomy.get_dep_account(ACCOUNT_SCI)
-		if(sci_dept)
-			sci_dept.adjust_money(SSeconomy.techweb_bounty)
+		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only

@@ -215,7 +215,8 @@ Nothing else in the console has ID requirements.
  */
 /obj/machinery/computer/rdconsole/proc/compress_id(id)
 	if (!id_cache[id])
-		id_cache[id] = id_cache_seq++
+		id_cache[id] = id_cache_seq
+		id_cache_seq += 1
 	return id_cache[id]
 
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)

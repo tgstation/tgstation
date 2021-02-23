@@ -179,7 +179,7 @@
 	return TRUE
 
 /obj/machinery/doppler_array/powered()
-	return anchored ? ..() : FALSE
+	return anchored && ..()
 
 /obj/machinery/doppler_array/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -208,8 +208,7 @@
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 
 /obj/machinery/doppler_array/research/attackby(obj/item/I, mob/user, params)
-	if (default_deconstruction_screwdriver(user, "tdoppler", "tdoppler", I) \
-		|| default_deconstruction_crowbar(I))
+	if (default_deconstruction_screwdriver(user, "tdoppler", "tdoppler", I) || default_deconstruction_crowbar(I))
 		update_icon()
 		return
 	return ..()

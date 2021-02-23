@@ -33,14 +33,16 @@
  * * start_experiment_callback - When provided adds a UI button to use this callback to the start the experiment
  */
 /datum/component/experiment_handler/Initialize(allowed_experiments = list(),
-												blacklisted_experiments = list(),
-												config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
-												disallowed_traits = null,
-												config_flags = null,
-												var/datum/callback/start_experiment_callback = null)
+	blacklisted_experiments = list(),
+	config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
+	disallowed_traits = null,
+	config_flags = null,
+	datum/callback/start_experiment_callback = null,
+)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
 	src.disallowed_traits = disallowed_traits
@@ -71,9 +73,9 @@
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
 		var/list/found_servers = get_available_servers(parent)
-		var/obj/machinery/rnd/server/s = found_servers.len ? found_servers[1] : null
-		if (s)
-			link_techweb(s.stored_research)
+		var/obj/machinery/rnd/server/selected_server = found_servers.len ? found_servers[1] : null
+		if (selected_server)
+			link_techweb(selected_server.stored_research)
 
 	GLOB.experiment_handlers += src
 
@@ -99,7 +101,7 @@
 	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
 		return
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-	to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
+	to_chat(user, "<span class='notice'>[target] is not related to your currently selected experiment.</span>")
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -113,27 +115,27 @@
 	var/list/arguments = list(src)
 	arguments = args.len > 1 ? arguments + args.Copy(2) : arguments
 	if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
-		for (var/datum/experiment/e in linked_web.available_experiments)
-			if (e.actionable(arglist(arguments)))
+		for (var/datum/experiment/experiment in linked_web.available_experiments)
+			if (experiment.actionable(arglist(arguments)))
 				return TRUE
 	else
-		. = selected_experiment.actionable(arglist(arguments))
+		return selected_experiment.actionable(arglist(arguments))
 
 /**
  * This proc exists because Jared Fogle really likes async
  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
-		to_chat(user, "<span>You do not have an experiment selected!.</span>")
+		to_chat(user, "<span class='notice'>You do not have an experiment selected!</span>")
 		return
-	if(!do_after(user, 10, target = target))
+	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
-		to_chat(user, "<span>You scan \the [target.name].</span>")
+		to_chat(user, "<span class='notice'>You scan [target].</span>")
 	else
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
+		to_chat(user, "<span class='notice'>[target] is not related to your currently selected experiment.</span>")
 
 
 /**
@@ -144,15 +146,16 @@
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
 		playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(our_scanner, "<span>No experiment selected!.</span>")
+		to_chat(our_scanner, "<span class='notice'>No experiment selected!</span>")
 		return
 	var/successful_scan
 	for(var/scan_target in scanned_atoms)
 		if(action_experiment(source, scan_target))
 			successful_scan = TRUE
+			break
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
-		to_chat(our_scanner, "<span>The scan succeeds.</span>")
+		to_chat(our_scanner, "<span class='notice'>The scan succeeds.</span>")
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
@@ -160,7 +163,8 @@
  * Hooks on successful explosions on the doppler array this is attached to
  */
 /datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range,
-	heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+	heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range
+)
 	SIGNAL_HANDLER
 	var/atom/movable/our_array = parent
 	if(action_experiment(source, devastation_range, heavy_impact_range, light_impact_range))
@@ -199,15 +203,21 @@
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		return FALSE
 
-	// Attempt to run
+	// Get arguments for passing to the experiment[s]
 	var/list/arguments = list(src)
 	arguments = args.len > 1 ? arguments + args.Copy(2) : arguments
+
+	// Check if this handler is configured to be always active, in which case we
+	// attempt to action every experiment that is available to this handler.
 	if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
-		for (var/datum/experiment/e in linked_web.available_experiments)
-			. = e.actionable(arglist(arguments)) && e.perform_experiment(arglist(arguments))
+		var/any_success
+		for (var/datum/experiment/experiment in linked_web.available_experiments)
+			if (experiment.actionable(arglist(arguments)) && experiment.perform_experiment(arglist(arguments)))
+				any_success = TRUE
+		return any_success
 	else
 		// Returns true if the experiment was succesfuly handled
-		. = selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
+		return selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
 
 /**
  * Hook for handling UI interaction via signals
@@ -261,11 +271,11 @@
  * Attempts to link this experiment_handler to a provided experiment
  *
  * Arguments:
- * * e - The experiment to attempt to link to
+ * * experiment - The experiment to attempt to link to
  */
-/datum/component/experiment_handler/proc/link_experiment(datum/experiment/experi)
-	if (experi && can_select_experiment(experi))
-		selected_experiment = experi
+/datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
+	if (experiment && can_select_experiment(experiment))
+		selected_experiment = experiment
 
 /**
  * Unlinks this handler from the selected experiment
@@ -277,33 +287,33 @@
  * Attempts to get rnd servers on the same z-level as a provided turf
  *
  * Arguments:
- * * pos - The turf to get servers on the same z-level of
+ * * turf_to_check_for_servers - The turf to get servers on the same z-level of
  */
-/datum/component/experiment_handler/proc/get_available_servers(turf/pos = null)
-	if (!pos)
-		pos = get_turf(parent)
+/datum/component/experiment_handler/proc/get_available_servers(turf/turf_to_check_for_servers = null)
+	if (!turf_to_check_for_servers)
+		turf_to_check_for_servers = get_turf(parent)
 	var/list/local_servers = list()
-	for (var/obj/machinery/rnd/server/serv in SSresearch.servers)
-		var/turf/s_pos = get_turf(serv)
-		if (pos && s_pos && s_pos.z == pos.z)
-			local_servers += serv
+	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
+		var/turf/position_of_this_server_machine = get_turf(server)
+		if (turf_to_check_for_servers && position_of_this_server_machine && position_of_this_server_machine.z == turf_to_check_for_servers.z)
+			local_servers += server
 	return local_servers
 
 /**
  * Checks if an experiment is valid to be selected by this handler
  *
  * Arguments:
- * * e - The experiment to check
+ * * experiment - The experiment to check
  */
-/datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/experi)
+/datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/experiment)
 	// Check that this experiments has no disallowed traits
-	if (experi.traits & disallowed_traits)
+	if (experiment.traits & disallowed_traits)
 		return FALSE
 
 	// Check against the list of allowed experimentors
-	if (experi.allowed_experimentors && experi.allowed_experimentors.len)
+	if (experiment.allowed_experimentors && experiment.allowed_experimentors.len)
 		var/matched = FALSE
-		for (var/experimentor in experi.allowed_experimentors)
+		for (var/experimentor in experiment.allowed_experimentors)
 			if (istype(parent, experimentor))
 				matched = TRUE
 				break
@@ -311,17 +321,17 @@
 			return FALSE
 
 	// Check that this experiment is visible currently
-	if (!linked_web || !(experi in linked_web.available_experiments))
+	if (!linked_web || !(experiment in linked_web.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted
 	for (var/badsci in blacklisted_experiments)
-		if (istype(experi, badsci))
+		if (istype(experiment, badsci))
 			return FALSE
 
 	// Check against the allowed experiment types
 	for (var/goodsci in allowed_experiments)
-		if (istype(experi, goodsci))
+		if (istype(experiment, goodsci))
 			return TRUE
 
 	// If we haven't returned yet then this shouldn't be allowed
@@ -337,30 +347,30 @@
 /datum/component/experiment_handler/ui_data(mob/user)
 	. = list(
 		"always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE,
-		"has_start_callback" = !!start_experiment_callback)
+		"has_start_callback" = !isnull(start_experiment_callback))
 	.["servers"] = list()
-	for (var/obj/machinery/rnd/server/serv in get_available_servers())
+	for (var/obj/machinery/rnd/server/server in get_available_servers())
 		var/list/data = list(
-			name = serv.name,
-			web_id = serv.stored_research ? serv.stored_research.id : null,
-			web_org = serv.stored_research ? serv.stored_research.organization : null,
-			location = get_area(serv),
-			selected = linked_web && serv.stored_research ? serv.stored_research == linked_web : FALSE,
-			ref = REF(serv)
+			name = server.name,
+			web_id = server.stored_research?.id,
+			web_org = server.stored_research?.organization,
+			location = get_area(server),
+			selected = !isnull(linked_web) && server.stored_research == linked_web,
+			ref = REF(server)
 		)
 		.["servers"] += list(data)
 	.["experiments"] = list()
 	if (linked_web)
-		for (var/datum/experiment/experi in linked_web.available_experiments)
+		for (var/datum/experiment/experiment in linked_web.available_experiments)
 			var/list/data = list(
-				name = experi.name,
-				description = experi.description,
-				tag = experi.exp_tag,
-				selectable = can_select_experiment(experi),
-				selected = selected_experiment == experi,
-				progress = experi.check_progress(),
-				performance_hint = experi.performance_hint,
-				ref = REF(experi)
+				name = experiment.name,
+				description = experiment.description,
+				tag = experiment.exp_tag,
+				selectable = can_select_experiment(experiment),
+				selected = selected_experiment == experiment,
+				progress = experiment.check_progress(),
+				performance_hint = experiment.performance_hint,
+				ref = REF(experiment)
 			)
 			.["experiments"] += list(data)
 
