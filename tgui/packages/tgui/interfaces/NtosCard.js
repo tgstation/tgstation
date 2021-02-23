@@ -198,7 +198,7 @@ const IDCardTarget = (props, context) => {
         icon="eject"
         content={id_name}
         onClick={() => act('PRG_ejectmodid')} />
-      {(has_id && authenticatedUser) && (
+      {!!(has_id && authenticatedUser) && (
         <>
           <Stack mt={1}>
             <Stack.Item align="center">
@@ -239,7 +239,7 @@ const IDCardTarget = (props, context) => {
             </Stack.Item>
           </Stack>
         </>
-      ) || false}
+      )}
     </Section>
   );
 };
@@ -252,8 +252,9 @@ const TemplateDropdown = (props, context) => {
 
   const templateKeys = Object.keys(templates);
 
-  if (!templateKeys.length)
-  { return; }
+  if (!templateKeys.length) {
+    return;
+  }
 
   return (
     <Stack>
