@@ -102,9 +102,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/mob_negates_gravity()
-	. = ..()
-	var/obj/structure/spider/stickyweb/web = locate() in loc
-	return (. || web)
+	return ..() || (locate(/obj/structure/spider/stickyweb) in loc)
 
 /**
  * # Spider Hunter
