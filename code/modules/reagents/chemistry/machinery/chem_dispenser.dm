@@ -29,6 +29,7 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
+	var/dispense_temperature = DEFAULT_REAGENT_TEMPERATURE
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -253,7 +254,7 @@
 					if(!cell.use(actual / powerefficiency))
 						say("Not enough energy to complete operation!")
 						return
-					R.add_reagent(reagent, actual)
+					R.add_reagent(reagent, actual, reagtemp = dispense_temperature)
 
 					work_animation()
 			else
@@ -291,7 +292,7 @@
 						if(!cell.use(actual / powerefficiency))
 							say("Not enough energy to complete operation!")
 							return
-						R.add_reagent(reagent, actual)
+						R.add_reagent(reagent, actual, reagtemp = dispensed_temperature)
 						work_animation()
 				else
 					recording_recipe[key] += dispense_amount
@@ -368,7 +369,7 @@
 	if(beaker?.reagents)
 		R += beaker.reagents
 	for(var/i in 1 to total)
-		Q.add_reagent(pick(dispensable_reagents), 10)
+		Q.add_reagent(pick(dispensable_reagents), 10, reagtemp = dispensed_temperature)
 	R += Q
 	chem_splash(get_turf(src), 3, R)
 	if(beaker?.reagents)
@@ -449,6 +450,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
+	dispensed_temperature = 274 // cold enough that ice won't melt
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
