@@ -16,8 +16,6 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
-	///Delay between atom movements, if this is not a multiplication of the delay in
-	var/move_delay
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
