@@ -62,21 +62,6 @@ SUBSYSTEM_DEF(eigenstates)
 	id_counter = 1
 	return ..()
 
-///Processes through eigenlinks to ensure that there are no nulls
-/datum/controller/subsystem/eigenstates/proc/repair_eigenlink(id)
-	var/counter = 0
-	for(var/item in eigen_targets[id])
-		if(item == null)
-			stack_trace("SSeigenstates found a missing entry. Somehow an object reference was removed without calling it's destroy signaler.")
-			eigen_targets[id] -= item
-			eigen_id -= null
-			continue
-		counter++
-	if(counter == 0)
-		eigen_targets -= id
-		return FALSE
-	return TRUE
-
 ///removes an object reference from the master list
 /datum/controller/subsystem/eigenstates/proc/remove_eigen_entry(entry)
 	var/id = eigen_id[entry]
@@ -94,8 +79,6 @@ SUBSYSTEM_DEF(eigenstates)
 	var/id = eigen_id[object_sent_from]
 	if(!id)
 		stack_trace("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")
-		return FALSE
-	if(!repair_eigenlink(id)) //safety
 		return FALSE
 	var/list/items = eigen_targets[id]
 	var/index = (items.Find(object_sent_from))+1 //index + 1
