@@ -221,7 +221,6 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	var/list/modifiers = params2list(params)
 	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
@@ -242,10 +241,10 @@
 		try_to_weld_secondary(weapon, user)
 	if (weapon.tool_behaviour == TOOL_CROWBAR)
 		var/forced_open = FALSE
-		if(istype(I, /obj/item/crowbar))
-			var/obj/item/crowbar/C = I
-			forced_open = C.force_opens
-		try_to_crowbar(I, user, forced_open)
+		if(istype(weapon, /obj/item/crowbar))
+			var/obj/item/crowbar/crowbar = weapon
+			forced_open = crowbar.force_opens
+		try_to_crowbar(weapon, user, forced_open)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
