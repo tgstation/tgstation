@@ -1037,7 +1037,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
 	. = FALSE
 	if(I.flags_1 & HOLOGRAM_1)
-		say("This vendor cannot accept nonexistant items.")
+		say("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
