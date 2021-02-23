@@ -48,5 +48,5 @@
 	cut_overlays()
 	if(!reinforced)
 		reinforced = mutable_appearance(icon, "reinforced")
-	PIPING_LAYER_SHIFT(reinforced, piping_layer)
+	PIPING_LAYER_DOUBLE_SHIFT(reinforced, piping_layer)
 	add_overlay(reinforced)

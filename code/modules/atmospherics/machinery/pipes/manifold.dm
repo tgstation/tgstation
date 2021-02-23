@@ -14,7 +14,7 @@
 
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "manifold"
-	can_burst = FALSE
+
 	var/mutable_appearance/center
 
 /* We use New() instead of Initialize() because these values are used in update_icon()
@@ -32,12 +32,30 @@
 
 /obj/machinery/atmospherics/pipe/manifold/update_overlays()
 	. = ..()
-
+	cut_overlays()
 	if(!center)
 		center = mutable_appearance(icon, "manifold_center")
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	. += center
 
+	//Add non-broken pieces
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
+
+/obj/machinery/atmospherics/pipe/manifold/reinforced
+	name = "reinforced manifold"
+	desc = "A manifold composed of reinforced pipes."
+	can_burst = FALSE
+	var/mutable_appearance/reinforced
+
+/obj/machinery/atmospherics/pipe/manifold/reinforced/update_overlays()
+	. = ..()
+	cut_overlays()
+	if(!reinforced)
+		reinforced = mutable_appearance(icon, "reinforced")
+	PIPING_LAYER_DOUBLE_SHIFT(reinforced, piping_layer)
+	. += reinforced
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])

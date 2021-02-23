@@ -11,7 +11,6 @@
 	..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 2000
-	atmosinit()
 
 /obj/machinery/atmospherics/components/unary/burstpipe/Initialize(mapload, set_dir, set_piping_layer, _color)
 	. = ..()
@@ -22,13 +21,16 @@
 	color = _color
 
 /obj/machinery/atmospherics/components/unary/burstpipe/proc/do_connect()
+	SetInitDirections()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
+		if(src in node.nodes)
+			node.disconnect(src)
 		node.disconnect(src)
 		nodes[1] = null
+	if(parents[1])
 		nullifyPipenet(parents[1])
 
-	SetInitDirections()
 	atmosinit()
 	node = nodes[1]
 	if(node)
@@ -53,6 +55,8 @@
 			"[user] unfastens \the [src].",
 			"<span class='notice'>You unfasten \the [src].</span>")
 		qdel(src)
+		return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/components/unary/burstpipe/can_crawl_through()
 	return TRUE
