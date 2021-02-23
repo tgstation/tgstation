@@ -221,6 +221,6 @@ have ways of interacting with a specific mob and control it.
 	if(prob(MONKEY_CUFF_RETALIATION_PROB))
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/update_movespeed(mob/pawn)
+/datum/ai_controller/monkey/proc/update_movespeed(mob/living/pawn)
 	SIGNAL_HANDLER
-	movement_delay = living_pawn.cached_multiplicative_slowdown
+	movement_delay = pawn.cached_multiplicative_slowdown
