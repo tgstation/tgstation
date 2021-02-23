@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(job)
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
-	/// If TRUE, the "Captain" job will always be given the
+	/// If TRUE, the "Captain" job will always be given the code to the spare ID safe and always have a "Captain on deck!" announcement.
 	var/always_promote_captain_job = TRUE
 
 /datum/controller/subsystem/job/Initialize(timeofday)
