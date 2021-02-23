@@ -39,7 +39,7 @@
 	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 	var/list/tiers = list()
 	/// Available experiments
-	var/list/available_experiments= list()
+	var/list/available_experiments = list()
 	/// Completed experiments
 	var/list/completed_experiments = list()
 
@@ -256,14 +256,14 @@
 /datum/techweb/proc/add_experiment(experiment_type)
 	. = TRUE
 	// check active experiments for experiment of this type
-	for (var/avail_experi in available_experiments)
-		var/datum/experiment/Experi = avail_experi
-		if (Experi.type == experiment_type)
+	for (var/available_experiment in available_experiments)
+		var/datum/experiment/experiment = available_experiment
+		if (experiment.type == experiment_type)
 			return FALSE
 	// check completed experiments for experiments of this type
-	for (var/comp_experi in completed_experiments)
-		var/datum/experiment/Experi = comp_experi
-		if (Experi == experiment_type)
+	for (var/completed_experiment in completed_experiments)
+		var/datum/experiment/experiment = completed_experiment
+		if (experiment == experiment_type)
 			return FALSE
 	available_experiments += new experiment_type()
 

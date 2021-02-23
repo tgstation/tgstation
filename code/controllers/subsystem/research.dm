@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(research)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list()				//typecache style type = TRUE list
+	var/list/point_types = list() //typecache style type = TRUE list
 	//----------------------------------------------
 	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
 	var/last_income
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(research)
 	for(var/obj/machinery/rnd/server/miner in servers)
 		if(miner.working)
 			bitcoins = single_server_income.Copy()
-			break			//Just need one to work.
+			break //Just need one to work.
 	if (!isnull(last_income))
 		var/income_time_difference = world.time - last_income
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account

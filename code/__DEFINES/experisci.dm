@@ -4,28 +4,28 @@
 #define EXPERIMENT_CONFIG_UI "experiment_config_ui"
 
 /// Boolean stage, complete/incomplete. No specific progress to report.
-#define EXP_BOOL_STAGE "bool"
+#define EXPERIMENT_BOOL_STAGE "bool"
 /// Integer stages, should be whole numbers with total being included
 /// to support rendering ``value of total``, or something akin to it.
-#define EXP_INT_STAGE "integer"
+#define EXPERIMENT_INT_STAGE "integer"
 /// Float stages, the value should be between 0 and 1 representing percent completion
-#define EXP_FLOAT_STAGE "float"
+#define EXPERIMENT_FLOAT_STAGE "float"
 /// Detail stages, only provide more textual information and have no inherent progress
-#define EXP_DETAIL_STAGE "detail"
+#define EXPERIMENT_DETAIL_STAGE "detail"
 
 /// Macro for defining a progress stage
-#define EXP_PROGRESS(type, desc, values...) list(list(type, desc, values))
+#define EXPERIMENT_PROGRESS(type, desc, values...) list(list(type, desc, values))
 /// Macro for boolean stages
-#define EXP_PROG_BOOL(desc, complete) EXP_PROGRESS(EXP_BOOL_STAGE, desc, complete)
+#define EXPERIMENT_PROG_BOOL(desc, complete) EXPERIMENT_PROGRESS(EXPERIMENT_BOOL_STAGE, desc, complete)
 /// Macro for integer stages
-#define EXP_PROG_INT(desc, complete, total) EXP_PROGRESS(EXP_INT_STAGE, desc, complete, total)
+#define EXPERIMENT_PROG_INT(desc, complete, total) EXPERIMENT_PROGRESS(EXPERIMENT_INT_STAGE, desc, complete, total)
 /// Macro for float stages
-#define EXP_PROG_FLOAT(desc, complete) EXP_PROGRESS(EXP_FLOAT_STAGE, desc, complete)
+#define EXPERIMENT_PROG_FLOAT(desc, complete) EXPERIMENT_PROGRESS(EXPERIMENT_FLOAT_STAGE, desc, complete)
 /// Macro for non-valued stages, details for exp stages
-#define EXP_PROG_DETAIL(desc, complete) EXP_PROGRESS(EXP_DETAIL_STAGE, desc, complete)
+#define EXPERIMENT_PROG_DETAIL(desc, complete) EXPERIMENT_PROGRESS(EXPERIMENT_DETAIL_STAGE, desc, complete)
 
 /// Destructive experiments which will destroy the sample
-#define EXP_TRAIT_DESTRUCTIVE (1 << 0)
+#define EXPERIMENT_TRAIT_DESTRUCTIVE (1 << 0)
 
 /// Will always attempt to action every experiment eligible with a single input,
 /// no experiment selection required

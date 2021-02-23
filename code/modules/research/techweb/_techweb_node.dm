@@ -109,10 +109,10 @@
 			for(var/booster in boostlist)
 				if(actual_costs[booster])
 					actual_costs[booster] -= boostlist[booster]
-		for(var/actual_inc in actual_costs)
-			for(var/experi_type in discount_experiments)
-				if(host.completed_experiments[experi_type]) //do we have this discount_experiment unlocked?
-					actual_costs[actual_inc] -= discount_experiments[experi_type]
+		for(var/cost_type in actual_costs)
+			for(var/experiment_type in discount_experiments)
+				if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked?
+					actual_costs[cost_type] -= discount_experiments[experiment_type]
 		return actual_costs
 	else
 		return research_costs

@@ -3,7 +3,7 @@
 	description = "An experiment requiring a physical reaction to continue"
 	exp_tag = "Physical Experiment"
 	performance_hint = "To perform physical experiments you must use a hand-held scanner unit to track objects in our world relevant to \
-						your experiment. Activate the experiment on your scanner, scan the object to track, and then complete the objective."
+		your experiment. Activate the experiment on your scanner, scan the object to track, and then complete the objective."
 	/// The atom that is currently being watched by this experiment
 	var/atom/currently_scanned_atom
 	/// Linked experiment handler

@@ -93,7 +93,7 @@
 			if(computer.obj_flags & EMAGGED)
 				to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to access locking protocols.</span>")
 				return TRUE
-			if(ACCESS_RND in user_id_card.access)
+			if(ACCESS_RND in user_id_card?.access)
 				locked = !locked
 			else
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access. Please insert research ID card.</span>")
@@ -114,43 +114,43 @@
 	// by the greatest amount that we can, as larger JSON payloads result in
 	// hanging when the user opens the UI
 	var/node_cache = list()
-	for (var/nid in SSresearch.techweb_nodes)
-		var/datum/techweb_node/node = SSresearch.techweb_nodes[nid] || SSresearch.error_node
-		var/cid = "[compress_id(node.id)]"
-		node_cache[cid] = list(
+	for (var/node_id in SSresearch.techweb_nodes)
+		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id] || SSresearch.error_node
+		var/compressed_id = "[compress_id(node.id)]"
+		node_cache[compressed_id] = list(
 			"name" = node.display_name,
 			"description" = node.description
 		)
-		if (node.research_costs?.len)
-			node_cache[cid]["costs"] = list()
-			for (var/cost in node.research_costs)
-				node_cache[cid]["costs"]["[compress_id(cost)]"] = node.research_costs[cost]
-		if (node.prereq_ids?.len)
-			node_cache[cid]["prereq_ids"] = list()
-			for (var/pre_node in node.prereq_ids)
-				node_cache[cid]["prereq_ids"] += compress_id(pre_node)
-		if (node.design_ids?.len)
-			node_cache[cid]["design_ids"] = list()
-			for (var/design in node.design_ids)
-				node_cache[cid]["design_ids"] += compress_id(design)
-		if (node.unlock_ids?.len)
-			node_cache[cid]["unlock_ids"] = list()
-			for (var/unlock_node in node.unlock_ids)
-				node_cache[cid]["unlock_ids"] += compress_id(unlock_node)
-		if (node.required_experiments?.len)
-			node_cache[cid]["required_experiments"] = node.required_experiments
-		if (node.discount_experiments?.len)
-			node_cache[cid]["discount_experiments"] = node.discount_experiments
+		if (LAZYLEN(node.research_costs))
+			node_cache[compressed_id]["costs"] = list()
+			for (var/node_cost in node.research_costs)
+				node_cache[compressed_id]["costs"]["[compress_id(node_cost)]"] = node.research_costs[node_cost]
+		if (LAZYLEN(node.prereq_ids))
+			node_cache[compressed_id]["prereq_ids"] = list()
+			for (var/prerequisite_node in node.prereq_ids)
+				node_cache[compressed_id]["prereq_ids"] += compress_id(prerequisite_node)
+		if (LAZYLEN(node.design_ids))
+			node_cache[compressed_id]["design_ids"] = list()
+			for (var/unlocked_design in node.design_ids)
+				node_cache[compressed_id]["design_ids"] += compress_id(unlocked_design)
+		if (LAZYLEN(node.unlock_ids))
+			node_cache[compressed_id]["unlock_ids"] = list()
+			for (var/unlocked_node in node.unlock_ids)
+				node_cache[compressed_id]["unlock_ids"] += compress_id(unlocked_node)
+		if (LAZYLEN(node.required_experiments))
+			node_cache[compressed_id]["required_experiments"] = node.required_experiments
+		if (LAZYLEN(node.discount_experiments))
+			node_cache[compressed_id]["discount_experiments"] = node.discount_experiments
 
 	// Build design cache
 	var/design_cache = list()
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
-	for (var/did in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_designs[did] || SSresearch.error_design
-		var/cid = "[compress_id(design.id)]"
+	for (var/design_id in SSresearch.techweb_designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_id] || SSresearch.error_design
+		var/compressed_id = "[compress_id(design.id)]"
 		var/size = spritesheet.icon_size_id(design.id)
-		design_cache[cid] = list(
+		design_cache[compressed_id] = list(
 			design.name,
 			"[size == size32x32 ? "" : "[size] "][design.id]"
 		)

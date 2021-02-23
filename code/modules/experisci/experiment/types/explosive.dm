@@ -26,7 +26,7 @@
 		[required_devastation] devastation, [required_heavy] heavy, and [required_light] light."
 	if (last_devastation || last_heavy || last_light)
 		status_message += " The last attempt had ranges of [last_devastation]D/[last_heavy]H/[last_light]L."
-	. += EXP_PROG_BOOL(status_message, is_complete())
+	. += EXPERIMENT_PROG_BOOL(status_message, is_complete())
 
 /datum/experiment/explosion/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, devastation, heavy, light)
 	last_devastation = devastation

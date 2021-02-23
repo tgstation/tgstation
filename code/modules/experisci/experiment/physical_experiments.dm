@@ -19,7 +19,7 @@
 	UnregisterSignal(currently_scanned_atom, COMSIG_ATOM_BULLET_ACT)
 
 /datum/experiment/physical/meat_wall_explosion/check_progress()
-	. += EXP_PROG_BOOL("Fire an emitter at a tracked meat wall", is_complete())
+	. += EXPERIMENT_PROG_BOOL("Fire an emitter at a tracked meat wall", is_complete())
 
 /datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/Proj)
 	if(istype(Proj, /obj/projectile/beam/emitter))
@@ -50,7 +50,7 @@
 	UnregisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND)
 
 /datum/experiment/physical/arcade_winner/check_progress()
-	. += EXP_PROG_BOOL("Win an arcade game at a tracked arcade cabinet.", is_complete())
+	. += EXPERIMENT_PROG_BOOL("Win an arcade game at a tracked arcade cabinet.", is_complete())
 
 /datum/experiment/physical/arcade_winner/proc/win_arcade(datum/source)
 	finish_experiment(linked_experiment_handler)

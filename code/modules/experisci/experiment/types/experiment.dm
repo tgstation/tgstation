@@ -27,7 +27,7 @@
  * Performs any necessary initialization of tags and other variables
  */
 /datum/experiment/New()
-	if (traits & EXP_TRAIT_DESTRUCTIVE)
+	if (traits & EXPERIMENT_TRAIT_DESTRUCTIVE)
 		exp_tag = "Destructive [exp_tag]"
 
 /**

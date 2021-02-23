@@ -20,5 +20,5 @@
 
 /datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)
 	var/datum/material/required_material = GET_MATERIAL_REF(required_materials[target])
-	return EXP_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
-		traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
+	return EXPERIMENT_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
+		traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])

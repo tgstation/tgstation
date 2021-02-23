@@ -340,8 +340,8 @@
 /datum/component/experiment_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		var/atom/p_atom = parent
-		ui = new(user, src, "ExperimentConfigure", "[p_atom ? "[p_atom.name] | " : ""]Experiment Configuration")
+		var/atom/parent_atom = parent
+		ui = new(user, src, "ExperimentConfigure", "[parent_atom ? "[parent_atom.name] | " : ""]Experiment Configuration")
 		ui.open()
 
 /datum/component/experiment_handler/ui_data(mob/user)

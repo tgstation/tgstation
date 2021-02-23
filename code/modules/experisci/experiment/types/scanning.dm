@@ -26,7 +26,7 @@
 /datum/experiment/scanning/New()
 	. = ..()
 	for (var/req_atom in required_atoms)
-		scanned[req_atom] = traits & EXP_TRAIT_DESTRUCTIVE ? 0 : list()
+		scanned[req_atom] = traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 0 : list()
 
 /**
  * Checks if the scanning experiment is complete
@@ -36,7 +36,7 @@
  */
 /datum/experiment/scanning/is_complete()
 	. = TRUE
-	var/destructive = traits & EXP_TRAIT_DESTRUCTIVE
+	var/destructive = traits & EXPERIMENT_TRAIT_DESTRUCTIVE
 	for (var/req_atom in required_atoms)
 		var/list/seen = scanned[req_atom]
 		if (destructive && (!(req_atom in scanned) || scanned[req_atom] != required_atoms[req_atom]))
@@ -52,10 +52,10 @@
  */
 /datum/experiment/scanning/check_progress()
 	. = list()
-	for (var/a_type in required_atoms)
-		var/atom/req_atom = a_type
-		var/list/seen = scanned[req_atom]
-		. += serialize_progress_stage(req_atom, seen)
+	for (var/atom_type in required_atoms)
+		var/atom/required_atom = atom_type
+		var/list/seen_instances = scanned[required_atom]
+		. += serialize_progress_stage(required_atom, seen_instances)
 
 /**
  * Serializes a progress stage into a list to be sent to the UI
@@ -65,8 +65,8 @@
  * * seen_instances - The number of instances seen of this atom
  */
 /datum/experiment/scanning/proc/serialize_progress_stage(atom/target, list/seen_instances)
-	var/scanned_total = traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len
-	return EXP_PROG_INT("Scan samples of \a [initial(target.name)]", scanned_total, required_atoms[target])
+	var/scanned_total = traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len
+	return EXPERIMENT_PROG_INT("Scan samples of \a [initial(target.name)]", scanned_total, required_atoms[target])
 
 /**
  * Attempts to scan an atom towards the experiment's goal
@@ -79,8 +79,8 @@
 /datum/experiment/scanning/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
 	var/contributing_index_value = get_contributing_index(target)
 	if (contributing_index_value)
-		scanned[contributing_index_value] += traits & EXP_TRAIT_DESTRUCTIVE ? 1 : target
-		if(traits & EXP_TRAIT_DESTRUCTIVE && !isliving(target))//only qdel things when destructive scanning and they're not living (living things get gibbed)
+		scanned[contributing_index_value] += traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 1 : target
+		if(traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !isliving(target))//only qdel things when destructive scanning and they're not living (living things get gibbed)
 			qdel(target)
 		do_after_experiment(target, contributing_index_value)
 		return TRUE
@@ -97,7 +97,7 @@
  * * target - The atom to attempt to scan
  */
 /datum/experiment/scanning/proc/get_contributing_index(atom/target)
-	var/destructive = traits & EXP_TRAIT_DESTRUCTIVE
+	var/destructive = traits & EXPERIMENT_TRAIT_DESTRUCTIVE
 	for (var/req_atom in required_atoms)
 		if (!istype(target, req_atom))
 			continue

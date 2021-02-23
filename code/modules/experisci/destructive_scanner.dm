@@ -13,7 +13,7 @@
 	var/scanning = FALSE
 
 /obj/machinery/destructive_scanner/Initialize()
-	. = ..()
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 // Late load to ensure the component initialization occurs after the machines are initialized
