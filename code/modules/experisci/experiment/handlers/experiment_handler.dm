@@ -212,7 +212,9 @@
 	if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 		var/any_success
 		for (var/datum/experiment/experiment in linked_web.available_experiments)
-			if (experiment.actionable(arglist(arguments)) && experiment.perform_experiment(arglist(arguments)))
+			// Because this checks any experiment, we have to ensure it is allowable to be selected with can_select_experiment(...)
+			// this handles the handler's blacklist, whitelist, etc (potentially refactor this in the future if possible because this could be expensive)
+			if (can_select_experiment(experiment) && experiment.actionable(arglist(arguments)) && experiment.perform_experiment(arglist(arguments)))
 				any_success = TRUE
 		return any_success
 	else
