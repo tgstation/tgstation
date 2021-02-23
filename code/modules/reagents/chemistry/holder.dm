@@ -101,7 +101,7 @@
  * * reagtemp - Temperature of this reagent, will be equalized
  * * no_react - prevents reactions being triggered by this addition
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
