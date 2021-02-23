@@ -931,25 +931,28 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		dust_mob(user, cause = "hand")
 		return
 
-	var/obj/item/organ/tongue/lick = user.getorganslot(ORGAN_SLOT_TONGUE)
-	if(lick && !user.is_mouth_covered())
+	var/obj/item/organ/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+	if(licking_tongue && !user.is_mouth_covered())
 		user.visible_message(
-			"<span class='danger'>As [user] hesitantly leans in and licks [src] everything goes silent before [user.p_their()] [lick] flashes to ash!</span>",
-			"<span class='userdanger'>You tentatively lick [src], but you can't figure out what it tastes like before your [lick] flashes to ash!</span>"
+			"<span class='danger'>As [user] hesitantly leans in and licks [src] everything goes silent before [user.p_their()] [licking_tongue] flashes to ash!</span>",
+			"<span class='userdanger'>You tentatively lick [src], but you can't figure out what it tastes like before your [licking_tongue] flashes to ash!</span>"
 		)
-		lick.Remove(user)
-		Consume(lick)
+		licking_tongue.Remove(user)
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
+		Consume(licking_tongue)
 		return
 
 	var/obj/item/bodypart/head/forehead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(forehead)
 		user.visible_message(
 			"<span class='danger'>As [user]'s forehead bumps into [src], inducing a resonance... Everything goes silent before [user.p_their()] [forehead] flashes to ash!</span>",
-			"<span class='userdanger'>You feel your forhead bump into [src] and everything suddenly goes silent. As your head fills with ringing you come to realize that that was not a wise decision.</span>"
+			"<span class='userdanger'>You feel your forehead bump into [src] and everything suddenly goes silent. As your head fills with ringing you come to realize that that was not a wise decision.</span>"
 		)
 		forehead.dismember(BURN, TRUE)
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 		Consume(forehead)
 		return
+
 	dust_mob(user, cause = "attempted lick",
 		vis_msg = "<span class='danger'>[user] leans in and tries to lick [src], inducing a resonance... [user.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",
 		mob_msg = "<span class='userdanger'>You lean in and try to lick [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>"
