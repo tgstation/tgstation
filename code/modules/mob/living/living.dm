@@ -1927,11 +1927,11 @@
 	var/datum/martial_art/style = mind?.martial_art
 	var/attack_result = FALSE
 	if (style)
-		if (is_grab)
+		if (LAZYACCESS(modifiers, CTRL_CLICK))
 			attack_result = style.grab_act(src, target)
-		if(modifiers && modifiers["right"])
+		else if (LAZYACCESS(modifiers, RIGHT_CLICK))
 			attack_result = style.disarm_act(src, target)
-		if(combat_mode)
+		else if(combat_mode)
 			if (HAS_TRAIT(src, TRAIT_PACIFISM))
 				return FALSE
 			attack_result = style.harm_act(src, target)

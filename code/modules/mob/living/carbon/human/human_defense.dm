@@ -213,17 +213,15 @@
 		var/mob/living/carbon/human/H = user
 		dna.species.spec_attack_hand(H, src, null, modifiers)
 
-
-/mob/living/carbon/human/attack_paw(mob/living/carbon/human/M)
-	// First check for martial arts.
-	if (M.apply_martial_art(src))
-		return TRUE
-
+/mob/living/carbon/human/attack_paw(mob/living/carbon/human/M, modifiers)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 
+	// Check for martial arts.
+	if (M.apply_martial_art(src))
+		return TRUE
 
 	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()

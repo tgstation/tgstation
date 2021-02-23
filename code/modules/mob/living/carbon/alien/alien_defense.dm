@@ -52,6 +52,9 @@ In all, this is a lot like the monkey code. /N
 	if(.)	//to allow surgery to return properly.
 		return FALSE
 
+	if (M.apply_martial_art(src, modifiers))
+		return TRUE
+
 	if(M.combat_mode)
 		if(modifiers && modifiers["right"])
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -63,6 +66,9 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/M)
+	// Check for martial arts first.
+	if (M.apply_martial_art(src, modifiers))
+		return TRUE
 	if(..())
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
