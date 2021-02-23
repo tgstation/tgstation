@@ -13,6 +13,8 @@
 	ai_controller = /datum/ai_controller/robot_customer
 	var/clothes_set = "amerifat_clothes"
 	var/datum/atom_hud/hud_to_show_on_hover
+	///Rolls on initialize, if lucky you might see a unique exit
+	var/has_unique_exit = FALSE
 
 /mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT) //dont push me bitch
@@ -27,6 +29,8 @@
 	icon_state = customer_info.base_icon
 	name = "[pick(customer_info.name_prefixes)]-bot ([customer_info.nationality])"
 	color = rgb(rand(150,255), rand(150,255), rand(150,255))
+	if(prob(100))
+		has_unique_exit = TRUE
 	update_icon()
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
@@ -53,6 +57,10 @@
 	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
 	clothes.appearance_flags = RESET_COLOR
 	. += clothes
+
+	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+
+	. += customer_info.get_overlays(src)
 
 /mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)
 	. = ..()

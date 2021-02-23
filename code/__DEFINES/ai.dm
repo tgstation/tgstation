@@ -68,4 +68,4 @@
 #define BB_CUSTOMER_CUSTOMERINFO "BB_customer_customerinfo"
 #define BB_CUSTOMER_EATING "BB_customer_eating"
 #define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
-#define BB_BLACKBOARD_CUSTOMER_LEAVING "BB_customer_leaving"
+#define BB_CUSTOMER_LEAVING "BB_customer_leaving"

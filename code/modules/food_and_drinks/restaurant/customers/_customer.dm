@@ -32,6 +32,9 @@
 	. = ..()
 	name_prefixes = world.file2list("strings/names/american_prefix.txt")
 
+/datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
+	return
+
 /datum/customer_data/american
 	nationality = "Space-American"
 	orderable_objects = list(
@@ -51,6 +54,12 @@
 	prefix_file = "strings/names/italian_prefix.txt"
 	base_icon = "italian"
 	clothing_sets = list("italian_pison", "italian_godfather")
+
+	found_seat_lines = list("What a wonderful place to sit.", "I hope they serve it like-a my momma used to make it.")
+	cant_find_seat_lines = list("Mamma mia! I just want a seat!", "Why-a you making me stand here?")
+	leave_mad_lines = list("I have-a not seen-a this much disrespect in years!", "What-a horrendous establishment!")
+	leave_happy_lines = list("That's amoreee!", "Just like momma used to make it!")
+	wait_for_food_lines = list("I'ma so hungry...")
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 10, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 5, /datum/reagent/consumable/ethanol/beer = 6, /datum/reagent/consumable/ethanol/beer/light = 6, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5,  /datum/reagent/consumable/hot_ice_coffee = 5))
@@ -59,6 +68,19 @@
 /datum/customer_data/french
 	nationality = "Space-French"
 	prefix_file = "strings/names/french_prefix.txt"
+	base_icon = "french"
+	clothing_sets = list("french_fit")
+	found_seat_lines = list("Hon hon hon", "It's not the Eiffel tower but it will do.", "Yuck, I guess this will make do.")
+	cant_find_seat_lines = list("Making someone like me stand? How dare you.", "What a filthy lobby!")
+	leave_mad_lines = list("Sacre bleu!", "Merde! This place is shittier than the Rhine!")
+	leave_happy_lines = list("Hon hon hon.", "A good effort.")
+	wait_for_food_lines = list("Hon hon hon")
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 10, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 6),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 3, /datum/reagent/consumable/ethanol/beer/light = 5))
+
+/datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
+	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.has_unique_exit)
+		var/mutable_appearance/flag = mutable_appearance(customer.icon, "french_flag")
+		flag.appearance_flags = RESET_COLOR
+		return

@@ -64,7 +64,7 @@
 		return
 
 	controller.blackboard[BB_CUSTOMER_PATIENCE] -= delta_time
-	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_BLACKBOARD_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
+	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
 		finish_action(controller, FALSE)
 		return
 
@@ -94,7 +94,7 @@
 	. = ..()
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	controller.blackboard[BB_BLACKBOARD_CUSTOMER_LEAVING] = TRUE
+	controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE
 	if(succeeded)
 		customer_pawn.say(pick(customer_data.leave_happy_lines))
 	else

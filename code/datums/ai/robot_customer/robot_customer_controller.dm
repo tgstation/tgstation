@@ -4,7 +4,7 @@
 	BB_CUSTOMER_PATIENCE = 999,
 	BB_CUSTOMER_CUSTOMERINFO = null,
 	BB_CUSTOMER_EATING = FALSE,
-	BB_BLACKBOARD_CUSTOMER_LEAVING = FALSE,
+	BB_CUSTOMER_LEAVING = FALSE,
 	BB_CUSTOMER_ATTENDING_VENUE = null)
 
 
@@ -20,7 +20,7 @@
 
 /datum/ai_controller/robot_customer/SelectBehaviors(delta_time)
 	current_behaviors = list()
-	if(blackboard[BB_BLACKBOARD_CUSTOMER_LEAVING])
+	if(blackboard[BB_CUSTOMER_LEAVING])
 		var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 		current_movement_target = attending_venue.restaurant_portal
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/leave_venue)
