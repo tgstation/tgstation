@@ -167,6 +167,7 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
+	range = 50
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 	wound_bonus = -40
@@ -177,7 +178,6 @@
 
 /obj/projectile/beam/emitter/hitscan
 	hitscan = TRUE
-	range = 50
 	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
 	impact_type = /obj/effect/projectile/impact/laser/emitter
