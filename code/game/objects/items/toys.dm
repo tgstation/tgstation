@@ -1777,7 +1777,6 @@
 
 	state = STATE_OFF
 	COOLDOWN_RESET(src, next_process)
-	STOP_PROCESSING(SSfastprocess, src)
 	REMOVE_TRAIT(src, TRAIT_NODROP, type)
 
 /obj/item/toy/intento/proc/render(input)
@@ -1792,6 +1791,10 @@
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short-circuit [src], activating the negative feedback loop.</span>")
+
+/obj/item/toy/intento/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
 
 #undef HELP
 #undef DISARM
