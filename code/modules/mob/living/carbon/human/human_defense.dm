@@ -219,8 +219,7 @@
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 
-	// Check for martial arts.
-	if (M.apply_martial_art(src))
+	if (user.apply_martial_art(src))
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.

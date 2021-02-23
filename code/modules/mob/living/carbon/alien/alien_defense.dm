@@ -49,21 +49,15 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(.) //to allow surgery to return properly.
-		return FALSE
-
-<<<<<<< HEAD
-	if (M.apply_martial_art(src, modifiers))
+	if(.) //to allow surgery and martial arts to return properly.
 		return TRUE
 
-	if(M.combat_mode)
-		if(modifiers && modifiers["right"])
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-=======
+	if (user.apply_martial_art(src, modifiers))
+		return TRUE
+
 	if(user.combat_mode)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
->>>>>>> 784cbea702653707a16c4c24e319ef01ff370b4a
 			return TRUE
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		return TRUE
@@ -71,14 +65,7 @@ In all, this is a lot like the monkey code. /N
 		help_shake_act(user)
 
 
-<<<<<<< HEAD
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/human/M)
-	// Check for martial arts first.
-	if (M.apply_martial_art(src, modifiers))
-		return TRUE
-=======
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
->>>>>>> 784cbea702653707a16c4c24e319ef01ff370b4a
 	if(..())
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
