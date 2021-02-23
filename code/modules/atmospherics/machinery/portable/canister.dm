@@ -359,8 +359,6 @@
 	if(starter_temp)
 		air_contents.temperature = starter_temp
 	air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	if(starter_temp)
-		air_contents.temperature = starter_temp
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
@@ -407,19 +405,19 @@
 	if(!(machine_stat & BROKEN))
 		canister_break()
 	if(!disassembled)
-		new /obj/item/stack/sheet/iron (loc, 5)
+		new /obj/item/stack/sheet/iron (drop_location(), 5)
 		qdel(src)
 		return
 	switch(mode)
 		if(CANISTER_TIER_1)
-			new /obj/item/stack/sheet/iron (loc, 10)
+			new /obj/item/stack/sheet/iron (drop_location(), 10)
 		if(CANISTER_TIER_2)
-			new /obj/item/stack/sheet/iron (loc, 10)
-			new /obj/item/stack/sheet/plasteel (loc, 5)
+			new /obj/item/stack/sheet/iron (drop_location(), 10)
+			new /obj/item/stack/sheet/plasteel (drop_location(), 5)
 		if(CANISTER_TIER_3)
-			new /obj/item/stack/sheet/iron (loc, 10)
-			new /obj/item/stack/sheet/plasteel (loc, 5)
-			new /obj/item/stack/sheet/bluespace_crystal (loc, 1)
+			new /obj/item/stack/sheet/iron (drop_location(), 10)
+			new /obj/item/stack/sheet/plasteel (drop_location(), 5)
+			new /obj/item/stack/sheet/bluespace_crystal (drop_location(), 1)
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
