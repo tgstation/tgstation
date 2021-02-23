@@ -822,6 +822,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	smoothing_groups = list(SMOOTH_GROUP_ABDUCTOR_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_TABLES)
 	frame = /obj/structure/table_frame/abductor
+	custom_materials = list(/datum/material/silver = 2000)
 
 /obj/structure/table/optable/abductor
 	name = "alien operating table"
