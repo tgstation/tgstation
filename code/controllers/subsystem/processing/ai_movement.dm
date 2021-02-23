@@ -5,7 +5,7 @@ PROCESSING_SUBSYSTEM_DEF(ai_movement)
 	priority = FIRE_PRIORITY_NPC_MOVEMENT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_AI_MOVEMENT
-	wait = 0.1 SECONDS
+	wait = 1
 
 	///an assoc list of all ai_movement types. Assoc type to instance
 	var/list/movement_types
