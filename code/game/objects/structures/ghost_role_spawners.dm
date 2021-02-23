@@ -606,7 +606,7 @@
 
 /obj/effect/mob_spawn/human/pirate/captain
 	rank = "Renegade Leader"
-	outfit = /datum/outfit/pirate/captain
+	outfit = /datum/outfit/pirate/space/captain
 
 /obj/effect/mob_spawn/human/pirate/gunner
 	rank = "Rogue"
