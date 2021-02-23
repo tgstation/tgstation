@@ -28,6 +28,7 @@
 	reflectable = REFLECT_NORMAL
 	wound_bonus = -20
 	bare_wound_bonus = 10
+	var/damage_constant = 0.8
 
 obj/projectile/beam/Range()
 	if(hitscan != TRUE)
@@ -39,7 +40,7 @@ obj/projectile/beam/Range()
 	var/environment_pressure = environment.return_pressure()
 	if(environment_pressure >= 50)
 		if((decayedRange - range) >= 4)
-			damage *= 0.8
+			damage *= damage_constant
 	. = ..()
 
 /obj/projectile/beam/laser
@@ -101,6 +102,7 @@ obj/projectile/beam/Range()
 	irradiate = 300
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	hitscan = TRUE
+	damage_constant = 0.9
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	hitscan_light_color_override = LIGHT_COLOR_GREEN
