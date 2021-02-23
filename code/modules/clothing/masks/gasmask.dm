@@ -11,7 +11,6 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	tint = 1.1
-	different_overlay = TRUE
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -112,7 +111,6 @@
 	icon_state = "plaguedoctor"
 	inhand_icon_state = "gas_mask"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, RAD = 0, FIRE = 0, ACID = 0)
-	different_overlay = FALSE
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -237,7 +235,6 @@
 	inhand_icon_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	different_overlay = FALSE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -263,13 +260,11 @@
 	clothing_flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	different_overlay = FALSE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
 	desc = "Gnash gnash."
 	icon_state = "carp_mask"
-	different_overlay = FALSE
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
@@ -282,7 +277,6 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
 	species_exception = list(/datum/species/golem/wood)
-	different_overlay = FALSE
 	var/list/tikimask_designs = list()
 
 /obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)
@@ -326,4 +320,3 @@
 	inhand_icon_state = "hunter"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
-	different_overlay = FALSE

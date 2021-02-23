@@ -11,8 +11,6 @@
 
 	var/has_filter = FALSE
 
-	var/different_overlay = FALSE
-
 /obj/item/clothing/mask/attack_self(mob/user)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		clothing_flags ^= (VOICEBOX_DISABLED)
