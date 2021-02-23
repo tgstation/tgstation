@@ -100,12 +100,11 @@
 	if(creation_purity < 0.8)
 		return
 	var/list/lockers = list()
-	for(var/obj/structure/closet/closet as anything in exposed_turf.contents)
-		if(!istype(closet, /obj/structure/closet))
-			continue
+	for(var/obj/structure/closet/closet in exposed_turf.contents)
 		lockers += closet
 	if(!length(lockers))
 		return
 	SSeigenstates.create_new_link(lockers)
+	return
 
 //eigenstate END
