@@ -381,9 +381,9 @@
 	switch (action)
 		if ("select_server")
 			. = TRUE
-			var/obj/machinery/rnd/server/serv = locate(params["ref"])
-			if (serv)
-				link_techweb(serv.stored_research)
+			var/obj/machinery/rnd/server/server = locate(params["ref"])
+			if (server)
+				link_techweb(server.stored_research)
 				return
 		if ("clear_server")
 			. = TRUE
@@ -393,9 +393,9 @@
 			// Don't allow selection for always actives (no concept of active)
 			if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 				return
-			var/datum/experiment/experi = locate(params["ref"])
-			if (experi)
-				link_experiment(experi)
+			var/datum/experiment/experiment = locate(params["ref"])
+			if (experiment)
+				link_experiment(experiment)
 		if ("clear_experiment")
 			. = TRUE
 			unlink_experiment()
