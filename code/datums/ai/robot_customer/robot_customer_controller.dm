@@ -1,4 +1,5 @@
 /datum/ai_controller/robot_customer
+	ai_movement = /datum/ai_movement/basic_avoidance
 	blackboard = list(BB_CUSTOMER_CURRENT_ORDER = null,
 	BB_CUSTOMER_MY_SEAT = null,
 	BB_CUSTOMER_PATIENCE = 999,
