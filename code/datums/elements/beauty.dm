@@ -1,5 +1,5 @@
 /**
- * Beauty element; makes the indoor area the parent is in prettier or uglier depending on the beauty var value.
+ * Beauty element. It makes the indoor area the parent is in prettier or uglier depending on the beauty var value.
  * Clean and well decorated areas lead to positive moodlets for passerbies;
  * Shabbier, dirtier ones lead to negative moodlets EXCLUSIVE to characters with the snob quirk.
  */
@@ -13,12 +13,12 @@
 	  */
 	var/beauty_counter = list()
 
-/datum/element/beauty/Attach(datum/target, _beauty)
+/datum/element/beauty/Attach(datum/target, beauty)
 	. = ..()
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
-	beauty = _beauty
+	src.beauty = beauty
 
 	if(!beauty_counter[target] && ismovable(target))
 		var/atom/movable/mov_target = target
@@ -28,40 +28,40 @@
 
 	beauty_counter[target]++
 
-	var/area/A = get_area(target)
-	if(A && !A.outdoors)
-		A.totalbeauty += beauty
-		A.update_beauty()
+	var/area/current_area = get_area(target)
+	if(current_area && !current_area.outdoors)
+		current_area.totalbeauty += beauty
+		current_area.update_beauty()
 
-/datum/element/beauty/proc/enter_area(datum/source, area/A)
+/datum/element/beauty/proc/enter_area(datum/source, area/new_area)
 	SIGNAL_HANDLER
 
-	if(A.outdoors)
+	if(new_area.outdoors)
 		return
-	A.totalbeauty += beauty * beauty_counter[source]
-	A.update_beauty()
+	new_area.totalbeauty += beauty * beauty_counter[source]
+	new_area.update_beauty()
 
-/datum/element/beauty/proc/exit_area(datum/source, area/A)
+/datum/element/beauty/proc/exit_area(datum/source, area/old_area)
 	SIGNAL_HANDLER
 
-	if(A.outdoors)
+	if(old_area.outdoors)
 		return
-	A.totalbeauty -= beauty * beauty_counter[source]
-	A.update_beauty()
+	old_area.totalbeauty -= beauty * beauty_counter[source]
+	old_area.update_beauty()
 
 /datum/element/beauty/Detach(datum/source, force)
-	var/area/A = get_area(source)
+	var/area/current_area = get_area(source)
 	if(QDELETED(source))
 		. = ..()
 		UnregisterSignal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
-		if(A)
-			exit_area(source, A)
+		if(current_area)
+			exit_area(source, current_area)
 		beauty_counter -= source
 	else //lower the 'counter' down by one, update the area, and call parent if it's reached zero.
 		beauty_counter[source]--
-		if(A && !A.outdoors)
-			A.totalbeauty -= beauty
-			A.update_beauty()
+		if(current_area && !current_area.outdoors)
+			current_area.totalbeauty -= beauty
+			current_area.update_beauty()
 		if(!beauty_counter[source])
 			. = ..()
 			UnregisterSignal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
