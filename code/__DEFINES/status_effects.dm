@@ -11,9 +11,9 @@
 
 ///Processing flags - used to define the speed at which the status will work
 ///This is fast - 0.2s between ticks (I believe!)
-#define STATUS_EFFECT_FAST_PROCESS (1<<0)
+#define STATUS_EFFECT_FAST_PROCESS 0
 ///This is slower and better for more intensive status effects - 1s between ticks
-#define STATUS_EFFECT_NORMAL_PROCESS (1<<1)
+#define STATUS_EFFECT_NORMAL_PROCESS 1
 
 ///////////
 // BUFFS //

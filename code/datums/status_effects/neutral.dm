@@ -347,7 +347,7 @@
 	id = "eigenstasium"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
-	processing_flags = STATUS_EFFECT_NORMAL_PROCESS
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	///So we know what cycle we're in during the status
 	var/current_cycle = -250 //Consider it your stability
 	///The addiction looper for addiction stage 3

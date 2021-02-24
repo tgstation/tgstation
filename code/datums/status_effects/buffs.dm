@@ -202,7 +202,7 @@
 	id = "Exercised"
 	duration = 1200
 	alert_type = null
-	processing_flags = STATUS_EFFECT_NORMAL_PROCESS
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
 /datum/status_effect/hippocratic_oath
