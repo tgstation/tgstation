@@ -5,9 +5,9 @@
 	total_requirement = 1
 	possible_types = list(/obj/item/food/grown)
 	traits = EXPERIMENT_TRAIT_DESTRUCTIVE
-	///List of materials that can be required.
+	///List of possible plant genes the experiment may ask for.
 	var/list/possible_plant_genes = list()
-	///List of materials actually required, indexed by the atom that is required.
+	///List of plant genes actually required, indexed by the atom that is required.
 	var/list/required_genes = list()
 
 /datum/experiment/scanning/random/plants/New()
@@ -26,7 +26,7 @@
 		return FALSE
 	var/obj/item/food/grown/crop = target
 	if(possible_plant_genes.len)
-		return ..() && crop?.seed.get_gene(required_genes[typepath])
+		return ..() && crop.seed.get_gene(required_genes[typepath])
 	return ..()
 
 /datum/experiment/scanning/random/plants/traits/serialize_progress_stage(atom/target, list/seen_instances)
