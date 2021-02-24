@@ -359,7 +359,7 @@
 
 /datum/status_effect/eigenstasium/Destroy()
 	QDEL_NULL(alt_clone)
-	. = ..()
+	return ..()
 
 /datum/status_effect/eigenstasium/tick()
 	. = ..()
@@ -383,11 +383,10 @@
 		else
 			block_effects = FALSE
 
-	if(alt_clone)//catch any stragilers
-		do_sparks(5,FALSE,alt_clone)
-		qdel(alt_clone)
+	if(!QDELETED(alt_clone)) //catch any stragglers
+		do_sparks(5, FALSE, alt_clone)
 		owner.visible_message("[owner] is snapped across to a different alternative reality!")
-		alt_clone = null
+		QDEL_NULL(alt_clone)
 
 	if(block_effects)
 		if(!stable_message)
@@ -500,13 +499,15 @@
 			mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
-			if(!human_mob)
+			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
 				var/obj/item/organ/tail/monkey/monkey_tail = new (human_mob.loc)
 				monkey_tail.Insert(human_mob)
-			human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
-			human_mob.dna?.species?.randomize_active_underwear(human_mob)
+			var/datum/species/human_species = human_mob.dna?.species
+			if(human_species)
+				human_species.randomize_main_appearance_element(human_mob)
+				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(STATUS_EFFECT_EIGEN)
 
@@ -514,9 +515,8 @@
 	current_cycle++
 
 /datum/status_effect/eigenstasium/on_remove()
-	if(alt_clone)//catch any stragilers
-		do_sparks(5,FALSE,alt_clone)
-		qdel(alt_clone)
+	if(!QDELETED(alt_clone))//catch any stragilers
+		do_sparks(5, FALSE, alt_clone)
 		owner.visible_message("[owner] is snapped across to a different alternative reality!")
-		alt_clone = null
-	. = ..()
+		QDEL_NULL(alt_clone)
+	return ..()
