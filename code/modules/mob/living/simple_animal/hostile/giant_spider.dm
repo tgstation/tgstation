@@ -101,6 +101,9 @@
 	GLOB.spidermobs -= src
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/giant_spider/mob_negates_gravity()
+	return ..() || (locate(/obj/structure/spider/stickyweb) in loc)
+
 /**
  * # Spider Hunter
  *

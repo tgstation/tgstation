@@ -464,10 +464,6 @@
 		visible_message("<span class='notice'>[src] scans the [exp_on], revealing its true nature!</span>")
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
-		if (!R.revealed)
-			var/points = rand(3500,3750) // discovery reward
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			visible_message("<span class='notice'> This discovery netted [points] points for research.</span>")
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()

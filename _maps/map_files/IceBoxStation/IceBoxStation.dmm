@@ -12604,6 +12604,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bfZ" = (
@@ -12615,14 +12616,14 @@
 	dir = 8
 	},
 /obj/machinery/light,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bga" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/machinery/lapvend,
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bgb" = (
@@ -14998,6 +14999,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
+/obj/item/experi_scanner,
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
+/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/science/lab)
 "boB" = (
@@ -31448,6 +31457,13 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"gdd" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "gdg" = (
 /obj/structure/mirror{
 	pixel_y = 28
@@ -56782,6 +56798,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/medical/medbay/central)
+"xXm" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "xXp" = (
 /turf/closed/wall,
 /area/medical/break_room)
@@ -102378,7 +102404,7 @@ nhQ
 iMW
 csr
 pXx
-aYV
+bga
 qXW
 aYV
 bfX
@@ -103922,8 +103948,8 @@ iwd
 vVm
 aYV
 qXW
-aYV
-bga
+gdd
+bfX
 bgc
 bgc
 bgc
@@ -104180,7 +104206,7 @@ vVm
 aYV
 qXW
 aYV
-bfX
+xXm
 bhC
 biF
 bks
