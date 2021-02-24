@@ -1,0 +1,4 @@
+author: "Gurkenglas"
+delete-after: True
+changes: 
+  - qol: "ninjaDrainAct is now used with rightclick, not toggled with HUD."
