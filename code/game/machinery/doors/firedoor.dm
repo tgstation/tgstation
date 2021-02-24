@@ -77,15 +77,15 @@
 	return FALSE
 
 /obj/machinery/door/firedoor/try_safety_unlock(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(world.time - carbon_user.last_bumped <= 1 SECONDS)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(world.time - living_user.last_bumped <= 1 SECONDS)
 			return
-		carbon_user.last_bumped = world.time
-	if(density && user.get_empty_held_indexes())
-		to_chat(user, "<span class='notice'>You begin unlocking [src]'s safety mechanism...</span>")
-		if(do_after(user, hand_open_time, src))
-			try_to_crowbar(null, user)
+		living_user.last_bumped = world.time
+		if(density && living_user.get_empty_held_indexes() && !HAS_TRAIT(living_user, TRAIT_HANDS_BLOCKED))
+			to_chat(living_user, "<span class='notice'>You begin unlocking [src]'s safety mechanism...</span>")
+			if(do_after(living_user, hand_open_time, src))
+				try_to_crowbar(null, living_user)
 			return TRUE
 	return FALSE
 
