@@ -144,7 +144,7 @@
 	if(!possible_locs.len)
 		return
 
-	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/a0oresnrwk
+	var/chance_generation = 100 * (NUM_E ** -((GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR + GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM * GLOB.glowshrooms) / myseed.potency * (generation - 1))) //https://www.desmos.com/calculator/istvjvcelz
 
 	for(var/i in 1 to myseed.yield)
 		if(!prob(chance_generation))
