@@ -5,7 +5,7 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "detective"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -108,7 +108,7 @@
 		pin = null
 	if(A == chambered)
 		chambered = null
-		update_icon()
+		update_appearance()
 	if(A == bayonet)
 		clear_bayonet()
 	if(A == gun_light)
@@ -122,7 +122,7 @@
 	if(!can_unsuppress)
 		return
 	suppressed = null
-	update_icon()
+	update_appearance()
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
@@ -325,7 +325,7 @@
 		firing_burst = FALSE
 		return FALSE
 	process_chamber()
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -373,7 +373,7 @@
 			shoot_with_empty_chamber(user)
 			return
 		process_chamber()
-		update_icon()
+		update_appearance()
 		semicd = TRUE
 		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
 
@@ -426,7 +426,7 @@
 			return
 		to_chat(user, "<span class='notice'>You attach [K] to [src]'s bayonet lug.</span>")
 		bayonet = K
-		update_icon()
+		update_appearance()
 
 	else
 		return ..()
@@ -513,7 +513,7 @@
 	if(!bayonet)
 		return
 	bayonet = null
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/gun/proc/clear_gunlight()
@@ -574,7 +574,7 @@
 	update_gunlight()
 
 /obj/item/gun/proc/update_gunlight()
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

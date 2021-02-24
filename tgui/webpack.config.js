@@ -49,13 +49,13 @@ module.exports = (env = {}, argv) => {
       chunkLoadTimeout: 15000,
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.tsx', '.ts', '.jsx', '.js'],
       alias: {},
     },
     module: {
       rules: [
         {
-          test: /\.m?jsx?$/,
+          test: /\.(js|jsx|cjs|mjs|ts|tsx)$/,
           use: [
             {
               loader: 'babel-loader',

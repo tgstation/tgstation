@@ -132,7 +132,7 @@
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
-		bin.update_icon()
+		bin.update_appearance()
 		flick("synthesizer_beam", src)
 	else
 		visible_message("<span class='notice'>There are no disposable items in [src]!</span>")

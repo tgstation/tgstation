@@ -71,7 +71,7 @@
 		switch(href_list["act"])
 			if("toggle_vote")
 				voting_active = !voting_active
-				update_icon()
+				update_appearance()
 			if("toggle_auth")
 				id_auth = !id_auth
 			if("reset_voted")
@@ -205,12 +205,13 @@
 
 	P.info = tally.Join()
 	P.name = "Voting Results"
-	P.update_icon()
+	P.update_appearance()
 	user.put_in_hands(P)
 	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
 
 /obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"
+	return ..()
 
 #undef VOTE_TEXT_LIMIT
 #undef MAX_VOTES

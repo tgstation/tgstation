@@ -1,4 +1,4 @@
-#define EGG_INCUBATION_TIME 120
+#define EGG_INCUBATION_TIME 4 MINUTES
 
 /mob/living/simple_animal/hostile/headcrab
 	name = "headslug"
@@ -57,11 +57,11 @@
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	var/datum/mind/origin
-	var/time
+	var/time = 0
 
-/obj/item/organ/body_egg/changeling_egg/egg_process()
+/obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
-	time++
+	time += delta_time
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)

@@ -31,10 +31,8 @@
 	return ..()
 
 /obj/structure/transit_tube_pod/update_icon_state()
-	if(contents.len)
-		icon_state = occupied_icon_state
-	else
-		icon_state = initial(icon_state)
+	icon_state = contents.len ? occupied_icon_state : initial(icon_state)
+	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -98,7 +96,7 @@
 		location = get_turf(src)
 	for(var/atom/movable/M in contents)
 		M.forceMove(location)
-	update_icon()
+	update_appearance()
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
@@ -199,7 +197,7 @@
 		if(direction == turn(station.boarding_dir,180))
 			if(station.open_status == STATION_TUBE_OPEN)
 				user.forceMove(loc)
-				update_icon()
+				update_appearance()
 			else
 				station.open_animation()
 		else if(direction in station.tube_dirs)

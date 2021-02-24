@@ -456,6 +456,7 @@
 	light_system = MOVABLE_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
+	base_icon_state = "glowstick"
 	inhand_icon_state = "glowstick"
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
@@ -479,28 +480,35 @@
 	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
-		update_icon()
+		update_appearance()
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	on = FALSE
-	update_icon()
+	update_appearance()
 
-/obj/item/flashlight/glowstick/update_icon()
-	inhand_icon_state = "glowstick"
-	cut_overlays()
+/obj/item/flashlight/glowstick/update_appearance(updates=ALL)
+	. = ..()
 	if(fuel <= 0)
-		icon_state = "glowstick-empty"
-		cut_overlays()
 		set_light_on(FALSE)
-	else if(on)
-		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
-		glowstick_overlay.color = color
-		add_overlay(glowstick_overlay)
-		inhand_icon_state = "glowstick-on"
+		return
+	if(on)
 		set_light_on(TRUE)
-	else
-		icon_state = "glowstick"
-		cut_overlays()
+		return
+
+/obj/item/flashlight/glowstick/update_icon_state()
+	icon_state = "[base_icon_state][(fuel <= 0) ? "-empty" : ""]"
+	inhand_icon_state = "[base_icon_state][((fuel > 0) && on) ? "-on" : ""]"
+	return ..()
+
+/obj/item/flashlight/glowstick/update_overlays()
+	. = ..()
+	if(fuel <= 0 && !on)
+		return
+
+	var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
+	glowstick_overlay.color = color
+	. += glowstick_overlay
+
 
 /obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(fuel <= 0)

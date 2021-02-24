@@ -6528,7 +6528,6 @@
 "ZB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = /area/storage/mining;
 	dir = 1;
 	name = "Public Mining APC";
 	pixel_y = 23
