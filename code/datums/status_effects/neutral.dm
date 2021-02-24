@@ -518,7 +518,6 @@
 
 /datum/status_effect/eigenstasium/proc/remove_clone_from_var()
 	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
-	QDEL_NULL(alt_clone)
 
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers
