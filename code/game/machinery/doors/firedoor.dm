@@ -24,6 +24,8 @@
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
+	///Time taken to open the firelock by hand.
+	var/hand_open_time = 5 SECONDS
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
@@ -34,11 +36,12 @@
 	if(!density)
 		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
-		. += "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>"
+		. += "<span class='notice'>It is closed, but could be <b>pried</b> open. Deconstruction would require it to be <b>welded</b> shut.</span>"
 	else if(boltslocked)
 		. += "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>"
 	else
 		. += "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>"
+	. += "<span class='notice'>It has labels indicating that it has a mechanism to open it with an <b>empty hand</b>.</span>"
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
@@ -67,8 +70,23 @@
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
 		return
+	if(try_safety_unlock(AM))
+		return
 	if(!density)
 		return ..()
+	return FALSE
+
+/obj/machinery/door/firedoor/try_safety_unlock(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(world.time - carbon_user.last_bumped <= 1 SECONDS)
+			return
+		carbon_user.last_bumped = world.time
+	if(density && user.get_empty_held_indexes())
+		to_chat(user, "<span class='notice'>You begin unlocking [src]'s safety mechanism...</span>")
+		if(do_after(user, hand_open_time, src))
+			try_to_crowbar(null, user)
+			return TRUE
 	return FALSE
 
 /obj/machinery/door/firedoor/bumpopen(mob/living/user)
