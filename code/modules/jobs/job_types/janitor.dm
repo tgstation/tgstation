@@ -15,6 +15,7 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_JANITOR
+	departments = DEPARTMENT_SERVICE
 
 /datum/outfit/job/janitor
 	name = "Janitor"

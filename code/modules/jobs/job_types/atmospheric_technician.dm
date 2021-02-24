@@ -21,6 +21,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
 	bounty_types = CIV_JOB_ENG
+	departments = DEPARTMENT_ENGINEERING
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"

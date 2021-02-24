@@ -19,6 +19,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_COOK
 	bounty_types = CIV_JOB_CHEF
+	departments = DEPARTMENT_SERVICE
 
 /datum/outfit/job/cook
 	name = "Cook"
