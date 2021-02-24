@@ -65,6 +65,15 @@ If you'd like a more robust server hosting option for tgstation and its
 derivatives. Check out our server tools suite at
 https://github.com/tgstation/tgstation-server
 
+If you decide to go this route, here are /tg/ specific details on hosting with TGS.
+
+- We have two directories which should be setup in the instance's `Configuration/GameStaticFiles` directory:
+	- `config` should be where you place your production configuration. Overwrites the default contents of the repo's [config](../config) directory.
+	- `data` should be initially created as an empty directory. The game stores persistent data here.
+- You should incorporate our [custom build scripts for TGS4](../tools/tgs4_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g on Linux.
+- Deployment security level must be set to `Trusted` or it will likely fail due to our native library usage.
+- We highly recommend using the BYOND version specified in [dependencies.sh](../dependencies.sh) to avoid potential unrecorded issues.
+
 ## SQL SETUP
 
 The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: https://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
