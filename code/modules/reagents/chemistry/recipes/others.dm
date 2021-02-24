@@ -826,7 +826,7 @@
 	do_sparks(3,FALSE,location)
 	holder.chem_temp += 10
 	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
-	var/lets_not_go_crazy = 20 //Teleport 10 items at max
+	var/lets_not_go_crazy = 15 //Teleport 15 items at max
 	var/list/items = list()
 	for(var/obj/item/item in range(location, 3))
 		items += item

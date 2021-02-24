@@ -105,6 +105,5 @@
 	if(!length(lockers))
 		return
 	SSeigenstates.create_new_link(lockers)
-	return
 
 //eigenstate END

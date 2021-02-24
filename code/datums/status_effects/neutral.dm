@@ -358,6 +358,7 @@
 	var/stable_message = FALSE
 
 /datum/status_effect/eigenstasium/Destroy()
+	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
 	QDEL_NULL(alt_clone)
 	return ..()
 
@@ -432,6 +433,7 @@
 					alt_clone = new typepath(owner.loc)
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
+					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, .proc/remove_clone_from_var)
 					owner.visible_message("[owner] collapses in from an alternative reality!")
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
@@ -502,8 +504,8 @@
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/tail/monkey/monkey_tail = new (human_mob.loc)
-				monkey_tail.Insert(human_mob)
+				var/obj/item/organ/tail/monkey/monkey_tail = new ()
+				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
 				human_species.randomize_main_appearance_element(human_mob)
@@ -513,6 +515,10 @@
 
 	//Finally increment cycle
 	current_cycle++
+
+/datum/status_effect/eigenstasium/proc/remove_clone_from_var()
+	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
+	QDEL_NULL(alt_clone)
 
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers
