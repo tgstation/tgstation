@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/obsessed
 	max_occurrences = 1
 	min_players = 20
+	dynamic_should_hijack = TRUE
 
 /datum/round_event/obsessed
 	fakeable = FALSE
