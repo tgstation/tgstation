@@ -122,7 +122,7 @@
 	if(!attacker.transferItemToLoc(ingredient, atom_parent))
 		return
 	if (replacement)
-		var/atom/replacement_parent = new replacement(get_turf(atom_parent))
+		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
 		ingredient.forceMove(replacement_parent)
 		replacement = null
 		RemoveComponent()
