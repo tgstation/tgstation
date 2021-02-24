@@ -1,5 +1,0 @@
-author: "bobbahbrown, Qustinnus, MrDoomBringer, ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Experi-sci. Some nodes in the techwebs will now require specific experiments to be done. Some will also give a discount to specific nodes"
-  - rscdel: "Active point generation has been removed from techwebs"

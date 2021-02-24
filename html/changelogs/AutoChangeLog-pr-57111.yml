@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - refactor: "Adds a subsystem for ai movement"
