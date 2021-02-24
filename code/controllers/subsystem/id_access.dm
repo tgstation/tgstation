@@ -38,6 +38,7 @@ SUBSYSTEM_DEF(id_access)
 	// We use this because creating the trim singletons requires the config to be loaded.
 	SSmapping.HACK_LoadMapConfig()
 	setup_access_flags()
+	setup_region_lists()
 	setup_trim_singletons()
 	setup_wildcard_dict()
 	setup_access_descriptions()
@@ -90,13 +91,8 @@ SUBSYSTEM_DEF(id_access)
 	access_flag_string_by_flag["[ACCESS_FLAG_AWAY]"] = ACCESS_FLAG_AWAY_NAME
 	access_flag_string_by_flag["[ACCESS_FLAG_SPECIAL]"] = ACCESS_FLAG_SPECIAL_NAME
 
-/// Instantiate trim singletons and add them to a list.
-/datum/controller/subsystem/id_access/proc/setup_trim_singletons()
-	for(var/trim in typesof(/datum/id_trim))
-		trim_singletons_by_path[trim] = new trim()
-
-/// Creates various data structures that primarily get fed to tgui interfaces, although these lists are used in other places.
-/datum/controller/subsystem/id_access/proc/setup_tgui_lists()
+/// Populates the region lists with data about which accesses correspond to which regions.
+/datum/controller/subsystem/id_access/proc/setup_region_lists()
 	accesses_by_region[REGION_ALL_STATION] = REGION_ACCESS_ALL_STATION
 	accesses_by_region[REGION_ALL_GLOBAL] = REGION_ACCESS_ALL_GLOBAL
 	accesses_by_region[REGION_GENERAL] = REGION_ACCESS_GENERAL
@@ -110,6 +106,13 @@ SUBSYSTEM_DEF(id_access)
 
 	station_regions = REGION_AREA_STATION
 
+/// Instantiate trim singletons and add them to a list.
+/datum/controller/subsystem/id_access/proc/setup_trim_singletons()
+	for(var/trim in typesof(/datum/id_trim))
+		trim_singletons_by_path[trim] = new trim()
+
+/// Creates various data structures that primarily get fed to tgui interfaces, although these lists are used in other places.
+/datum/controller/subsystem/id_access/proc/setup_tgui_lists()
 	for(var/region in accesses_by_region)
 		var/list/region_access = accesses_by_region[region]
 
