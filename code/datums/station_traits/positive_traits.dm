@@ -129,6 +129,7 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	trait_flags = STATION_TRAIT_ABSTRACT
+	blacklist = list(/datum/station_trait/deathrattle_all)
 
 	var/department_to_apply_to
 	var/department_name = "department"
@@ -137,7 +138,7 @@
 /datum/station_trait/deathrattle_department/New()
 	. = ..()
 	deathrattle_group = new("[department_name] group")
-	blacklist = subtypesof(/datum/station_trait/deathrattle_department) -= type //All but ourselves
+	blacklist += subtypesof(/datum/station_trait/deathrattle_department) -= type //All but ourselves
 	name = "deathrattled [department_name]"
 	report_message = "All members of [department_name] have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
@@ -155,42 +156,62 @@
 
 /datum/station_trait/deathrattle_department/service
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_SERVICE
 	department_name = "Service"
 /datum/station_trait/deathrattle_department/cargo
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_SECURITY
 	department_name = "Security"
 
-
 /datum/station_trait/deathrattle_department/medical
 	trait_flags = NONE
-	weight = 2
+	weight = 1
 	department_to_apply_to = DEPARTMENTAL_MEDICAL
 	department_name = "Medical"
+/datum/station_trait/deathrattle_all
+	name = "deathrattled department"
+	trait_type = STATION_TRAIT_POSITIVE
+	show_in_report = TRUE
+	weight = 1
+	report_message = "All members of the station have received an implant to notify each other if one of them dies. This should help improve job-safety!"
+	var/datum/deathrattle_group/deathrattle_group
+
+
+/datum/station_trait/deathrattle_department/New()
+	. = ..()
+	deathrattle_group = new("station group")
+	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+
+/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+	SIGNAL_HANDLER
+
+	var/obj/item/implant/deathrattle/implant_to_give = new()
+	deathrattle_group.register(implant_to_give)
+	implant_to_give.implant(living_mob, living_mob, TRUE, TRUE)
