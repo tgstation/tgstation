@@ -491,7 +491,7 @@
 			do_sparks(5, FALSE, owner)
 			owner.Sleeping(100)
 			owner.Jitter(50)
-			to_chat(owner, "<span class='warning'>You feel your eigenstate settle, snapping an alternative version of yourself into reality.</span>")
+			to_chat(owner, "<span class='userdanger'>You feel your eigenstate settle, as \"you\" become an alternative version of yourself!</span>")
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")
 			//new you new stuff
