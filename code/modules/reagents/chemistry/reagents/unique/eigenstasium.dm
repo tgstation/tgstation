@@ -81,8 +81,8 @@
 	to_chat(living_mob, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
 	living_mob.Jitter(20)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
-	var/mob/living/carbon/carbon_mob = living_mob
-	if(carbon_mob)
+	if(iscarbon(living_mob))
+		var/mob/living/carbon/carbon_mob = living_mob
 		carbon_mob.apply_status_effect(STATUS_EFFECT_EIGEN)
 	return ..()
 
