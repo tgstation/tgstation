@@ -32,6 +32,7 @@
 #define MEDAL_VOID_ASCENSION "Void"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT          "Beginner Chemist"
+#define MEDAL_TRAM_SURFER "Tram Surfer"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
