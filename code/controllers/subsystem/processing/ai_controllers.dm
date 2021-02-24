@@ -4,6 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(ai_controllers)
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	init_order = INIT_ORDER_AI_CONTROLLERS
 	wait = 8 //Uses the value of CLICK_CD_MELEE because that seemed like a nice standard for the speed of AI behavior
 
 	///an assoc list of all ai_behaviors by type, to
