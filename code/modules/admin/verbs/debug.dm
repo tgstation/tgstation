@@ -199,6 +199,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(worn)
 			id = worn.GetID()
 		if(id)
+			if(id == worn)
+				worn = null
 			qdel(id)
 
 		id = new /obj/item/card/id/advanced/debug()
