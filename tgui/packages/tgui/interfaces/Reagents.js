@@ -406,12 +406,18 @@ const RecipeLibrary = (props, context) => {
             icon="search"
             disabled={bookmarkMode}
             color={reagentFilter ? "green" : "red"}
-            onClick={() => { setReagentFilter(!reagentFilter); setPage(1); }} />
+            onClick={() => {
+              setReagentFilter(!reagentFilter);
+              setPage(1);
+            }} />
           <Button
             content="Bookmarks"
             icon="book"
             color={bookmarkMode ? "green" : "red"}
-            onClick={() => { setBookmarkMode(!bookmarkMode); setPage(1); }} />
+            onClick={() => {
+              setBookmarkMode(!bookmarkMode);
+              setPage(1);
+            }} />
           <Button
             icon="minus"
             disabled={page === 1}
@@ -446,7 +452,9 @@ const RecipeLibrary = (props, context) => {
           </Table.Cell>
         </Table.Row>
         {visibleReactions.slice(startIndex, endIndex).map(reaction => (
-          <Table.Row key={reaction.id} className="candystripe">
+          <Table.Row
+            key={reaction.id}
+            className="candystripe">
             <>
               <Table.Cell bold color="label">
                 <Button
@@ -476,7 +484,10 @@ const RecipeLibrary = (props, context) => {
                 {flagIcons
                   .filter(meta => reaction.bitflags & meta.flag)
                   .map(meta => (
-                    <Icon key={meta.flag} name={meta.icon} mr={1} />
+                    <Icon
+                      key={meta.flag}
+                      name={meta.icon}
+                      mr={1} />
                   ))}
               </Table.Cell>
               <Table.Cell width="20px">
