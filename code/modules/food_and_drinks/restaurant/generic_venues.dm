@@ -53,6 +53,7 @@
 /datum/venue/bar
 	name = "bar"
 	req_access = ACCESS_BAR
+	max_time_between_visitor = 60 SECONDS
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])

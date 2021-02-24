@@ -39,7 +39,7 @@
 	nationality = "Space-American"
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/burger/plain = 15, /obj/item/food/burger/cheese = 8, /obj/item/food/burger/superbite = 1, /obj/item/food/fries = 10, /obj/item/food/cheesyfries = 6, /obj/item/food/pie/applepie = 4, /obj/item/food/pie/pumpkinpie = 2, /obj/item/food/hotdog = 8, /obj/item/food/pizza/pineapple = 1, /obj/item/food/burger/baconburger = 6, /obj/item/food/pancakes = 4),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer/light = 15, /datum/reagent/consumable/ethanol/beer = 25))
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer = 25))
 
 
 	found_seat_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
@@ -62,7 +62,7 @@
 	wait_for_food_lines = list("I'ma so hungry...")
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 10, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 5, /datum/reagent/consumable/ethanol/beer = 6, /datum/reagent/consumable/ethanol/beer/light = 6, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5,  /datum/reagent/consumable/hot_ice_coffee = 5))
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 5, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5))
 
 
 /datum/customer_data/french
@@ -77,7 +77,7 @@
 	wait_for_food_lines = list("Hon hon hon")
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 10, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 6),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 3, /datum/reagent/consumable/ethanol/beer/light = 5))
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 10))
 
 /datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
