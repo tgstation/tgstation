@@ -6,8 +6,9 @@
 		return
 
 	if (random_event_hijacked != HIJACKED_NOTHING)
-		message_admins("Random event [round_event_control.name] tried to roll, but Dynamic vetoed it.")
-		// TODO: Choose different random event
+		message_admins("Random event [round_event_control.name] tried to roll, but Dynamic vetoed it (random event has already ran).")
+		SSevents.spawnEvent()
+		SSevents.reschedule()
 		return CANCEL_PRE_RANDOM_EVENT
 
 	var/time_range = rand(random_event_hijack_minimum, random_event_hijack_maximum)
