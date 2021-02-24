@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Stops the rune carver from carving on invalid targets."

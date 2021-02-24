@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - imageadd: "adds new sprites for wizard cult constructs"
-  - bugfix: "fixes wraith jaunts being invisible"
-  - bugfix: "fixes wizard cult constructs not working"

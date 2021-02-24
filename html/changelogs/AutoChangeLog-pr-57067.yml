@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "Icebox public mining APC now uses the correct area"
