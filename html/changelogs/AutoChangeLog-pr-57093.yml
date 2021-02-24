@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Midround dynamic injection no longer has a 100% chance of activating."
