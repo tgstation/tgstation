@@ -61,13 +61,11 @@
  *
  * Arguments:
  * * newseed - Seed of the shroom
- * * mutate_stats - If the plant needs to mutate their stats
- * * spread - If the plant is a result of spreading, reduce its stats
  */
 
 
 
-/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
+/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed)
 	. = ..()
 	GLOB.glowshrooms++
 	if(newseed)
@@ -180,7 +178,7 @@
 		if(shroom_count >= place_count)
 			continue
 
-		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy(), TRUE, TRUE)
+		var/obj/structure/glowshroom/child = new type(new_loc, newseed = myseed.Copy())
 		child.generation = generation + 1
 
 /obj/structure/glowshroom/proc/calc_dir(turf/location = loc)
@@ -244,14 +242,14 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/glowshroom/extreme/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
+/obj/structure/glowshroom/extreme/Initialize(mapload, obj/item/seeds/newseed)
 	. = ..()
 	if(generation == 1)
 		myseed.potency = 100
 		myseed.endurance = 100
 		myseed.yield = 10
 
-/obj/structure/glowshroom/medium/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
+/obj/structure/glowshroom/medium/Initialize(mapload, obj/item/seeds/newseed)
 	. = ..()
 	if(generation == 1)
 		myseed.potency = 50
