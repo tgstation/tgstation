@@ -63,8 +63,14 @@
 
 
 ///Food price classes
-#define FOOD_PRICE_TRASH 10
-#define FOOD_PRICE_CHEAP 35 //Most typically, 1-2 ingredients from a roundstart kitchen.
-#define FOOD_PRICE_NORMAL 60 //May still be only a few ingredients, but may require some cooperation or prep-work to aquire.
-#define FOOD_PRICE_EXOTIC 125 //Themed foods that in most rounds requires botany or another department to go out on a limb for you. Contains most seafoods/exotic meats/unpopular foods.
-#define FOOD_PRICE_LEGENDARY 600 //If you can make one of these in an hour long round, without any help, then you'll surely be awarded.
+#define FOOD_PRICE_TRASH 10  //cheap and quick.
+#define FOOD_PRICE_CHEAP 40 //In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
+#define FOOD_PRICE_NORMAL 100 //Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.
+#define FOOD_PRICE_EXOTIC 300 //Making one of these should be worth the time investment, solid chunk of profit.
+#define FOOD_PRICE_LEGENDARY 1000 //Large windfall for making something from this list.
+
+
+#define DRINK_PRICE_STOCK 20
+#define DRINK_PRICE_EASY 35
+#define DRINK_PRICE_MEDIUM 80
+#define DRINK_PRICE_HIGH 200

@@ -329,7 +329,7 @@
 	glass_name = "pitcher of lemonade"
 	glass_desc = "This drink leaves you feeling nostalgic for some reason."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	glass_price = FOOD_PRICE_NORMAL
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/tea/arnold_palmer
 	name = "Arnold Palmer"
@@ -379,7 +379,6 @@
 	glass_name = "hot ice coffee"
 	glass_desc = "A sharp drink, this can't have come cheap"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	glass_price = FOOD_PRICE_NORMAL
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)

@@ -15,7 +15,7 @@
 	///Cooldown for next guest to arrive
 	COOLDOWN_DECLARE(visit_cooldown)
 	///Min time between new visits
-	var/min_time_between_visitor = 20 SECONDS
+	var/min_time_between_visitor = 60 SECONDS
 	///Max time between new visits
 	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
@@ -59,7 +59,7 @@
 /datum/venue/proc/open()
 	open = TRUE
 	restaurant_portal.update_icon()
-	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
+	COOLDOWN_START(src, visit_cooldown, 10 SECONDS) //First one comes faster
 	START_PROCESSING(SSobj, src)
 
 /datum/venue/proc/close()
