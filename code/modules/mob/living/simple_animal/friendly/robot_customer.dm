@@ -1,6 +1,8 @@
 ///Robot customers
 /mob/living/simple_animal/robot_customer
 	name = "space-tourist bot"
+	maxHealth = 50000000 //go fuck yourself
+	health = 50000000
 	desc = "I wonder what they'll order..."
 	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
@@ -11,6 +13,9 @@
 	del_on_death = TRUE
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	ai_controller = /datum/ai_controller/robot_customer
+	unsuitable_atmos_damage = 0
+	minbodytemp = 0
+	maxbodytemp = 1000
 	var/clothes_set = "amerifat_clothes"
 	var/datum/atom_hud/hud_to_show_on_hover
 
