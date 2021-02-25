@@ -14,7 +14,6 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-	var/obj/item/assembly/shock_kit/stored_kit
 
 
 /obj/structure/chair/examine(mob/user)
@@ -59,9 +58,6 @@
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(stored_kit)
-			stored_kit.Move(loc)
-			stored_kit = null
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else
@@ -81,23 +77,18 @@
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(flags_1 & NODECONSTRUCT_1)
 		return ..()
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && stored_kit)
-		stored_kit.Move(loc)
-		stored_kit = null
-		to_chat(user, "<span class='notice'> You disconnect the shock kit from the chair. </span>")
-		return
-	if(W.tool_behaviour == TOOL_WRENCH)
-		W.play_tool_sound(src)
-		deconstruct()
-		return
-	if(istype(W, /obj/item/assembly/shock_kit) && !stored_kit)
+	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_CHAIR))
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
-		stored_kit = W
-		stored_kit.Move(src)
 		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
-		AddComponent(/datum/component/electrified_buckle, stored_kit)
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE), W, list(image(icon = 'icons/obj/chairs.dmi', icon_state = "echair_over", loc)))
 		return
+	. = ..()
+
+/obj/structure/chair/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	I.play_tool_sound(src)
+	deconstruct()
 
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
