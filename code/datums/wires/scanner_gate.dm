@@ -25,4 +25,4 @@
 	. += "The Green light is [scanner.pass ? "on" : "off"]."
 	. += "The Red light is [scanner.fail ? "on" : "off"]."
 	. += "The Yellow light is [scanner.triggered ? "on" : "off"]."
-	. += "The Purple light is [scanner.ignore_signals ? "on" : "off"].
+	. += "The Purple light is [scanner.ignore_signals ? "on" : "off"]."
