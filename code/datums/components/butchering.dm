@@ -105,8 +105,8 @@
 			if(prob(bonus_chance))
 				if(butcher)
 					to_chat(butcher, "<span class='info'>You harvest some extra [initial(bones.name)] from [meat]!</span>")
-				results += new bones (T)
-			results += new bones (T)
+				results += bones
+			results += bones
 
 		meat.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
 
@@ -114,7 +114,7 @@
 		var/obj/sinew = V
 		var/amount = meat.guaranteed_butcher_results[sinew]
 		for(var/i in 1 to amount)
-			results += new sinew (T)
+			results +=  sinew
 		meat.guaranteed_butcher_results.Remove(sinew)
 
 	for(var/obj/item/carrion in results)
@@ -129,6 +129,8 @@
 	ButcherEffects(meat)
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)
+	for(var/butchery_path in results)
+		new butchery_path(T)
 
 /datum/component/butchering/proc/ButcherEffects(mob/living/meat) //extra effects called on butchering, override this via subtypes
 	return
