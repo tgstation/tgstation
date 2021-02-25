@@ -57965,15 +57965,15 @@
 /turf/open/floor/plating,
 /area/cargo/storage)
 "sDY" = (
-/obj/machinery/doppler_array/research/science{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/item/radio/intercom{
 	pixel_y = 25
+	},
+/obj/machinery/doppler_array/research/science{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
