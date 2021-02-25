@@ -32844,10 +32844,8 @@
 "ecg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/engineering/main)
 "ecm" = (
@@ -34799,7 +34797,6 @@
 /area/commons/locker)
 "eOy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "eOz" = (
@@ -34984,7 +34981,6 @@
 /area/engineering/atmos)
 "eRV" = (
 /obj/effect/turf_decal/trimline/purple/corner,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
@@ -37080,7 +37076,7 @@
 	dir = 5
 	},
 /obj/machinery/camera{
-	c_tag = "Science Hallway - Security";
+	c_tag = "Science Hallway - West";
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -37729,7 +37725,7 @@
 "gad" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/camera{
-	c_tag = "Science Hallway - Security";
+	c_tag = "Science Hallway - Central";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -38108,7 +38104,7 @@
 	},
 /obj/item/crowbar,
 /obj/machinery/camera{
-	c_tag = "Science Toxins Launch";
+	c_tag = "Science Toxins Launch Control";
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -41287,6 +41283,7 @@
 /obj/item/reagent_containers/dropper{
 	pixel_y = -5
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "htR" = (
@@ -46650,7 +46647,6 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "jMx" = (
@@ -49252,8 +49248,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "kPY" = (
-/obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "kQw" = (
@@ -49696,6 +49690,7 @@
 /area/space)
 "kZt" = (
 /obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "kZI" = (
@@ -50395,6 +50390,13 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"lpV" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "lqa" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/fork/plastic,
@@ -54127,7 +54129,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "mQO" = (
@@ -56575,7 +56576,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "nPq" = (
@@ -57343,6 +57343,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "Science Hallway - Security";
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/storage)
 "oji" = (
@@ -63443,7 +63447,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "qAp" = (
@@ -65762,7 +65765,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "rxh" = (
@@ -68156,9 +68158,10 @@
 "sqy" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/science/misc_lab)
+/area/science/misc_lab/range)
 "sqI" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -68262,6 +68265,7 @@
 "srC" = (
 /obj/structure/table,
 /obj/item/crowbar,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "srE" = (
@@ -72457,6 +72461,14 @@
 	luminosity = 2
 	},
 /area/ai_monitored/command/nuke_storage)
+"uib" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/engineering/main)
 "uir" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -73802,14 +73814,12 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/light_switch{
 	pixel_x = 24;
 	pixel_y = -22
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron{
 	dir = 1
 	},
@@ -74673,7 +74683,6 @@
 	req_access_txt = "8"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/white,
 /area/science/storage)
@@ -78735,7 +78744,6 @@
 "wNT" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/start/scientist,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "wOc" = (
@@ -124015,7 +124023,7 @@ vio
 eQv
 pFp
 fTu
-fNo
+uib
 gYN
 wmW
 qEv
@@ -125571,7 +125579,7 @@ ugD
 iLT
 hIv
 fTu
-avs
+lpV
 kDC
 oaB
 mEI
