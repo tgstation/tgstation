@@ -1506,7 +1506,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "adh" = (
@@ -2815,7 +2814,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "age" = (
@@ -8781,6 +8779,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = -32
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/service/bar)
 "auX" = (
@@ -14179,18 +14178,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
-"aJU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 9
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/plating,
-/area/maintenance/central/secondary)
 "aJV" = (
 /turf/closed/wall,
 /area/security/checkpoint)
@@ -15762,13 +15749,6 @@
 "aPG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
-	},
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
-	name = "Containment Pen #6";
-	req_access_txt = "55"
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -22591,9 +22571,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cXz" = (
@@ -23087,11 +23064,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
-"djy" = (
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "djI" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/delivery,
@@ -25956,6 +25928,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/space/basic,
 /area/space/nearstation)
+"etq" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/iron,
+/area/service/bar)
 "etv" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
@@ -26065,6 +26045,7 @@
 	c_tag = "Civilian - Bar South";
 	dir = 1
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/service/bar)
 "evw" = (
@@ -26745,12 +26726,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
-"eLB" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "eLP" = (
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
@@ -27503,16 +27478,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/research)
-"far" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/machinery/door/window/northleft{
-	name = "Containment Pen #3";
-	req_access_txt = "55"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "fat" = (
 /obj/effect/spawner/randomcolavend,
 /obj/machinery/newscaster{
@@ -29433,6 +29398,13 @@
 /obj/structure/chair/stool,
 /turf/open/floor/iron,
 /area/engineering/break_room)
+"fND" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/wood,
+/area/space)
 "fOh" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -33742,11 +33714,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/door/window/northleft{
-	dir = 2;
-	name = "Containment Pen #5";
-	req_access_txt = "55"
-	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "hJG" = (
@@ -36281,9 +36248,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -40760,12 +40724,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	icon_state = "right";
-	name = "Containment Pen #1";
-	req_access_txt = "55"
-	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "kWq" = (
@@ -42527,7 +42485,6 @@
 "lKO" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "lMa" = (
@@ -53326,19 +53283,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"qBf" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
-	name = "Containment Pen #8";
-	req_access_txt = "55"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "qBh" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -55734,18 +55678,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"rDp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	icon_state = "right";
-	name = "Containment Pen #4";
-	req_access_txt = "55"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "rDE" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -56167,12 +56099,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
-"rNP" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "rNZ" = (
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
@@ -56661,9 +56587,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -63357,6 +63280,10 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/tcommsat/computer)
+"uTG" = (
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/glass,
+/area/service/kitchen)
 "uUu" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -63421,12 +63348,6 @@
 "uWz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
-	},
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	icon_state = "right";
-	name = "Containment Pen #2";
-	req_access_txt = "55"
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -64895,17 +64816,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/storage)
-"vFz" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/machinery/door/window/northleft{
-	dir = 2;
-	name = "Containment Pen #7";
-	req_access_txt = "55"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "vFI" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/line{
@@ -67208,9 +67118,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -70741,13 +70648,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/science/research)
-"yiw" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "yiH" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/closet/crate,
@@ -88747,7 +88647,7 @@ air
 air
 vKH
 air
-yiw
+air
 air
 air
 aIx
@@ -91819,7 +91719,7 @@ aOF
 akf
 aeK
 abX
-ahV
+etq
 ahV
 ahV
 aZE
@@ -95976,7 +95876,7 @@ aJI
 aKf
 aKf
 aKf
-aJU
+uNb
 aJo
 aae
 aae
@@ -111144,12 +111044,12 @@ aae
 lQG
 pfK
 lPd
-rNP
+lPd
 nOn
 egz
 ttV
 lZG
-rNP
+lPd
 lPd
 ckj
 lQG
@@ -111407,7 +111307,7 @@ xYk
 fhe
 xql
 hJD
-lPd
+hUF
 lPd
 lQG
 mrd
@@ -112171,7 +112071,7 @@ aae
 aae
 lQG
 lPd
-lPd
+hUF
 uWz
 etT
 xYk
@@ -112429,12 +112329,12 @@ aae
 lQG
 pfK
 lPd
-eLB
+lPd
 nOn
 wwy
 oqW
 lZG
-eLB
+lPd
 lPd
 ckj
 lQG
@@ -113971,12 +113871,12 @@ aae
 lQG
 pfK
 lPd
-rNP
+lPd
 uQq
 eOn
 bfg
 fqi
-rNP
+lPd
 lPd
 ckj
 lQG
@@ -114227,13 +114127,13 @@ aae
 aae
 lQG
 lPd
-hUF
-far
+lPd
+kWm
 sPU
 xYk
 fhe
 mHo
-vFz
+hJD
 lPd
 lPd
 lQG
@@ -114999,13 +114899,13 @@ aae
 lQG
 lPd
 lPd
-rDp
+uWz
 smb
 xYk
 fhe
 dMo
-qBf
-lPd
+aPG
+hUF
 lPd
 lQG
 aae
@@ -115255,14 +115155,14 @@ aae
 aae
 lQG
 pfK
-hUF
-eLB
+lPd
+lPd
 uQq
 gBC
 hMO
 fqi
-eLB
-hUF
+lPd
+lPd
 ckj
 lQG
 aae
@@ -154268,7 +154168,7 @@ azJ
 azJ
 aae
 aae
-aae
+fND
 aae
 aae
 jPI
@@ -158133,7 +158033,7 @@ pco
 jya
 aUE
 gyC
-aUE
+uTG
 aUE
 aDI
 aqB
@@ -173281,7 +173181,7 @@ fGX
 fGX
 fGX
 aTC
-djy
+fGX
 fGX
 oOP
 aae
