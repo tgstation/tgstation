@@ -11,4 +11,4 @@ jobs:
     - name: GBP action
       uses: tgstation/gbp-action@v1
       with:
-        token: ${{ secrets.GBP_UPDATER }}
+        token: ${{ secrets.GITHUB_MASTER_KEY }}
