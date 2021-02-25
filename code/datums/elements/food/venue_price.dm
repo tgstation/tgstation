@@ -18,6 +18,5 @@
 
 	if(!venue_price)
 		CRASH("[container] was sold, but had no price assigned to it! (Or its contents)")
-		return
 	new /obj/item/holochip(get_turf(container), venue_price)
 	playsound(get_turf(container), 'sound/effects/cashregister.ogg', 60, TRUE)
