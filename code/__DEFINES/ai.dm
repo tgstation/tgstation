@@ -60,3 +60,36 @@
 #define BB_VENDING_UNTILT_COOLDOWN "BB_vending_untilt_cooldown"
 #define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
 #define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"
+
+
+///Dog AI controller blackboard keys
+
+#define BB_FETCHING "BB_FETCHING"
+#define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
+#define BB_FETCH_TARGET "BB_FETCH_TARGET"
+#define BB_FETCH_IGNORE_LIST "BB_FETCH_IGNORE_LISTlist"
+#define BB_FETCH_DELIVER_TO "BB_FETCH_DELIVER_TO"
+#define BB_FETCH_THROW_LISTENERS "BB_FETCH_THROW_LISTENERS"
+#define BB_DOG_FRIENDS "BB_DOG_FRIENDS"
+#define BB_FETCH_RESET_IGNORE_CD "BB_FETCH_RESET_IGNORE_CD"
+#define BB_DOG_ORDER_MODE "BB_DOG_ORDER_MODE"
+#define BB_DOG_HEEL_CD "BB_DOG_RELAX_CD"
+#define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
+#define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
+
+/// Basically, what is our vision/hearing range for picking up on things to fetch?
+#define AI_DOG_VISION_RANGE	7
+/// What are the odds someone petting us will become our friend?
+#define AI_DOG_PET_FRIEND_PROB		15
+/// After this long without having fetched something, we clear our ignore list
+#define AI_FETCH_IGNORE_DURATION	30 SECONDS
+/// After being ordered to heel, we spend this long chilling out
+#define AI_DOG_HEEL_DURATION	10 SECONDS
+
+// dog command modes (what pointing at something/someone does depending on the last order the dog heard)
+///
+#define DOG_COMMAND_NONE	0
+
+#define DOG_COMMAND_FETCH	1
+
+#define DOG_COMMAND_ATTACK	2

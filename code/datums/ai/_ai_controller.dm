@@ -32,6 +32,10 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	COOLDOWN_DECLARE(movement_cooldown)
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
+	///A list for the path we're currently following, if we're using JPS pathing
+	var/list/movement_path
+	///A reference to an ID card representing the pawn's access, if one exists
+	var/id_card
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
@@ -148,6 +152,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 			CancelActions()
 
 /datum/ai_controller/proc/CancelActions()
+	movement_path = null
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
 		current_behavior.finish_action(src, FALSE)
@@ -162,3 +167,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+
+/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
+/datum/ai_controller/proc/get_access()
+	return
