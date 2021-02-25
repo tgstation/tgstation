@@ -753,7 +753,6 @@
 "abz" = (
 /obj/machinery/door/airlock{
 	name = "Service Lathe Access";
-	req_access_txt = "0";
 	req_one_access_txt = "35;26;28;25"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -17866,7 +17865,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/obj/structure/industrial_lift/tram/console,
+/obj/machinery/computer/tram_controls,
 /turf/open/floor/vault,
 /area/hallway/primary/tram/center)
 "aYd" = (
@@ -28136,7 +28135,6 @@
 "fnX" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Medical Maintenance";
-	req_access_txt = "0";
 	req_one_access_txt = "12;5;28"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -29980,7 +29978,6 @@
 	freerange = 1;
 	frequency = 1447;
 	name = "Private Channel";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/iron/dark,
@@ -31985,7 +31982,6 @@
 	freerange = 1;
 	frequency = 1447;
 	name = "Private Channel";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/iron/grimy,
@@ -35588,8 +35584,7 @@
 	},
 /obj/machinery/button/elevator{
 	id = "publicElevator";
-	pixel_x = 25;
-	pixel_y = 0
+	pixel_x = 25
 	},
 /obj/machinery/light{
 	dir = 4
@@ -37164,7 +37159,6 @@
 "jre" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Chemistry Maintenance";
-	req_access_txt = "0";
 	req_one_access_txt = "12;33"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -40849,8 +40843,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Medical Maintenance";
-	req_access_txt = "5";
-	req_one_access_txt = "0"
+	req_access_txt = "5"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -44803,8 +44796,7 @@
 "mRf" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Secure - AI Upload Maintenance Access";
-	dir = 1;
-	network = list("ss13")
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -48580,8 +48572,7 @@
 	},
 /obj/machinery/button/elevator{
 	id = "publicElevator";
-	pixel_x = 25;
-	pixel_y = 0
+	pixel_x = 25
 	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -51215,10 +51206,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "pEH" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 1;
-	output_dir = 2
-	},
+/obj/machinery/mineral/ore_redemption,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -60380,6 +60368,7 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/goonplaque{
 	desc = "\"This is a plaque in honour of the fallen spacemen and spacewomen who gave their lives to bravely test our state-of-the-art monorail system. They sacrificed themselves so the future may be safer for us all.";name = "tram casualities remembrance plaque"},
+	},
 /area/hallway/secondary/exit)
 "tIj" = (
 /obj/structure/ore_box,
@@ -63263,7 +63252,6 @@
 	freerange = 1;
 	frequency = 1447;
 	name = "Private Channel";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/iron/dark,
@@ -67049,8 +67037,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Engineering Maintenance";
-	req_access_txt = "11";
-	req_one_access_txt = "0"
+	req_access_txt = "11"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,

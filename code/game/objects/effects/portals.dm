@@ -38,7 +38,7 @@
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
-/obj/effect/portal/Move(newloc)
+/obj/effect/portal/Move(atom/newloc, direct, glide_size_override)
 	for(var/T in newloc)
 		if(istype(T, /obj/effect/portal))
 			return FALSE
@@ -50,13 +50,7 @@
 		return TRUE
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
-	if(force_stop)
-		return ..()
-	if(isobserver(AM))
-		return ..()
-	if(linked && (get_turf(oldloc) == get_turf(linked)))
-		return ..()
-	if(!teleport(AM))
+	if(force_stop || isobserver(AM) || (linked && (get_turf(oldloc) == get_turf(linked))) || !teleport(AM))
 		return ..()
 
 /obj/effect/portal/attack_tk(mob/user)

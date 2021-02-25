@@ -229,11 +229,11 @@
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 	var/obj/structure/industrial_lift/tram/tram_part
-	for(var/obj/structure/industrial_lift/tram/possible_lift in GLOB.lifts) //this is a tram lift check in of itself, with byond's filtering system
-		tram_part = possible_lift
-		break
+
+	var/obj/machinery/computer/tram_controls/computer = locate(/obj/machinery/computer/tram_controls) in GLOB.machines
+	tram_part = computer?.tram_part
 	if(!tram_part)
-		say("The tram is not responding to call signals. Does the tram you are calling for still exist?")
+		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
 		return
 	if(!tram_part.from_where) //edge case where the tram has not moved yet and set up it's landmarks but has been called
 		for(var/obj/effect/landmark/tram/tram_landmark in GLOB.landmarks_list)
