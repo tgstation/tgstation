@@ -170,7 +170,7 @@
 
 			if(LAZYLEN(filtered_organ_list) > 0)
 				var/obj/item/organ/picked_organ = pick(filtered_organ_list)
-				picked_organ.applyOrganDamage(5 * severity*severity)
+				picked_organ.applyOrganDamage(2.5 * severity*severity)
 
 		wound_injury(old_wound)
 		second_wind()
