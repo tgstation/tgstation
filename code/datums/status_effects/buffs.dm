@@ -115,6 +115,7 @@
 	. = ..()
 	if(.)
 		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk")
+		ADD_TRAIT(owner, TRAIT_RESIST_WOUND_ORGAN_DAMAGE, "blooddrunk")
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.physiology.brute_mod *= 0.1
@@ -138,6 +139,7 @@
 		H.physiology.stamina_mod *= 10
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
+	REMOVE_TRAIT(owner, TRAIT_RESIST_WOUND_ORGAN_DAMAGE, "blooddrunk")
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -417,10 +419,12 @@
 /datum/status_effect/marshal/on_apply()
 	. = ..()
 	ADD_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+	ADD_TRAIT(owner,TRAIT_RESIST_WOUND_ORGAN_DAMAGE,type)
 
 /datum/status_effect/marshal/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+	REMOVE_TRAIT(owner,TRAIT_RESIST_WOUND_ORGAN_DAMAGE,type)
 
 /datum/status_effect/marshal/tick()
 	. = ..()

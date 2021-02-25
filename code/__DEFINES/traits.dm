@@ -252,6 +252,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
+#define TRAIT_RESIST_WOUND_ORGAN_DAMAGE "resist_wound_organ_damage"
+
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind

@@ -159,6 +159,19 @@
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
 	if(!demoted)
+
+		if((wound_flags & DEEP_WOUND) && !HAS_TRAIT(L.owner,TRAIT_RESIST_WOUND_ORGAN_DAMAGE))
+			var/organ_list = L.owner.getorganszone(L.body_zone)
+			var/filtered_organ_list
+			for(var/obj/item/organ/organ as() in organ_list)
+				if(organ.status != ORGAN_ORGANIC)
+					continue
+				LAZYADD(filtered_organ_list,organ)
+
+			if(LAZYLEN(filtered_organ_list) > 0)
+				var/obj/item/organ/picked_organ = pick(filtered_organ_list)
+				picked_organ.applyOrganDamage(5 * severity*severity)
+
 		wound_injury(old_wound)
 		second_wind()
 

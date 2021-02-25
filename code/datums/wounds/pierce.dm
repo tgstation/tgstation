@@ -166,6 +166,7 @@
 	threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
+	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | DEEP_WOUND)
 
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
@@ -183,4 +184,4 @@
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
-	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH | DEEP_WOUND)

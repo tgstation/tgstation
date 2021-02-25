@@ -299,4 +299,4 @@
 	demotes_to = /datum/wound/slash/severe
 	status_effect_type = /datum/status_effect/wound/slash/critical
 	scar_keyword = "slashcritical"
-	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH | DEEP_WOUND)
