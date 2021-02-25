@@ -437,3 +437,129 @@
 
 	M.adjustToxLoss(5 * REM * delta_time)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time)
+
+/datum/reagent/drug/blastoff
+	name = "bLaSToFF"
+	///This is multiplied by the amount of units to get the chance to flip per second
+	var/flip_chance_per_unit = 1
+	///How many flips have we done so far?
+	var/flip_count = 0
+	///How many flips for a super flip?
+	var/super_flip_requirement = 3
+
+
+/datum/reagent/drug/blastoff/on_mob_add(mob/living/L, amount)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_blue = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.764,0,0,0) //most blue color
+	var/list/col_filter_mid = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.832,0,0,0) //red/blue mix midpoint
+	var/list/col_filter_red = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.900,0,0,0) //most red color
+
+	game_plane_master_controller.add_filter("blastoff_filter", 10, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY))
+
+	for(var/filter in game_plane_master_controller.get_filters("blastoff_filter"))
+		animate(filter, color = col_filter_blue, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN, loop = -1)
+		animate(color = col_filter_mid, time = 3 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+		animate(color = col_filter_red, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN)
+		animate(color = col_filter_mid, time = 3 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+
+/datum/reagent/drug/blastoff/on_mob_delete(mob/living/L)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.remove_filter("blastoff_filter")
+
+
+/datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	. = ..()
+
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1 * REM * delta_time)
+
+	if(!DT_PROB(flip_chance_per_unit * volume, delta_time))
+		return
+
+	flip_count++
+	if(flip_count >= super_flip_requirement) //Do a super flip
+		flip_count = 0
+		var/atom/throw_target = get_edge_target_turf(M, M.dir)
+		M.visible_message("<span class='userdanger'>[M] does an extravagant flip!</span>")
+		M.throw_at(throw_target, range = rand(2,3), speed = 4, gentle = !overdosed)
+		if(overdosed)
+			M.AdjustKnockdown(1 SECONDS)
+	else
+		M.emote("flip")
+
+	if(overdosed)
+		M.adjust_disgust(1 * REM * delta_time)
+
+
+
+/datum/reagent/drug/saturnx
+
+
+
+/datum/reagent/drug/saturnx/on_mob_add(mob/living/L, amount)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_full = list(1,0,0,0, 0,1.00,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	var/list/col_filter_twothird = list(1,0,0,0, 0,0.68,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	var/list/col_filter_half = list(1,0,0,0, 0,0.42,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+	var/list/col_filter_empty = list(1,0,0,0, 0,0.11,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0) //leaves just a bit of color
+
+	game_plane_master_controller.add_filter("saturnx_filter", 10, color_matrix_filter(col_filter_twothird, FILTER_COLOR_HCY))
+
+	for(var/filter in game_plane_master_controller.get_filters("saturnx_filter"))
+		animate(filter, loop = -1, color = col_filter_full, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+		//uneven so we spend slightly less time with bright colors
+		animate(color = col_filter_twothird, time = 2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(color = col_filter_half, time = 9 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_empty, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+		animate(color = col_filter_half, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(color = col_filter_twothird, time = 9 SECONDS, easing = LINEAR_EASING)
+
+/datum/reagent/drug/saturnx/on_mob_delete(mob/living/L)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.remove_filter("saturnx_filter")
+
+
+
+
+
+
+
+/datum/reagent/drug/kroncaine
+
+
+
+/datum/reagent/drug/kroncaine/on_mob_add(mob/living/L, amount)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
+	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
+	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
+	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
+
+	game_plane_master_controller.add_filter("kroncaine_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/filter in game_plane_master_controller.get_filters("kroncaine_filter"))
+		animate(filter, loop = -1, color = col_filter_identity, time = 0, easing = JUMP_EASING)
+		animate(color = col_filter_green, time = 4 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_blue, time = 4 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_red, time = 4 SECONDS, easing = LINEAR_EASING)
+
+/datum/reagent/drug/kroncaine/on_mob_delete(mob/living/L)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.remove_filter("kroncaine_filter")
