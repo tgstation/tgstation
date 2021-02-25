@@ -21,7 +21,7 @@ export const captureExternalLinks = () => {
       target = target.parentElement;
     }
     // Not a link, do nothing.
-    if (!target) {
+    if (!target || target === document.body) {
       return;
     }
     const hrefAttr = target.getAttribute('href') || '';
