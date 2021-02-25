@@ -57,6 +57,11 @@
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
 
+/obj/machinery/scanner_gate/Destroy()
+	qdel(wires)
+	wires = null
+	. = ..()
+
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 	if(locked)
@@ -95,7 +100,12 @@
 		else
 			to_chat(user, "<span class='warning'>You try to lock [src] with [W], but nothing happens.</span>")
 	else
-		return ..()
+		if(!locked)
+			if(default_deconstruction_screwdriver(user, "scangate_open", "scangate", W))
+				return
+		if(panel_open && is_wire_tool(W))
+			wires.interact(user)
+	return ..()
 
 /obj/machinery/scanner_gate/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -107,6 +117,7 @@
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
+	var/color = FALSE
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
@@ -179,17 +190,16 @@
 	if(beep)
 		alarm_beep()
 		if(!ignore_signals)
-			color = wires.get_color_of_wire(WIRE_FAIL)
-			var/obj/item/assembly/S = wires.get_attached(color)
-			if(istype(S))
-				S.activate()
-	else		else
-		if(!ignore_signals)
-			color = wires.get_color_of_wire(WIRE_PASS)
+			color = wires.get_color_of_wire(WIRE_ACCEPT)
 			var/obj/item/assembly/S = wires.get_attached(color)
 			if(istype(S))
 				S.activate()
 	else
+		if(!ignore_signals)
+			color = wires.get_color_of_wire(WIRE_DENY)
+			var/obj/item/assembly/S = wires.get_attached(color)
+			if(istype(S))
+				S.activate()
 		set_scanline("scanning", 10)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
