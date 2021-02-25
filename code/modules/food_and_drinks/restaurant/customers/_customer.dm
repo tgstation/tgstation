@@ -30,7 +30,7 @@
 
 /datum/customer_data/New()
 	. = ..()
-	name_prefixes = world.file2list("strings/names/american_prefix.txt")
+	name_prefixes = world.file2list(prefix_file)
 
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
