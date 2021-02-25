@@ -216,5 +216,5 @@ There appears to be a small amount of surface corrosion. It doesn't look like it
 	l_set = TRUE
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
-/obj/item/storage/secure/safe/PopulateContents()
+/obj/item/storage/secure/safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)
