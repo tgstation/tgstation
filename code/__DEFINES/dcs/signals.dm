@@ -909,6 +909,8 @@
 ///called on an object by its NTNET connection component on a port distruction (port, list/data))
 #define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
 
+///Restaurant
+#define COMSIG_ITEM_SOLD_TO_CUSTOMER "item_sold_to_customer"
 
 //Nanites
 

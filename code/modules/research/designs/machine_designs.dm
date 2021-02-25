@@ -633,6 +633,14 @@
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 
+
+/datum/design/board/restaurant_portal
+	name = "Machine Design (Restaurant Portal)"
+	desc = "The circuit board for a restaurant portal"
+	id = "restaurant_portal"
+	build_path = /obj/item/circuitboard/machine/restaurant_portal
+	category = list ("Misc. Machinery")
+
 /datum/design/board/vendatray
 	name = "Machine Design (Vend-a-Tray)"
 	desc = "The circuit board for a Vend-a-Tray."
