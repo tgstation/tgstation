@@ -117,7 +117,7 @@
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
-	var/color = FALSE
+	var/color = null
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
