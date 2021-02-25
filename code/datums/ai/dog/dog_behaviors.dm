@@ -200,7 +200,7 @@
 	controller.blackboard[BB_DOG_HARASS_TARGET] = null
 
 /// A proc representing when the mob is pushed to actually attack the target. Again, subtypes can be used to represent different attacks from different animals, or it can be some other generic behavior
-/datum/ai_behavior/harass/proc/attack(datum/ai_controller/controller, mob/living/target)
+/datum/ai_behavior/harass/proc/attack(datum/ai_controller/controller, mob/living/living_target)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
