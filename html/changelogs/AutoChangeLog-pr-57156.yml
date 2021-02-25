@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - qol: "Reduced the lag on the chemistry recipe lookup button on the dispenser"
