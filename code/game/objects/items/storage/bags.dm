@@ -426,6 +426,7 @@
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	resistance_flags = FLAMMABLE
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
@@ -446,8 +447,21 @@
 		/obj/item/organ,
 		/obj/item/bodypart,
 		/obj/item/petri_dish,
-		/obj/item/swab
+		/obj/item/swab,
+		/obj/item/slimecross
 		))
+
+/obj/item/storage/bag/bio/holding
+	name = "bio bag of holding"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bspace_biobag"
+	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+
+/obj/item/storage/bag/bio/holding/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = INFINITY
+	STR.max_items = 100
 
 /*
  *  Construction bag (for engineering, holds stock parts and electronics)
