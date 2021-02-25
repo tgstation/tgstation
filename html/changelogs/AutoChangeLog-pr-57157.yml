@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - bugfix: "Fixes smashed bottles not applying their splashing effect on people"

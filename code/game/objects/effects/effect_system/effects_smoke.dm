@@ -347,3 +347,14 @@
 
 /datum/effect_system/smoke_spread/bad/green
 	effect_type = /obj/effect/particle_effect/smoke/bad/green
+
+/////////////////////////////////////////////
+// Quick smoke
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/quick
+	lifetime = 1
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/quick
+	effect_type = /obj/effect/particle_effect/smoke/quick
