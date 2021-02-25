@@ -3,7 +3,6 @@
 /datum/ai_controller/dog
 	blackboard = list(BB_FETCHING = FALSE,\
 	BB_SIMPLE_CARRY_ITEM = null,\
-	BB_FETCH_THROW_LISTENERS = list(),\
 	BB_FETCH_IGNORE_LIST = list(),\
 	BB_FETCH_TARGET = null,\
 	BB_FETCH_DELIVER_TO = null,\
@@ -28,10 +27,11 @@
 
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CARBON_THROW_THING, .proc/listened_throw)
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_GLOB_CARBON_THROW_THING))
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/able_to_run()
@@ -75,7 +75,7 @@
 	// if we're carrying something and we have a destination to deliver it, do that
 	if(blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_DELIVER_TO])
 		var/atom/return_target = blackboard[BB_FETCH_DELIVER_TO]
-		if(!(return_target in view(pawn, AI_DOG_VISION_RANGE)))
+		if(!can_see(pawn, return_target, length=AI_DOG_VISION_RANGE))
 			// if the return target isn't in sight, we'll just forget about it and carry the thing around
 			blackboard[BB_FETCH_DELIVER_TO] = null
 			current_movement_target = null
@@ -84,31 +84,13 @@
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/deliver_item)
 		return
 
-	var/list/old_throw_listeners = blackboard[BB_FETCH_THROW_LISTENERS]
-	var/list/new_throw_listeners = list()
-
-	// check around us for people who we can hear throw things for fetching
-	// (would probably be smart to make this run less frequently than every tick)
-	for(var/i in range(AI_DOG_VISION_RANGE, get_turf(living_pawn)))
-		if(!iscarbon(i))
-			continue
-		var/mob/living/carbon/iter_carbon = i
-		if(!(iter_carbon in old_throw_listeners))
-			RegisterSignal(iter_carbon, COMSIG_MOB_THROW, .proc/listened_throw)
-		new_throw_listeners += iter_carbon
-		old_throw_listeners -= iter_carbon // we're still in, so remove them from the drop list
-
-	for(var/i in old_throw_listeners)
-		var/mob/living/carbon/lost_listener = i
-		UnregisterSignal(lost_listener, COMSIG_MOB_THROW)
-	blackboard[BB_FETCH_THROW_LISTENERS] = new_throw_listeners
-
-	// see if there's any loose snacks in sight nearby
-	for(var/obj/item/potential_snack in oview(living_pawn,3))
-		if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
-			current_movement_target = potential_snack
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
-			return
+	// occasionally see if there's any loose snacks in sight nearby
+	if(DT_PROB(40, delta_time))
+		for(var/obj/item/potential_snack in oview(living_pawn,2))
+			if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+				current_movement_target = potential_snack
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
+				return
 
 /datum/ai_controller/dog/PerformIdleBehavior(delta_time)
 	var/mob/living/living_pawn = pawn
@@ -124,36 +106,36 @@
 		var/obj/item/carry_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 		living_pawn.visible_message("<span class='notice'>[living_pawn] gently teethes on \the [carry_item] in [living_pawn.p_their()] mouth.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 
-	if(DT_PROB(15, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE))
+	if(DT_PROB(5, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE))
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 	else if(DT_PROB(10, delta_time))
 		living_pawn.manual_emote(pick("dances around.","chases its tail!"))
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, living_pawn)
+		//INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, living_pawn)
 
 /// Someone we were listening to throws for has thrown something, start listening to the thrown item so we can see if we want to fetch it when it lands
-/datum/ai_controller/dog/proc/listened_throw(mob/living/carbon/carbon_thrower)
+/datum/ai_controller/dog/proc/listened_throw(datum/source, mob/living/carbon/carbon_thrower)
 	SIGNAL_HANDLER
-
 	if(blackboard[BB_FETCH_TARGET] || blackboard[BB_FETCH_DELIVER_TO]) // we're already busy
 		return
 	if((world.time < blackboard[BB_DOG_HEEL_CD] + AI_DOG_HEEL_DURATION)) // if we were just ordered to heel, chill out for a bit
 		return
-	var/obj/item/thrown_thing = carbon_thrower.get_active_held_item()
-	if(!isitem(thrown_thing) || get_dist(carbon_thrower, pawn) > AI_DOG_VISION_RANGE)
+	if(!can_see(pawn, carbon_thrower, length=AI_DOG_VISION_RANGE))
 		return
-	var/list/thrown_ignorelist = blackboard[BB_FETCH_IGNORE_LIST]
-	if(thrown_thing in thrown_ignorelist)
+	var/obj/item/thrown_thing = carbon_thrower.get_active_held_item()
+	if(!isitem(thrown_thing))
+		return
+	if(blackboard[BB_FETCH_IGNORE_LIST][thrown_thing])
 		return
 
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, .proc/listen_throw_land)
 
 /// A throw we were listening to has finished, see if it's in range for us to try grabbing it
-/datum/ai_controller/dog/proc/listen_throw_land(obj/thrown_thing, datum/thrownthing/throwing_datum)
+/datum/ai_controller/dog/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwing_datum)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(thrown_thing, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_THROW_LANDED))
-	if(!isitem(thrown_thing) || !isturf(thrown_thing.loc) || !(thrown_thing in view(pawn, AI_DOG_VISION_RANGE)))
+	if(!istype(thrown_thing) || !isturf(thrown_thing.loc) || !can_see(pawn, thrown_thing, length=AI_DOG_VISION_RANGE))
 		return
 
 	current_movement_target = thrown_thing
@@ -203,8 +185,7 @@
 	if(blackboard[BB_FETCH_TARGET] || !ismovable(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE)
 		return
 
-	var/list/visible_things = view(pawn, AI_DOG_VISION_RANGE)
-	if(!(pointing_friend in visible_things) || !(pointed_movable in visible_things))
+	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
 		return
 
 	switch(blackboard[BB_DOG_ORDER_MODE])
@@ -249,7 +230,7 @@
 	SIGNAL_HANDLER
 
 	var/list/friends = blackboard[BB_DOG_FRIENDS]
-	if(!friends[speaker] || !(speaker in view(pawn, AI_DOG_VISION_RANGE)))
+	if(!friends[speaker] || !can_see(pawn, speaker, length=AI_DOG_VISION_RANGE))
 		return
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words

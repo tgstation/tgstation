@@ -24,10 +24,9 @@
 	. = ..()
 
 	if(!success) //Don't try again on this item if we failed
-		var/list/item_ignorelist = controller.blackboard[BB_FETCH_IGNORE_LIST]
 		var/obj/item/target = controller.blackboard[BB_FETCH_TARGET]
 		if(target)
-			item_ignorelist[target] = TRUE
+			controller.blackboard[BB_FETCH_IGNORE_LIST][target] = TRUE
 		controller.blackboard[BB_FETCH_TARGET] = null
 		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
@@ -175,7 +174,7 @@
 		return
 
 	var/atom/movable/harass_target = controller.blackboard[BB_DOG_HARASS_TARGET]
-	if(!harass_target || !(harass_target in view(living_pawn, AI_DOG_VISION_RANGE)))
+	if(!harass_target || !can_see(living_pawn, harass_target, length=AI_DOG_VISION_RANGE))
 		finish_action(controller, FALSE)
 		return
 
