@@ -3837,8 +3837,10 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar,
 /obj/effect/landmark/start/assistant,
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "ajb" = (
@@ -5551,12 +5553,14 @@
 /turf/open/floor/iron/white,
 /area/security/brig)
 "anr" = (
-/obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
+	},
+/obj/structure/chair/stool/bar{
+	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
@@ -8155,7 +8159,9 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "atG" = (
@@ -14318,6 +14324,7 @@
 /area/medical/virology)
 "aKt" = (
 /obj/structure/table/wood,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "aKu" = (
@@ -14598,6 +14605,9 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "aLn" = (
@@ -14625,13 +14635,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/tools)
-"aLq" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/service/kitchen)
 "aLs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -17250,6 +17253,7 @@
 /obj/structure/table,
 /obj/item/clothing/suit/apron/chef,
 /obj/item/kitchen/rollingpin,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "aTK" = (
@@ -17980,11 +17984,13 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "aYR" = (
-/obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating/corner,
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "aYT" = (
@@ -21757,8 +21763,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/holopad/secure,
 /obj/machinery/light,
+/obj/machinery/telecomms/relay/preset/station,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "cGX" = (
@@ -29396,13 +29402,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/iron,
 /area/engineering/break_room)
-"fND" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/restaurant_portal/restaurant,
-/turf/open/floor/wood,
-/area/space)
 "fOh" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -33230,11 +33229,13 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar,
 /obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "hzw" = (
@@ -34773,11 +34774,13 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/structure/chair/stool/bar{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "imW" = (
@@ -37542,7 +37545,6 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "jya" = (
-/obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
@@ -42588,18 +42590,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
-"lQm" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/chair/stool/bar,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/service/bar)
 "lQy" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input{
 	dir = 8
@@ -47623,6 +47613,7 @@
 /turf/open/floor/iron,
 /area/command/gateway)
 "odu" = (
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "odE" = (
@@ -50094,7 +50085,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/navbeacon/wayfinding/bar,
 /turf/open/floor/iron,
@@ -60366,9 +60356,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/goonplaque{
-	desc = "\"This is a plaque in honour of the fallen spacemen and spacewomen who gave their lives to bravely test our state-of-the-art monorail system. They sacrificed themselves so the future may be safer for us all.";name = "tram casualities remembrance plaque"},
-	},
+/turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "tIj" = (
 /obj/structure/ore_box,
@@ -68218,7 +68206,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
@@ -68226,6 +68213,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/structure/chair/stool/bar{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "xit" = (
@@ -69599,6 +69589,14 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
+"xLA" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/glass/reinforced,
+/area/ai_monitored/turret_protected/aisat/hallway)
 "xLE" = (
 /obj/machinery/light{
 	dir = 1
@@ -69673,7 +69671,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
-/obj/machinery/telecomms/relay/preset/station,
 /obj/machinery/atmospherics/pipe/multiz/layer4{
 	dir = 8
 	},
@@ -92223,7 +92220,7 @@ xjU
 iOd
 imU
 xim
-lQm
+lRL
 lRL
 pmm
 ahV
@@ -154155,7 +154152,7 @@ azJ
 azJ
 aae
 aae
-fND
+aae
 aae
 aae
 jPI
@@ -157503,7 +157500,7 @@ avo
 aTJ
 awv
 abq
-aLq
+aLm
 axl
 ayx
 aWs
@@ -158531,7 +158528,7 @@ fbF
 wDL
 awv
 abq
-aLq
+aLm
 abH
 aSF
 aLf
@@ -181750,7 +181747,7 @@ lKt
 wvH
 wvH
 vlZ
-eEo
+xLA
 vRe
 myx
 hQb
