@@ -6,13 +6,20 @@
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering
 
-	object_to_order = new object_to_order()
+
 
 	customer_pawn.say(order_food_line(object_to_order))
 
+	var/appearance = SSrestaurant.food_appearance_cache[object_to_order]
+
+	if(!appearance) //We havn't made this one before, do so now.
+		var/obj/item/temp_object = new object_to_order() //Make a temp object so we can see it including any overlays
+		appearance = temp_object.appearance //And then steal its appearance
+		SSrestaurant.food_appearance_cache[object_to_order] = appearance //and cache it for future orders
+
 	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
 
-	I.appearance = object_to_order.appearance
+	I.appearance = appearance
 	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
 	I.pixel_y = 32
 	I.pixel_x = 16
