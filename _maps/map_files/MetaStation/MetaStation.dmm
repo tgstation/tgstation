@@ -18400,7 +18400,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/break_room)
@@ -43927,6 +43927,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
+"iEN" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/engine,
+/area/science/misc_lab/range)
 "iFn" = (
 /obj/machinery/camera{
 	c_tag = "Chapel - Port";
@@ -62385,14 +62389,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/solars/port/fore)
-"qcc" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/engineering/main)
 "qcp" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/cargo/request{
@@ -73682,10 +73678,6 @@
 	dir = 1
 	},
 /obj/item/crowbar,
-/obj/machinery/camera{
-	c_tag = "Science Toxins Launch Control";
-	dir = 4
-	},
 /obj/machinery/requests_console{
 	department = "Toxins Test Range";
 	departmentType = 5;
@@ -81039,11 +81031,6 @@
 /obj/machinery/biogenerator,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"xDl" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/solars/port/fore)
 "xEb" = (
 /obj/structure/table,
 /obj/item/electronics/apc,
@@ -81144,6 +81131,9 @@
 	},
 /obj/structure/cable,
 /obj/structure/transit_tube/horizontal,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/break_room)
 "xFK" = (
@@ -94262,7 +94252,7 @@ hbj
 hbj
 hbj
 aaa
-xDl
+kHf
 aaa
 lMJ
 aaa
@@ -117733,7 +117723,7 @@ cuZ
 ewt
 pcn
 tBm
-pcn
+iEN
 nyz
 uDv
 uDv
@@ -124358,7 +124348,7 @@ vio
 eQv
 pFp
 fTu
-qcc
+fNo
 gYN
 wmW
 qEv
