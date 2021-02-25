@@ -191,7 +191,7 @@
 
 	// subtypes of this behavior can change behavior for how eager/averse the pawn is to attack the target as opposed to falling back/making noise/getting help
 	if(in_range(living_pawn, living_target))
-		attack(living_target)
+		attack(controller, living_target)
 	else if(DT_PROB(50, delta_time))
 		living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [harass_target]!")
 
@@ -200,7 +200,10 @@
 	controller.blackboard[BB_DOG_HARASS_TARGET] = null
 
 /// A proc representing when the mob is pushed to actually attack the target. Again, subtypes can be used to represent different attacks from different animals, or it can be some other generic behavior
-/datum/ai_behavior/harass/proc/attack(mob/living/target)
+/datum/ai_behavior/harass/proc/attack(datum/ai_controller/controller, mob/living/target)
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn))
+		return
 	living_pawn.do_attack_animation(living_target, ATTACK_EFFECT_BITE)
 	living_target.visible_message("<span class='danger'>[living_pawn] bites at [living_target]!</span>", "<span class='userdanger'>[living_pawn] bites at you!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 	living_target.take_bodypart_damage(rand(5, 10))
