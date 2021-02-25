@@ -6,7 +6,7 @@
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering
 
-
+	. = object_to_order
 
 	customer_pawn.say(order_food_line(object_to_order))
 
@@ -16,6 +16,7 @@
 		var/obj/item/temp_object = new object_to_order() //Make a temp object so we can see it including any overlays
 		appearance = temp_object.appearance //And then steal its appearance
 		SSrestaurant.food_appearance_cache[object_to_order] = appearance //and cache it for future orders
+		qdel(temp_object)
 
 	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
 
@@ -26,10 +27,6 @@
 	I.plane = HUD_PLANE
 	I.appearance_flags = RESET_COLOR
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", I)
-
-	. = object_to_order.type
-
-	qdel(object_to_order)
 
 /datum/venue/restaurant/is_correct_order(atom/movable/object_used, wanted_item)
 	return object_used.type == wanted_item
