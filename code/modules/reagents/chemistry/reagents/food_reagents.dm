@@ -23,7 +23,8 @@
 
 /datum/reagent/consumable/New()
 	. = ..()
-	AddElement(/datum/element/venue_price, glass_price)
+	if(glass_price)
+		AddElement(/datum/element/venue_price, glass_price)
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	current_cycle++
