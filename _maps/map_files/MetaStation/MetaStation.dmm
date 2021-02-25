@@ -57343,10 +57343,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/camera{
-	c_tag = "Science Hallway - Security";
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/science/storage)
 "oji" = (
