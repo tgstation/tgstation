@@ -22819,7 +22819,11 @@
 /turf/open/floor/iron/dark,
 /area/security/office)
 "ciV" = (
-/obj/item/kirbyplants/random,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/service/bar)
 "ciX" = (
@@ -25755,9 +25759,6 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "cAS" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
@@ -42576,9 +42577,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
 /turf/open/floor/wood,
 /area/service/bar)
 "hZZ" = (
@@ -50021,10 +50019,10 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "lgc" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "lgq" = (
@@ -58506,6 +58504,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/wood,
 /area/service/bar)
 "oFp" = (
@@ -59829,8 +59828,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/service/bar)
 "pds" = (
@@ -60298,6 +60295,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron,
 /area/service/bar)
 "pod" = (
@@ -68905,6 +68903,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
 /turf/open/floor/wood,
 /area/service/bar)
 "sGh" = (
@@ -74872,6 +74873,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
 /turf/open/floor/wood,
 /area/service/bar)
 "vih" = (
@@ -75260,6 +75264,7 @@
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -117100,7 +117105,7 @@ bhG
 bjp
 tFU
 hkR
-ciV
+otW
 otW
 pTE
 rNI
@@ -117619,7 +117624,7 @@ rXA
 rSf
 oNP
 vic
-imL
+ciV
 sFA
 mio
 vlj
