@@ -254,7 +254,6 @@
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
 
-	testing("made it to before checks, text: [spoken_text]")
 	// heel: stop what you're doing, relax and try not to do anything for a little bit
 	if(findtext(spoken_text, "heel") || findtext(spoken_text, "sit"))
 		pawn.visible_message("<span class='notice'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] sit[pawn.p_s()] down obediently, awaiting further orders.</span>")

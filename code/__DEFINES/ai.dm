@@ -87,9 +87,9 @@
 #define AI_DOG_HEEL_DURATION	10 SECONDS
 
 // dog command modes (what pointing at something/someone does depending on the last order the dog heard)
-///
+/// Don't do anything (will still react to stuff around them though)
 #define DOG_COMMAND_NONE	0
-
+/// Will try to pick up and bring back whatever you point to
 #define DOG_COMMAND_FETCH	1
-
+/// Will get within a few tiles of whatever you point at and continually growl/bark. If the target is a living mob who gets too close, the dog will attack them with bites
 #define DOG_COMMAND_ATTACK	2
