@@ -1,4 +1,0 @@
-author: "SomeAngryMiner (sprite), Qustinnus (porting)"
-delete-after: True
-changes: 
-  - imageadd: "Ports the supermatter sprite from Beestation"

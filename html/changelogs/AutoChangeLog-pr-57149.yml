@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Monkeys no longer rip apart machines from the inside"

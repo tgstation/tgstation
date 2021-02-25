@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Sticky tape no longer can be used on objects that aren't within reach."
