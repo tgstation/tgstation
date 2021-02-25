@@ -1526,11 +1526,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						asaycolor = sanitize_ooccolor(new_asaycolor)
 
 				if("briefoutfit")
-					testing("hhhhh")
 					var/list/valid_paths = list()
-					for(var/outfit_path in subtypesof(/datum/outfit))
-						var/datum/outfit/iter_outfit = outfit_path
-						valid_paths[initial(iter_outfit.name)] = outfit_path
+					for(var/datum/outfit/outfit_path as anything in subtypesof(/datum/outfit))
+						valid_paths[initial(outfit_path.name)] = outfit_path
 					var/new_outfit = input(user, "Choose your briefing officer outfit:", "Game Preference") as null|anything in valid_paths
 					new_outfit = valid_paths[new_outfit]
 					if(new_outfit)
