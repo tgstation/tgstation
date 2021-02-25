@@ -455,59 +455,57 @@ const RecipeLibrary = (props, context) => {
           <Table.Row
             key={reaction.id}
             className="candystripe">
-            <>
-              <Table.Cell bold color="label">
+            <Table.Cell bold color="label">
+              <Button
+                mt={0.5}
+                icon="flask"
+                color="purple"
+                content={reaction.name}
+                onClick={() => act('recipe_click', {
+                  id: reaction.id,
+                })} />
+            </Table.Cell>
+            <Table.Cell>
+              {reaction.reactants.map(reactant => (
                 <Button
-                  mt={0.5}
-                  icon="flask"
-                  color="purple"
-                  content={reaction.name}
-                  onClick={() => act('recipe_click', {
-                    id: reaction.id,
+                  key={reactant.id}
+                  mt={0.1}
+                  icon="vial"
+                  textColor="white"
+                  color={currentReagents?.includes(reactant.id) && "green"} // check here
+                  content={reactant.name}
+                  onClick={() => act('reagent_click', {
+                    id: reactant.id,
                   })} />
-              </Table.Cell>
-              <Table.Cell>
-                {reaction.reactants.map(reactant => (
-                  <Button
-                    key={reactant.id}
-                    mt={0.1}
-                    icon="vial"
-                    textColor="white"
-                    color={currentReagents?.includes(reactant.id) && "green"} // check here
-                    content={reactant.name}
-                    onClick={() => act('reagent_click', {
-                      id: reactant.id,
-                    })} />
+              ))}
+            </Table.Cell>
+            <Table.Cell width="60px">
+              {flagIcons
+                .filter(meta => reaction.bitflags & meta.flag)
+                .map(meta => (
+                  <Icon
+                    key={meta.flag}
+                    name={meta.icon}
+                    mr={1} />
                 ))}
-              </Table.Cell>
-              <Table.Cell width="60px">
-                {flagIcons
-                  .filter(meta => reaction.bitflags & meta.flag)
-                  .map(meta => (
-                    <Icon
-                      key={meta.flag}
-                      name={meta.icon}
-                      mr={1} />
-                  ))}
-              </Table.Cell>
-              <Table.Cell width="20px">
-                {!bookmarkMode && (
-                  <Button
-                    icon="book"
-                    color="green"
-                    disabled={bookmarkedReactions.has(reaction)}
-                    onClick={() => {
-                      addBookmark(reaction);
-                      act('update_ui');
-                    }} />
-                ) || (
-                  <Button
-                    icon="trash"
-                    color="red"
-                    onClick={() => removeBookmark(reaction)} />
-                )}
-              </Table.Cell>
-            </>
+            </Table.Cell>
+            <Table.Cell width="20px">
+              {!bookmarkMode && (
+                <Button
+                  icon="book"
+                  color="green"
+                  disabled={bookmarkedReactions.has(reaction)}
+                  onClick={() => {
+                    addBookmark(reaction);
+                    act('update_ui');
+                  }} />
+              ) || (
+                <Button
+                  icon="trash"
+                  color="red"
+                  onClick={() => removeBookmark(reaction)} />
+              )}
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table>
