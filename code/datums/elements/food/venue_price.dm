@@ -7,9 +7,8 @@
 /datum/element/venue_price/Attach(datum/target, venue_price)
 	. = ..()
 	if(!venue_price)
-		erorr
-		return ELEMENT_INCOMPATIBLE
 		stack_trace("A venue_price element was attached to something without specifying an actual price.")
+		return ELEMENT_INCOMPATIBLE
 	src.venue_price = venue_price
 	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/item_sold)
 
