@@ -28,17 +28,33 @@
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 
 	var/scanline_timer
-	var/next_beep = 0 //avoids spam
+	///Internal timer to prevent audio spam.
+	var/next_beep = 0
+	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
+	///Which setting is the scanner checking for? See defines in scan_gate.dm for the list.
 	var/scangate_mode = SCANGATE_NONE
+	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
+	///If scanning for a nanite strain, what cloud is it looking for?
 	var/nanite_cloud = 1
+	///If scanning for a specific species, what species is it looking for?
 	var/detect_species = SCANGATE_HUMAN
-	var/reverse = FALSE //If true, signals if the scan returns false
+	///Flips all scan results for inverse scanning. Signals if scan returns false.
+	var/reverse = FALSE
+	///If scanning for nutrition, what level of nutrition will trigger the scanner?
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
+	///Will the assembly on the pass wire activate if the scanner resolves green (Pass) on crossing?
+	var/light_pass = FALSE
+	///Will the assembly on the pass wire activate if the scanner resolves red (fail) on crossing?
+	var/light_fail = FALSE
+	///Does the scanner ignore light_pass and light_fail for sending signals?
+	var/ignore_signals = FALSE
+
 
 /obj/machinery/scanner_gate/Initialize()
 	. = ..()
+	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
 
 /obj/machinery/scanner_gate/examine(mob/user)
@@ -53,7 +69,7 @@
 	auto_scan(AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
-	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))
 		perform_scan(AM)
 
 /obj/machinery/scanner_gate/proc/set_scanline(type, duration)
@@ -162,6 +178,17 @@
 		beep = !beep
 	if(beep)
 		alarm_beep()
+		if(!ignore_signals)
+			color = wires.get_color_of_wire(WIRE_FAIL)
+			var/obj/item/assembly/S = wires.get_attached(color)
+			if(istype(S))
+				S.activate()
+	else		else
+		if(!ignore_signals)
+			color = wires.get_color_of_wire(WIRE_PASS)
+			var/obj/item/assembly/S = wires.get_attached(color)
+			if(istype(S))
+				S.activate()
 	else
 		set_scanline("scanning", 10)
 

@@ -764,6 +764,7 @@
 #include "code\datums\wires\radio.dm"
 #include "code\datums\wires\robot.dm"
 #include "code\datums\wires\roulette.dm"
+#include "code\datums\wires\scanner_gate.dm"
 #include "code\datums\wires\suit_storage_unit.dm"
 #include "code\datums\wires\syndicatebomb.dm"
 #include "code\datums\wires\tesla_coil.dm"
