@@ -2070,7 +2070,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of branca menta"
 	glass_desc = "A glass of Branca Menta, perfect for those lazy and hot Sunday summer afternoons." //Get lazy literally by drinking this
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	glass_price = DRINK_PRICE_EASY
+	glass_price = DRINK_PRICE_MEDIUM
 
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
