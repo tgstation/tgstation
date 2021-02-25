@@ -34,6 +34,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/movement_delay = 0.1 SECONDS
 	///A list for the path we're currently following, if we're using JPS pathing
 	var/list/movement_path
+	///Cooldown for JPS movement, how often we're allowed to try making a new path
+	COOLDOWN_DECLARE(repath_cooldown)
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
@@ -150,7 +152,6 @@ have ways of interacting with a specific atom and control it. They posses a blac
 			CancelActions()
 
 /datum/ai_controller/proc/CancelActions()
-	movement_path = null
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
 		current_behavior.finish_action(src, FALSE)

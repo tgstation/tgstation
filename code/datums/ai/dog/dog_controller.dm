@@ -78,7 +78,6 @@
 		if(!can_see(pawn, return_target, length=AI_DOG_VISION_RANGE))
 			// if the return target isn't in sight, we'll just forget about it and carry the thing around
 			blackboard[BB_FETCH_DELIVER_TO] = null
-			current_movement_target = null
 			return
 		current_movement_target = return_target
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/deliver_item)
@@ -182,7 +181,7 @@
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
 	SIGNAL_HANDLER
 
-	if(blackboard[BB_FETCH_TARGET] || !ismovable(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE)
+	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !ismovable(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE)
 		return
 
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))

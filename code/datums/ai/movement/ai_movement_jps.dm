@@ -33,9 +33,9 @@
 				else
 					controller.movement_path.Cut(1,2)
 		else
-			if(!COOLDOWN_FINISHED(src, repath_delay))
+			if(!COOLDOWN_FINISHED(controller, repath_cooldown))
 				continue
-			COOLDOWN_START(src, repath_delay, 2 SECONDS)
+			COOLDOWN_START(controller, repath_cooldown, 2 SECONDS)
 			var/minimum_distance = controller.max_target_distance // arbitrarily high
 			for(var/datum/ai_behavior/iter_behavior as anything in controller.current_behaviors)
 				if(iter_behavior.required_distance < minimum_distance)

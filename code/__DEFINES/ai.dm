@@ -77,7 +77,7 @@
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/
-#define AI_DOG_VISION_RANGE	7
+#define AI_DOG_VISION_RANGE	10
 /// What are the odds someone petting us will become our friend?
 #define AI_DOG_PET_FRIEND_PROB		15
 /// After this long without having fetched something, we clear our ignore list
