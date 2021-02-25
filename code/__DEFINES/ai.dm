@@ -77,14 +77,14 @@
 #define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
 #define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
 
-/// Basically, what is our vision/hearing range for picking up on things to fetch?
+/// Basically, what is our vision/hearing range for picking up on things to fetch/
 #define AI_DOG_VISION_RANGE	7
 /// What are the odds someone petting us will become our friend?
 #define AI_DOG_PET_FRIEND_PROB		15
 /// After this long without having fetched something, we clear our ignore list
 #define AI_FETCH_IGNORE_DURATION	30 SECONDS
 /// After being ordered to heel, we spend this long chilling out
-#define AI_DOG_HEEL_DURATION	10 SECONDS
+#define AI_DOG_HEEL_DURATION	20 SECONDS
 
 // dog command modes (what pointing at something/someone does depending on the last order the dog heard)
 /// Don't do anything (will still react to stuff around them though)
