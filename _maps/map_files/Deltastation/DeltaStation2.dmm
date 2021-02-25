@@ -33807,10 +33807,11 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPd" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPe" = (
@@ -35295,15 +35296,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/science/research)
-"cSp" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/science/research)
 "cSq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -36199,6 +36191,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
+	},
+/obj/effect/turf_decal/arrows/white{
+	color = "#800080";
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -41271,6 +41267,13 @@
 	dir = 6
 	},
 /obj/machinery/power/apc/auto_name/west,
+/obj/item/experi_scanner,
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
 /turf/open/floor/iron,
 /area/science/lab)
 "dfr" = (
@@ -149835,7 +149838,7 @@ cmP
 cNp
 cOW
 cQH
-cSp
+dgv
 cUe
 cWb
 cXr

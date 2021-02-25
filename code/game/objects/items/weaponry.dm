@@ -488,7 +488,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "angelplasm"
 
 /obj/item/ectoplasm/mystic
-	icon_state = "revenantEctoplasm"
+	icon_state = "mysticplasm"
 
 
 /obj/item/mounted_chainsaw
@@ -543,7 +543,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/Initialize()
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
-	AddComponent(/datum/component/beauty, 1000)
+	AddElement(/datum/element/beauty, 1000)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"

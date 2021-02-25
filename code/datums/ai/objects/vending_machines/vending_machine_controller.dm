@@ -1,5 +1,6 @@
 ///AI controller for vending machine gone rogue, Don't try using this on anything else, it wont work.
 /datum/ai_controller/vending_machine
+	movement_delay = 0.4 SECONDS
 	blackboard = list(BB_VENDING_CURRENT_TARGET = null,
 	BB_VENDING_TILT_COOLDOWN = 0,
 	BB_VENDING_UNTILT_COOLDOWN = 0,

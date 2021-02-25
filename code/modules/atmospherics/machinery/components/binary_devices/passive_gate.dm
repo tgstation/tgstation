@@ -9,23 +9,21 @@ Passive gate is similar to the regular pump except:
 
 /obj/machinery/atmospherics/components/binary/passive_gate
 	icon_state = "passgate_map-3"
-
 	name = "passive gate"
 	desc = "A one-way air valve that does not require power. Passes gas when the output pressure is lower than the target pressure."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
-
-	var/target_pressure = ONE_ATMOSPHERE
-
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
-
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
+	///Set the target pressure the component should arrive to
+	var/target_pressure = ONE_ATMOSPHERE
+	///Variable for radio frequency
+	var/frequency = 0
+	///Variable for radio id
+	var/id = null
+	///Stores the radio connection
+	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -53,7 +51,6 @@ Passive gate is similar to the regular pump except:
 		add_overlay(getpipeimage(icon, "passgate_on-[set_overlay_offset(piping_layer)]"))
 
 /obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
-	..()
 	if(!on)
 		return
 
@@ -62,15 +59,22 @@ Passive gate is similar to the regular pump except:
 	if(air1.release_gas_to(air2, target_pressure))
 		update_parents()
 
-
 //Radio remote control
 
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/passive_gate/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/passive_gate/proc/broadcast_status()
 	if(!radio_connection)
 		return

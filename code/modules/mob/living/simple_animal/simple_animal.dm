@@ -457,7 +457,7 @@
 	return ..()
 
 
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
+/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
 	if(stat)
 		return FALSE
 	return ..()

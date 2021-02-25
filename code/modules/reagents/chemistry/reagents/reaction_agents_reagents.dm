@@ -21,8 +21,11 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	ph = 0
-	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will decrease by 0.5
-	var/strength = 30
+	impure_chem = null
+	inverse_chem = null
+	failed_chem = null
+	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will decrease by 0.4
+	var/strength =30
 
 //Consumes self on addition and shifts ph
 /datum/reagent/reaction_agent/acidic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
@@ -39,13 +42,16 @@
 	target.my_atom.audible_message("<span class='warning'>The beaker fizzes as the ph changes!</span>")
 	playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, amount)
-	
+
 /datum/reagent/reaction_agent/basic_buffer
 	name = "Strong basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	ph = 14
-	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will increase by 0.5
+	impure_chem = null
+	inverse_chem = null
+	failed_chem = null
+	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will increase by 0.4
 	var/strength = 30
 
 /datum/reagent/reaction_agent/basic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
@@ -104,7 +110,7 @@
 	color = "#e61f82"
 	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2x
 	var/strength = 20
-	
+
 
 /datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()

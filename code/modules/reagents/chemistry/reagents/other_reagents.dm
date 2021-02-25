@@ -12,6 +12,12 @@
 	penetrates_skin = NONE
 	ph = 7.4
 
+	// FEED ME
+/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustPests(rand(2,3))
+
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(data && data["viruses"])
@@ -223,6 +229,14 @@
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
+/datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
+		if(myseed)
+			myseed.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
@@ -1103,6 +1117,8 @@
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 	penetrates_skin = NONE
 	ph = 4
+	burning_temperature = 1725 //more refined than oil
+	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
 
@@ -1711,6 +1727,8 @@
 	reagent_state = LIQUID
 	color = "#2D2D2D"
 	taste_description = "oil"
+	burning_temperature = 1200//Oil is crude
+	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
 
@@ -2559,7 +2577,7 @@
 		M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
 		M.AdjustAllImmobility(-40 * REM * delta_time)
 		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
-		M.adjustToxLoss(-2 * REM * delta_time, FALSE)
+		M.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
 		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
 		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
 		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
@@ -2573,3 +2591,16 @@
 		M.adjustBruteLoss(2 * REM * delta_time, FALSE)
 	..()
 
+/datum/reagent/universal_indicator
+	name = "Universal indicator"
+	description = "A solution that can be used to create pH paper booklets, or sprayed on things to colour them by their pH."
+	taste_description = "a strong chemical taste"
+	color = "#1f8016"
+
+//Colours things by their pH
+/datum/reagent/universal_indicator/expose_atom(atom/exposed_atom, reac_volume)
+	. = ..()
+	if(exposed_atom.reagents)
+		var/color
+		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
+		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)

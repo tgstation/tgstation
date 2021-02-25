@@ -1,8 +1,10 @@
 {
-	"eslint.nodePath": "tgui/.yarn/sdks",
+	"eslint.nodePath": "./tgui/.yarn/sdks",
 	"eslint.workingDirectories": [
 		"./tgui"
 	],
+	"typescript.tsdk": "./tgui/.yarn/sdks/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"tgui/.yarn": true,
 		"tgui/.pnp.*": true

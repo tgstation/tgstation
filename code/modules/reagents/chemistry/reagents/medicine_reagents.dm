@@ -156,6 +156,8 @@
 	color = "#0000C8"
 	taste_description = "blue"
 	ph = 11
+	burning_temperature = 20 //cold burning
+	burning_volume = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
