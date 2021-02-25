@@ -34,8 +34,6 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/movement_delay = 0.1 SECONDS
 	///A list for the path we're currently following, if we're using JPS pathing
 	var/list/movement_path
-	///A reference to an ID card representing the pawn's access, if one exists
-	var/id_card
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
