@@ -519,33 +519,38 @@
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+
+	var/datum/reagents/holder
+	if(istype(target, /datum/reagents))
+		holder = target
+	else if(target.reagents && total_volume > 0 && get_reagent_amount(reagent))
+		holder = target.reagents
+	else
 		return
 	if(amount < 0)
 		return
 
 	var/cached_amount = amount
-	var/datum/reagents/R = target.reagents
-	if(src.get_reagent_amount(reagent)<amount)
-		amount = src.get_reagent_amount(reagent)
+	if(get_reagent_amount(reagent) < amount)
+		amount = get_reagent_amount(reagent)
 
-	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), R.maximum_volume-R.total_volume)
+	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), holder.maximum_volume - holder.total_volume)
 	var/trans_data = null
-	for (var/CR in cached_reagents)
-		var/datum/reagent/current_reagent = CR
+	for (var/looping_through_reagents in cached_reagents)
+		var/datum/reagent/current_reagent = looping_through_reagents
 		if(current_reagent.type == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			if(current_reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+			if(current_reagent.intercept_reagents_transfer(holder, cached_amount))//Use input amount instead.
 				break
 			force_stop_reagent_reacting(current_reagent)
-			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE)
+			holder.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			break
 
-	src.update_total()
-	R.update_total()
-	R.handle_reactions()
+	update_total()
+	holder.update_total()
+	holder.handle_reactions()
 	return amount
 
 /// Copies the reagents to the target object
@@ -1605,6 +1610,8 @@
 
 			if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 				data["reagent_mode_reagent"] += list("deadProcess" = TRUE)
+	else
+		data["reagent_mode_reagent"] = null
 
 	//reaction lookup data
 	if (ui_reaction_id)
@@ -1704,6 +1711,8 @@
 					tooltip_bool = TRUE
 			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_catalysts[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 		data["reagent_mode_recipe"]["isColdRecipe"] = reaction.is_cold_recipe
+	else
+		data["reagent_mode_recipe"] = null
 
 	return data
 

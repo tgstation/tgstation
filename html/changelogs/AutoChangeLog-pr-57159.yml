@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - qol: "Ghosts can start their messages in deadchat with asterisks again"

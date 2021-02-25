@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "fixed a problem with room beauty not updating when movables are moved around whilst contained within another movable, or when deleted."

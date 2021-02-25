@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - bugfix: "Gets rid of a doublepipe that was throwing a bunch of mapping errors in the bar pipenet."

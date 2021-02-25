@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fixed cigarettes being lit in no-oxygen environments"
-  - rscadd: "Cigarettes can be injected with oxygen to allow smoking anywhere"
-  - code_imp: "The cigarette brand 'Space cigarettes' now has oxygen in it's default reagents (allowing it to be smoked in space)"

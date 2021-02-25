@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - rscadd: "Completely redid MetaStation's exterior layout"
+  - balance: "Some of the solars on MetaStation weren't set up last shift. You'll have to build them yourselves."

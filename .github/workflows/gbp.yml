@@ -1,0 +1,14 @@
+name: GBP
+on:
+  pull_request_target:
+    types: [closed]
+jobs:
+  gbp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: GBP action
+      uses: tgstation/gbp-action@v1
+      with:
+        token: ${{ secrets.GBP_UPDATER }}
