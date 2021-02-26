@@ -1,7 +1,7 @@
 #define MIN_PROGRESS_AMOUNT 3
 #define MIN_DEVIATION_RATE 0.90
 #define MAX_DEVIATION_RATE 1.1
-#define HIGH_EFFICIENCY_CONDUCTIVITY 0.95
+#define HIGH_CONDUCTIVITY_RATIO 0.95
 
 /obj/machinery/atmospherics/components/binary/crystallizer
 	icon = 'icons/obj/atmospherics/components/machines.dmi'
@@ -139,7 +139,7 @@
 		var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
 		if(internal.total_moles() > 0)
 			var/coolant_temperature_delta = cooling_remove.temperature - internal.temperature
-			var/cooling_heat_amount = HIGH_EFFICIENCY_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal.heat_capacity() / (cooling_remove.heat_capacity() + internal.heat_capacity()))
+			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal.heat_capacity() / (cooling_remove.heat_capacity() + internal.heat_capacity()))
 			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
 			internal.temperature = max(internal.temperature + cooling_heat_amount / internal.heat_capacity(), TCMB)
 		cooling_port.merge(cooling_remove)
@@ -247,16 +247,25 @@
 		ui = new(user, src, "Crystallizer", name)
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_data()
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_static_data()
 	var/data = list()
-	data["on"] = on
-
-	data["recipe_types"] = list("name" = "Nothing", "path" = "", "selected" = !recipe_type)
+	data["recipe_types"] = list(list("name" = "Nothing", "path" = ""))
 	for(var/path in GLOB.gas_recipe_meta)
 		var/list/recipe = GLOB.gas_recipe_meta[path]
 		if(recipe[META_RECIPE_MACHINE_TYPE] != "Crystallizer")
 			continue
-		data["recipe_types"] += list(list("name" = recipe[META_RECIPE_NAME], "id" = recipe[META_RECIPE_ID], "selected" = (path == recipe_id2path(recipe_type))))
+		data["recipe_types"] += list(list("name" = recipe[META_RECIPE_NAME], "id" = recipe[META_RECIPE_ID]))
+	return data
+
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_data()
+	var/data = list()
+	data["on"] = on
+
+	if(recipe_type)
+		var/list/selected_recipe = GLOB.gas_recipe_meta[recipe_type]
+		data["selected_recipe"] = selected_recipe[META_RECIPE_ID]
+	else
+		data["selected_recipe"] = null
 
 	var/list/internal_gas_data = list()
 	if(internal.total_moles())
@@ -329,4 +338,4 @@
 #undef MIN_PROGRESS_AMOUNT
 #undef MIN_DEVIATION_RATE
 #undef MAX_DEVIATION_RATE
-#undef HIGH_EFFICIENCY_CONDUCTIVITY
+#undef HIGH_CONDUCTIVITY_RATIO

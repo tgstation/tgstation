@@ -13,6 +13,7 @@ export const Crystallizer = (props, context) => {
     internal_temperature,
     progress_bar,
     gas_input,
+    selected_recipe,
   } = data;
   return (
     <Window
@@ -32,7 +33,7 @@ export const Crystallizer = (props, context) => {
               {recipeTypes.map(recipe => (
                 <Button
                   key={recipe.id}
-                  selected={recipe.selected}
+                  selected={recipe.id == selected_recipe}
                   content={recipe.name}
                   onClick={() => act('recipe', {
                     mode: recipe.id,
