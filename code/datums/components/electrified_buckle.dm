@@ -80,7 +80,7 @@
 		return FALSE
 
 	COOLDOWN_START(src, electric_buckle_cooldown, ELECTRIC_BUCKLE_WAIT_TIME)
-	if(!(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECIEVED) || !shock_on_loop)
+	if(!(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECIEVED) && shock_on_loop)
 		START_PROCESSING(SSprocessing, src)
 	return TRUE
 
@@ -129,6 +129,15 @@
 			guinea_pig.electrocute_act(shock_damage, parent_as_movable)
 			to_chat(guinea_pig, "<span class='userdanger'>You feel a deep shock course through your body!</span>")
 			break
+
+/datum/component/electrified_buckle/proc/toggle_shock_loop()
+	SIGNAL_HANDLER
+	if(!shock_on_loop)
+		shock_on_loop = TRUE
+		START_PROCESSING(SSprocessing, src)
+	else
+		shock_on_loop = FALSE
+		STOP_PROCESSING(SSprocessing, src)
 
 #undef ELECTRIC_BUCKLE_WAIT_TIME
 #undef ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR
