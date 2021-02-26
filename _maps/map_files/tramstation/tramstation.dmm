@@ -20741,6 +20741,7 @@
 	dir = 10
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/destructive_scanner,
 /turf/open/floor/iron/white,
 /area/science/research)
 "che" = (
@@ -25434,6 +25435,9 @@
 "ehy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/science/research)
 "ehE" = (
@@ -42903,6 +42907,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/science/research)
 "lXX" = (
@@ -54560,6 +54567,9 @@
 /area/ai_monitored/turret_protected/aisat/hallway)
 "rhx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -178336,9 +178346,9 @@ aEd
 aFV
 swz
 lMH
-hIG
+ngB
 rhx
-hIG
+bLs
 jrL
 oky
 bWJ
@@ -178593,7 +178603,7 @@ aEh
 aFW
 ykx
 hIG
-hIG
+jrL
 cgV
 ehy
 tqZ
@@ -178850,9 +178860,9 @@ aur
 aFQ
 aLZ
 bLs
-hIG
+aPA
 lXH
-hIG
+lMH
 jrL
 oky
 bWJ
@@ -182197,8 +182207,8 @@ qze
 aae
 aae
 aae
-aae
-aae
+esV
+esV
 aae
 xjn
 nTD
