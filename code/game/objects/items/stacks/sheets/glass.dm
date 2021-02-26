@@ -1,8 +1,8 @@
 /* Glass stack types
  * Contains:
- *		Glass sheets
- *		Reinforced glass sheets
- *		Glass shards - TODO: Move this into code/game/object/item/weapons
+ * Glass sheets
+ * Reinforced glass sheets
+ * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 
 /*
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/cyborg
 	mats_per_unit = null
 	cost = 250
-	source = /datum/robot_energy_storage/metal
+	source = /datum/robot_energy_storage/iron
 
 	/// What energy storage this draws glass from as a robot module.
 	var/datum/robot_energy_storage/glasource = /datum/robot_energy_storage/glass

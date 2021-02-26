@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - rscadd: "Added chat fonts that can be chosen via settings. You can also input a custom font."
-  - bugfix: "Fixed dropdown overflow if the selected input is too long."

@@ -22,6 +22,7 @@
 	desc = "A \"replacement\" for the destructive analyzer with a slight tendency to catastrophically fail."
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
+	base_icon_state = "h_lathe"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
@@ -149,7 +150,7 @@
 					res += str
 				else if(SSresearch.science_tech.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N.id])	//JOY OF DISCOVERY!
+				if(SSresearch.science_tech.visible_nodes[N.id]) //JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output
@@ -194,7 +195,7 @@
 			use_power(750)
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
-				var/picked = pickweight(nodes)		//This should work.
+				var/picked = pickweight(nodes) //This should work.
 				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
@@ -236,7 +237,7 @@
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
-	icon_state = "h_lathe_wloop"
+	icon_state = "[base_icon_state]_wloop"
 	var/chosenchem
 	var/criticalReaction = is_type_in_typecache(exp_on,  critical_items_typecache)
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -463,10 +464,6 @@
 		visible_message("<span class='notice'>[src] scans the [exp_on], revealing its true nature!</span>")
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
-		if (!R.revealed)
-			var/points = rand(3500,3750) // discovery reward
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			visible_message("<span class='notice'> This discovery netted [points] points for research.</span>")
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
@@ -527,11 +524,12 @@
 	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
-	update_icon()
+	update_appearance()
 	recentlyExperimented = FALSE
 
 /obj/machinery/rnd/experimentor/update_icon_state()
-	icon_state = "h_lathe"
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)
 	var/turf/T = get_turf(user)

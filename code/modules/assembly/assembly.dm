@@ -1,8 +1,8 @@
-#define WIRE_RECEIVE		(1<<0)
-#define WIRE_PULSE			(1<<1)
-#define WIRE_PULSE_SPECIAL	(1<<2)
-#define WIRE_RADIO_RECEIVE	(1<<3)
-#define WIRE_RADIO_PULSE	(1<<4)
+#define WIRE_RECEIVE (1<<0)
+#define WIRE_PULSE (1<<1)
+#define WIRE_PULSE_SPECIAL (1<<2)
+#define WIRE_RADIO_RECEIVE (1<<3)
+#define WIRE_RADIO_PULSE (1<<4)
 #define ASSEMBLY_BEEP_VOLUME 5
 
 /obj/item/assembly
@@ -18,8 +18,12 @@
 	throw_range = 7
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
-	var/is_position_sensitive = FALSE	//set to true if the device has different icons for each position.
-										//This will prevent things such as visible lasers from facing the incorrect direction when transformed by assembly_holder's update_icon()
+
+	/**
+	 * Set to true if the device has different icons for each position.
+	 * This will prevent things such as visible lasers from facing the incorrect direction when transformed by assembly_holder's update_appearance()
+	 */
+	var/is_position_sensitive = FALSE
 	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/assembly_holder/holder = null
@@ -82,7 +86,7 @@
 
 /obj/item/assembly/proc/toggle_secure()
 	secured = !secured
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/attackby(obj/item/W, mob/user, params)

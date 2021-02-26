@@ -11,7 +11,7 @@
 	integrity_failure = 0.1
 	custom_materials = list(/datum/material/iron = 2000)
 	layer = OBJ_LAYER
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 
@@ -24,7 +24,7 @@
 
 /obj/structure/chair/Initialize()
 	. = ..()
-	if(!anchored)	//why would you put these on the shuttle?
+	if(!anchored) //why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 	if(prob(0.2))
 		name = "tactical [name]"
@@ -53,7 +53,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -66,8 +66,8 @@
 				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
-/obj/structure/chair/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/chair/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/chair/narsie_act()
 	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))

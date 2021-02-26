@@ -3,9 +3,10 @@
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
+	base_icon_state = "RD-server"
 	var/heat_health = 100
 	//Code for point mining here.
-	var/working = TRUE			//temperature should break it.
+	var/working = TRUE //temperature should break it.
 	var/research_disabled = FALSE
 	var/server_id = 0
 	var/base_mining_income = 2
@@ -15,7 +16,7 @@
 	var/delay = 5
 	var/temp_tolerance_low = 0
 	var/temp_tolerance_high = T20C
-	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
+	var/temp_penalty_coefficient = 0.5 //1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/machinery/rnd/server/Initialize()
@@ -35,11 +36,10 @@
 
 /obj/machinery/rnd/server/update_icon_state()
 	if(machine_stat & EMPED || machine_stat & NOPOWER)
-		icon_state = "RD-server-off"
-	else if(research_disabled)
-		icon_state = "RD-server-halt"
-	else
-		icon_state = "RD-server-on"
+		icon_state = "[base_icon_state]-off"
+		return ..()
+	icon_state = "[base_icon_state]-[research_disabled ? "halt" : "on"]"
+	return ..()
 
 /obj/machinery/rnd/server/power_change()
 	. = ..()
@@ -51,7 +51,7 @@
 		working = FALSE
 	else
 		working = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()
@@ -68,12 +68,6 @@
 /obj/machinery/rnd/server/proc/toggle_disable()
 	research_disabled = !research_disabled
 	refresh_working()
-
-/obj/machinery/rnd/server/proc/mine()
-	. = base_mining_income
-	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
-	current_temp = get_env_temp()
-	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/turf/open/L = loc

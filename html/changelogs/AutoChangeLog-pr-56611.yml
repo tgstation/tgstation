@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - tweak: "The Temperature Gate's description now makes it clear that the gas flows only from the input side to the output side when open."

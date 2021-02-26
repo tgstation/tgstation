@@ -55,8 +55,8 @@
 #define ui_acti "EAST-3:24,SOUTH:5"
 #define ui_combat_toggle "EAST-3:24,SOUTH:5"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
-#define ui_acti_alt "EAST-1:28,SOUTH:5"	//alternative intent switcher for when the interface is hidden (F12)
-#define ui_crafting	"EAST-4:22,SOUTH:5"
+#define ui_acti_alt "EAST-1:28,SOUTH:5" //alternative intent switcher for when the interface is hidden (F12)
+#define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
 #define ui_skill_menu "EAST-4:22,SOUTH:5"
@@ -160,6 +160,7 @@
 #define ui_pai_state_laws "SOUTH:6,WEST+8"
 #define ui_pai_pda_send "SOUTH:6,WEST+9"
 #define ui_pai_pda_log "SOUTH:6,WEST+10"
+#define ui_pai_internal_gps "SOUTH:6,WEST+11"
 #define ui_pai_take_picture "SOUTH:6,WEST+12"
 #define ui_pai_view_images "SOUTH:6,WEST+13"
 

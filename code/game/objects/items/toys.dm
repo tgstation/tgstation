@@ -1,28 +1,28 @@
 /* Toys!
  * Contains
- *		Balloons
- *		Fake singularity
- *		Toy gun
- *		Toy crossbow
- *		Toy swords
- *		Crayons
- *		Snap pops
- *		AI core prizes
- *		Toy codex gigas
- * 		Skeleton toys
- *		Cards
- *		Toy nuke
- *		Fake meteor
- *		Foam armblade
- *		Toy big red button
- *		Beach ball
- *		Toy xeno
+ * Balloons
+ * Fake singularity
+ * Toy gun
+ * Toy crossbow
+ * Toy swords
+ * Crayons
+ * Snap pops
+ * AI core prizes
+ * Toy codex gigas
+ * Skeleton toys
+ * Cards
+ * Toy nuke
+ * Fake meteor
+ * Foam armblade
+ * Toy big red button
+ * Beach ball
+ * Toy xeno
  *      Kitty toys!
- *		Snowballs
- *		Clockwork Watches
- *		Toy Daggers
- *		Squeaky Brain
- *		Broken Radio
+ * Snowballs
+ * Clockwork Watches
+ * Toy Daggers
+ * Squeaky Brain
+ * Broken Radio
  */
 
 /obj/item/toy
@@ -68,7 +68,7 @@
 			A.reagents.trans_to(src, 10, transfered_by = user)
 			to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
-			update_icon()
+			update_appearance()
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
@@ -81,7 +81,7 @@
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
 				I.reagents.trans_to(src, 10, transfered_by = user)
-				update_icon()
+				update_appearance()
 	else if(I.get_sharpness())
 		balloon_burst()
 	else
@@ -106,12 +106,13 @@
 		qdel(src)
 
 /obj/item/toy/waterballoon/update_icon_state()
-	if(src.reagents.total_volume >= 1)
+	if(reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		inhand_icon_state = "balloon"
 	else
 		icon_state = "waterballoon-e"
 		inhand_icon_state = "balloon-empty"
+	return ..()
 
 #define BALLOON_COLORS list("red", "blue", "green", "yellow")
 
@@ -177,6 +178,8 @@
 	inhand_icon_state = "arrestballoon"
 	random_color = FALSE
 
+#undef BALLOON_COLORS
+
 /*
  * Fake singularity
  */
@@ -237,7 +240,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -272,7 +275,7 @@
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
-		A.update_icon()
+		A.update_appearance()
 		return 1
 	else
 		return ..()
@@ -298,7 +301,7 @@
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
@@ -306,6 +309,7 @@
 
 /obj/item/toy/ammo/gun/update_icon_state()
 	icon_state = "357OLD-[amount_left]"
+	return ..()
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
@@ -550,8 +554,8 @@
 	var/phomeme
 
 // Talking toys are language universal, and thus all species can use them
-/obj/item/toy/talking/attack_alien(mob/user)
-	return attack_hand(user)
+/obj/item/toy/talking/attack_alien(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
@@ -695,7 +699,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/attack_hand(mob/user, list/modifiers)
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
@@ -719,7 +723,7 @@
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
-	update_icon()
+	update_appearance()
 	return H
 
 /obj/item/toy/cards/deck/update_icon_state()
@@ -732,6 +736,7 @@
 			icon_state = "deck_[deckstyle]_low"
 		else
 			icon_state = "deck_[deckstyle]_empty"
+	return ..()
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -752,7 +757,7 @@
 			qdel(SC)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/CH = I
 		if(CH.parentdeck == src)
@@ -764,7 +769,7 @@
 			qdel(CH)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -1514,10 +1519,11 @@
 
 /obj/item/toy/eldritch_book/attack_self(mob/user)
 	book_open = !book_open
-	update_icon()
+	update_appearance()
 
 /obj/item/toy/eldritch_book/update_icon_state()
 	icon_state = book_open ? "book_open" : "book"
+	return ..()
 
 /*
  * Fake tear
@@ -1536,3 +1542,271 @@
 /obj/item/storage/box/heretic_box/PopulateContents()
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
+
+/obj/item/toy/foamfinger
+	name = "foam finger"
+	desc = "root for the home team! wait, does this station even have a sports team?"
+	icon = 'icons/obj/guns/ballistic.dmi'
+	icon_state = "foamfinger"
+	inhand_icon_state = "foamfinger_inhand"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	COOLDOWN_DECLARE(foamfinger_cooldown)
+
+/obj/item/toy/foamfinger/attack_self(mob/living/carbon/human/user)
+	if(!COOLDOWN_FINISHED(src, foamfinger_cooldown))
+		return
+	COOLDOWN_START(src, foamfinger_cooldown, 5 SECONDS)
+	user.manual_emote("waves around the foam finger.")
+	var/direction = prob(50) ? -1 : 1
+	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
+		animate(user, pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+	else
+		animate(user, pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+	user.changeNext_move(CLICK_CD_MELEE)
+
+#define HELP "help"
+#define DISARM "disarm"
+#define GRAB "grab"
+#define HARM "harm"
+#define ICON_SPLIT world.icon_size/2
+
+// These states do not have any associated processing.
+#define STATE_AWAITING_PLAYER_INPUT "awaiting_player_input"
+#define STATE_OFF "off"
+
+// When the Intento is in one of these four states, it has an accompanying
+// set of code that runs in processing()
+#define STATE_STARTING "starting"
+#define STATE_DEMO "demo"
+#define STATE_END_OF_GAME "end_of_game"
+#define STATE_RETALIATION "retaliation"
+
+#define TIME_TO_BEGIN 1.6 SECONDS
+#define TIME_PER_DEMO_STEP 0.6 SECONDS
+#define TIME_TO_RESET_ICON 0.5 SECONDS
+
+
+/obj/item/toy/intento
+	name = "\improper Intento"
+	desc = "Fundamentally useless for all intentsive purposes."
+	icon = 'icons/obj/intents.dmi'
+	icon_state = "blank"
+	/// Current sequence of intents
+	var/list/current_sequence = list()
+	/// Sequence player inputs
+	var/list/player_sequence = list()
+	/// Score of the player
+	var/score = 0
+	/// Associated list of intents to their sounds
+	var/static/list/sound_by_intent = list(
+		HELP = 'sound/items/intents/Help.ogg',
+		DISARM = 'sound/items/intents/Disarm.ogg',
+		GRAB = 'sound/items/intents/Grab.ogg',
+		HARM = 'sound/items/intents/Harm.ogg',
+		)
+
+	/// What state the toy is in.
+	var/state = STATE_OFF
+	/// Index used for iteration of steps for both demo and retaliation states
+	var/index
+	/// Time to delay until we start processing whatever state we're in
+	COOLDOWN_DECLARE(next_process)
+	/// Time until we reset the icon of the Intento
+	COOLDOWN_DECLARE(next_icon_reset)
+
+/obj/item/toy/intento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
+	..()
+	if(state == STATE_OFF)
+		boot()
+		return
+
+	if(!modifiers)
+		return
+
+	if(state != STATE_AWAITING_PLAYER_INPUT)
+		return
+
+	var/input
+	var/icon_x = text2num(modifiers["icon-x"])
+	var/icon_y = text2num(modifiers["icon-y"])
+	if(icon_x > ICON_SPLIT && icon_y > ICON_SPLIT)
+		input = DISARM
+	if(icon_x < ICON_SPLIT && icon_y > ICON_SPLIT)
+		input = HELP
+	if(icon_x > ICON_SPLIT && icon_y < ICON_SPLIT)
+		input = GRAB
+	if(icon_x < ICON_SPLIT && icon_y < ICON_SPLIT)
+		input = HARM
+
+	player_input(user, input)
+
+/obj/item/toy/intento/proc/boot()
+	say("Game starting!")
+	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
+
+	state = STATE_STARTING
+	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/toy/intento/proc/player_input(mob/player, intent)
+	// All branches of this proc lead to us wanting to process
+	START_PROCESSING(SSfastprocess, src)
+
+	render(intent)
+
+	player_sequence += intent
+	for(var/i in 1 to player_sequence.len)
+		if(player_sequence[i] != current_sequence[i])
+			state = STATE_END_OF_GAME
+			COOLDOWN_START(src, next_process, TIME_TO_RESET_ICON)
+			return
+
+	if(player_sequence.len == current_sequence.len)
+		score++
+
+		state = STATE_STARTING
+		COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
+
+
+/obj/item/toy/intento/process()
+	if(next_icon_reset && next_icon_reset <= world.time)
+		icon_state = initial(icon_state)
+		COOLDOWN_RESET(src, next_icon_reset)
+
+	if(next_process && next_process > world.time)
+		return
+
+	switch(state)
+		if(STATE_STARTING)
+			process_start()
+
+		if(STATE_DEMO)
+			process_demo()
+
+		if(STATE_END_OF_GAME)
+			process_end(isliving(loc) ? loc : null)
+
+		if(STATE_RETALIATION)
+			process_retaliation()
+
+	if(!next_process && !next_icon_reset)
+		return PROCESS_KILL
+
+/obj/item/toy/intento/proc/process_start()
+	player_sequence.Cut()
+
+	current_sequence += pick(list(HELP, DISARM, GRAB, HARM))
+
+	state = STATE_DEMO
+	next_process = world.time
+	index = 1
+
+/obj/item/toy/intento/proc/process_demo()
+	if(index > length(current_sequence))
+		state = STATE_AWAITING_PLAYER_INPUT
+		COOLDOWN_RESET(src, next_process)
+		return
+
+	var/intent = current_sequence[index]
+	render(intent)
+
+	index += 1
+	COOLDOWN_START(src, next_process, TIME_PER_DEMO_STEP)
+
+/obj/item/toy/intento/proc/process_end(mob/user)
+	if(user)
+		var/award_score = score
+		var/award_status = user.client.get_award_status(/datum/award/score/intento_score)
+		if(award_score - award_status > 0)
+			award_score -= award_status
+		user.client.give_award(/datum/award/score/intento_score, user, award_score)
+
+	say("GAME OVER. Your score was [score]!")
+	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
+
+	if(user && loc == user && obj_flags & EMAGGED)
+		ADD_TRAIT(src, TRAIT_NODROP, type)
+		to_chat(user, "<span class='userdanger'>Bad mistake.</span>")
+
+		state = STATE_RETALIATION
+		next_process = world.time
+		index = 1
+	else
+		cleanup()
+
+/obj/item/toy/intento/proc/process_retaliation()
+	var/mob/living/victim = loc
+	if(!isliving(victim) || index > length(current_sequence))
+		cleanup()
+		return
+
+	var/intent = current_sequence[index]
+	render(intent)
+	switch(intent)
+		if(HELP)
+			to_chat(victim, "<span class='danger'>[src] hugs you to make you feel better!</span>")
+			SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+		if(DISARM)
+			to_chat(victim, "<span class='danger'>You're knocked down from a shove by [src]!</span>")
+			victim.Knockdown(2 SECONDS)
+		if(GRAB)
+			to_chat(victim, "<span class='danger'>[src] grabs you aggressively!</span>")
+			victim.Stun(2 SECONDS)
+		if(HARM)
+			to_chat(victim, "<span class='danger'>You're punched by [src]!</span>")
+			victim.apply_damage(rand(20, 30), BRUTE)
+
+	index += 1
+	COOLDOWN_START(src, next_process, TIME_PER_DEMO_STEP)
+
+/obj/item/toy/intento/proc/cleanup()
+	score = 0
+	index = 1
+	player_sequence.Cut()
+	current_sequence.Cut()
+
+	state = STATE_OFF
+	COOLDOWN_RESET(src, next_process)
+	REMOVE_TRAIT(src, TRAIT_NODROP, type)
+
+/obj/item/toy/intento/proc/render(input)
+	icon_state = input
+	playsound(src, sound_by_intent[input], 50, FALSE)
+
+	START_PROCESSING(SSfastprocess, src)
+	COOLDOWN_START(src, next_icon_reset, TIME_TO_RESET_ICON)
+
+/obj/item/toy/intento/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You short-circuit [src], activating the negative feedback loop.</span>")
+
+/obj/item/toy/intento/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+#undef HELP
+#undef DISARM
+#undef GRAB
+#undef HARM
+#undef ICON_SPLIT
+#undef STATE_AWAITING_PLAYER_INPUT
+#undef STATE_OFF
+#undef STATE_STARTING
+#undef STATE_DEMO
+#undef STATE_END_OF_GAME
+#undef STATE_RETALIATION
+#undef TIME_TO_BEGIN
+#undef TIME_PER_DEMO_STEP
+#undef TIME_TO_RESET_ICON

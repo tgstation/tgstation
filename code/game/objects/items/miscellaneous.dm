@@ -345,7 +345,7 @@
 	///List of mobs that have already been mobbed.
 	var/static/list/mob_mobs = list()
 
-#define NICKNAME_CAP	(MAX_NAME_LEN/2)
+#define NICKNAME_CAP (MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(resistance_flags & ON_FIRE)
@@ -408,6 +408,11 @@
 	name = "poppy bouquet"
 	desc = "A bouquet of poppies. You feel loved just looking at it."
 	icon_state = "poppybouquet"
+
+/obj/item/bouquet/rose
+	name = "rose bouquet"
+	desc = "A bouquet of roses. A bundle of love."
+	icon_state = "rosebouquet"
 
 /obj/item/gun_maintenance_supplies
 	name = "gun maintenance supplies"

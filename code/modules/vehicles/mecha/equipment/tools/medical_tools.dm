@@ -253,13 +253,13 @@
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
 
-#define FIRE_SYRINGE_MODE		0
-#define ANALYZE_SYRINGE_MODE	1
+#define FIRE_SYRINGE_MODE 0
+#define ANALYZE_SYRINGE_MODE 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "syringegun"
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
@@ -469,7 +469,7 @@
 		return FALSE
 	to_chat(user, "[icon2html(src, user)]<span class='notice'>Analyzing reagents...</span>")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(R.can_synth && add_known_reagent(R.type,R.name))
+		if((R.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED) && add_known_reagent(R.type,R.name))
 			to_chat(user, "[icon2html(src, user)]<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
 	to_chat(user, "[icon2html(src, user)]<span class='notice'>Analysis complete.</span>")

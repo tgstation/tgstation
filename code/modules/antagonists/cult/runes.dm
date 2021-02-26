@@ -81,7 +81,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 		qdel(src)
 
-/obj/effect/rune/attack_hand(mob/living/user)
+/obj/effect/rune/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -95,15 +95,15 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, "<span class='danger'>You need [req_cultists - invokers.len] more adjacent cultists to use this rune in such a manner.</span>")
 		fail_invoke()
 
-/obj/effect/rune/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
-		if(istype(M, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(M, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(M, /mob/living/simple_animal/hostile/construct/artificer/angelic))
-			to_chat(M, "<span class='warning'>You purge the rune!</span>")
+/obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(istype(user, /mob/living/simple_animal/shade) || istype(user, /mob/living/simple_animal/hostile/construct))
+		if(istype(user, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/artificer/angelic))
+			to_chat(user, "<span class='warning'>You purge the rune!</span>")
 			qdel(src)
-		else if(construct_invoke || !iscultist(M)) //if you're not a cult construct we want the normal fail message
-			attack_hand(M)
+		else if(construct_invoke || !iscultist(user)) //if you're not a cult construct we want the normal fail message
+			attack_hand(user)
 		else
-			to_chat(M, "<span class='warning'>You are unable to invoke the rune!</span>")
+			to_chat(user, "<span class='warning'>You are unable to invoke the rune!</span>")
 
 /obj/effect/rune/proc/conceal() //for talisman of revealing/hiding
 	visible_message("<span class='danger'>[src] fades away.</span>")
@@ -452,7 +452,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		set_light_color(LIGHT_COLOR_FIRE)
 		desc += "<br><b>A tear in reality reveals a coursing river of lava... something recently teleported here from the Lavaland Mines!</b>"
 	outer_portal = new(T, 600, color)
-	light_range = 4
+	set_light_range(4)
 	update_light()
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
@@ -460,7 +460,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(inner_portal)
 	qdel(outer_portal)
 	desc = initial(desc)
-	light_range = 0
+	set_light_range(0)
 	update_light()
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.

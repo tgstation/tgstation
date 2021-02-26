@@ -1,8 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - rscadd: "A Public mining shuttle dock has been installed near the holodeck on Kilostation"
-  - rscadd: "Kilostation's incinerator has been expanded to accommodate the HFR and provide Atmospherics with an additional work area"
-  - rscadd: "Adds a trash chute to tool storage and the morgue on Kilostation"
-  - rscdel: "Removed the nonfunctional public mining dock from Kilostation aux base construction"
-  - bugfix: "A number of small piping issues on Kilostation have been fixed"

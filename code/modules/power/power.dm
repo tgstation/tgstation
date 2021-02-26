@@ -85,16 +85,16 @@
 	if(!use_power)
 		return TRUE
 
-	var/area/A = get_area(src)		// make sure it's in an area
+	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
-		return FALSE					// if not, then not powered
+		return FALSE // if not, then not powered
 	if(chan == -1)
 		chan = power_channel
-	return A.powered(chan)	// return power status of the area
+	return A.powered(chan) // return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
-	var/area/A = get_area(src)		// make sure it's in an area
+	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
 		return
 	if(chan == -1)
@@ -184,7 +184,7 @@
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
 		set_machine_stat(machine_stat | NOPOWER)
-	update_icon()
+	update_appearance()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -269,7 +269,7 @@
 
 /proc/update_cable_icons_on_turf(turf/T)
 	for(var/obj/structure/cable/C in T.contents)
-		C.update_icon()
+		C.update_appearance()
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
@@ -313,7 +313,7 @@
 		return
 
 	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
+	if(net1.cables.len < net2.cables.len) //net2 is larger than net1. Let's switch them around
 		var/temp = net1
 		net1 = net2
 		net2 = temp
@@ -422,7 +422,7 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.machinery_layer & machinery_layer)
-			C.update_icon()
+			C.update_appearance()
 			return C
 	return null
 
