@@ -2,7 +2,6 @@
 	var/mob/living/last_holder = null
 	var/mob/living/current_holder
 	var/list/color_altered_mobs = list()
-	var/datum/callback/roundend_callback
 	var/quiet = FALSE
 
 /datum/component/greentext/Initialize()
@@ -14,6 +13,7 @@
 	SSticker.OnRoundend(roundend_callback)
 
 /datum/component/greentext/proc/equip(item , mob/living/user as mob)
+	SIGNAL_HANDLER
 	if (user == current_holder)
 		return
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
@@ -27,16 +27,15 @@
 		color_altered_mobs += user
 	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
-	..()
 
 /datum/component/greentext/proc/unequip(item , mob/living/user as mob)
+	SIGNAL_HANDLER
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder = null
 	current_holder = null
 	STOP_PROCESSING(SSobj, src)
-	..()
 
 /datum/component/greentext/proc/check_winner()
 	if(!current_holder)

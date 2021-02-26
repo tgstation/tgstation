@@ -27,6 +27,6 @@
 	icon_state = "greentext"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/greentext/ComponentInitialize()
+/obj/item/greentext/Initialize()
 	AddElement(/datum/element/point_of_interest)
 	AddComponent(/datum/component/greentext)
