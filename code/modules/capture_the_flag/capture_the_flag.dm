@@ -265,6 +265,7 @@
 	team = GREEN_TEAM
 	team_span = "greenteamradio"
 	ctf_gear = list("green" = /datum/outfit/ctf/green)
+	instagib_gear = /datum/outfit/ctf/green/instagib
 
 /obj/machinery/capture_the_flag/yellow
 	name = "Yellow CTF Controller"
@@ -272,6 +273,7 @@
 	team = YELLOW_TEAM
 	team_span = "yellowteamradio"
 	ctf_gear = list("yellow" = /datum/outfit/ctf/yellow)
+	instagib_gear = /datum/outfit/ctf/yellow/instagib
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
@@ -649,18 +651,26 @@
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/green
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	id = /obj/item/card/id/syndicate_command //it's red
 
+/datum/outfit/ctf/green/instagib
+	r_hand = /obj/item/gun/energy/laser/instakill/blue
+	shoes = /obj/item/clothing/shoes/jackboots/fast
+
 /datum/outfit/ctf/yellow
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	id = /obj/item/card/id/syndicate_command //it's red
+
+/datum/outfit/ctf/yellow/instagib
+	r_hand = /obj/item/gun/energy/laser/instakill/blue
+	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
