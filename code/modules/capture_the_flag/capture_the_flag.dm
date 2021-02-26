@@ -122,8 +122,8 @@
 
 /obj/item/ctf/green
 	name = "green flag"
-	icon_state = "banner"
-	inhand_icon_state = "banner"
+	icon_state = "banner-green"
+	inhand_icon_state = "banner-green"
 	desc = "A green banner used to play capture the flag."
 	team = GREEN_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/green
@@ -131,8 +131,8 @@
 
 /obj/item/ctf/yellow
 	name = "yellow flag"
-	icon_state = "banner"
-	inhand_icon_state = "banner"
+	icon_state = "banner-yellow"
+	inhand_icon_state = "banner-yellow"
 	desc = "A yellow banner used to play capture the flag."
 	team = YELLOW_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/yellow
