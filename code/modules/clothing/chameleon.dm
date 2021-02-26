@@ -83,8 +83,7 @@
 		standard_outfit_options = list()
 		for(var/path in subtypesof(/datum/outfit/job))
 			var/datum/outfit/O = path
-			if(initial(O.can_be_admin_equipped))
-				standard_outfit_options[initial(O.name)] = path
+			standard_outfit_options[initial(O.name)] = path
 		sortTim(standard_outfit_options, /proc/cmp_text_asc)
 	outfit_options = standard_outfit_options
 

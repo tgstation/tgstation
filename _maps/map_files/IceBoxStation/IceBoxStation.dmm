@@ -27315,7 +27315,9 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "cXd" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -40578,6 +40580,16 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
 /area/commons/storage/mining)
+"mCN" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/service/bar)
 "mDf" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/engineering{
@@ -42953,6 +42965,12 @@
 /obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"opx" = (
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/hallway/primary/starboard)
 "opE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -43327,6 +43345,14 @@
 	},
 /turf/closed/wall,
 /area/commons/fitness)
+"oHO" = (
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/hallway/primary/starboard)
 "oHS" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -48829,6 +48855,7 @@
 /obj/structure/closet/secure_closet/bar{
 	req_access_txt = "25"
 	},
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "sCq" = (
@@ -49347,6 +49374,7 @@
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/donkpockets,
 /obj/item/reagent_containers/glass/beaker,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "sWw" = (
@@ -56112,6 +56140,14 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"xzy" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/iron,
+/area/service/bar)
 "xzA" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -92637,7 +92673,7 @@ oHj
 dSU
 crr
 iHa
-dLp
+xzy
 jcA
 hYS
 jcA
@@ -93410,10 +93446,10 @@ gYp
 dEb
 jUE
 cXd
-cXd
-cXd
-cXd
-cXd
+mCN
+mCN
+mCN
+mCN
 dLp
 wUq
 wXj
@@ -94958,7 +94994,7 @@ nUo
 nUo
 tIN
 mjA
-bbz
+opx
 aYV
 iKz
 aYV
@@ -95472,7 +95508,7 @@ omc
 nUo
 xiq
 xoj
-bbz
+oHO
 aYV
 iKz
 aYV
@@ -95729,7 +95765,7 @@ sWv
 nZu
 xiq
 pIM
-bbz
+oHO
 aYV
 iKz
 aYV
@@ -95986,7 +96022,7 @@ rmK
 nUo
 myl
 pIM
-bbz
+oHO
 aYV
 iKz
 cBm
@@ -96243,7 +96279,7 @@ rmK
 nUo
 xiq
 ewZ
-bbz
+oHO
 aYV
 iKz
 bdc

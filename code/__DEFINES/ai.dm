@@ -60,3 +60,12 @@
 #define BB_VENDING_UNTILT_COOLDOWN "BB_vending_untilt_cooldown"
 #define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
 #define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"
+
+///Robot customer AI controller blackboard keys
+#define BB_CUSTOMER_CURRENT_ORDER "BB_customer_current_order"
+#define BB_CUSTOMER_MY_SEAT "BB_customer_my_seat"
+#define BB_CUSTOMER_PATIENCE "BB_customer_patience"
+#define BB_CUSTOMER_CUSTOMERINFO "BB_customer_customerinfo"
+#define BB_CUSTOMER_EATING "BB_customer_eating"
+#define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
+#define BB_CUSTOMER_LEAVING "BB_customer_leaving"
