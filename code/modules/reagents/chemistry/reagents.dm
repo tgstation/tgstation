@@ -234,7 +234,7 @@ Primarily used in reagents/reaction_agents
  *
  * Arguments
  * * normalise_num_to - what number/purity value you're normalising to. If blank it will default to the compile value of purity for this chem
- * * _creation_purity - creation_purity override, if desired. This is the purity of the reagent that you're normalising from.
+ * * creation_purity - creation_purity override, if desired. This is the purity of the reagent that you're normalising from.
  */
 /datum/reagent/proc/normalise_creation_purity(normalise_num_to, creation_purity)
 	if(!normalise_num_to)
