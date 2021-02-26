@@ -158,7 +158,7 @@
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
 /datum/addiction/medicine
 	name = "medicine"
-	var/datum/hallucination/fake_alert/hallucin
+	var/datum/hallucination/fake_alert/hallucination
 
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -168,7 +168,7 @@
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
 	var/type = pick(list("not_enough_oxy", "too_much_oxy", "temphot", "tempcold"))
-	hallucin = New(affected_carbon, TRUE, type)
+	hallucination = New(affected_carbon, TRUE, type)
 
 /datum/addiction/medicine/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -195,5 +195,5 @@
 	if(iscarbon(victim_mind.current))
 		var/mob/living/carbon/affected_carbon = victim_mind.current
 		affected_carbon.hal_screwyhud = SCREWYHUD_NONE
-	qdel(hallucin)
-	hallucin = null
+	qdel(hallucination)
+	hallucination = null

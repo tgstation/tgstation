@@ -234,12 +234,12 @@ Primarily used in reagents/reaction_agents
  * * normalise_num_to - what number/purity value you're normalising to. If blank it will default to the compile value of purity for this chem
  * * _creation_purity - creation_purity override, if desired. This is the purity of the reagent that you're normalising from.
  */
-/datum/reagent/proc/normalise_creation_purity(normalise_num_to, _creation_purity)
+/datum/reagent/proc/normalise_creation_purity(normalise_num_to, creation_purity)
 	if(!normalise_num_to)
 		normalise_num_to = initial(purity)
-	if(!_creation_purity)
-		_creation_purity = creation_purity
-	return _creation_purity / normalise_num_to
+	if(!creation_purity)
+		creation_purity = src.creation_purity
+	return creation_purity / normalise_num_to
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

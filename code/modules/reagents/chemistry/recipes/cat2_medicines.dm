@@ -199,7 +199,7 @@
 
 /datum/chemical_reaction/medicine/convermol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	overheated(holder, equilibrium, TRUE)
+	overheated(holder, equilibrium, impure = TRUE)
 	clear_reactants(holder, 2)
 
 

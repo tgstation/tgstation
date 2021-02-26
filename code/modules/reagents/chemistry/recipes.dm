@@ -424,11 +424,11 @@
  * How clf3 works, you know!
  */
 /datum/chemical_reaction/proc/explode_fire_square(datum/reagents/holder, datum/equilibrium/equilibrium, fire_range = 1)
-	var/turf/T = get_turf(holder.my_atom)
+	var/turf/location = get_turf(holder.my_atom)
 	if(fire_range == 0)
-		new /obj/effect/hotspot(T)
+		new /obj/effect/hotspot(location)
 		return
-	for(var/turf/turf as anything in range(fire_range,T))
+	for(var/turf/turf as anything in range(fire_range, location))
 		new /obj/effect/hotspot(turf)
 
 ///////////END FIRE BASED EXPLOSIONS

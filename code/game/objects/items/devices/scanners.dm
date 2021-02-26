@@ -330,9 +330,12 @@ GENE SCANNER
 					if(organ.damage)
 						status = "<font color='#E42426'> organ is [round((organ.damage/organ.maxHealth)*100, 1)]% damaged.</font>"
 				else
-					if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#cc3333'>Non-Functional</font>"
-					else if (organ.damage > organ.high_threshold) status = "<font color='#ff9933'>Severely Damaged</font>"
-					else if (organ.damage > organ.low_threshold) status = "<font color='#ffcc33'>Mildly Damaged</font>"
+					if (organ.organ_flags & ORGAN_FAILING)
+						status = "<font color='#cc3333'>Non-Functional</font>"
+					else if (organ.damage > organ.high_threshold)
+						status = "<font color='#ff9933'>Severely Damaged</font>"
+					else if (organ.damage > organ.low_threshold)
+						status = "<font color='#ffcc33'>Mildly Damaged</font>"
 				if (status != "")
 					render = TRUE
 					toReport += "<tr><td><font color='#cc3333'>[organ.name]:</font></td>\

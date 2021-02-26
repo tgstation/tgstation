@@ -173,8 +173,6 @@
 	..()
 	return TRUE
 
-//lenturi side effects are now part of the impure type made from it
-
 /datum/reagent/medicine/c2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."

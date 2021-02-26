@@ -1,4 +1,5 @@
 #define ENABLE_FLASHING -1
+#define DISABLE_FLASHING 14
 
 ///Tutorial states
 #define TUT_NO_BUFFER 50
@@ -250,7 +251,7 @@
 	data["beakerContents"] = beaker_contents
 
 	var/list/active_reactions = list()
-	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
+	var/flashing = DISABLE_FLASHING //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
 	for(var/_reaction in beaker?.reagents.reaction_list)
 		var/datum/equilibrium/equilibrium = _reaction
 		if(!length(beaker.reagents.reaction_list))//I'm not sure why when it explodes it causes the gui to fail (it's missing danger (?) )

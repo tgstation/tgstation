@@ -105,18 +105,18 @@
 
 /datum/reagent/impurity/libitoil/on_mob_add(mob/living/L, amount)
 	. = ..()
-	var/mob/living/carbon/carbmob = L
-	if(!carbmob)
+	var/mob/living/carbon/consumer = L
+	if(!consumer)
 		return
-	var/obj/item/organ/liver/this_liver = carbmob.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/on_mob_delete(mob/living/L)
 	. = ..()
-	var/mob/living/carbon/carbmob = L
-	if(!carbmob)
+	var/mob/living/carbon/consumer = L
+	if(!consumer)
 		return
-	var/obj/item/organ/liver/this_liver = carbmob.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance /= 2
 
 
