@@ -258,20 +258,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
 
-	if(station_goals.len)
-		. += "<hr><b>Special Orders for [station_name()]:</b>"
-		for(var/datum/station_goal/G in station_goals)
-			G.on_report()
-			. += G.get_report()
-
-	if(SSstation.station_traits.len)
-		. += "<hr><b>Identified shift divergencies:</b><BR>"
-		for(var/i in SSstation.station_traits)
-			var/datum/station_trait/station_trait_iterator = i
-			if(!station_trait_iterator.show_in_report)
-				continue
-			. += "[station_trait_iterator.get_report()]<BR>"
-
+	. += generate_station_goal_report()
+	. += generate_station_trait_report()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
