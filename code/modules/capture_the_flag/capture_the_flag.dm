@@ -685,7 +685,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
-	id = /obj/item/card/id/syndicate_command //it's red
+	id = /obj/item/card/id/deathsquad/military //it's green
 
 /datum/outfit/ctf/green/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/green
@@ -696,7 +696,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
-	id = /obj/item/card/id/syndicate_command //it's red
+	id = /obj/item/card/id/prisoner //it's yello- orange
 
 /datum/outfit/ctf/yellow/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/yellow
