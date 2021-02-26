@@ -719,6 +719,8 @@
 	. = ..()
 	if(!iscarbon(quirk_holder))
 		return
+	if(IS_IN_STASIS(quirk_holder))
+		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/M in allergies)
 		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(M)
