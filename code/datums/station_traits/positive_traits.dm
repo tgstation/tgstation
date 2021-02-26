@@ -209,7 +209,7 @@
 	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
 
-/datum/station_trait/deathrattle_department/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+/datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
 	SIGNAL_HANDLER
 
 	var/obj/item/implant/deathrattle/implant_to_give = new()
