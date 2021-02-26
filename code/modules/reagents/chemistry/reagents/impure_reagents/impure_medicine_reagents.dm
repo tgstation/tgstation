@@ -504,14 +504,15 @@
 
 /datum/reagent/test
 	name = "testchem"
-	var/datum/hallucination/fake_health_doll/hallucination2
+	addiction_types = list(/datum/addiction/medicine = 500)
 
+/*
 /datum/reagent/test/on_mob_add(mob/living/L, amount)
 	. = ..()
 	if(!ishuman(L))
 		return
 	var/mob/living/carbon/human/human_mob = L
-	hallucination2 = New(human_mob, TRUE, severity = 1)
+	hallucination2 = new(human_mob, TRUE, severity = 1)
 
 /datum/reagent/test/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -524,3 +525,4 @@
 /datum/reagent/test/on_mob_delete(mob/living/L)
 	. = ..()
 	QDEL_NULL(hallucination2)
+*/

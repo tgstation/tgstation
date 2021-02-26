@@ -1183,6 +1183,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		specific_limb = pick(list(SCREWYDOLL_HEAD, SCREWYDOLL_CHEST, SCREWYDOLL_L_ARM, SCREWYDOLL_R_ARM, SCREWYDOLL_L_LEG, SCREWYDOLL_R_LEG))
 	if(!severity)
 		severity = rand(1, 5)
+	var/mob/living/carbon/human/human_mob = target
+	LAZYSET(human_mob.hal_screwydoll, specific_limb, severity)
 	target.update_health_hud()
 
 /datum/hallucination/fake_health_doll/target_deleting()

@@ -158,15 +158,23 @@
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
 /datum/addiction/medicine
 	name = "medicine"
+	withdrawal_stage_messages = list("", "", "")
 	var/datum/hallucination/fake_alert/hallucination
 	var/datum/hallucination/fake_health_doll/hallucination2
 
+/datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
+	. = ..()
+	if(!ishuman(affected_carbon))
+		return
+	var/mob/living/carbon/human/human_mob = affected_carbon
+	hallucination2 = new(human_mob, TRUE, severity = 1, duration = 120 MINUTES)
+
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(prob(10*delta_time))
+	if(DT_PROB(10, delta_time))
 		affected_carbon.emote("cough")
 
-/datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
+/datum/addiction/medicine/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	var/list/possibilities = list()
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTHEAT))
@@ -179,31 +187,30 @@
 			possibilities += "not_enough_oxy"
 		if(lungs.safe_oxygen_max)
 			possibilities += "too_much_oxy"
-
 	var/type = pick(possibilities)
-	hallucination = New(affected_carbon, TRUE, type, 5 MINUTES)//last for a while basically
-	affected_carbon.hal_screwyhud = SCREWYHUD_CRIT
-	if(!ishuman(affected_carbon))
-		return
-	var/mob/living/carbon/human/human_mob = affected_carbon
-	hallucination2 = New(human_mob, TRUE, severity = 1)
+	hallucination = new(affected_carbon, TRUE, type, 120 MINUTES)//last for a while basically
 
-/datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
+/datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(prob(2))
-		hallucination2.increment_fake_damage()
-		return
-	if(prob(2))
+	if(DT_PROB(10, delta_time))
 		hallucination2.add_fake_limb(severity = 1)
+		return
+	if(DT_PROB(5, delta_time))
+		hallucination2.increment_fake_damage()
+
+/datum/addiction/medicine/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.hal_screwyhud = SCREWYHUD_CRIT
 
 /datum/addiction/medicine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(prob(2))
+	if(DT_PROB(5, delta_time))
 		hallucination2.increment_fake_damage()
-	if(prob(75*delta_time))
 		return
-	if(prob(15*delta_time))
+	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")
+		return
+	if(DT_PROB(65, delta_time))
 		return
 	var/obj/item/organ/organ = pick(affected_carbon.internal_organs)
 	if(organ.low_threshold)
