@@ -366,9 +366,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
-	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += "<span class='danger'>You get headaches just from looking at it.</span>"
+	if(isobserver(user))
+		if(power > 5)
+			. += "<span class='notice'>The supermatter appears active at [power] MeV.</span>"
+		else
+			. += "<span class='notice'>The supermatter appears inactive or outputting minimal power.</span>"
 
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/T = get_turf(src)
