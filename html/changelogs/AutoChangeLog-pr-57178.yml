@@ -1,0 +1,5 @@
+author: "redmoogle"
+delete-after: True
+changes: 
+  - bugfix: "Virology Healing Stat Bonuses Work Again"
+  - bugfix: "Virology Narcolepsy Increased Speed Works Now"
