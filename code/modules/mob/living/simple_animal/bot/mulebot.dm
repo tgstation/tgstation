@@ -115,6 +115,13 @@
 		return
 	return ..()
 
+/mob/living/simple_animal/bot/mulebot/Cross(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM))
+		RunOver(AM)
+
+
+
 /// returns true if the bot is fully powered.
 /mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
 	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
@@ -724,7 +731,6 @@
 			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
 	return ..()
 
-// called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")

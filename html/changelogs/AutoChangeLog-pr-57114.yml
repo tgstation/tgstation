@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - qol: "Trying to use an emote while it's cooling down will now tell you how much longer you have to wait. This will only show for emotes with longer than normal wait times."

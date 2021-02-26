@@ -23,6 +23,7 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	departments = DEPARTMENT_COMMAND
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

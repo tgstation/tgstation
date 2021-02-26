@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - qol: "You can now check the EER of the supermatter as a ghost by examining it."

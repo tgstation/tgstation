@@ -15,6 +15,7 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
+	departments = DEPARTMENT_SERVICE
 
 /datum/outfit/job/curator
 	name = "Curator"

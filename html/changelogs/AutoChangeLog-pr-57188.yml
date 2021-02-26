@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Allergy suffers should now stop accumulating histamine and toxin damage while in stasis."
