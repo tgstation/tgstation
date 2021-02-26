@@ -30,3 +30,4 @@
 /obj/item/greentext/Initialize()
 	AddElement(/datum/element/point_of_interest)
 	AddComponent(/datum/component/greentext)
+	. = ..()
