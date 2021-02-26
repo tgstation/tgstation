@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "combo streaks now reset after a while (default to 6 seconds), and not just visually, if no unarmed action is performed during that time period. Also, the combo hud now fades out, starting 2 seconds before the timed combo streak reset. Of course, the animation is halted and the opaqueness restored when the aforementioned \"countdown\" is interrupted."
