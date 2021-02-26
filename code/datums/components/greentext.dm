@@ -9,7 +9,7 @@
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unequip)
-	roundend_callback = CALLBACK(src, .proc/check_winner)
+	var/roundend_callback = CALLBACK(src, .proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
 /datum/component/greentext/proc/equip(item , mob/living/user as mob)
