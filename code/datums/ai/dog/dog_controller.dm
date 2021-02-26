@@ -1,15 +1,15 @@
 
 
 /datum/ai_controller/dog
-	blackboard = list(BB_FETCHING = FALSE,\
-	BB_SIMPLE_CARRY_ITEM = null,\
-	BB_FETCH_IGNORE_LIST = list(),\
+	blackboard = list(BB_SIMPLE_CARRY_ITEM = null,\
 	BB_FETCH_TARGET = null,\
 	BB_FETCH_DELIVER_TO = null,\
 	BB_DOG_FRIENDS = list(),\
+	BB_FETCH_IGNORE_LIST = list(),\
 	BB_FETCH_RESET_IGNORE_CD = 0,\
 	BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,\
 	BB_DOG_HEEL_CD = 0,\
+	BB_DOG_COMMAND_CD = 0,\
 	BB_DOG_PLAYING_DEAD = FALSE,\
 	BB_DOG_HARASS_TARGET = null)
 	ai_movement = /datum/ai_movement/jps
@@ -19,7 +19,7 @@
 	if(ismob(pawn))
 		var/mob/living/living_pawn = pawn
 		movement_delay = living_pawn.cached_multiplicative_slowdown
-	. = ..()
+	return ..()
 
 /datum/ai_controller/dog/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -112,10 +112,10 @@
 		living_pawn.manual_emote(pick("dances around.","chases its tail!"))
 		//INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, living_pawn)
 
-/// Someone we were listening to throws for has thrown something, start listening to the thrown item so we can see if we want to fetch it when it lands
+/// Someone has thrown something, see if it's someone we care about and start listening to the thrown item so we can see if we want to fetch it when it lands
 /datum/ai_controller/dog/proc/listened_throw(datum/source, mob/living/carbon/carbon_thrower)
 	SIGNAL_HANDLER
-	if(blackboard[BB_FETCH_TARGET] || blackboard[BB_FETCH_DELIVER_TO]) // we're already busy
+	if(blackboard[BB_FETCH_TARGET] || blackboard[BB_FETCH_DELIVER_TO] || blackboard[BB_DOG_PLAYING_DEAD]) // we're already busy
 		return
 	if((world.time < blackboard[BB_DOG_HEEL_CD] + AI_DOG_HEEL_DURATION)) // if we were just ordered to heel, chill out for a bit
 		return
@@ -181,11 +181,16 @@
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
 	SIGNAL_HANDLER
 
-	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !ismovable(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE)
+	if((world.time < blackboard[BB_DOG_COMMAND_CD] + AI_DOG_COMMAND_COOLDOWN)) // command cooldown
+		return
+
+	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !istype(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE) // busy or no command
 		return
 
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
 		return
+
+	blackboard[BB_DOG_COMMAND_CD] = world.time
 
 	switch(blackboard[BB_DOG_ORDER_MODE])
 		if(DOG_COMMAND_FETCH)
@@ -206,11 +211,9 @@
 /datum/ai_controller/dog/proc/on_examined(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	if(!blackboard[BB_SIMPLE_CARRY_ITEM])
-		return
-
 	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
-	examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
+	if(carried_item)
+		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
 
 /// If we died, drop anything we were carrying
 /datum/ai_controller/dog/proc/on_death(mob/living/ol_yeller)
@@ -228,27 +231,45 @@
 /datum/ai_controller/dog/proc/check_command(mob/speaker, speech_args)
 	SIGNAL_HANDLER
 
-	var/list/friends = blackboard[BB_DOG_FRIENDS]
-	if(!friends[speaker] || !can_see(pawn, speaker, length=AI_DOG_VISION_RANGE))
+	if(!blackboard[BB_DOG_FRIENDS][speaker])
+		return
+
+	if((world.time < blackboard[BB_DOG_COMMAND_CD] + AI_DOG_COMMAND_COOLDOWN))
 		return
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
-
-	// heel: stop what you're doing, relax and try not to do anything for a little bit
+	var/command
 	if(findtext(spoken_text, "heel") || findtext(spoken_text, "sit"))
-		pawn.visible_message("<span class='notice'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] sit[pawn.p_s()] down obediently, awaiting further orders.</span>")
-		blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
-		blackboard[BB_DOG_HEEL_CD] = world.time
-		CancelActions()
-	// fetch: whatever the speaker points to, try and bring it back
+		command = COMMAND_HEEL
 	else if(findtext(spoken_text, "fetch") || findtext(spoken_text, "get it"))
-		pawn.visible_message("<span class='notice'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] bounce[pawn.p_s()] slightly in anticipation.</span>")
-		blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_FETCH
-	// attack: harass whoever the speaker points to
+		command = COMMAND_FETCH
 	else if(findtext(spoken_text, "attack") || findtext(spoken_text, "sic"))
-		pawn.visible_message("<span class='danger'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] growl[pawn.p_s()] intensely.</span>") // imagine getting intimidated by a corgi
-		blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_ATTACK
+		command = COMMAND_ATTACK
 	else if(findtext(spoken_text, "play dead") || findtext(spoken_text, "die"))
-		blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
-		CancelActions()
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/play_dead)
+		command = COMMAND_DIE
+	else
+		return
+
+	if(!can_see(pawn, speaker, length=AI_DOG_VISION_RANGE))
+		return
+
+	blackboard[BB_DOG_COMMAND_CD] = world.time
+	switch(command)
+		// heel: stop what you're doing, relax and try not to do anything for a little bit
+		if(COMMAND_HEEL)
+			pawn.visible_message("<span class='notice'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] sit[pawn.p_s()] down obediently, awaiting further orders.</span>")
+			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
+			blackboard[BB_DOG_HEEL_CD] = world.time
+			CancelActions()
+		// fetch: whatever the speaker points to, try and bring it back
+		if(COMMAND_FETCH)
+			pawn.visible_message("<span class='notice'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] bounce[pawn.p_s()] slightly in anticipation.</span>")
+			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_FETCH
+		// attack: harass whoever the speaker points to
+		if(COMMAND_ATTACK)
+			pawn.visible_message("<span class='danger'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] growl[pawn.p_s()] intensely.</span>") // imagine getting intimidated by a corgi
+			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_ATTACK
+		if(COMMAND_DIE)
+			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
+			CancelActions()
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/play_dead)

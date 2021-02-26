@@ -2,6 +2,8 @@
 /datum/ai_movement
 	///Assoc list ist of controllers that are currently moving as key, and what they are moving to as value
 	var/list/moving_controllers = list()
+	///How many times a given controller can fail on their route before they just give up
+	var/max_pathing_attempts
 
 /datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target)
 	controller.pathing_attempts = 0

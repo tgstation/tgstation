@@ -30,8 +30,6 @@
 		controller.blackboard[BB_FETCH_TARGET] = null
 		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
-	controller.blackboard[BB_FETCHING] = FALSE
-
 
 // This is simply a behaviour to pick up a fetch target
 /datum/ai_behavior/simple_equip/perform(delta_time, datum/ai_controller/controller)
@@ -205,5 +203,6 @@
 		return
 	living_pawn.do_attack_animation(living_target, ATTACK_EFFECT_BITE)
 	living_target.visible_message("<span class='danger'>[living_pawn] bites at [living_target]!</span>", "<span class='userdanger'>[living_pawn] bites at you!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
-	living_target.take_bodypart_damage(rand(5, 10))
-	log_combat(living_pawn, living_target, "bit (AI)")
+	if(istype(living_target))
+		living_target.take_bodypart_damage(rand(5, 10))
+		log_combat(living_pawn, living_target, "bit (AI)")

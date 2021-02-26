@@ -1,6 +1,6 @@
 ///The most braindead type of movement, bee-line to the target with no concern of whats infront of us.
 /datum/ai_movement/dumb
-
+	max_pathing_attempts = 16
 
 ///Put your movement behavior in here!
 /datum/ai_movement/dumb/process(delta_time)
@@ -23,5 +23,5 @@
 
 		if(current_loc == get_turf(movable_pawn)) //Did we even move after trying to move?
 			controller.pathing_attempts++
-			if(controller.pathing_attempts >= MAX_PATHING_ATTEMPTS)
+			if(controller.pathing_attempts >= max_pathing_attempts)
 				controller.CancelActions()
