@@ -3,9 +3,9 @@
 //Invert = Whole conversion
 //Failed = End reaction below purity_min
 
-////START SUBTYPES
+//START SUBTYPES
 
-///We don't want these to hide - they're helpful!
+//We don't want these to hide - they're helpful!
 /datum/reagent/impurity/healing
 	name = "Healing impure reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
@@ -20,7 +20,7 @@
 	addiction_types = list(/datum/addiction/medicine = 3)
 	tox_damage = 0
 
-//// END SUBTYPES
+// END SUBTYPES
 
 ////////////////////MEDICINES///////////////////////////
 
@@ -262,9 +262,9 @@
 				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 					if(reagent in cached_reagent_list)
 						continue
-					if(!(istype(reagent, /datum/reagent/medicine)))
+					if(!istype(reagent, /datum/reagent/medicine))
 						continue
-					if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
+					if(reagent.creation_purity <= reagent.inverse_chem_val)//Only affect pure types
 						continue
 					reagent.creation_purity *= 1.25
 					cached_reagent_list += reagent
@@ -315,9 +315,9 @@
 	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 		if(reagent in cached_reagent_list)
 			continue
-		if(!(istype(reagent, /datum/reagent/medicine)))
+		if(!istype(reagent, /datum/reagent/medicine))
 			continue
-		if(!(reagent.creation_purity > reagent.inverse_chem_val))//Only affect pure types
+		if(reagent.creation_purity <= reagent.inverse_chem_val)//Only affect pure types
 			continue
 		reagent.creation_purity *= 0.8
 		cached_reagent_list += reagent

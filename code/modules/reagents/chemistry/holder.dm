@@ -1119,7 +1119,7 @@
 		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
 			remove_reagent(R.type, impureVol, FALSE)
 		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-	R.chemical_flags = R.chemical_flags | REAGENT_DONOTSPLIT
+	R.chemical_flags |= REAGENT_DONOTSPLIT
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()

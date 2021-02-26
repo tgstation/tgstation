@@ -442,7 +442,7 @@
 */
 /datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50)
 	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
-		if(!(istype(any_turf, /turf/open)))
+		if(!istype(any_turf, /turf/open))
 			continue
 		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, 10, freeze_duration, freeze_duration)
@@ -486,15 +486,12 @@
 	if(istype(reagent, /datum/reagent))
 		var/datum/reagent/temp_reagent = reagent
 		reagent = temp_reagent.type
-	for(var/atom/movable/movey as anything in orange(range, get_turf(holder.my_atom)))
-		if(!(iscarbon(movey)))
-			continue
-		var/mob/living/carbon/target = movey
+	for(var/mob/living/carbon/target in orange(range, get_turf(holder.my_atom)))
 		if(target.has_smoke_protection() && !ignore_mask)
 			continue
 		if(target.get_eye_protection() && !ignore_eyes)
 			continue
-		to_chat(target, "The [holder] launches some of it's contents at you!")
+		to_chat(target, "The [holder] launches some of [holder.p_their()] contents at you!")
 		target.reagents.add_reagent(reagent, vol)
 
 

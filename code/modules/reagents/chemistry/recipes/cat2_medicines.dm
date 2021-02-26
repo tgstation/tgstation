@@ -127,9 +127,7 @@
 
 /datum/chemical_reaction/medicine/aiuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	for(var/mob/living/living_mob as anything in orange(3, get_turf(holder.my_atom)))
-		if(!isliving(living_mob))
-			continue
+	for(var/mob/living/living_mob in orange(3, get_turf(holder.my_atom)))
 		if(living_mob.flash_act(1, length = 5))
 			living_mob.set_blurriness(10)
 	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [holder.my_atom] lets out a loud bang!</span>")
@@ -187,10 +185,10 @@
 /datum/chemical_reaction/medicine/convermol/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
-	if(!oxy)
-		reaction.delta_t = delta_t/10 //slow without oxygen
-	else
+	if(oxy)
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
+	else
+		reaction.delta_t = delta_t/10 //slow without oxygen
 
 /datum/chemical_reaction/medicine/convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
 	var/range = impure ? 4 : 3
@@ -228,10 +226,10 @@
 /datum/chemical_reaction/medicine/tirimol/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
-	if(!oxy)
-		holder.ph += 0.2*step_reaction_vol//pH drifts faster
-	else
+	if(oxy)
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
+	else
+		holder.ph += 0.2*step_reaction_vol//pH drifts faster
 
 //Sleepytime for chem
 /datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)

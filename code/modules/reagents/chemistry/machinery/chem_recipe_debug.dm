@@ -213,8 +213,7 @@
 	data["minTemp"] = min_temp
 
 	var/list/beaker_contents = list()
-	for(var/r in reagents.reagent_list)
-		var/datum/reagent/reagent = r
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		beaker_contents.len++
 		beaker_contents[length(beaker_contents)] = list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))
 	data["chamberContents"] = beaker_contents
@@ -228,15 +227,13 @@
 
 	var/list/active_reactions = list()
 	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
-	for(var/_reaction in reagents.reaction_list)
-		var/datum/equilibrium/equilibrium = _reaction
+	for(var/datum/equilibrium/equilibrium as anything in reagents.reaction_list)
 		if(!length(reagents.reaction_list))//I'm not sure why when it explodes it causes the gui to fail (it's missing danger (?) )
 			stack_trace("how is this happening??")
 			continue
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
-		var/_reagent = equilibrium.reaction.results[1]
-		var/datum/reagent/reagent = reagents.get_reagent(_reagent) //Reactions are named after their primary products
+		var/datum/reagent/reagent = reagents.get_reagent(equilibrium.reaction.results[1]) //Reactions are named after their primary products
 		if(!reagent)
 			continue
 		var/overheat = FALSE
@@ -245,7 +242,7 @@
 		if(reagent.purity < equilibrium.reaction.purity_min)
 			purity_alert = ENABLE_FLASHING//Because 0 is seen as null
 			danger = TRUE
-		if(!(flashing == ENABLE_FLASHING))//So that the pH meter flashes for ANY reactions out of optimal
+		if(flashing != ENABLE_FLASHING)//So that the pH meter flashes for ANY reactions out of optimal
 			if(equilibrium.reaction.optimal_ph_min > reagents.ph || equilibrium.reaction.optimal_ph_max < reagents.ph)
 				flashing = ENABLE_FLASHING
 		if(equilibrium.reaction.is_cold_recipe)
