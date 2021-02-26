@@ -173,7 +173,7 @@
 	icon_state = "hotcrossbun"
 	foodtypes = SUGAR | GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
-	tastes = list("easter")
+	tastes = list("easter" = 1)
 
 /datum/crafting_recipe/food/hotcrossbun
 	name = "Hot-Cross Bun"
