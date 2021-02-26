@@ -27,7 +27,11 @@
 
 /datum/map_template/ctf/classic
 	name = "Classic"
-	width = 107
-	height = 43
 	description = "The original CTF map."
 	mappath = "_maps/map_files/CTF/classic.dmm"
+
+/datum/map_template/ctf/fourSide
+	name = "Four Side"
+	description = "A CTF map created to demonstrate 4 team CTF, features a single centred flag rather than one per team."
+	mappath = "_maps/map_files/CTF/fourSide.dmm"
+	

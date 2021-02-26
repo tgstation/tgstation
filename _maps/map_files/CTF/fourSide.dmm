@@ -1,0 +1,4346 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"bh" = (
+/obj/structure/trap/ctf{
+	color = "#FFFF00";
+	name = "yellow";
+	team = "YELLOW_TEAM"
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"bY" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"ce" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"cZ" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"dF" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"dI" = (
+/obj/machinery/capture_the_flag/red,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"dV" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"eK" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"fH" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/machinery/teambuilder{
+	desc = A machine that, when passed, colors you based on the color of your team. Go green team!;
+	name = "Teambuilding Machine (Green)";
+	team_color = "#008000";
+	team_radio = 1219
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"gq" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"gL" = (
+/obj/structure/trap/ctf/blue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"hz" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"iL" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"iS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"jS" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"ke" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"kh" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"kO" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"kV" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/machinery/teambuilder{
+	desc = A machine that, when passed, colors you based on the color of your team. Go yellow team!;
+	name = "Teambuilding Machine (Yellow)";
+	team_color = "#FFFF00";
+	team_radio = 1221
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"lm" = (
+/turf/open/floor/circuit/green/anim,
+/area/ctf)
+"lu" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"mf" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"mi" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"ne" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"ns" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"nL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"oR" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"pm" = (
+/obj/machinery/teambuilder/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"pL" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"pX" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"qv" = (
+/obj/machinery/teambuilder{
+	desc = A machine that, when passed, colors you based on the color of your team. Go yellow team!;
+	name = "Teambuilding Machine (Yellow)";
+	team_color = "#FFFF00";
+	team_radio = 1221
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"ra" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ctf)
+"rs" = (
+/turf/open/floor/circuit/green/off,
+/area/ctf)
+"rw" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"rB" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"rI" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"rU" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"sV" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"sW" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"th" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"tr" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"ts" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"tP" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"tU" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron,
+/area/ctf)
+"uD" = (
+/obj/machinery/capture_the_flag/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"uN" = (
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"vo" = (
+/obj/machinery/teambuilder{
+	desc = A machine that, when passed, colors you based on the color of your team. Go green team!;
+	name = "Teambuilding Machine (Green)";
+	team_color = "#008000";
+	team_radio = 1219
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/white,
+/area/ctf)
+"wl" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"wo" = (
+/turf/closed/wall/mineral/titanium,
+/area/ctf)
+"xu" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"xN" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"ye" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/white,
+/area/ctf)
+"yP" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ctf)
+"zm" = (
+/obj/item/ctf{
+	desc = "A banner used to play capture the flag.";
+	name = "capture flag";
+	team = "WHITE_TEAM"
+	},
+/turf/open/floor/circuit/green/anim,
+/area/ctf)
+"zS" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"AD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"AI" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"BB" = (
+/obj/machinery/capture_the_flag{
+	name = "Green CTF Controller";
+	team = "GREEN_TEAM";
+	team_span = "greenteamradio"
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/white,
+/area/ctf)
+"Cd" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Ce" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Db" = (
+/obj/structure/window/reinforced/fulltile{
+	max_integrity = 5000;
+	name = "hardened window";
+	obj_integrity = 5000
+	},
+/turf/open/floor/plating,
+/area/ctf)
+"Ev" = (
+/turf/open/floor/iron/dark,
+/area/ctf)
+"FW" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Gp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Gs" = (
+/obj/machinery/conveyor/auto,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"GM" = (
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"GR" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"HR" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Iv" = (
+/turf/open/space/basic,
+/area/space)
+"IM" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ctf)
+"IX" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Jd" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Jr" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/circuit/green/off,
+/area/ctf)
+"Kh" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"KV" = (
+/obj/structure/fluff/drake_statue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"LO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"MJ" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"MT" = (
+/obj/structure/trap/ctf{
+	color = "#008000";
+	name = "green";
+	team = "GREEN_TEAM"
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Nl" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Ns" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"NH" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"NY" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Og" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Qf" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Qt" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Qy" = (
+/obj/machinery/teambuilder/red,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"QI" = (
+/turf/closed/indestructible/riveted,
+/area/ctf)
+"Ra" = (
+/obj/structure/barricade/security/ctf,
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Sg" = (
+/obj/machinery/capture_the_flag{
+	name = "Yellow CTF Controller";
+	team = "YELLOW_TEAM";
+	team_span = "yellowteamradio"
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ctf)
+"Sw" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"SB" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"SX" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Ue" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"UB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Vf" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Vz" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"WQ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Xk" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"XV" = (
+/obj/structure/trap/ctf/red,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Yg" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+"YV" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"Zg" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/dark,
+/area/ctf)
+"ZQ" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
+
+(1,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(2,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+Ce
+Ce
+Ce
+yP
+yP
+yP
+eK
+eK
+eK
+eK
+eK
+Qy
+eK
+eK
+eK
+eK
+eK
+yP
+yP
+yP
+Ce
+Ce
+Ce
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(3,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+Ce
+kO
+Ce
+yP
+yP
+yP
+eK
+eK
+eK
+eK
+Qy
+dI
+Qy
+eK
+eK
+eK
+eK
+yP
+yP
+yP
+Ce
+kO
+Ce
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(4,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+Ce
+Ce
+Ce
+yP
+yP
+yP
+eK
+eK
+eK
+eK
+eK
+Qy
+eK
+eK
+eK
+eK
+eK
+yP
+yP
+yP
+Ce
+Ce
+Ce
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(5,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+XV
+XV
+XV
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+XV
+XV
+XV
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(6,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+rs
+rs
+Db
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+Db
+rs
+rs
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(7,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+rs
+rs
+Db
+rs
+Jr
+Jr
+rs
+rs
+rs
+Jr
+Jr
+rs
+Db
+rs
+rs
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(8,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+QI
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+QI
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(9,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+QI
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+QI
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(10,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+QI
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+QI
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(11,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+rs
+rs
+Db
+rs
+Jr
+Jr
+rs
+rs
+rs
+Jr
+Jr
+rs
+Db
+rs
+rs
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(12,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+dF
+Ev
+Ev
+Qt
+dF
+rs
+rs
+Db
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+Db
+rs
+rs
+Nl
+tP
+Ev
+Ev
+Nl
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(13,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+QI
+Ev
+Ev
+Ev
+Qt
+QI
+QI
+QI
+QI
+Db
+Db
+QI
+QI
+QI
+QI
+QI
+Db
+Db
+QI
+QI
+QI
+QI
+tP
+Ev
+Ev
+Ev
+QI
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(14,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+mi
+Ev
+mi
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+mi
+Ev
+mi
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(15,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+Ev
+QI
+QI
+QI
+UB
+UB
+UB
+QI
+QI
+QI
+QI
+QI
+Db
+Db
+Db
+Db
+Db
+Db
+Db
+QI
+QI
+QI
+QI
+QI
+UB
+UB
+UB
+QI
+QI
+QI
+Ev
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+"}
+(16,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+QI
+mi
+QI
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Vf
+QI
+mi
+QI
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+"}
+(17,1,1) = {"
+QI
+QI
+QI
+QI
+QI
+NY
+NY
+NY
+NY
+NY
+NY
+NY
+Ev
+Ev
+QI
+MJ
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Gs
+Vf
+Vf
+QI
+Ev
+Ev
+xN
+xN
+xN
+xN
+xN
+xN
+xN
+QI
+QI
+QI
+QI
+QI
+"}
+(18,1,1) = {"
+QI
+AI
+AI
+AI
+MT
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Qf
+MJ
+MJ
+Db
+Db
+Db
+Db
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Db
+Db
+Db
+Db
+Vf
+Vf
+nL
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+bh
+Yg
+Yg
+Yg
+QI
+"}
+(19,1,1) = {"
+QI
+AI
+Og
+AI
+MT
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Qf
+MJ
+MJ
+Db
+FW
+FW
+FW
+Ev
+Nl
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+dF
+Ev
+Qt
+Qt
+Qt
+Db
+Vf
+Vf
+nL
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+bh
+Yg
+rB
+Yg
+QI
+"}
+(20,1,1) = {"
+QI
+AI
+AI
+AI
+MT
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+Ev
+Qf
+MJ
+MJ
+Db
+FW
+Db
+Db
+Ev
+ke
+pX
+pX
+QI
+pX
+pX
+QI
+pX
+pX
+QI
+pX
+pX
+Sw
+Ev
+Db
+Db
+Qt
+Db
+Vf
+Vf
+nL
+Ev
+wl
+wl
+wl
+wl
+wl
+wl
+wl
+wl
+bh
+Yg
+Yg
+Yg
+QI
+"}
+(21,1,1) = {"
+QI
+tU
+tU
+tU
+QI
+NY
+NY
+NY
+NY
+NY
+NY
+NY
+QI
+Ev
+QI
+MJ
+MJ
+Db
+FW
+Db
+FW
+Ev
+Qt
+WQ
+WQ
+WQ
+WQ
+WQ
+WQ
+WQ
+WQ
+WQ
+WQ
+WQ
+tP
+Ev
+Qt
+Db
+Qt
+Db
+Vf
+Vf
+QI
+Ev
+QI
+xN
+xN
+xN
+xN
+xN
+xN
+xN
+QI
+ra
+ra
+ra
+QI
+"}
+(22,1,1) = {"
+QI
+tU
+tU
+tU
+QI
+rs
+rs
+QI
+QI
+QI
+rs
+rs
+QI
+Ev
+QI
+MJ
+MJ
+nL
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Qf
+Vf
+Vf
+QI
+Ev
+QI
+rs
+rs
+QI
+QI
+QI
+rs
+rs
+QI
+ra
+ra
+ra
+QI
+"}
+(23,1,1) = {"
+QI
+tU
+tU
+tU
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+Ev
+QI
+MJ
+MJ
+nL
+uN
+gq
+xu
+Ev
+QI
+QI
+QI
+QI
+QI
+iS
+rs
+AD
+Db
+Db
+Db
+Db
+QI
+Ev
+wl
+zS
+ns
+Qf
+Vf
+Vf
+QI
+Ev
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+ra
+ra
+ra
+QI
+"}
+(24,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+Db
+Db
+rs
+rs
+rs
+Db
+Db
+QI
+Ev
+QI
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+Db
+rs
+rs
+rs
+rs
+iS
+rs
+AD
+rs
+rs
+rs
+rs
+QI
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+QI
+Ev
+QI
+Db
+Db
+rs
+rs
+rs
+Db
+Db
+QI
+jS
+jS
+jS
+QI
+"}
+(25,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+Db
+Ev
+QI
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+Db
+rs
+SX
+xu
+uN
+iS
+rs
+AD
+dF
+Nl
+pL
+rs
+QI
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+QI
+Ev
+Db
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+jS
+jS
+jS
+QI
+"}
+(26,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+rs
+Jr
+Jr
+Jr
+Jr
+Jr
+rs
+Db
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+QI
+HR
+Ev
+Db
+rs
+NY
+SX
+lu
+iS
+rs
+AD
+NH
+pL
+tP
+rs
+QI
+Ev
+rw
+QI
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+Db
+rs
+Jr
+Jr
+Jr
+Jr
+Jr
+rs
+QI
+jS
+jS
+jS
+QI
+"}
+(27,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+rs
+Jr
+rs
+rs
+rs
+Jr
+rs
+QI
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+Db
+rs
+uN
+lu
+YV
+iS
+rs
+AD
+tr
+ts
+dF
+rs
+QI
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+QI
+rs
+Jr
+rs
+rs
+rs
+Jr
+rs
+QI
+jS
+jS
+jS
+QI
+"}
+(28,1,1) = {"
+QI
+ye
+fH
+ye
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+iS
+iS
+iS
+iS
+iS
+iS
+lm
+AD
+AD
+AD
+AD
+AD
+AD
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+jS
+kV
+jS
+QI
+"}
+(29,1,1) = {"
+QI
+vo
+BB
+fH
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+QI
+HR
+Ev
+rs
+rs
+rs
+rs
+rs
+lm
+zm
+lm
+rs
+rs
+rs
+rs
+rs
+Ev
+rw
+QI
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+qv
+Sg
+kV
+QI
+"}
+(30,1,1) = {"
+QI
+ye
+fH
+ye
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+Jd
+Jd
+Jd
+Jd
+Jd
+Jd
+lm
+Zg
+Zg
+Zg
+Zg
+Zg
+Zg
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+jS
+kV
+jS
+QI
+"}
+(31,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+rs
+Jr
+rs
+rs
+rs
+Jr
+rs
+QI
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+Ra
+HR
+Ev
+QI
+rs
+Vz
+hz
+LO
+Jd
+rs
+Zg
+bY
+Kh
+xN
+rs
+Db
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+QI
+rs
+Jr
+rs
+rs
+rs
+Jr
+rs
+QI
+jS
+jS
+jS
+QI
+"}
+(32,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+rs
+Jr
+Jr
+Jr
+Jr
+Jr
+rs
+Db
+Ev
+Db
+MJ
+MJ
+nL
+ZQ
+QI
+HR
+Ev
+QI
+rs
+GM
+SB
+ne
+Jd
+rs
+Zg
+cZ
+sW
+ns
+rs
+Db
+Ev
+rw
+QI
+mf
+Qf
+Vf
+Vf
+Db
+Ev
+Db
+rs
+Jr
+Jr
+Jr
+Jr
+Jr
+rs
+QI
+jS
+jS
+jS
+QI
+"}
+(33,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+Db
+Ev
+QI
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+QI
+rs
+SB
+kh
+Vz
+Jd
+rs
+Zg
+xN
+rU
+sW
+rs
+Db
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+QI
+Ev
+Db
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+jS
+jS
+jS
+QI
+"}
+(34,1,1) = {"
+QI
+ye
+ye
+ye
+QI
+Db
+Db
+rs
+rs
+rs
+Db
+Db
+QI
+Ev
+QI
+MJ
+MJ
+nL
+ZQ
+ce
+HR
+Ev
+QI
+rs
+rs
+rs
+rs
+Jd
+rs
+Zg
+rs
+rs
+rs
+rs
+Db
+Ev
+rw
+dV
+mf
+Qf
+Vf
+Vf
+QI
+Ev
+QI
+Db
+Db
+rs
+rs
+rs
+Db
+Db
+QI
+jS
+jS
+jS
+QI
+"}
+(35,1,1) = {"
+QI
+tU
+tU
+tU
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+Ev
+QI
+MJ
+MJ
+nL
+NY
+oR
+FW
+Ev
+QI
+Db
+Db
+Db
+Db
+Jd
+rs
+Zg
+QI
+QI
+QI
+QI
+QI
+Ev
+rU
+th
+xN
+Qf
+Vf
+Vf
+QI
+Ev
+QI
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+QI
+ra
+ra
+ra
+QI
+"}
+(36,1,1) = {"
+QI
+tU
+tU
+tU
+QI
+rs
+rs
+QI
+QI
+QI
+rs
+rs
+QI
+Ev
+QI
+MJ
+MJ
+nL
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Qf
+Vf
+Vf
+QI
+Ev
+QI
+rs
+rs
+QI
+QI
+QI
+rs
+rs
+QI
+ra
+ra
+ra
+QI
+"}
+(37,1,1) = {"
+QI
+tU
+tU
+tU
+QI
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+QI
+Ev
+QI
+MJ
+MJ
+Db
+aW
+Db
+aW
+Ev
+GM
+Cd
+Cd
+Cd
+Cd
+Cd
+Cd
+Cd
+Cd
+Cd
+Cd
+Cd
+aW
+Ev
+wl
+Db
+wl
+Db
+Vf
+Vf
+QI
+Ev
+QI
+ns
+ns
+ns
+ns
+ns
+ns
+ns
+QI
+ra
+ra
+ra
+QI
+"}
+(38,1,1) = {"
+QI
+AI
+AI
+AI
+MT
+FW
+FW
+FW
+FW
+FW
+FW
+FW
+FW
+Ev
+Qf
+MJ
+MJ
+Db
+aW
+Db
+Db
+Ev
+rI
+Ns
+Ns
+QI
+Ns
+Ns
+QI
+Ns
+Ns
+QI
+Ns
+Ns
+sV
+Ev
+Db
+Db
+wl
+Db
+Vf
+Vf
+nL
+Ev
+rU
+rU
+rU
+rU
+rU
+rU
+rU
+rU
+bh
+Yg
+Yg
+Yg
+QI
+"}
+(39,1,1) = {"
+QI
+AI
+Og
+AI
+MT
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Qf
+MJ
+MJ
+Db
+aW
+aW
+aW
+Ev
+Vz
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+kh
+Ev
+wl
+wl
+wl
+Db
+Vf
+Vf
+nL
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+bh
+Yg
+rB
+Yg
+QI
+"}
+(40,1,1) = {"
+QI
+AI
+AI
+AI
+MT
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Qf
+MJ
+MJ
+Db
+Db
+Db
+Db
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+UB
+Db
+Db
+Db
+Db
+Vf
+Vf
+nL
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+bh
+Yg
+Yg
+Yg
+QI
+"}
+(41,1,1) = {"
+QI
+QI
+QI
+QI
+QI
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+Ev
+Ev
+QI
+MJ
+MJ
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+Vf
+QI
+Ev
+Ev
+ns
+ns
+ns
+ns
+ns
+ns
+ns
+QI
+QI
+QI
+QI
+QI
+"}
+(42,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+QI
+mi
+QI
+MJ
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+iL
+QI
+mi
+QI
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+"}
+(43,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+Ev
+QI
+QI
+QI
+Gp
+Gp
+Gp
+QI
+QI
+QI
+QI
+QI
+Db
+Db
+Db
+Db
+Db
+Db
+Db
+QI
+QI
+QI
+QI
+QI
+Gp
+Gp
+Gp
+QI
+QI
+QI
+Ev
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+"}
+(44,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+mi
+Ev
+mi
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+Ev
+mi
+Ev
+mi
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(45,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+QI
+Ev
+Ev
+Ev
+GM
+QI
+QI
+QI
+QI
+Db
+Db
+QI
+QI
+QI
+QI
+QI
+Db
+Db
+QI
+QI
+QI
+QI
+aW
+Ev
+Ev
+Ev
+QI
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(46,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+rs
+rs
+Db
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+Db
+rs
+rs
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(47,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+rs
+rs
+Db
+rs
+Jr
+Jr
+rs
+rs
+rs
+Jr
+Jr
+rs
+Db
+rs
+rs
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(48,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+QI
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+QI
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(49,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+QI
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+QI
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(50,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+QI
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+rs
+rs
+Jr
+rs
+rs
+rs
+QI
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(51,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+rs
+rs
+Db
+rs
+Jr
+Jr
+rs
+rs
+rs
+Jr
+Jr
+rs
+Db
+rs
+rs
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(52,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+wo
+kh
+Ev
+Ev
+GM
+kh
+rs
+rs
+Db
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+rs
+Db
+rs
+rs
+Vz
+aW
+Ev
+Ev
+Vz
+wo
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(53,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+gL
+gL
+gL
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+gL
+gL
+gL
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(54,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+IX
+IX
+IX
+IM
+IM
+IM
+GR
+GR
+GR
+GR
+GR
+pm
+GR
+GR
+GR
+GR
+GR
+IM
+IM
+IM
+IX
+IX
+IX
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(55,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+IX
+KV
+IX
+IM
+IM
+IM
+GR
+GR
+GR
+GR
+pm
+uD
+pm
+GR
+GR
+GR
+GR
+IM
+IM
+IM
+IX
+KV
+IX
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(56,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+IX
+IX
+IX
+IM
+IM
+IM
+GR
+GR
+GR
+GR
+GR
+pm
+GR
+GR
+GR
+GR
+GR
+IM
+IM
+IM
+IX
+IX
+IX
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
+(57,1,1) = {"
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+QI
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+Iv
+"}
