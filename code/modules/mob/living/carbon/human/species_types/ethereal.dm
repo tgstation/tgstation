@@ -1,7 +1,7 @@
 #define CRYSTALIZE_COOLDOWN_LENGTH 120 SECONDS
-#define CRYSTALIZE_PRE_WAIT_TIME 3 SECONDS
+#define CRYSTALIZE_PRE_WAIT_TIME 40 SECONDS
 #define CRYSTALIZE_DISARM_WAIT_TIME 120 SECONDS
-#define CRYSTALIZE_HEAL_TIME 5 SECONDS
+#define CRYSTALIZE_HEAL_TIME 40 SECONDS
 
 #define CRYSTALIZE_STAGE_ENGULFING 100 //Cant use second defines
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
@@ -327,12 +327,12 @@
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
 	ethereal.revive(TRUE, FALSE)
+	to_chat(ethereal, "<span class='notice'>You burst out of the crystal with vigour</span><span class='userdanger'>...But at a cost.</span>")
 	var/datum/brain_trauma/picked_trauma
 	if(prob(10)) //10% chance for a severe trauma
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/severe))
 	else
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/mild))
 	ethereal.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	to_chat(ethereal, "<span class='notice'>You burst out of the crystal with vigour</span><span class='userdanger'>...But at a cost.</span>")
 	qdel(src)
 
