@@ -839,9 +839,7 @@
 	name = "Godslayer Armour"
 	result = /obj/item/clothing/suit/hooded/cloak/godslayer
 	time = 60
-	reqs = list(/obj/item/ice_energy_crystal = 1,
-				/obj/item/wendigo_skull = 1,
-				/obj/item/clockwork_alloy = 1)
+	reqs = list(/obj/item/ice_energy_crystal = 1, /obj/item/wendigo_skull = 1, /obj/item/clockwork_alloy = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/firebrand

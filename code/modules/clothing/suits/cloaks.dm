@@ -114,7 +114,7 @@
 	/// Time until the effect can take place again
 	var/effect_cooldown_time = 10 MINUTES
 	/// Current cooldown for the effect
-	var/effect_cooldown
+	COOLDOWN_DECLARE(effect_cooldown)
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /obj/item/clothing/head/hooded/cloakhood/godslayer
@@ -133,8 +133,8 @@
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/examine(mob/user)
 	. = ..()
-	if(src.loc == user && world.time <= effect_cooldown)
-		. += "You feel like the revival effect will be able to occur again in [(effect_cooldown - world.time) / 10] seconds."
+	if(loc == user && !COOLDOWN_FINISHED(src, effect_cooldown))
+		. += "You feel like the revival effect will be able to occur again in [COOLDOWN_TIMELEFT(src, effect_cooldown) / 10] seconds."
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/equipped(mob/user, slot)
 	. = ..()
@@ -148,11 +148,11 @@
 	UnregisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrect(mob/living/carbon/user, new_stat)
-	if(new_stat > CONSCIOUS && new_stat < DEAD && world.time > effect_cooldown)
+	if(new_stat > CONSCIOUS && new_stat < DEAD && COOLDOWN_FINISHED(src, effect_cooldown))
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
 		user.visible_message("<span class='notice'>[user] suddenly revives, as their armor swirls with demonic energy!</span>", "<span class='notice'>You suddenly feel invigorated!</span>")
 		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
-		effect_cooldown = world.time + effect_cooldown_time
+		COOLDOWN_START(src, effect_cooldown, effect_cooldown_time)
 
 /obj/item/clothing/neck/cloak/skill_reward
 	var/associated_skill_path = /datum/skill
