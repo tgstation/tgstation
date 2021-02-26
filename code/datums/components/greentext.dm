@@ -4,19 +4,20 @@
 	var/list/color_altered_mobs = list()
 	var/quiet = FALSE
 
-/datum/component/greentext/Initialize()
+/datum/component/greentext/Initialize(_quiet = FALSE)
 	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+	quiet = _quiet
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unequip)
 	var/roundend_callback = CALLBACK(src, .proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
-/datum/component/greentext/proc/equip(item , mob/living/user as mob)
+/datum/component/greentext/proc/equip(mob/living/user)
 	SIGNAL_HANDLER
 	if (user == current_holder)
 		return
-	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
+	to_chat(user, "<font color='green'>So long as you leave this place with [parent] in hand you know will be happy...</font>")
 	var/list/other_objectives = user.mind.get_all_objectives()
 	if(user.mind && other_objectives.len > 0)
 		to_chat(user, "<span class='warning'>... so long as you still perform your other objectives that is!</span>")
@@ -28,7 +29,7 @@
 	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
 
-/datum/component/greentext/proc/unequip(item , mob/living/user as mob)
+/datum/component/greentext/proc/unequip(mob/living/user)
 	SIGNAL_HANDLER
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
