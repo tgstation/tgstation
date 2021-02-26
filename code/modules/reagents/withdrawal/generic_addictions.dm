@@ -159,6 +159,7 @@
 /datum/addiction/medicine
 	name = "medicine"
 	var/datum/hallucination/fake_alert/hallucination
+	var/datum/hallucination/fake_health_doll/hallucination2
 
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -167,15 +168,38 @@
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
-	var/type = pick(list("not_enough_oxy", "too_much_oxy", "temphot", "tempcold"))
-	hallucination = New(affected_carbon, TRUE, type)
+	var/list/possibilities = list()
+	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTHEAT))
+		possibilities += "temphot"
+	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTCOLD))
+		possibilities += "tempcold"
+	var/obj/item/organ/lungs/lungs = affected_carbon.getorganslot(ORGAN_SLOT_LUNGS)
+	if(lungs)
+		if(lungs.safe_oxygen_min)
+			possibilities += "not_enough_oxy"
+		if(lungs.safe_oxygen_max)
+			possibilities += "too_much_oxy"
 
-/datum/addiction/medicine/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
-	. = ..()
+	var/type = pick(possibilities)
+	hallucination = New(affected_carbon, TRUE, type, 5 MINUTES)//last for a while basically
 	affected_carbon.hal_screwyhud = SCREWYHUD_CRIT
+	if(!ishuman(affected_carbon))
+		return
+	var/mob/living/carbon/human/human_mob = affected_carbon
+	hallucination2 = New(human_mob, TRUE, severity = 1)
+
+/datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
+	. = ..()
+	if(prob(2))
+		hallucination2.increment_fake_damage()
+		return
+	if(prob(2))
+		hallucination2.add_fake_limb(severity = 1)
 
 /datum/addiction/medicine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
+	if(prob(2))
+		hallucination2.increment_fake_damage()
 	if(prob(75*delta_time))
 		return
 	if(prob(15*delta_time))
@@ -195,5 +219,5 @@
 	if(iscarbon(victim_mind.current))
 		var/mob/living/carbon/affected_carbon = victim_mind.current
 		affected_carbon.hal_screwyhud = SCREWYHUD_NONE
-	qdel(hallucination)
-	hallucination = null
+	QDEL_NULL(hallucination)
+	QDEL_NULL(hallucination2)

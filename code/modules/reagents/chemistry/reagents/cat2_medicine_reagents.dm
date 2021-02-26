@@ -246,7 +246,7 @@
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 	ph = 5.6
 	inverse_chem_val = 0.35
-	inverse_chem = /datum/reagent/inverse/healing/tirimol
+	inverse_chem = /datum/reagent/inverse/healing/convermol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)

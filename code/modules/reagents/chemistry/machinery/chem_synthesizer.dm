@@ -58,9 +58,9 @@
 	update_appearance()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
-	var/data = list()
-	data["purity"] = purity
-	return data
+	. = ..()
+	.["purity"] = purity
+	return .
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE

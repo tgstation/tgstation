@@ -46,9 +46,8 @@
 		if("oxy")
 			owner.adjustOxyLoss(-0.5)
 
-////// C2 medications
-//// Helbital
-
+// C2 medications
+// Helbital
 //Inverse:
 /datum/reagent/inverse/helgrasp
 	name = "Helgrasp"
@@ -90,10 +89,8 @@
 		hands++
 	. = ..()
 
-////libital
-
+//libital
 //Impure
-
 //Simply reduces your alcohol tolerance, kinda simular to prohol
 /datum/reagent/impurity/libitoil
 	name = "Libitoil"
@@ -108,20 +105,27 @@
 	var/mob/living/carbon/consumer = L
 	if(!consumer)
 		return
+	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
+
+/datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	if(!istype(organ, /obj/item/organ/liver))
+		return
+	var/obj/item/organ/liver/this_liver = organ
+	this_liver.alcohol_tolerance /= 2
 
 /datum/reagent/impurity/libitoil/on_mob_delete(mob/living/L)
 	. = ..()
 	var/mob/living/carbon/consumer = L
-	if(!consumer)
-		return
+	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	if(!this_liver)
+		return
 	this_liver.alcohol_tolerance /= 2
 
 
-////probital
-
+//probital
 /datum/reagent/impurity/probital_failed//Basically crashed out failed metafactor
 	name = "Mitogen Metabolic Inhibition Factor"
 	description = "This enzyme catalyzes crashes the conversion of nutricious food into healing peptides."
@@ -148,8 +152,7 @@
 	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * delta_time)
 	. = ..()
 
-////Lenturi
-
+//Lenturi
 //impure
 /datum/reagent/impurity/lentslurri //Okay maybe I should outsource names for these
 	name = "Lentslurri"//This is a really bad name please replace
@@ -193,8 +196,7 @@
 	..()
 	return TRUE
 
-////Aiuri
-
+//Aiuri
 //impure
 /datum/reagent/impurity/aiuri
 	name = "Aivime"
@@ -216,8 +218,7 @@
 		return
 	owner.set_blurriness(cached_blurriness)
 
-////Hercuri
-
+//Hercuri
 //inverse
 /datum/reagent/inverse/hercuri
 	name = "Herignis"
@@ -225,27 +226,35 @@
 	ph = 0.8
 	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 2.5)
+	//type of exposure saved on add
+	var/ingested = FALSE
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	. = ..()
+	if(!ingested)
+		return ..()
 	var/heating = rand(creation_purity*10, creation_purity*30)
 	owner.reagents?.chem_temp += (heating * REM *normalise_creation_purity() * delta_time)
 	owner.adjust_bodytemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
 	if(ishuman(owner))
-		var/mob/living/carbon/human/humi = owner
-		humi.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
-
+		var/mob/living/carbon/human/human_mob = owner
+		human_mob.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
+	..()
 
 /datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	. = ..()
-	if(!(methods & VAPOR))
-		return
-	exposed_mob.adjust_bodytemperature((reac_volume*creation_purity) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	if(methods & INGEST)
+		ingested = TRUE
+	if(methods & VAPOR)
+		exposed_mob.adjust_bodytemperature((reac_volume*creation_purity) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	else
+		exposed_mob.adjust_fire_stacks(1 * (reac_volume * 0.05))
 
 /datum/reagent/inverse/healing/tirimol
 	name = "Super Melatonin"//It's melatonin, but super!
 	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
-	ph = 12.5 //sleeping is a basic need of all lifeforms
+	ph = 12.5 //sleeping is a basic need of all lifeformsa
+	self_consuming = TRUE //No pesky liver shenanigans
+	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 5)
 
@@ -287,23 +296,85 @@
 	cached_reagent_list = list()
 	..()
 
+//convermol
+//inverse
+/datum/reagent/inverse/healing/convermol
+	name = "Coveroli"
+	description = "This reagent is known to coat the inside of a patient's lungs, providing greater protection against hot or cold air."
+	ph = 3.82
+	tox_damage = 0
+	addiction_types = list(/datum/addiction/medicine = 2.3)
+	//The heat damage levels of lungs when added (i.e. heat_level_1_threshold on lungs)
+	var/cached_heat_level_1
+	var/cached_heat_level_2
+	var/cached_heat_level_3
+	//The cold damage levels of lungs when added (i.e. cold_level_1_threshold on lungs)
+	var/cached_cold_level_1
+	var/cached_cold_level_2
+	var/cached_cold_level_3
+
+/datum/reagent/inverse/healing/convermol/on_mob_add(mob/living/owner, amount)
+	. = ..()
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	if(!lungs)
+		return
+	cached_heat_level_1 = lungs.heat_level_1_threshold
+	cached_heat_level_2 = lungs.heat_level_2_threshold
+	cached_heat_level_3 = lungs.heat_level_3_threshold
+	cached_cold_level_1 = lungs.cold_level_1_threshold
+	cached_cold_level_2 = lungs.cold_level_2_threshold
+	cached_cold_level_3 = lungs.cold_level_3_threshold
+	//Heat threshold is increased
+	lungs.heat_level_1_threshold *= creation_purity * 1.5
+	lungs.heat_level_2_threshold *= creation_purity * 1.5
+	lungs.heat_level_3_threshold *= creation_purity * 1.5
+	//Cold threshold is decreased
+	lungs.cold_level_1_threshold *= creation_purity * 0.5
+	lungs.cold_level_2_threshold *= creation_purity * 0.5
+	lungs.cold_level_3_threshold *= creation_purity * 0.5
+
+/datum/reagent/inverse/healing/convermol/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	if(!istype(organ, /obj/item/organ/lungs))
+		return
+	var/obj/item/organ/lungs/lungs = organ
+	restore_lung_levels(lungs)
+
+/datum/reagent/inverse/healing/convermol/proc/restore_lung_levels(obj/item/organ/lungs/lungs)
+	lungs.heat_level_1_threshold = cached_heat_level_1
+	lungs.heat_level_2_threshold = cached_heat_level_2
+	lungs.heat_level_3_threshold = cached_heat_level_3
+	lungs.cold_level_1_threshold = cached_cold_level_1
+	lungs.cold_level_2_threshold = cached_cold_level_2
+	lungs.cold_level_3_threshold = cached_cold_level_3
+
+/datum/reagent/inverse/healing/convermol/on_mob_delete(mob/living/owner)
+	. = ..()
+	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	if(!lungs)
+		return
+	restore_lung_levels(lungs)
+
 //seiver
-////Inverse
+//Inverse
 //Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
 /datum/reagent/inverse/technetium
 	name = "Technetium 99"
-	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Has a very low metabolism rate and will irradiate the patient when present, purging is recommended after use."
+	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Has a very low metabolism rate and will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.01 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 	tox_damage = 0
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	owner.radiation += creation_purity * delta_time // 0 - 1
+	owner.radiation += creation_purity * delta_time * 0.05// 0 - 0.05
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
 	name = "Syrinifergus"
 	description = "This reagent reduces the impurity of all non medicines within the patient, reducing their negative effects."
+	self_consuming = TRUE //No pesky liver shenanigans
+	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
 	///The list of reagents we've affected
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 1.75)
@@ -334,7 +405,7 @@
 		reagent.creation_purity *= 1.25
 	cached_reagent_list = null
 
-////Multiver
+//Multiver
 //Inverse
 //Reaction product when between 0.2 and 0.35 purity.
 /datum/reagent/inverse/healing/monover
@@ -365,6 +436,7 @@
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
+	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 
@@ -388,7 +460,7 @@
 		iter_wound.blood_flow += (1-creation_purity)
 	if(!back_from_the_dead)
 		return ..()
-	//Following is for those brough back from the dead only
+	//Following is for those brought back from the dead only
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
 	owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2 * (1-creation_purity) * delta_time)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
@@ -429,3 +501,26 @@
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+
+/datum/reagent/test
+	name = "testchem"
+	var/datum/hallucination/fake_health_doll/hallucination2
+
+/datum/reagent/test/on_mob_add(mob/living/L, amount)
+	. = ..()
+	if(!ishuman(L))
+		return
+	var/mob/living/carbon/human/human_mob = L
+	hallucination2 = New(human_mob, TRUE, severity = 1)
+
+/datum/reagent/test/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	. = ..()
+	if(prob(5))
+		hallucination2.increment_fake_damage()
+		return
+	if(prob(5))
+		hallucination2.add_fake_limb(severity = 1)
+
+/datum/reagent/test/on_mob_delete(mob/living/L)
+	. = ..()
+	QDEL_NULL(hallucination2)
