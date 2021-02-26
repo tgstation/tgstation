@@ -1,6 +1,8 @@
 #define WHITE_TEAM "White"
 #define RED_TEAM "Red"
 #define BLUE_TEAM "Blue"
+#define GREEN_TEAM "Green"
+#define YELLOW_TEAM "Yellow"
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
@@ -227,6 +229,18 @@
 	team_span = "blueteamradio"
 	ctf_gear = list("blue" = /datum/outfit/ctf/blue)
 	instagib_gear = /datum/outfit/ctf/blue/instagib
+
+/obj/machinery/capture_the_flag/green
+	name = "Green CTF Controller"
+	icon_state = "greenbeacon"
+	team = GREEN_TEAM
+	team_span = "greenteamradio"
+
+/obj/machinery/capture_the_flag/yellow
+	name = "Yellow CTF Controller"
+	icon_state = "yellowbeacon"
+	team = YELLOW_TEAM
+	team_span = "yellowteamradio"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
