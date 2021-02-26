@@ -120,6 +120,23 @@
 	team = BLUE_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/blue
 
+/obj/item/ctf/green
+	name = "green flag"
+	icon_state = "banner"
+	inhand_icon_state = "banner"
+	desc = "A green banner used to play capture the flag."
+	team = GREEN_TEAM
+	reset_path = /obj/effect/ctf/flag_reset/green
+
+
+/obj/item/ctf/yellow
+	name = "yellow flag"
+	icon_state = "banner"
+	inhand_icon_state = "banner"
+	desc = "A yellow banner used to play capture the flag."
+	team = YELLOW_TEAM
+	reset_path = /obj/effect/ctf/flag_reset/yellow
+
 /obj/effect/ctf/flag_reset
 	name = "banner landmark"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -137,6 +154,18 @@
 	name = "blue flag landmark"
 	icon_state = "banner-blue"
 	desc = "This is where a blue banner used to play capture the flag \
+		would go."
+
+/obj/effect/ctf/flag_reset/green
+	name = "green flag landmark"
+	icon_state = "banner"
+	desc = "This is where a green banner used to play capture the flag \
+		would go."
+
+/obj/effect/ctf/flag_reset/yellow
+	name = "yellow flag landmark"
+	icon_state = "banner"
+	desc = "This is where a yellow banner used to play capture the flag \
 		would go."
 
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE)
@@ -235,12 +264,14 @@
 	icon_state = "greenbeacon"
 	team = GREEN_TEAM
 	team_span = "greenteamradio"
+	ctf_gear = list("green" = /datum/outfit/ctf/green)
 
 /obj/machinery/capture_the_flag/yellow
 	name = "Yellow CTF Controller"
 	icon_state = "yellowbeacon"
 	team = YELLOW_TEAM
 	team_span = "yellowteamradio"
+	ctf_gear = list("yellow" = /datum/outfit/ctf/yellow)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
@@ -617,6 +648,20 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
+/datum/outfit/ctf/green
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	id = /obj/item/card/id/syndicate_command //it's red
+
+/datum/outfit/ctf/yellow
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	id = /obj/item/card/id/syndicate_command //it's red
+
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/radio/R = H.ears
@@ -633,6 +678,21 @@
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
+/datum/outfit/ctf/green/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_GREEN)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
+
+/datum/outfit/ctf/yellow/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_YELLOW)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
 
 
 /obj/structure/trap/ctf
@@ -662,6 +722,14 @@
 /obj/structure/trap/ctf/blue
 	team = BLUE_TEAM
 	icon_state = "trap-frost"
+
+/obj/structure/trap/ctf/green
+	team = GREEN_TEAM
+	icon_state = "trap-earth"
+
+/obj/structure/trap/ctf/yellow
+	team = YELLOW_TEAM
+	icon_state = "trap-shock"
 
 /obj/structure/barricade/security/ctf
 	name = "barrier"
@@ -745,6 +813,8 @@
 #undef WHITE_TEAM
 #undef RED_TEAM
 #undef BLUE_TEAM
+#undef GREEN_TEAM
+#undef YELLOW_TEAM
 #undef FLAG_RETURN_TIME
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN

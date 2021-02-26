@@ -53,7 +53,7 @@ em						{font-style: normal;	font-weight: bold;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
 .greenteamradio			{color: #00ff00;}
-.yellowteamradio		{color: #ffff00;}
+.yellowteamradio		{color: #d1ba22;}
 
 .yell					{					font-weight: bold;}
 

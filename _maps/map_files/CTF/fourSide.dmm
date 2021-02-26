@@ -6,11 +6,7 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "bh" = (
-/obj/structure/trap/ctf{
-	color = "#FFFF00";
-	name = "yellow";
-	team = "YELLOW_TEAM"
-	},
+/obj/structure/trap/ctf/yellow,
 /turf/open/floor/iron/dark,
 /area/ctf)
 "bY" = (
@@ -741,11 +737,7 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "MT" = (
-/obj/structure/trap/ctf{
-	color = "#008000";
-	name = "green";
-	team = "GREEN_TEAM"
-	},
+/obj/structure/trap/ctf/green,
 /turf/open/floor/iron/dark,
 /area/ctf)
 "Nl" = (
