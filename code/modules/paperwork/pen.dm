@@ -28,7 +28,7 @@
 	var/colour = "black" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
-	embedding = list()
+	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
@@ -262,7 +262,7 @@
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	updateEmbedding()
-	update_icon()
+	update_appearance()
 
 /obj/item/pen/edagger/update_icon_state()
 	if(on)
@@ -274,6 +274,7 @@
 		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
+	return ..()
 
 /obj/item/pen/survival
 	name = "survival pen"

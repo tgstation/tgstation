@@ -52,11 +52,11 @@
 		retreat_message_said = TRUE
 	retreat_distance = 30
 
-/mob/living/simple_animal/hostile/asteroid/wolf/Life()
+/mob/living/simple_animal/hostile/asteroid/wolf/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-maxHealth*0.025)
+	adjustHealth(-0.0125 * maxHealth * delta_time)
 	retreat_message_said = FALSE
 
 /obj/item/crusher_trophy/wolf_ear

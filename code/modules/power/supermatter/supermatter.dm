@@ -45,6 +45,19 @@
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 #define PROTO_NITRATE_HEAT_RESISTANCE 5
 
+/// The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed be default.
+#define MIASMA_CONSUMPTION_RATIO_MIN 0
+/// The maximum portion of the miasma in the air that will be consumed. Lower values mean the miasma consumption rate caps earlier.
+#define MIASMA_CONSUMPTION_RATIO_MAX 1
+/// The minimum pressure for a pure miasma atmosphere to begin being consumed. Higher values mean it takes more miasma pressure to make miasma start being consumed. Should be >= 0
+#define MIASMA_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
+/// How the amount of miasma consumed per tick scales with partial pressure. Higher values decrease the rate miasma consumption scales with partial pressure. Should be >0
+#define MIASMA_PRESSURE_SCALING (ONE_ATMOSPHERE*0.5)
+/// How much the amount of miasma consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the miasma consumed.
+#define MIASMA_GASMIX_SCALING (0.3)
+/// The amount of matter power generated for every mole of miasma consumed. Higher values mean miasma generates more power.
+#define MIASMA_POWER_GAIN 10
+
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
 #define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
@@ -111,6 +124,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
+	layer = MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -172,6 +186,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium,
 		/datum/gas/proto_nitrate,
 		/datum/gas/zauker,
+		/datum/gas/miasma
 	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(
@@ -240,6 +255,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = 1,
 		/datum/gas/proto_nitrate = 1,
 		/datum/gas/zauker = 1,
+		/datum/gas/miasma = 0.5,
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -350,9 +366,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
-	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += "<span class='danger'>You get headaches just from looking at it.</span>"
+	if(isobserver(user))
+		if(power > 5)
+			. += "<span class='notice'>The supermatter appears active at [power] MeV.</span>"
+		else
+			. += "<span class='notice'>The supermatter appears inactive or outputting minimal power.</span>"
 
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/T = get_turf(src)
@@ -410,7 +431,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown) // We're already doing it go away
 		return
 	final_countdown = TRUE
-	update_icon()
+	update_appearance()
 
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
@@ -418,7 +439,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
-			update_icon()
+			update_appearance()
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
 			sleep(10)
@@ -629,6 +650,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		for(var/gasID in gas_trans)
 			power_transmission_bonus += gas_comp[gasID] * gas_trans[gasID] * (isnull(transit_mod[gasID]) ? 1 : transit_mod[gasID])
 		power_transmission_bonus *= h2obonus
+
+		//Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
+		if(gas_comp[/datum/gas/miasma])
+			var/miasma_pp = env.return_pressure() * gas_comp[/datum/gas/miasma]
+			var/consumed_miasma = clamp(((miasma_pp - MIASMA_CONSUMPTION_PP) / (miasma_pp + MIASMA_PRESSURE_SCALING)) * (1 + (gasmix_power_ratio * MIASMA_GASMIX_SCALING)), MIASMA_CONSUMPTION_RATIO_MIN, MIASMA_CONSUMPTION_RATIO_MAX)
+			consumed_miasma *= gas_comp[/datum/gas/miasma] * combined_gas
+			if(consumed_miasma)
+				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
+				matter_power += consumed_miasma * MIASMA_POWER_GAIN
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -898,7 +928,47 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = ..()
 	if(.)
 		return
-	dust_mob(user, cause = "hand")
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
+
+	. = TRUE
+	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+		dust_mob(user, cause = "hand")
+		return
+
+	if(!user.is_mouth_covered())
+		if(user.combat_mode)
+			dust_mob(user,
+				"<span class='danger'>As [user] tries to take a bite out of [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash.</span>",
+				"<span class='userdanger'>You try to take a bite out of [src], but find [p_them()] far too hard to get anywhere before everything starts burning and your ears fill with ringing!</span>",
+				"attempted bite"
+			)
+			return
+
+		var/obj/item/organ/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+		if(licking_tongue)
+			dust_mob(user,
+				"<span class='danger'>As [user] hesitantly leans in and licks [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!</span>",
+				"<span class='userdanger'>You tentatively lick [src], but you can't figure out what it tastes like before everything starts burning and your ears fill with ringing!</span>",
+				"attempted lick"
+			)
+			return
+
+	var/obj/item/bodypart/head/forehead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(forehead)
+		dust_mob(user,
+			"<span class='danger'>As [user]'s forehead bumps into [src], inducing a resonance... Everything goes silent before [user.p_their()] [forehead] flashes to ash!</span>",
+			"<span class='userdanger'>You feel your forehead bump into [src] and everything suddenly goes silent. As your head fills with ringing you come to realize that that was not a wise decision.</span>",
+			"failed lick"
+		)
+		return
+
+	dust_mob(user,
+		"<span class='danger'>[user] leans in and tries to lick [src], inducing a resonance... [user.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",
+		"<span class='userdanger'>You lean in and try to lick [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",
+		"failed lick"
+	)
+
 
 /obj/machinery/power/supermatter_crystal/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
 	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
@@ -1247,6 +1317,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
+
 
 /obj/overlay/psy/shard
 	icon_state = "psy_shard"

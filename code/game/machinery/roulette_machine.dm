@@ -99,7 +99,7 @@
 		if("ChangeBetType")
 			chosen_bet_type = params["type"]
 			. = TRUE
-	update_icon() // Not applicable to all objects.
+	update_appearance() // Not applicable to all objects.
 
 ///Handles setting ownership and the betting itself.
 /obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
@@ -182,7 +182,7 @@
 	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount)
 
 	playing = TRUE
-	update_icon()
+	update_appearance()
 	set_light(0)
 
 	var/rolled_number = rand(0, 36)
@@ -322,14 +322,18 @@
 	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return FALSE
 
-/obj/machinery/roulette/update_icon(payout, color, rolled_number, is_winner = FALSE)
-	cut_overlays()
-
+/obj/machinery/roulette/update_overlays()
+	. = ..()
 	if(machine_stat & MAINT)
 		return
 
 	if(playing)
-		add_overlay("random_numbers")
+		. += "random_numbers"
+
+/obj/machinery/roulette/update_icon(updates=ALL, payout, color, rolled_number, is_winner = FALSE)
+	. = ..()
+	if(machine_stat & MAINT)
+		return
 
 	if(!payout || !color || isnull(rolled_number)) //Don't fall for tricks.
 		return

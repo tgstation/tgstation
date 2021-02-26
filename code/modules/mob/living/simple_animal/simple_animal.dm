@@ -52,8 +52,8 @@
 	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
 	var/max_staminaloss = 200
-	///How much stamina the mob recovers per call of update_stamina
-	var/stamina_recovery = 10
+	///How much stamina the mob recovers per second
+	var/stamina_recovery = 5
 
 	///Minimal body temperature without receiving damage
 	var/minbodytemp = 250
@@ -71,7 +71,7 @@
 	///Leaving something at 0 means it's off - has no maximum.
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
-	var/unsuitable_atmos_damage = 2
+	var/unsuitable_atmos_damage = 1
 
 	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
 	melee_damage_lower = 0
@@ -173,7 +173,7 @@
 	var/pet_bonus_emote = ""
 
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)
@@ -208,10 +208,10 @@
 	if(!unsuitable_heat_damage)
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-/mob/living/simple_animal/Life()
+/mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -274,7 +274,7 @@
 			set_stat(CONSCIOUS)
 	med_hud_set_status()
 
-/mob/living/simple_animal/handle_status_effects()
+/mob/living/simple_animal/handle_status_effects(delta_time, times_fired)
 	..()
 	if(stuttering)
 		stuttering = 0
@@ -385,27 +385,31 @@
 	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
 		. = FALSE
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if(abs(areatemp - bodytemperature) > 5)
-			var/diff = areatemp - bodytemperature
-			diff = diff / 5
-			adjust_bodytemperature(diff)
+		var/temp_delta = areatemp - bodytemperature
+		if(abs(temp_delta) > 5)
+			if(temp_delta < 0)
+				if(!on_fire)
+					adjust_bodytemperature(clamp(temp_delta * delta_time / 10, temp_delta, 0))
+			else
+				adjust_bodytemperature(clamp(temp_delta * delta_time / 10, 0, temp_delta))
 
-	if(!environment_air_is_safe())
-		adjustHealth(unsuitable_atmos_damage)
+	if(!environment_air_is_safe() && unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage * delta_time)
 		if(unsuitable_atmos_damage > 0)
 			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 	else
 		clear_alert("not_enough_oxy")
 
-	handle_temperature_damage()
+	handle_temperature_damage(delta_time, times_fired)
 
-/mob/living/simple_animal/proc/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustHealth(unsuitable_cold_damage)
+/mob/living/simple_animal/proc/handle_temperature_damage(delta_time, times_fired)
+	. = FALSE
+	if((bodytemperature < minbodytemp) && unsuitable_cold_damage)
+		adjustHealth(unsuitable_cold_damage * delta_time)
 		switch(unsuitable_cold_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
@@ -413,8 +417,10 @@
 				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 			if(10 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-	else if(bodytemperature > maxbodytemp)
-		adjustHealth(unsuitable_heat_damage)
+		. = TRUE
+
+	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
+		adjustHealth(unsuitable_heat_damage * delta_time)
 		switch(unsuitable_heat_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
@@ -422,7 +428,9 @@
 				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 			if(10 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-	else
+		. = TRUE
+
+	if(!.)
 		clear_alert("temp")
 
 /mob/living/simple_animal/gib()
@@ -449,7 +457,7 @@
 	return ..()
 
 
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
+/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
 	if(stat)
 		return FALSE
 	return ..()
@@ -516,7 +524,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/handle_fire()
+/mob/living/simple_animal/handle_fire(delta_time, times_fired)
 	return TRUE
 
 /mob/living/simple_animal/IgniteMob()
@@ -655,10 +663,10 @@
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[hand_index]"]
 		if(H)
-			H.update_icon()
+			H.update_appearance()
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_appearance()
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
 	. = ..(I, del_on_fail, merge_stacks)
@@ -704,13 +712,6 @@
 /mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
-
-/mob/living/simple_animal/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(!ckey && !stat)//Not unconscious
-		if(AIStatus == AI_IDLE)
-			toggle_ai(AI_ON)
-
 
 /mob/living/simple_animal/onTransitZ(old_z, new_z)
 	..()

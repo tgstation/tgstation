@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a missing title header of the Microscope UI."
+  - bugfix: "Fixed a missing title header of the R&D Console UI."

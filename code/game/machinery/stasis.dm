@@ -4,6 +4,7 @@
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
 	icon = 'icons/obj/machines/stasis.dmi'
 	icon_state = "stasis"
+	base_icon_state = "stasis"
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -56,7 +57,7 @@
 					"<span class='notice'>You [stasis_enabled ? "power on" : "shut down"] \the [src].</span>", \
 					"<span class='hear'>You hear a nearby machine [stasis_enabled ? "power on" : "shut down"].</span>")
 		play_power_sound()
-		update_icon()
+		update_appearance()
 
 /obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
 	if(AM == occupant)
@@ -70,30 +71,33 @@
 
 /obj/machinery/stasis/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "stasis_broken"
-		return
+		icon_state = "[base_icon_state]_broken"
+		return ..()
 	if(panel_open || machine_stat & MAINT)
-		icon_state = "stasis_maintenance"
-		return
-	icon_state = "stasis"
+		icon_state = "[base_icon_state]_maintenance"
+		return ..()
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/stasis/update_overlays()
 	. = ..()
+	if(!mattress_state)
+		return
 	var/_running = stasis_running()
-	var/list/overlays_to_remove = managed_vis_overlays
+	if(!mattress_on)
+		mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, BELOW_OBJ_LAYER, plane, dir, alpha = 0, unique = TRUE)
+	else
+		vis_contents += mattress_on
+		if(managed_vis_overlays)
+			managed_vis_overlays += mattress_on
+		else
+			managed_vis_overlays = list(mattress_on)
 
-	if(mattress_state)
-		if(!mattress_on || !managed_vis_overlays)
-			mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, BELOW_OBJ_LAYER, plane, dir, alpha = 0, unique = TRUE)
+	if(mattress_on.alpha ? !_running : _running) //check the inverse of _running compared to truthy alpha, to see if they differ
+		var/new_alpha = _running ? 255 : 0
+		var/easing_direction = _running ? EASE_OUT : EASE_IN
+		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
-		if(mattress_on.alpha ? !_running : _running) //check the inverse of _running compared to truthy alpha, to see if they differ
-			var/new_alpha = _running ? 255 : 0
-			var/easing_direction = _running ? EASE_OUT : EASE_IN
-			animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
-
-		overlays_to_remove = managed_vis_overlays - mattress_on
-
-	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
 
 /obj/machinery/stasis/obj_break(damage_flag)
 	. = ..()
@@ -126,13 +130,13 @@
 	set_occupant(L)
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
 		set_occupant(null)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/process()
 	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
@@ -148,7 +152,7 @@
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	. |= default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()

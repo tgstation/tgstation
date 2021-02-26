@@ -195,7 +195,7 @@
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
 				if(duct.duct_layer == ducting_layer)
 					duct.remove_connects(turn(D, 180))
-					duct.update_icon()
+					duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable()
@@ -279,14 +279,14 @@
 	SIGNAL_HANDLER
 
 	tile_covered = intact
-	AM.update_icon()
+	AM.update_appearance()
 
 /datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
 	ducting_layer = new_layer
 
 	if(ismovable(parent))
 		var/atom/movable/AM = parent
-		AM.update_icon()
+		AM.update_appearance()
 
 	if(O)
 		playsound(O, 'sound/items/ratchet.ogg', 10, TRUE) //sound

@@ -75,7 +75,7 @@ Difficulty: Extremely Hard
 
 /datum/action/innate/megafauna_attack/ice_shotgun
 	name = "Fire Ice Shotgun"
-	icon_icon = 'icons/obj/guns/projectile.dmi'
+	icon_icon = 'icons/obj/guns/ballistic.dmi'
 	button_icon_state = "shotgun"
 	chosen_message = "<span class='colossus'>You are now firing shotgun ice blasts.</span>"
 	chosen_attack_num = 3

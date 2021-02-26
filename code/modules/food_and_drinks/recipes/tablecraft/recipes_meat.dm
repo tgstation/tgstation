@@ -131,7 +131,7 @@
 		/datum/reagent/consumable/ethanol/manly_dorf = 5,
 		/obj/item/food/meat/steak/bear = 1,
 	)
-	tools = list(/obj/item/lighter)
+	tool_paths = list(/obj/item/lighter)
 	result = /obj/item/food/bearsteak
 	subcategory = CAT_MEAT
 

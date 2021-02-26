@@ -29135,8 +29135,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cqu" = (
-/obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29147,6 +29145,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "cqH" = (
@@ -33807,10 +33806,11 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPd" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPe" = (
@@ -35295,15 +35295,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/science/research)
-"cSp" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/science/research)
 "cSq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -36199,6 +36190,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
+	},
+/obj/effect/turf_decal/arrows/white{
+	color = "#800080";
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -41271,6 +41266,13 @@
 	dir = 6
 	},
 /obj/machinery/power/apc/auto_name/west,
+/obj/item/experi_scanner,
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
 /turf/open/floor/iron,
 /area/science/lab)
 "dfr" = (
@@ -69062,8 +69064,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "hzj" = (
-/obj/structure/table/wood,
-/obj/item/clothing/head/fedora,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -69074,6 +69074,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "hzE" = (
@@ -73925,6 +73926,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/head/fedora,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "jqu" = (
@@ -88935,6 +88937,7 @@
 /obj/item/reagent_containers/glass/bowl,
 /obj/effect/turf_decal/bot,
 /obj/item/food/dough,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "oJI" = (
@@ -103599,6 +103602,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/toy/figure/bartender,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "udl" = (
@@ -113571,6 +113575,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "xRL" = (
@@ -149835,7 +149840,7 @@ cmP
 cNp
 cOW
 cQH
-cSp
+dgv
 cUe
 cWb
 cXr
