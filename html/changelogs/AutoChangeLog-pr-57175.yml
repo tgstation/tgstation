@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - rscadd: "Dynamic will now play a part in controlling random event antagonists. If a dynamic midround injection is coming too soon, or too early, then the next midround injection will be buffed. Otherwise, it'll spawn normally."
