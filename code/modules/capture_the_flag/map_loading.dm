@@ -34,4 +34,3 @@
 	name = "Four Side"
 	description = "A CTF map created to demonstrate 4 team CTF, features a single centred flag rather than one per team."
 	mappath = "_maps/map_files/CTF/fourSide.dmm"
-	
