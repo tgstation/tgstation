@@ -9,8 +9,8 @@
 	flags_1 = CONDUCT_1
 
 /obj/item/assembly/shock_kit/Destroy()
-	qdel(helmet_part)
-	qdel(electropack_part)
+	QDEL_NULL(helmet_part)
+	QDEL_NULL(electropack_part)
 	return ..()
 
 /obj/item/assembly/shock_kit/Initialize()
