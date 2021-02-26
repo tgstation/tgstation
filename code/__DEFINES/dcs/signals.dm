@@ -289,9 +289,9 @@
 
 /////////////////
 
-///from base of area/Entered(): (/area)
+///from base of area/Entered(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_ENTER_AREA "enter_area"
-///from base of area/Exited(): (/area)
+///from base of area/Exited(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
@@ -914,6 +914,8 @@
 ///called on an object by its NTNET connection component on a port distruction (port, list/data))
 #define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
 
+///Restaurant
+#define COMSIG_ITEM_SOLD_TO_CUSTOMER "item_sold_to_customer"
 
 //Nanites
 

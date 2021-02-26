@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - qol: "brand_intelligence event no longer has 30% prob of making an hull breaking explosion and destoying the machine when converting them to rogue vending machines which means there  is 30% more vending machines that get turned into rogue ones aka all the ones that got hit with the vending machine virus"

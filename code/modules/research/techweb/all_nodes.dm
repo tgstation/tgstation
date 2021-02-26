@@ -9,7 +9,7 @@
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "basic_electrolite", "c-reader", "desttagger", "salestagger", "handlabel", "packagewrap",
-					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
+					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab", "restaurant_portal",
 					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel", "experi_scanner", "destructive_scanner", "doppler_array",
 					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon", "conveyor_belt", "conveyor_switch")
 
@@ -116,7 +116,8 @@
 	description = "When evolution isn't fast enough."
 	prereq_ids = list("adv_surgery")
 	design_ids = list("surgery_pacify","surgery_vein_thread","surgery_muscled_veins","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_cortex_imprint","surgery_cortex_folding","surgery_viral_bond", "surgery_heal_combo_upgrade")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 4500)
 
 /datum/techweb_node/alien_surgery
 	id = "alien_surgery"
@@ -522,7 +523,8 @@
 	description = "Botanical tools"
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list("portaseeder", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/wild = 3000)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"

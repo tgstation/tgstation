@@ -173,7 +173,7 @@
 	var/pet_bonus_emote = ""
 
 
-/mob/living/simple_animal/Initialize()
+/mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)
@@ -458,7 +458,7 @@
 	return ..()
 
 
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
+/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
 	if(stat)
 		return FALSE
 	return ..()

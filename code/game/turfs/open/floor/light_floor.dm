@@ -22,6 +22,8 @@
 	tiled_dirt = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
+	///used for light floors that cycle colours
+	var/cycle = FALSE
 
 /turf/open/floor/light/setup_broken_states()
 	return list("light_broken")
@@ -87,7 +89,15 @@
 
 	switch(state)
 		if(LIGHTFLOOR_FINE)
-			icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
+			if(cycle)
+				if(istype(src, /turf/open/floor/light/colour_cycle/dancefloor_a))
+					icon_state = "light_on-dancefloor_A"
+				else if(istype(src, /turf/open/floor/light/colour_cycle/dancefloor_b))
+					icon_state = "light_on-dancefloor_B"
+				else
+					icon_state = "light_on-cycle_all"
+			else
+				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
 		if(LIGHTFLOOR_FLICKER)
 			icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
 		if(LIGHTFLOOR_BREAKING)
@@ -102,7 +112,7 @@
 
 /turf/open/floor/light/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(!can_modify_colour)
+	if(!can_modify_colour && !cycle)
 		return
 	on = !on
 	update_appearance()
@@ -149,25 +159,20 @@
 
 //Cycles through all of the colours
 /turf/open/floor/light/colour_cycle
-	icon_state = "cycle_all"
+	name = "dancefloor"
+	desc = "Funky floor."
+	icon_state = "light_on-cycle_all"
 	light_color = LIGHT_COLOR_SLIME_LAMP
 	can_modify_colour = FALSE
+	cycle = TRUE
 
 //Two different "dancefloor" types so that you can have a checkered pattern
 // (also has a longer delay than colour_cycle between cycling colours)
 /turf/open/floor/light/colour_cycle/dancefloor_a
-	name = "dancefloor"
-	desc = "Funky floor."
 	icon_state = "light_on-dancefloor_A"
-	light_color =LIGHT_COLOR_SLIME_LAMP
-	can_modify_colour = FALSE
 
 /turf/open/floor/light/colour_cycle/dancefloor_b
-	name = "dancefloor"
-	desc = "Funky floor."
 	icon_state = "light_on-dancefloor_B"
-	light_color = LIGHT_COLOR_SLIME_LAMP
-	can_modify_colour = FALSE
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
