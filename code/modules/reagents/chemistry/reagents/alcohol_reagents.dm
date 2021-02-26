@@ -1689,7 +1689,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		M.adjustBruteLoss(-2 * REM * delta_time, 0)
 		. = TRUE
 	return ..()
 
@@ -1710,10 +1709,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time, 2 * REM * delta_time)
-		M.adjustBruteLoss(-5 * REM * delta_time, 0)
-		M.adjustOxyLoss(-5 * REM * delta_time, 0)
-		M.adjustFireLoss(-5 * REM * delta_time, 0)
-		M.adjustToxLoss(-5 * REM * delta_time, 0)
 		. = TRUE
 	return ..()
 
