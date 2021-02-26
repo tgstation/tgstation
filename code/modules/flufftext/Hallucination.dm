@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/battle = 20,
 	/datum/hallucination/dangerflash = 15,
 	/datum/hallucination/hudscrew = 12,
+	/datum/hallucination/fake_health_doll = 12,
 	/datum/hallucination/fake_alert = 12,
 	/datum/hallucination/weird_sounds = 8,
 	/datum/hallucination/stationmessage = 7,
@@ -1157,7 +1158,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/timer_id = null
 
 ///Creates a specified doll hallucination, or picks one randomly
-/datum/hallucination/fake_health_doll/New(mob/living/carbon/human/human_mob, forced = TRUE, specific_limb, severity, duration = 150)
+/datum/hallucination/fake_health_doll/New(mob/living/carbon/human/human_mob, forced = TRUE, specific_limb, severity, duration = 500)
 	. = ..()
 	if(!specific_limb)
 		specific_limb = pick(list(SCREWYDOLL_HEAD, SCREWYDOLL_CHEST, SCREWYDOLL_L_ARM, SCREWYDOLL_R_ARM, SCREWYDOLL_L_LEG, SCREWYDOLL_R_LEG))
@@ -1196,12 +1197,17 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 ///Cleans up the hallucinations - this deletes any overlap, but that shouldn't happen.
 /datum/hallucination/fake_health_doll/proc/cleanup()
+	qdel(src)
+
+//So that the associated addition proc cleans it up correctly
+/datum/hallucination/fake_health_doll/Destroy()
 	if(!ishuman(target))
 		stack_trace("Somehow [target] managed to get a fake health doll hallucination, while not being a human mob.")
 	var/mob/living/carbon/human/human_mob = target
 	LAZYNULL(human_mob.hal_screwydoll)
 	human_mob.update_health_hud()
-	qdel(src)
+	..()
+
 
 /datum/hallucination/items/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE

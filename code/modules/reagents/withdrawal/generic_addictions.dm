@@ -226,5 +226,5 @@
 	if(iscarbon(victim_mind.current))
 		var/mob/living/carbon/affected_carbon = victim_mind.current
 		affected_carbon.hal_screwyhud = SCREWYHUD_NONE
-	QDEL_NULL(hallucination)
+	hallucination.cleanup()
 	QDEL_NULL(hallucination2)

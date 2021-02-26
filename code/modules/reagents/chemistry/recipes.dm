@@ -457,7 +457,7 @@
 		holder.remove_reagent(reagent, volume)
 
 ///Clears the beaker of the product only
-/datum/chemical_reaction/proc/clear_products(datum/reagents/holder, volume = null)
+/datum/chemical_reaction/proc/clear_products(datum/reagents/holder, volume = 1000)
 	if(!holder)
 		return FALSE
 	for(var/reagent in results)
@@ -465,7 +465,7 @@
 
 
 ///Clears the beaker of ALL reagents inside
-/datum/chemical_reaction/proc/clear_reagents(datum/reagents/holder, volume = null)
+/datum/chemical_reaction/proc/clear_reagents(datum/reagents/holder, volume = 1000)
 	if(!holder)
 		return FALSE
 	if(!volume)
