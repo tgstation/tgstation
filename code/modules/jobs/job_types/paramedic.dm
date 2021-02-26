@@ -20,6 +20,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 	bounty_types = CIV_JOB_MED
+	departments = DEPARTMENT_MEDICAL
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"

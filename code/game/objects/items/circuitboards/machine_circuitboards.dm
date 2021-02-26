@@ -1192,6 +1192,12 @@
 		/obj/item/stock_parts/matter_bin = 2)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/restaurant_portal
+	name = "Restaurant Portal"
+	icon_state = "service"
+	build_path = /obj/machinery/restaurant_portal
+	needs_anchored = TRUE
+
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
 	icon_state = "abductor_mod"
@@ -1236,3 +1242,19 @@
 		/obj/item/stock_parts/scanning_module = 2
 	)
 
+/obj/item/circuitboard/machine/destructive_scanner
+	name = "Experimental Destructive Scanner (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/destructive_scanner
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 2)
+
+/obj/item/circuitboard/machine/doppler_array
+	name = "Tachyon-Doppler Research Array (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/doppler_array/research
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 4)

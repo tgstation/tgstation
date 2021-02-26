@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Spawned hot cross buns (e.g. one in cafe on MetaStation) are edible again"
+  - balance: "Hot cross buns now use a bread slice instead of a loaf of bread (more economical)"

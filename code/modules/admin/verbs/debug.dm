@@ -534,8 +534,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
-		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+		outfits[initial(O.name)] = path
 
 	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sortList(outfits)
 	if (isnull(dresscode))
@@ -549,8 +548,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/job_outfits = list()
 		for(var/path in job_paths)
 			var/datum/outfit/O = path
-			if(initial(O.can_be_admin_equipped))
-				job_outfits[initial(O.name)] = path
+			job_outfits[initial(O.name)] = path
 
 		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sortList(job_outfits)
 		dresscode = job_outfits[dresscode]
@@ -562,8 +560,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/plasmaman_outfits = list()
 		for(var/path in plasmaman_paths)
 			var/datum/outfit/O = path
-			if(initial(O.can_be_admin_equipped))
-				plasmaman_outfits[initial(O.name)] = path
+			plasmaman_outfits[initial(O.name)] = path
 
 		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sortList(plasmaman_outfits)
 		dresscode = plasmaman_outfits[dresscode]

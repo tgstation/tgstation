@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Disabler beams from drop pods/frag grenades will no longer cause burn wounds."

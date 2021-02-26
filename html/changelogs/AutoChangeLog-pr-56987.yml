@@ -1,0 +1,5 @@
+author: "Guillaume Prata and M. Joyce"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Plasmamen ERT not spawning properly"
+  - imageadd: "Updated sprites for the CE and CMO Envirosuits and some small fixes on others."

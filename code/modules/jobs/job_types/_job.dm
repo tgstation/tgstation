@@ -68,6 +68,9 @@
 
 	var/bounty_types = CIV_JOB_BASIC
 
+	///Bitfield of departments this job belongs wit
+	var/departments = NONE
+
 	/// Should this job be allowed to be picked for the bureaucratic error event?
 	var/allow_bureaucratic_error = TRUE
 

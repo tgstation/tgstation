@@ -19,6 +19,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	bounty_types = CIV_JOB_RANDOM
+	departments = DEPARTMENT_CARGO
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
