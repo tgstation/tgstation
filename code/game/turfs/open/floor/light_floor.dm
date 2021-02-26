@@ -89,15 +89,15 @@
 
 	switch(state)
 		if(LIGHTFLOOR_FINE)
-			if(!cycle)
-				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
-			else
+			if(cycle)
 				if(istype(src, /turf/open/floor/light/colour_cycle/dancefloor_a))
 					icon_state = "light_on-dancefloor_A"
 				else if(istype(src, /turf/open/floor/light/colour_cycle/dancefloor_b))
 					icon_state = "light_on-dancefloor_B"
 				else
 					icon_state = "light_on-cycle_all"
+			else
+				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
 		if(LIGHTFLOOR_FLICKER)
 			icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
 		if(LIGHTFLOOR_BREAKING)
