@@ -104,11 +104,11 @@ export const TramControl = (props, context) => {
   };
   const Destination = props => {
     const { dest } = props;
-    const getDestColor = (dest) => {
+    const getDestColor = dest => {
       const here = dest.name === current_loc[0].name;
       const selected = transitIndex === destinations.indexOf(dest);
       return !current_loc ? "bad" : here ? "blue" : selected ? "green" : "transparent";
-    }
+    };
     return (
       <Stack vertical>
         <Stack.Item ml={5}>
@@ -151,7 +151,7 @@ export const TramControl = (props, context) => {
             </Stack>
           </Stack.Item>
         )}
-    </Stack>
+      </Stack>
     );
   };
   return (
