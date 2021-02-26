@@ -172,6 +172,7 @@
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
 	foodtypes = SUGAR | GRAIN
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
 	tastes = list("easter")
 
 /datum/crafting_recipe/food/hotcrossbun
