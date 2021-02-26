@@ -128,7 +128,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "az" = (
-/obj/item/greentext/quiet{
+/obj/item/greentext{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
