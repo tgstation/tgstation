@@ -96,25 +96,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ctf)
-"fH" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/machinery/teambuilder{
-	desc = A machine that, when passed, colors you based on the color of your team. Go green team!;
-	name = "Teambuilding Machine (Green)";
-	team_color = "#008000";
-	team_radio = 1219
-	},
-/turf/open/floor/iron/white,
-/area/ctf)
 "gq" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -188,25 +169,6 @@
 /obj/structure/fluff/drake_statue,
 /turf/open/floor/iron/dark,
 /area/ctf)
-"kV" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/machinery/teambuilder{
-	desc = A machine that, when passed, colors you based on the color of your team. Go yellow team!;
-	name = "Teambuilding Machine (Yellow)";
-	team_color = "#FFFF00";
-	team_radio = 1221
-	},
-/turf/open/floor/iron/white,
-/area/ctf)
 "lm" = (
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
@@ -264,20 +226,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"pm" = (
-/obj/machinery/teambuilder/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/ctf)
 "pL" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -304,25 +252,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ctf)
-"qv" = (
-/obj/machinery/teambuilder{
-	desc = A machine that, when passed, colors you based on the color of your team. Go yellow team!;
-	name = "Teambuilding Machine (Yellow)";
-	team_color = "#FFFF00";
-	team_radio = 1221
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
 /area/ctf)
 "ra" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -465,25 +394,6 @@
 "uN" = (
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/dark,
-/area/ctf)
-"vo" = (
-/obj/machinery/teambuilder{
-	desc = A machine that, when passed, colors you based on the color of your team. Go green team!;
-	name = "Teambuilding Machine (Green)";
-	team_color = "#008000";
-	team_radio = 1219
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/turf/open/floor/iron/white,
 /area/ctf)
 "wl" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -798,20 +708,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"Qy" = (
-/obj/machinery/teambuilder/red,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/ctf)
 "QI" = (
 /turf/closed/indestructible/riveted,
 /area/ctf)
@@ -1053,7 +949,7 @@ eK
 eK
 eK
 eK
-Qy
+eK
 eK
 eK
 eK
@@ -1111,9 +1007,9 @@ eK
 eK
 eK
 eK
-Qy
+eK
 dI
-Qy
+eK
 eK
 eK
 eK
@@ -1171,7 +1067,7 @@ eK
 eK
 eK
 eK
-Qy
+eK
 eK
 eK
 eK
@@ -2561,7 +2457,7 @@ QI
 (28,1,1) = {"
 QI
 ye
-fH
+ye
 ye
 QI
 rs
@@ -2613,15 +2509,15 @@ rs
 rs
 QI
 jS
-kV
+jS
 jS
 QI
 "}
 (29,1,1) = {"
 QI
-vo
+ye
 BB
-fH
+ye
 QI
 rs
 rs
@@ -2671,15 +2567,15 @@ rs
 rs
 rs
 QI
-qv
+jS
 Sg
-kV
+jS
 QI
 "}
 (30,1,1) = {"
 QI
 ye
-fH
+ye
 ye
 QI
 rs
@@ -2731,7 +2627,7 @@ rs
 rs
 QI
 jS
-kV
+jS
 jS
 QI
 "}
@@ -4121,7 +4017,7 @@ GR
 GR
 GR
 GR
-pm
+GR
 GR
 GR
 GR
@@ -4179,9 +4075,9 @@ GR
 GR
 GR
 GR
-pm
+GR
 uD
-pm
+GR
 GR
 GR
 GR
@@ -4239,7 +4135,7 @@ GR
 GR
 GR
 GR
-pm
+GR
 GR
 GR
 GR
