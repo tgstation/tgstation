@@ -13,7 +13,7 @@
 	var/roundend_callback = CALLBACK(src, .proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
-/datum/component/greentext/proc/equip(mob/living/user)
+/datum/component/greentext/proc/equip(source, mob/living/user)
 	SIGNAL_HANDLER
 	if (user == current_holder)
 		return
@@ -29,7 +29,7 @@
 	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
 
-/datum/component/greentext/proc/unequip(mob/living/user)
+/datum/component/greentext/proc/unequip(source, mob/living/user)
 	SIGNAL_HANDLER
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
