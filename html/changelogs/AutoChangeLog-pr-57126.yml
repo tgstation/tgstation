@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "The daemon forge's normal description and stackcrafting description have been updated to reflect the recent changes to the daemon forge."
