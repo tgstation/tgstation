@@ -89,10 +89,6 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
 
-/obj/item/fireaxe/metal_h2_axe/update_icon_state()
-	. = ..()
-	icon_state = "metalh2_axe0"
-
 /obj/item/fireaxe/elder_atmosian_fireaxe
 	icon_state = "elder_axe0"
 	base_icon_state = "elder_axe"
@@ -103,7 +99,3 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=25, icon_wielded="[base_icon_state]1")
 	AddComponent(/datum/component/lifesteal, 15)
-
-/obj/item/fireaxe/elder_atmosian_fireaxe/update_icon_state()
-	. = ..()
-	icon_state = "elder_axe0"

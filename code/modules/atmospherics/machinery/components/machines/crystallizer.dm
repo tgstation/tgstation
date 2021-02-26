@@ -1,7 +1,7 @@
-#define MIN_PROGRESS_AMOUNT 				3
-#define MIN_DEVIATION_RATE 					0.90
-#define MAX_DEVIATION_RATE 					1.1
-#define HIGH_EFFICIENCY_CONDUCTIVITY 		0.95
+#define MIN_PROGRESS_AMOUNT 3
+#define MIN_DEVIATION_RATE 0.90
+#define MAX_DEVIATION_RATE 1.1
+#define HIGH_EFFICIENCY_CONDUCTIVITY 0.95
 
 /obj/machinery/atmospherics/components/binary/crystallizer
 	icon = 'icons/obj/atmospherics/components/machines.dmi'
@@ -93,7 +93,7 @@
 	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
 	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
 
-/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(mob/user)
 	if(!can_interact(user))
 		return
 	on = !on
@@ -233,7 +233,7 @@
 		for(var/i in 1 to amount_produced)
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] [creation.name]"
-			if(istype(creation, /obj/machinery/power/supermatter_crystal/shard))
+			if(recipe[META_RECIPE_DANGER][path])
 				investigate_log("has been created in the crystallizer.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
 

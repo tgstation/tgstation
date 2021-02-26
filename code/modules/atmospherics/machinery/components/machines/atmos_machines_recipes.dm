@@ -8,8 +8,9 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 #define META_RECIPE_MAX_TEMP 5
 #define META_RECIPE_REACTION_TYPE 6
 #define META_RECIPE_ENERGY_RELEASE 7
-#define META_RECIPE_REQUIREMENTS 8
-#define META_RECIPE_PRODUCTS 9
+#define META_RECIPE_DANGER 8
+#define META_RECIPE_REQUIREMENTS 9
+#define META_RECIPE_PRODUCTS 10
 ///Defines for the recipes var
 #define ENDOTHERMIC_REACTION "endothermic"
 #define EXOTHERMIC_REACTION "exothermic"
@@ -20,7 +21,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /proc/gas_recipes_list()
 	. = subtypesof(/datum/gas_recipe)
 	for(var/recipe_path in .)
-		var/list/recipe_info = new(9)
+		var/list/recipe_info = new(10)
 		var/datum/gas_recipe/recipe = new recipe_path()
 
 		recipe_info[META_RECIPE_ID] = initial(recipe.id)
@@ -30,6 +31,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 		recipe_info[META_RECIPE_MAX_TEMP] = initial(recipe.max_temp)
 		recipe_info[META_RECIPE_REACTION_TYPE] = initial(recipe.reaction_type)
 		recipe_info[META_RECIPE_ENERGY_RELEASE] = initial(recipe.energy_release)
+		recipe_info[META_RECIPE_DANGER] = initial(recipe.dangerous)
 		recipe_info[META_RECIPE_REQUIREMENTS] = recipe.requirements
 		recipe_info[META_RECIPE_PRODUCTS] = recipe.products
 
@@ -62,6 +64,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	var/reaction_type = ""
 	///Amount of energy released/consumed by the reaction (always positive)
 	var/energy_release = 0
+	var/dangerous = FALSE
 	///Gas required for the recipe to work
 	var/list/requirements
 	///Products made from the machine
@@ -127,6 +130,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 5
 	reaction_type = "EXOTHERMIC_REACTION"
 	energy_release = 1500000
+	dangerous = TRUE
 	requirements = list(/datum/gas/hypernoblium = 1500, /datum/gas/antinoblium = 1500, /datum/gas/bz = 2000, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
 	products = list(/obj/machinery/power/supermatter_crystal/shard = 1)
 
