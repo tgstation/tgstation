@@ -77,11 +77,12 @@
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(flags_1 & NODECONSTRUCT_1)
 		return ..()
-	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_CHAIR))
+	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
-		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE), W, list(image(icon = 'icons/obj/chairs.dmi', icon_state = "echair_over", loc)))
+		var/image/export_to_component = image(icon = 'icons/obj/chairs.dmi', loc=loc, icon_state = "echair_over")
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE), W, list(export_to_component))
 		return
 	. = ..()
 
