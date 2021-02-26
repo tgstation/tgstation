@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes certain announcements (captain's announcements, nuclear operative war declaration, command reports, etc) not playing their respective sounds."
+  - bugfix: "Interns no longer override their superior's announced command reports."
