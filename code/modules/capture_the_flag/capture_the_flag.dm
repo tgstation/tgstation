@@ -592,6 +592,36 @@
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
+// GREEN TEAM GUNS
+
+/obj/item/gun/ballistic/automatic/laser/ctf/green
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/green
+
+/obj/item/ammo_box/magazine/recharge/ctf/green
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/green
+
+/obj/item/ammo_casing/caseless/laser/ctf/green
+	projectile_type = /obj/projectile/beam/ctf/green
+
+/obj/projectile/beam/ctf/green
+	icon_state = "xray"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+
+// YELLOW TEAM GUNS
+
+/obj/item/gun/ballistic/automatic/laser/ctf/yellow
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/yellow
+
+/obj/item/ammo_box/magazine/recharge/ctf/yellow
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/yellow
+
+/obj/item/ammo_casing/caseless/laser/ctf/yellow
+	projectile_type = /obj/projectile/beam/ctf/yellow
+
+/obj/projectile/beam/ctf/yellow
+	icon_state = "gaussstrong"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+
 /datum/outfit/ctf
 	name = "CTF"
 	ears = /obj/item/radio/headset
@@ -652,24 +682,24 @@
 
 /datum/outfit/ctf/green
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
 	id = /obj/item/card/id/syndicate_command //it's red
 
 /datum/outfit/ctf/green/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill/blue
+	r_hand = /obj/item/gun/energy/laser/instakill/green
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/yellow
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
 	id = /obj/item/card/id/syndicate_command //it's red
 
 /datum/outfit/ctf/yellow/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill/blue
+	r_hand = /obj/item/gun/energy/laser/instakill/yellow
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
