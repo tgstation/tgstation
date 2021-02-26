@@ -53,20 +53,20 @@
 				var/width = template.width
 				var/height = template.height
 				src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
-
 		if(status != SHELTER_DEPLOY_ALLOWED)
 			used = FALSE
 			return
-
-		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
-
-		var/turf/T = deploy_location
-		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
-			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
-		template.load(deploy_location, centered = TRUE)
-		new /obj/effect/particle_effect/smoke(get_turf(src))
-		qdel(src)
+		if(template.load(deploy_location, centered = TRUE)) // Did capsule deploy?
+			var/turf/T = deploy_location
+			if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
+				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
+				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
+			playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
+			new /obj/effect/particle_effect/smoke(get_turf(src))
+			qdel(src)
+		else // Capsule didn't deploy.
+			src.loc.visible_message("<span class='warning'>\The [src] will not function in this area.</span>")
+			used = FALSE
 
 //Non-default pods
 
