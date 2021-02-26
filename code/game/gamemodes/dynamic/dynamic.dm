@@ -838,6 +838,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (20 to INFINITY)
 			return rand(90, 100)
 
+/// Log to messages and to the game
+/datum/game_mode/dynamic/proc/dynamic_log(text)
+	message_admins("DYNAMIC: [text]")
+	log_game("DYNAMIC: [text]")
+
 #undef FAKE_REPORT_CHANCE
 #undef REPORT_NEG_DIVERGENCE
 #undef REPORT_POS_DIVERGENCE

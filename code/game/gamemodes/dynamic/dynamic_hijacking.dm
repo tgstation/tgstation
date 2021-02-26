@@ -6,7 +6,7 @@
 		return
 
 	if (random_event_hijacked != HIJACKED_NOTHING)
-		message_admins("Random event [round_event_control.name] tried to roll, but Dynamic vetoed it (random event has already ran).")
+		dynamic_log("Random event [round_event_control.name] tried to roll, but Dynamic vetoed it (random event has already ran).")
 		SSevents.spawnEvent()
 		SSevents.reschedule()
 		return CANCEL_PRE_RANDOM_EVENT
@@ -15,12 +15,12 @@
 
 	if (world.time - last_midround_injection_attempt < time_range)
 		random_event_hijacked = HIJACKED_TOO_RECENT
-		message_admins("Random event [round_event_control.name] tried to roll, but the last midround injection \
+		dynamic_log("Random event [round_event_control.name] tried to roll, but the last midround injection \
 			was too recent. Injection chance has been raised to [get_midround_injection_chance(dry_run = TRUE)]%.")
 		return CANCEL_PRE_RANDOM_EVENT
 
 	if (midround_injection_cooldown - world.time < time_range)
 		random_event_hijacked = HIJACKED_TOO_SOON
-		message_admins("Random event [round_event_control.name] tried to roll, but the next midround injection \
+		dynamic_log("Random event [round_event_control.name] tried to roll, but the next midround injection \
 			is too soon. Injection chance has been raised to [get_midround_injection_chance(dry_run = TRUE)]%.")
 		return CANCEL_PRE_RANDOM_EVENT
