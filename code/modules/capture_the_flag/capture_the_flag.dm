@@ -685,7 +685,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
-	id = /obj/item/card/id/ert/deathsquad/militaryy //it's green
+	id = /obj/item/card/id/ert/deathsquad/military //it's green
 
 /datum/outfit/ctf/green/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/green
