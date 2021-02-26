@@ -33,7 +33,7 @@ export const Crystallizer = (props, context) => {
               {recipeTypes.map(recipe => (
                 <Button
                   key={recipe.id}
-                  selected={recipe.id == selected_recipe}
+                  selected={recipe.id === selected_recipe}
                   content={recipe.name}
                   onClick={() => act('recipe', {
                     mode: recipe.id,
