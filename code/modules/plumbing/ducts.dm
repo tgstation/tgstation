@@ -418,18 +418,21 @@ All the important duct code:
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
 
-/obj/item/stack/ducts/afterattack(atom/A, user, proximity)
+/obj/item/stack/ducts/afterattack(atom/target, user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(A, /obj/machinery/duct))
-		var/obj/machinery/duct/D = A
+	if(istype(target, /obj/machinery/duct))
+		var/obj/machinery/duct/D = target
 		if(!D.anchored)
 			add(1)
 			qdel(D)
-	if(istype(A, /turf/open) && use(1))
-		var/turf/open/OT = A
-		new /obj/machinery/duct(OT, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
+	check_attach_turf(target)
+
+/obj/item/stack/ducts/proc/check_attach_turf(atom/target)
+	if(istype(target, /turf/open) && use(1))
+		var/turf/open/open_turf = target
+		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/stack/ducts/fifty

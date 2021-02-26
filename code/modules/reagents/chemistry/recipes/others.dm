@@ -789,10 +789,15 @@
 
 /datum/chemical_reaction/eigenstate/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
+	var/turf/open/location = get_turf(holder.my_atom)
+	if(reaction.data["ducts_teleported"] == TRUE) //If we teleported an duct, then we reconnect it at the end
+		for(var/obj/item/stack/ducts/duct in range(location, 3))
+			duct.check_attach_turf(duct.loc)
+
 	var/datum/reagent/eigenstate/eigen = holder.has_reagent(/datum/reagent/eigenstate)
 	if(!eigen)
 		return
-	var/turf/open/location = get_turf(holder.my_atom)
+
 	if(location)
 		eigen.location_created = location
 		eigen.data["location_created"] = location
@@ -826,12 +831,15 @@
 	do_sparks(3,FALSE,location)
 	holder.chem_temp += 10
 	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
+	for(var/obj/machinery/duct/duct in range(location, 3))
+		do_teleport(duct, location, 3, no_effects=TRUE)
+		equilibrium.data["ducts_teleported"] = TRUE //If we teleported a duct - call the process in
 	var/lets_not_go_crazy = 15 //Teleport 15 items at max
 	var/list/items = list()
 	for(var/obj/item/item in range(location, 3))
 		items += item
 	shuffle(items)
-	for(var/obj/item/item as anything in items)
+	for(var/obj/item/item in items)
 		do_teleport(item, location, 3, no_effects=TRUE)
 		lets_not_go_crazy -= 1
 		item.add_atom_colour("#c4b3fd", WASHABLE_COLOUR_PRIORITY)
