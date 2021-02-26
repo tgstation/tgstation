@@ -46,7 +46,7 @@
 
 	if(parent_as_movable.has_buckled_mobs())
 		for(var/mob/living/possible_guinea_pig as anything in parent_as_movable.buckled_mobs)
-			if(on_buckle(src, possible_guinea_pig, FALSE))
+			if(on_buckle(src, possible_guinea_pig))
 				break
 
 /datum/component/electrified_buckle/UnregisterFromParent()
