@@ -18,7 +18,7 @@
 		if(!spawned_food.reagents)
 			Fail("[food_path] does not have any reagents, making it inedible!")
 
-		if(!spawned_food.GetComponent(/datum/component/edible))
+		if(!IS_EDIBLE(spawned_food))
 			Fail("[food_path] does not have the edible component, making it inedible!")
 
 		qdel(spawned_food)
