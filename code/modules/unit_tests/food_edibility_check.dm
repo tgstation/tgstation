@@ -2,12 +2,13 @@
 /datum/unit_test/food_edibility_check
 
 /datum/unit_test/food_edibility_check/Run()
-	var/list/not_food = list(/obj/item/food/grown,
-						/obj/item/food/grown/mushroom,
-						/obj/item/food/deepfryholder,
-						/obj/item/food/clothing,
-						/obj/item/food/meat/slab/human/mutant,
-						/obj/item/food/grown/shell)
+	var/list/not_food = list(
+		/obj/item/food/grown,
+		/obj/item/food/grown/mushroom,
+		/obj/item/food/deepfryholder,
+		/obj/item/food/clothing,
+		/obj/item/food/meat/slab/human/mutant,
+		/obj/item/food/grown/shell)
 
 	var/list/food_paths = subtypesof(/obj/item/food) - not_food
 
