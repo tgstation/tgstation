@@ -126,7 +126,7 @@
 			owner.emote("Scream")
 			owner.AdjustUnconscious(2.5 SECONDS)
 		if(ORGAN_FAILURE_STAGE_5)
-			to_chat(owner,"<span class='danger'>You feel as if yout guts are about to melt!</danger>")
+			to_chat(owner,"<span class='danger'>You feel as if your guts are about to melt!</danger>")
 			owner.vomit(blood = TRUE)
 			owner.emote("Scream")
 			owner.AdjustUnconscious(5 SECONDS)

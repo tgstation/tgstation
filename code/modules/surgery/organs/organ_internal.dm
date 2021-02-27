@@ -69,7 +69,7 @@
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
 	moveToNullspace()
-	RegisterSignal(owner,COMSIG_PARENT_EXAMINE,.proc/on_owner_examine)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -83,7 +83,7 @@
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
 
-	UnregisterSignal(owner,COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 
 	owner = null
 	if(M)
