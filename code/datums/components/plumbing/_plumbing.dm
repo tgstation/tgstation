@@ -17,6 +17,10 @@
 	var/turn_connects = TRUE
 	///The layer on which we connect. Don't add multiple. If you want multiple layer connects for some reason you can just add multiple components with different layers
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+	///In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
+	var/recipient_reagents_holder
+	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
+	var/methods
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer)
@@ -31,6 +35,8 @@
 		return COMPONENT_INCOMPATIBLE
 	reagents = AM.reagents
 	turn_connects = _turn_connects
+
+	recipient_reagents_holder = AM.reagents
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
@@ -105,9 +111,9 @@
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
-		reagents.trans_id_to(target.parent, reagent, amount)
+		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
-		reagents.trans_to(target.parent, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)
@@ -189,7 +195,7 @@
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
 				if(duct.duct_layer == ducting_layer)
 					duct.remove_connects(turn(D, 180))
-					duct.update_icon()
+					duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable()
@@ -200,8 +206,8 @@
 	active = TRUE
 
 	var/atom/movable/AM = parent
-	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
-		if(D.anchored)								//that should cover everything
+	for(var/obj/machinery/duct/D in AM.loc) //Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
+		if(D.anchored) //that should cover everything
 			D.disconnect_duct()
 
 	if(demand_connects)
@@ -273,14 +279,14 @@
 	SIGNAL_HANDLER
 
 	tile_covered = intact
-	AM.update_icon()
+	AM.update_appearance()
 
 /datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
 	ducting_layer = new_layer
 
 	if(ismovable(parent))
 		var/atom/movable/AM = parent
-		AM.update_icon()
+		AM.update_appearance()
 
 	if(O)
 		playsound(O, 'sound/items/ratchet.ogg', 10, TRUE) //sound

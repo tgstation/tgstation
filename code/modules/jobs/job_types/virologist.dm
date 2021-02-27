@@ -20,6 +20,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 	bounty_types = CIV_JOB_VIRO
+	departments = DEPARTMENT_MEDICAL
 
 /datum/outfit/job/virologist
 	name = "Virologist"
@@ -35,5 +36,5 @@
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/virology
 	box = /obj/item/storage/box/survival/medical

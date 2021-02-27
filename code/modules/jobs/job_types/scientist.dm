@@ -21,6 +21,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
+	departments = DEPARTMENT_SCIENCE
 
 /datum/outfit/job/scientist
 	name = "Scientist"
@@ -34,6 +35,7 @@
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
+	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()

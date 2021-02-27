@@ -108,9 +108,6 @@
 	/// Any clothing accessory item
 	var/accessory = null
 
-	/// Set to FALSE if your outfit requires runtime parameters
-	var/can_be_admin_equipped = TRUE
-
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
 	  *
@@ -269,7 +266,7 @@
 	if(!istype(H))
 		return
 	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
+		H.back.add_fingerprint(H,1) //The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)
 			I.add_fingerprint(H,1)
 	if(H.wear_id)

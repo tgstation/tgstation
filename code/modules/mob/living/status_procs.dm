@@ -479,11 +479,11 @@
 		for(var/listed_type in slowdown_type)
 			if(ispath(listed_type))
 				listed_type = "[listed_type]" //Path2String
-			LAZYADDASSOC(movespeed_mod_immunities, listed_type, source)
+			LAZYADDASSOCLIST(movespeed_mod_immunities, listed_type, source)
 	else
 		if(ispath(slowdown_type))
 			slowdown_type = "[slowdown_type]" //Path2String
-		LAZYADDASSOC(movespeed_mod_immunities, slowdown_type, source)
+		LAZYADDASSOCLIST(movespeed_mod_immunities, slowdown_type, source)
 	if(update)
 		update_movespeed()
 

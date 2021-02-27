@@ -16,7 +16,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	var/color
 	///Base alpha of the material, is used for greyscale icons.
-	var/alpha
+	var/alpha = 255
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
@@ -77,7 +77,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		source.AddComponent(/datum/component/beauty, beauty_modifier * amount)
+		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -145,8 +145,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
 
-	if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
-		source.AddComponent(/datum/component/beauty, -beauty_modifier * amount)
+	if(beauty_modifier)
+		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
@@ -163,11 +163,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.throwforce = initial(o.throwforce)
 
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
-	if(alpha)
-		RemoveElement(/datum/element/turf_z_transparency, FALSE)
+	if(alpha < 255)
+		T.RemoveElement(/datum/element/turf_z_transparency, FALSE)
 
 /**
- *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+ * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
  * Arguments
  * * M - person consuming the mat
  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)

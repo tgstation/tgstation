@@ -18,7 +18,7 @@
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 	var/status = FALSE
-	var/lit = FALSE	//on or off
+	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
 	var/obj/item/assembly/igniter/igniter = null
@@ -59,6 +59,7 @@
 
 /obj/item/flamethrower/update_icon_state()
 	inhand_icon_state = "flamethrower_[lit]"
+	return ..()
 
 /obj/item/flamethrower/update_overlays()
 	. = ..()
@@ -105,7 +106,7 @@
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
-		update_icon()
+		update_appearance()
 		return
 
 	else if(isigniter(W))
@@ -117,7 +118,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		igniter = I
-		update_icon()
+		update_appearance()
 		return
 
 	else if(istype(W, /obj/item/tank/internals/plasma))
@@ -130,7 +131,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		ptank = W
-		update_icon()
+		update_appearance()
 		return
 
 	else
@@ -150,7 +151,7 @@
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
-		update_icon()
+		update_appearance()
 
 /obj/item/flamethrower/examine(mob/user)
 	. = ..()
@@ -176,7 +177,7 @@
 		playsound(loc, deac_sound, 50, TRUE)
 		STOP_PROCESSING(SSobj,src)
 	set_light_on(lit)
-	update_icon()
+	update_appearance()
 
 /obj/item/flamethrower/CheckParts(list/parts_list)
 	..()
@@ -185,7 +186,7 @@
 	weldtool.status = FALSE
 	igniter.secured = FALSE
 	status = TRUE
-	update_icon()
+	update_appearance()
 
 //Called from turf.dm turf/dblclick
 /obj/item/flamethrower/proc/flame_turf(turflist)
@@ -195,7 +196,7 @@
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/T in turflist)
 		if(T == previousturf)
-			continue	//so we don't burn the tile we be standin on
+			continue //so we don't burn the tile we be standin on
 		var/list/turfs_sharing_with_prev = previousturf.GetAtmosAdjacentTurfs(alldir=1)
 		if(!(T in turfs_sharing_with_prev))
 			break
@@ -235,7 +236,8 @@
 		status = TRUE
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
-		update_icon()
+		update_appearance()
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_refill)
 
 /obj/item/flamethrower/full
 	create_full = TRUE
@@ -259,3 +261,11 @@
 
 /obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)
+
+/obj/item/flamethrower/proc/instant_refill()
+	if(ptank)
+		ptank.air_contents.assert_gas(/datum/gas/plasma)
+		ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
+	else
+		ptank = new /obj/item/tank/internals/plasma/full(src)
+	update_appearance()

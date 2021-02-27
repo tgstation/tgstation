@@ -15,6 +15,7 @@
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	bounty_types = CIV_JOB_GROW
+	departments = DEPARTMENT_SERVICE
 
 /datum/outfit/job/botanist
 	name = "Botanist"
@@ -29,5 +30,5 @@
 
 	backpack = /obj/item/storage/backpack/botany
 	satchel = /obj/item/storage/backpack/satchel/hyd
-
+	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
 

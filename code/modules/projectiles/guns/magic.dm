@@ -40,11 +40,11 @@
 	return charges
 
 /obj/item/gun/magic/recharge_newshot()
-	if (charges && chambered && !chambered.BB)
+	if (charges && chambered && !chambered.loaded_projectile)
 		chambered.newshot()
 
 /obj/item/gun/magic/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
 		recharge_newshot()
 
@@ -54,6 +54,7 @@
 	chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 
 /obj/item/gun/magic/Destroy()
@@ -89,3 +90,8 @@
 	switch(var_name)
 		if(NAMEOF(src, charges))
 			recharge_newshot()
+
+/obj/item/gun/magic/proc/instant_recharge()
+	charges = max_charges
+	recharge_newshot()
+	update_appearance()

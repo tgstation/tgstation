@@ -5,7 +5,7 @@
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
 #define MAX_PAPER_LENGTH 5000
-#define MAX_PAPER_STAMPS 30		// Too low?
+#define MAX_PAPER_STAMPS 30 // Too low?
 #define MAX_PAPER_STAMPS_OVERLAYS 4
 #define MODE_READING 0
 #define MODE_WRITING 1
@@ -43,8 +43,8 @@
 	var/show_written_words = TRUE
 
 	/// The (text for the) stamps on the paper.
-	var/list/stamps			/// Positioning for the stamp in tgui
-	var/list/stamped		/// Overlay info
+	var/list/stamps /// Positioning for the stamp in tgui
+	var/list/stamped /// Overlay info
 
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
@@ -102,11 +102,12 @@
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
 	pixel_y = base_pixel_y + rand(-8, 8)
-	update_icon()
+	update_appearance()
 
 /obj/item/paper/update_icon_state()
 	if(info && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
+	return ..()
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -209,7 +210,7 @@
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
 		// cut paper?  the sky is the limit!
-		ui_interact(user)	// The other ui will be created with just read mode outside of this
+		ui_interact(user) // The other ui will be created with just read mode outside of this
 
 	return ..()
 
@@ -236,8 +237,8 @@
 	. = list()
 	.["text"] = info
 	.["max_length"] = MAX_PAPER_LENGTH
-	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
-	.["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
+	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
+	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = stamps
 
 
@@ -291,14 +292,14 @@
 		if("stamp")
 			var/stamp_x = text2num(params["x"])
 			var/stamp_y = text2num(params["y"])
-			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/stamp_r = text2num(params["r"]) // rotation in degrees
 			var/stamp_icon_state = params["stamp_icon_state"]
 			var/stamp_class = params["stamp_class"]
 			if (isnull(stamps))
 				stamps = list()
 			if(stamps.len < MAX_PAPER_STAMPS)
 				// I hate byond when dealing with freaking lists
-				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r)	/// WHHHHY
+				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r) /// WHHHHY
 
 				/// This does the overlay stuff
 				if (isnull(stamped))
@@ -338,7 +339,7 @@
 					update_static_data(usr,ui)
 
 
-			update_icon()
+			update_appearance()
 			. = TRUE
 
 /**
@@ -362,9 +363,6 @@
 	icon_state = "scrap"
 	slot_flags = null
 	show_written_words = FALSE
-
-/obj/item/paper/crumpled/update_icon_state()
-	return
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

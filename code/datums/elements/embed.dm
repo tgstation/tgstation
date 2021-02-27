@@ -75,6 +75,9 @@
 
 	var/actual_chance = embed_chance
 
+	if(throwingdatum?.speed > weapon.throw_speed)
+		actual_chance += (throwingdatum.speed - weapon.throw_speed) * EMBED_CHANCE_SPEED_BONUS
+
 	if(!weapon.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
 		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
@@ -134,7 +137,7 @@
  * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
  *
  * If we hit a valid target, we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
- *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
+ * it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
  */
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
 	SIGNAL_HANDLER

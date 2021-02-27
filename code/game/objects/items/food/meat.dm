@@ -14,30 +14,34 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/carpmeat
-	name = "carp fillet"
-	desc = "A fillet of spess carp meat."
+
+/obj/item/food/fishmeat
+	name = "fish fillet"
+	desc = "A fillet of some fish meat."
 	icon_state = "fishfillet"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bite_consumption = 6
 	tastes = list("fish" = 1)
 	foodtypes = MEAT
 	eatverbs = list("bite","chew","gnaw","swallow","chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/carpmeat/Initialize()
-	. = ..()
-	if(!istype(src, /obj/item/food/carpmeat/imitation))
-		AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB)
+/obj/item/food/fishmeat/carp
+	name = "carp fillet"
+	desc = "A fillet of spess carp meat."
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	/// Cytology category you can swab the meat for.
+	var/cell_line = CELL_LINE_TABLE_CARP
 
-/obj/item/food/carpmeat/imitation
+/obj/item/food/fishmeat/carp/Initialize()
+	. = ..()
+	if(cell_line)
+		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/obj/item/food/fishmeat/carp/imitation
 	name = "imitation carp fillet"
 	desc = "Almost just like the real thing, kinda."
-
-/obj/item/food/carpmeat/icantbeliveitsnotcarp
-	name = "fish fillet"
-	desc = "A fillet of unspecified fish meat."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2) //No carpotoxin
+	cell_line = null
 
 /obj/item/food/fishfingers
 	name = "fish fingers"
@@ -48,6 +52,7 @@
 	tastes = list("fish" = 1, "breadcrumbs" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/fishandchips
 	name = "fish and chips"
@@ -56,6 +61,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/fishfry
 	name = "fish fry"
@@ -114,6 +120,7 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = MEAT | ALCOHOL
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/raw_meatball
 	name = "raw meatball"
@@ -165,6 +172,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/meatball/human
 	name = "strange meatball"
@@ -277,6 +285,7 @@
 	var/roasted = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sausage/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 30)
@@ -446,6 +455,7 @@
 	tastes = list("\"chicken\"" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/nugget/Initialize()
 	. = ..()
@@ -507,6 +517,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("tender meat" = 3, "metal" = 1)
 	foodtypes = MEAT | GROSS
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/monkey
 	name = "meat-kebab"
@@ -514,6 +525,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 3, "metal" = 1)
 	foodtypes = MEAT
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/tofu
 	name = "tofu-kebab"
@@ -521,6 +533,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 15)
 	tastes = list("tofu" = 3, "metal" = 1)
 	foodtypes = VEGETABLES
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/tail
 	name = "lizard-tail kebab"
@@ -537,6 +550,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rat meat" = 1, "metal" = 1)
 	foodtypes = MEAT | GROSS
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/rat/double
 	name = "double rat-kebab"

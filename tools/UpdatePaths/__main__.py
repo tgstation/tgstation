@@ -9,9 +9,9 @@ from mapmerge2.dmm import *
 desc = """
 Update dmm files given update file/string.
 Replacement syntax example:
-    /turf/open/floor/plasteel/warningline : /obj/effect/turf_decal {dir = @OLD ;tag = @SKIP;icon_state = @SKIP}
-    /turf/open/floor/plasteel/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
-    /turf/open/floor/plasteel/warningline{dir=2} : /obj/thing
+    /turf/open/floor/iron/warningline : /obj/effect/turf_decal {dir = @OLD ;tag = @SKIP;icon_state = @SKIP}
+    /turf/open/floor/iron/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
+    /turf/open/floor/iron/warningline{dir=2} : /obj/thing
 New paths properties:
     @OLD - if used as property name copies all modified properties from original path to this one
     property = @SKIP - will not copy this property through when global @OLD is used.
@@ -140,7 +140,7 @@ def update_map(map_filepath, updates, verbose=False):
     dmm_data = DMM.from_file(map_filepath)
     for update_string in updates:
         update_path(dmm_data, update_string, verbose)
-    dmm_data.to_file(map_filepath, True)
+    dmm_data.to_file(map_filepath)
 
 
 def update_all_maps(map_directory, updates, verbose=False):
