@@ -8,7 +8,7 @@
 	action_intent = new /atom/movable/screen/combattoggle/flashy()
 	action_intent.hud = src
 	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
+	action_intent.screen_loc = ui_alien_combat_toggle
 	static_inventory += action_intent
 
 	healths = new /atom/movable/screen/healths/alien()

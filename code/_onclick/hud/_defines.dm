@@ -123,11 +123,8 @@
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
-#define ui_alien_language_menu "EAST-3:26,SOUTH:5"
-
-//Constructs
-#define ui_construct_pull "EAST,CENTER-2:15"
-#define ui_construct_health "EAST,CENTER:15"
+#define ui_alien_language_menu "EAST-3:24,SOUTH:5"
+#define ui_alien_combat_toggle "EAST-2:26,SOUTH:5"
 
 // AI
 #define ui_ai_core "SOUTH:6,WEST"
