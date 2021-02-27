@@ -324,7 +324,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	to_chat(victim, "<span class='nicegreen'>Crystals start forming around your dead body</span>")
+	to_chat(victim, "<span class='nicegreen'>Crystals start forming around your dead body.</span>")
 	victim.visible_message("<span class='notice'>Crystals start forming around [victim].</span>")
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
