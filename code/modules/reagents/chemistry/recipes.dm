@@ -299,7 +299,7 @@
 
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
-/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0 clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
+/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	var/sum_volume = 0
@@ -493,7 +493,7 @@
 			continue
 		if(target.get_eye_protection() && !ignore_eyes)
 			continue
-		to_chat(target, "The [holder.name] launches some of [holder.p_their()] contents at you!")
+		to_chat(target, "The [holder.my_atom.name] launches some of [holder.p_their()] contents at you!")
 		target.reagents.add_reagent(reagent, vol)
 
 
