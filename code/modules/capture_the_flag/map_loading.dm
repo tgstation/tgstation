@@ -3,7 +3,7 @@
 
 /obj/effect/landmark/ctf/Initialize(mapload)
 	. = ..()
-	load_map()
+	INVOKE_ASYNC(src, load_map())
 
 /obj/effect/landmark/ctf/proc/load_map()
 	
