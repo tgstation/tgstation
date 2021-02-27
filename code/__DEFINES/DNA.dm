@@ -176,13 +176,6 @@
 #define G_FEMALE 2
 #define G_PLURAL 3
 
-#define ORGAN_FAILURE_NONE		 	0
-#define ORGAN_FAILURE_STAGE_1 		1
-#define ORGAN_FAILURE_STAGE_2 		2
-#define ORGAN_FAILURE_STAGE_3 		3
-#define ORGAN_FAILURE_STAGE_4 		4
-#define ORGAN_FAILURE_STAGE_5 		5
-
 ///Organ slot processing order for life proc
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,

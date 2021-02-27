@@ -1,6 +1,6 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.005 //lower values lower how harmful toxins are to the liver
-
+#define LIVER_FAILURE_LIVER_FAILURE_DIVIDER 60
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
@@ -110,68 +110,67 @@
 		return
 	return ..()
 
-/obj/item/organ/liver/on_change_organ_failure(old_stage)
-	switch(failure_stage)
-		if(ORGAN_FAILURE_STAGE_1)
+/obj/item/organ/liver/organ_failure(delta_time)
+	var/LIVER_FAILURE_DIVIDER = 60
+
+	switch(failure_time/LIVER_FAILURE_DIVIDER)
+		if(1)
 			to_chat(owner,"<span class='danger'>You feel stabbing pain in your abdomen!</danger>")
-		if(ORGAN_FAILURE_STAGE_2)
+		if(2)
 			to_chat(owner,"<span class='danger'>You feel a burning sensation in your gut!</danger>")
 			owner.vomit()
-		if(ORGAN_FAILURE_STAGE_3)
+		if(3)
 			to_chat(owner,"<span class='danger'>You feel painful acid in your throat!</danger>")
 			owner.vomit(blood = TRUE)
-		if(ORGAN_FAILURE_STAGE_4)
+		if(4)
 			to_chat(owner,"<span class='danger'>Overwhelming pain knocks you out!</danger>")
-			owner.vomit(blood = TRUE)
+			owner.vomit(blood = TRUE, distance = rand(1,2))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(2.5 SECONDS)
-		if(ORGAN_FAILURE_STAGE_5)
+		if(5)
 			to_chat(owner,"<span class='danger'>You feel as if your guts are about to melt!</danger>")
-			owner.vomit(blood = TRUE)
+			owner.vomit(blood = TRUE,distance = rand(1,3))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(5 SECONDS)
 
+	switch(failure_time)
+			//After 60 seconds we begin to feel the effects
+		if(1 * LIVER_FAILURE_DIVIDER to 2 * LIVER_FAILURE_DIVIDER - 1)
+			owner.adjustToxLoss(0.2 * delta_time)
+			owner.adjust_disgust(0.5 * delta_time)
+		if(2 * LIVER_FAILURE_DIVIDER to 3 * LIVER_FAILURE_DIVIDER - 1)
+			owner.adjustToxLoss(0.4 * delta_time)
+			owner.drowsyness += 1 * delta_time
+			owner.adjust_disgust(1 * delta_time)
+		if(3 * LIVER_FAILURE_DIVIDER to 4 * LIVER_FAILURE_DIVIDER - 1)
+			owner.adjustToxLoss(0.6 * delta_time)
+			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
+			owner.drowsyness += 2 * delta_time
+			owner.adjust_disgust(1.5 * delta_time)
+			if(DT_PROB(1.5, delta_time))
+				owner.emote("drool")
+		if(4 * LIVER_FAILURE_DIVIDER to INFINITY)
+			owner.adjustToxLoss(0.8 * delta_time)
+			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
+			owner.drowsyness += 3 * delta_time
+			owner.adjust_disgust(2 * delta_time)
+			if(DT_PROB(3, delta_time))
+				owner.emote("drool")
+
 /obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
-	if(!ishuman(user))
+	if(!ishuman(user) || !(organ_flags & ORGAN_FAILING))
 		return
 
 	var/mob/living/carbon/human/humie = user
 	if(!humie.getorganslot(ORGAN_SLOT_EYES) || humie.is_eyes_covered())
 		return
-	switch(failure_stage)
-		if(ORGAN_FAILURE_STAGE_1 to ORGAN_FAILURE_STAGE_2)
+	switch(failure_time)
+		if(0 to 3 * LIVER_FAILURE_DIVIDER - 1)
 			examine_list += "<span class='notice'>[owner]'s eyes are slightly yellow.</span>"
-		if(ORGAN_FAILURE_STAGE_3 to ORGAN_FAILURE_STAGE_4)
+		if(3 * LIVER_FAILURE_DIVIDER to 4 * LIVER_FAILURE_DIVIDER - 1)
 			examine_list += "<span class='notice'>[owner]'s eyes are completely yellow, and he is visibly suffering.</span>"
-		if(ORGAN_FAILURE_STAGE_5)
+		if(4 * LIVER_FAILURE_DIVIDER to INFINITY)
 			examine_list += "<span class='danger'>[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they()] don't look like they will be alive for much longer.</span>"
-
-//WE don't have stage 1 because it is like a warning time before the effects of your liver being dead catch up to you.
-
-/obj/item/organ/liver/organ_failure_stage_2(delta_time)
-	owner.adjustToxLoss(0.2 * delta_time)
-	owner.adjust_disgust(0.5 * delta_time)
-
-/obj/item/organ/liver/organ_failure_stage_3(delta_time)
-	owner.adjustToxLoss(0.4 * delta_time)
-	owner.drowsyness += 1 * delta_time
-	owner.adjust_disgust(1 * delta_time)
-
-/obj/item/organ/liver/organ_failure_stage_4(delta_time)
-	owner.adjustToxLoss(0.6 * delta_time)
-	owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-	owner.drowsyness += 2 * delta_time
-	owner.adjust_disgust(1.5 * delta_time)
-	if(DT_PROB(1.5, delta_time))
-		owner.emote("drool")
-
-/obj/item/organ/liver/organ_failure_stage_5(delta_time)
-	owner.adjustToxLoss(0.8 * delta_time)
-	owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-	owner.drowsyness += 3 * delta_time
-	owner.adjust_disgust(2 * delta_time)
-	if(DT_PROB(3, delta_time))
-		owner.emote("drool")
 
 /obj/item/organ/liver/on_death()
 	. = ..()
@@ -191,6 +190,7 @@
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN
+#undef LIVER_FAILURE_LIVER_FAILURE_DIVIDER
 
 /obj/item/organ/liver/get_availability(datum/species/S)
 	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
@@ -246,3 +246,5 @@
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+
+

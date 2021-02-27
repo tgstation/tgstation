@@ -31,10 +31,8 @@
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	///The size of the reagent container
 	var/reagent_vol = 10
-	///Stage of failing
-	var/failure_stage = 0
+
 	var/failure_time = 0
-	var/failure_progression_time = 60 //a minute
 
 /obj/item/organ/Initialize()
 	. = ..()
@@ -120,8 +118,8 @@
 		handle_failing_organs(delta_time)
 		return
 
-	if(failure_stage > 0)
-		set_failure_stage(0)
+	if(failure_time > 0)
+		failure_time--
 
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
 		applyOrganDamage(decay_factor * maxHealth * delta_time)
@@ -257,54 +255,16 @@
 		return
 
 	failure_time += delta_time
-	if(failure_time % failure_progression_time == 0)
-		failure_time = 0
-		set_failure_stage(failure_stage + 1)
+	organ_failure(delta_time)
 
-	switch(failure_stage)
-		if(ORGAN_FAILURE_STAGE_1)
-			organ_failure_stage_1(delta_time)
-		if(ORGAN_FAILURE_STAGE_2)
-			organ_failure_stage_2(delta_time)
-		if(ORGAN_FAILURE_STAGE_3)
-			organ_failure_stage_3(delta_time)
-		if(ORGAN_FAILURE_STAGE_4)
-			organ_failure_stage_4(delta_time)
-		if(ORGAN_FAILURE_STAGE_5)
-			organ_failure_stage_5(delta_time)
-
-///1st stage of your organs rotting
-/obj/item/organ/proc/organ_failure_stage_1(delta_time)
+/** organ_failure
+ * generic proc for handling dying organs
+ *
+ * Arguments:
+ * delta_time - seconds since last tick
+ */
+/obj/item/organ/proc/organ_failure(delta_time)
 	return
-
-///1st stage of your organs rotting
-/obj/item/organ/proc/organ_failure_stage_2(delta_time)
-	return
-
-///1st stage of your organs rotting
-/obj/item/organ/proc/organ_failure_stage_3(delta_time)
-	return
-
-///1st stage of your organs rotting
-/obj/item/organ/proc/organ_failure_stage_4(delta_time)
-	return
-
-///1st stage of your organs rotting
-/obj/item/organ/proc/organ_failure_stage_5(delta_time)
-	return
-
-///Proc that gets called whenever failure stage is changed, useful for one time effects and messages
-/obj/item/organ/proc/on_change_organ_failure(old_stage)
-	return
-
-///Sets the current failure stage
-/obj/item/organ/proc/set_failure_stage(stage)
-	if(stage > ORGAN_FAILURE_STAGE_5 || stage < ORGAN_FAILURE_NONE)
-		return
-	var/old_failure = failure_stage
-	failure_stage = stage
-	on_change_organ_failure(old_failure)
-
 
 /** get_availability
  * returns whether the species should innately have this organ.
