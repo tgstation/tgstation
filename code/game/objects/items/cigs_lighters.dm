@@ -120,6 +120,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	inhand_icon_state = "cigoff"
+	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
@@ -510,6 +511,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
+	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)

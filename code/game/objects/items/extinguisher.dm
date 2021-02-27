@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "fire_extinguisher0"
 	inhand_icon_state = "fire_extinguisher"
+	worn_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags_1 = CONDUCT_1
 	throwforce = 10
@@ -34,6 +35,7 @@
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	inhand_icon_state = "miniFE"
+	worn_icon_state = "miniFE"
 	hitsound = null //it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 2
@@ -49,6 +51,7 @@
 	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
 	icon_state = "coolant0"
 	inhand_icon_state = "miniFE"
+	worn_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 1

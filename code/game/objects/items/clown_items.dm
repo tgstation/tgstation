@@ -16,6 +16,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soap"
+	worn_icon_state = "soap"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -61,6 +62,7 @@
 /obj/item/soap/homemade
 	desc = "A homemade bar of soap. Smells of... well...."
 	icon_state = "soapgibs"
+	worn_icon_state = "soapsyndie"
 	cleanspeed = 30 // faster to reward chemists for going to the effort
 
 /obj/item/soap/deluxe
@@ -71,12 +73,14 @@
 /obj/item/soap/syndie
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	icon_state = "soapsyndie"
+	worn_icon_state = "soapsyndie"
 	cleanspeed = 5 //faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/soap/omega
 	name = "omega soap"
 	desc = "The most advanced soap known to mankind."
 	icon_state = "soapomega"
+	worn_icon_state = "soapomega"
 	cleanspeed = 3 //Only the truest of mind soul and body get one of these
 	uses = 301
 
