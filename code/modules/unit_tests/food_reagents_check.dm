@@ -13,7 +13,7 @@
 	var/list/food_paths = subtypesof(/obj/item/food) - not_food
 
 	for(var/food_path in food_paths)
-		var/obj/item/food/spawned_food = new food_path
+		var/obj/item/food/spawned_food = allocate(food_path)
 
 		if(!spawned_food.reagents)
 			Fail("[food_path] does not have any reagents, making it inedible!")
