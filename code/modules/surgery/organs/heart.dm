@@ -435,7 +435,7 @@
 	ethereal_heart.owner.revive(TRUE, FALSE)
 	to_chat(ethereal_heart.owner, "<span class='notice'>You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost.</span>")
 	var/datum/brain_trauma/picked_trauma
-	if(prob(6)) //6% chance for a severe trauma
+	if(prob(10)) //10% chance for a severe trauma
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/severe))
 	else
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/mild))
