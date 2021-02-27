@@ -8,7 +8,7 @@
 	var/check_every = 12 SECONDS
 	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
-	var/datum/emote/next_breath_type = /datum/emote/inhale
+	var/datum/emote/next_breath_type = /datum/emote/living/inhale
 
 /datum/component/manual_breathing/Initialize()
 	if(!iscarbon(parent))
@@ -90,10 +90,10 @@
 	SIGNAL_HANDLER
 
 	if(emote.type == next_breath_type)
-		if(next_breath_type == /datum/emote/inhale)
-			next_breath_type = /datum/emote/exhale
+		if(next_breath_type == /datum/emote/living/inhale)
+			next_breath_type = /datum/emote/living/exhale
 		else
-			next_breath_type = /datum/emote/inhale
+			next_breath_type = /datum/emote/living/inhale
 
 		warn_grace = FALSE
 		warn_dying = FALSE

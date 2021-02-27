@@ -15,6 +15,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/rd
+	departments = DEPARTMENT_SCIENCE | DEPARTMENT_COMMAND
 
 	access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_RND, ACCESS_GENETICS, ACCESS_MORGUE,
 					ACCESS_TOXINS, ACCESS_TELEPORTER, ACCESS_SEC_DOORS, ACCESS_MECH_SCIENCE,
@@ -50,6 +51,7 @@
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
+	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
 
 	skillchips = list(/obj/item/skillchip/job/research_director)
 

@@ -6,6 +6,8 @@
 
 	min_players = 20
 
+	dynamic_should_hijack = TRUE
+
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
 /datum/round_event_control/blob/canSpawnEvent(players, gamemode)
@@ -15,12 +17,12 @@
 	return ..()
 
 /datum/round_event/ghost_role/blob
-	announceChance	= 0
+	announceChance = 0
 	role_name = "blob overmind"
 	fakeable = TRUE
 
 /datum/round_event/ghost_role/blob/announce(fake)
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)

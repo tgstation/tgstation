@@ -28,7 +28,6 @@
 	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speed = 1
-	ventcrawler = VENTCRAWLER_ALWAYS
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
@@ -48,10 +47,10 @@
 	else
 		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
-/mob/living/simple_animal/hostile/mushroom/Life()
+/mob/living/simple_animal/hostile/mushroom/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		adjustBruteLoss(-2)
+		adjustBruteLoss(-1 * delta_time)
 
 /mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
@@ -65,6 +64,8 @@
 	UpdateMushroomCap()
 	health = maxHealth
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
 	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object))
@@ -94,20 +95,20 @@
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
 	retreat_distance = null
 
-/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
-	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
-		var/mob/living/simple_animal/hostile/mushroom/M = L
+/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/user, list/modifiers)
+	if(istype(user, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
+		var/mob/living/simple_animal/hostile/mushroom/shroom = user
 		if(faint_ticker < 2)
-			M.visible_message("<span class='notice'>[M] chews a bit on [src].</span>")
+			shroom.visible_message("<span class='notice'>[shroom] chews a bit on [src].</span>")
 			faint_ticker++
 			return TRUE
-		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
-		var/level_gain = (powerlevel - M.powerlevel)
-		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
+		shroom.visible_message("<span class='warning'>[shroom] devours [src]!</span>")
+		var/level_gain = (powerlevel - shroom.powerlevel)
+		if(level_gain >= -1 && !bruised && !shroom.ckey)//Player shrooms can't level up to become robust gods.
 			if(level_gain < 1)//So we still gain a level if two mushrooms were the same level
 				level_gain = 1
-			M.LevelUp(level_gain)
-		M.adjustBruteLoss(-M.maxHealth)
+			shroom.LevelUp(level_gain)
+		shroom.adjustBruteLoss(-shroom.maxHealth)
 		qdel(src)
 		return TRUE
 	return ..()
@@ -169,9 +170,9 @@
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
-	if(M.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

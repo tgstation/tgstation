@@ -312,6 +312,22 @@
 	build_path = /obj/item/circuitboard/machine/dnascanner
 	category = list("Research Machinery")
 
+/datum/design/board/destructive_scanner
+	name = "Machine Design (Destructive Scanner Board)"
+	desc = "The circuit board for an experimental destructive scanner."
+	id = "destructive_scanner"
+	build_path = /obj/item/circuitboard/machine/destructive_scanner
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/doppler_array
+	name = "Machine Design (Tachyon-Doppler Research Array Board)"
+	desc = "The circuit board for a tachyon-doppler research array"
+	id = "doppler_array"
+	build_path = /obj/item/circuitboard/machine/doppler_array
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
 	desc = "The circuit board for a microwave."
@@ -615,6 +631,14 @@
 	desc = "The circuit board for a Sheet-meister 2000."
 	id = "sheetifier"
 	build_path = /obj/item/circuitboard/machine/sheetifier
+	category = list ("Misc. Machinery")
+
+
+/datum/design/board/restaurant_portal
+	name = "Machine Design (Restaurant Portal)"
+	desc = "The circuit board for a restaurant portal"
+	id = "restaurant_portal"
+	build_path = /obj/item/circuitboard/machine/restaurant_portal
 	category = list ("Misc. Machinery")
 
 /datum/design/board/vendatray

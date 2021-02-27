@@ -29,13 +29,13 @@
 	var/can_insert = min(S.amount, remaining_space())
 	if(!can_insert)
 		return FALSE
-	for(var/i in real_location)				//combine.
+	for(var/i in real_location) //combine.
 		if(QDELETED(I))
 			return
 		var/obj/item/stack/_S = i
 		if(!istype(_S))
 			continue
-		if(S.can_merge(_S))
+		if(_S.merge_type == S.merge_type)
 			_S.add(can_insert)
 			S.use(can_insert, TRUE)
 			return TRUE
@@ -59,7 +59,7 @@
 	. = list()
 	for(var/i in real_location)
 		var/obj/item/stack/I = i
-		if(!istype(I) || QDELETED(I))				//We're specialized stack storage, just ignore non stacks.
+		if(!istype(I) || QDELETED(I)) //We're specialized stack storage, just ignore non stacks.
 			continue
 		if(!.[I.merge_type])
 			.[I.merge_type] = new /datum/numbered_display(I, I.amount)

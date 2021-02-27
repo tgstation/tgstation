@@ -6,20 +6,34 @@ export const TachyonArray = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     records = [],
+    is_research,
   } = data;
   return (
     <Window
-      width={500}
-      height={225}
+      width={550}
+      height={250}
       resizable>
       <Window.Content scrollable>
-        {!records.length ? (
-          <NoticeBox>
-            No Records
-          </NoticeBox>
-        ) : (
-          <TachyonArrayContent />
-        )}
+        <Flex direction="column" height="100%">
+          <Flex.Item grow={1} className="TachyonArray__Content">
+            {!records.length ? (
+              <NoticeBox>
+                No Records
+              </NoticeBox>
+            ) : (
+              <TachyonArrayContent />
+            )}
+          </Flex.Item>
+          {!!is_research && (
+            <Flex.Item className="TachyonArray__ResearchFooter">
+              <Button
+                onClick={() => act("open_experiments")}
+                icon="tasks">
+                View Experiments
+              </Button>
+            </Flex.Item>
+          )}
+        </Flex>
       </Window.Content>
     </Window>
   );
@@ -38,7 +52,7 @@ export const TachyonArrayContent = (props, context) => {
     return record.name === activeRecordName;
   });
   return (
-    <Section>
+    <Section height="100%">
       <Flex>
         <Flex.Item>
           <Tabs vertical>
@@ -54,7 +68,7 @@ export const TachyonArrayContent = (props, context) => {
           </Tabs>
         </Flex.Item>
         {activeRecord ? (
-          <Flex.Item>
+          <Flex.Item className="TachyonArray__ActiveRecord">
             <Section
               level="2"
               title={activeRecord.name}

@@ -235,7 +235,7 @@
 
 /datum/spellbook_entry/infinite_guns/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
 	for (var/obj/item/currentItem in user.get_all_gear())
-		if (currentItem.type == /obj/item/gun/ballistic/rifle/boltaction/enchanted)
+		if (currentItem.type == /obj/item/gun/ballistic/rifle/enchanted)
 			qdel(currentItem)
 	return ..()
 
@@ -247,7 +247,7 @@
 
 /datum/spellbook_entry/arcane_barrage/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
 	for (var/obj/item/currentItem in user.get_all_gear())
-		if (currentItem.type == /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage)
+		if (currentItem.type == /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage)
 			qdel(currentItem)
 	return ..()
 
@@ -473,12 +473,15 @@
 	category = "Mobility"
 	cost = 1
 
-/datum/spellbook_entry/duffel_bag
-	name = "Duffel Bag Curse"
+/datum/spellbook_entry/duffelbag
+	name = "Bestow Cursed Duffel Bag"
 	desc = "A curse that firmly attaches a demonic duffel bag to the target's back. The duffel bag will make the person it's attached to take periodical damage if it is not fed regularly, and regardless of whether or not it's been fed, it will slow the person wearing it down significantly."
-	spell_type = /obj/effect/proc_holder/spell/pointed/duffelbagcurse
-	category = "Assistance"
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/duffelbag
+	category = "Defensive"
 	cost = 1
+
+/// How much threat we need to let these rituals happen on dynamic
+#define MINIMUM_THREAT_FOR_RITUALS 100
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -507,12 +510,6 @@
 	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilities to frustrate you."
 	cost = 0
 
-/datum/spellbook_entry/summon/ghosts/IsAvailable()
-	if(!SSticker.mode)
-		return FALSE
-	else
-		return TRUE
-
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
@@ -530,7 +527,9 @@
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
-		return FALSE
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+			return FALSE
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -550,7 +549,9 @@
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
-		return FALSE
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+			return FALSE
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -573,7 +574,9 @@
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
-		return FALSE
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+			return FALSE
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -607,6 +610,8 @@
 	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return TRUE
+
+#undef MINIMUM_THREAT_FOR_RITUALS
 
 /obj/item/spellbook
 	name = "spell book"

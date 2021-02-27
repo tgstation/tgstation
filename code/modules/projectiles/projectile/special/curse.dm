@@ -5,6 +5,7 @@
 /obj/projectile/curse_hand
 	name = "curse hand"
 	icon_state = "cursehand0"
+	base_icon_state = "cursehand"
 	hitsound = 'sound/effects/curse4.ogg'
 	layer = LARGE_MOB_LAYER
 	damage_type = BURN
@@ -18,10 +19,11 @@
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
 	handedness = prob(50)
-	icon_state = "cursehand[handedness]"
+	icon_state = "[base_icon_state][handedness]"
 
 /obj/projectile/curse_hand/update_icon_state()
-	icon_state = "[initial(icon_state)][handedness]"
+	icon_state = "[base_icon_state]0[handedness]"
+	return ..()
 
 /obj/projectile/curse_hand/fire(setAngle)
 	if(starting)

@@ -18,7 +18,7 @@
 	max_occurrences = 10
 
 /datum/round_event/rabbitrelease/announce(fake)
-	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", 'sound/ai/aliens.ogg')
+	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", ANNOUNCER_ALIENS)
 
 
 /datum/round_event/rabbitrelease/start()
@@ -51,6 +51,7 @@
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
 	pet_bonus = TRUE
 	pet_bonus_emote = "hops around happily!"
+	can_be_held = TRUE
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
@@ -166,22 +167,23 @@
 
 //Easter Recipes + food
 /obj/item/food/hotcrossbun
-	bite_consumption = 2
-	name = "hot-cross bun"
-	desc = "The Cross represents the Assistants that died for your sins."
+	name = "hot cross bun"
+	desc = "The cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
-	foodtypes = SUGAR | GRAIN
-	tastes = list("easter")
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
+	foodtypes = SUGAR | GRAIN | BREAKFAST
+	tastes = list("pastry" = 1, "easter" = 1)
+	bite_consumption = 2
 
 /datum/crafting_recipe/food/hotcrossbun
-	name = "Hot-Cross Bun"
+	name = "Hot Cross Bun"
 	reqs = list(
-		/obj/item/food/bread/plain = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/food/hotcrossbun
 
-	subcategory = CAT_MISCFOOD
+	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"

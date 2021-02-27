@@ -37,19 +37,21 @@ Bonus
 	)
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 3)
+	if(A.totalStealth() >= 3)
 		suppress_warning = TRUE
-	if(A.properties["stage_rate"] >= 7) //faster change of voice
+	if(A.totalStageSpeed() >= 7) //faster change of voice
 		base_message_chance = 25
 		symptom_delay_min = 25
 		symptom_delay_max = 85
-	if(A.properties["transmittable"] >= 14) //random language
+	if(A.totalTransmittable() >= 14) //random language
 		scramble_language = TRUE
 
 /datum/symptom/voice_change/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
@@ -60,7 +62,7 @@ Bonus
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.SetSpecialVoice(H.dna.species.random_name(H.gender))
-				if(scramble_language && !current_language)	// Last part prevents rerolling language with small amounts of cure.
+				if(scramble_language && !current_language) // Last part prevents rerolling language with small amounts of cure.
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.add_blocked_language(subtypesof(/datum/language) - current_language, LANGUAGE_VOICECHANGE)
 					H.grant_language(current_language, TRUE, TRUE, LANGUAGE_VOICECHANGE)
@@ -72,4 +74,4 @@ Bonus
 		H.UnsetSpecialVoice()
 	if(scramble_language)
 		A.affected_mob.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_VOICECHANGE)
-		A.affected_mob.remove_all_languages(LANGUAGE_VOICECHANGE)	// In case someone managed to get more than one anyway.
+		A.affected_mob.remove_all_languages(LANGUAGE_VOICECHANGE) // In case someone managed to get more than one anyway.

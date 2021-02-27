@@ -65,7 +65,7 @@
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
-	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
+	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
@@ -187,7 +187,6 @@
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
-	clothing_traits = list(TRAIT_QUICK_CARRY)
 	transfer_prints = TRUE
 	resistance_flags = NONE
 
@@ -196,7 +195,6 @@
 	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
-	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/nitrile/infiltrator

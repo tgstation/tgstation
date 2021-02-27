@@ -6,7 +6,7 @@
 #define BEYBLADE_CONFUSION_LIMIT 40 //A max for how penalized a carbon will be for beyblading
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
 	act = lowertext(act)
 	var/param = message
 	var/custom_param = findchar(act, " ")
@@ -17,7 +17,7 @@
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
-		if(intentional)
+		if(intentional && !force_silence)
 			to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
 		return FALSE
 	var/silenced = FALSE
@@ -28,9 +28,31 @@
 		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			return TRUE
-	if(intentional && !silenced)
+	if(intentional && !silenced && !force_silence)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 	return FALSE
+
+/datum/emote/help
+	key = "help"
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
+
+/datum/emote/help/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/list/keys = list()
+	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
+
+	for(var/key in GLOB.emote_list)
+		for(var/datum/emote/P in GLOB.emote_list[key])
+			if(P.key in keys)
+				continue
+			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
+				keys += P.key
+
+	keys = sortList(keys)
+	message += keys.Join(", ")
+	message += "."
+	message = message.Join("")
+	to_chat(user, message)
 
 /datum/emote/flip
 	key = "flip"

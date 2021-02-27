@@ -32,7 +32,7 @@
 	target.cure_blind(list(EYE_DAMAGE))
 	target.set_blindness(0)
 	target.cure_nearsighted(list(EYE_DAMAGE))
-	target.blur_eyes(35)	//this will fix itself slowly.
+	target.blur_eyes(35) //this will fix itself slowly.
 	E.setOrganDamage(0)
 	return ..()
 

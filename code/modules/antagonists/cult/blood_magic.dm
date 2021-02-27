@@ -552,7 +552,7 @@
 	. = ..()
 
 
-//Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
+//Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
 	desc = "Corrupts certain metalic objects on contact."
@@ -564,7 +564,7 @@
 	. = ..()
 	. += {"<u>A sinister spell used to convert:</u>\n
 	Plasteel into runed metal\n
-	[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell\n
+	[IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron into a construct shell\n
 	Living cyborgs into constructs after a delay\n
 	Cyborg shells into construct shells\n
 	Airlocks into brittle runed airlocks after a delay (harm intent)"}
@@ -575,15 +575,15 @@
 			to_chat(user, "<span class='cultitalic'>You are already invoking twisted construction!</span>")
 			return
 		var/turf/T = get_turf(target)
-		if(istype(target, /obj/item/stack/sheet/metal))
+		if(istype(target, /obj/item/stack/sheet/iron))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(METAL_TO_CONSTRUCT_SHELL_CONVERSION))
+			if(candidate.use(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
 				uses--
-				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
+				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the iron, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			else
-				to_chat(user, "<span class='warning'>You need [METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal to produce a construct shell!</span>")
+				to_chat(user, "<span class='warning'>You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!</span>")
 				return
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target
@@ -603,7 +603,7 @@
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(EMP_HEAVY)
-					var/list/constructs = list(
+					var/static/list/constructs = list(
 						"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
 						"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
 						"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
@@ -617,11 +617,11 @@
 					user.visible_message("<span class='danger'>The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
 						if("Juggernaut")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, candidate, user, FALSE, T)
 						if("Wraith")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, FALSE, T)
 						if("Artificer")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, candidate, user, 0, T)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, candidate, user, FALSE, T)
 						else
 							return
 					uses--
@@ -661,7 +661,7 @@
 
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
-		return FALSE
+		CRASH("The cult construct selection radial menu was accessed by something other than a valid user.")
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
@@ -670,7 +670,7 @@
 //Armor: Gives the target (cultist) a basic cultist combat loadout
 /obj/item/melee/blood_magic/armor
 	name = "Arming Aura"
-	desc = "Will equipt cult combat gear onto a cultist on contact."
+	desc = "Will equip cult combat gear onto a cultist on contact."
 	color = "#33cc33" // green
 
 /obj/item/melee/blood_magic/armor/afterattack(atom/target, mob/living/carbon/user, proximity)
@@ -684,7 +684,7 @@
 		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), ITEM_SLOT_BACK)
 		if(C == user)
 			qdel(src) //Clears the hands
-		C.put_in_hands(new /obj/item/melee/cultblade(user))
+		C.put_in_hands(new /obj/item/melee/cultblade/dagger(user))
 		C.put_in_hands(new /obj/item/restraints/legcuffs/bola/cult(user))
 		..()
 
@@ -695,7 +695,7 @@
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
 	. = ..()
-	. += "Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
+	. += "Bloody halberd, blood bolt barrage, and blood beam cost [BLOOD_HALBERD_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
@@ -803,23 +803,27 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
-		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
-		if(!choice)
+		var/static/list/spells = list(
+			"Bloody Halberd (150)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
+			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/guns/ballistic.dmi', icon_state = "arcane_barrage"),
+			"Blood Beam (500)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "disintegrate")
+			)
+		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		if(!check_menu(user))
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return
 		switch(choice)
-			if("Blood Spear (150)")
-				if(uses < BLOOD_SPEAR_COST)
-					to_chat(user, "<span class='cultitalic'>You need [BLOOD_SPEAR_COST] charges to perform this rite.</span>")
+			if("Bloody Halberd (150)")
+				if(uses < BLOOD_HALBERD_COST)
+					to_chat(user, "<span class='cultitalic'>You need [BLOOD_HALBERD_COST] charges to perform this rite.</span>")
 				else
-					uses -= BLOOD_SPEAR_COST
-					var/turf/T = get_turf(user)
+					uses -= BLOOD_HALBERD_COST
+					var/turf/current_position = get_turf(user)
 					qdel(src)
-					var/datum/action/innate/cult/spear/S = new(user)
-					var/obj/item/cult_spear/rite = new(T)
-					S.Grant(user, rite)
-					rite.spear_act = S
+					var/datum/action/innate/cult/halberd/halberd_act_granted = new(user)
+					var/obj/item/melee/cultblade/halberd/rite = new(current_position)
+					halberd_act_granted.Grant(user, rite)
+					rite.halberd_act = halberd_act_granted
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cultitalic'>A [rite.name] appears in your hand!</span>")
 					else
@@ -829,7 +833,7 @@
 				if(uses < BLOOD_BARRAGE_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BARRAGE_COST] charges to perform this rite.</span>")
 				else
-					var/obj/rite = new /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood()
+					var/obj/rite = new /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood()
 					uses -= BLOOD_BARRAGE_COST
 					qdel(src)
 					if(user.put_in_hands(rite))
@@ -849,3 +853,10 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
+
+/obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		CRASH("The Blood Rites manipulator radial menu was accessed by something other than a valid user.")
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE

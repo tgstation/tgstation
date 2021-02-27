@@ -1,7 +1,9 @@
 /turf/open/floor/holofloor
 	icon_state = "floor"
+	holodeck_compatible = TRUE
 	thermal_conductivity = 0
 	flags_1 = NONE
+	var/direction = SOUTH
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
@@ -18,6 +20,30 @@
 /turf/open/floor/holofloor/plating
 	name = "holodeck projector floor"
 	icon_state = "engine"
+
+/turf/open/floor/holofloor/chapel
+	name = "chapel floor"
+	icon_state = "chapel"
+
+/turf/open/floor/holofloor/chapel/bottom_left
+	direction = WEST
+
+/turf/open/floor/holofloor/chapel/top_right
+	direction = EAST
+
+/turf/open/floor/holofloor/chapel/bottom_right
+
+/turf/open/floor/holofloor/chapel/top_left
+	direction = NORTH
+
+/turf/open/floor/holofloor/chapel/Initialize(mapload)
+	. = ..()
+	if (direction != SOUTH)
+		setDir(direction)
+
+/turf/open/floor/holofloor/white
+	name = "white floor"
+	icon_state = "white"
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
@@ -118,7 +144,7 @@
 
 /turf/open/floor/holofloor/carpet/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 1)
+	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	. = ..()
