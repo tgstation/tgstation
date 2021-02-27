@@ -26,7 +26,7 @@
 	///Stores the amount of lost quality
 	var/quality_loss = 0
 	///Stores the recipe selected by the user in the GUI
-	var/datum/gas_recipe/recipe_type = null
+	var/datum/gas_recipe/selected_recipe = null
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
@@ -98,7 +98,7 @@
 ///Checks if the gases in the input are the ones needed by the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = airs[2]
-	for(var/gas_type in recipe_type.requirements)
+	for(var/gas_type in selected_recipe.requirements)
 		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
 			return FALSE
 	return TRUE
@@ -106,23 +106,23 @@
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
 	var/datum/gas_mixture/contents = airs[2]
-	if(contents.temperature >= recipe_type.min_temp * MIN_DEVIATION_RATE && contents.temperature <= recipe_type.max_temp * MAX_DEVIATION_RATE)
+	if(contents.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && contents.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
 		return TRUE
 	return FALSE
 
 ///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases(delta_time)
 	var/datum/gas_mixture/contents = airs[2]
-	for(var/gas_type in recipe_type.requirements)
+	for(var/gas_type in selected_recipe.requirements)
 		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * (gas_input  * delta_time)))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	var/gas_check = 0
-	for(var/gas_type in recipe_type.requirements)
-		if(internal.gases[gas_type][MOLES] >= recipe_type.requirements[gas_type])
+	for(var/gas_type in selected_recipe.requirements)
+		if(internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type])
 			gas_check++
-	if(gas_check == recipe_type.requirements.len)
+	if(gas_check == selected_recipe.requirements.len)
 		return TRUE
 	return FALSE
 
@@ -141,24 +141,24 @@
 			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
 		cooling_port.merge(cooling_remove)
 
-	if(	(internal.temperature >= (recipe_type.min_temp * MIN_DEVIATION_RATE) && internal.temperature <= recipe_type.min_temp) || \
-		(internal.temperature >= recipe_type.max_temp && internal.temperature <= (recipe_type.max_temp * MAX_DEVIATION_RATE)))
+	if(	(internal.temperature >= (selected_recipe.min_temp * MIN_DEVIATION_RATE) && internal.temperature <= selected_recipe.min_temp) || \
+		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))
 		quality_loss = min(quality_loss + 1.5, 100)
 
-	var/median_temperature = (recipe_type.max_temp - recipe_type.min_temp) * 0.5
+	var/median_temperature = (selected_recipe.max_temp - selected_recipe.min_temp) * 0.5
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
 		quality_loss = max(quality_loss - 5.5, 100)
 
-	if(recipe_type.reaction_type == "endothermic")
-		internal.temperature = max(internal.temperature - (recipe_type.energy_release / internal.heat_capacity()), TCMB)
-	else if(recipe_type.reaction_type == "exothermic")
-		internal.temperature = max(internal.temperature + (recipe_type.energy_release / internal.heat_capacity()), TCMB)
+	if(selected_recipe.reaction_type == "endothermic")
+		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+	else if(selected_recipe.reaction_type == "exothermic")
+		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
 
 ///Calculate the total moles needed for the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/moles_calculations()
 	var/amounts = 0
-	for(var/gas_type in recipe_type.requirements)
-		amounts += recipe_type.requirements[gas_type]
+	for(var/gas_type in selected_recipe.requirements)
+		amounts += selected_recipe.requirements[gas_type]
 	total_recipe_moles = amounts
 
 ///Removes the gases from the internal gasmix when the recipe is changed
@@ -168,7 +168,7 @@
 	internal.garbage_collect()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/process_atmos(delta_time)
-	if(!on || !is_operational || recipe_type == null)
+	if(!on || !is_operational || selected_recipe == null)
 		return
 
 	if(!check_gas_requirements())
@@ -192,8 +192,8 @@
 		return
 	progress_bar = 0
 
-	for(var/gas_type in recipe_type.requirements)
-		var/amount_consumed = recipe_type.requirements[gas_type] + quality_loss * 5
+	for(var/gas_type in selected_recipe.requirements)
+		var/amount_consumed = selected_recipe.requirements[gas_type] + quality_loss * 5
 		if(internal.gases[gas_type][MOLES] < amount_consumed)
 			quality_loss = min(quality_loss + 10, 100)
 		internal.remove_specific(gas_type, amount_consumed)
@@ -222,12 +222,12 @@
 		if(0)
 			quality_control = "Oh God why"
 
-	for(var/path in recipe_type.products)
-		var/amount_produced = recipe_type.products[path]
+	for(var/path in selected_recipe.products)
+		var/amount_produced = selected_recipe.products[path]
 		for(var/i in 1 to amount_produced)
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] [creation.name]"
-			if(recipe_type.dangerous)
+			if(selected_recipe.dangerous)
 				investigate_log("has been created in the crystallizer.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
 
@@ -243,20 +243,20 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/ui_static_data()
 	var/data = list()
-	data["recipe_types"] = list(list("name" = "Nothing", "id" = ""))
+	data["selected_recipes"] = list(list("name" = "Nothing", "id" = ""))
 	for(var/path in GLOB.gas_recipe_meta)
 		var/datum/gas_recipe/recipe = GLOB.gas_recipe_meta[path]
 		if(recipe.machine_type != "Crystallizer")
 			continue
-		data["recipe_types"] += list(list("name" = recipe.name, "id" = recipe.id))
+		data["selected_recipes"] += list(list("name" = recipe.name, "id" = recipe.id))
 	return data
 
 /obj/machinery/atmospherics/components/binary/crystallizer/ui_data()
 	var/data = list()
 	data["on"] = on
 
-	if(recipe_type)
-		data["selected_recipe"] = recipe_type.id
+	if(selected_recipe)
+		data["selected_recipe"] = selected_recipe.id
 	else
 		data["selected_recipe"] = null
 
@@ -276,16 +276,16 @@
 	data["internal_gas_data"] = internal_gas_data
 
 	var/list/requirements
-	if(!recipe_type)
+	if(!selected_recipe)
 		requirements = list("Select a recipe to see the requirements")
 	else
-		requirements = list("To create [recipe_type.name] you will need:")
-		for(var/gas_type in recipe_type.requirements)
+		requirements = list("To create [selected_recipe.name] you will need:")
+		for(var/gas_type in selected_recipe.requirements)
 			var/datum/gas/gas_required = gas_type
-			var/amount_consumed = recipe_type.requirements[gas_type]
+			var/amount_consumed = selected_recipe.requirements[gas_type]
 			requirements += "-[amount_consumed] moles of [initial(gas_required.name)]"
-		requirements += "In a temperature range between [recipe_type.min_temp] K and [recipe_type.max_temp] K"
-		requirements += "The crystallization reaction will be [recipe_type.reaction_type]"
+		requirements += "In a temperature range between [selected_recipe.min_temp] K and [selected_recipe.max_temp] K"
+		requirements += "The crystallization reaction will be [selected_recipe.reaction_type]"
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature
@@ -308,15 +308,15 @@
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("recipe")
-			recipe_type = null
+			selected_recipe = null
 			var/recipe_name = "nothing"
 			var/datum/gas_recipe/recipe = GLOB.gas_recipe_meta[params["mode"]]
 			if(internal.total_moles())
 				dump_gases()
 			quality_loss = 0
 			progress_bar = 0
-			if(recipe_type)
-				recipe_type = recipe
+			if(selected_recipe)
+				selected_recipe = recipe
 				recipe_name = recipe.name
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
 				moles_calculations()
