@@ -151,3 +151,8 @@
 #define REACTION_TAG_PLANT (1<<20)
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_COMPETITIVE (1<<21)
+
+/// Below are defines used for reagent associated machines only
+/// For the pH meter flashing method
+#define ENABLE_FLASHING -1
+#define DISABLE_FLASHING 14

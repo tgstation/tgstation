@@ -1,6 +1,3 @@
-#define ENABLE_FLASHING -1
-#define DISABLE_FLASHING 14
-
 ///Tutorial states
 #define TUT_NO_BUFFER 50
 #define TUT_START 1
@@ -492,3 +489,12 @@ To continue set your target temperature to 390K."}
 	. = ..()
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
+
+#undef TUT_NO_BUFFER
+#undef TUT_START
+#undef TUT_HAS_REAGENTS
+#undef TUT_IS_ACTIVE
+#undef TUT_IS_REACTING
+#undef TUT_FAIL
+#undef TUT_COMPLETE
+#undef TUT_MISSING
