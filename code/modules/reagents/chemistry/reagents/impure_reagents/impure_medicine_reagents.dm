@@ -225,18 +225,20 @@
 	description = "This reagent causes a dramatic raise in a patient's body temperature."
 	ph = 0.8
 	tox_damage = 0
+	color = "#ff1818"
+	taste_description = "heat! Ouch!"
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	data = list("method" = null)
+	data = list("method" = TOUCH)
 	///The method in which the reagent was exposed
 	var/method
 
 /datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
-	method = methods
-	data["method"] = method
+	method |= methods
+	data["method"] |= methods
 	..()
 
 /datum/reagent/inverse/hercuri/on_new(data)
-	method = data["method"]
+	method |= data["method"]
 	..()
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
@@ -438,7 +440,7 @@
 	name = "Nooartrium"
 	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
 	ph = 14
-	metabolization_rate = 0.4 * REM
+	metabolization_rate = 0.05 * REM
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
@@ -450,27 +452,31 @@
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
+	metabolization_rate = 0.35
 	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	ADD_TRAIT(owner, TRAIT_NODEATH, type)
-	owner.status_flags = owner.status_flags & ~CANUNCONSCIOUS
-	owner.set_stat(CONSCIOUS)
+	//owner.status_flags = owner.status_flags & ~CANUNCONSCIOUS
+	owner.set_stat(CONSCIOUS) //This doesn't touch knocked out
+	owner.updatehealth()
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, STAT_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health
 	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
 	owner.SetAllImmobility(0)
-	owner.updatehealth()
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
-	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
+	owner.playsound_local(owner, 'sound/health/fastbeat.ogg', 40)
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
-		iter_wound.blood_flow += (1-creation_purity)
 	if(!back_from_the_dead)
 		return ..()
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	//Following is for those brought back from the dead only
+	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
+		iter_wound.blood_flow += (1-creation_purity)
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
 	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
@@ -510,6 +516,6 @@
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
-	owner.status_flags |= CANUNCONSCIOUS
+	//owner.status_flags |= CANUNCONSCIOUS
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
