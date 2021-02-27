@@ -23,7 +23,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	explode_fire_vortex(holder, equilibrium, 1, 1)
+	explode_fire_vortex(holder, equilibrium, 1, 1, "impure")
 	holder.chem_temp += 2.5
 	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
@@ -213,10 +213,10 @@
 	optimal_temp = 900
 	overheat_temp = 720
 	optimal_ph_min = 2
-	optimal_ph_max = 7
+	optimal_ph_max = 7.1
 	determin_ph_range = 2
 	temp_exponent_factor = 4
-	ph_exponent_factor = 2
+	ph_exponent_factor = 1.8
 	thermic_constant = -20
 	H_ion_release = 3
 	rate_up_lim = 50
