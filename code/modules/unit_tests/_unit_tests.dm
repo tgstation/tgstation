@@ -49,7 +49,7 @@
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "emoting.dm"
-#include "food_reagents_check.dm"
+#include "food_edibility_check.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
