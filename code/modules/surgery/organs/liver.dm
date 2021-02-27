@@ -132,6 +132,14 @@
 			owner.AdjustUnconscious(5 SECONDS)
 
 /obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/humie = user
+	if(!humie.getorganslot(ORGAN_SLOT_EYES) || humie.is_eyes_covered())
+		return
 	switch(failure_stage)
 		if(ORGAN_FAILURE_STAGE_1 to ORGAN_FAILURE_STAGE_2)
 			examine_list += "<span class='notice'>[owner]'s eyes are slightly yellow.</span>"
@@ -144,32 +152,28 @@
 
 /obj/item/organ/liver/organ_failure_stage_2(delta_time)
 	owner.adjustToxLoss(0.2 * delta_time)
-	owner.adjust_disgust(1)
-	return
+	owner.adjust_disgust(0.5 * delta_time)
 
 /obj/item/organ/liver/organ_failure_stage_3(delta_time)
 	owner.adjustToxLoss(0.4 * delta_time)
-	owner.drowsyness += 1
-	owner.adjust_disgust(2)
-	return
+	owner.drowsyness += 1 * delta_time
+	owner.adjust_disgust(1 * delta_time)
 
 /obj/item/organ/liver/organ_failure_stage_4(delta_time)
 	owner.adjustToxLoss(0.6 * delta_time)
 	owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-	owner.drowsyness += 2
-	owner.adjust_disgust(3)
+	owner.drowsyness += 2 * delta_time
+	owner.adjust_disgust(1.5 * delta_time)
 	if(DT_PROB(1.5, delta_time))
 		owner.emote("drool")
-	return
 
 /obj/item/organ/liver/organ_failure_stage_5(delta_time)
 	owner.adjustToxLoss(0.8 * delta_time)
 	owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-	owner.drowsyness += 3
-	owner.adjust_disgust(4)
+	owner.drowsyness += 3 * delta_time
+	owner.adjust_disgust(2 * delta_time)
 	if(DT_PROB(3, delta_time))
 		owner.emote("drool")
-	return
 
 /obj/item/organ/liver/on_death()
 	. = ..()
