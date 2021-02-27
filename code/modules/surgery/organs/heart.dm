@@ -324,7 +324,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	to_chat(ethereal_heart.owner, "<span class='nicegreen'>Crystals start forming around your dead body</span>")
+	to_chat(victim, "<span class='nicegreen'>Crystals start forming around your dead body</span>")
 	victim.visible_message("<span class='notice'>Crystals start forming around [victim]</span>")
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
@@ -337,7 +337,7 @@
 ///Ran when disarmed, prevents the ethereal from reviving
 /obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
 	SIGNAL_HANDLER
-	to_chat(ethereal_heart.owner, "<span class='notice'>The crystals on your corpse are gently broken off, and will need some time to recover.</span>")
+	to_chat(defender, "<span class='notice'>The crystals on your corpse are gently broken off, and will need some time to recover.</span>")
 	defender.visible_message("<span class='notice'>The crystals on [defender] are gently broken off</span>")
 	deltimer(crystalize_timer_id)
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, defender), CRYSTALIZE_DISARM_WAIT_TIME, TIMER_STOPPABLE) //Lets us restart the timer on disarm
@@ -377,7 +377,7 @@
 
 	var/mob/living/carbon/human/ethereal = source
 
-	to_chat(ethereal_heart.owner, "<span class='userwarning'>The crystals on your body have completely broken</span>")
+	to_chat(ethereal, "<span class='userwarning'>The crystals on your body have completely broken</span>")
 	ethereal.visible_message("<span class='notice'>The crystals on [ethereal] are completely shattered and stopped growing</span>")
 
 	stop_crystalization_process(ethereal)
@@ -410,7 +410,7 @@
 	update_icon()
 
 /obj/structure/ethereal_crystal/obj_destruction(damage_flag)
-	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive_fail.ogg', 75)
+	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive_fail.ogg', 100)
 	return ..()
 
 
@@ -440,6 +440,6 @@
 	else
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/mild))
 	ethereal_heart.owner.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive.ogg', 75)
+	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive.ogg', 100)
 	qdel(src)
 
