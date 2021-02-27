@@ -281,7 +281,7 @@
 	RegisterSignal(M, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
 
 /obj/item/organ/heart/ethereal/Remove(mob/living/carbon/M, special = 0)
-	UnregisterSignal(M, list(COMSIG_LIVING_ELECTROCUTE_ACT, COMSIG_LIVING_POST_FULLY_HEAL))
+	UnregisterSignal(M, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL))
 	REMOVE_TRAIT(M, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(M)
 	QDEL_NULL(current_crystal)
