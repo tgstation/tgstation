@@ -41216,8 +41216,8 @@
 /area/cargo/sorting)
 "hzy" = (
 /obj/structure/table,
-/obj/item/clothing/suit/cyborg_suit,
-/obj/item/clothing/mask/gas/cyborg,
+/obj/item/clothing/suit/cardborg,
+/obj/item/clothing/head/cardborg,
 /obj/machinery/light/small/broken{
 	dir = 8
 	},
