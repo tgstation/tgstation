@@ -147,6 +147,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Whether or not a random event has been hijacked this midround cycle
 	var/random_event_hijacked = HIJACKED_NOTHING
 
+	/// The timer ID for the cancellable midround rule injection
+	var/midround_injection_timer_id
+
+	/// The last drafted midround rulesets (without the current one included).
+	/// Used for choosing different midround injections.
+	var/list/current_midround_rulesets
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
@@ -230,6 +237,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
 		message_admins("[key_name(usr)] executed the [added_rule] ruleset.")
 		picking_specific_rule(added_rule, TRUE)
+	else if(href_list["cancelmidround"])
+		admin_cancel_midround(usr, href_list["cancelmidround"])
+		return
+	else if (href_list["differentmidround"])
+		admin_different_midround(usr, href_list["differentmidround"])
+		return
 
 	admin_panel() // Refreshes the window
 
@@ -632,7 +645,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.
 /datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
 	if(forced_injection)
-		forced_injection = !dry_run
+		forced_injection = dry_run
 		return 100
 	var/chance = 0
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/5))
