@@ -184,7 +184,6 @@
 
 /obj/item/food/grown/banana/bombanana
 	trash_type = /obj/item/grown/bananapeel/bombanana
-	bite_consumption = 1
 	seed = /obj/item/seeds/banana/bombanana
 	tastes = list("explosives" = 10)
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
