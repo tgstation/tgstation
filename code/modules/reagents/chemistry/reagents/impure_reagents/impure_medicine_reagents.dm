@@ -143,12 +143,11 @@
 /datum/reagent/peptides_failed
 	name = "Prion peptides"
 	taste_description = "spearmint frosting"
-	description = "These inhibitory peptides slow down wound healing and also cost nutrition as well!"
+	description = "These inhibitory peptides cause cellular damage and cost nutrition to the patient!"
 	ph = 2.1
 
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	owner.adjustFireLoss(-0.5 * delta_time)
-	owner.adjustBruteLoss(-1.5* delta_time)
+	owner.adjustCloneLoss(0.25 * delta_time)
 	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * delta_time)
 	. = ..()
 
@@ -226,26 +225,19 @@
 	ph = 0.8
 	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	//type of exposure saved on add
-	var/ingested = FALSE
-
-/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	if(!ingested)
-		return ..()
-	var/heating = rand(creation_purity*10, creation_purity*30)
-	owner.reagents?.chem_temp += (heating * REM *normalise_creation_purity() * delta_time)
-	owner.adjust_bodytemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_mob = owner
-		human_mob.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
-	..()
 
 /datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	. = ..()
+	var/heating = rand(creation_purity*reac_volume*0.5, creation_purity*reac_volume*2)
 	if(methods & INGEST)
-		ingested = TRUE
+		owner.reagents?.chem_temp += (heating * REM *normalise_creation_purity() * delta_time)
 	if(methods & VAPOR)
-		exposed_mob.adjust_bodytemperature((reac_volume*creation_purity) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+		exposed_mob.adjust_bodytemperature((heating) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	if(methods & INJECT)
+		if(!ishuman(owner))
+			return
+		var/mob/living/carbon/human/human_mob = owner
+		human_mob.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
 	else
 		exposed_mob.adjust_fire_stacks(1 * (reac_volume * 0.05))
 

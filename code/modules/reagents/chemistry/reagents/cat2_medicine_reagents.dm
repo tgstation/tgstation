@@ -199,7 +199,7 @@
 	reagent_weight = 0.6
 	ph = 8.9
 	inverse_chem = /datum/reagent/inverse/hercuri
-	inverse_chem_val = 0.32
+	inverse_chem_val = 0.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)

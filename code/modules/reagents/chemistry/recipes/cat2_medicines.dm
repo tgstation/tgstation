@@ -148,7 +148,8 @@
 	thermic_constant = -40
 	H_ion_release = 3.7
 	rate_up_lim = 50
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	purity_min = 0.15
+	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
