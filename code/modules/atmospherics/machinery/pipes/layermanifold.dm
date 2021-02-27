@@ -43,7 +43,7 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_overlays()
 	. = ..()
-
+	cut_overlays()
 	for(var/node in front_nodes)
 		. += get_attached_images(node)
 	for(var/node in back_nodes)

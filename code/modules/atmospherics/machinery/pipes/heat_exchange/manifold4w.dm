@@ -26,7 +26,7 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/update_overlays()
 	. = ..()
-
+	cut_overlays()
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	. += center
 
@@ -34,6 +34,7 @@
 	for(var/i in 1 to device_type)
 		if(nodes[i])
 			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
+	update_layer()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer2
 	piping_layer = 2

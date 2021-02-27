@@ -84,6 +84,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
+	cut_overlays()
 	. += getpipeimage(icon, "pipe", dir, , piping_layer)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()

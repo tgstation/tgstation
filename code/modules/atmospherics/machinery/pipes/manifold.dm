@@ -32,7 +32,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold/update_overlays()
 	. = ..()
-
+	cut_overlays()
 	if(!center)
 		center = mutable_appearance(icon, "manifold_center")
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
@@ -42,3 +42,4 @@
 	for(var/i in 1 to device_type)
 		if(nodes[i])
 			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
+	update_layer()
