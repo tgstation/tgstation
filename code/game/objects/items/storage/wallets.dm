@@ -62,7 +62,7 @@
 	var/winning_tally = 0
 	for(var/card in contents)
 		var/obj/item/card/id/id_card = card
-		if(!istype(card))
+		if(!istype(id_card))
 			continue
 		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
 		if(card_tally > winning_tally)
