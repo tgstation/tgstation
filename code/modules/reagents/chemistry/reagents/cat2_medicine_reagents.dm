@@ -305,7 +305,8 @@
 	inverse_chem_val = 0.3
 	ph = 3.7
 	inverse_chem = /datum/reagent/inverse/technetium
-	inverse_chem_val = 0.4
+	inverse_chem_val = 0.45
+	failed_chem = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/M)

@@ -484,7 +484,7 @@
 * * ignore_mask - if masks block the effect, making this true will affect someone regardless
 * * ignore_eyes - if glasses block the effect, making this true will affect someone regardless
 */
-/datum/chemical_reaction/proc/explode_attack_chem(datum/reagents/holder, datum/equilibrium/equilibrium, reagent, vol, range = 2, ignore_mask = FALSE, ignore_eyes = FALSE)
+/datum/chemical_reaction/proc/explode_attack_chem(datum/reagents/holder, datum/equilibrium/equilibrium, reagent, vol, range = 3, ignore_mask = FALSE, ignore_eyes = FALSE)
 	if(istype(reagent, /datum/reagent))
 		var/datum/reagent/temp_reagent = reagent
 		reagent = temp_reagent.type

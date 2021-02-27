@@ -242,7 +242,7 @@
 			if(equilibrium.reaction.optimal_ph_min > reagents.ph || equilibrium.reaction.optimal_ph_max < reagents.ph)
 				flashing = ENABLE_FLASHING
 		if(equilibrium.reaction.is_cold_recipe)
-			if(equilibrium.reaction.overheat_temp > reagents.chem_temp)
+			if(equilibrium.reaction.overheat_temp > reagents.chem_temp && equilibrium.reaction.overheat_temp != NO_OVERHEAT)
 				danger = TRUE
 				overheat = TRUE
 		else

@@ -208,7 +208,7 @@
 /datum/equilibrium/proc/check_fail_states(vol_added)
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
+		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 			reaction.overheated(holder, src, vol_added)
 	else
