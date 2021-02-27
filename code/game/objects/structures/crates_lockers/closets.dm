@@ -522,3 +522,5 @@
 
 /obj/structure/closet/return_temperature()
 	return
+
+#undef LOCKER_FULL
