@@ -89,7 +89,7 @@ const tasksToRun = [
   taskDm,
 ];
 
-if (process.env['TG_BUILD_TGS_MODE']) {
+if (process.env.TG_BUILD_TGS_MODE) {
   tasksToRun.pop();
 }
 
