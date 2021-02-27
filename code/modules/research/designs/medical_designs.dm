@@ -664,7 +664,7 @@
 
 /datum/design/cybernetic_eyes
 	name = "Cybernetic Eyes"
-	desc = "A pair of cybernetic ears."
+	desc = "A pair of cybernetic eyes."
 	id = "cybernetic_eyes"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 30
