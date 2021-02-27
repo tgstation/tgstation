@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - qol: "Updated radial menu for a spider selection from an egg cluster. It will now include a small button for showing additional information about given spider type."
-  - qol: "You can now choose a spider from an egg cluster from a distance instead of having to be next to them as a ghost."
-  - bugfix: "\"Click to play\" button on when spider egg cluster matures will now actually give you a selection of spiders to choose from instead of doing nothing."

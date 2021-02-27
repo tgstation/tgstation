@@ -170,6 +170,8 @@ GENE SCANNER
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			render_list += "<span class='alert'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>\n"
+		if(H.has_reagent(/datum/reagent/inverse/technetium))
+			advanced = TRUE
 
 	render_list += "<span class='info'>Analyzing results for [M]:</span>\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
 
@@ -324,9 +326,16 @@ GENE SCANNER
 
 			for(var/obj/item/organ/organ in H.internal_organs)
 				var/status = ""
-				if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#cc3333'>Non-Functional</font>"
-				else if (organ.damage > organ.high_threshold) status = "<font color='#ff9933'>Severely Damaged</font>"
-				else if (organ.damage > organ.low_threshold) status = "<font color='#ffcc33'>Mildly Damaged</font>"
+				if(H.has_reagent(/datum/reagent/inverse/technetium))
+					if(organ.damage)
+						status = "<font color='#E42426'> organ is [round((organ.damage/organ.maxHealth)*100, 1)]% damaged.</font>"
+				else
+					if (organ.organ_flags & ORGAN_FAILING)
+						status = "<font color='#cc3333'>Non-Functional</font>"
+					else if (organ.damage > organ.high_threshold)
+						status = "<font color='#ff9933'>Severely Damaged</font>"
+					else if (organ.damage > organ.low_threshold)
+						status = "<font color='#ffcc33'>Mildly Damaged</font>"
 				if (status != "")
 					render = TRUE
 					toReport += "<tr><td><font color='#cc3333'>[organ.name]:</font></td>\

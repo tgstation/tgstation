@@ -1,0 +1,4 @@
+author: "Gurkenglas"
+delete-after: True
+changes: 
+  - bugfix: "The chaplain's null rod can now dispel the heretic's transmutation rune. Note that as with with the Nar'Sie rune, you must stand on it."

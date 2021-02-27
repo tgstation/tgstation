@@ -535,12 +535,12 @@
 /area/medical/chemistry)
 "bR" = (
 /obj/machinery/camera/autoname,
-/obj/machinery/chem_heater/withbuffer,
 /obj/machinery/power/apc{
 	dir = 1;
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/machinery/chem_heater/debug,
 /turf/open/floor/iron/dark,
 /area/medical/chemistry)
 "bS" = (
@@ -2615,6 +2615,10 @@
 /obj/machinery/nanite_chamber,
 /turf/open/floor/iron/dark,
 /area/science/nanite)
+"Nc" = (
+/obj/machinery/chem_recipe_debug,
+/turf/open/floor/iron,
+/area/medical/chemistry)
 "Ns" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
@@ -7449,7 +7453,7 @@ aj
 hD
 cj
 ct
-Ce
+Nc
 cF
 bE
 bE
