@@ -46,13 +46,13 @@
 	make_dryable()
 
 	// Go through all traits in their genes and call on_new_plant from them.
-	for(var/datum/plant_gene/trait/trait in seed.genes)
+	for(var/datum/plant_gene/trait/trait in seed?.genes)
 		trait.on_new_plant(src, loc)
 
 	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
 
-	seed.prepare_result(src)
-	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
+	seed?.prepare_result(src)
+	transform *= TRANSFORM_USING_VARIABLE(seed?.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
 /obj/item/food/grown/MakeEdible()
 	AddComponent(/datum/component/edible,\
