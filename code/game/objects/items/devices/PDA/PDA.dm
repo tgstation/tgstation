@@ -151,6 +151,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		return ..()
 
+/obj/item/pda/get_id_examine_strings(mob/user)
+	. = ..()
+	if(id)
+		. += "\The [src] is displaying [id]."
+		. += id.get_id_examine_strings(user)
+
 /obj/item/pda/GetID()
 	return id
 

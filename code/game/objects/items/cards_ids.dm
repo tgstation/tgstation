@@ -115,6 +115,14 @@
 		my_store.my_card = null
 	return ..()
 
+/obj/item/card/id/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[icon2html(get_icon_source(), user, extra_classes = "bigicon")]")
+
+/// Simple helper proc. Returns the source of the icon for this card. Advanced cards can override this to return their icon that has been cached due to using overlays.
+/obj/item/card/id/proc/get_icon_source()
+	return src
+
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
  *
@@ -682,6 +690,9 @@
 	var/trim_icon_override
 	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
+
+/obj/item/card/id/advanced/get_icon_source()
+	return get_cached_flat_icon()
 
 /// If no cached_flat_icon exists, this proc creates it. This proc then returns the cached_flat_icon.
 /obj/item/card/id/advanced/proc/get_cached_flat_icon()

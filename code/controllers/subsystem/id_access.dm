@@ -437,3 +437,21 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+
+/**
+ * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.
+ *
+ * Returns the number of accesses that have flags matching access_flag or a higher tier access.
+ * Arguments:
+ * * id_card - The ID card to tally up access for.
+ * * access_flag - The minimum access flag required for an access to be tallied up.
+ */
+/datum/controller/subsystem/id_access/proc/tally_access(obj/item/card/id/id_card, access_flag = NONE)
+	var/tally = 0
+
+	var/list/id_card_access = id_card.access
+	for(var/access in id_card_access)
+		if(flags_by_access["[access]"] >= access_flag)
+			tally++
+
+	return tally
