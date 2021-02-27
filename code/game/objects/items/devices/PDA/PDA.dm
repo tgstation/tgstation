@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	inhand_icon_state = "electronic"
-	worn_icon_state = "electronic"
+	worn_icon_state = "pda"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -713,6 +713,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(H.wear_id == src)
 			H.sec_hud_set_ID()
 
+	update_slot_icon()
+
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name)
@@ -963,6 +965,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			user.put_in_hands(old_id)
 		else
 			old_id.forceMove(get_turf(src))
+
+	update_slot_icon()
 
 
 /obj/item/pda/pre_attack(obj/target, mob/living/user, params)

@@ -83,6 +83,7 @@
 
 	update_label()
 	update_appearance(UPDATE_ICON)
+	update_slot_icon()
 
 /obj/item/storage/wallet/Entered(atom/movable/AM)
 	. = ..()

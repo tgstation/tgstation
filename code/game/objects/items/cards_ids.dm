@@ -66,6 +66,7 @@
 	name = "retro identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "card_grey"
+	worn_icon_state = "card_retro"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
@@ -678,6 +679,7 @@
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
 	icon_state = "card_grey"
+	worn_icon_state = "card_grey"
 
 	wildcard_slots = WILDCARD_LIMIT_GREY
 
@@ -723,6 +725,7 @@
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "card_silver"
+	worn_icon_state = "card_silver"
 	inhand_icon_state = "silver_id"
 	wildcard_slots = WILDCARD_LIMIT_SILVER
 
@@ -740,6 +743,7 @@
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "card_gold"
+	worn_icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
@@ -761,6 +765,7 @@
 	name = "\improper CentCom ID"
 	desc = "An ID straight from Central Command."
 	icon_state = "card_centcom"
+	worn_icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	registered_name = "Central Command"
 	registered_age = null
@@ -806,6 +811,7 @@
 	name = "black identification card"
 	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."
 	icon_state = "card_black"
+	worn_icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
@@ -820,7 +826,6 @@
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	icon_state = "card_black"
 	registered_age = null
 	trim = /datum/id_trim/syndicom
 	wildcard_slots = WILDCARD_LIMIT_SYNDICATE
@@ -841,6 +846,7 @@
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
+	worn_icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
@@ -853,6 +859,7 @@
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
 	icon_state = "card_prisoner"
+	worn_icon_state = "card_prisoner"
 	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
@@ -914,6 +921,7 @@
 	registered_name = "Highlander"
 	desc = "There can be only one!"
 	icon_state = "card_black"
+	worn_icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
@@ -1118,6 +1126,7 @@
 /// A special variant of the classic chameleon ID card which accepts all access.
 /obj/item/card/id/advanced/chameleon/black
 	icon_state = "card_black"
+	worn_icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
