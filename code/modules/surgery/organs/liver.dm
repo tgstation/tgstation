@@ -111,6 +111,7 @@
 	return ..()
 
 /obj/item/organ/liver/organ_failure(delta_time)
+
 	switch(failure_time/LIVER_FAILURE_DIVIDER)
 		if(1)
 			to_chat(owner,"<span class='danger'>You feel stabbing pain in your abdomen!</danger>")
