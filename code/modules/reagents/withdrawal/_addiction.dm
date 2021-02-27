@@ -113,7 +113,7 @@
 
 /// Called when addiction is in stage 2 every process
 /datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
-	if(DT_PROB(10, delta_time))
+	if(DT_PROB(10, delta_time) )
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 
 
