@@ -1,14 +1,14 @@
 /datum/surgery/implant_removal
-	name = "implant removal"
+	name = "Implant removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"
-	implements = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 65)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 65, /obj/item/kitchen/fork = 35)
 	time = 64
 	var/obj/item/implant/I = null
 
@@ -17,13 +17,19 @@
 		I = O
 		break
 	if(I)
-		user.visible_message("[user] begins to extract [I] from [target]'s [target_zone].", "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>")
+		display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>",
+			"<span class='notice'>[user] begins to extract [I] from [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] begins to extract something from [target]'s [target_zone].</span>")
 	else
-		user.visible_message("[user] looks for an implant in [target]'s [target_zone].", "<span class='notice'>You look for an implant in [target]'s [target_zone]...</span>")
+		display_results(user, target, "<span class='notice'>You look for an implant in [target]'s [target_zone]...</span>",
+			"<span class='notice'>[user] looks for an implant in [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] looks for something in [target]'s [target_zone].</span>")
 
-/datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(I)
-		user.visible_message("[user] successfully removes [I] from [target]'s [target_zone]!", "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>")
+		display_results(user, target, "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] successfully removes [I] from [target]'s [target_zone]!</span>",
+			"<span class='notice'>[user] successfully removes something from [target]'s [target_zone]!</span>")
 		I.removed(target)
 
 		var/obj/item/implantcase/case
@@ -35,14 +41,16 @@
 		if(case && !case.imp)
 			case.imp = I
 			I.forceMove(case)
-			case.update_icon()
-			user.visible_message("[user] places [I] into [case]!", "<span class='notice'>You place [I] into [case].</span>")
+			case.update_appearance()
+			display_results(user, target, "<span class='notice'>You place [I] into [case].</span>",
+				"<span class='notice'>[user] places [I] into [case]!</span>",
+				"<span class='notice'>[user] places it into [case]!</span>")
 		else
 			qdel(I)
 
 	else
 		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
-	return 1
+	return ..()
 
 /datum/surgery/implant_removal/mechanic
 	name = "implant removal"

@@ -12,7 +12,7 @@
 		if(!ishuman(M))
 			holder_canadates -= M
 	if(!holder_canadates) //Very unlikely, but just in case
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/human/H = pick(holder_canadates)
 	new /obj/item/greentext(H.loc)
@@ -34,13 +34,14 @@
 
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	roundend_callback = CALLBACK(src,.proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
 /obj/item/greentext/equipped(mob/living/user as mob)
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
-	if(user.mind && user.mind.objectives.len > 0)
+	var/list/other_objectives = user.mind.get_all_objectives()
+	if(user.mind && other_objectives.len > 0)
 		to_chat(user, "<span class='warning'>... so long as you still perform your other objectives that is!</span>")
 	new_holder = user
 	if(!last_holder)
@@ -55,19 +56,19 @@
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
-	last_holder 	= null
-	new_holder 		= null
+	last_holder = null
+	new_holder = null
 	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/greentext/proc/check_winner()
 	if(!new_holder)
 		return
-	
+
 	if(is_centcom_level(new_holder.z))//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
 		new_holder.mind.add_antag_datum(/datum/antagonist/greentext)
-		new_holder.log_message("<font color='green'>Won with greentext!!!</font>", INDIVIDUAL_ATTACK_LOG)
+		new_holder.log_message("won with greentext!!!", LOG_ATTACK, color="green")
 		color_altered_mobs -= new_holder
 		resistance_flags |= ON_FIRE
 		qdel(src)
@@ -83,7 +84,6 @@
 		return QDEL_HINT_LETMELIVE
 
 	SSticker.round_end_events -= roundend_callback
-	GLOB.poi_list.Remove(src)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		var/message = "<span class='warning'>A dark temptation has passed from this world"

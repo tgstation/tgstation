@@ -9,59 +9,6 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
-
-/datum/saymode/changeling
-	key = "g"
-	mode = MODE_CHANGELING
-
-/datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
-	switch(user.lingcheck())
-		if(LINGHIVE_LINK)
-			var/msg = "<i><font color=#800040><b>[user.mind]:</b> [message]</font></i>"
-			for(var/_M in GLOB.player_list)
-				var/mob/M = _M
-				if(M in GLOB.dead_mob_list)
-					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link] [msg]")
-				else
-					switch(M.lingcheck())
-						if (LINGHIVE_LING)
-							var/mob/living/L = M
-							if (!L.has_trait(CHANGELING_HIVEMIND_MUTE))
-								to_chat(M, msg)
-						if(LINGHIVE_LINK)
-							to_chat(M, msg)
-						if(LINGHIVE_OUTSIDER)
-							if(prob(40))
-								to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
-		if(LINGHIVE_LING)
-			if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
-				to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
-				return FALSE
-			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-			var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
-			log_talk(user,"[changeling.changelingID]/[user.key] : [message]",LOGSAY)
-			for(var/_M in GLOB.player_list)
-				var/mob/M = _M
-				if(M in GLOB.dead_mob_list)
-					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link] [msg]")
-				else
-					switch(M.lingcheck())
-						if(LINGHIVE_LINK)
-							to_chat(M, msg)
-						if(LINGHIVE_LING)
-							var/mob/living/L = M
-							if (!L.has_trait(CHANGELING_HIVEMIND_MUTE))
-								to_chat(M, msg)
-						if(LINGHIVE_OUTSIDER)
-							if(prob(40))
-								to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
-		if(LINGHIVE_OUTSIDER)
-			to_chat(user, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
-	return FALSE
-
-
 /datum/saymode/xeno
 	key = "a"
 	mode = MODE_ALIEN
@@ -73,31 +20,27 @@
 
 
 /datum/saymode/vocalcords
-	key = "x"
+	key = MODE_KEY_VOCALCORDS
 	mode = MODE_VOCALCORDS
 
 /datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/organ/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
-		if(V && V.can_speak_with())
+		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
 	return FALSE
 
 
-/datum/saymode/binary //everything that uses .b (silicons, drones, blobbernauts/spores, swarmers)
-	key = "b"
+/datum/saymode/binary //everything that uses .b (silicons, drones, swarmers)
+	key = MODE_KEY_BINARY
 	mode = MODE_BINARY
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
 	if(isswarmer(user))
 		var/mob/living/simple_animal/hostile/swarmer/S = user
 		S.swarmer_chat(message)
-		return FALSE
-	if(isblobmonster(user))
-		var/mob/living/simple_animal/hostile/blob/B = user
-		B.blob_chat(message)
 		return FALSE
 	if(isdrone(user))
 		var/mob/living/simple_animal/drone/D = user
@@ -129,7 +72,7 @@
 	if(!mind)
 		return TRUE
 	if(is_monkey_leader(mind) || (ismonkey(user) && is_monkey(mind)))
-		log_talk(user, "(MONKEY) [user]/[user.key]: [message]",LOGSAY)
+		user.log_talk(message, LOG_SAY, tag="monkey")
 		if(prob(75) && ismonkey(user))
 			user.visible_message("<span class='notice'>\The [user] chimpers.</span>")
 		var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
@@ -141,3 +84,15 @@
 			if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
 				to_chat(M, msg)
 		return FALSE
+
+/datum/saymode/mafia
+	key = "j"
+	mode = MODE_MAFIA
+
+/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
+	var/datum/mafia_controller/MF = GLOB.mafia_game
+	var/datum/mafia_role/R = MF.player_role_lookup[user]
+	if(!R || R.team != "mafia")
+		return TRUE
+	MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>","mafia")
+	return FALSE

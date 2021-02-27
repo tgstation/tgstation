@@ -1,12 +1,12 @@
 /* Utility Closets
  * Contains:
- *		Emergency Closet
- *		Fire Closet
- *		Tool Closet
- *		Radiation Closet
- *		Bombsuit Closet
- *		Hydrant
- *		First Aid
+ * Emergency Closet
+ * Fire Closet
+ * Tool Closet
+ * Radiation Closet
+ * Bombsuit Closet
+ * Hydrant
+ * First Aid
  */
 
 /*
@@ -26,7 +26,7 @@
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -35,11 +35,11 @@
 
 		if ("aid")
 			new /obj/item/tank/internals/emergency_oxygen(src)
-			new /obj/item/storage/firstaid/o2(src)
+			new /obj/item/storage/firstaid/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("tank")
-			new /obj/item/tank/internals/air(src)
+			new /obj/item/tank/internals/oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("both")
@@ -108,11 +108,11 @@
 	if(prob(20))
 		new /obj/item/storage/belt/utility(src)
 	if(prob(30))
-		new /obj/item/stack/cable_coil/random(src)
+		new /obj/item/stack/cable_coil(src)
 	if(prob(30))
-		new /obj/item/stack/cable_coil/random(src)
+		new /obj/item/stack/cable_coil(src)
 	if(prob(30))
-		new /obj/item/stack/cable_coil/random(src)
+		new /obj/item/stack/cable_coil(src)
 	if(prob(20))
 		new /obj/item/multitool(src)
 	if(prob(5))
@@ -153,7 +153,7 @@
 
 /obj/structure/closet/bombcloset/security/PopulateContents()
 	new /obj/item/clothing/suit/bomb_suit/security(src)
-	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/bomb_hood/security(src)
 

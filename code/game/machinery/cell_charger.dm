@@ -3,35 +3,38 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger"
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
-	power_channel = EQUIP
+	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
+	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/chargelevel = -1
-	var/charge_rate = 500
+	var/charge_rate = 250
 
-/obj/machinery/cell_charger/proc/updateicon()
-	cut_overlays()
-	if(charging)
-		add_overlay(image(charging.icon, charging.icon_state))
-		add_overlay("ccharger-on")
-		if(!(stat & (BROKEN|NOPOWER)))
-			var/newlevel = 	round(charging.percent() * 4 / 100)
-			chargelevel = newlevel
-			add_overlay("ccharger-o[newlevel]")
+/obj/machinery/cell_charger/update_overlays()
+	. = ..()
+
+	if(!charging)
+		return
+
+	. += image(charging.icon, charging.icon_state)
+	. += "ccharger-on"
+	if(!(machine_stat & (BROKEN|NOPOWER)))
+		var/newlevel = round(charging.percent() * 4 / 100)
+		. += "ccharger-o[newlevel]"
 
 /obj/machinery/cell_charger/examine(mob/user)
-	..()
-	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+	. = ..()
+	. += "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
-		to_chat(user, "Current charge: [round(charging.percent(), 1)]%.")
+		. += "Current charge: [round(charging.percent(), 1)]%."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Charging power: <b>[charge_rate]W</b>.</span>"
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
-		if(stat & BROKEN)
+		if(machine_stat & BROKEN)
 			to_chat(user, "<span class='warning'>[src] is broken!</span>")
 			return
 		if(!anchored)
@@ -51,10 +54,9 @@
 				return
 
 			charging = W
-			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
-			chargelevel = -1
-			updateicon()
-	else 
+			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
+			update_appearance()
+	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
 		if(default_deconstruction_crowbar(W))
@@ -73,12 +75,11 @@
 	return ..()
 
 /obj/machinery/cell_charger/proc/removecell()
-	charging.update_icon()
+	charging.update_appearance()
 	charging = null
-	chargelevel = -1
-	updateicon()
+	update_appearance()
 
-/obj/machinery/cell_charger/attack_hand(mob/user)
+/obj/machinery/cell_charger/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -88,9 +89,10 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>You remove [charging] from [src].</span>")
+	user.visible_message("<span class='notice'>[user] removes [charging] from [src].</span>", "<span class='notice'>You remove [charging] from [src].</span>")
 
 	removecell()
+
 
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
@@ -100,32 +102,37 @@
 	to_chat(user, "<span class='notice'>You telekinetically remove [charging] from [src].</span>")
 
 	removecell()
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	return
 
 /obj/machinery/cell_charger/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
+	. = ..()
+
+	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_CONTENTS)
 		return
 
 	if(charging)
 		charging.emp_act(severity)
 
-	..(severity)
-
 /obj/machinery/cell_charger/RefreshParts()
-	charge_rate = 500
+	charge_rate = 250
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		charge_rate *= C.rating
 
-/obj/machinery/cell_charger/process()
-	if(!charging || !anchored || (stat & (BROKEN|NOPOWER)))
+/obj/machinery/cell_charger/process(delta_time)
+	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
 		return
 
 	if(charging.percent() >= 100)
 		return
-	use_power(charge_rate)
-	charging.give(charge_rate)	//this is 2558, efficient batteries exist
 
-	updateicon()
- 
+	var/main_draw = use_power_from_net(charge_rate * delta_time, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	if(!main_draw)
+		return
+	charging.give(main_draw)
+	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
+
+	update_appearance()

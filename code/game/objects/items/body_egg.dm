@@ -3,41 +3,43 @@
 	desc = "All slimy and yuck."
 	icon_state = "innards"
 	zone = BODY_ZONE_CHEST
-	slot = "parasite_egg"
+	slot = ORGAN_SLOT_PARASITE_EGG
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)
 	..()
 	to_chat(finder, "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>")
 
-/obj/item/organ/body_egg/New(loc)
+/obj/item/organ/body_egg/Initialize()
+	. = ..()
 	if(iscarbon(loc))
-		src.Insert(loc)
-	return ..()
+		Insert(loc)
 
-/obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/body_egg/Insert(mob/living/carbon/M, special = FALSE)
 	..()
-	owner.add_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
-	START_PROCESSING(SSobj, src)
+	ADD_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_XENO_IMMUNE, "xeno immune")
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
-/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
-	STOP_PROCESSING(SSobj, src)
+/obj/item/organ/body_egg/Remove(mob/living/carbon/M, special = FALSE)
 	if(owner)
-		owner.remove_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
+		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
+		REMOVE_TRAIT(owner, TRAIT_XENO_IMMUNE, "xeno immune")
 		owner.med_hud_set_status()
 		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()
 
-/obj/item/organ/body_egg/process()
+/obj/item/organ/body_egg/on_death(delta_time, times_fired)
+	. = ..()
 	if(!owner)
 		return
-	if(!(src in owner.internal_organs))
-		Remove(owner)
-		return
-	egg_process()
+	egg_process(delta_time, times_fired)
 
-/obj/item/organ/body_egg/proc/egg_process()
+/obj/item/organ/body_egg/on_life(delta_time, times_fired)
+	. = ..()
+	egg_process(delta_time, times_fired)
+
+/obj/item/organ/body_egg/proc/egg_process(delta_time, times_fired)
 	return
 
 /obj/item/organ/body_egg/proc/RefreshInfectionImage()

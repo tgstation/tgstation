@@ -4,11 +4,12 @@
 	desc = "It's blank."
 	force = 5
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("bashed","smacked")
+	attack_verb_continuous = list("bashes", "smacks")
+	attack_verb_simple = list("bash", "smack")
 	resistance_flags = FLAMMABLE
 
 	var/label = ""
-	var/last_wave = 0
+	COOLDOWN_DECLARE(picket_sign_cooldown)
 
 /obj/item/picket_sign/cyborg
 	name = "metallic nano-sign"
@@ -25,7 +26,7 @@
 	if(txt && user.canUseTopic(src, BE_CLOSE))
 		label = txt
 		name = "[label] sign"
-		desc =	"It reads: [label]"
+		desc = "It reads: [label]"
 
 /obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
@@ -34,13 +35,27 @@
 		return ..()
 
 /obj/item/picket_sign/attack_self(mob/living/carbon/human/user)
-	if( last_wave + 20 < world.time )
-		last_wave = world.time
-		if(label)
-			user.visible_message("<span class='warning'>[user] waves around \the \"[label]\" sign.</span>")
-		else
-			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
-		user.changeNext_move(CLICK_CD_MELEE)
+	if(!COOLDOWN_FINISHED(src, picket_sign_cooldown))
+		return
+	COOLDOWN_START(src, picket_sign_cooldown, 5 SECONDS)
+	if(label)
+		user.manual_emote("waves around \the \"[label]\" sign.")
+	else
+		user.manual_emote("waves around a blank sign.")
+	var/direction = prob(50) ? -1 : 1
+	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
+		animate(user, pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_x = user.pixel_x + (1 * direction), time = 1, easing = SINE_EASING)
+	else
+		animate(user, pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
+		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"

@@ -6,44 +6,71 @@
 	density = FALSE
 	anchored = TRUE
 	var/bonespear = FALSE
-	var/obj/item/twohanded/spear/spear
+	var/obj/item/spear/spear
 	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears
 	icon_state = "headpike-bone"
 	bonespear = TRUE
 
-
-/obj/structure/headpike/CheckParts(list/parts_list)
-	..()
-	victim = locate(/obj/item/bodypart/head) in parts_list
-	name = "[victim.name] on a spear"
-	update_icon()
-	if(bonespear)
-		spear = locate(/obj/item/twohanded/bonespear) in parts_list
-	else
-		spear = locate(/obj/item/twohanded/spear) in parts_list
-
-/obj/structure/headpike/Initialize()
+/obj/structure/headpike/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		CheckParts()
 	pixel_x = rand(-8, 8)
 
-/obj/structure/headpike/update_icon()
-	..()
-	var/obj/item/bodypart/head/H = locate() in contents
-	var/mutable_appearance/MA = new()
-	if(H)
-		MA.copy_overlays(H)
-		MA.pixel_y = 12
-		add_overlay(H)
+/obj/structure/headpike/Destroy()
+	QDEL_NULL(victim)
+	QDEL_NULL(spear)
+	return ..()
 
-/obj/structure/headpike/attack_hand(mob/user)
+/obj/structure/headpike/CheckParts(list/parts_list)
+	victim = locate() in parts_list
+	if(!victim) //likely a mapspawned one
+		victim = new(src)
+		victim.real_name = random_unique_name(prob(50))
+	spear = locate(bonespear ? /obj/item/spear/bonespear : /obj/item/spear) in parts_list
+	if(!spear)
+		spear = bonespear ? new/obj/item/spear/bonespear(src) : new/obj/item/spear(src)
+	update_appearance()
+	return ..()
+
+/obj/structure/headpike/update_name()
+	name = "[victim.real_name] on a [spear]"
+	return ..()
+
+/obj/structure/headpike/update_overlays()
+	. = ..()
+	if(!victim)
+		return
+	var/mutable_appearance/MA = new()
+	MA.copy_overlays(victim)
+	MA.pixel_y = 12
+	MA.pixel_x = pixel_x
+	. += victim
+
+/obj/structure/headpike/handle_atom_del(atom/A)
+	if(A == victim)
+		victim = null
+	if(A == spear)
+		spear = null
+	deconstruct(TRUE)
+	return ..()
+
+/obj/structure/headpike/deconstruct(disassembled)
+	if(!disassembled)
+		return ..()
+	if(victim)
+		victim.forceMove(drop_location())
+		victim = null
+	if(spear)
+		spear.forceMove(drop_location())
+		spear = null
+	return ..()
+
+/obj/structure/headpike/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	to_chat(user, "<span class='notice'>You take down [src].</span>")
-	victim.forceMove(drop_location())
-	victim = null
-	spear.forceMove(drop_location())
-	spear = null
-	qdel(src)
+	deconstruct(TRUE)

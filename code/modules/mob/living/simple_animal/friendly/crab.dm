@@ -10,39 +10,43 @@
 	emote_see = list("clacks.")
 	speak_chance = 1
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "stomps"
+	butcher_results = list(/obj/item/food/meat/rawcrab = 2)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "stomps"
+	response_harm_simple = "stomp"
 	stop_automated_movement = 1
-	friendly = "pinches"
-	ventcrawler = VENTCRAWLER_ALWAYS
+	friendly_verb_continuous = "pinches"
+	friendly_verb_simple = "pinch"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/Life()
+/mob/living/simple_animal/crab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	//CRAB movement
 	if(!ckey && !stat)
-		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(loc) && !resting && !buckled) //This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				var/east_vs_west = pick(4,8)
+				var/east_vs_west = pick(4, 8)
 				if(Process_Spacemove(east_vs_west))
 					Move(get_step(src,east_vs_west), east_vs_west)
 					turns_since_move = 0
 	regenerate_icons()
 
 //COFFEE! SQUEEEEEEEEE!
-/mob/living/simple_animal/crab/Coffee
+/mob/living/simple_animal/crab/coffee
 	name = "Coffee"
 	real_name = "Coffee"
 	desc = "It's Coffee, the other pet!"
 	gender = FEMALE
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "stomps"
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil
@@ -52,10 +56,7 @@
 	icon_state = "evilcrab"
 	icon_living = "evilcrab"
 	icon_dead = "evilcrab_dead"
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "stomps"
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/crab/kreb
 	name = "Kreb"
@@ -64,9 +65,6 @@
 	icon_state = "kreb"
 	icon_living = "kreb"
 	icon_dead = "kreb_dead"
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "stomps"
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil/kreb

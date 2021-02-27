@@ -3,6 +3,10 @@
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 	max_integrity = 70
 
 /obj/structure/closet/acloset
@@ -17,7 +21,7 @@
 	icon_state = "syndicate"
 
 /obj/structure/closet/gimmick/russian
-	name = "russian surplus closet"
+	name = "\improper Russian surplus closet"
 	desc = "It's a storage unit for Russian standard-issue surplus."
 
 /obj/structure/closet/gimmick/russian/PopulateContents()
@@ -25,7 +29,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/head/ushanka(src)
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/under/soviet(src)
+		new /obj/item/clothing/under/costume/soviet(src)
 
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
@@ -35,8 +39,8 @@
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
@@ -105,3 +109,22 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stock_parts/cell(src)
 	new /obj/item/multitool(src)
+
+/obj/structure/closet/mini_fridge
+	name = "grimy mini-fridge"
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+	icon_state = "mini_fridge"
+	icon_welded = "welded_small"
+	max_mob_size = MOB_SIZE_SMALL
+	storage_capacity = 7
+
+/obj/structure/closet/mini_fridge/PopulateContents()
+	. = ..()
+	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	if(prob(50))
+		new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	if(prob(40))
+		new /obj/item/food/pizzaslice/moldy(src)
+	else if(prob(30))
+		new /obj/item/food/syndicake(src)

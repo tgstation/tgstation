@@ -1,12 +1,12 @@
 /obj/effect/fun_balloon
 	name = "fun balloon"
 	desc = "This is going to be a laugh riot."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/balloons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -27,8 +27,8 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("[src] pops!")
-	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
+	visible_message("<span class='notice'>[src] pops!</span>")
+	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, TRUE, -1)
 	qdel(src)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -58,7 +58,7 @@
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
 
-		to_chat(body, "Your mob has been taken over by a ghost!")
+		to_chat(body, "<span class='warning'>Your mob has been taken over by a ghost!</span>", confidential = TRUE)
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
 		body.key = C.key
@@ -83,7 +83,7 @@
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
-		to_chat(M, "<span class='notice'>Pop!</span>")
+		to_chat(M, "<span class='notice'>Pop!</span>", confidential = TRUE)
 
 /obj/effect/station_crash
 	name = "station crash"
@@ -91,65 +91,67 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
+	var/min_crash_strength = 3
+	var/max_crash_strength = 15
 
-/obj/effect/station_crash/New()
-	for(var/S in SSshuttle.stationary)
+/obj/effect/station_crash/Initialize()
+	..()
+	shuttle_crash()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/station_crash/proc/shuttle_crash()
+	var/crash_strength = rand(min_crash_strength,max_crash_strength)
+	for (var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S
-		if(SM.id == "emergency_home")
+		if (SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
-			SM.forceMove(get_ranged_target_turf(SM, new_dir, rand(3,15)))
+			SM.forceMove(get_ranged_target_turf(SM, new_dir, crash_strength))
 			break
-	qdel(src)
 
+/obj/effect/station_crash/devastating
+	name = "devastating station crash"
+	desc = "Absolute Destruction. Will crash the shuttle far into the station."
+	min_crash_strength = 15
+	max_crash_strength = 25
 
-//Shuttle Build
-
-/obj/effect/shuttle_build
-	name = "shuttle_build"
-	desc = "Some assembly required."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
-	anchored = TRUE
-
-/obj/effect/shuttle_build/New()
-	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
-	qdel(src)
 
 //Arena
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
 	timeleft = 0
-	var/list/warp_points
+	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle/Initialize()
 	. = ..()
 	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
 		warp_points += exit
 
-/obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
 	var/mob/living/L = AM
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
-		to_chat(L, "Your offering is accepted. You may pass.")
+		to_chat(L, "<span class='notice'>Your offering is accepted. You may pass.</span>", confidential = TRUE)
 		qdel(L.pulling)
 		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
 		L.hallucination = 0
-		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
-		for(var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw in L)
+		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
+		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
+		var/obj/item/skeleton_key/key = new(L)
+		L.put_in_hands(key)
 	else
-		to_chat(L, "You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.")
+		to_chat(L, "<span class='warning'>You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.</span>", confidential = TRUE)
 
 /obj/effect/landmark/shuttle_arena_safe
 	name = "hall of champions"
 	desc = "For the winners."
 
 /obj/effect/landmark/shuttle_arena_entrance
-	name = "the arena"
+	name = "\proper the arena"
 	desc = "A lava filled battlefield."
 
 
@@ -158,7 +160,7 @@
 	timeleft = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -169,13 +171,10 @@
 	var/obj/effect/landmark/LA = pick(warp_points)
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
-	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>")
-	spawn()
-		var/obj/effect/mine/pickup/bloodbath/B = new (M)
-		B.mineEffect(M)
-
+	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
+	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
 
 /area/shuttle_arena
 	name = "arena"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

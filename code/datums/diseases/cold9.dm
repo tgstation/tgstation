@@ -4,36 +4,40 @@
 	spread_text = "On contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Common Cold Anti-bodies & Spaceacillin"
-	cures = list("spaceacillin")
+	cures = list(/datum/reagent/medicine/spaceacillin)
 	agent = "ICE9-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "If left untreated the subject will slow, as if partly frozen."
 	severity = DISEASE_SEVERITY_HARMFUL
 
-/datum/disease/cold9/stage_act()
-	..()
+
+/datum/disease/cold9/stage_act(delta_time, times_fired)
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
-			affected_mob.adjust_bodytemperature(-10)
-			if(prob(1) && prob(10))
+			affected_mob.adjust_bodytemperature(-5 * delta_time)
+			if(DT_PROB(0.5, delta_time))
+				affected_mob.emote("sneeze")
+			if(DT_PROB(0.5, delta_time))
+				affected_mob.emote("cough")
+			if(DT_PROB(0.5, delta_time))
+				to_chat(affected_mob, "<span class='danger'>Your throat feels sore.</span>")
+			if(DT_PROB(2.5, delta_time))
+				to_chat(affected_mob, "<span class='danger'>You feel stiff.</span>")
+			if(DT_PROB(0.05, delta_time))
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				cure()
-				return
-			if(prob(1))
-				affected_mob.emote("sneeze")
-			if(prob(1))
-				affected_mob.emote("cough")
-			if(prob(1))
-				to_chat(affected_mob, "<span class='danger'>Your throat feels sore.</span>")
-			if(prob(5))
-				to_chat(affected_mob, "<span class='danger'>You feel stiff.</span>")
+				return FALSE
 		if(3)
-			affected_mob.adjust_bodytemperature(-20)
-			if(prob(1))
+			affected_mob.adjust_bodytemperature(-10 * delta_time)
+			if(DT_PROB(0.5, delta_time))
 				affected_mob.emote("sneeze")
-			if(prob(1))
+			if(DT_PROB(0.5, delta_time))
 				affected_mob.emote("cough")
-			if(prob(1))
+			if(DT_PROB(0.5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your throat feels sore.</span>")
-			if(prob(10))
+			if(DT_PROB(5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel stiff.</span>")

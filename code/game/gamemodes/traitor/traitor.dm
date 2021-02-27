@@ -2,16 +2,14 @@
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
 
-	var/datum/mind/exchange_red
-	var/datum/mind/exchange_blue
-
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
+	report_type = "traitor"
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 20 //Reports of traitors are pretty common.
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -53,18 +51,25 @@
 		pre_traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
-		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
+		log_game("[key_name(traitor)] has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-	return !traitors_required || pre_traitors.len > 0
+	var/enough_tators = !traitors_required || pre_traitors.len > 0
+
+	if(!enough_tators)
+		setup_error = "Not enough traitor candidates"
+		return FALSE
+	else
+		for(var/antag in pre_traitors)
+			GLOB.pre_setup_antags += antag
+		return TRUE
 
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
 		var/datum/antagonist/traitor/new_antag = new antag_datum()
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
-	if(!exchange_blue)
-		exchange_blue = -1 //Block latejoiners from getting exchange objectives
+		GLOB.pre_setup_antags -= traitor
 	..()
 
 	//We're not actually ready until all traitors are assigned.
@@ -78,8 +83,8 @@
 	if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
 	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
-		if(ROLE_TRAITOR in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, ROLE_SYNDICATE))
+		if(antag_flag in character.client.prefs.be_special)
+			if(!is_banned_from(character.ckey, list(ROLE_TRAITOR, ROLE_SYNDICATE)) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
@@ -91,13 +96,3 @@
 /datum/game_mode/traitor/generate_report()
 	return "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \
 		Nanotrasen employees are Syndicate agents with hidden memories that may be activated at a moment's notice, so it's possible that these agents might not even know their positions."
-
-/datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
-	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
-	traitorhud.join_hud(traitor_mind.current)
-	set_antag_hud(traitor_mind.current, "traitor")
-
-/datum/game_mode/proc/update_traitor_icons_removed(datum/mind/traitor_mind)
-	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
-	traitorhud.leave_hud(traitor_mind.current)
-	set_antag_hud(traitor_mind.current, null)

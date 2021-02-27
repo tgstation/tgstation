@@ -1,14 +1,17 @@
 
 // CENTCOM
 
+// Side note, be sure to change the network_root_id of any areas that are not a part of centcom
+// and just using the z space as safe harbor.  It shouldn't matter much as centcom z is isolated
+// from everything anyway
+
 /area/centcom
 	name = "CentCom"
 	icon_state = "centcom"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = TRUE
-	noteleport = TRUE
-	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
+	has_gravity = STANDARD_GRAVITY
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
@@ -29,6 +32,51 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/supplypod/supplypod_temp_holding
+	name = "Supplypod Shipping lane"
+	icon_state = "supplypod_flight"
+
+/area/centcom/supplypod
+	name = "Supplypod Facility"
+	icon_state = "supplypod"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/centcom/supplypod/pod_storage
+	name = "Supplypod Storage"
+	icon_state = "supplypod_holding"
+
+/area/centcom/supplypod/loading
+	name = "Supplypod Loading Facility"
+	icon_state = "supplypod_loading"
+	var/loading_id = ""
+
+/area/centcom/supplypod/loading/Initialize()
+	. = ..()
+	if(!loading_id)
+		CRASH("[type] created without a loading_id")
+	if(GLOB.supplypod_loading_bays[loading_id])
+		CRASH("Duplicate loading bay area: [type] ([loading_id])")
+	GLOB.supplypod_loading_bays[loading_id] = src
+
+/area/centcom/supplypod/loading/one
+	name = "Bay #1"
+	loading_id = "1"
+
+/area/centcom/supplypod/loading/two
+	name = "Bay #2"
+	loading_id = "2"
+
+/area/centcom/supplypod/loading/three
+	name = "Bay #3"
+	loading_id = "3"
+
+/area/centcom/supplypod/loading/four
+	name = "Bay #4"
+	loading_id = "4"
+
+/area/centcom/supplypod/loading/ert
+	name = "ERT Bay"
+	loading_id = "5"
 //THUNDERDOME
 
 /area/tdome
@@ -36,7 +84,7 @@
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
 /area/tdome/arena
@@ -74,49 +122,50 @@
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = TRUE
-	noteleport = TRUE
+	has_gravity = STANDARD_GRAVITY
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
+	network_root_id = "MAGIC_NET"
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = FALSE
-	noteleport = TRUE
-	has_gravity = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	network_root_id = "ALIENS"
 
 //Syndicates
 /area/syndicate_mothership
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = FALSE
-	has_gravity = TRUE
-	noteleport = TRUE
-	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	has_gravity = STANDARD_GRAVITY
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
-	ambientsounds = HIGHSEC
+	ambience_index = AMBIENCE_DANGER
+	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	icon_state = "syndie-control"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
-
-
-
+	network_root_id = SYNDICATE_NETWORK_ROOT
 //CAPTURE THE FLAG
 
 /area/ctf
 	name = "Capture the Flag"
 	icon_state = "yellow"
 	requires_power = FALSE
-	has_gravity = TRUE
-	flags_1 = NO_DEATHRATTLE_1
+	has_gravity = STANDARD_GRAVITY
+	flags_1 = NONE
 
 /area/ctf/control_room
 	name = "Control Room A"
@@ -144,19 +193,3 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
-
-// REEBE
-
-/area/reebe
-	name = "Reebe"
-	icon_state = "yellow"
-	requires_power = FALSE
-	has_gravity = TRUE
-	noteleport = TRUE
-	hidden = TRUE
-	ambientsounds = REEBE
-
-/area/reebe/city_of_cogs
-	name = "City of Cogs"
-	icon_state = "purple"
-	hidden = FALSE

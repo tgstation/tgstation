@@ -5,10 +5,11 @@
 	drop_all_on_destroy = TRUE
 	drop_all_on_deconstruct = TRUE
 	silent = TRUE
+	allow_big_nesting = TRUE
 
 /datum/component/storage/concrete/implant/Initialize()
 	. = ..()
-	cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	set_holdable(null, list(/obj/item/disk/nuclear))
 
 /datum/component/storage/concrete/implant/InheritComponent(datum/component/storage/concrete/implant/I, original)
 	if(!istype(I))

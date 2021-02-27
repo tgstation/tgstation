@@ -6,6 +6,7 @@ Prismatic extracts:
 	name = "prismatic extract"
 	desc = "It's constantly wet with a semi-transparent, colored goo."
 	effect = "prismatic"
+	effect_desc = "When used it paints whatever it hits."
 	icon_state = "prismatic"
 	var/paintcolor = "#FFFFFF"
 
@@ -15,18 +16,19 @@ Prismatic extracts:
 	if(!istype(target) || isspaceturf(target))
 		return
 	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
-	playsound(target, 'sound/effects/slosh.ogg', 20, 1)
+	playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
 
 /obj/item/slimecross/prismatic/grey/
 	colour = "grey"
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
 /obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(istype(target) && target.color != initial(target.color))
 		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		playsound(target, 'sound/effects/slosh.ogg', 20, 1)
+		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
 
 /obj/item/slimecross/prismatic/orange
 	paintcolor = "#FFA500"
@@ -114,7 +116,7 @@ Prismatic extracts:
 
 /obj/item/slimecross/prismatic/rainbow/attack_self(mob/user)
 	var/newcolor = input(user, "Choose the slime color:", "Color change",paintcolor) as color|null
-	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
+	if(user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!newcolor)
 		return

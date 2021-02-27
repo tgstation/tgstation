@@ -13,7 +13,6 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
@@ -48,13 +47,15 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	signal.broadcast()
 
 	if(!GLOB.message_delay)
-		GLOB.message_delay = 1
-		spawn(10)
-			GLOB.message_delay = 0
-			GLOB.recentmessages = list()
+		GLOB.message_delay = TRUE
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/end_message_delay), 1 SECONDS)
 
 	/* --- Do a snazzy animation! --- */
 	flick("broadcaster_send", src)
+
+/proc/end_message_delay()
+	GLOB.message_delay = FALSE
+	GLOB.recentmessages = list()
 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.

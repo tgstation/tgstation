@@ -1,4 +1,4 @@
-#define EGG_INCUBATION_TIME 120
+#define EGG_INCUBATION_TIME 4 MINUTES
 
 /mob/living/simple_animal/hostile/headcrab
 	name = "headslug"
@@ -11,7 +11,8 @@
 	maxHealth = 50
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("creature")
 	robust_searching = 1
@@ -19,10 +20,12 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
-	gold_core_spawnable = HOSTILE_SPAWN //are you sure about this??
+
+/mob/living/simple_animal/hostile/headcrab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -43,7 +46,7 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
-			if(C.has_trait(TRAIT_XENO_HOST))
+			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
 				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
@@ -54,19 +57,18 @@
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	var/datum/mind/origin
-	var/time
+	var/time = 0
 
-/obj/item/organ/body_egg/changeling_egg/egg_process()
+/obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
-	time++
+	time += delta_time
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
-	var/mob/living/carbon/monkey/M = new(owner)
-	owner.stomach_contents += M
+	var/mob/living/carbon/human/species/monkey/M = new(owner)
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)
@@ -79,7 +81,9 @@
 		if(C.can_absorb_dna(owner))
 			C.add_new_profile(owner)
 
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/datum/action/changeling/humanform/hf = new
+		C.purchasedpowers += hf
+		C.regain_powers()
 		M.key = origin.key
 	owner.gib()
 

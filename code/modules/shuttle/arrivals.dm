@@ -11,18 +11,21 @@
 	callTime = INFINITY
 	ignitionTime = 50
 
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
+
 	var/sound_played
-	var/damaged	//too damaged to undock?
-	var/list/areas	//areas in our shuttle
-	var/list/queued_announces	//people coming in that we have to announce
+	var/damaged //too damaged to undock?
+	var/list/areas //areas in our shuttle
+	var/list/queued_announces //people coming in that we have to announce
 	var/obj/machinery/requests_console/console
 	var/force_depart = FALSE
-	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
+	var/perma_docked = FALSE //highlander with RESPAWN??? OH GOD!!!
+	var/obj/docking_port/stationary/target_dock  // for badminry
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	. = ..()
 	preferred_direction = dir
-	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+	return INITIALIZE_HINT_LATELOAD //for latejoin list
 
 /obj/docking_port/mobile/arrivals/register()
 	..()
@@ -76,8 +79,10 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-		announcer.announce("ARRIVALS_BROKEN", channels = list())
+		if (length(GLOB.announcement_systems))
+			var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+			if(!QDELETED(announcer))
+				announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
@@ -103,7 +108,7 @@
 	for(var/I in SSjob.latejoin_trackers)
 		var/turf/open/T = get_turf(I)
 		var/pressure = T.air.return_pressure()
-		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check
+		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE) //simple safety check
 			return TRUE
 	return FALSE
 
@@ -129,13 +134,13 @@
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
 			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
-		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
+		hyperspace_sound(HYPERSPACE_LAUNCH, areas) //for the new guy
 		setTimer(dockTime)
 
 /obj/docking_port/mobile/arrivals/initiate_docking(obj/docking_port/stationary/S1, force=FALSE)
 	var/docked = S1 == assigned_transit
 	sound_played = FALSE
-	if(docked)	//about to launch
+	if(docked) //about to launch
 		if(!force_depart)
 			var/cancel_reason
 			if(PersonCheck())
@@ -174,7 +179,10 @@
 	if(mode == SHUTTLE_IDLE)
 		if(console)
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
-		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
+		var/obj/docking_port/stationary/target = target_dock
+		if(QDELETED(target))
+			target = SSshuttle.getDock("arrivals_stationary")
+		request(target) //we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
@@ -194,6 +202,6 @@
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("perma_docked")
+		if(NAMEOF(src, perma_docked))
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("arrivals shuttle", "[var_value ? "stopped" : "started"]"))
 	return ..()

@@ -8,24 +8,22 @@
 
 /obj/machinery/atmospherics/components/binary/SetInitDirections()
 	switch(dir)
-		if(NORTH)
+		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
-		if(SOUTH)
-			initialize_directions = NORTH|SOUTH
-		if(EAST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
-		if(WEST)
-			initialize_directions = EAST|WEST
-/*
-Iconnery
-*/
-/obj/machinery/atmospherics/components/binary/hide(intact)
-	update_icon()
-
-	..(intact)
-/*
-Housekeeping and pipe network stuff
-*/
 
 /obj/machinery/atmospherics/components/binary/getNodeConnects()
 	return list(turn(dir, 180), dir)
+
+/**
+ * Used by binary devices to set what the offset will be for each layer, called in update_icon_nopipes()
+ * Arguments:
+ * * -pipe_layer: is the pipe layer the component should be set to
+ */
+/obj/machinery/atmospherics/components/binary/proc/set_overlay_offset(pipe_layer)
+	switch(pipe_layer)
+		if(1, 3, 5)
+			return 1
+		if(2, 4)
+			return 2

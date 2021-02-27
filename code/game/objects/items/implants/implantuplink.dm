@@ -10,32 +10,18 @@
 /obj/item/implant/uplink/Initialize(mapload, _owner)
 	. = ..()
 	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
+	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
 
-/obj/item/implant/uplink/implant(mob/living/target, mob/user, silent = FALSE)
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-	if(hidden_uplink)
-		for(var/X in target.implants)
-			if(istype(X, type))
-				var/obj/item/implant/imp_e = X
-				GET_COMPONENT_FROM(their_hidden_uplink, /datum/component/uplink, imp_e)
-				if(their_hidden_uplink)
-					their_hidden_uplink.telecrystals += hidden_uplink.telecrystals
-					qdel(src)
-					return TRUE
-				else
-					qdel(imp_e)	//INFERIOR AND EMPTY!
-
-	if(..())
-		if(hidden_uplink)
-			hidden_uplink.owner = "[user.key]"
-			return TRUE
-	return FALSE
-
-/obj/item/implant/uplink/activate()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-	if(hidden_uplink)
-		hidden_uplink.locked = FALSE
-		hidden_uplink.interact(usr)
+/**
+ * Proc called when component is removed; ie. uplink component
+ *
+ * Callback catching if the underlying uplink component has been removed,
+ * generally by admin verbs or var editing. Implant does nothing without
+ * the component, so delete itself.
+ */
+/obj/item/implant/uplink/proc/_component_removal(datum/source, datum/component/component)
+	if(istype(component, /datum/component/uplink))
+		qdel(src)
 
 /obj/item/implanter/uplink
 	name = "implanter (uplink)"
@@ -46,4 +32,7 @@
 	imp_type = /obj/item/implant/uplink/precharged
 
 /obj/item/implant/uplink/precharged
-	starting_tc = 10
+	starting_tc = TELECRYSTALS_PRELOADED_IMPLANT
+
+/obj/item/implant/uplink/starting
+	starting_tc = TELECRYSTALS_DEFAULT - UPLINK_IMPLANT_TELECRYSTAL_COST

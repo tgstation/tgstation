@@ -20,7 +20,7 @@
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = 1
+	player_mind.active = TRUE
 
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
@@ -31,9 +31,8 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter((pick(spawn_locs)))
-	var/mob/living/simple_animal/slaughter/S = new (holder)
-	S.holder = holder
+	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob((pick(spawn_locs)))
+	var/mob/living/simple_animal/hostile/imp/slaughter/S = new (holder)
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"
 	player_mind.special_role = "Slaughter Demon"
@@ -41,7 +40,7 @@
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
 	SEND_SOUND(S, 'sound/magic/demon_dies.ogg')
-	message_admins("[key_name_admin(S)] has been made into a slaughter demon by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a slaughter demon by an event.")
 	log_game("[key_name(S)] was spawned as a slaughter demon by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

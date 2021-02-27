@@ -8,7 +8,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling
 	name = "seedling"
 	desc = "This oversized, predatory flower conceals what can only be described as an organic energy cannon, and it will not die until its hidden vital organs are sliced out. \
-	 The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
+		The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
 	icon = 'icons/mob/jungle/seedling.dmi'
 	icon_state = "seedling"
 	icon_living = "seedling"
@@ -18,36 +18,38 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	pixel_x = -16
+	base_pixel_x = -16
 	pixel_y = -14
+	base_pixel_y = -14
 	minimum_distance = 3
 	move_to_delay = 20
 	vision_range = 9
 	aggro_vision_range = 15
 	ranged = TRUE
 	ranged_cooldown_time = 10
-	projectiletype = /obj/item/projectile/seedling
+	projectiletype = /obj/projectile/seedling
 	projectilesound = 'sound/weapons/pierce.ogg'
 	robust_searching = TRUE
-	stat_attack = UNCONSCIOUS
-	anchored = TRUE
+	stat_attack = HARD_CRIT
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point
 	var/mob/living/beam_debuff_target
 	var/solar_beam_identifier = 0
 
-/obj/item/projectile/seedling
+/obj/projectile/seedling
 	name = "solar energy"
 	icon_state = "seedling"
 	damage = 10
 	damage_type = BURN
 	light_range = 2
-	flag = "energy"
+	flag = ENERGY
 	light_color = LIGHT_COLOR_YELLOW
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/item/projectile/seedling/Collide(atom/A)//Stops seedlings from destroying other jungle mobs through FF
+/obj/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
 	if(isliving(A))
 		var/mob/living/L = A
 		if("jungle" in L.faction)
@@ -68,7 +70,7 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	tick_interval = 1
-	var/obj/screen/seedling/seedling_screen_object
+	var/atom/movable/screen/seedling/seedling_screen_object
 	var/atom/target
 
 
@@ -80,7 +82,7 @@
 
 /datum/status_effect/seedling_beam_indicator/on_apply()
 	if(owner.client)
-		seedling_screen_object = new /obj/screen/seedling()
+		seedling_screen_object = new /atom/movable/screen/seedling()
 		owner.client.screen += seedling_screen_object
 	tick()
 	return ..()
@@ -97,7 +99,7 @@
 	final.Turn(target_angle)
 	seedling_screen_object.transform = final
 
-/obj/screen/seedling
+/atom/movable/screen/seedling
 	icon = 'icons/mob/jungle/arachnid.dmi'
 	icon_state = "seedling_beam_indicator"
 	screen_loc = "CENTER:-16,CENTER:-16"
@@ -138,9 +140,9 @@
 		combatant_state = SEEDLING_STATE_ACTIVE
 		living_target.apply_status_effect(/datum/status_effect/seedling_beam_indicator, src)
 		beam_debuff_target = living_target
-		playsound(src,'sound/effects/seedling_chargeup.ogg', 100, 0)
+		playsound(src,'sound/effects/seedling_chargeup.ogg', 100, FALSE)
 		if(get_dist(src,living_target) > 7)
-			playsound(living_target,'sound/effects/seedling_chargeup.ogg', 100, 0)
+			playsound(living_target,'sound/effects/seedling_chargeup.ogg', 100, FALSE)
 		solar_beam_identifier = world.time
 		addtimer(CALLBACK(src, .proc/Beamu, living_target, solar_beam_identifier), 35)
 
@@ -161,7 +163,7 @@
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
 			living_target.IgniteMob()
-			playsound(living_target,'sound/weapons/sear.ogg', 50, 1)
+			playsound(living_target,'sound/weapons/sear.ogg', 50, TRUE)
 			addtimer(CALLBACK(src, .proc/AttackRecovery), 5)
 			return
 	AttackRecovery()
@@ -181,10 +183,10 @@
 			Shoot(target)
 			return
 		var/turf/our_turf = get_turf(src)
-		var/obj/item/projectile/seedling/readied_shot = new /obj/item/projectile/seedling(our_turf)
+		var/obj/projectile/seedling/readied_shot = new /obj/projectile/seedling(our_turf)
 		readied_shot.preparePixelProjectile(target, src, null, rand(-10, 10))
 		readied_shot.fire()
-		playsound(src, projectilesound, 100, 1)
+		playsound(src, projectilesound, 100, TRUE)
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/AttackRecovery()
 	if(combatant_state == SEEDLING_STATE_ACTIVE)
@@ -201,7 +203,7 @@
 		update_icons()
 		Goto(target, move_to_delay, minimum_distance)
 
-/mob/living/simple_animal/hostile/jungle/seedling/adjustHealth()
+/mob/living/simple_animal/hostile/jungle/seedling/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(combatant_state == SEEDLING_STATE_ACTIVE && beam_debuff_target)
 		beam_debuff_target.remove_status_effect(/datum/status_effect/seedling_beam_indicator)

@@ -3,24 +3,21 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "bananiumbomb_base"
+	base_icon_state = "bananiumbomb"
 
-/obj/machinery/nuclearbomb/syndicate/bananium/update_icon()
-	if(deconstruction_state == NUKESTATE_INTACT)
-		switch(get_nuke_state())
-			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				icon_state = "bananiumbomb_base"
-				update_icon_interior()
-				update_icon_lights()
-			if(NUKE_ON_TIMING)
-				cut_overlays()
-				icon_state = "bananiumbomb_timing"
-			if(NUKE_ON_EXPLODING)
-				cut_overlays()
-				icon_state = "bananiumbomb_exploding"
-	else
-		icon_state = "bananiumbomb_base"
-		update_icon_interior()
-		update_icon_lights()
+/obj/machinery/nuclearbomb/syndicate/bananium/update_icon_state()
+	. = ..()
+	if(deconstruction_state != NUKESTATE_INTACT)
+		icon_state = "[base_icon_state]_base"
+		return
+
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+			icon_state = "[base_icon_state]_base"
+		if(NUKE_ON_TIMING)
+			icon_state = "[base_icon_state]_timing"
+		if(NUKE_ON_EXPLODING)
+			icon_state = "[base_icon_state]_exploding"
 
 /obj/machinery/nuclearbomb/syndicate/bananium/get_cinematic_type(off_station)
 	switch(off_station)
@@ -34,26 +31,27 @@
 
 /obj/machinery/nuclearbomb/syndicate/bananium/really_actually_explode(off_station)
 	Cinematic(get_cinematic_type(off_station), world)
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/turf/T = get_turf(H)
 		if(!T || T.z != z)
 			continue
 		H.Stun(10)
 		var/obj/item/clothing/C
 		if(!H.w_uniform || H.dropItemToGround(H.w_uniform))
-			C = new /obj/item/clothing/under/rank/clown(H)
-			C.flags_1 |= NODROP_1 //mwahaha
-			H.equip_to_slot_or_del(C, slot_w_uniform)
+			C = new /obj/item/clothing/under/rank/civilian/clown(H)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			H.equip_to_slot_or_del(C, ITEM_SLOT_ICLOTHING)
 
 		if(!H.shoes || H.dropItemToGround(H.shoes))
 			C = new /obj/item/clothing/shoes/clown_shoes(H)
-			C.flags_1 |= NODROP_1
-			H.equip_to_slot_or_del(C, slot_shoes)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			H.equip_to_slot_or_del(C, ITEM_SLOT_FEET)
 
 		if(!H.wear_mask || H.dropItemToGround(H.wear_mask))
 			C = new /obj/item/clothing/mask/gas/clown_hat(H)
-			C.flags_1 |= NODROP_1
-			H.equip_to_slot_or_del(C, slot_wear_mask)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			H.equip_to_slot_or_del(C, ITEM_SLOT_MASK)
 
 		H.dna.add_mutation(CLOWNMUT)
-		H.gain_trauma(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_LOBOTOMY, "clowns") //MWA HA HA
+		H.gain_trauma(/datum/brain_trauma/mild/phobia/clowns, TRAUMA_RESILIENCE_LOBOTOMY) //MWA HA HA

@@ -56,10 +56,10 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
-/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target)
-	if(get_dir(loc, target) == dir)
-		return !density
-	return 1
+/obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(!(get_dir(loc, target) == dir))
+		return TRUE
 
 /obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
 	if(get_dir(O.loc, target) == dir)
@@ -74,6 +74,7 @@
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
+	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
 	return 0
@@ -85,7 +86,7 @@
 		return QDEL_HINT_LETMELIVE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/attack_hand(mob/user)
+/obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
 	if(locked)
 		to_chat(user, "<span class='boldannounce'>It's [open ? "stuck open":"locked"].</span>")
 		return
@@ -154,13 +155,13 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		return QDEL_HINT_LETMELIVE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user)
+/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
 	if(!open && !changing_openness)
 		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())
 			return
 		user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
+		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, TRUE)
 		sleep(50)
 	return ..()
 
@@ -176,8 +177,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
-			message_admins("[user ? key_name_admin(user):"Unknown"] has released Legion!")
-			log_game("[user ? key_name(user):"Unknown"] released Legion.")
+			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
+			log_game("[user ? key_name(user) : "Unknown"] released Legion.")
 
 		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
@@ -186,7 +187,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, S = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
-		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
+		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
 
 /obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'
@@ -263,6 +264,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	return
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
+	. = ..()
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)

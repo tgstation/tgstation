@@ -1,12 +1,14 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
-	nonabstract_req = 1
+	nonabstract_req = TRUE
 
-	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
-	var/invocation_area = 1 //if the invocation appends the selected area
+	var/randomise_selection = FALSE //if it lets the usr choose the teleport loc or picks it from the list
+	var/invocation_area = TRUE //if the invocation appends the selected area
 	var/sound1 = 'sound/weapons/zapbang.ogg'
 	var/sound2 = 'sound/weapons/zapbang.ogg'
+
+	var/say_destination = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
 	var/thearea = before_cast(targets)
@@ -33,56 +35,55 @@
 	return thearea
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea,mob/user = usr)
-	playsound(get_turf(user), sound1, 50,1)
+	playsound(get_turf(user), sound1, 50,TRUE)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
 			if(!T.density)
-				var/clear = 1
+				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)
-						clear = 0
+						clear = FALSE
 						break
 				if(clear)
 					L+=T
 
 		if(!L.len)
-			to_chat(usr, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+			to_chat(usr, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
 			return
 
-		if(target && target.buckled)
+		if(target?.buckled)
 			target.buckled.unbuckle_mob(target, force=1)
 
 		var/list/tempL = L
 		var/attempt = null
-		var/success = 0
+		var/success = FALSE
 		while(tempL.len)
 			attempt = pick(tempL)
-			target.Move(attempt)
+			do_teleport(target, attempt, channel = TELEPORT_CHANNEL_MAGIC)
 			if(get_turf(target) == attempt)
-				success = 1
+				success = TRUE
 				break
 			else
 				tempL.Remove(attempt)
 
 		if(!success)
-			target.forceMove(L)
-			playsound(get_turf(user), sound2, 50,1)
+			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+			playsound(get_turf(user), sound2, 50,TRUE)
 
-	return
-
-/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/living/user = usr)
 	if(!invocation_area || !chosenarea)
 		..()
 	else
-		switch(invocation_type)
-			if("shout")
-				user.say("[invocation] [uppertext(chosenarea.name)]")
-				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
-				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
-			if("whisper")
-				user.whisper("[invocation] [uppertext(chosenarea.name)]")
+		var/words
+		if(say_destination)
+			words = "[invocation] [uppertext(chosenarea.name)]"
+		else
+			words = "[invocation]"
 
-	return
+		switch(invocation_type)
+			if(INVOCATION_SHOUT)
+				user.say(words, forced = "spell")
+				playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
+			if(INVOCATION_WHISPER)
+				user.whisper(words, forced = "spell")

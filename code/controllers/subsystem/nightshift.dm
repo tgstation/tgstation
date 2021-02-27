@@ -4,8 +4,8 @@ SUBSYSTEM_DEF(nightshift)
 	flags = SS_NO_TICK_CHECK
 
 	var/nightshift_active = FALSE
-	var/nightshift_start_time = 702000		//7:30 PM, station time
-	var/nightshift_end_time = 270000		//7:30 AM, station time
+	var/nightshift_start_time = 702000 //7:30 PM, station time
+	var/nightshift_end_time = 270000 //7:30 AM, station time
 	var/nightshift_first_check = 30 SECONDS
 
 	var/high_security_mode = FALSE
@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(nightshift)
 			if(!emergency)
 				announce("Restoring night lighting configuration to normal operation.")
 			else
-				announce("Disabling night lighting: Station is in a state of emergency.")  
+				announce("Disabling night lighting: Station is in a state of emergency.")
 	if(emergency)
 		night_time = FALSE
 	if(nightshift_active != night_time)

@@ -3,7 +3,7 @@
 	desc = "A tool for inductively charging internal power cells."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
-	item_state = "inducer-engi"
+	inhand_icon_state = "inducer-engi"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 7
@@ -22,19 +22,19 @@
 	var/totransfer = min(cell.charge,(powertransfer * coefficient))
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
-	cell.update_icon()
-	target.update_icon()
+	cell.update_appearance()
+	target.update_appearance()
 
 /obj/item/inducer/get_cell()
 	return cell
 
 /obj/item/inducer/emp_act(severity)
-	..()
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
 /obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 
 	if(cantbeused(user))
@@ -46,7 +46,7 @@
 	return ..()
 
 /obj/item/inducer/proc/cantbeused(mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to use [src]!</span>")
 		return TRUE
 
@@ -61,17 +61,17 @@
 
 
 /obj/item/inducer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		W.play_tool_sound(src)
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
 			opened = TRUE
-			update_icon()
+			update_appearance()
 			return
 		else
 			to_chat(user, "<span class='notice'>You close the battery compartment.</span>")
 			opened = FALSE
-			update_icon()
+			update_appearance()
 			return
 	if(istype(W, /obj/item/stock_parts/cell))
 		if(opened)
@@ -80,10 +80,10 @@
 					return
 				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 				cell = W
-				update_icon()
+				update_appearance()
 				return
 			else
-				to_chat(user, "<span class='notice'>[src] already has \a [cell] installed!</span>")
+				to_chat(user, "<span class='warning'>[src] already has \a [cell] installed!</span>")
 				return
 
 	if(cantbeused(user))
@@ -105,7 +105,10 @@
 	var/obj/O
 	var/coefficient = 1
 	if(istype(A, /obj/item/gun/energy))
-		to_chat(user,"Error unable to interface with device")
+		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
+		return FALSE
+	if(istype(A, /obj/item/clothing/suit/space))
+		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
 		return FALSE
 	if(istype(A, /obj))
 		O = A
@@ -115,25 +118,25 @@
 			to_chat(user, "<span class='notice'>[A] is fully charged!</span>")
 			recharging = FALSE
 			return TRUE
-		user.visible_message("[user] starts recharging [A] with [src].","<span class='notice'>You start recharging [A] with [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts recharging [A] with [src].</span>", "<span class='notice'>You start recharging [A] with [src].</span>")
 		while(C.charge < C.maxcharge)
 			if(do_after(user, 10, target = user) && cell.charge)
 				done_any = TRUE
 				induce(C, coefficient)
 				do_sparks(1, FALSE, A)
 				if(O)
-					O.update_icon()
+					O.update_appearance()
 			else
 				break
 		if(done_any) // Only show a message if we succeeded at least once
-			user.visible_message("[user] recharged [A]!","<span class='notice'>You recharged [A]!</span>")
+			user.visible_message("<span class='notice'>[user] recharged [A]!</span>", "<span class='notice'>You recharged [A]!</span>")
 		recharging = FALSE
 		return TRUE
 	recharging = FALSE
 
 
-/obj/item/inducer/attack(mob/M, mob/user)
-	if(user.a_intent == INTENT_HARM)
+/obj/item/inducer/attack(mob/M, mob/living/user)
+	if(user.combat_mode)
 		return ..()
 
 	if(cantbeused(user))
@@ -146,33 +149,31 @@
 
 /obj/item/inducer/attack_self(mob/user)
 	if(opened && cell)
-		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
-		cell.update_icon()
+		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
+		cell.update_appearance()
 		user.put_in_hands(cell)
 		cell = null
-		update_icon()
+		update_appearance()
 
 
 /obj/item/inducer/examine(mob/living/M)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(M, "<span class='notice'>Its display shows: [DisplayEnergy(cell.charge)].</span>")
+		. += "<span class='notice'>Its display shows: [DisplayEnergy(cell.charge)].</span>"
 	else
-		to_chat(M,"<span class='notice'>Its display is dark.</span>")
+		. += "<span class='notice'>Its display is dark.</span>"
 	if(opened)
-		to_chat(M,"<span class='notice'>Its battery compartment is open.</span>")
+		. += "<span class='notice'>Its battery compartment is open.</span>"
 
-/obj/item/inducer/update_icon()
-	cut_overlays()
-	if(opened)
-		if(!cell)
-			add_overlay("inducer-nobat")
-		else
-			add_overlay("inducer-bat")
+/obj/item/inducer/update_overlays()
+	. = ..()
+	if(!opened)
+		return
+	. += "inducer-[cell ? "bat" : "nobat"]"
 
 /obj/item/inducer/sci
 	icon_state = "inducer-sci"
-	item_state = "inducer-sci"
+	inhand_icon_state = "inducer-sci"
 	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than its engineering counterpart."
 	cell_type = null
 	powertransfer = 500
@@ -180,6 +181,11 @@
 
 /obj/item/inducer/sci/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
-
+/obj/item/inducer/syndicate
+	icon_state = "inducer-syndi"
+	inhand_icon_state = "inducer-syndi"
+	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
+	powertransfer = 2000
+	cell_type = /obj/item/stock_parts/cell/super

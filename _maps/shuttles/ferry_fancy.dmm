@@ -27,7 +27,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "g" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "h" = (
@@ -70,7 +70,6 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_direction = 1;
 	preferred_direction = 4;
 	width = 5
 	},
@@ -87,7 +86,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,

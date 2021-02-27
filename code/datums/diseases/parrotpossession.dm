@@ -5,23 +5,29 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	disease_flags = CURABLE
 	cure_text = "Holy Water."
-	cures = list("holywater")
-	cure_chance = 20
+	cures = list(/datum/reagent/water/holywater)
+	cure_chance = 10
 	agent = "Avian Vengence"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	desc = "Subject is possesed by the vengeful spirit of a parrot. Call the priest."
+	desc = "Subject is possessed by the vengeful spirit of a parrot. Call the priest."
 	severity = DISEASE_SEVERITY_MEDIUM
-	infectable_biotypes = list(MOB_ORGANIC, MOB_UNDEAD, MOB_INORGANIC, MOB_ROBOTIC)
+	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC|MOB_MINERAL
 	bypasses_immunity = TRUE //2spook
-	var/mob/living/simple_animal/parrot/Poly/ghost/parrot
+	var/mob/living/simple_animal/parrot/poly/ghost/parrot
 
-/datum/disease/parrot_possession/stage_act()
-	..()
-	if(!parrot || parrot.loc != affected_mob)
+
+/datum/disease/parrot_possession/stage_act(delta_time, times_fired)
+	. = ..()
+	if(!.)
+		return
+
+	if(QDELETED(parrot) || parrot.loc != affected_mob)
 		cure()
-	else if(prob(parrot.speak_chance))
-		if(parrot.speech_buffer.len)
-			affected_mob.say(pick(parrot.speech_buffer))
+		return FALSE
+
+	if(length(parrot.speech_buffer) && DT_PROB(parrot.speak_chance, delta_time)) // I'm not going to dive into polycode trying to adjust that probability. Enjoy doubled ghost parrot speach
+		affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
+
 
 /datum/disease/parrot_possession/cure()
 	if(parrot && parrot.loc == affected_mob)

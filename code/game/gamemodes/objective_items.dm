@@ -2,10 +2,10 @@
 
 /datum/objective_item
 	var/name = "A silly bike horn! Honk!"
-	var/targetitem = /obj/item/bikehorn		//typepath of the objective item
-	var/difficulty = 9001							//vaguely how hard it is to do this objective
-	var/list/excludefromjob = list()				//If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
-	var/list/altitems = list()				//Items which can serve as an alternative to the objective (darn you blueprints)
+	var/targetitem = /obj/item/bikehorn //typepath of the objective item
+	var/difficulty = 9001 //vaguely how hard it is to do this objective
+	var/list/excludefromjob = list() //If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
+	var/list/altitems = list() //Items which can serve as an alternative to the objective (darn you blueprints)
 	var/list/special_equipment = list()
 
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
@@ -41,7 +41,7 @@
 	name = "a hand teleporter."
 	targetitem = /obj/item/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Captain", "Research Director")
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack."
@@ -63,7 +63,7 @@
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray."
-	targetitem = /obj/item/reagent_containers/hypospray/CMO
+	targetitem = /obj/item/reagent_containers/hypospray/cmo
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 
@@ -77,14 +77,14 @@
 	return !N.fake
 
 /datum/objective_item/steal/reflector
-	name = "a reflector vest."
-	targetitem = /obj/item/clothing/suit/armor/laserproof
+	name = "a reflector trenchcoat."
+	targetitem = /obj/item/clothing/suit/hooded/ablative
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
 
 /datum/objective_item/steal/reactive
 	name = "the reactive teleport armor."
-	targetitem = /obj/item/clothing/suit/armor/reactive
+	targetitem = /obj/item/clothing/suit/armor/reactive/teleport
 	difficulty = 5
 	excludefromjob = list("Research Director")
 
@@ -136,8 +136,8 @@
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints."
@@ -148,12 +148,12 @@
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
-		return 1
+		return TRUE
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I
-		if(P.blueprints)	//if the blueprints are in frame
-			return 1
-	return 0
+		if(P.picture.has_blueprints) //if the blueprints are in frame
+			return TRUE
+	return FALSE
 
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract."
@@ -166,17 +166,13 @@
 		return 1
 	return 0
 
+/datum/objective_item/steal/blackbox
+	name = "The Blackbox."
+	targetitem = /obj/item/blackbox
+	difficulty = 10
+	excludefromjob = list("Chief Engineer","Station Engineer","Atmospheric Technician")
+
 //Unique Objectives
-/datum/objective_item/unique/docs_red
-	name = "the \"Red\" secret documents."
-	targetitem = /obj/item/documents/syndicate/red
-	difficulty = 10
-
-/datum/objective_item/unique/docs_blue
-	name = "the \"Blue\" secret documents."
-	targetitem = /obj/item/documents/syndicate/blue
-	difficulty = 10
-
 /datum/objective_item/special/New()
 	..()
 	if(TargetExists())
@@ -189,9 +185,9 @@
 	return ..()
 
 //Old ninja objectives.
-/datum/objective_item/special/pinpointer/nuke
+/datum/objective_item/special/pinpointer
 	name = "the captain's pinpointer."
-	targetitem = /obj/item/pinpointer
+	targetitem = /obj/item/pinpointer/nuke
 	difficulty = 10
 
 /datum/objective_item/special/aegun
@@ -221,7 +217,7 @@
 
 /datum/objective_item/special/corgimeat
 	name = "a piece of corgi meat."
-	targetitem = /obj/item/reagent_containers/food/snacks/meat/slab/corgi
+	targetitem = /obj/item/food/meat/slab/corgi
 	difficulty = 5
 
 /datum/objective_item/stack/New()

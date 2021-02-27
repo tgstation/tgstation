@@ -1,18 +1,18 @@
 // Blob Overmind Controls
 
 
-/mob/camera/blob/ClickOn(var/atom/A, var/params) //Expand blob
+/mob/camera/blob/ClickOn(atom/A, params) //Expand blob
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"])
-		MiddleClickOn(A)
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		MiddleClickOn(A, params)
 		return
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"])
+	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
 	var/turf/T = get_turf(A)
@@ -20,6 +20,7 @@
 		expand_blob(T)
 
 /mob/camera/blob/MiddleClickOn(atom/A) //Rally spores
+	. = ..()
 	var/turf/T = get_turf(A)
 	if(T)
 		rally_spores(T)

@@ -2,7 +2,7 @@
 //Clusterbang
 ////////////////////
 /obj/item/grenade/clusterbuster
-	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
+	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
@@ -14,7 +14,8 @@
 	var/max_spawned = 8
 	var/segment_chance = 35
 
-/obj/item/grenade/clusterbuster/prime()
+/obj/item/grenade/clusterbuster/detonate(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	var/numspawned = rand(min_spawned,max_spawned)
 	var/again = 0
@@ -28,14 +29,14 @@
 		new /obj/item/grenade/clusterbuster/segment(drop_location(), src)//Creates 'segments' that launches a few more payloads
 
 	new payload_spawner(drop_location(), payload, numspawned)//Launches payload
-	playsound(src, prime_sound, 75, 1, -3)
+	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 
 //////////////////////
 //Clusterbang segment
 //////////////////////
 /obj/item/grenade/clusterbuster/segment
-	desc = "A smaller segment of a clusterbang. Better run."
+	desc = "A smaller segment of a clusterbang. Better run!"
 	name = "clusterbang segment"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
@@ -57,11 +58,11 @@
 	var/steps = rand(1,4)
 	for(var/i in 1 to steps)
 		step_away(src,loc)
-	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
+	addtimer(CALLBACK(src, .proc/detonate), rand(15,60))
 
-/obj/item/grenade/clusterbuster/segment/prime()
+/obj/item/grenade/clusterbuster/segment/detonate(mob/living/lanced_by)
 	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
-	playsound(src, prime_sound, 75, 1, -3)
+	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 
 //////////////////////////////////
@@ -77,7 +78,7 @@
 		var/obj/item/grenade/P = new type(loc)
 		if(istype(P))
 			P.active = TRUE
-			addtimer(CALLBACK(P, /obj/item/grenade/proc/prime), rand(15,60))
+			addtimer(CALLBACK(P, /obj/item/grenade/proc/detonate), rand(15,60))
 		var/steps = rand(1,4)
 		for(var/i in 1 to steps)
 			step_away(src,loc)
@@ -94,11 +95,11 @@
 		var/chem = pick(slime_chems)
 		var/amount = 5
 		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = "plasma"
+			chem = /datum/reagent/toxin/plasma
 			amount = 4
 		if(chem == "holy water and uranium")
-			chem = "uranium"
-			reagents.add_reagent("holywater")
+			chem = /datum/reagent/uranium
+			reagents.add_reagent(/datum/reagent/water/holywater)
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
@@ -173,10 +174,11 @@
 /obj/item/grenade/clusterbuster/random
 	icon_state = "random_clusterbang"
 
-/obj/item/grenade/clusterbuster/random/New()
+/obj/item/grenade/clusterbuster/random/Initialize()
+	..()
 	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 //rainbow slime effect
 /obj/item/grenade/clusterbuster/slime

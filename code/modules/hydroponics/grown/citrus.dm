@@ -1,11 +1,12 @@
 // Citrus - base type
-/obj/item/reagent_containers/food/snacks/grown/citrus
+/obj/item/food/grown/citrus
 	seed = /obj/item/seeds/lime
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
+	wine_power = 30
 
 // Lime
 /obj/item/seeds/lime
@@ -14,7 +15,7 @@
 	icon_state = "seed-lime"
 	species = "lime"
 	plantname = "Lime Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/citrus/lime
+	product = /obj/item/food/grown/citrus/lime
 	lifespan = 55
 	endurance = 50
 	yield = 4
@@ -22,15 +23,14 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/orange)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/citrus/lime
+/obj/item/food/grown/citrus/lime
 	seed = /obj/item/seeds/lime
 	name = "lime"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	filling_color = "#00FF00"
-	juice_results = list("limejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/limejuice = 0)
 
 // Orange
 /obj/item/seeds/orange
@@ -39,7 +39,7 @@
 	icon_state = "seed-orange"
 	species = "orange"
 	plantname = "Orange Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/citrus/orange
+	product = /obj/item/food/grown/citrus/orange
 	lifespan = 60
 	endurance = 50
 	yield = 5
@@ -48,16 +48,16 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/lime)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	mutatelist = list(/obj/item/seeds/lime, /obj/item/seeds/orange_3d)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange
+/obj/item/food/grown/citrus/orange
 	seed = /obj/item/seeds/orange
 	name = "orange"
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
-	filling_color = "#FFA500"
-	juice_results = list("orangejuice" = 0)
+	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
+	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 
 // Lemon
 /obj/item/seeds/lemon
@@ -66,7 +66,7 @@
 	icon_state = "seed-lemon"
 	species = "lemon"
 	plantname = "Lemon Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/citrus/lemon
+	product = /obj/item/food/grown/citrus/lemon
 	lifespan = 55
 	endurance = 45
 	yield = 4
@@ -75,15 +75,14 @@
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/firelemon)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/citrus/lemon
+/obj/item/food/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
 	name = "lemon"
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
-	filling_color = "#FFD700"
-	juice_results = list("lemonjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
@@ -92,7 +91,7 @@
 	icon_state = "seed-firelemon"
 	species = "firelemon"
 	plantname = "Combustible Lemon Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/firelemon
+	product = /obj/item/food/grown/firelemon
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
@@ -100,43 +99,40 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
-	reagents_add = list("nutriment" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon
+/obj/item/food/grown/firelemon
 	seed = /obj/item/seeds/firelemon
 	name = "Combustible Lemon"
 	desc = "Made for burning houses down."
 	icon_state = "firelemon"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
+	wine_power = 70
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
-	var/area/A = get_area(user)
+/obj/item/food/grown/firelemon/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")
-	var/message = "[ADMIN_LOOKUPFLW(user)] primed a combustible lemon for detonation at [A] [ADMIN_COORDJMP(user)]"
-	GLOB.bombers += message
-	message_admins(message)
-	log_game("[key_name(user)] primed a combustible lemon for detonation at [A] [COORD(user)].")
+	log_bomber(user, "primed a", src, "for detonation")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
 	icon_state = "firelemon_active"
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-	addtimer(CALLBACK(src, .proc/prime), rand(10, 60))
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
+	addtimer(CALLBACK(src, .proc/detonate), rand(10, 60))
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/burn()
-	prime()
+/obj/item/food/grown/firelemon/burn()
+	detonate()
 	..()
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/proc/update_mob()
+/obj/item/food/grown/firelemon/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.dropItemToGround(src)
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
+/obj/item/food/grown/firelemon/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime()
+/obj/item/food/grown/firelemon/proc/detonate(mob/living/lanced_by)
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()
@@ -158,3 +154,39 @@
 			update_mob()
 			explosion(src.loc,-1,-1,2, flame_range = 5)
 			qdel(src)
+
+//3D Orange
+/obj/item/seeds/orange_3d
+	name = "pack of extradimensional orange seeds"
+	desc = "Polygonal seeds."
+	icon_state = "seed-orange"
+	species = "orange"
+	plantname = "Extradimensional Orange Tree"
+	product = /obj/item/food/grown/citrus/orange_3d
+	lifespan = 60
+	endurance = 50
+	yield = 5
+	potency = 20
+	instability = 64
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/haloperidol = 0.15) //insert joke about the effects of haloperidol and our glorious headcoder here
+
+/obj/item/food/grown/citrus/orange_3d
+	seed = /obj/item/seeds/orange_3d
+	name = "extradimensional orange"
+	desc = "You can hardly wrap your head around this thing."
+	icon_state = "orang"
+	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
+	distill_reagent = /datum/reagent/toxin/mindbreaker
+	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)
+
+/obj/item/food/grown/citrus/orange_3d/pickup(mob/user)
+	. = ..()
+	icon_state = "orange"
+
+/obj/item/food/grown/citrus/orange_3d/dropped(mob/user)
+	. = ..()
+	icon_state = "orang"

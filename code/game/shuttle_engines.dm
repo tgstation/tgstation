@@ -7,8 +7,10 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
 	max_integrity = 500
-	armor = list("melee" = 100, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70) //default + ignores melee
+	armor = list(MELEE = 100, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70) //default + ignores melee
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/shuttle/engine
 	name = "engine"
@@ -35,33 +37,35 @@
 			state = ENGINE_UNWRENCHED
 
 /obj/structure/shuttle/engine/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/structure/shuttle/engine/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	switch(state)
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
-		if(EM_SECURED)
+		if(ENGINE_WRENCHED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 
-			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+			user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 
 			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
 				state = ENGINE_WELDED
 				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 				alter_engine_power(engine_power)
 
-		if(EM_WELDED)
+		if(ENGINE_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 
-			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+			user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 
 			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
 				state = ENGINE_WRENCHED
@@ -99,7 +103,7 @@
 	name = "propulsion engine"
 	icon_state = "propulsion"
 	desc = "A standard reliable bluespace engine used by many forms of shuttles."
-	opacity = 1
+	opacity = TRUE
 
 /obj/structure/shuttle/engine/propulsion/left
 	name = "left propulsion engine"
@@ -132,7 +136,7 @@
 
 /obj/structure/shuttle/engine/large
 	name = "engine"
-	opacity = 1
+	opacity = TRUE
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "large_engine"
 	desc = "A very large bluespace engine used to propel very large ships."
@@ -142,10 +146,15 @@
 
 /obj/structure/shuttle/engine/huge
 	name = "engine"
-	opacity = 1
+	opacity = TRUE
 	icon = 'icons/obj/3x3.dmi'
 	icon_state = "huge_engine"
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = 0
+
+#undef ENGINE_UNWRENCHED
+#undef ENGINE_WRENCHED
+#undef ENGINE_WELDED
+#undef ENGINE_WELDTIME

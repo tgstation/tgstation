@@ -1,0 +1,52 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+.Flex {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Flex--inline {
+  display: inline-flex;
+}
+
+.Flex--iefix {
+  display: table !important;
+  width: 105%;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  &:after {
+    content: '';
+    display: table-cell;
+    width: 5%;
+  }
+}
+
+.Flex--iefix--column {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  & > .Flex__item--iefix {
+    display: table-row !important;
+  }
+
+  & > .Flex__item--iefix--grow {
+    height: 100% !important;
+  }
+}
+
+.Flex__item--iefix {
+  display: table-cell !important;
+  width: 1% !important;
+  min-width: 99%;
+}
+
+.Flex__item--iefix--grow {
+  width: auto !important;
+}

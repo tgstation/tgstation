@@ -1,23 +1,20 @@
-
-
 GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
-/mob
-	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
-	sandbox = new/datum/hSB
+	sandbox = new/datum/h_sandbox
 	sandbox.owner = src.ckey
 	if(src.client.holder)
-		sandbox.admin = 1
-	verbs += new/mob/proc/sandbox_panel
+		sandbox.admin = TRUE
+	add_verb(src, /mob/proc/sandbox_panel)
+
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)
 		sandbox.update()
 
-/datum/hSB
+/datum/h_sandbox
 	var/owner = null
-	var/admin = 0
+	var/admin = FALSE
 
 	var/static/clothinfo = null
 	var/static/reaginfo = null
@@ -25,52 +22,55 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/canisterinfo = null
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
-	var/global/list/spawn_forbidden = list(
+	var/static/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
-		/obj/item/smallDelivery, /obj/item/projectile,
-		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
+		/obj/item/small_delivery, /obj/projectile,
+		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_model)
 
-/datum/hSB/proc/update()
-	var/global/list/hrefs = list(
+/datum/h_sandbox/proc/update()
+	var/static/list/hrefs = list(
 			"Space Gear",
-			"Suit Up (Space Travel Gear)"		= "hsbsuit",
-			"Spawn Gas Mask"					= "hsbspawn&path=[/obj/item/clothing/mask/gas]",
-			"Spawn Emergency Air Tank"			= "hsbspawn&path=[/obj/item/tank/internals/emergency_oxygen/double]",
+			"Suit Up (Space Travel Gear)" = "hsbsuit",
+			"Spawn Gas Mask" = "hsbspawn&path=[/obj/item/clothing/mask/gas]",
+			"Spawn Emergency Air Tank" = "hsbspawn&path=[/obj/item/tank/internals/emergency_oxygen/double]",
 
 			"Standard Tools",
-			"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/flashlight]",
-			"Spawn Toolbox"						= "hsbspawn&path=[/obj/item/storage/toolbox/mechanical]",
-			"Spawn Light Replacer"				= "hsbspawn&path=[/obj/item/lightreplacer]",
-			"Spawn Medical Kit"					= "hsbspawn&path=[/obj/item/storage/firstaid/regular]",
-			"Spawn All-Access ID"				= "hsbaaid",
+			"Spawn Flashlight" = "hsbspawn&path=[/obj/item/flashlight]",
+			"Spawn Toolbox" = "hsbspawn&path=[/obj/item/storage/toolbox/mechanical]",
+			"Spawn Experimental Welding tool" = "hsbspawn&path=[/obj/item/weldingtool/experimental]",
+			"Spawn Light Replacer" = "hsbspawn&path=[/obj/item/lightreplacer]",
+			"Spawn Medical Kit" = "hsbspawn&path=[/obj/item/storage/firstaid/regular]",
+			"Spawn All-Access ID" = "hsbaaid",
 
 			"Building Supplies",
 			"Spawn 50 Wood"                     = "hsbwood",
-			"Spawn 50 Metal"					= "hsbmetal",
-			"Spawn 50 Plasteel"					= "hsbplasteel",
+			"Spawn 50 Metal" = "hsbmetal",
+			"Spawn 50 Plasteel" = "hsbplasteel",
 			"Spawn 50 Reinforced Glass"         = "hsbrglass",
-			"Spawn 50 Glass"					= "hsbglass",
-			"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil]",
-			"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
-			"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
-			"Spawn Rapid Construction Device"	= "hsbrcd",
-			"Spawn RCD Ammo"					= "hsb_safespawn&path=[/obj/item/rcd_ammo]",
-			"Spawn Airlock"						= "hsbairlock",
+			"Spawn 50 Glass" = "hsbglass",
+			"Spawn Box of Materials" = "hsbspawn&path=[/obj/item/storage/box/material]",
+			"Spawn Full Cable Coil" = "hsbspawn&path=[/obj/item/stack/cable_coil]",
+			"Spawn Hyper Capacity Power Cell" = "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
+			"Spawn Inf. Capacity Power Cell" = "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
+			"Spawn Rapid Construction Device" = "hsbrcd",
+			"Spawn RCD Ammo" = "hsb_safespawn&path=[/obj/item/rcd_ammo]",
+			"Spawn Airlock" = "hsbairlock",
 
 			"Miscellaneous",
-			"Spawn Air Scrubber"				= "hsbscrubber",
-			"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
-			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
+			"Spawn Air Scrubber" = "hsbscrubber",
+			"Spawn CentCom Technology Disk" = "hsbspawn&path=[/obj/item/disk/tech_disk/debug]",
+			"Spawn Adminordrazine" = "hsbspawn&path=[/obj/item/reagent_containers/pill/adminordrazine]",
+			"Spawn Water Tank" = "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
-			"Spawn Cleanbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
-			"Spawn Floorbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
-			"Spawn Medbot"						= "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
+			"Spawn Cleanbot" = "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
+			"Spawn Floorbot" = "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
+			"Spawn Medbot" = "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
 
 			"Canisters",
-			"Spawn O2 Canister" 				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
-			"Spawn Air Canister"				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/air]")
+			"Spawn O2 Canister" = "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
+			"Spawn Air Canister" = "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/air]")
 
 
 	if(!hsbinfo)
@@ -100,7 +100,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
-/datum/hSB/Topic(href, href_list)
+/datum/h_sandbox/Topic(href, href_list)
 	if(!usr || !src || !(src.owner == usr.ckey))
 		if(usr)
 			usr << browse(null,"window=sandbox")
@@ -130,7 +130,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(sbac)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
+					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning. The window will now auto-close after use.</b>")
 				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//
@@ -180,7 +180,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
 				var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)
-				hsb.update_icon() // hackish but it wasn't meant to be spawned I guess?
+				hsb.update_appearance() // hackish but it wasn't meant to be spawned I guess?
 
 			//
 			// Stacked Materials
@@ -190,7 +190,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				new/obj/item/stack/sheet/rglass{amount=50}(usr.loc)
 
 			if("hsbmetal")
-				new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
+				new/obj/item/stack/sheet/iron/fifty(usr.loc)
 
 			if("hsbplasteel")
 				new/obj/item/stack/sheet/plasteel{amount=50}(usr.loc)

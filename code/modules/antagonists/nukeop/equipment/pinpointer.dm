@@ -1,8 +1,9 @@
 /obj/item/pinpointer/nuke
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mode = TRACK_NUKE_DISK
 
 /obj/item/pinpointer/nuke/examine(mob/user)
-	..()
+	. = ..()
 	var/msg = "Its tracking indicator reads "
 	switch(mode)
 		if(TRACK_NUKE_DISK)
@@ -13,10 +14,10 @@
 			msg += "\"vasvygengbefuvc\"."
 		else
 			msg = "Its tracking indicator is blank."
-	to_chat(user, msg)
+	. += msg
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
-			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
+			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
 /obj/item/pinpointer/nuke/process()
 	..()
@@ -25,7 +26,7 @@
 			if(bomb.timing)
 				if(!alert)
 					alert = TRUE
-					playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, 0)
+					playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
 					if(isliving(loc))
 						var/mob/living/L = loc
 						to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
@@ -52,8 +53,8 @@
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>")
-		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
+		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures it's tracking algorithms.</span>")
+		playsound(L, 'sound/machines/triple_beep.ogg', 50, TRUE)
 	mode = new_mode
 	scan_for_target()
 
@@ -65,7 +66,17 @@
 /obj/item/pinpointer/syndicate_cyborg // Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
-	flags_1 = NODROP_1
+	flags_1 = NONE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/pinpointer/syndicate_cyborg/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
+	if(!active)
+		return
+	toggle_on()
 
 /obj/item/pinpointer/syndicate_cyborg/scan_for_target()
 	target = null
@@ -79,4 +90,3 @@
 	if(closest_operative)
 		target = closest_operative
 	..()
-

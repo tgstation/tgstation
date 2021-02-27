@@ -4,9 +4,10 @@
 	desc = "This spell lets you reach into S-space and retrieve presents! Yay!"
 	school = "santa"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	invocation = "HO HO HO"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 3
 	cooldown_min = 50
 

@@ -1,7 +1,14 @@
 //Vars that will not be copied when using /DuplicateObject
-GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag", "datum_components", "area","type","loc","locs","vars", "parent","parent_type", "verbs","ckey","key","power_supply","contents","reagents","stat","x","y","z","group","atmos_adjacent_turfs"))
+GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
+	"tag", "datum_components", "area", "type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key",
+	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup",
+	"client_mobs_in_contents", "bodyparts", "internal_organs", "hand_bodyparts", "overlays_standing", "hud_list",
+	"actions", "AIStatus", "appearance", "managed_overlays", "managed_vis_overlays", "computer_id", "lastKnownIP", "implants",
+	"tgui_shared_states"
+	))
 
-/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
+/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc, atom/newloc = null, nerf, holoitem)
+	RETURN_TYPE(original.type)
 	if(!original)
 		return
 	var/atom/O
@@ -16,8 +23,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag", "datum_components", "area"
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V], /datum))
-				continue	// this would reference the original's object, that will break when it is used or deleted.
+			else if(istype(original.vars[V], /datum) || ismob(original.vars[V]))
+				continue // this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]
 
@@ -30,22 +37,38 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag", "datum_components", "area"
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
 
-		N.update_icon()
+		N.update_appearance()
 		if(ismachinery(O))
 			var/obj/machinery/M = O
 			M.power_change()
+			if(istype(O, /obj/machinery/button))
+				var/obj/machinery/button/B = O
+				B.setup_device()
 
 	if(holoitem)
-		O.flags_2 |= HOLOGRAM_2
+		O.flags_1 |= HOLOGRAM_1
+		for(var/atom/thing in O)
+			thing.flags_1 |= HOLOGRAM_1
+		if(ismachinery(O))
+			var/obj/machinery/M = O
+			for(var/atom/contained_atom in M.component_parts)
+				contained_atom.flags_1 |= HOLOGRAM_1
+			if(M.circuit)
+				M.circuit.flags_1 |= HOLOGRAM_1
+
+	if(ismob(O)) //Overlays are carried over despite disallowing them, if a fix is found remove this.
+		var/mob/M = O
+		M.cut_overlays()
+		M.regenerate_icons()
 	return O
 
 
-/area/proc/copy_contents_to(var/area/A , var/platingRequired = 0, var/nerf_weapons = 0 )
+/area/proc/copy_contents_to(area/A , platingRequired = 0, nerf_weapons = 0 )
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
 	//       Movement based on lower left corner. Tiles that do not fit
-	//		 into the new area will not be moved.
+	//  into the new area will not be moved.
 
 	if(!A || !src)
 		return 0
@@ -119,8 +142,6 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag", "datum_components", "area"
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
-			T1.CalculateAdjacentTurfs()
-			SSair.add_to_active(T1,1)
-
+			CALCULATE_ADJACENT_TURFS(T1, KILL_EXCITED)
 
 	return copiedobjs

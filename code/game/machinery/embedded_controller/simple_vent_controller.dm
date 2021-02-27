@@ -15,7 +15,7 @@
 			post_signal(new /datum/signal(list(
 				"tag" = airpump_tag,
 				"sigtype" = "command",
-				"stabalize" = 1,
+				"stabilize" = 1,
 				"power" = 1
 			)))
 
@@ -39,7 +39,7 @@
 	density = FALSE
 
 	frequency = FREQ_ATMOS_CONTROL
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
 	var/airpump_tag
@@ -54,11 +54,9 @@
 	new_prog.master = src
 	program = new_prog
 
-/obj/machinery/embedded_controller/radio/simple_vent_controller/update_icon()
-	if(on && program)
-		icon_state = "airlock_control_standby"
-	else
-		icon_state = "airlock_control_off"
+/obj/machinery/embedded_controller/radio/simple_vent_controller/update_icon_state()
+	icon_state = "[base_icon_state]_[(on && program) ? "standby" : "off"]"
+	return ..()
 
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller/return_text()

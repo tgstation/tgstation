@@ -31,7 +31,7 @@
 	poster_structure = null
 	. = ..()
 
-// These icon_states may be overriden, but are for mapper's convinence
+// These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
 	name = "random contraband poster"
 	poster_type = /obj/structure/sign/poster/contraband/random
@@ -50,6 +50,7 @@
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
+	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -57,16 +58,18 @@
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
+	var/poster_item_type = /obj/item/poster
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
+
+	AddElement(/datum/element/beauty, 300)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -88,7 +91,7 @@
 
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters))
+	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		I.play_tool_sound(src, 100)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
@@ -97,14 +100,14 @@
 			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
 
-/obj/structure/sign/poster/attack_hand(mob/user)
+/obj/structure/sign/poster/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(ruined)
 		return
-	visible_message("[user] rips [src] in a single, decisive motion!" )
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+	visible_message("<span class='notice'>[user] rips [src] in a single, decisive motion!</span>" )
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)
 	R.pixel_y = pixel_y
@@ -115,7 +118,7 @@
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new(loc, src)
+	var/obj/item/poster/P = new poster_item_type(loc, src)
 	forceMove(P)
 	return P
 
@@ -126,10 +129,10 @@
 		return
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
-	if (smooth & SMOOTH_DIAGONAL)
-		for (var/O in our_overlays)
+	if (smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		for (var/O in overlays)
 			var/image/I = O
-			if (copytext(I.icon_state, 1, 3) == "d-")
+			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
 	var/stuff_on_wall = 0
@@ -142,26 +145,26 @@
 			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 
-	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>"	)
+	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>" )
 
 	var/obj/structure/sign/poster/D = P.poster_structure
 
 	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
 	D.forceMove(src)
-	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
-	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+	qdel(P) //delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
+	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	if(do_after(user, PLACE_SPEED, target=src))
 		if(!D || QDELETED(D))
 			return
 
-		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
 			to_chat(user, "<span class='notice'>You place the poster!</span>")
 			return
 
 	to_chat(user, "<span class='notice'>The poster falls down!</span>")
-	D.roll_and_drop(temp_loc)
+	D.roll_and_drop(get_turf(user))
 
 // Various possible posters follow
 
@@ -384,8 +387,8 @@
 	desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
 	icon_state = "poster39"
 
-/obj/structure/sign/poster/contraband/sun_kist
-	name = "Sun-kist"
+/obj/structure/sign/poster/contraband/starkist
+	name = "Star-kist"
 	desc = "Drink the stars!"
 	icon_state = "poster40"
 
@@ -409,6 +412,23 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
 
+//annoyingly, poster45 is in another file.
+
+/obj/structure/sign/poster/contraband/free_key
+	name = "Free Syndicate Encryption Key"
+	desc = "A poster about traitors begging for more."
+	icon_state = "poster46"
+
+/obj/structure/sign/poster/contraband/bountyhunters
+	name = "Bounty Hunters"
+	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
+	icon_state = "poster47"
+
+/obj/structure/sign/poster/contraband/the_big_gas_giant_truth
+	name = "The Big Gas Giant Truth"
+	desc = "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
+	icon_state = "poster48"
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
@@ -426,7 +446,7 @@
 	icon_state = "poster1_legit"
 
 /obj/structure/sign/poster/official/nanotrasen_logo
-	name = "Nanotrasen Logo"
+	name = "\improper Nanotrasen logo"
 	desc = "A poster depicting the Nanotrasen logo."
 	icon_state = "poster2_legit"
 
@@ -547,7 +567,7 @@
 
 /obj/structure/sign/poster/official/anniversary_vintage_reprint
 	name = "50th Anniversary Vintage Reprint"
-	desc = "A reprint of a poster from 2505, commemorating the 50th Aniversery of Nanoposters Manufacturing, a subsidary of Nanotrasen."
+	desc = "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
 	icon_state = "poster26_legit"
 
 /obj/structure/sign/poster/official/fruit_bowl
@@ -594,5 +614,16 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/dick_gum
+	name = "Dick Gumshue"
+	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
+	icon_state = "poster36_legit"
+
+/obj/structure/sign/poster/official/there_is_no_gas_giant
+	name = "There Is No Gas Giant"
+	desc = "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
+	// And yet people still believe...
+	icon_state = "poster37_legit"
 
 #undef PLACE_SPEED

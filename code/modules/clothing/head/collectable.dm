@@ -4,28 +4,24 @@
 /obj/item/clothing/head/collectable
 	name = "collectable hat"
 	desc = "A rare collectable hat."
+	icon_state = null
 
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"
 	desc = "It smells faintly of plasma."
 	icon_state = "petehat"
 
-/obj/item/clothing/head/collectable/slime
-	name = "collectable slime cap!"
-	desc = "It just latches right in place!"
-	icon_state = "slime"
-	dynamic_hair_suffix = ""
-
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
+	clothing_flags = SNUG_FIT
 	icon_state = "xenom"
 
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
 	desc = "A rare chef's hat meant for hat collectors!"
 	icon_state = "chef"
-	item_state = "chef"
+	inhand_icon_state = "chef"
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/chef
@@ -41,13 +37,13 @@
 	name = "collectable top hat"
 	desc = "A top hat worn by only the most prestigious hat collectors."
 	icon_state = "tophat"
-	item_state = "that"
+	inhand_icon_state = "that"
 
 /obj/item/clothing/head/collectable/captain
 	name = "collectable captain's hat"
 	desc = "A collectable hat that'll make you look just like a real comdom!"
 	icon_state = "captain"
-	item_state = "caphat"
+	inhand_icon_state = "caphat"
 
 	dog_fashion = /datum/dog_fashion/head/captain
 
@@ -70,26 +66,28 @@
 	name = "collectable welding helmet"
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
-	item_state = "welding"
-	resistance_flags = NONE
+	inhand_icon_state = "welding"
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
 	desc = "Just like a real brain slug!"
 	icon_state = "headslime"
-	item_state = "headslime"
+	inhand_icon_state = "headslime"
+	clothing_flags = SNUG_FIT
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
 	desc = "A collectible farmer's flat cap!"
 	icon_state = "flat_cap"
-	item_state = "detective"
+	inhand_icon_state = "detective"
 
 /obj/item/clothing/head/collectable/pirate
 	name = "collectable pirate hat"
 	desc = "You'd make a great Dread Syndie Roberts!"
 	icon_state = "pirate"
-	item_state = "pirate"
+	inhand_icon_state = "pirate"
 
 	dog_fashion = /datum/dog_fashion/head/pirate
 
@@ -97,7 +95,7 @@
 	name = "collectable kitty ears"
 	desc = "The fur feels... a bit too realistic."
 	icon_state = "kitty"
-	item_state = "kitty"
+	inhand_icon_state = "kitty"
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
@@ -106,7 +104,7 @@
 	name = "collectable rabbit ears"
 	desc = "Not as lucky as the feet!"
 	icon_state = "bunny"
-	item_state = "bunny"
+	inhand_icon_state = "bunny"
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
@@ -121,18 +119,19 @@
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
 	desc = "WARNING! Offers no real protection, or luminosity, but damn, is it fancy!"
+	clothing_flags = SNUG_FIT
 	icon_state = "hardhat0_yellow"
-	item_state = "hardhat0_yellow"
+	inhand_icon_state = "hardhat0_yellow"
 
 	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/head/collectable/HoS
+/obj/item/clothing/head/collectable/hos
 	name = "collectable HoS hat"
 	desc = "Now you too can beat prisoners, set silly sentences, and arrest for no reason!"
 	icon_state = "hoscap"
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/head/collectable/HoP
+/obj/item/clothing/head/collectable/hop
 	name = "collectable HoP hat"
 	desc = "It's your turn to demand excessive paperwork, signatures, stamps, and hire more clowns! Papers, please!"
 	icon_state = "hopcap"
@@ -142,14 +141,14 @@
 	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
-	item_state = "thunderdome"
-	resistance_flags = NONE
+	inhand_icon_state = "thunderdome"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
 	icon_state = "swat"
-	item_state = "swat"
-	resistance_flags = NONE
+	inhand_icon_state = "swat"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR

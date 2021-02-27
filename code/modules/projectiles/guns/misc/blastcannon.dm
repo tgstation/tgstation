@@ -1,17 +1,46 @@
+/**
+ * A gun that consumes a TTV to shoot an projectile with equivalent power.
+ *
+ * It's basically an immovable rod launcher.
+ */
 /obj/item/gun/blastcannon
-	name = "pipe gun"
-	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
+	name = "blast cannon"
+	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
 	icon_state = "empty_blastcannon"
-	var/icon_state_loaded = "loaded_blastcannon"
-	item_state = "blastcannon_empty"
+	inhand_icon_state = "blastcannon_empty"
+	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
-
+	/// The TTV this contains that will be used to create the projectile
 	var/obj/item/transfer_valve/bomb
+	/// Additional volume added to the gasmixture used to calculate the bombs power.
+	var/reaction_volume_mod = 0
+	/// Whether the gases are reacted once before calculating the range
+	var/prereaction = TRUE
+	/// How many times gases react() before calculation. Very finnicky value, do not mess with without good reason.
+	var/reaction_cycles = 3
+	/// The maximum power the blastcannon is capable of reaching
+	var/max_power = INFINITY
+
+	// For debugging/badminry
+	/// Whether you can fire this without a bomb.
+	var/bombcheck = TRUE
+	/// The range this defaults to without a bomb for debugging and badminry
+	var/debug_power = 0
+
+
+/obj/item/gun/blastcannon/debug
+	debug_power = 80
+	bombcheck = FALSE
+
+/obj/item/gun/blastcannon/examine(mob/user)
+	. = ..()
+	if(bomb)
+		. += "<span class='notice'>A bomb is loaded inside.</span>"
 
 /obj/item/gun/blastcannon/Initialize()
 	. = ..()
@@ -20,8 +49,7 @@
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
-		qdel(bomb)
-		bomb = null
+		QDEL_NULL(bomb)
 	return ..()
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
@@ -30,98 +58,116 @@
 		user.put_in_hands(bomb)
 		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
-	update_icon()
+	update_appearance()
 	return ..()
 
-/obj/item/gun/blastcannon/update_icon()
-	if(bomb)
-		icon_state = icon_state_loaded
-		name = "blast cannon"
-		desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
-	else
-		icon_state = initial(icon_state)
-		name = initial(name)
-		desc = initial(desc)
-
-/obj/item/gun/blastcannon/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/transfer_valve))
-		var/obj/item/transfer_valve/T = O
-		if(!T.tank_one || !T.tank_two)
-			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
-			return FALSE
-		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>[O] seems to be stuck to your hand!</span>")
-			return FALSE
-		user.visible_message("<span class='warning'>[user] attaches [O] to [src]!</span>")
-		bomb = O
-		update_icon()
-		return TRUE
+/obj/item/gun/blastcannon/update_icon_state()
+	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
 	return ..()
 
+/obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
+	if(!istype(bomb_to_attach))
+		return ..()
+
+	if(!bomb_to_attach.tank_one || !bomb_to_attach.tank_two)
+		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
+		return FALSE
+	if(!user.transferItemToLoc(bomb_to_attach, src))
+		to_chat(user, "<span class='warning'>[bomb_to_attach] seems to be stuck to your hand!</span>")
+		return FALSE
+
+	user.visible_message("<span class='warning'>[user] attaches [bomb_to_attach] to [src]!</span>")
+	bomb = bomb_to_attach
+	update_appearance()
+	return TRUE
+
+/// Handles the bomb power calculations
 /obj/item/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
+	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
 		return 0
-	var/datum/gas_mixture/temp = new(60)	//directional buff.
-	temp.merge(bomb.tank_one.air_contents.remove_ratio(1))
-	temp.merge(bomb.tank_two.air_contents.remove_ratio(2))
-	for(var/i in 1 to 6)
-		temp.react()
+
+	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
+	bomb.merge_gases(temp)
+
+	if(prereaction)
+		temp.react(src)
+		var/prereaction_pressure = temp.return_pressure()
+		if(prereaction_pressure < TANK_FRAGMENT_PRESSURE)
+			return 0
+	for(var/i in 1 to reaction_cycles)
+		temp.react(src)
+
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
-	return (pressure/TANK_FRAGMENT_SCALE)
+	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
+
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
+	if((!bomb && bombcheck) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
-	var/power = calculate_bomb()
-	qdel(bomb)
-	update_icon()
-	var/heavy = power * 0.2
+
+	var/power =  bomb ? calculate_bomb() : debug_power
+	power = min(power, max_power)
+	QDEL_NULL(bomb)
+	update_appearance()
+
+	var/heavy = power * 0.25
 	var/medium = power * 0.5
 	var/light = power
-	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [name] and fire a blast wave at \the [target]!</span>")
-	playsound(user, "explosion", 100, 1)
+	user.visible_message("<span class='danger'>[user] opens [bomb] on [user.p_their()] [name] and fires a blast wave at [target]!</span>","<span class='danger'>You open [bomb] on your [name] and fire a blast wave at [target]!</span>")
+	playsound(user, "explosion", 100, TRUE)
 	var/turf/starting = get_turf(user)
 	var/turf/targturf = get_turf(target)
-	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
-	message_admins(log_str)
-	log_game(log_str)
-	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
-	BW.preparePixelProjectile(target, get_turf(target), user, params, 0)
+	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
+	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
+	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
+	BW.preparePixelProjectile(target, get_turf(src), params, 0)
 	BW.fire()
+	name = initial(name)
+	desc = initial(desc)
 
-/obj/item/projectile/blastwave
+/// The projectile used by the blastcannon
+/obj/projectile/blastwave
 	name = "blast wave"
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	forcedodge = TRUE
+	movement_type = FLYING
+	projectile_phasing = ALL // just blows up the turfs lmao
+	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavyr = 0
+	/// The maximum distance this will inflict [EXPLODE_HEAVY]
 	var/mediumr = 0
+	/// The maximum distance this will inflict [EXPLODE_LIGHT]
 	var/lightr = 0
-	range = 150
 
-/obj/item/projectile/blastwave/Initialize(mapload, _h, _m, _l)
-	heavyr = _h
-	mediumr = _m
-	lightr = _l
+/obj/projectile/blastwave/Initialize(mapload, _heavy, _medium, _light)
+	range = max(_heavy, _medium, _light, 0)
+	heavyr = _heavy
+	mediumr = _medium
+	lightr = _light
 	return ..()
 
-/obj/item/projectile/blastwave/Range()
-	..()
+/obj/projectile/blastwave/Range()
+	. = ..()
+	if(QDELETED(src))
+		return
+
+	heavyr = max(heavyr - 1, 0)
+	mediumr = max(mediumr - 1, 0)
+	lightr = max(lightr - 1, 0)
+
 	if(heavyr)
-		loc.ex_act(EXPLODE_DEVASTATE)
+		SSexplosions.highturf += loc
 	else if(mediumr)
-		loc.ex_act(EXPLODE_HEAVY)
+		SSexplosions.medturf += loc
 	else if(lightr)
-		loc.ex_act(EXPLODE_LIGHT)
+		SSexplosions.lowturf += loc
 	else
 		qdel(src)
-	heavyr--
-	mediumr--
-	lightr--
+		return
 
-/obj/item/projectile/blastwave/ex_act()
+/obj/projectile/blastwave/ex_act()
 	return

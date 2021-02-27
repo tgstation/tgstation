@@ -1,2 +1,2 @@
-#!/bin/bash
-exec tools/hooks/python.sh -m precommit
+#!/bin/sh
+exec tools/bootstrap/python -m mapmerge2.precommit

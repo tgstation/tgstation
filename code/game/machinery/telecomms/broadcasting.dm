@@ -1,5 +1,4 @@
-
-/**
+/*
 
 	Here is the big, bad function that broadcasts a message given the appropriate
 	parameters.
@@ -100,9 +99,10 @@
 	obj/source,  // the originating radio
 	frequency,  // the frequency the signal is taking place on
 	atom/movable/virtualspeaker/speaker,  // representation of the method's speaker
-	datum/language/language,  // the langauge of the message
+	datum/language/language,  // the language of the message
 	message,  // the text content of the message
-	spans  // the list of spans applied to the message
+	spans,  // the list of spans applied to the message
+	list/message_mods // the list of modification applied to the message. Whispering, singing, ect
 )
 	src.source = source
 	src.frequency = frequency
@@ -115,7 +115,8 @@
 		"message" = message,
 		"compression" = rand(35, 65),
 		"language" = lang_instance.name,
-		"spans" = spans
+		"spans" = spans,
+		"mods" = message_mods
 	)
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
@@ -132,12 +133,12 @@
 	set waitfor = FALSE
 
 	// Perform final composition steps on the message.
-	var/message = copytext(data["message"], 1, MAX_BROADCAST_LEN)
+	var/message = copytext_char(data["message"], 1, MAX_BROADCAST_LEN)
 	if(!message)
 		return
 	var/compression = data["compression"]
 	if(compression > 0)
-		message = Gibberish(message, compression + 40)
+		message = Gibberish(message, compression >= 30)
 
 	// Assemble the list of radios
 	var/list/radios = list()
@@ -176,18 +177,35 @@
 
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/M in GLOB.player_list)
-		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
+		if(M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)
 			receive |= M
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
+	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, language, message, frequency, spans)
+		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
 		SSblackbox.LogBroadcast(frequency)
+
+	var/spans_part = ""
+	if(length(spans))
+		spans_part = "(spans:"
+		for(var/S in spans)
+			spans_part = "[spans_part] [S]"
+		spans_part = "[spans_part] ) "
+
+	var/lang_name = data["language"]
+	var/log_text = "\[[get_radio_name(frequency)]\] [spans_part]\"[message]\" (language: [lang_name])"
+
+	var/mob/source_mob = virt.source
+	if(istype(source_mob))
+		source_mob.log_message(log_text, LOG_TELECOMMS)
+	else
+		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
 	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted

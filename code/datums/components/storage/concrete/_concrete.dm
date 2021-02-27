@@ -4,15 +4,19 @@
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
 
 /datum/component/storage/concrete
+	can_transfer = TRUE
 	var/drop_all_on_deconstruct = TRUE
 	var/drop_all_on_destroy = FALSE
 	var/transfer_contents_on_component_transfer = FALSE
 	var/list/datum/component/storage/slaves = list()
 
+	var/list/_contents_limbo // Where objects go to live mid transfer
+	var/list/_user_limbo // The last users before the component started moving
+
 /datum/component/storage/concrete/Initialize()
 	. = ..()
-	RegisterSignal(COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
-	RegisterSignal(COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
+	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
 
 /datum/component/storage/concrete/Destroy()
 	var/atom/real_location = real_location()
@@ -23,6 +27,8 @@
 	for(var/i in slaves)
 		var/datum/component/storage/slave = i
 		slave.change_master(null)
+	QDEL_LIST(_contents_limbo)
+	_user_limbo = null
 	return ..()
 
 /datum/component/storage/concrete/master()
@@ -31,22 +37,28 @@
 /datum/component/storage/concrete/real_location()
 	return parent
 
-/datum/component/storage/concrete/OnTransfer(datum/new_parent)
-	if(!isatom(new_parent))
-		return COMPONENT_INCOMPATIBLE
-	var/list/mob/_is_using
+/datum/component/storage/concrete/PreTransfer()
 	if(is_using)
-		_is_using = is_using.Copy()
+		_user_limbo = is_using.Copy()
 		close_all()
 	if(transfer_contents_on_component_transfer)
-		var/atom/old = parent
-		for(var/i in old)
+		_contents_limbo = list()
+		for(var/atom/movable/AM in parent)
+			_contents_limbo += AM
+			AM.moveToNullspace()
+
+/datum/component/storage/concrete/PostTransfer()
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
+	if(transfer_contents_on_component_transfer)
+		for(var/i in _contents_limbo)
 			var/atom/movable/AM = i
-			AM.forceMove(new_parent)
-	if(_is_using)
-		for(var/i in _is_using)
-			var/mob/M = i
-			show_to(M)
+			AM.forceMove(parent)
+		_contents_limbo = null
+	if(_user_limbo)
+		for(var/i in _user_limbo)
+			show_to(i)
+		_user_limbo = null
 
 /datum/component/storage/concrete/_insert_physical_item(obj/item/I, override = FALSE)
 	. = TRUE
@@ -61,7 +73,9 @@
 		var/datum/component/storage/slave = i
 		slave.refresh_mob_views()
 
-/datum/component/storage/concrete/emp_act(severity)
+/datum/component/storage/concrete/emp_act(datum/source, severity)
+	if(emp_shielded)
+		return
 	var/atom/real_location = real_location()
 	for(var/i in real_location)
 		var/atom/A = i
@@ -77,13 +91,13 @@
 	slaves -= S
 	return FALSE
 
-/datum/component/storage/concrete/proc/on_contents_del(atom/A)
+/datum/component/storage/concrete/proc/on_contents_del(datum/source, atom/A)
 	var/atom/real_location = parent
 	if(A in real_location)
 		usr = null
 		remove_from_storage(A, null)
 
-/datum/component/storage/concrete/proc/on_deconstruct(disassembled)
+/datum/component/storage/concrete/proc/on_deconstruct(datum/source, disassembled)
 	if(drop_all_on_deconstruct)
 		do_quick_empty()
 
@@ -111,7 +125,8 @@
 	if(ismob(parent.loc) && isitem(AM))
 		var/obj/item/I = AM
 		var/mob/M = parent.loc
-		I.dropped(M)
+		I.dropped(M, TRUE)
+		I.item_flags &= ~IN_STORAGE
 	if(new_location)
 		//Reset the items values
 		_removal_reset(AM)
@@ -124,7 +139,7 @@
 	refresh_mob_views()
 	if(isobj(parent))
 		var/obj/O = parent
-		O.update_icon()
+		O.update_appearance()
 	return TRUE
 
 /datum/component/storage/concrete/proc/slave_can_insert_object(datum/component/storage/slave, obj/item/I, stop_messages = FALSE, mob/M)
@@ -135,7 +150,7 @@
 	if(. && !prevent_warning)
 		slave.mob_item_insertion_feedback(usr, M, I)
 
-/datum/component/storage/concrete/handle_item_insertion(obj/item/I, prevent_warning = FALSE, mob/M, datum/component/storage/remote)		//Remote is null or the slave datum
+/datum/component/storage/concrete/handle_item_insertion(obj/item/I, prevent_warning = FALSE, mob/M, datum/component/storage/remote) //Remote is null or the slave datum
 	var/datum/component/storage/concrete/master = master()
 	var/atom/parent = src.parent
 	var/moved = FALSE
@@ -145,7 +160,7 @@
 		if(!M.temporarilyRemoveItemFromInventory(I))
 			return FALSE
 		else
-			moved = TRUE			//At this point if the proc fails we need to manually move the object back to the turf/mob/whatever.
+			moved = TRUE //At this point if the proc fails we need to manually move the object back to the turf/mob/whatever.
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
 	if(silent)
@@ -159,6 +174,7 @@
 				I.forceMove(parent.drop_location())
 		return FALSE
 	I.on_enter_storage(master)
+	I.item_flags |= IN_STORAGE
 	refresh_mob_views()
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	if(M)
@@ -179,7 +195,7 @@
 /datum/component/storage/concrete/update_icon()
 	if(isobj(parent))
 		var/obj/O = parent
-		O.update_icon()
+		O.update_appearance()
 	for(var/i in slaves)
 		var/datum/component/storage/slave = i
 		slave.update_icon()

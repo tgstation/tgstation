@@ -7,10 +7,22 @@
 	var/obj/item/stock_parts/cell/battery = null
 	device_type = MC_CELL
 
+/obj/item/computer_hardware/battery/get_cell()
+	return battery
+
 /obj/item/computer_hardware/battery/New(loc, battery_type = null)
 	if(battery_type)
 		battery = new battery_type(src)
 	..()
+
+/obj/item/computer_hardware/battery/Destroy()
+	. = ..()
+	QDEL_NULL(battery)
+
+/obj/item/computer_hardware/battery/handle_atom_del(atom/A)
+	if(A == battery)
+		try_eject(forced = TRUE)
+	. = ..()
 
 /obj/item/computer_hardware/battery/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
@@ -36,12 +48,15 @@
 	return TRUE
 
 
-/obj/item/computer_hardware/battery/try_eject(slot=0, mob/living/user = null, forced = 0)
+/obj/item/computer_hardware/battery/try_eject(mob/living/user = null, forced = FALSE)
 	if(!battery)
 		to_chat(user, "<span class='warning'>There is no power cell connected to \the [src].</span>")
 		return FALSE
 	else
-		battery.forceMove(get_turf(src))
+		if(user)
+			user.put_in_hands(battery)
+		else
+			battery.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You detach \the [battery] from \the [src].</span>")
 		battery = null
 
@@ -50,7 +65,6 @@
 				holder.shutdown_computer()
 
 		return TRUE
-	return FALSE
 
 
 

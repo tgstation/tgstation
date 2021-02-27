@@ -16,9 +16,10 @@
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
 	if(remaining_uses != -1)
-		to_chat(user, "It has [remaining_uses] uses left.")
+		. += "It has [remaining_uses] uses left."
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	var/turf/T = get_turf(target)
 	if(!proximity)
 		return
@@ -34,13 +35,13 @@
 		return
 
 	if(existing_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a chipping sound.</span>")
-		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='hear'>You hear a chipping sound.</span>")
+		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		if(do_after(user, tool_speed, target = existing_message))
 			user.visible_message("<span class='notice'>[user] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>")
 			existing_message.persists = FALSE
 			qdel(existing_message)
-			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 			if(existing_message.creator_key == user.ckey)
 				refund_use()
 		return
@@ -53,12 +54,12 @@
 	if(!target.Adjacent(user) && locate(/obj/structure/chisel_message) in T)
 		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
 		return
-	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='italics'>You hear a chipping sound.</span>")
+	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
+	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='hear'>You hear a chipping sound.</span>")
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
-		if(!locate(/obj/structure/chisel_message in T))
-			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='italics'>You hear a chipping sound.</span>")
-			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+		if(!locate(/obj/structure/chisel_message) in T)
+			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='hear'>You hear a chipping sound.</span>")
+			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
 			remove_use()
@@ -86,10 +87,10 @@
 		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
-   as instructions and/or memes for the next generation of spessmen.
+as instructions and/or memes for the next generation of spessmen.
 
-   Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the curator's soapstone.
+Limited in location to station_z only. Can be smashed out or exploded,
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -111,11 +112,10 @@
 	desc = "A message from a past traveler."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "soapstone_message"
-	layer = HIGH_OBJ_LAYER
+	layer = LATTICE_LAYER
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 30
-	layer = LATTICE_LAYER
 
 	var/hidden_message
 	var/creator_key
@@ -128,6 +128,9 @@
 
 	var/turf/original_turf
 
+	/// Total vote count at or below which we won't persist.
+	var/delete_at = -5
+
 /obj/structure/chisel_message/Initialize(mapload)
 	. = ..()
 	SSpersistence.chisel_messages += src
@@ -138,20 +141,23 @@
 		persists = FALSE
 		return INITIALIZE_HINT_QDEL
 
+	if(like_keys.len - dislike_keys.len <= delete_at)
+		persists = FALSE
+
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
 	realdate = world.realtime
 	map = SSmapping.config.map_name
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/update_icon()
-	..()
+	. = ..()
 	var/hash = md5(hidden_message)
-	var/newcolor = copytext(hash, 1, 7)
+	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
-	light_color = "#[newcolor]"
+	set_light_color("#[newcolor]")
 	set_light(1)
 
 /obj/structure/chisel_message/proc/pack()
@@ -189,10 +195,10 @@
 	var/turf/newloc = locate(x, y, z)
 	if(isturf(newloc))
 		forceMove(newloc)
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/examine(mob/user)
-	..()
+	. = ..()
 	ui_interact(user)
 
 /obj/structure/chisel_message/Destroy()
@@ -204,10 +210,13 @@
 /obj/structure/chisel_message/interact()
 	return
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/chisel_message/ui_state(mob/user)
+	return GLOB.always_state
+
+/obj/structure/chisel_message/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "engraved_message", name, 600, 300, master_ui, state)
+		ui = new(user, src, "EngravedMessage", name)
 		ui.open()
 
 /obj/structure/chisel_message/ui_data(mob/user)
@@ -229,6 +238,10 @@
 	return data
 
 /obj/structure/chisel_message/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	var/mob/user = usr
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	var/is_creator = user.ckey == creator_key
@@ -263,3 +276,6 @@
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)
+				return
+
+	persists = like_keys.len - dislike_keys.len > delete_at

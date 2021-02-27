@@ -1,14 +1,13 @@
 
 
-/mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
+/mob/living/carbon/alien/larva/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
-	if(..()) //not dead
-		// GROW!
-		if(amount_grown < max_grown)
-			amount_grown++
-			update_icons()
+	if(!..() || IS_IN_STASIS(src) || (amount_grown >= max_grown))
+		return // We're dead, in stasis, or already grown.
+	// GROW!
+	amount_grown = min(amount_grown + (0.5 * delta_time), max_grown)
+	update_icons()
 
 
 /mob/living/carbon/alien/larva/update_stat()
@@ -18,16 +17,11 @@
 		if(health<= -maxHealth || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_FAKEDEATH)) || health <= HEALTH_THRESHOLD_CRIT)
-			if(stat == CONSCIOUS)
-				stat = UNCONSCIOUS
-				blind_eyes(1)
-				update_canmove()
+		if((HAS_TRAIT(src, TRAIT_KNOCKEDOUT)))
+			set_stat(UNCONSCIOUS)
 		else
 			if(stat == UNCONSCIOUS)
-				stat = CONSCIOUS
-				resting = 0
-				adjust_blindness(-1)
-				update_canmove()
+				set_resting(FALSE)
+			set_stat(CONSCIOUS)
 	update_damage_hud()
 	update_health_hud()

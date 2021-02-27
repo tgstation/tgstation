@@ -8,14 +8,14 @@
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
-	var/title_image
 	var/head_elements
 	var/body_elements
 	var/head_content = ""
 	var/content = ""
+	var/static/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 
 
-/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null)
+/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
 
 	user = nuser
 	window_id = nwindow_id
@@ -27,7 +27,6 @@
 		height = nheight
 	if (nref)
 		ref = nref
-	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -35,16 +34,21 @@
 /datum/browser/proc/set_window_options(nwindow_options)
 	window_options = nwindow_options
 
-/datum/browser/proc/set_title_image(ntitle_image)
-	//title_image = ntitle_image
-
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets["[ckey(name)].css"] = file
-	register_asset("[ckey(name)].css", file)
+	if (istype(name, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/sheet = name
+		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
+	else
+		var/asset_name = "[name].css"
+
+		stylesheets[asset_name] = file
+
+		if (!SSassets.cache[asset_name])
+			SSassets.transport.register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
 	scripts["[ckey(name)].js"] = file
-	register_asset("[ckey(name)].js", file)
+	SSassets.transport.register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -54,26 +58,24 @@
 
 /datum/browser/proc/get_header()
 	var/file
+	head_content += "<link rel='stylesheet' type='text/css' href='[common_asset.get_url_mappings()["common.css"]]'>"
 	for (file in stylesheets)
-		head_content += "<link rel='stylesheet' type='text/css' href='[file]'>"
+		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
+
 
 	for (file in scripts)
-		head_content += "<script type='text/javascript' src='[file]'></script>"
-
-	var/title_attributes = "class='uiTitle'"
-	if (title_image)
-		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
+		head_content += "<script type='text/javascript' src='[SSassets.transport.get_asset_url(file)]'></script>"
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		[head_content]
 	</head>
 	<body scroll=auto>
 		<div class='uiWrapper'>
-			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
+			[title ? "<div class='uiTitleWrapper'><div class='uiTitle'><tt>[title]</tt></div></div>" : ""]
 			<div class='uiContent'>
 	"}
 //" This is here because else the rest of the file looks like a string in notepad++.
@@ -91,18 +93,19 @@
 	[get_footer()]
 	"}
 
-/datum/browser/proc/open(use_onclose = 1)
-	if(isnull(window_id))	//null check because this can potentially nuke goonchat
+/datum/browser/proc/open(use_onclose = TRUE)
+	if(isnull(window_id)) //null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
 		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
 		return
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	common_asset.send(user)
 	if (stylesheets.len)
-		send_asset_list(user, stylesheets, verify=FALSE)
+		SSassets.transport.send_assets(user, stylesheets)
 	if (scripts.len)
-		send_asset_list(user, scripts, verify=FALSE)
+		SSassets.transport.send_assets(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		setup_onclose()
@@ -150,11 +153,35 @@
 	opentime = 0
 	close()
 
-//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/**
+ * **DEPRECATED: USE tgui_alert(...) INSTEAD**
+ *
+ * Designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+ * Arguments:
+ * * User - The user to show the alert to.
+ * * Message - The textual body of the alert.
+ * * Title - The title of the alert's window.
+ * * Button1 - The first button option.
+ * * Button2 - The second button option.
+ * * Button3 - The third button option.
+ * * StealFocus - Boolean operator controlling if the alert will steal the user's window focus.
+ * * Timeout - The timeout of the window, after which no responses will be valid.
+ */
+/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = TRUE, Timeout = 6000)
 	if (!User)
 		User = usr
-	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
+	if (!istype(User))
+		if (istype(User, /client))
+			var/client/client = User
+			User = client.mob
+		else
+			return
+
+	// Get user's response using a modal
+	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	A.open()
+	A.wait()
+	switch(A.selectedbutton)
 		if (1)
 			return Button1
 		if (2)
@@ -162,27 +189,13 @@
 		if (3)
 			return Button3
 
-//Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
-	if (!istype(User))
-		if (istype(User, /client/))
-			var/client/C = User
-			User = C.mob
-		else
-			return
-	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
-	A.open()
-	A.wait()
-	if (A.selectedbutton)
-		return A.selectedbutton
-
 /datum/browser/modal
 	var/opentime = 0
 	var/timeout
 	var/selectedbutton = 0
 	var/stealfocus
 
-/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null, StealFocus = 1, Timeout = 6000)
+/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null, StealFocus = 1, Timeout = 6000)
 	..()
 	stealfocus = StealFocus
 	if (!StealFocus)
@@ -194,8 +207,8 @@
 	.=..()
 	opentime = 0
 
-/datum/browser/modal/open()
-	set waitfor = 0
+/datum/browser/modal/open(use_onclose)
+	set waitfor = FALSE
 	opentime = world.time
 
 	if (stealfocus)
@@ -274,7 +287,7 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
+/proc/presentpicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -287,7 +300,7 @@
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
+/proc/input_bitfield(mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
 	if (!User || !(bitfield in GLOB.bitfields))
 		return
 	var/list/pickerlist = list()
@@ -371,11 +384,13 @@
 				if (isnull(settings["mainsettings"][setting]["value"]))
 					settings["mainsettings"][setting]["value"] = oldval
 			if ("string")
-				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]")
+				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])
 			if ("number")
 				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]") as num
+			if ("color")
+				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
 			if ("boolean")
-				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
+				settings["mainsettings"][setting]["value"] = (settings["mainsettings"][setting]["value"] == "Yes") ? "No" : "Yes"
 			if ("ckey")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
 		if (settings["mainsettings"][setting]["callback"])
@@ -396,7 +411,7 @@
 	opentime = 0
 	close()
 
-/proc/presentpreflikepicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
+/proc/presentpreflikepicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -409,12 +424,6 @@
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "settings" = A.settings)
 
-// This will allow you to show an icon in the browse window
-// This is added to mob so that it can be used without a reference to the browser object
-// There is probably a better place for this...
-/mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
-
-
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
 // this will be called when the close-button of a window is pressed.
 //
@@ -422,8 +431,8 @@
 // e.g. canisters, timers, etc.
 //
 // windowid should be the specified window name
-// e.g. code is	: user << browse(text, "window=fred")
-// then use 	: onclose(user, "fred")
+// e.g. code is : user << browse(text, "window=fred")
+// then use : onclose(user, "fred")
 //
 // Optionally, specify the "ref" parameter as the controlled atom (usually src)
 // to pass a "close=1" parameter to the atom's Topic() proc for special handling.
@@ -446,19 +455,18 @@
 // otherwise, just reset the client mob's machine var.
 //
 /client/verb/windowclose(atomref as text)
-	set hidden = 1						// hide this verb from the user's panel
-	set name = ".windowclose"			// no autocomplete on cmd line
+	set hidden = TRUE // hide this verb from the user's panel
+	set name = ".windowclose" // no autocomplete on cmd line
 
-	if(atomref!="null")				// if passed a real atomref
-		var/hsrc = locate(atomref)	// find the reffed atom
+	if(atomref!="null") // if passed a real atomref
+		var/hsrc = locate(atomref) // find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
 			usr = src.mob
-			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
-			return										// Topic() proc via client.Topic()
+			src.Topic(href, params2list(href), hsrc) // this will direct to the atom's
+			return // Topic() proc via client.Topic()
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
-	if(src && src.mob)
+	if(src?.mob)
 		src.mob.unset_machine()
-	return

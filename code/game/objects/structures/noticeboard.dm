@@ -26,7 +26,7 @@
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo))
 		if(!allowed(user))
-			to_chat(user, "<span class='info'>You are not authorized to add notices</span>")
+			to_chat(user, "<span class='warning'>You are not authorized to add notices!</span>")
 			return
 		if(notices < 5)
 			if(!user.transferItemToLoc(O, src))
@@ -35,7 +35,7 @@
 			icon_state = "nboard0[notices]"
 			to_chat(user, "<span class='notice'>You pin the [O] to the noticeboard.</span>")
 		else
-			to_chat(user, "<span class='notice'>The notice board is full</span>")
+			to_chat(user, "<span class='warning'>The notice board is full!</span>")
 	else
 		return ..()
 
@@ -58,7 +58,7 @@
 	..()
 	usr.set_machine(src)
 	if(href_list["remove"])
-		if((usr.stat || usr.restrained()))	//For when a player is handcuffed while they have the notice window open
+		if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED)) //For when a player is handcuffed while they have the notice window open
 			return
 		var/obj/item/I = locate(href_list["remove"]) in contents
 		if(istype(I) && I.loc == src)
@@ -68,7 +68,7 @@
 			icon_state = "nboard0[notices]"
 
 	if(href_list["write"])
-		if((usr.stat || usr.restrained())) //For when a player is handcuffed while they have the notice window open
+		if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED)) //For when a player is handcuffed while they have the notice window open
 			return
 		var/obj/item/P = locate(href_list["write"]) in contents
 		if(istype(P) && P.loc == src)
@@ -77,7 +77,7 @@
 				add_fingerprint(usr)
 				P.attackby(I, usr)
 			else
-				to_chat(usr, "<span class='notice'>You'll need something to write with!</span>")
+				to_chat(usr, "<span class='warning'>You'll need something to write with!</span>")
 
 	if(href_list["read"])
 		var/obj/item/I = locate(href_list["read"]) in contents
@@ -86,7 +86,7 @@
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal (loc, 1)
+		new /obj/item/stack/sheet/iron (loc, 1)
 	qdel(src)
 
 // Notice boards for the heads of staff (plus the qm)

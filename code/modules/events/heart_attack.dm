@@ -7,16 +7,18 @@
 
 /datum/round_event/heart_attack/start()
 	var/list/heart_attack_contestants = list()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
-		if(!H.client || H.stat == DEAD || H.InCritical() || !H.can_heartattack() || H.has_status_effect(STATUS_EFFECT_EXERCISED) || (/datum/disease/heart_failure in H.diseases) || H.undergoing_cardiac_arrest())
+	for(var/mob/living/carbon/human/victim in shuffle(GLOB.player_list))
+		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !victim.can_heartattack() || victim.has_status_effect(STATUS_EFFECT_EXERCISED) || (/datum/disease/heart_failure in victim.diseases) || victim.undergoing_cardiac_arrest())
 			continue
-		if(H.satiety <= -60) //Multiple junk food items recently
-			heart_attack_contestants[H] = 3
+		if(!SSjob.GetJob(victim.mind.assigned_role) || (victim.mind.assigned_role in GLOB.nonhuman_positions))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
+			continue
+		if(victim.satiety <= -60) //Multiple junk food items recently
+			heart_attack_contestants[victim] = 3
 		else
-			heart_attack_contestants[H] = 1
+			heart_attack_contestants[victim] = 1
 
 	if(LAZYLEN(heart_attack_contestants))
 		var/mob/living/carbon/human/winner = pickweight(heart_attack_contestants)
 		var/datum/disease/D = new /datum/disease/heart_failure()
 		winner.ForceContractDisease(D, FALSE, TRUE)
-		notify_ghosts("[winner] is beginning to have a heart attack!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=winner, action=NOTIFY_ORBIT)
+		announce_to_ghosts(winner)

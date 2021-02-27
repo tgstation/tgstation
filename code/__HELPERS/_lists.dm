@@ -1,8 +1,8 @@
 /*
  * Holds procs to help with list operations
  * Contains groups:
- *			Misc
- *			Sorting
+ * Misc
+ * Sorting
  */
 
 /*
@@ -11,57 +11,90 @@
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
+///Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled
+#define LAZYLISTDUPLICATE(L) (L ? L.Copy() : null )
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
-#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYFIND(L, V) (L ? L.Find(V) : 0)
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
-#define LAZYCLEARLIST(L) if(L) L.Cut()
+///Sets a list to null
+#define LAZYNULL(L) L = null
+#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += V;
+///This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
+#define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
+#define QDEL_LAZYLIST(L) for(var/I in L) qdel(I); L = null;
+//These methods don't null the list
+#define LAZYCOPY(L) (L ? L.Copy() : list() ) //Use LAZYLISTDUPLICATE instead if you want it to null with no entries
+#define LAZYCLEARLIST(L) if(L) L.Cut() // Consider LAZYNULL instead
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+#define reverseList(L) reverseRange(L.Copy())
+
+/// Passed into BINARY_INSERT to compare keys
+#define COMPARE_KEY __BIN_LIST[__BIN_MID]
+/// Passed into BINARY_INSERT to compare values
+#define COMPARE_VALUE __BIN_LIST[__BIN_LIST[__BIN_MID]]
+
+/****
+	* Binary search sorted insert
+	* INPUT: Object to be inserted
+	* LIST: List to insert object into
+	* TYPECONT: The typepath of the contents of the list
+	* COMPARE: The object to compare against, usualy the same as INPUT
+	* COMPARISON: The variable on the objects to compare
+	* COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.
+	*/
+#define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
+	do {\
+		var/list/__BIN_LIST = LIST;\
+		var/__BIN_CTTL = length(__BIN_LIST);\
+		if(!__BIN_CTTL) {\
+			__BIN_LIST += INPUT;\
+		} else {\
+			var/__BIN_LEFT = 1;\
+			var/__BIN_RIGHT = __BIN_CTTL;\
+			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			var ##TYPECONT/__BIN_ITEM;\
+			while(__BIN_LEFT < __BIN_RIGHT) {\
+				__BIN_ITEM = COMPTYPE;\
+				if(__BIN_ITEM.##COMPARISON <= COMPARE.##COMPARISON) {\
+					__BIN_LEFT = __BIN_MID + 1;\
+				} else {\
+					__BIN_RIGHT = __BIN_MID;\
+				};\
+				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			};\
+			__BIN_ITEM = COMPTYPE;\
+			__BIN_MID = __BIN_ITEM.##COMPARISON > COMPARE.##COMPARISON ? __BIN_MID : __BIN_MID + 1;\
+			__BIN_LIST.Insert(__BIN_MID, INPUT);\
+		};\
+	} while(FALSE)
 
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
-	var/total = input.len
-	if (!total)
-		return "[nothing_text]"
-	else if (total == 1)
-		return "[input[1]]"
-	else if (total == 2)
-		return "[input[1]][and_text][input[2]]"
-	else
-		var/output = ""
-		var/index = 1
-		while (index < total)
-			if (index == total - 1)
-				comma_text = final_comma_text
+	var/total = length(input)
+	switch(total)
+		if (0)
+			return "[nothing_text]"
+		if (1)
+			return "[input[1]]"
+		if (2)
+			return "[input[1]][and_text][input[2]]"
+		else
+			var/output = ""
+			var/index = 1
+			while (index < total)
+				if (index == total - 1)
+					comma_text = final_comma_text
 
-			output += "[input[index]][comma_text]"
-			index++
+				output += "[input[index]][comma_text]"
+				index++
 
-		return "[output][and_text][input[index]]"
-
-//Returns list element or null. Should prevent "index out of bounds" error.
-/proc/listgetindex(list/L, index)
-	if(LAZYLEN(L))
-		if(isnum(index) && ISINTEGER(index))
-			if(ISINRANGE(index,1,L.len))
-				return L[index]
-		else if(index in L)
-			return L[index]
-	return
-
-//Return either pick(list) or null if list is not of type /list or is empty
-/proc/safepick(list/L)
-	if(LAZYLEN(L))
-		return pick(L)
-
-//Checks if the list is empty
-/proc/isemptylist(list/L)
-	if(!L.len)
-		return TRUE
-	return FALSE
+			return "[output][and_text][input[index]]"
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
@@ -73,35 +106,11 @@
 	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
-/proc/is_type_in_typecache(atom/A, list/L)
-	if(!LAZYLEN(L) || !A)
-
-		return FALSE
-	if(ispath(A))
-		. = L[A]
-	else
-		. = L[A.type]
-
-//Checks for a string in a list
-/proc/is_string_in_list(string, list/L)
-	if(!LAZYLEN(L) || !string)
-		return
-	for(var/V in L)
-		if(string == V)
-			return TRUE
-	return
-
-//Removes a string from a list
-/proc/remove_strings_from_list(string, list/L)
-	if(!LAZYLEN(L) || !string)
-		return
-	for(var/V in L)
-		if(V == string)
-			L -= V //No return here so that it removes all strings of that type
-	return
+#define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
@@ -109,6 +118,7 @@
 			. += A
 
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
@@ -149,12 +159,6 @@
 					for(var/T in typesof(P))
 						L[T] = TRUE
 		return L
-
-//Empties the list by setting the length to 0. Hopefully the elements get garbage collected
-/proc/clearlist(list/list)
-	if(istype(list))
-		list.len = 0
-	return
 
 //Removes any null entries from the list
 //Returns TRUE if the list had nulls, FALSE otherwise
@@ -201,6 +205,7 @@
 //2. Gets a number between 1 and that total
 //3. For each element in the list, subtracts its weighting from that number
 //4. If that makes the number 0 or less, return that element.
+//Will output null sometimes if you use decimals (e.g. 0.1 instead of 10) as rand() uses integers, not floats
 /proc/pickweight(list/L)
 	var/total = 0
 	var/item
@@ -233,12 +238,13 @@
 
 	return null
 
-//Pick a random element from the list and remove it from the list.
+/// Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
+	RETURN_TYPE(L[_].type)
 	if(L.len)
 		var/picked = rand(1,L.len)
 		. = L[picked]
-		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
+		L.Cut(picked,picked+1) //Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
@@ -327,7 +333,7 @@
 
 //uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sortNames(list/L, order=1)
-	return sortTim(L, order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
+	return sortTim(L.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
 
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
@@ -357,10 +363,12 @@
 			i++
 	return i
 
+/// Returns datum/data/record
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
 			return R
+	return null
 
 
 //Move a single element from position fromIndex within a list, to position toIndex
@@ -370,10 +378,10 @@
 //fromIndex and toIndex must be in the range [1,L.len+1]
 //This will preserve associations ~Carnie
 /proc/moveElement(list/L, fromIndex, toIndex)
-	if(fromIndex == toIndex || fromIndex+1 == toIndex)	//no need to move
+	if(fromIndex == toIndex || fromIndex+1 == toIndex) //no need to move
 		return
 	if(fromIndex > toIndex)
-		++fromIndex	//since a null will be inserted before fromIndex, the index needs to be nudged right by one
+		++fromIndex //since a null will be inserted before fromIndex, the index needs to be nudged right by one
 
 	L.Insert(toIndex, null)
 	L.Swap(fromIndex, toIndex)
@@ -385,10 +393,10 @@
 //This will preserve associations ~Carnie
 /proc/moveRange(list/L, fromIndex, toIndex, len=1)
 	var/distance = abs(toIndex - fromIndex)
-	if(len >= distance)	//there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
+	if(len >= distance) //there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
 		if(fromIndex <= toIndex)
-			return	//no need to move
-		fromIndex += len	//we want to shift left instead of right
+			return //no need to move
+		fromIndex += len //we want to shift left instead of right
 
 		for(var/i=0, i<distance, ++i)
 			L.Insert(fromIndex, null)
@@ -408,7 +416,7 @@
 //Note: if the two ranges overlap, only the destination order will be preserved fully, since some elements will be within both ranges ~Carnie
 /proc/swapRange(list/L, fromIndex, toIndex, len=1)
 	var/distance = abs(toIndex - fromIndex)
-	if(len > distance)	//there is an overlap, therefore swapping each element will require more swaps than inserting new elements
+	if(len > distance) //there is an overlap, therefore swapping each element will require more swaps than inserting new elements
 		if(fromIndex < toIndex)
 			toIndex += len
 		else
@@ -467,8 +475,18 @@
 		return l
 	. = l.Copy()
 	for(var/i = 1 to l.len)
-		if(islist(.[i]))
-			.[i] = .(.[i])
+		var/key = .[i]
+		if(isnum(key))
+			// numbers cannot ever be associative keys
+			continue
+		var/value = .[key]
+		if(islist(value))
+			value = deepCopyList(value)
+			.[key] = value
+		if(islist(key))
+			key = deepCopyList(key)
+			.[i] = key
+			.[key] = value
 
 //takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
 //use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
@@ -482,11 +500,6 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-#if DM_VERSION > 512
-#error Remie said that lummox was adding a way to get a lists
-#error contents via list.values, if that is true remove this
-#error otherwise, update the version and bug lummox
-#endif
 //Flattens a keyed list into a list of it's contents
 /proc/flatten_list(list/key_list)
 	if(!islist(key_list))
@@ -494,6 +507,11 @@
 	. = list()
 	for(var/key in key_list)
 		. |= key_list[key]
+
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
@@ -528,3 +546,22 @@
 			L1[key] += other_value
 		else
 			L1[key] = other_value
+
+/proc/assoc_list_strip_value(list/input)
+	var/list/ret = list()
+	for(var/key in input)
+		ret += key
+	return ret
+
+/proc/compare_list(list/l,list/d)
+	if(!islist(l) || !islist(d))
+		return FALSE
+
+	if(l.len != d.len)
+		return FALSE
+
+	for(var/i in 1 to l.len)
+		if(l[i] != d[i])
+			return FALSE
+
+	return TRUE

@@ -22,20 +22,19 @@ class DMM:
 
     @staticmethod
     def from_file(fname):
-        # stream the file rather than forcing all its contents to memory
         with open(fname, 'r', encoding=ENCODING) as f:
-            return _parse(iter(lambda: f.read(1), ''))
+            return _parse(f.read())
 
     @staticmethod
     def from_bytes(bytes):
         return _parse(bytes.decode(ENCODING))
 
-    def to_file(self, fname, tgm = True):
+    def to_file(self, fname, *, tgm = True):
         self._presave_checks()
         with open(fname, 'w', newline='\n', encoding=ENCODING) as f:
             (save_tgm if tgm else save_dmm)(self, f)
 
-    def to_bytes(self, tgm = True):
+    def to_bytes(self, *, tgm = True):
         self._presave_checks()
         bio = io.BytesIO()
         with io.TextIOWrapper(bio, newline='\n', encoding=ENCODING) as f:
@@ -43,20 +42,46 @@ class DMM:
             f.flush()
             return bio.getvalue()
 
+    def get_or_generate_key(self, tile):
+        try:
+            return self.dictionary.inv[tile]
+        except KeyError:
+            key = self.generate_new_key()
+            self.dictionary[key] = tile
+            return key
+
+    def get_tile(self, coord):
+        return self.dictionary[self.grid[coord]]
+
+    def set_tile(self, coord, tile):
+        tile = tuple(tile)
+        self.grid[coord] = self.get_or_generate_key(tile)
+
     def generate_new_key(self):
         free_keys = self._ensure_free_keys(1)
+        max_key = max_key_for(self.key_length)
         # choose one of the free keys at random
-        key = 0
-        while free_keys:
-            if key not in self.dictionary:
-                # this construction is used to avoid needing to construct the
-                # full set in order to random.choice() from it
-                if random.random() < 1 / free_keys:
-                    return key
-                free_keys -= 1
-            key += 1
+        key = random.randint(0, max_key - 1)
+        while key in self.dictionary:
+            key = random.randint(0, max_key - 1)
+        return key
 
-        raise RuntimeError("ran out of keys, this shouldn't happen")
+    def overwrite_key(self, key, fixed, bad_keys):
+        try:
+            self.dictionary[key] = fixed
+            return None
+        except bidict.DuplicationError:
+            old_key = self.dictionary.inv[fixed]
+            bad_keys[key] = old_key
+            print(f"Merging '{num_to_key(key, self.key_length)}' into '{num_to_key(old_key, self.key_length)}'")
+            return old_key
+
+    def reassign_bad_keys(self, bad_keys):
+        if not bad_keys:
+            return
+        for k, v in self.grid.items():
+            # reassign the grid entries which used the old key
+            self.grid[k] = bad_keys.get(v, v)
 
     def _presave_checks(self):
         # last-second handling of bogus keys to help prevent and fix broken maps
@@ -70,9 +95,16 @@ class DMM:
                 new_key = bad_keys[k] = self.generate_new_key()
                 self.dictionary.forceput(new_key, self.dictionary[k])
                 print(f"    {num_to_key(k, self.key_length, True)} -> {num_to_key(new_key, self.key_length)}")
-            for k, v in self.grid.items():
-                # reassign the grid entries which used the old key
-                self.grid[k] = bad_keys.get(v, v)
+
+        # handle entries in the dictionary which have atoms in the wrong order
+        keys = list(self.dictionary.keys())
+        for key in keys:
+            value = self.dictionary[key]
+            if is_bad_atom_ordering(num_to_key(key, self.key_length, True), value):
+                fixed = tuple(fix_atom_ordering(value))
+                self.overwrite_key(key, fixed, bad_keys)
+
+        self.reassign_bad_keys(bad_keys)
 
     def _ensure_free_keys(self, desired):
         # ensure that free keys exist by increasing the key length if necessary
@@ -100,6 +132,9 @@ class DMM:
         for y in range(1, self.size.y + 1):
             for x in range(1, self.size.x + 1):
                 yield (y, x)
+
+    def __repr__(self):
+        return f"DMM(size={self.size}, key_length={self.key_length}, dictionary_size={len(self.dictionary)})"
 
 # ----------
 # key handling
@@ -179,6 +214,47 @@ def parse_map_atom(atom):
 
     return path, vars
 
+def is_bad_atom_ordering(key, atoms):
+    seen_turfs = 0
+    seen_areas = 0
+    can_fix = False
+    for each in atoms:
+        if each.startswith('/turf'):
+            if seen_turfs == 1:
+                print(f"Warning: key '{key}' has multiple turfs!")
+            if seen_areas:
+                print(f"Warning: key '{key}' has area before turf (autofixing...)")
+                can_fix = True
+            seen_turfs += 1
+        elif each.startswith('/area'):
+            if seen_areas == 1:
+                print(f"Warning: key '{key}' has multiple areas!!!")
+            seen_areas += 1
+        else:
+            if (seen_turfs or seen_areas) and not can_fix:
+                print(f"Warning: key '{key}' has movable after turf or area (autofixing...)")
+                can_fix = True
+    if not seen_areas or not seen_turfs:
+        print(f"Warning: key '{key}' is missing either a turf or area")
+    return can_fix
+
+def split_atom_groups(atoms):
+    movables, turfs, areas = [], [], []
+    for each in atoms:
+        if each.startswith('/turf'):
+            turfs.append(each)
+        elif each.startswith('/area'):
+            areas.append(each)
+        else:
+            movables.append(each)
+    return movables, turfs, areas
+
+def fix_atom_ordering(atoms):
+    movables, turfs, areas = split_atom_groups(atoms)
+    movables.extend(turfs)
+    movables.extend(areas)
+    return movables
+
 # ----------
 # TGM writer
 
@@ -224,7 +300,7 @@ def save_tgm(dmm, output):
         output.write("\n")
         for x in range(1, max_x + 1):
             output.write(f"({x},{1},{z}) = {{\"\n")
-            for y in range(1, max_y + 1):
+            for y in range(max_y, 0, -1):
                 output.write(f"{num_to_key(dmm.grid[x, y, z], dmm.key_length)}\n")
             output.write("\"}\n")
 
@@ -246,7 +322,7 @@ def save_dmm(dmm, output):
     for z in range(1, max_z + 1):
         output.write(f"(1,1,{z}) = {{\"\n")
 
-        for y in range(1, max_y + 1):
+        for y in range(max_y, 0, -1):
             for x in range(1, max_x + 1):
                 try:
                     output.write(num_to_key(dmm.grid[x, y, z], dmm.key_length))
@@ -280,7 +356,7 @@ def _parse(map_raw_text):
     in_map_block = False
     in_coord_block = False
     in_map_string = False
-    iter_x = 0
+    base_x = 0
     adjust_y = True
 
     curr_num = ""
@@ -307,7 +383,7 @@ def _parse(map_raw_text):
             continue
         elif in_comment_line:
             continue
-        elif char == "\t":
+        elif char in "\r\t":
             continue
 
         if char == "/" and not in_quote_block:
@@ -415,13 +491,16 @@ def _parse(map_raw_text):
 
     # grid block
     for char in it:
+        if char == "\r":
+            continue
+
         if in_coord_block:
             if char == ",":
                 if reading_coord == "x":
                     curr_x = int(curr_num)
                     if curr_x > maxx:
                         maxx = curr_x
-                    iter_x = 0
+                    base_x = curr_x
                     curr_num = ""
                     reading_coord = "y"
                 elif reading_coord == "y":
@@ -455,21 +534,15 @@ def _parse(map_raw_text):
                     adjust_y = False
                 else:
                     curr_y += 1
-                if curr_x > maxx:
-                    maxx = curr_x
-                if iter_x > 1:
-                    curr_x = 1
-                iter_x = 0
-
+                curr_x = base_x
             else:
                 curr_key = BASE * curr_key + base52_r[char]
                 curr_key_len += 1
                 if curr_key_len == key_length:
-                    iter_x += 1
-                    if iter_x > 1:
-                        curr_x += 1
-
                     grid[curr_x, curr_y, curr_z] = duplicate_keys.get(curr_key, curr_key)
+                    if curr_x > maxx:
+                        maxx = curr_x
+                    curr_x += 1
                     curr_key = 0
                     curr_key_len = 0
 
@@ -482,7 +555,17 @@ def _parse(map_raw_text):
     if curr_y > maxy:
         maxy = curr_y
 
+    if not grid:
+        # Usually caused by unbalanced quotes.
+        max_key = num_to_key(max(dictionary.keys()), key_length, True)
+        raise ValueError(f"dmm failed to parse, check for a syntax error near or after key {max_key!r}")
+
+    # Convert from raw .dmm coordinates to DM/BYOND coordinates by flipping Y
+    grid2 = dict()
+    for (x, y, z), tile in grid.items():
+        grid2[x, maxy + 1 - y, z] = tile
+
     data = DMM(key_length, Coordinate(maxx, maxy, maxz))
     data.dictionary = dictionary
-    data.grid = grid
+    data.grid = grid2
     return data

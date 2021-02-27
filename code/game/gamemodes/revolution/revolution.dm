@@ -4,39 +4,32 @@
 // Just make sure the converter is a head before you call it!
 // To remove a rev (from brainwashing or w/e), call SSticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
 // this will also check they're not a head, so it can just be called freely
-// If the game somtimes isn't registering a win properly, then SSticker.mode.check_win() isn't being called somewhere.
+// If the game somtimes isn't registering a win properly, then our check_finished is fucked up.
 
 
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
+	report_type = "revolution"
 	antag_flag = ROLE_REV
 	false_report_weight = 10
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	required_jobs = list(list("Captain"=1),list("Head of Personnel"=1),list("Head of Security"=1),list("Chief Engineer"=1),list("Research Director"=1),list("Chief Medical Officer"=1)) //Any head present
 	required_players = 30
 	required_enemies = 2
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
-	announce_span = "danger"
+	announce_span = "Revolution"
 	announce_text = "Some crewmembers are attempting a coup!\n\
 	<span class='danger'>Revolutionaries</span>: Expand your cause and overthrow the heads of staff by execution or otherwise.\n\
 	<span class='notice'>Crew</span>: Prevent the revolutionaries from taking over the station."
 
 	var/finished = 0
-	var/check_counter = 0
 	var/max_headrevs = 3
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
 	var/end_when_heads_dead = TRUE
-
-///////////////////////////
-//Announces the game type//
-///////////////////////////
-/datum/game_mode/revolution/announce()
-	to_chat(world, "<B>The current game mode is - Revolution!</B>")
-	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>")
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
@@ -58,8 +51,11 @@
 		lenin.restricted_roles = restricted_jobs
 
 	if(headrev_candidates.len < required_enemies)
+		setup_error = "Not enough headrev candidates"
 		return FALSE
 
+	for(var/antag in headrev_candidates)
+		GLOB.pre_setup_antags += antag
 	return TRUE
 
 /datum/game_mode/revolution/post_setup()
@@ -67,7 +63,7 @@
 	var/list/sec = SSjob.get_living_sec()
 	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
 
-	for(var/datum/mind/rev_mind in headrev_candidates)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
+	for(var/datum/mind/rev_mind in headrev_candidates) //People with return to lobby may still be in the lobby. Let's pick someone else in that case.
 		if(isnewplayer(rev_mind.current))
 			headrev_candidates -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
@@ -81,8 +77,8 @@
 					continue
 				else
 					var/mob/Nm = lenin.current
-					if(Nm.job in restricted_jobs)	//Don't make the HOS a replacement revhead
-						antag_candidates += lenin	//Let's let them keep antag chance for other antags
+					if(Nm.job in restricted_jobs) //Don't make the HOS a replacement revhead
+						antag_candidates += lenin //Let's let them keep antag chance for other antags
 						continue
 
 					headrev_candidates += lenin
@@ -96,12 +92,13 @@
 	revolution = new()
 
 	for(var/datum/mind/rev_mind in headrev_candidates)
-		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
+		log_game("[key_name(rev_mind)] has been selected as a head rev")
 		var/datum/antagonist/rev/head/new_head = new()
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE
 		new_head.remove_clumsy = TRUE
 		rev_mind.add_antag_datum(new_head,revolution)
+		GLOB.pre_setup_antags -= rev_mind
 
 	revolution.update_objectives()
 	revolution.update_heads()
@@ -110,33 +107,19 @@
 	..()
 
 
-/datum/game_mode/revolution/process()
-	check_counter++
-	if(check_counter >= 5)
-		if(!finished)
-			SSticker.mode.check_win()
-		check_counter = 0
-	return FALSE
-
-//////////////////////////////////////
-//Checks if the revs have won or not//
-//////////////////////////////////////
-/datum/game_mode/revolution/check_win()
+///////////////////////////////////////////
+//Checks who won and if the round is over//
+///////////////////////////////////////////
+/datum/game_mode/revolution/check_finished()
 	if(check_rev_victory())
 		finished = 1
 	else if(check_heads_victory())
 		finished = 2
-	return
-
-///////////////////////////////
-//Checks if the round is over//
-///////////////////////////////
-/datum/game_mode/revolution/check_finished()
-	if(CONFIG_GET(keyed_flag_list/continuous)["revolution"])
+	if(CONFIG_GET(keyed_list/continuous)["revolution"])
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
-	if(finished != 0 && end_when_heads_dead)
+	if(finished && end_when_heads_dead)
 		return TRUE
 	else
 		return ..()
@@ -183,9 +166,9 @@
 //TODO What should be displayed for revs in non-rev rounds
 /datum/game_mode/revolution/special_report()
 	if(finished == 1)
-		return "<span class='redtext big'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The heads of staff were killed or exiled! The revolutionaries win!</span></div>"
 	else if(finished == 2)
-		return "<span class='redtext big'>The heads of staff managed to stop the revolution!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The heads of staff managed to stop the revolution!</span></div>"
 
 /datum/game_mode/revolution/generate_report()
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
@@ -203,6 +186,7 @@
 	end_when_heads_dead = FALSE
 	var/endtime = null
 	var/fuckingdone = FALSE
+	var/check_counter = 0
 
 /datum/game_mode/revolution/speedy/pre_setup()
 	endtime = world.time + 20 MINUTES
@@ -210,7 +194,9 @@
 
 /datum/game_mode/revolution/speedy/process()
 	. = ..()
-	if(check_counter == 0)
+	check_counter++
+	if(check_counter == 5)
+		check_counter = 0
 		if (world.time > endtime && !fuckingdone)
 			fuckingdone = TRUE
 			for (var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)

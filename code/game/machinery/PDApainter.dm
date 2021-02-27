@@ -3,29 +3,27 @@
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
+	base_icon_state = "pdapainter"
 	density = TRUE
-	anchored = TRUE
+	max_integrity = 200
 	var/obj/item/pda/storedpda = null
 	var/list/colorlist = list()
-	max_integrity = 200
 
+/obj/machinery/pdapainter/update_icon_state()
+	if(machine_stat & BROKEN)
+		icon_state = "[base_icon_state]-broken"
+		return ..()
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
+	return ..()
 
-/obj/machinery/pdapainter/update_icon()
-	cut_overlays()
+/obj/machinery/pdapainter/update_overlays()
+	. = ..()
 
-	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
+	if(machine_stat & BROKEN)
 		return
 
 	if(storedpda)
-		add_overlay("[initial(icon_state)]-closed")
-
-	if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
-
-	return
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize()
 	. = ..()
@@ -62,10 +60,28 @@
 /obj/machinery/pdapainter/handle_atom_del(atom/A)
 	if(A == storedpda)
 		storedpda = null
-		update_icon()
+		update_appearance()
 
-/obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
-	if(default_unfasten_wrench(user, O))
+/obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
+	if(machine_stat & BROKEN)
+		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+			if(!O.tool_start_check(user, amount=0))
+				return
+			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
+							"<span class='notice'>You begin repairing [src]...</span>", \
+							"<span class='hear'>You hear welding.</span>")
+			if(O.use_tool(src, user, 40, volume=50))
+				if(!(machine_stat & BROKEN))
+					return
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				set_machine_stat(machine_stat & ~BROKEN)
+				obj_integrity = max_integrity
+				update_appearance()
+
+		else
+			return ..()
+
+	else if(default_unfasten_wrench(user, O))
 		power_change()
 		return
 
@@ -77,53 +93,38 @@
 			return
 		storedpda = O
 		O.add_fingerprint(user)
-		update_icon()
+		update_appearance()
 
-	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		if(stat & BROKEN)
-			if(!O.tool_start_check(user, amount=0))
-				return
-			user.visible_message("[user] is repairing [src].", \
-							"<span class='notice'>You begin repairing [src]...</span>", \
-							"<span class='italics'>You hear welding.</span>")
-			if(O.use_tool(src, user, 40, volume=50))
-				if(!(stat & BROKEN))
-					return
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
-				stat &= ~BROKEN
-				obj_integrity = max_integrity
-				update_icon()
-		else
-			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
 		return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			update_icon()
+	obj_break()
 
-/obj/machinery/pdapainter/attack_hand(mob/user)
+/obj/machinery/pdapainter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 
 	if(storedpda)
-		var/obj/item/pda/P
-		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
-		if(!P)
-			return
-		if(!in_range(src, user))
-			return
-		if(!storedpda)//is the pda still there?
-			return
-		storedpda.icon_state = P.icon_state
-		storedpda.desc = P.desc
-		ejectpda()
+		if(machine_stat & BROKEN) //otherwise the PDA is stuck until repaired
+			ejectpda()
+			to_chat(user, "<span class='info'>You manage to eject the loaded PDA.</span>")
+		else
+			var/obj/item/pda/P
+			P = input(user, "Select your color!", "PDA Painting") as null|anything in sortNames(colorlist)
+			if(!P)
+				return
+			if(!in_range(src, user))
+				return
+			if(!storedpda)//is the pda still there?
+				return
+			storedpda.icon_state = P.icon_state
+			storedpda.desc = P.desc
+			ejectpda()
 
 	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -131,17 +132,12 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || usr.restrained() || !usr.canmove)
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	if(storedpda)
 		storedpda.forceMove(drop_location())
 		storedpda = null
-		update_icon()
+		update_appearance()
 	else
-		to_chat(usr, "<span class='notice'>[src] is empty.</span>")
-
-
-/obj/machinery/pdapainter/power_change()
-	..()
-	update_icon()
+		to_chat(usr, "<span class='warning'>[src] is empty!</span>")

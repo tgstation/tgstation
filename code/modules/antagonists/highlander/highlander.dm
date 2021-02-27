@@ -3,27 +3,35 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	can_elimination_hijack = ELIMINATION_ENABLED
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	L.add_trait(TRAIT_NOGUNS, "highlander")
+	ADD_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	L.remove_trait(TRAIT_NOGUNS, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
+	if(L.has_quirk(/datum/quirk/nonviolent))
+		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
 	steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
 	objectives += steal_objective
-
-	var/datum/objective/hijack/hijack_objective = new
-	hijack_objective.explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
-	hijack_objective.owner = owner
-	objectives += hijack_objective
-
-	owner.objectives |= objectives
+	var/datum/objective/elimination/highlander/elimination_objective = new
+	elimination_objective.owner = owner
+	objectives += elimination_objective
 
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
@@ -42,30 +50,30 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H.get_equipped_items())
-		qdel(I)
-	for(var/obj/item/I in H.held_items)
-		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), slot_ears)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), slot_l_store)
+	for(var/obj/item/I in H)
+		if(!H.dropItemToGround(I))
+			qdel(I)
+	H.regenerate_icons()
+	H.revive(full_heal = TRUE, admin_revive = TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
+	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), ITEM_SLOT_FEET)
+	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
-	var/obj/item/card/id/W = new(H)
-	W.icon_state = "centcom"
+	var/obj/item/card/id/centcom/W = new(H)
 	W.access = get_all_accesses()
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.flags_1 |= NODROP_1
-	W.update_label(H.real_name)
-	H.equip_to_slot_or_del(W, slot_wear_id)
+	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
+	W.update_label()
+	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
 
 	sword = new(H)
 	if(!GLOB.highlander)
-		sword.admin_spawned = TRUE //To prevent announcing
+		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)
 
@@ -75,3 +83,22 @@
 	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
 	antiwelder.icon_state = "bloodhand_right"
 	H.put_in_hands(antiwelder)
+
+/datum/antagonist/highlander/robot
+	name="highlander"
+
+/datum/antagonist/highlander/robot/greet()
+	to_chat(owner, "<span class='boldannounce'>Your integrated claymore cries out for blood. Claim the lives of others, and your own will be restored!\n\
+	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
+
+/datum/antagonist/highlander/robot/give_equipment()
+	var/mob/living/silicon/robot/robotlander = owner.current
+	if(!istype(robotlander))
+		return ..()
+	robotlander.revive(full_heal = TRUE, admin_revive = TRUE)
+	robotlander.set_connected_ai() //DISCONNECT FROM AI
+	robotlander.laws.clear_inherent_laws()
+	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
+	robotlander.laws.show_laws(robotlander)
+	robotlander.model.transform_to(/obj/item/robot_model/syndicate/kiltborg)
+	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules

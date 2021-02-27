@@ -7,17 +7,17 @@
 	icon_state = "minibar"
 	anchored = TRUE
 	density = FALSE
-	opacity = 0
+	opacity = FALSE
 	var/deconstructible = TRUE
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/wrench) && deconstructible)
+	if(I.tool_behaviour == TOOL_WRENCH && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 50))
 			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-			playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
-			new/obj/item/stack/sheet/metal(drop_location())
+			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
+			new/obj/item/stack/sheet/iron(drop_location())
 			qdel(src)
 		return
 	..()
@@ -103,8 +103,8 @@
 	desc = "Space Jesus is my copilot."
 	icon_state = "driverseat"
 
-/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
-	playsound(src, 'sound/items/carhorn.ogg', 50, 1)
+/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user, list/modifiers)
+	playsound(src, 'sound/items/carhorn.ogg', 50, TRUE)
 	. = ..()
 
 /obj/structure/fluff/paper
@@ -167,3 +167,109 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+
+/obj/structure/fluff/big_chain
+	name = "giant chain"
+	desc = "A towering link of chains leading up to the ceiling."
+	icon = 'icons/effects/32x96.dmi'
+	icon_state = "chain"
+	layer = ABOVE_OBJ_LAYER
+	anchored = TRUE
+	density = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_towel
+	name = "beach towel"
+	desc = "A towel decorated in various beach-themed designs."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella
+	name = "beach umbrella"
+	desc = "A fancy umbrella designed to keep the sun off beach-goers."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "brella"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella/security
+	icon_state = "hos_brella"
+
+/obj/structure/fluff/beach_umbrella/science
+	icon_state = "rd_brella"
+
+/obj/structure/fluff/beach_umbrella/engine
+	icon_state = "ce_brella"
+
+/obj/structure/fluff/beach_umbrella/cap
+	icon_state = "cap_brella"
+
+/obj/structure/fluff/beach_umbrella/syndi
+	icon_state = "syndi_brella"
+
+/obj/structure/fluff/clockwork
+	name = "Clockwork Fluff"
+	icon = 'icons/obj/clockwork_objects.dmi'
+	deconstructible = FALSE
+
+/obj/structure/fluff/clockwork/alloy_shards
+	name = "replicant alloy shards"
+	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
+	icon_state = "alloy_shards"
+
+/obj/structure/fluff/clockwork/alloy_shards/small
+	icon_state = "shard_small1"
+
+/obj/structure/fluff/clockwork/alloy_shards/medium
+	icon_state = "shard_medium1"
+
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit
+	icon_state = "gear_bit1"
+
+/obj/structure/fluff/clockwork/alloy_shards/large
+	icon_state = "shard_large1"
+
+/obj/structure/fluff/clockwork/blind_eye
+	name = "blind eye"
+	desc = "A heavy brass eye, its red iris fallen dark."
+	icon_state = "blind_eye"
+
+/obj/structure/fluff/clockwork/fallen_armor
+	name = "fallen armor"
+	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
+	icon_state = "fallen_armor"
+
+/obj/structure/fluff/clockwork/clockgolem_remains
+	name = "clockwork golem scrap"
+	desc = "A pile of scrap metal. It seems damaged beyond repair."
+	icon_state = "clockgolem_dead"
+
+/obj/structure/fluff/hedge
+	name = "hedge"
+	desc = "A large bushy hedge."
+	icon = 'icons/obj/smooth_structures/hedge.dmi'
+	icon_state = "hedge-0"
+	base_icon_state = "hedge"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_HEDGE_FLUFF)
+	canSmoothWith = list(SMOOTH_GROUP_HEDGE_FLUFF)
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+	max_integrity = 80
+
+/obj/structure/fluff/hedge/attacked_by(obj/item/I, mob/living/user)
+	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
+		to_chat(user,"<span class='notice'>You start trimming \the [src].</span>")
+		if(do_after(user, 3 SECONDS,target=src))
+			to_chat(user,"<span class='notice'>You finish trimming \the [src].</span>")
+			opacity = FALSE
+	else
+		return ..()
+
+/obj/structure/fluff/hedge/opaque //useful for mazes and such
+	opacity = TRUE

@@ -1,9 +1,9 @@
 
-#define BEEBOX_MAX_FRAMES				3		//Max frames per box
-#define BEES_RATIO						0.5 	//Multiplied by the max number of honeycombs to find the max number of bees
-#define BEE_PROB_NEW_BEE				20		//The chance for spare bee_resources to be turned into new bees
-#define BEE_RESOURCE_HONEYCOMB_COST		100		//The amount of bee_resources for a new honeycomb to be produced, percentage cost 1-100
-#define BEE_RESOURCE_NEW_BEE_COST		50		//The amount of bee_resources for a new bee to be produced, percentage cost 1-100
+#define BEEBOX_MAX_FRAMES 3 //Max frames per box
+#define BEES_RATIO 0.5 //Multiplied by the max number of honeycombs to find the max number of bees
+#define BEE_PROB_NEW_BEE 20 //The chance for spare bee_resources to be turned into new bees
+#define BEE_RESOURCE_HONEYCOMB_COST 100 //The amount of bee_resources for a new honeycomb to be produced, percentage cost 1-100
+#define BEE_RESOURCE_NEW_BEE_COST 50 //The amount of bee_resources for a new bee to be produced, percentage cost 1-100
 
 
 
@@ -18,8 +18,11 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
-		return 1
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+			return 1
 	return 0
 
 
@@ -62,7 +65,7 @@
 	var/datum/reagent/R = null
 	if(random_reagent)
 		R = pick(subtypesof(/datum/reagent))
-		R = GLOB.chemical_reagents_list[initial(R.id)]
+		R = GLOB.chemical_reagents_list[R]
 
 	queen_bee = new(src)
 	queen_bee.beehome = src
@@ -92,7 +95,7 @@
 				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
 				var/obj/item/reagent_containers/honeycomb/HC = new(src)
 				if(queen_bee.beegent)
-					HC.set_reagent(queen_bee.beegent.id)
+					HC.set_reagent(queen_bee.beegent.type)
 				honeycombs += HC
 
 		if(bees.len < get_max_bees())
@@ -120,25 +123,25 @@
 
 
 /obj/structure/beebox/examine(mob/user)
-	..()
+	. = ..()
 
 	if(!queen_bee)
-		to_chat(user, "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>")
+		. += "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>"
 
 	var/half_bee = get_max_bees()*0.5
 	if(half_bee && (bees.len >= half_bee))
-		to_chat(user, "<span class='notice'>This place is aBUZZ with activity... there are lots of bees!</span>")
+		. += "<span class='notice'>This place is aBUZZ with activity... there are lots of bees!</span>"
 
-	to_chat(user, "<span class='notice'>[bee_resources]/100 resource supply.</span>")
-	to_chat(user, "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>")
-	to_chat(user, "<span class='notice'>[bee_resources*2]% towards a new bee.</span>")
+	. += "<span class='notice'>[bee_resources]/100 resource supply.</span>"
+	. += "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>"
+	. += "<span class='notice'>[bee_resources*2]% towards a new bee.</span>"
 
 	if(honeycombs.len)
 		var/plural = honeycombs.len > 1
-		to_chat(user, "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>")
+		. += "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>"
 
 	if(honeycombs.len >= get_max_honeycomb())
-		to_chat(user, "<span class='warning'>There's no room for more honeycomb!</span>")
+		. += "<span class='warning'>There's no room for more honeycomb!</span>"
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
@@ -153,7 +156,7 @@
 			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
 		return
 
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		if(default_unfasten_wrench(user, I, time = 20))
 			return
 
@@ -260,3 +263,6 @@
 		if(HF.loc == src)
 			HF.forceMove(drop_location())
 	qdel(src)
+
+/obj/structure/beebox/unwrenched
+	anchored = FALSE

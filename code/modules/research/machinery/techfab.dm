@@ -2,7 +2,6 @@
 	name = "technology fabricator"
 	desc = "Produces researched prototypes with raw materials and energy."
 	icon_state = "protolathe"
-	container_type = OPENCONTAINER
 	circuit = /obj/item/circuitboard/machine/techfab
 	categories = list(
 								"Power Designs",
@@ -10,6 +9,7 @@
 								"Bluespace Designs",
 								"Stock Parts",
 								"Equipment",
+								"Tool Designs",
 								"Mining Designs",
 								"Electronics",
 								"Weapons",
@@ -30,6 +30,4 @@
 								)
 	console_link = FALSE
 	production_animation = "protolathe_n"
-	requires_console = FALSE
-	consoleless_interface = TRUE
 	allowed_buildtypes = PROTOLATHE | IMPRINTER

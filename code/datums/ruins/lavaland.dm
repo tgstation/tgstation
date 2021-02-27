@@ -65,17 +65,18 @@
 	name = "Free Golem Ship"
 	id = "golem-ship"
 	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
-	Seem very intent on research and individual liberty, and also geology based naming?"
+	Seem very intent on research and individual liberty, and also geology-based naming?"
 	cost = 20
-	suffix = "lavaland_surface_golem_ship.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/animal_hospital
-	name = "Animal Hospital"
-	id = "animal-hospital"
-	description = "Rats with cancer do not live very long. And the ones that wake up from cryostasis seem to commit suicide out of boredom."
+/datum/map_template/ruin/lavaland/gaia
+	name = "Patch of Eden"
+	id = "gaia"
+	description = "Who would have thought that such a peaceful place could be on such a horrific planet?"
 	cost = 5
-	suffix = "lavaland_surface_animal_hospital.dmm"
+	suffix = "lavaland_surface_gaia.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin
@@ -104,7 +105,7 @@
 /datum/map_template/ruin/lavaland/sin/pride
 	name = "Ruin of Pride"
 	id = "pride"
-	description = "Wormhole lifebelts are for LOSERS, who you are better than."
+	description = "Wormhole lifebelts are for LOSERS, whom you are better than."
 	suffix = "lavaland_surface_pride.dmm"
 
 /datum/map_template/ruin/lavaland/sin/sloth
@@ -114,6 +115,14 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
+
+/datum/map_template/ruin/lavaland/ratvar
+	name = "Dead God"
+	id = "ratvar"
+	description = "Ratvar's final resting place."
+	suffix = "lavaland_surface_dead_ratvar.dmm"
+	cost = 0
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
@@ -149,7 +158,7 @@
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
 	id = "xeno-nest"
-	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava filled hellscape to focus on what's really important in life. \
+	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava-filled hellscape to focus on what's really important in life. \
 	Quality memes."
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
@@ -158,7 +167,8 @@
 	name = "Fountain Hall"
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_surface_fountain_hall.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "fountain_hall.dmm"
 	cost = 5
 
 /datum/map_template/ruin/lavaland/survivalcapsule
@@ -171,7 +181,7 @@
 /datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
 	id = "pizza"
-	description = "Little Timmy's birthday pizza-bash took a turn for the worse when a bluespace anomaly passed by."
+	description = "Little Timmy's birthday pizza bash took a turn for the worse when a bluespace anomaly passed by."
 	suffix = "lavaland_surface_pizzaparty.dmm"
 	allow_duplicates = FALSE
 	cost = 5
@@ -179,7 +189,7 @@
 /datum/map_template/ruin/lavaland/cultaltar
 	name = "Summoning Ritual"
 	id = "cultaltar"
-	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily. A demonic laugh echoes throughout the caverns"
+	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily. A demonic laugh echoes throughout the caverns."
 	suffix = "lavaland_surface_cultaltar.dmm"
 	allow_duplicates = FALSE
 	cost = 10
@@ -207,3 +217,42 @@
 	suffix = "lavaland_surface_random_ripley.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/dark_wizards
+	name = "Dark Wizard Altar"
+	id = "dark_wizards"
+	description = "A ruin with dark wizards. What secret do they guard?"
+	suffix = "lavaland_surface_wizard.dmm"
+	cost = 5
+
+/datum/map_template/ruin/lavaland/strong_stone
+	name = "Strong Stone"
+	id = "strong_stone"
+	description = "A stone that seems particularly powerful."
+	suffix = "lavaland_strong_rock.dmm"
+	allow_duplicates = FALSE
+	cost = 2
+
+/datum/map_template/ruin/lavaland/puzzle
+	name = "Ancient Puzzle"
+	id = "puzzle"
+	description = "Mystery to be solved."
+	suffix = "lavaland_surface_puzzle.dmm"
+	cost = 5
+
+/datum/map_template/ruin/lavaland/elite_tumor
+	name = "Pulsating Tumor"
+	id = "tumor"
+	description = "A strange tumor which houses a powerful beast..."
+	suffix = "lavaland_surface_elite_tumor.dmm"
+	cost = 5
+	always_place = TRUE
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/lavaland/elephant_graveyard
+	name = "Elephant Graveyard"
+	id = "Graveyard"
+	description = "An abandoned graveyard, calling to those unable to continue."
+	suffix = "lavaland_surface_elephant_graveyard.dmm"
+	allow_duplicates = FALSE
+	cost = 10

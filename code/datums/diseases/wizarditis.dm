@@ -3,13 +3,13 @@
 	max_stages = 4
 	spread_text = "Airborne"
 	cure_text = "The Manly Dorf"
-	cures = list("manlydorf")
+	cures = list(/datum/reagent/consumable/ethanol/manly_dorf)
 	cure_chance = 100
 	agent = "Rincewindus Vulgaris"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 0.75
-	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. Subjects affected show the signs of mental retardation, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
+	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. Subjects affected show the signs of brain damage, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
 	severity = DISEASE_SEVERITY_HARMFUL
 	required_organs = list(/obj/item/bodypart/head)
 
@@ -23,35 +23,31 @@ TARCOL MINTI ZHERI - forcewall
 STI KALY - blind
 */
 
-/datum/disease/wizarditis/stage_act()
-	..()
+/datum/disease/wizarditis/stage_act(delta_time, times_fired)
+	. = ..()
+	if(!.)
+		return
 
 	switch(stage)
 		if(2)
-			if(prob(1)&&prob(50))
-				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
-			if(prob(1)&&prob(50))
+			if(DT_PROB(0.25, delta_time))
+				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"), forced = "wizarditis")
+			if(DT_PROB(0.25, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>")
-
-
 		if(3)
-			if(prob(1)&&prob(50))
-				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
-			if(prob(1)&&prob(50))
+			if(DT_PROB(0.25, delta_time))
+				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"), forced = "wizarditis")
+			if(DT_PROB(0.25, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>")
-
 		if(4)
-
-			if(prob(1))
-				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
+			if(DT_PROB(0.5, delta_time))
+				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"), forced = "wizarditis")
 				return
-			if(prob(1)&&prob(50))
+			if(DT_PROB(0.25, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
 				spawn_wizard_clothes(50)
-			if(prob(1)&&prob(1))
+			if(DT_PROB(0.005, delta_time))
 				teleport()
-	return
-
 
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)
@@ -61,19 +57,19 @@ STI KALY - blind
 			if(!istype(H.head, /obj/item/clothing/head/wizard))
 				if(!H.dropItemToGround(H.head))
 					qdel(H.head)
-				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), slot_head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), ITEM_SLOT_HEAD)
 			return
 		if(prob(chance))
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
 				if(!H.dropItemToGround(H.wear_suit))
 					qdel(H.wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), ITEM_SLOT_OCLOTHING)
 			return
 		if(prob(chance))
 			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
 				if(!H.dropItemToGround(H.shoes))
 					qdel(H.shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), ITEM_SLOT_FEET)
 			return
 	else
 		var/mob/living/carbon/H = affected_mob
@@ -111,7 +107,7 @@ STI KALY - blind
 	if(!L)
 		return
 
-	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
+	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!", forced = "wizarditis teleport")
 	affected_mob.forceMove(pick(L))
 
 	return

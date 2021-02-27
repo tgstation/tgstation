@@ -1,5 +1,4 @@
 /mob/living/silicon/ai/Logout()
 	..()
-	for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
-		O.mode = 0
+	set_eyeobj_visible(FALSE)
 	view_core()

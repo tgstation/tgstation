@@ -18,54 +18,49 @@
 	anchored = FALSE
 	density = FALSE
 	dir = NORTH
+	set_dir_on_move = FALSE
 
-	var/ini_dir
 	var/obj/item/electronics/airlock/electronics = null
 	var/created_name = null
 
 	//Vars to help with the icon's name
-	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = FALSE		//Whether or not this creates a secure windoor
-	var/state = "01"	//How far the door assembly has progressed
+	var/facing = "l" //Does the windoor open to the left or right?
+	var/secure = FALSE //Whether or not this creates a secure windoor
+	var/state = "01" //How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
-	ini_dir = dir
-	air_update_turf(1)
+		setDir(set_dir)
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/windoor_assembly/Destroy()
 	density = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc
 	. = ..()
-	setDir(ini_dir)
 	move_update_air(T)
 
-/obj/structure/windoor_assembly/update_icon()
+/obj/structure/windoor_assembly/update_icon_state()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
+	return ..()
 
-/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
-	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		return !density
+/obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
+	if(get_dir(loc, target) == dir)
+		return
+
 	if(istype(mover, /obj/structure/window))
-		var/obj/structure/window/W = mover
-		if(!valid_window_location(loc, W.ini_dir))
-			return FALSE
-	else if(istype(mover, /obj/structure/windoor_assembly))
-		var/obj/structure/windoor_assembly/W = mover
-		if(!valid_window_location(loc, W.ini_dir))
-			return FALSE
-	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
-		return FALSE
-	return 1
+		var/obj/structure/window/moved_window = mover
+		return valid_window_location(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
+
+	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
+		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
 
 /obj/structure/windoor_assembly/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
@@ -73,25 +68,24 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+/obj/structure/windoor_assembly/CheckExit(atom/movable/mover, turf/target)
+	if(mover.pass_flags & pass_flags_self)
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
-		return 1
-
+		return TRUE
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weldingtool) && !anchored)
+			if(W.tool_behaviour == TOOL_WELDER && !anchored)
 				if(!W.tool_start_check(user, amount=0))
 					return
 
-				user.visible_message("[user] disassembles the windoor assembly.",
+				user.visible_message("<span class='notice'>[user] disassembles the windoor assembly.</span>",
 					"<span class='notice'>You start to disassemble the windoor assembly...</span>")
 
 				if(W.use_tool(src, user, 40, volume=50))
@@ -105,12 +99,12 @@
 				return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/wrench) && !anchored)
+			if(W.tool_behaviour == TOOL_WRENCH && !anchored)
 				for(var/obj/machinery/door/window/WD in loc)
 					if(WD.dir == dir)
 						to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 						return
-				user.visible_message("[user] secures the windoor assembly to the floor.",
+				user.visible_message("<span class='notice'>[user] secures the windoor assembly to the floor.</span>",
 					"<span class='notice'>You start to secure the windoor assembly to the floor...</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
@@ -121,22 +115,22 @@
 							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
 					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
-					anchored = TRUE
+					set_anchored(TRUE)
 					if(secure)
 						name = "secure anchored windoor assembly"
 					else
 						name = "anchored windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(istype(W, /obj/item/wrench) && anchored)
-				user.visible_message("[user] unsecures the windoor assembly to the floor.",
+			else if(W.tool_behaviour == TOOL_WRENCH && anchored)
+				user.visible_message("<span class='notice'>[user] unsecures the windoor assembly to the floor.</span>",
 					"<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
-					anchored = FALSE
+					set_anchored(FALSE)
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -164,7 +158,7 @@
 
 			//Adding cable to the assembly. Step 5 complete.
 			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
-				user.visible_message("[user] wires the windoor assembly.", "<span class='notice'>You start to wire the windoor assembly...</span>")
+				user.visible_message("<span class='notice'>[user] wires the windoor assembly.</span>", "<span class='notice'>You start to wire the windoor assembly...</span>")
 
 				if(do_after(user, 40, target = src))
 					if(!src || !anchored || src.state != "01")
@@ -185,8 +179,8 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(istype(W, /obj/item/wirecutters))
-				user.visible_message("[user] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
+			if(W.tool_behaviour == TOOL_WIRECUTTER)
+				user.visible_message("<span class='notice'>[user] cuts the wires from the airlock assembly.</span>", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(state != "02")
@@ -205,7 +199,7 @@
 				if(!user.transferItemToLoc(W, src))
 					return
 				W.play_tool_sound(src, 100)
-				user.visible_message("[user] installs the electronics into the airlock assembly.",
+				user.visible_message("<span class='notice'>[user] installs the electronics into the airlock assembly.</span>",
 					"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 
 				if(do_after(user, 40, target = src))
@@ -219,11 +213,11 @@
 					W.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(istype(W, /obj/item/screwdriver))
+			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				if(!electronics)
 					return
 
-				user.visible_message("[user] removes the electronics from the airlock assembly.",
+				user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>",
 					"<span class='notice'>You start to uninstall electronics from the airlock assembly...</span>")
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
@@ -246,12 +240,12 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(istype(W, /obj/item/crowbar))
+			else if(W.tool_behaviour == TOOL_CROWBAR)
 				if(!electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics!</span>")
 					return
 				user << browse(null, "window=windoor_access")
-				user.visible_message("[user] pries the windoor into the frame.",
+				user.visible_message("<span class='notice'>[user] pries the windoor into the frame.</span>",
 					"<span class='notice'>You start prying the windoor into the frame...</span>")
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
@@ -293,7 +287,10 @@
 						windoor.setDir(dir)
 						windoor.density = FALSE
 
-						windoor.req_access = electronics.accesses
+						if(electronics.one_access)
+							windoor.req_one_access = electronics.accesses
+						else
+							windoor.req_access = electronics.accesses
 						windoor.electronics = electronics
 						electronics.loc = windoor
 						if(created_name)
@@ -306,19 +303,14 @@
 				return ..()
 
 	//Update to reflect changes(if applicable)
-	update_icon()
+	update_appearance()
 
 
 
 /obj/structure/windoor_assembly/ComponentInitialize()
 	. = ..()
-	AddComponent(
-		/datum/component/simple_rotation,
-		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS,
-		null,
-		CALLBACK(src, .proc/can_be_rotated),
-		CALLBACK(src,.proc/after_rotation)
-		)
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/windoor_assembly/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
@@ -326,22 +318,26 @@
 		return FALSE
 	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
-	if(!valid_window_location(loc, target_dir))
+	if(!valid_window_location(loc, target_dir, is_fulltile = FALSE))
 		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 	return TRUE
 
 /obj/structure/windoor_assembly/proc/after_rotation(mob/user)
-	ini_dir = dir
-	update_icon()
+	update_appearance()
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_USE))
+			return
 
 	if(facing == "l")
 		to_chat(usr, "<span class='notice'>The windoor will now slide to the right.</span>")
@@ -350,5 +346,5 @@
 		facing = "l"
 		to_chat(usr, "<span class='notice'>The windoor will now slide to the left.</span>")
 
-	update_icon()
+	update_appearance()
 	return

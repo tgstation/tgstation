@@ -1,10 +1,10 @@
 /*
- *	Absorbs /obj/item/secstorage.
- *	Reimplements it only slightly to use existing storage functionality.
+ * Absorbs /obj/item/secstorage.
+ * Reimplements it only slightly to use existing storage functionality.
  *
- *	Contains:
- *		Secure Briefcase
- *		Wall Safe
+ * Contains:
+ * Secure Briefcase
+ * Wall Safe
  */
 
 // -----------------------------
@@ -17,44 +17,44 @@
 	var/icon_opened = "secure0"
 	var/code = ""
 	var/l_code = null
-	var/l_set = 0
-	var/l_setshort = 0
-	var/l_hacking = 0
+	var/l_set = FALSE
+	var/l_setshort = FALSE
+	var/l_hacking = FALSE
 	var/open = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	desc = "This shouldn't exist. If it does, create an issue report."
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 14
 
 /obj/item/storage/secure/examine(mob/user)
-	..()
-	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
+	. = ..()
+	. += "The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
-	if(SendSignal(COMSIG_IS_STORAGE_LOCKED))
-		if (istype(W, /obj/item/screwdriver))
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+		if (W.tool_behaviour == TOOL_SCREWDRIVER)
 			if (W.use_tool(src, user, 20))
 				open =! open
 				to_chat(user, "<span class='notice'>You [open ? "open" : "close"] the service panel.</span>")
 			return
-		if (istype(W, /obj/item/wirecutters))
+		if (W.tool_behaviour == TOOL_WIRECUTTER)
 			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
-		if ((istype(W, /obj/item/multitool)) && (!l_hacking))
-			if(open == 1)
+		if ((W.tool_behaviour == TOOL_MULTITOOL) && (!l_hacking))
+			if(open == TRUE)
 				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
-				l_hacking = 1
+				l_hacking = TRUE
 				if (W.use_tool(src, user, 400))
 					to_chat(user, "<span class='danger'>Internal memory reset - lock has been disengaged.</span>")
-					l_set = 0
-					l_hacking = 0
+					l_set = FALSE
+					l_hacking = FALSE
 				else
-					l_hacking = 0
+					l_hacking = FALSE
 			else
-				to_chat(user, "<span class='notice'>You must <b>unscrew</b> the service panel before you can pulse the wiring.</span>")
+				to_chat(user, "<span class='warning'>You must <b>unscrew</b> the service panel before you can pulse the wiring!</span>")
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
@@ -64,7 +64,7 @@
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user)
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -80,15 +80,15 @@
 
 /obj/item/storage/secure/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || (get_dist(src, usr) > 1))
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")
-			if ((l_set == 0) && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
+			if (!l_set && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
 				l_code = code
-				l_set = 1
-			else if ((code == l_code) && (l_set == 1))
-				SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+				l_set = TRUE
+			else if ((code == l_code) && l_set)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 				cut_overlays()
 				add_overlay(icon_opened)
 				code = null
@@ -96,10 +96,10 @@
 				code = "ERROR"
 		else
 			if ((href_list["type"] == "R") && (!l_setshort))
-				SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 				cut_overlays()
 				code = null
-				SendSignal(COMSIG_TRY_STORAGE_HIDE_FROM, usr)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_FROM, usr)
 			else
 				code += text("[]", sanitize_text(href_list["type"]))
 				if (length(code) > 5)
@@ -119,7 +119,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
-	item_state = "sec-case"
+	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	desc = "A large briefcase with a digital locking system."
@@ -128,7 +128,8 @@
 	throw_speed = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
+	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 
 /obj/item/storage/secure/briefcase/PopulateContents()
 	new /obj/item/paper(src)
@@ -136,7 +137,7 @@
 
 /obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
@@ -146,7 +147,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	for(var/i = 0, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
@@ -170,19 +171,19 @@
 
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.cant_hold = typecacheof(list(/obj/item/storage/secure/briefcase))
-	STR.max_w_class = 8						//??
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
+	STR.max_w_class = 8 //??
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/safe/attack_hand(mob/user)
+/obj/item/storage/secure/safe/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	return attack_self(user)
 
-/obj/item/storage/secure/safe/HoS
+/obj/item/storage/secure/safe/hos
 	name = "head of security's safe"

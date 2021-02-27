@@ -18,6 +18,7 @@ import MySQLdb
 import argparse
 import re
 import sys
+import string
 
 def parse_text_flags(text, previous):
     flag_values = {"BUILDMODE":1, "BUILD":1, "ADMIN":2, "REJUVINATE":2, "REJUV":2, "BAN":4, "FUN":8, "SERVER":16, "DEBUG":32, "POSSESS":64, "PERMISSIONS":128, "RIGHTS":128, "STEALTH":256, "POLL":512, "VAREDIT":1024, "SOUNDS":2048, "SOUND":2048, "SPAWN":4096, "CREATE":4096, "AUTOLOGIN":8192, "AUTOADMIN":8192, "DBRANKS":16384}
@@ -70,6 +71,7 @@ db=MySQLdb.connect(host=args.address, user=args.username, passwd=args.password, 
 cursor=db.cursor()
 ranks_table = args.rankstable
 admin_table = args.admintable
+ckeyExformat = re.sub("@|-|_", " ", string.punctuation)
 with open("..\\config\\admin_ranks.txt") as rank_file:
     previous = 0
     for line in rank_file:
@@ -77,17 +79,21 @@ with open("..\\config\\admin_ranks.txt") as rank_file:
             if line.startswith("#"):
                 continue
             matches = re.match("(.+)\\b\\s+=\\s*(.*)", line)
+            rank = "".join((c for c in matches.group(1) if c not in ckeyExformat))
             flags = parse_text_flags(matches.group(2), previous)
             previous = flags
-            cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags, can_edit_flags) VALUES ('{1}', {2}, {3}, {4})".format(ranks_table, matches.group(1), flags[0], flags[1], flags[2]))
+            cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags, can_edit_flags) VALUES ('{1}', {2}, {3}, {4})".format(ranks_table, rank, flags[0], flags[1], flags[2]))
 with open("..\\config\\admins.txt") as admins_file:
     previous = 0
+    ckeyformat = string.punctuation.replace("@", " ")
     for line in admins_file:
         if line.strip():
             if line.startswith("#"):
                 continue
             matches = re.match("(.+)\\b\\s+=\\s+(.+)", line)
-        cursor.execute("INSERT INTO {0} (ckey, rank) VALUES ('{1}', '{2}')".format(admin_table, matches.group(1).lower(), matches.group(2)))
+            ckey = "".join((c for c in matches.group(1) if c not in ckeyformat)).lower()
+            rank = "".join((c for c in matches.group(2) if c not in ckeyExformat))
+            cursor.execute("INSERT INTO {0} (ckey, rank) VALUES ('{1}', '{2}')".format(admin_table, ckey, rank))
 db.commit()
 cursor.close()
 print("Import complete.")

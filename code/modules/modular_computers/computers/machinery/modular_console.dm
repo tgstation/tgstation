@@ -8,8 +8,6 @@
 	icon_state_unpowered = "console-off"
 	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
-	var/console_department = "" // Used in New() to set network tag according to our area.
-	anchored = TRUE
 	density = TRUE
 	base_idle_power_usage = 100
 	base_active_power_usage = 500
@@ -17,7 +15,8 @@
 	steel_sheet_cost = 10
 	light_strength = 2
 	max_integrity = 300
-	integrity_failure = 150
+	integrity_failure = 0.5
+	var/console_department = "" // Used in New() to set network tag according to our area.
 
 /obj/machinery/modular_computer/console/buildable/Initialize()
 	. = ..()
@@ -38,7 +37,7 @@
 	var/obj/item/computer_hardware/network_card/wired/network_card = new()
 
 	cpu.install_component(network_card)
-	cpu.install_component(new /obj/item/computer_hardware/recharger/APC)
+	cpu.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 	cpu.install_component(new /obj/item/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 
 	var/area/A = get_area(src)
@@ -53,4 +52,4 @@
 		network_card.identification_string = "Unknown Console"
 	if(cpu)
 		cpu.screen_on = 1
-	update_icon()
+	update_appearance()

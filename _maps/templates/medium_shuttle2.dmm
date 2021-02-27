@@ -6,7 +6,7 @@
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_2)
 "c" = (
 /obj/structure/shuttle/engine/heater{
@@ -24,7 +24,7 @@
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_2)
 "g" = (
 /turf/closed/wall/mineral/titanium,
@@ -33,44 +33,93 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/powered/shuttle/medium_2)
 "k" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "l" = (
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "m" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_2)
 "n" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "o" = (
-/turf/open/floor/plasteel/darkblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "p" = (
-/turf/open/floor/plasteel/darkyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "r" = (
 /obj/structure/table,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_2)
 "s" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/darkblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "t" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper";
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "u" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/darkyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "v" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -88,7 +137,17 @@
 /obj/structure/chair/comfy{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "B" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,

@@ -4,16 +4,12 @@
 
 	min_players = 20
 	max_occurrences = 2
-	weight = 5
+	weight = 10
 
 /datum/round_event/anomaly/anomaly_vortex
 	startWhen = 10
 	announceWhen = 3
+	anomaly_path = /obj/effect/anomaly/bhole
 
 /datum/round_event/anomaly/anomaly_vortex/announce(fake)
 	priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
-
-/datum/round_event/anomaly/anomaly_vortex/start()
-	var/turf/T = safepick(get_area_turfs(impact_area))
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/bhole(T)

@@ -4,13 +4,17 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	var/unfoldedbag_path = /obj/structure/closet/body_bag
 	w_class = WEIGHT_CLASS_SMALL
+	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
-	deploy_bodybag(user, user.loc)
+	if(user.is_holding(src))
+		deploy_bodybag(user, get_turf(user))
+	else
+		deploy_bodybag(user, get_turf(src))
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(proximity)
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
@@ -19,7 +23,8 @@
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	R.open(user)
 	R.add_fingerprint(user)
-	qdel(src)
+	R.foldedbag_instance = src
+	moveToNullspace()
 
 /obj/item/bodybag/suicide_act(mob/user)
 	if(isopenturf(user.loc))
@@ -28,9 +33,9 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		user.forceMove(R)
-		playsound(src, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
 		return (OXYLOSS)
-	..()	
+	..()
 
 // Bluespace bodybag
 
@@ -41,14 +46,13 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
-	flags_2 = NO_MAT_REDEMPTION_2
-
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/bodybag/bluespace/examine(mob/user)
-	..()
+	. = ..()
 	if(contents.len)
 		var/s = contents.len == 1 ? "" : "s"
-		to_chat(user, "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>")
+		. += "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>"
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)
@@ -65,9 +69,10 @@
 			to_chat(A, "<span class='notice'>You suddenly feel air around you! You're free!</span>")
 	R.open(user)
 	R.add_fingerprint(user)
-	qdel(src)
+	R.foldedbag_instance = src
+	moveToNullspace()
 
-/obj/item/bodybag/bluespace/container_resist(mob/living/user)
+/obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
 	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
 		return
@@ -75,7 +80,11 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You claw at the fabric of [src], trying to tear it open...</span>")
 	to_chat(loc, "<span class='warning'>Someone starts trying to break free of [src]!</span>")
-	if(!do_after(user, 200, target = src))
+	if(!do_mob(user, src, 12 SECONDS, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
+		return
+	// you are still in the bag? time to go unless you KO'd, honey!
+	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
+	if(user.incapacitated())
 		to_chat(loc, "<span class='warning'>The pressure subsides. It seems that they've stopped resisting...</span>")
 		return
 	loc.visible_message("<span class='warning'>[user] suddenly appears in front of [loc]!</span>", "<span class='userdanger'>[user] breaks free of [src]!</span>")

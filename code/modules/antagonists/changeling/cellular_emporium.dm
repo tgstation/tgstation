@@ -13,10 +13,13 @@
 	changeling = null
 	. = ..()
 
-/datum/cellular_emporium/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/cellular_emporium/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/cellular_emporium/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "cellular_emporium", name, 900, 480, master_ui, state)
+		ui = new(user, src, "CellularEmporium", name)
 		ui.open()
 
 /datum/cellular_emporium/ui_data(mob/user)
@@ -25,6 +28,7 @@
 	var/can_readapt = changeling.canrespec
 	var/genetic_points_remaining = changeling.geneticpoints
 	var/absorbed_dna_count = changeling.absorbedcount
+	var/true_absorbs = changeling.trueabsorbs
 
 	data["can_readapt"] = can_readapt
 	data["genetic_points_remaining"] = genetic_points_remaining
@@ -33,7 +37,7 @@
 	var/list/abilities = list()
 
 	for(var/path in changeling.all_powers)
-		var/obj/effect/proc_holder/changeling/ability = path
+		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
 		if(dna_cost <= 0)
@@ -45,8 +49,9 @@
 		AL["helptext"] = initial(ability.helptext)
 		AL["owned"] = changeling.has_sting(ability)
 		var/req_dna = initial(ability.req_dna)
+		var/req_absorbs = initial(ability.req_absorbs)
 		AL["dna_cost"] = dna_cost
-		AL["can_purchase"] = ((req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
+		AL["can_purchase"] = ((req_absorbs <= true_absorbs) && (req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
 
 		abilities += list(AL)
 
@@ -55,7 +60,8 @@
 	return data
 
 /datum/cellular_emporium/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -70,7 +76,7 @@
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
-	background_icon_state = "bg_alien"
+	background_icon_state = "bg_changeling"
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)
@@ -79,7 +85,7 @@
 	if(istype(our_target, /datum/cellular_emporium))
 		cellular_emporium = our_target
 	else
-		throw EXCEPTION("cellular_emporium action created with non emporium")
+		CRASH("cellular_emporium action created with non emporium")
 
 /datum/action/innate/cellular_emporium/Activate()
 	cellular_emporium.ui_interact(owner)

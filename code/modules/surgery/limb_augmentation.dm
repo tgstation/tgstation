@@ -4,25 +4,18 @@
 
 //SURGERY STEPS
 
-/datum/surgery_step/replace
-	name = "sever muscles"
-	implements = list(/obj/item/scalpel = 100, TOOL_WIRECUTTER = 55)
-	time = 32
-
-
-/datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>")
-
-
-/datum/surgery_step/add_limb
+/datum/surgery_step/replace_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/borg/apparatus/organ_storage = 100)
 	time = 32
 	var/obj/item/bodypart/L = null // L because "limb"
 
 
-/datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
+/datum/surgery_step/replace_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(NOAUGMENTS in target.dna.species.species_traits)
+		to_chat(user, "<span class='warning'>[target] cannot be augmented!</span>")
+		return -1
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
 		tool = tool.contents[1]
 	var/obj/item/bodypart/aug = tool
 	if(aug.status != BODYPART_ROBOTIC)
@@ -33,38 +26,37 @@
 		return -1
 	L = surgery.operated_bodypart
 	if(L)
-		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
+		display_results(user, target, "<span class='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
+			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].</span>",
+			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)].</span>")
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 //ACTUAL SURGERIES
 
 /datum/surgery/augmentation
-	name = "augmentation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
-	species = list(/mob/living/carbon/human)
+	name = "Augmentation"
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace_limb)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
 
 //SURGERY STEP SUCCESSES
 
-/datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)
+/datum/surgery_step/replace_limb/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(L)
-		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-		if(istype(tool, /obj/item/organ_storage))
+		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 			tool.icon_state = initial(tool.icon_state)
 			tool.desc = initial(tool.desc)
 			tool.cut_overlays()
 			tool = tool.contents[1]
-		L.change_bodypart_status(BODYPART_ROBOTIC, TRUE)
-		L.icon = tool.icon
-		L.max_damage = tool.max_damage
-		qdel(tool)
-		target.update_body_parts()
-		target.updatehealth()
-		target.update_hair()
-		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
+		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
+			tool.replace_limb(target, TRUE)
+		display_results(user, target, "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!</span>",
+			"<span class='notice'>[user] successfully augments [target]'s [parse_zone(target_zone)]!</span>")
+		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] COMBAT MODE: [uppertext(user.combat_mode)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
-	return 1
+	return ..()

@@ -19,23 +19,25 @@
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
-GLOBAL_PROTECT(admin_verbs_debug_mapping)
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/camera_view, 				//-errorage
-	/client/proc/sec_camera_report, 		//-errorage
-	/client/proc/intercom_view, 			//-errorage
+	/client/proc/camera_view, //-errorage
+	/client/proc/sec_camera_report, //-errorage
+	/client/proc/intercom_view, //-errorage
 	/client/proc/air_status, //Air things
 	/client/proc/Cell, //More air things
 	/client/proc/atmosscan, //check plumbing
 	/client/proc/powerdebug, //check power
 	/client/proc/count_objects_on_z_level,
 	/client/proc/count_objects_all,
-	/client/proc/cmd_assume_direct_control,	//-errorage
-	/client/proc/startSinglo,
-	/client/proc/set_server_fps,	//allows you to set the ticklag.
+	/client/proc/cmd_assume_direct_control, //-errorage
+	/client/proc/cmd_give_direct_control,
+	/client/proc/set_server_fps, //allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	#ifdef TESTING
+	/client/proc/see_dirty_varedits,
+	#endif
 	/client/proc/cmd_admin_test_atmos_controllers,
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
@@ -48,11 +50,13 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
 	/client/proc/debug_z_levels,
+	/client/proc/place_ruin
 ))
+GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
 /obj/effect/debugging/mapfix_marker
 	name = "map fix marker"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "mapfixmarker"
 	desc = "I am a mappers mistake."
 
@@ -61,7 +65,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -79,11 +83,26 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
-			T.maptext = "[seen[T]]"
+			T.maptext = MAPTEXT(seen[T])
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
+#ifdef TESTING
+GLOBAL_LIST_EMPTY(dirty_vars)
 
+/client/proc/see_dirty_varedits()
+	set category = "Mapping"
+	set name = "Dirty Varedits"
+
+	var/list/dat = list()
+	dat += "<h3>Abandon all hope ye who enter here</h3><br><br>"
+	for(var/thing in GLOB.dirty_vars)
+		dat += "[thing]<br>"
+		CHECK_TICK
+	var/datum/browser/popup = new(usr, "dirty_vars", "Dirty Varedits", 900, 750)
+	popup.set_content(dat.Join())
+	popup.open()
+#endif
 
 /client/proc/sec_camera_report()
 	set category = "Mapping"
@@ -91,7 +110,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 
@@ -105,21 +124,21 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		for(var/obj/machinery/camera/C2 in CL)
 			if(C1 != C2)
 				if(C1.c_tag == C2.c_tag)
-					output += "<li><font color='red'>c_tag match for cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) and [ADMIN_COORDJMP(C2)] ([C2.loc.loc]) - c_tag is [C1.c_tag]</font></li>"
+					output += "<li><font color='red'>c_tag match for cameras at [ADMIN_VERBOSEJMP(C1)] and [ADMIN_VERBOSEJMP(C2)] - c_tag is [C1.c_tag]</font></li>"
 				if(C1.loc == C2.loc && C1.dir == C2.dir && C1.pixel_x == C2.pixel_x && C1.pixel_y == C2.pixel_y)
-					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
+					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
 				if(C1.loc == C2.loc)
-					output += "<li>Overlapping cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
+					output += "<li>Overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
 		var/turf/T = get_step(C1,turn(C1.dir,180))
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+					if (W.dir == turn(C1.dir,180) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
 						window_check = 1
 						break
 				if(!window_check)
-					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Network: [json_encode(C1.network)]</font></li>"
+					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_VERBOSEJMP(C1)] Network: [json_encode(C1.network)]</font></li>"
 
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
@@ -149,11 +168,11 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	set desc = "Displays a list of active turfs coordinates at roundstart"
 
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
-	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
+		<br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t
-		dat += "[ADMIN_COORDJMP(T)]\n"
+		dat += "[ADMIN_VERBOSEJMP(T)]\n"
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")
@@ -171,12 +190,12 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		count++
 
 	if(count)
-		to_chat(usr, "[count] AT markers removed.")
+		to_chat(usr, "[count] AT markers removed.", confidential = TRUE)
 	else
 		for(var/t in GLOB.active_turfs_startlist)
 			new /obj/effect/abstract/marker/at(t)
 			count++
-		to_chat(usr, "[count] AT markers placed.")
+		to_chat(usr, "[count] AT markers placed.", confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
 
@@ -185,21 +204,21 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	set name = "Debug verbs - Enable"
 	if(!check_rights(R_DEBUG))
 		return
-	verbs -= /client/proc/enable_debug_verbs
-	verbs.Add(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
+	remove_verb(src, /client/proc/enable_debug_verbs)
+	add_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/disable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Disable"
-	verbs.Remove(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
-	verbs += /client/proc/enable_debug_verbs
+	remove_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
+	add_verb(src, /client/proc/enable_debug_verbs)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
-	var/level = input("Which z-level?","Level?") as text
+	var/level = input("Which z-level?","Level?") as text|null
 	if(!level)
 		return
 	var/num_level = text2num(level)
@@ -208,7 +227,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	if(!isnum(num_level))
 		return
 
-	var/type_text = input("Which type path?","Path?") as text
+	var/type_text = input("Which type path?","Path?") as text|null
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)
@@ -223,7 +242,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		if(istype(A,type_path))
 			var/atom/B = A
 			while(!(isturf(B.loc)))
-				if(B && B.loc)
+				if(B?.loc)
 					B = B.loc
 				else
 					break
@@ -232,14 +251,14 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 					count++
 					atom_list += A
 
-	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
+	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
 	set category = "Mapping"
 	set name = "Count Objects All"
 
-	var/type_text = input("Which type path?","") as text
+	var/type_text = input("Which type path?","") as text|null
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)
@@ -252,7 +271,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		if(istype(A,type_path))
 			count++
 
-	to_chat(world, "There are [count] objects of type [type_path] in the game world")
+	to_chat(world, "There are [count] objects of type [type_path] in the game world", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -264,9 +283,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	GLOB.say_disabled = !GLOB.say_disabled
 	if(GLOB.say_disabled)
-		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
+		message_admins("[key] used 'Disable all communication verbs', killing all communication methods.")
 	else
-		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+		message_admins("[key] used 'Disable all communication verbs', restoring all communication methods.")
 
 //This generates the icon states for job starting location landmarks.
 /client/proc/create_mapping_job_icons()
@@ -293,7 +312,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	qdel(D)
 	//Also add the x
 	for(var/x_number in 1 to 4)
-		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
+		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
 
 /client/proc/debug_z_levels()
@@ -354,4 +373,4 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, messages.Join(""))
+	to_chat(src, messages.Join(""), confidential = TRUE)

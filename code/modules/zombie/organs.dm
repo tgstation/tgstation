@@ -4,6 +4,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
+	var/causes_damage = TRUE
 	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 30
 	var/converts_living = FALSE
@@ -22,7 +23,7 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/zombie_infection/Insert(mob/living/carbon/M, special = 0)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -39,12 +40,17 @@
 		web of pus and viscera, bound tightly around the brain like some \
 		biological harness.</span>")
 
-/obj/item/organ/zombie_infection/process()
+/obj/item/organ/zombie_infection/process(delta_time)
 	if(!owner)
 		return
 	if(!(src in owner.internal_organs))
 		Remove(owner)
-
+	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
+		return
+	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
+		owner.adjustToxLoss(0.5 * delta_time)
+		if(DT_PROB(5, delta_time))
+			to_chat(owner, "<span class='danger'>You feel sick...</span>")
 	if(timer_id)
 		return
 	if(owner.suiciding)
@@ -64,21 +70,29 @@
 /obj/item/organ/zombie_infection/proc/zombify()
 	timer_id = null
 
+	if(!converts_living && owner.stat != DEAD)
+		return
+
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
 		owner.set_species(/datum/species/zombie/infectious)
 
-	if(!converts_living && owner.stat != DEAD)
-		return
-
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
-	if(!owner.revive(full_heal = TRUE))
+	//Fully heal the zombie's damage the first time they rise
+	owner.setToxLoss(0, 0)
+	owner.setOxyLoss(0, 0)
+	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
+
+	if(!owner.revive(full_heal = FALSE, admin_revive = FALSE))
 		return
 
 	owner.grab_ghost()
 	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
-	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	owner.do_jitter_animation(living_transformation_time)
 	owner.Stun(living_transformation_time)
-	to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")
+	to_chat(owner, "<span class='alertalien'>You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence.</span>")
+
+/obj/item/organ/zombie_infection/nodamage
+	causes_damage = FALSE

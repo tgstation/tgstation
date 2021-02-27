@@ -1,13 +1,19 @@
 
-/mob/living/silicon/ai/attacked_by(obj/item/I, mob/living/user, def_zone)
-	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
+/mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = W
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
+		return
+	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
 
-
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(!SSticker.HasRoundStarted())
-		to_chat(M, "You cannot attack people before the game has started.")
+		to_chat(user, "You cannot attack people before the game has started.")
 		return
 	..()
 
@@ -18,10 +24,13 @@
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	disconnect_shell()
 	if (prob(30))
 		switch(pick(1,2))
@@ -29,7 +38,6 @@
 				view_core()
 			if(2)
 				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
-	..()
 
 /mob/living/silicon/ai/ex_act(severity, target)
 	switch(severity)
@@ -45,10 +53,9 @@
 
 
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
-	..(Proj)
+/mob/living/silicon/ai/bullet_act(obj/projectile/Proj)
+	. = ..(Proj)
 	updatehealth()
-	return 2
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing

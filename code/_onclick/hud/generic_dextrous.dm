@@ -1,64 +1,62 @@
 //Used for normal mobs that have hands.
-/datum/hud/dextrous/New(mob/living/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/dextrous/New(mob/living/owner)
 	..()
-	var/obj/screen/using
+	var/atom/movable/screen/using
 
-	using = new /obj/screen/drop()
+	using = new /atom/movable/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drone_drop
+	using.hud = src
 	static_inventory += using
 
-	pull_icon = new /obj/screen/pull()
+	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon(mymob)
+	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_drone_pull
+	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
-	using = new /obj/screen/swap_hand()
+	using = new /atom/movable/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1_m"
 	using.screen_loc = ui_swaphand_position(owner,1)
+	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/swap_hand()
+	using = new /atom/movable/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
+	using.hud = src
 	static_inventory += using
 
-	if(mymob.possible_a_intents)
-		if(mymob.possible_a_intents.len == 4)
-			// All possible intents - full intent selector
-			action_intent = new /obj/screen/act_intent/segmented
-		else
-			action_intent = new /obj/screen/act_intent
-			action_intent.icon = ui_style
-		action_intent.icon_state = mymob.a_intent
-		static_inventory += action_intent
+	action_intent = new /atom/movable/screen/combattoggle/flashy()
+	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
+	static_inventory += action_intent
 
 
-	zone_select = new /obj/screen/zone_sel()
+	zone_select = new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.update_icon(mymob)
+	zone_select.hud = src
+	zone_select.update_appearance()
 	static_inventory += zone_select
 
-	using = new /obj/screen/craft
+	using = new /atom/movable/screen/area_creator
 	using.icon = ui_style
-	static_inventory += using
-
-	using = new /obj/screen/area_creator
-	using.icon = ui_style
+	using.hud = src
 	static_inventory += using
 
 	mymob.client.screen = list()
 
-	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
-			inv_slots[inv.slot_id] = inv
-			inv.update_icon()
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
+			inv.update_appearance()
 
 /datum/hud/dextrous/persistent_inventory_update()
 	if(!mymob)
@@ -76,8 +74,6 @@
 
 //Dextrous simple mobs can use hands!
 /mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used)
-		if(dextrous)
-			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
-		else
-			..()
+	if(dextrous)
+		hud_type = dextrous_hud_type
+	return ..()

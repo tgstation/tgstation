@@ -16,8 +16,9 @@
 	end_duration = 300
 	end_overlay = "light_ash"
 
-	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	area_type = /area
+	protect_indoors = TRUE
+	target_trait = ZTRAIT_ASHSTORM
 
 	immunity_type = "ash"
 
@@ -81,9 +82,13 @@
 		if(ishuman(L)) //Are you immune?
 			var/mob/living/carbon/human/H = L
 			var/thermal_protection = H.get_thermal_protection()
-			if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 				return TRUE
-		L = L.loc //Matryoshka check
+		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
+			var/mob/living/the_mob = L
+			if("ash" in the_mob.weather_immunities)
+				return TRUE
+		L = L.loc //Check parent items immunities (recurses up to the turf)
 	return FALSE //RIP you
 
 /datum/weather/ash_storm/weather_act(mob/living/L)

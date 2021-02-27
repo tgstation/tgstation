@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns."
 	icon_state = "auth"
-	activated = 0
+	activated = FALSE
 
 /obj/item/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -12,41 +12,6 @@
 				<b>Function:</b> Allows operation of implant-locked weaponry, preventing equipment from falling into enemy hands."}
 	return dat
 
-
-/obj/item/implant/adrenalin
-	name = "adrenal implant"
-	desc = "Removes all stuns."
-	icon_state = "adrenal"
-	uses = 3
-
-/obj/item/implant/adrenalin/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Cybersun Industries Adrenaline Implant<BR>
-				<b>Life:</b> Five days.<BR>
-				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-				<HR>
-				<b>Implant Details:</b> Subjects injected with implant can activate an injection of medical cocktails.<BR>
-				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>
-				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
-	return dat
-
-/obj/item/implant/adrenalin/activate()
-	uses--
-	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	imp_in.SetStun(0)
-	imp_in.SetKnockdown(0)
-	imp_in.SetUnconscious(0)
-	imp_in.adjustStaminaLoss(-75)
-	imp_in.lying = 0
-	imp_in.update_canmove()
-
-	imp_in.reagents.add_reagent("synaptizine", 10)
-	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("stimulants", 10)
-	if(!uses)
-		qdel(src)
-
-
 /obj/item/implant/emp
 	name = "emp implant"
 	desc = "Triggers an EMP."
@@ -54,17 +19,22 @@
 	uses = 3
 
 /obj/item/implant/emp/activate()
+	. = ..()
 	uses--
 	empulse(imp_in, 3, 5)
 	if(!uses)
 		qdel(src)
+
+/obj/item/implanter/emp
+	name = "implanter (EMP)"
+	imp_type = /obj/item/implant/emp
 
 
 //Health Tracker Implant
 
 /obj/item/implant/health
 	name = "health implant"
-	activated = 0
+	activated = FALSE
 	var/healthstring = ""
 
 /obj/item/implant/health/proc/sensehealth()
@@ -88,8 +58,9 @@
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/activate()
+	. = ..()
 	// needs to be GLOB.deep_inventory_state otherwise it won't open
-	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
+	radio.ui_interact(usr, state = GLOB.deep_inventory_state)
 
 /obj/item/implant/radio/Initialize(mapload)
 	. = ..()

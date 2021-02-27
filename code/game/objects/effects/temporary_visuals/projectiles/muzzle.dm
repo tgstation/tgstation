@@ -1,6 +1,6 @@
 /obj/effect/projectile/muzzle
 	name = "muzzle flash"
-	icon = 'icons/obj/projectiles_muzzle.dmi'
+	icon = 'icons/obj/guns/projectiles_muzzle.dmi'
 
 /obj/effect/projectile/muzzle/laser
 	icon_state = "muzzle_laser"
@@ -25,3 +25,10 @@
 
 /obj/effect/projectile/muzzle/heavy_laser
 	icon_state = "muzzle_beam_heavy"
+
+/obj/effect/projectile/muzzle/wormhole
+	icon_state = "wormhole_g"
+
+/obj/effect/projectile/muzzle/laser/emitter
+	name = "emitter flash"
+	icon_state = "muzzle_emitter"

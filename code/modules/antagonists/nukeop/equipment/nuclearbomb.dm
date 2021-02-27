@@ -3,18 +3,20 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
+	anchored = FALSE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 90
-	var/default_timer_set = 90
 	var/minimum_timer_set = 90
 	var/maximum_timer_set = 3600
-	var/ui_style = "nanotrasen"
 
 	var/numeric_input = ""
+	var/ui_mode = NUKEUI_AWAIT_DISK
+
 	var/timing = FALSE
 	var/exploding = FALSE
+	var/exploded = FALSE
 	var/detonation_timer = null
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
@@ -26,8 +28,8 @@
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/lights = ""
 	var/interior = ""
+	var/proper_bomb = TRUE //Please
 	var/obj/effect/countdown/nuclearbomb/countdown
-	var/static/bomb_set
 
 /obj/machinery/nuclearbomb/Initialize()
 	. = ..()
@@ -35,8 +37,8 @@
 	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
-	update_icon()
-	GLOB.poi_list |= src
+	update_appearance()
+	AddElement(/datum/element/point_of_interest)
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -44,7 +46,6 @@
 	if(!exploding)
 		// If we're not exploding, set the alert level back to normal
 		set_safety()
-	GLOB.poi_list -= src
 	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
@@ -95,6 +96,8 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		auth = I
+		update_ui_mode()
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		add_fingerprint(user)
 		return
 
@@ -105,18 +108,18 @@
 				if(I.use_tool(src, user, 60, volume=100))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
-					update_icon()
+					update_appearance()
 				return
 
 		if(NUKESTATE_PANEL_REMOVED)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(!I.tool_start_check(user, amount=1))
 					return
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
 				if(I.use_tool(src, user, 80, volume=100, amount=1))
 					to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
 					deconstruction_state = NUKESTATE_WELDED
-					update_icon()
+					update_appearance()
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -126,12 +129,12 @@
 					if(core_box.load(core, user))
 						to_chat(user, "<span class='notice'>You load the plutonium core into [core_box].</span>")
 						deconstruction_state = NUKESTATE_CORE_REMOVED
-						update_icon()
+						update_appearance()
 						core = null
 					else
 						to_chat(user, "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>")
 				return
-			if(istype(I, /obj/item/stack/sheet/metal))
+			if(istype(I, /obj/item/stack/sheet/iron))
 				if(!I.tool_start_check(user, amount=20))
 					return
 
@@ -140,7 +143,7 @@
 					to_chat(user, "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>")
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					STOP_PROCESSING(SSobj, core)
-					update_icon()
+					update_appearance()
 				return
 	. = ..()
 
@@ -152,14 +155,14 @@
 			if(tool.use_tool(src, user, 30, volume=100))
 				to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
 				deconstruction_state = NUKESTATE_PANEL_REMOVED
-				update_icon()
+				update_appearance()
 			return TRUE
 		if(NUKESTATE_WELDED)
 			to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
 			if(tool.use_tool(src, user, 30, volume=100))
 				to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
-				update_icon()
+				update_appearance()
 				START_PROCESSING(SSobj, core)
 			return TRUE
 
@@ -173,23 +176,23 @@
 	else
 		return NUKE_OFF_UNLOCKED
 
-/obj/machinery/nuclearbomb/update_icon()
-	if(deconstruction_state == NUKESTATE_INTACT)
-		switch(get_nuke_state())
-			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				icon_state = "nuclearbomb_base"
-				update_icon_interior()
-				update_icon_lights()
-			if(NUKE_ON_TIMING)
-				cut_overlays()
-				icon_state = "nuclearbomb_timing"
-			if(NUKE_ON_EXPLODING)
-				cut_overlays()
-				icon_state = "nuclearbomb_exploding"
-	else
+/obj/machinery/nuclearbomb/update_icon_state()
+	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "nuclearbomb_base"
-		update_icon_interior()
-		update_icon_lights()
+		return ..()
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+			icon_state = "nuclearbomb_base"
+		if(NUKE_ON_TIMING)
+			icon_state = "nuclearbomb_timing"
+		if(NUKE_ON_EXPLODING)
+			icon_state = "nuclearbomb_exploding"
+	return ..()
+
+/obj/machinery/nuclearbomb/update_overlays()
+	. += ..()
+	update_icon_interior()
+	update_icon_lights()
 
 /obj/machinery/nuclearbomb/proc/update_icon_interior()
 	cut_overlay(interior)
@@ -225,127 +228,173 @@
 
 /obj/machinery/nuclearbomb/process()
 	if(timing && !exploding)
-		bomb_set = TRUE
 		if(detonation_timer < world.time)
 			explode()
 		else
 			var/volume = (get_time_left() <= 20 ? 30 : 5)
-			playsound(loc, 'sound/items/timer.ogg', volume, 0)
+			playsound(loc, 'sound/items/timer.ogg', volume, FALSE)
 
-/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/nuclearbomb/proc/update_ui_mode()
+	if(exploded)
+		ui_mode = NUKEUI_EXPLODED
+		return
+
+	if(!auth)
+		ui_mode = NUKEUI_AWAIT_DISK
+		return
+
+	if(timing)
+		ui_mode = NUKEUI_TIMING
+		return
+
+	if(!safety)
+		ui_mode = NUKEUI_AWAIT_ARM
+		return
+
+	if(!yes_code)
+		ui_mode = NUKEUI_AWAIT_CODE
+		return
+
+	ui_mode = NUKEUI_AWAIT_TIMER
+
+/obj/machinery/nuclearbomb/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "nuclear_bomb", name, 500, 600, master_ui, state)
-		ui.set_style(ui_style)
+		ui = new(user, src, "NuclearBomb", name)
 		ui.open()
 
 /obj/machinery/nuclearbomb/ui_data(mob/user)
 	var/list/data = list()
 	data["disk_present"] = auth
-	data["code_approved"] = yes_code
-	var/first_status
-	if(auth)
-		if(yes_code)
-			first_status = timing ? "Func/Set" : "Functional"
-		else
-			first_status = "Auth S2."
+
+	var/hidden_code = (ui_mode == NUKEUI_AWAIT_CODE && numeric_input != "ERROR")
+
+	var/current_code = ""
+	if(hidden_code)
+		while(length(current_code) < length(numeric_input))
+			current_code = "[current_code]*"
 	else
-		if(timing)
-			first_status = "Set"
-		else
-			first_status = "Auth S1."
-	var/second_status = safety ? "Safe" : "Engaged"
+		current_code = numeric_input
+	while(length(current_code) < 5)
+		current_code = "[current_code]-"
+
+	var/first_status
+	var/second_status
+	switch(ui_mode)
+		if(NUKEUI_AWAIT_DISK)
+			first_status = "DEVICE LOCKED"
+			if(timing)
+				second_status = "TIME: [get_time_left()]"
+			else
+				second_status = "AWAIT DISK"
+		if(NUKEUI_AWAIT_CODE)
+			first_status = "INPUT CODE"
+			second_status = "CODE: [current_code]"
+		if(NUKEUI_AWAIT_TIMER)
+			first_status = "INPUT TIME"
+			second_status = "TIME: [current_code]"
+		if(NUKEUI_AWAIT_ARM)
+			first_status = "DEVICE READY"
+			second_status = "TIME: [get_time_left()]"
+		if(NUKEUI_TIMING)
+			first_status = "DEVICE ARMED"
+			second_status = "TIME: [get_time_left()]"
+		if(NUKEUI_EXPLODED)
+			first_status = "DEVICE DEPLOYED"
+			second_status = "THANK YOU"
+
 	data["status1"] = first_status
 	data["status2"] = second_status
 	data["anchored"] = anchored
-	data["safety"] = safety
-	data["timing"] = timing
-	data["time_left"] = get_time_left()
-
-	data["timer_set"] = timer_set
-	data["timer_is_not_default"] = timer_set != default_timer_set
-	data["timer_is_not_min"] = timer_set != minimum_timer_set
-	data["timer_is_not_max"] = timer_set != maximum_timer_set
-
-	var/message = "AUTH"
-	if(auth)
-		message = "[numeric_input]"
-		if(yes_code)
-			message = "*****"
-	data["message"] = message
 
 	return data
 
 /obj/machinery/nuclearbomb/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				auth.forceMove(get_turf(src))
 				auth = null
 				. = TRUE
-		if("insert_disk")
-			if(!auth)
+			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 					auth = I
 					. = TRUE
+			update_ui_mode()
 		if("keypad")
 			if(auth)
 				var/digit = params["digit"]
 				switch(digit)
-					if("R")
+					if("C")
+						if(auth && ui_mode == NUKEUI_AWAIT_ARM)
+							set_safety()
+							yes_code = FALSE
+							playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
+							update_ui_mode()
+						else
+							playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 						numeric_input = ""
-						yes_code = FALSE
 						. = TRUE
 					if("E")
-						if(numeric_input == r_code)
-							numeric_input = ""
-							yes_code = TRUE
-							. = TRUE
-						else
-							numeric_input = "ERROR"
+						switch(ui_mode)
+							if(NUKEUI_AWAIT_CODE)
+								if(numeric_input == r_code)
+									numeric_input = ""
+									yes_code = TRUE
+									playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+									. = TRUE
+								else
+									playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+									numeric_input = "ERROR"
+							if(NUKEUI_AWAIT_TIMER)
+								var/number_value = text2num(numeric_input)
+								if(number_value)
+									timer_set = clamp(number_value, minimum_timer_set, maximum_timer_set)
+									playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+									set_safety()
+									. = TRUE
+							else
+								playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+						update_ui_mode()
 					if("0","1","2","3","4","5","6","7","8","9")
 						if(numeric_input != "ERROR")
 							numeric_input += digit
 							if(length(numeric_input) > 5)
 								numeric_input = "ERROR"
+							else
+								playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 							. = TRUE
-		if("timer")
-			if(auth && yes_code)
-				var/change = params["change"]
-				if(change == "reset")
-					timer_set = default_timer_set
-				else if(change == "decrease")
-					timer_set = max(minimum_timer_set, timer_set - 10)
-				else if(change == "increase")
-					timer_set = min(maximum_timer_set, timer_set + 10)
-				else if(change == "input")
-					var/user_input = input(usr, "Set time to detonation.", name) as null|num
-					if(!user_input)
-						return
-					var/N = text2num(user_input)
-					if(!N)
-						return
-					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
+			else
+				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+		if("arm")
+			if(auth && yes_code && !safety && !exploded)
+				playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
+				set_active()
+				update_ui_mode()
 				. = TRUE
-		if("safety")
-			if(auth && yes_code)
-				set_safety()
+			else
+				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 		if("anchor")
 			if(auth && yes_code)
+				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				set_anchor()
-		if("toggle_timer")
-			if(auth && yes_code && !safety)
-				set_active()
-
+			else
+				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
-	if(!isinspace())
-		anchored = !anchored
-	else
+	if(isinspace() && !anchored)
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
+	else
+		set_anchored(!anchored)
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -356,33 +405,35 @@
 				S.switch_mode_to(initial(S.mode))
 				S.alert = FALSE
 		timing = FALSE
-		bomb_set = TRUE
 		detonation_timer = null
 		countdown.stop()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety && !bomb_set)
+	var/turf/our_turf = get_turf(src)
+	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
 	timing = !timing
 	if(timing)
+		message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [ADMIN_LOOKUPFLW(usr)].")
+		log_game("\The [src] was armed at [loc_name(our_turf)] by [key_name(usr)].")
 		previous_level = get_security_level()
-		bomb_set = TRUE
-		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
+		set_security_level("delta")
 	else
-		bomb_set = FALSE
+		message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [ADMIN_LOOKUPFLW(usr)].")
+		log_game("\The [src] at [loc_name(our_turf)] was disarmed by [key_name(usr)].")
 		detonation_timer = null
 		set_security_level(previous_level)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(initial(S.mode))
 			S.alert = FALSE
 		countdown.stop()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
 	if(timing)
@@ -395,9 +446,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, explosive)
-	..()
-	if(explosive)
+/obj/machinery/nuclearbomb/zap_act(power, zap_flags)
+	. = ..()
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
@@ -409,9 +460,9 @@
 	exploding = TRUE
 	yes_code = FALSE
 	safety = TRUE
-	update_icon()
+	update_appearance()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	if(SSticker && SSticker.mode)
+	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 
@@ -426,6 +477,7 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
+
 	if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
@@ -455,12 +507,93 @@
 	else
 		return CINEMATIC_SELFDESTRUCT_MISS
 
+/obj/machinery/nuclearbomb/beer
+	name = "\improper Nanotrasen-brand nuclear fission explosive"
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
+	proper_bomb = FALSE
+	var/obj/structure/reagent_dispensers/beerkeg/keg
+
+/obj/machinery/nuclearbomb/beer/Initialize()
+	. = ..()
+	keg = new(src)
+	QDEL_NULL(core)
+
+/obj/machinery/nuclearbomb/beer/examine(mob/user)
+	. = ..()
+	if(keg.reagents.total_volume)
+		to_chat(user, "<span class='notice'>It has [keg.reagents.total_volume] unit\s left.</span>")
+	else
+		to_chat(user, "<span class='danger'>It's empty.</span>")
+
+/obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
+	if(W.is_refillable())
+		W.afterattack(keg, user, TRUE) // redirect refillable containers to the keg, allowing them to be filled
+		return TRUE // pretend we handled the attack, too.
+	if(istype(W, /obj/item/nuke_core_container))
+		to_chat(user, "<span class='notice'>[src] has had its plutonium core removed as a part of being decommissioned.</span>")
+		return TRUE
+	return ..()
+
+/obj/machinery/nuclearbomb/beer/actually_explode()
+	//Unblock roundend, we're not actually exploding.
+	SSticker.roundend_check_paused = FALSE
+	var/turf/bomb_location = get_turf(src)
+	if(!bomb_location)
+		disarm()
+		return
+	if(is_station_level(bomb_location.z))
+		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
+	else
+		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
+		addtimer(CALLBACK(src, .proc/local_foam), 110)
+
+/obj/machinery/nuclearbomb/beer/proc/disarm()
+	detonation_timer = null
+	exploding = FALSE
+	exploded = TRUE
+	set_security_level(previous_level)
+	for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
+		S.switch_mode_to(initial(S.mode))
+		S.alert = FALSE
+	countdown.stop()
+	update_appearance()
+
+/obj/machinery/nuclearbomb/beer/proc/local_foam()
+	var/datum/reagents/R = new/datum/reagents(1000)
+	R.my_atom = src
+	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
+
+	var/datum/effect_system/foam_spread/foam = new
+	foam.set_up(200, get_turf(src), R)
+	foam.start()
+	disarm()
+
+/obj/machinery/nuclearbomb/beer/proc/stationwide_foam()
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent in GLOB.machines)
+		var/turf/vent_turf = get_turf(vent)
+		if (!vent_turf || !is_station_level(vent_turf.z) || vent.welded)
+			continue
+
+		var/datum/reagents/beer = new /datum/reagents(1000)
+		beer.my_atom = vent
+		beer.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
+		beer.create_foam(/datum/effect_system/foam_spread, 200)
+
+		CHECK_TICK
+
+/obj/machinery/nuclearbomb/beer/really_actually_explode()
+	disarm()
+	stationwide_foam()
+
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
 		return
-	for(var/mob/M in GLOB.mob_list)
-		if(M.stat != DEAD && M.z == z)
-			M.gib()
+	for(var/_victim in GLOB.mob_living_list)
+		var/mob/living/victim = _victim
+		if(victim.stat != DEAD && victim.z == z)
+			victim.gib()
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.
@@ -487,43 +620,88 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/disk
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	item_state = "card-id"
+	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
+	drop_sound = 'sound/items/handling/disk_drop.ogg'
+	pickup_sound =  'sound/items/handling/disk_pickup.ogg'
 
 /obj/item/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	persistence_replacement = /obj/item/disk/nuclear/fake
 	max_integrity = 250
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
+	var/turf/lastlocation
+	var/last_disk_move
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
-	var/tell_the_admins
-	// Only tell the admins if a REAL nuke disk is relocated
-	if(fake)
-		tell_the_admins = FALSE
-	else
-		GLOB.poi_list |= src
-		tell_the_admins = TRUE
+	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
 
-	set_stationloving(TRUE, inform_admins=tell_the_admins)
+	if(!fake)
+		AddElement(/datum/element/point_of_interest)
+		last_disk_move = world.time
+		START_PROCESSING(SSobj, src)
+
+/obj/item/disk/nuclear/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/stationloving, !fake)
+
+/obj/item/disk/nuclear/process()
+	if(fake)
+		STOP_PROCESSING(SSobj, src)
+		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
+	var/turf/newturf = get_turf(src)
+
+	if(newturf && lastlocation == newturf)
+		/// How comfy is our disk?
+		var/disk_comfort_level = 0
+
+		//Go through and check for items that make disk comfy
+		for(var/obj/comfort_item in loc)
+			if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
+				disk_comfort_level++
+
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
+			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
+				loneop.weight += 1
+				if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
+					if(disk_comfort_level >= 2)
+						visible_message("<span class='notice'>[src] sleeps soundly. Sleep tight, disky.</span>")
+					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
+				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+
+	else
+		lastlocation = newturf
+		last_disk_move = world.time
+		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+		if(istype(loneop) && loneop.occurrences < loneop.max_occurrences && prob(loneop.weight))
+			loneop.weight = max(loneop.weight - 1, 0)
+			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
+				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
+			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
 	if(!fake)
 		return
 
-	var/ghost = isobserver(user)
-	var/captain = user.mind && user.mind.assigned_role == "Captain"
-	var/nukie = user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop)
-	if(ghost || captain || nukie)
-		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
+	if(isobserver(user) || HAS_TRAIT(user, TRAIT_DISK_VERIFIER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER)))
+		. += "<span class='warning'>The serial numbers on [src] are incorrect.</span>"
+
+/*
+ * You can't accidentally eat the nuke disk, bro
+ */
+/obj/item/disk/nuclear/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something important.</span>", \
+						"<span class='warning'>Wait, is this the nuke disk?</span>")
+
+	return discover_after
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander) && !fake)
@@ -539,15 +717,9 @@ This is here to make the tiles around the station mininuke change when it's arme
 		return TRUE
 	return ..()
 
-/obj/item/disk/nuclear/Destroy(force=FALSE)
-	// respawning is handled in /obj/Destroy()
-	if(force)
-		GLOB.poi_list -= src
-	. = ..()
-
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/machines/alarm.ogg', 50, -1, 1)
+	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
@@ -555,9 +727,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
+	user.visible_message("<span class='suicide'>[user] is destroyed by the nuclear blast!</span>")
 	user.adjustOxyLoss(200)
 	user.death(0)
 
 /obj/item/disk/nuclear/fake
 	fake = TRUE
+
+/obj/item/disk/nuclear/fake/obvious
+	name = "cheap plastic imitation of the nuclear authentication disk"
+	desc = "How anyone could mistake this for the real thing is beyond you."

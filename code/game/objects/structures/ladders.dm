@@ -5,31 +5,29 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
+	var/crafted = FALSE
+	/// Optional travel time for ladder in deciseconds
+	var/travel_time = 0
 
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
 	if (up)
 		src.up = up
 		up.down = src
-		up.update_icon()
+		up.update_appearance()
 	if (down)
 		src.down = down
 		down.up = src
-		down.update_icon()
+		down.update_appearance()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy(force)
 	if ((resistance_flags & INDESTRUCTIBLE) && !force)
 		return QDEL_HINT_LETMELIVE
-
-	if(up && up.down == src)
-		up.down = null
-		up.update_icon()
-	if(down && down.up == src)
-		down.up = null
-		down.update_icon()
+	disconnect()
 	return ..()
 
 /obj/structure/ladder/LateInitialize()
@@ -40,30 +38,32 @@
 	if (!down)
 		L = locate() in SSmapping.get_turf_below(T)
 		if (L)
-			down = L
-			L.up = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				down = L
+				L.up = src  // Don't waste effort looping the other way
+				L.update_appearance()
 	if (!up)
 		L = locate() in SSmapping.get_turf_above(T)
 		if (L)
-			up = L
-			L.down = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				up = L
+				L.down = src  // Don't waste effort looping the other way
+				L.update_appearance()
 
-	update_icon()
+	update_appearance()
 
-/obj/structure/ladder/update_icon()
-	if(up && down)
-		icon_state = "ladder11"
+/obj/structure/ladder/proc/disconnect()
+	if(up && up.down == src)
+		up.down = null
+		up.update_appearance()
+	if(down && down.up == src)
+		down.up = null
+		down.update_appearance()
+	up = down = null
 
-	else if(up)
-		icon_state = "ladder10"
-
-	else if(down)
-		icon_state = "ladder01"
-
-	else	//wtf make your ladders properly assholes
-		icon_state = "ladder00"
+/obj/structure/ladder/update_icon_state()
+	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
+	return ..()
 
 /obj/structure/ladder/singularity_pull()
 	if (!(resistance_flags & INDESTRUCTIBLE))
@@ -72,8 +72,11 @@
 
 /obj/structure/ladder/proc/travel(going_up, mob/user, is_ghost, obj/structure/ladder/ladder)
 	if(!is_ghost)
-		show_fluff_message(going_up, user)
 		ladder.add_fingerprint(user)
+		if(!do_after(user, travel_time, target = src))
+			return
+		show_fluff_message(going_up, user)
+
 
 	var/turf/T = get_turf(ladder)
 	var/atom/movable/AM
@@ -84,38 +87,63 @@
 	if(AM)
 		user.start_pulling(AM)
 
+	//reopening ladder radial menu ahead
+	T = get_turf(user)
+	var/obj/structure/ladder/ladder_structure = locate() in T
+	if (ladder_structure)
+		ladder_structure.use(user)
+
 /obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)
 	if (!is_ghost && !in_range(src, user))
 		return
 
-	if (up && down)
-		var/result = alert("Go up or down [src]?", "Ladder", "Up", "Down", "Cancel")
-		if (!is_ghost && !in_range(src, user))
-			return  // nice try
-		switch(result)
-			if("Up")
-				travel(TRUE, user, is_ghost, up)
-			if("Down")
-				travel(FALSE, user, is_ghost, down)
-			if("Cancel")
-				return
-	else if(up)
-		travel(TRUE, user, is_ghost, up)
-	else if(down)
-		travel(FALSE, user, is_ghost, down)
-	else
+	var/list/tool_list = list()
+	if (up)
+		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	if (down)
+		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+	if (!length(tool_list))
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
+		return
+
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, is_ghost), require_near = !is_ghost, tooltips = TRUE)
+	if (!is_ghost && !in_range(src, user))
+		return  // nice try
+	switch(result)
+		if("Up")
+			travel(TRUE, user, is_ghost, up)
+		if("Down")
+			travel(FALSE, user, is_ghost, down)
+		if("Cancel")
+			return
 
 	if(!is_ghost)
 		add_fingerprint(user)
 
-/obj/structure/ladder/attack_hand(mob/user)
+/obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
+	if(user.incapacitated() || (!user.Adjacent(src) && !is_ghost))
+		return FALSE
+	return TRUE
+
+/obj/structure/ladder/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	use(user)
 
-/obj/structure/ladder/attack_paw(mob/user)
+/obj/structure/ladder/attack_paw(mob/user, list/modifiers)
+	return use(user)
+
+/obj/structure/ladder/attack_alien(mob/user, list/modifiers)
+	return use(user)
+
+/obj/structure/ladder/attack_larva(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_animal(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_slime(mob/user)
 	return use(user)
 
 /obj/structure/ladder/attackby(obj/item/W, mob/user, params)
@@ -132,9 +160,9 @@
 
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
-		user.visible_message("[user] climbs up [src].","<span class='notice'>You climb up [src].</span>")
+		user.visible_message("<span class='notice'>[user] climbs up [src].</span>", "<span class='notice'>You climb up [src].</span>")
 	else
-		user.visible_message("[user] climbs down [src].","<span class='notice'>You climb down [src].</span>")
+		user.visible_message("<span class='notice'>[user] climbs down [src].</span>", "<span class='notice'>You climb down [src].</span>")
 
 
 // Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
@@ -157,7 +185,7 @@
 /obj/structure/ladder/unbreakable/LateInitialize()
 	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
-		update_icon()
+		update_appearance()
 		return
 
 	for (var/O in GLOB.ladders)
@@ -167,14 +195,17 @@
 		if (!down && L.height == height - 1)
 			down = L
 			L.up = src
-			L.update_icon()
+			L.update_appearance()
 			if (up)
 				break  // break if both our connections are filled
 		else if (!up && L.height == height + 1)
 			up = L
 			L.down = src
-			L.update_icon()
+			L.update_appearance()
 			if (down)
 				break  // break if both our connections are filled
 
-	update_icon()
+	update_appearance()
+
+/obj/structure/ladder/crafted
+	crafted = TRUE

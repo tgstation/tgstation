@@ -1,6 +1,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	report_type = "nuclear"
 	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
@@ -30,9 +31,10 @@
 			pre_nukeops += new_op
 			new_op.assigned_role = "Nuclear Operative"
 			new_op.special_role = "Nuclear Operative"
-			log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
+			log_game("[key_name(new_op)] has been selected as a nuclear operative")
 		return TRUE
 	else
+		setup_error = "Not enough nuke op candidates"
 		return FALSE
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -52,32 +54,17 @@
 	..()
 	nukes_left--
 
-/datum/game_mode/nuclear/check_win()
-	if (nukes_left == 0)
-		return TRUE
-	return ..()
-
-/datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
-		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
-			return FALSE
-	return TRUE
-
-/datum/game_mode/nuclear/check_finished() //to be called by SSticker
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return TRUE
+/datum/game_mode/nuclear/check_finished()
+	//Keep the round going if ops are dead but bomb is ticking.
 	if(nuke_team.operatives_dead())
-		var/obj/machinery/nuclearbomb/N
-		pass(N)	//suppress unused warning
-		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return FALSE	//its a static var btw
-	..()
+		for(var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+			if(N.proper_bomb && (N.timing || N.exploding))
+				return FALSE
+	return ..()
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
-	var result = nuke_team.get_result()
+	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
 			SSticker.mode_result = "loss - syndicate nuked - disk secured"
@@ -123,27 +110,30 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
+	gloves =  /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
-	l_pocket = /obj/item/pinpointer/nuke/syndicate
+	l_pocket = /obj/item/modular_computer/tablet/nukeops
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
-	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival)
+
+	skillchips = list(/obj/item/skillchip/disk_verifier)
 
 	var/tc = 25
 	var/command_radio = FALSE
-	var/uplink_type = /obj/item/radio/uplink/nuclear
+	var/uplink_type = /obj/item/uplink/nuclear
 
 
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
-	r_hand = /obj/item/nuclear_challenge
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	command_radio = TRUE
 
 /datum/outfit/syndicate/no_crystals
+	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
@@ -153,9 +143,9 @@
 	if(command_radio)
 		R.command = TRUE
 
-	if(tc)
-		var/obj/item/radio/uplink/U = new uplink_type(H, H.key, tc)
-		H.equip_to_slot_or_del(U, slot_in_backpack)
+	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
+		var/obj/item/U = new uplink_type(H, H.key, tc)
+		H.equip_to_slot_or_del(U, ITEM_SLOT_BACKPACK)
 
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
 	W.implant(H)
@@ -171,10 +161,10 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
-	internals_slot = slot_r_store
+	internals_slot = ITEM_SLOT_RPOCKET
 	belt = /obj/item/storage/belt/military
-	r_hand = /obj/item/gun/ballistic/automatic/shotgun/bulldog
-	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
+	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/tank/jetpack/oxygen/harness=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1,\
 		/obj/item/kitchen/knife/combat/survival)

@@ -1,8 +1,13 @@
- /**
-  * tgui state: observer_state
-  *
-  * Checks that the user is an observer/ghost.
- **/
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
+ * tgui state: observer_state
+ *
+ * Checks that the user is an observer/ghost.
+ */
 
 GLOBAL_DATUM_INIT(observer_state, /datum/ui_state/observer_state, new)
 

@@ -14,9 +14,11 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
+	var/mob/living/owner
 
-/obj/effect/proc_holder/Initialize()
+/obj/effect/proc_holder/Initialize(mob/living/owner)
 	. = ..()
+	src.owner = owner
 	if(has_action)
 		action = new base_action(src)
 
@@ -35,6 +37,8 @@
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
+	if (action)
+		qdel(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -68,32 +72,24 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return
 	user.ranged_ability = src
 	user.click_intercept = src
-	add_mousepointer(user.client)
+	user.update_mouse_pointer()
 	ranged_ability_user = user
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	active = TRUE
-	update_icon()
-
-/obj/effect/proc_holder/proc/add_mousepointer(client/C)
-	if(C && ranged_mousepointer && C.mouse_pointer_icon == initial(C.mouse_pointer_icon))
-		C.mouse_pointer_icon = ranged_mousepointer
-
-/obj/effect/proc_holder/proc/remove_mousepointer(client/C)
-	if(C && ranged_mousepointer && C.mouse_pointer_icon == ranged_mousepointer)
-		C.mouse_pointer_icon = initial(C.mouse_pointer_icon)
+	update_appearance()
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
 	ranged_ability_user.ranged_ability = null
 	ranged_ability_user.click_intercept = null
-	remove_mousepointer(ranged_ability_user.client)
+	ranged_ability_user.update_mouse_pointer()
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	ranged_ability_user = null
 	active = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -103,13 +99,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = FALSE
-	opacity = 0
+	opacity = FALSE
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
-	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
+	var/charge_max = 10 SECONDS //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
 	var/recharging = TRUE
@@ -117,12 +113,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
-	var/clothes_req = 1 //see if it requires clothes
-	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes required for cult only spells
-	var/human_req = 0 //spell can only be cast by humans
-	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
-	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
-	var/phase_allowed = 0 // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
+	var/clothes_req = TRUE //see if it requires clothes
+	var/cult_req = FALSE //SPECIAL SNOWFLAKE clothes required for cult only spells
+	var/human_req = FALSE //spell can only be cast by humans
+	var/nonabstract_req = FALSE //spell can only be cast by mobs that are physical entities
+	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
+	var/phase_allowed = FALSE // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
+	var/antimagic_allowed = FALSE // If false, the spell cannot be cast while under the effect of antimagic
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
 	var/invocation_type = "none" //can be none, whisper, emote and shout
@@ -132,7 +129,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/spell_level = 0 //if a spell can be taken multiple times, this raises
 	var/level_max = 4 //The max possible level_max is 4
 	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
-	var/player_lock = 1 //If it can be used by simple mobs
+	var/player_lock = TRUE //If it can be used by simple mobs
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -144,8 +141,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-	var/critfailchance = 0
-	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
+	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "spell_default"
@@ -153,46 +149,48 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	base_action = /datum/action/spell_action/spell
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
-			return 0
+			return FALSE
 	else
 		if(!(src in user.mob_spell_list))
-			return 0
+			return FALSE
 
 	var/turf/T = get_turf(user)
 	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
-		return 0
+		to_chat(user, "<span class='warning'>You can't cast this spell here!</span>")
+		return FALSE
 
 	if(!skipcharge)
-		switch(charge_type)
-			if("recharge")
-				if(charge_counter < charge_max)
-					to_chat(user, still_recharging_msg)
-					return 0
-			if("charges")
-				if(!charge_counter)
-					to_chat(user, "<span class='notice'>[name] has no charges left.</span>")
-					return 0
+		if(!charge_check(user))
+			return FALSE
 
 	if(user.stat && !stat_allowed)
-		to_chat(user, "<span class='notice'>Not when you're incapacitated.</span>")
-		return 0
+		to_chat(user, "<span class='warning'>Not when you're incapacitated!</span>")
+		return FALSE
+
+	if(!antimagic_allowed)
+		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
+		if(antimagic)
+			if(isitem(antimagic))
+				to_chat(user, "<span class='notice'>[antimagic] is interfering with your magic.</span>")
+			else
+				to_chat(user, "<span class='warning'>Magic seems to flee from you, you can't gather enough power to cast this spell.</span>")
+			return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
-		to_chat(user, "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>")
-		return 0
+		to_chat(user, "<span class='warning'>[name] cannot be cast unless you are completely manifested in the material plane!</span>")
+		return FALSE
+
+	var/mob/living/L = user
+	if(istype(L) && (invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !L.can_speak_vocal())
+		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
+		return FALSE
 
 	if(ishuman(user))
 
 		var/mob/living/carbon/human/H = user
-
-		if((invocation_type == "whisper" || invocation_type == "shout") && !H.can_speak_vocal())
-			to_chat(user, "<span class='notice'>You can't get the words out!</span>")
-			return 0
 
 		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
@@ -203,25 +201,25 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		if(clothes_req) //clothes check
 			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my robe.</span>")
-				return 0
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your robe!</span>")
+				return FALSE
 			if(!is_type_in_typecache(H.head, casting_clothes))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my hat.</span>")
-				return 0
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your hat!</span>")
+				return FALSE
 		if(cult_req) //CULT_REQ CLOTHES CHECK
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my armor.</span>")
-				return 0
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your armor.</span>")
+				return FALSE
 			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my helmet.</span>")
-				return 0
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your helmet.</span>")
+				return FALSE
 	else
 		if(clothes_req || human_req)
-			to_chat(user, "<span class='notice'>This spell can only be cast by humans!</span>")
-			return 0
+			to_chat(user, "<span class='warning'>This spell can only be cast by humans!</span>")
+			return FALSE
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			to_chat(user, "<span class='notice'>This spell can only be cast by physical beings!</span>")
-			return 0
+			to_chat(user, "<span class='warning'>This spell can only be cast by physical beings!</span>")
+			return FALSE
 
 
 	if(!skipcharge)
@@ -234,31 +232,45 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
 		action.UpdateButtonIcon()
-	return 1
+	return TRUE
+
+/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
+	switch(charge_type)
+		if("recharge")
+			if(charge_counter < charge_max)
+				if(!silent)
+					to_chat(user, still_recharging_msg)
+				return FALSE
+		if("charges")
+			if(!charge_counter)
+				if(!silent)
+					to_chat(user, "<span class='warning'>[name] has no charges left!</span>")
+				return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
-		if("shout")
+		if(INVOCATION_SHOUT)
 			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(invocation)
+				user.say(invocation, forced = "spell")
 			else
-				user.say(replacetext(invocation," ","`"))
-		if("whisper")
+				user.say(replacetext(invocation," ","`"), forced = "spell")
+		if(INVOCATION_WHISPER)
 			if(prob(50))
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
-		if("emote")
+		if(INVOCATION_EMOTE)
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
-	playsound(get_turf(usr), sound,50,1)
+	playsound(get_turf(usr), sound,50,TRUE)
 
 /obj/effect/proc_holder/spell/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
-	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
+	still_recharging_msg = "<span class='warning'>[name] is still recharging!</span>"
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Destroy()
@@ -274,15 +286,23 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+/**
+ * can_target: Checks if we are allowed to cast the spell on a target.
+ *
+ * Arguments:
+ * * target The atom that is being targeted by the spell.
+ * * user The mob using the spell.
+ * * silent If the checks should not give any feedback messages.
+ */
+/obj/effect/proc_holder/spell/proc/can_target(atom/target, mob/user, silent = FALSE)
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	recharging = TRUE
 
-/obj/effect/proc_holder/spell/process()
+/obj/effect/proc_holder/spell/process(delta_time)
 	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
-		charge_counter += 2	//processes 5 times per second instead of 10.
+		charge_counter += delta_time * 10
 		if(charge_counter >= charge_max)
 			action.UpdateButtonIcon()
 			charge_counter = charge_max
@@ -291,16 +311,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation(user)
-	if(user && user.ckey)
-		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
+	if(user?.ckey)
+		user.log_message("<span class='danger'>cast the spell [name].</span>", LOG_ATTACK)
 	if(recharge)
 		recharging = TRUE
 	if(sound)
 		playMagSound()
-	if(prob(critfailchance))
-		critfail(targets)
-	else
-		cast(targets,user=user)
+	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
 		action.UpdateButtonIcon()
@@ -316,7 +333,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
-			spell.anchored = TRUE
+			spell.set_anchored(TRUE)
 			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
 
@@ -349,8 +366,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
 	return
 
-/obj/effect/proc_holder/spell/proc/critfail(list/targets)
-	return
+/obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
+	switch(type)
+		if("view")
+			. = view(distance,center)
+		if("range")
+			. = range(distance,center)
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
 	switch(charge_type)
@@ -379,10 +400,14 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			target.AdjustStun(amount)
 		if("knockdown")
 			target.AdjustKnockdown(amount)
+		if("paralyze")
+			target.AdjustParalyzed(amount)
+		if("immobilize")
+			target.AdjustImmobilized(amount)
 		if("unconscious")
 			target.AdjustUnconscious(amount)
 		else
-			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
+			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existent vars
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
@@ -401,7 +426,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	switch(max_targets)
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target))
+				if(!can_target(target, user, TRUE))
 					continue
 				targets += target
 		if(1) //single target can be picked
@@ -413,7 +438,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
 						continue
-					if(!can_target(M))
+					if(!can_target(M, user, TRUE))
 						continue
 					possible_targets += M
 
@@ -421,7 +446,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in possible_targets
+					M = input("Choose the target for the spell.", "Targeting") as null|mob in sortNames(possible_targets)
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
@@ -441,7 +466,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target))
+				if(!can_target(target, user, TRUE))
 					continue
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
@@ -467,7 +492,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/list/targets = list()
 
 	for(var/turf/target in view_or_range(range,user,selection_type))
-		if(!can_target(target))
+		if(!can_target(target, user, TRUE))
 			continue
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
@@ -483,8 +508,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
 	//Checks for obstacles from A to B
@@ -494,31 +519,29 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		for(var/atom/movable/AM in turf)
 			if(!AM.CanPass(dummy,turf,1))
 				qdel(dummy)
-				return 0
+				return FALSE
 	qdel(dummy)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
-		return 0
+		return FALSE
 
-	switch(charge_type)
-		if("recharge")
-			if(charge_counter < charge_max)
-				return 0
-		if("charges")
-			if(!charge_counter)
-				return 0
+	if(!charge_check(user,TRUE))
+		return FALSE
 
 	if(user.stat && !stat_allowed)
-		return 0
+		return FALSE
+
+	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+		return FALSE
 
 	if(!ishuman(user))
 		if(clothes_req || human_req)
-			return 0
+			return FALSE
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
 	range = -1 //Duh
@@ -532,16 +555,16 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
 	name = "Lesser Heal"
 	desc = "Heals a small amount of brute and burn damage."
-	human_req = 1
-	clothes_req = 0
+	human_req = TRUE
+	clothes_req = FALSE
 	charge_max = 100
 	cooldown_min = 50
 	invocation = "Victus sano!"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	school = "restoration"
 	sound = 'sound/magic/staff_healing.ogg'
 
-/obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
+/obj/effect/proc_holder/spell/self/basic_heal/cast(list/targets, mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
 	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
 	user.adjustBruteLoss(-10)

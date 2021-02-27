@@ -6,22 +6,24 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 //VENTCRAWLING
 
 /mob/living/proc/handle_ventcrawl(atom/A)
-	if(!ventcrawler || !Adjacent(A))
+	if(!Adjacent(A))
+		return
+	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
 		return
 	if(stat)
-		to_chat(src, "You must be conscious to do this!")
+		to_chat(src, "<span class='warning'>You must be conscious to do this!</span>")
 		return
-	if(lying)
-		to_chat(src, "You can't vent crawl while you're stunned!")
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+		to_chat(src, "<span class='warning'>You can't move into the vent!</span>")
 		return
-	if(restrained())
-		to_chat(src, "You can't vent crawl while you're restrained!")
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		to_chat(src, "<span class='warning'>You need to be able to use your hands to ventcrawl!</span>")
 		return
 	if(has_buckled_mobs())
-		to_chat(src, "You can't vent crawl with other creatures on you!")
+		to_chat(src, "<span class='warning'>You can't vent crawl with other creatures on you!</span>")
 		return
 	if(buckled)
-		to_chat(src, "You can't vent crawl while buckled!")
+		to_chat(src, "<span class='warning'>You can't vent crawl while buckled!</span>")
 		return
 
 	var/obj/machinery/atmospherics/components/unary/vent_found
@@ -43,6 +45,8 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 			if(vent_found)
 				break
 
+	// Being able to always ventcrawl trumps being only able to ventcrawl when wearing nothing
+	var/required_nudity = HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS)
 
 	if(vent_found)
 		var/datum/pipeline/vent_found_parent = vent_found.parents[1]
@@ -55,15 +59,8 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 			if(!client)
 				return
 
-			if(iscarbon(src) && ventcrawler < 2)//It must have atleast been 1 to get this far
-				var/failed = 0
-				var/list/items_list = get_equipped_items()
-				if(items_list.len)
-					failed = 1
-				for(var/obj/item/I in held_items)
-					failed = 1
-					break
-				if(failed)
+			if(iscarbon(src) && required_nudity)
+				if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
 					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 					return
 
@@ -76,7 +73,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(buckled)
 		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
 		return
-	..()
+	return ..()
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
@@ -91,21 +88,23 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(!totalMembers.len)
 		return
 
-	for(var/X in totalMembers)
-		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
-		if(!A.pipe_vision_img)
-			A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
-			A.pipe_vision_img.plane = ABOVE_HUD_PLANE
-		pipes_shown += A.pipe_vision_img
-		if(client)
-			client.images += A.pipe_vision_img
-
+	if(client)
+		for(var/X in totalMembers)
+			var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
+			if(in_view_range(client.mob, A))
+				if(!A.pipe_vision_img)
+					A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
+					A.pipe_vision_img.plane = ABOVE_HUD_PLANE
+				client.images += A.pipe_vision_img
+				pipes_shown += A.pipe_vision_img
+	ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 
 /mob/living/proc/remove_ventcrawl()
 	if(client)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 	pipes_shown.len = 0
+	REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 
 
 
@@ -120,4 +119,3 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		. = new_loc
 	remove_ventcrawl()
 	add_ventcrawl(.)
-

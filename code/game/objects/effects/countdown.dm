@@ -5,22 +5,22 @@
 		And maybe we'll come back\n\
 		To Earth, who can tell?"
 
-	var/displayed_text
-	var/atom/attached_to
-	color = "#ff0000"
-	var/text_size = 4
-	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
 	layer = GHOST_LAYER
+	color = "#ff0000" // text color
+	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
+	var/started = FALSE
+	var/displayed_text
+	var/atom/attached_to
 
-/obj/effect/countdown/New(atom/A)
+/obj/effect/countdown/Initialize()
 	. = ..()
-	attach(A)
+	attach(loc)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	to_chat(user, "This countdown is displaying: [displayed_text].")
+	. += "This countdown is displaying: [displayed_text]."
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -51,7 +51,7 @@
 	displayed_text = new_val
 
 	if(displayed_text)
-		maptext = "<font size = [text_size]>[displayed_text]</font>"
+		maptext = MAPTEXT("<font size = [text_size]>[displayed_text]</font>")
 	else
 		maptext = null
 
@@ -60,7 +60,10 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/obj/effect/countdown/ex_act(severity, target) //immune to explosions
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
 	return
 
 /obj/effect/countdown/syndicatebomb
@@ -83,32 +86,6 @@
 		return
 	else if(N.timing)
 		return round(N.get_time_left(), 1)
-
-/obj/effect/countdown/clonepod
-	name = "cloning pod countdown"
-	color = "#0C479D"
-	text_size = 1
-
-/obj/effect/countdown/clonepod/get_value()
-	var/obj/machinery/clonepod/C = attached_to
-	if(!istype(C))
-		return
-	else if(C.occupant)
-		var/completion = round(C.get_completion())
-		return completion
-
-/obj/effect/countdown/clockworkgate
-	name = "gateway countdown"
-	text_size = 1
-	color = "#BE8700"
-	layer = POINT_LAYER
-
-/obj/effect/countdown/clockworkgate/get_value()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = attached_to
-	if(!istype(G))
-		return
-	else if(G.obj_integrity && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_time(FALSE)]</div>"
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
@@ -135,7 +112,6 @@
 
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
-	text_size = 3
 
 /obj/effect/countdown/doomsday/get_value()
 	var/obj/machinery/doomsday_device/DD = attached_to
@@ -155,8 +131,38 @@
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
 
-/obj/effect/countdown/singularity_pull()
-	return
+/obj/effect/countdown/hourglass
+	name = "hourglass countdown"
 
-/obj/effect/countdown/singularity_act()
-	return
+/obj/effect/countdown/hourglass/get_value()
+	var/obj/item/hourglass/H = attached_to
+	if(!istype(H))
+		return
+	else
+		var/time_left = max(0, (H.finish_time - world.time) / 10)
+		return round(time_left)
+
+/obj/effect/countdown/arena
+	invisibility = 0
+	name = "arena countdown"
+
+/obj/effect/countdown/arena/get_value()
+	var/obj/machinery/arena_spawn/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/obj/machinery/computer/arena/C = A.get_controller()
+		var/time_left = max(0, (C.start_time - world.time) / 10)
+		return round(time_left)
+
+/obj/effect/countdown/flower_bud
+	name = "flower bud countdown"
+
+/obj/effect/countdown/flower_bud/get_value()
+	var/obj/structure/alien/resin/flower_bud/bud = attached_to
+	if(!istype(bud))
+		return
+	if(!bud.finish_time)
+		return -1
+	var/time_left = max(0, (bud.finish_time - world.time) / 10)
+	return time_left

@@ -11,8 +11,9 @@ SUBSYSTEM_DEF(throwing)
 	var/list/currentrun
 	var/list/processing = list()
 
-/datum/controller/subsystem/throwing/stat_entry()
-	..("P:[processing.len]")
+/datum/controller/subsystem/throwing/stat_entry(msg)
+	msg = "P:[length(processing)]"
+	return ..()
 
 
 /datum/controller/subsystem/throwing/fire(resumed = 0)
@@ -26,7 +27,7 @@ SUBSYSTEM_DEF(throwing)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		var/datum/thrownthing/TT = currentrun[AM]
 		currentrun.len--
-		if (!AM || !TT)
+		if (QDELETED(AM) || QDELETED(TT))
 			processing -= AM
 			if (MC_TICK_CHECK)
 				return
@@ -43,6 +44,7 @@ SUBSYSTEM_DEF(throwing)
 	var/atom/movable/thrownthing
 	var/atom/target
 	var/turf/target_turf
+	var/target_zone
 	var/init_dir
 	var/maxrange
 	var/speed
@@ -54,12 +56,50 @@ SUBSYSTEM_DEF(throwing)
 	var/dist_y
 	var/dx
 	var/dy
+	var/force = MOVE_FORCE_DEFAULT
+	var/gentle = FALSE
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
 	var/paused = FALSE
 	var/delayed_time = 0
 	var/last_move = 0
+
+
+/datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
+	. = ..()
+	src.thrownthing = thrownthing
+	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
+	src.target = target
+	src.target_turf = target_turf
+	src.init_dir = init_dir
+	src.maxrange = maxrange
+	src.speed = speed
+	src.thrower = thrower
+	src.diagonals_first = diagonals_first
+	src.force = force
+	src.gentle = gentle
+	src.callback = callback
+	src.target_zone = target_zone
+
+
+/datum/thrownthing/Destroy()
+	SSthrowing.processing -= thrownthing
+	thrownthing.throwing = null
+	thrownthing = null
+	target = null
+	thrower = null
+	if(callback)
+		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
+	return ..()
+
+
+///Defines the datum behavior on the thrownthing's qdeletion event.
+/datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -100,41 +140,55 @@ SUBSYSTEM_DEF(throwing)
 			finalize()
 			return
 
-		AM.Move(step, get_dir(AM, step))
+		AM.Move(step, get_dir(AM, step), DELAY_TO_GLIDE_SIZE(1 / speed))
 
 		if (!AM.throwing) // we hit something during our move
 			finalize(hit = TRUE)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
 
 /datum/thrownthing/proc/finalize(hit = FALSE, target=null)
-	set waitfor = 0
-	SSthrowing.processing -= thrownthing
+	set waitfor = FALSE
 	//done throwing, either because it hit something or it finished moving
+	if(!thrownthing)
+		return
 	thrownthing.throwing = null
 	if (!hit)
 		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
 			var/atom/A = thing
 			if (A == target)
-				hit = 1
+				hit = TRUE
 				thrownthing.throw_impact(A, src)
+				if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+					return //deletion should already be handled by on_thrownthing_qdel()
 				break
 		if (!hit)
 			thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
+			if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+				return //deletion should already be handled by on_thrownthing_qdel()
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
 
 	if(target)
 		thrownthing.throw_impact(target, src)
+		if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+			return //deletion should already be handled by on_thrownthing_qdel()
 
 	if (callback)
 		callback.Invoke()
+
+	if(!thrownthing.zfalling) // I don't think you can zfall while thrown but hey, just in case.
+		var/turf/T = get_turf(thrownthing)
+		if(T && thrownthing.has_gravity(T))
+			T.zFall(thrownthing)
+
+	qdel(src)
 
 /datum/thrownthing/proc/hit_atom(atom/A)
 	finalize(hit=TRUE, target=A)
@@ -142,8 +196,8 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
-		if (AM == thrownthing)
+		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
 			continue
-		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
+		if (AM.density && !(AM.pass_flags_self & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)
 			return TRUE

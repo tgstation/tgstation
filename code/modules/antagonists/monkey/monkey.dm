@@ -1,13 +1,14 @@
-#define MONKEYS_ESCAPED		1
-#define MONKEYS_LIVED		2
-#define MONKEYS_DIED		3
-#define DISEASE_LIVED		4
+#define MONKEYS_ESCAPED 1
+#define MONKEYS_LIVED 2
+#define MONKEYS_DIED 3
+#define DISEASE_LIVED 4
 
 /datum/antagonist/monkey
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
+	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
@@ -46,10 +47,21 @@
 
 	. = ..()
 
+/datum/antagonist/monkey/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	ADD_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
+/datum/antagonist/monkey/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	REMOVE_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/monkey/H in GLOB.antagonists)
 			if(!H.owner)
+				stack_trace("Antagonist datum without owner in GLOB.antagonists: [H]")
 				continue
 			if(H.monkey_team)
 				monkey_team = H.monkey_team
@@ -63,17 +75,16 @@
 
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
-	var/mob/living/carbon/monkey/M = owner.current
-	if(istype(M))
+	var/mob/living/carbon/human/M = owner.current
+	if(ismonkey(M))
 		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
 			if("Yes")
 				if(admin == M)
-					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+					admin = M.humanize()
 				else
-					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+					M.humanize()
 			if("No")
 				//nothing
 			else
@@ -98,8 +109,8 @@
 			else
 				return
 	new_owner.add_antag_datum(src)
-	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
-	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] a monkey leader!")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] a monkey leader!")
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
@@ -133,7 +144,9 @@
 
 /datum/objective/monkey/check_completion()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if (M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
@@ -151,14 +164,18 @@
 
 /datum/team/monkey/proc/infected_monkeys_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_monkeys_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE

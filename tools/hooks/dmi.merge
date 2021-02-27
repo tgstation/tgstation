@@ -1,0 +1,2 @@
+#!/bin/sh
+exec tools/bootstrap/python -m dmi.merge_driver "$@"

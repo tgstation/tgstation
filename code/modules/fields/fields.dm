@@ -4,9 +4,9 @@
 //If there's any way to make this less CPU intensive than I've managed, gimme a call or do it yourself! - kevinz000
 
 //Field shapes
-#define FIELD_NO_SHAPE 0		//Does not update turfs automatically
-#define FIELD_SHAPE_RADIUS_SQUARE 1	//Uses current_range and square_depth_up/down
-#define FIELD_SHAPE_CUSTOM_SQUARE 2	//Uses square_height and square_width and square_depth_up/down
+#define FIELD_NO_SHAPE 0 //Does not update turfs automatically
+#define FIELD_SHAPE_RADIUS_SQUARE 1 //Uses current_range and square_depth_up/down
+#define FIELD_SHAPE_CUSTOM_SQUARE 2 //Uses square_height and square_width and square_depth_up/down
 
 //Proc to make fields. make_field(field_type, field_params_in_associative_list)
 /proc/make_field(field_type, list/field_params, override_checks = FALSE, start_field = TRUE)
@@ -16,7 +16,7 @@
 	if(!F.check_variables() && !override_checks)
 		QDEL_NULL(F)
 	if(start_field && (F || override_checks))
-		F.Initialize()
+		F.begin_field()
 	return F
 
 /datum/proximity_monitor/advanced
@@ -28,12 +28,12 @@
 	var/square_depth_up = 0
 	var/square_depth_down = 0
 	//Processing
-	var/process_inner_turfs = FALSE	//Don't do this unless it's absolutely necessary
-	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
+	var/process_inner_turfs = FALSE //Don't do this unless it's absolutely necessary
+	var/process_edge_turfs = FALSE //Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
 	var/requires_processing = FALSE
-	var/setup_edge_turfs = FALSE	//Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
+	var/setup_edge_turfs = FALSE //Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
 	var/setup_field_turfs = FALSE
-	var/use_host_turf = FALSE		//For fields from items carried on mobs to check turf instead of loc...
+	var/use_host_turf = FALSE //For fields from items carried on mobs to check turf instead of loc...
 
 	var/list/turf/field_turfs = list()
 	var/list/turf/edge_turfs = list()
@@ -56,7 +56,7 @@
 
 /datum/proximity_monitor/advanced/proc/check_variables()
 	var/pass = TRUE
-	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
+	if(field_shape == FIELD_NO_SHAPE) //If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
 		pass = FALSE
 	if(current_range < 0 || square_height < 0 || square_width < 0 || square_depth_up < 0 || square_depth_down < 0)
 		pass = FALSE
@@ -68,25 +68,25 @@
 	if(process_inner_turfs)
 		for(var/turf/T in field_turfs)
 			process_inner_turf(T)
-			CHECK_TICK		//Really crappy lagchecks, needs improvement once someone starts using processed fields.
+			CHECK_TICK //Really crappy lagchecks, needs improvement once someone starts using processed fields.
 	if(process_edge_turfs)
 		for(var/turf/T in edge_turfs)
 			process_edge_turf(T)
-			CHECK_TICK	//Same here.
+			CHECK_TICK //Same here.
 
 /datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
-/datum/proximity_monitor/advanced/New()
+/datum/proximity_monitor/advanced/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	if(requires_processing)
 		START_PROCESSING(SSfields, src)
 
-/datum/proximity_monitor/advanced/proc/Initialize()
+/datum/proximity_monitor/advanced/proc/begin_field()
 	setup_field()
 	post_setup_field()
 
-/datum/proximity_monitor/advanced/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
+/datum/proximity_monitor/advanced/proc/full_cleanup()  //Full cleanup for when you change something that would require complete resetting.
 	for(var/turf/T in edge_turfs)
 		cleanup_edge_turf(T)
 	for(var/turf/T in field_turfs)
@@ -103,7 +103,7 @@
 			return TRUE
 	return FALSE
 
-/datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
+/datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE) //Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
 	if(!(ignore_movement_check || check_movement()) && (field_shape != FIELD_NO_SHAPE))
 		return
 	update_new_turfs()
@@ -154,7 +154,7 @@
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
-		recalculate_field()
+		INVOKE_ASYNC(src, .proc/recalculate_field)
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 
@@ -283,7 +283,7 @@
 	var/field_type = /datum/proximity_monitor/advanced/debug
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/current = null
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/multitool/field_debug/Initialize()
 	. = ..()
@@ -292,7 +292,7 @@
 /obj/item/multitool/field_debug/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(current)
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	return ..()
 
 /obj/item/multitool/field_debug/proc/setup_debug_field()
@@ -302,19 +302,25 @@
 
 /obj/item/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
-	to_chat(user, "You turn [src] [operating? "on":"off"].")
-	QDEL_NULL(mobhook)
+	to_chat(user, "<span class='notice'>You turn [src] [operating? "on":"off"].</span>")
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	if(!istype(current) && operating)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		listeningTo = user
 		setup_debug_field()
 	else if(!operating)
 		QDEL_NULL(current)
 
 /obj/item/multitool/field_debug/dropped()
 	. = ..()
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		listeningTo = null
 
 /obj/item/multitool/field_debug/proc/on_mob_move()
+	SIGNAL_HANDLER
+
 	check_turf(get_turf(src))
 
 /obj/item/multitool/field_debug/process()

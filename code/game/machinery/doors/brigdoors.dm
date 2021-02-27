@@ -1,7 +1,7 @@
 #define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
-#define FONT_STYLE "Arial Black"
+#define FONT_STYLE "Small Fonts"
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
@@ -24,19 +24,19 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(ACCESS_SECURITY)
-	anchored = TRUE
 	density = FALSE
 	var/id = null // id of linked machinery/lockers
 
 	var/activation_time = 0
 	var/timer_duration = 0
 
-	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = FALSE // boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
 	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
+	maptext_y = -1
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
@@ -60,32 +60,26 @@
 				targets += C
 
 	if(!targets.len)
-		stat |= BROKEN
-	update_icon()
+		obj_break()
+	update_appearance()
 
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
 	if(timing)
 		if(world.time - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
-		update_icon()
-
-// has the door power sitatuation changed, if so update icon.
-/obj/machinery/door_timer/power_change()
-	..()
-	update_icon()
-
+		update_appearance()
 
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
 /obj/machinery/door_timer/proc/timer_start()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return 0
 
 	activation_time = world.time
@@ -102,13 +96,13 @@
 		if(C.opened && !C.close())
 			continue
 		C.locked = TRUE
-		C.update_icon()
+		C.update_appearance()
 	return 1
 
 
 /obj/machinery/door_timer/proc/timer_end(forced = FALSE)
 
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return 0
 
 	if(!forced)
@@ -118,7 +112,7 @@
 	timing = FALSE
 	activation_time = null
 	set_timer(0)
-	update_icon()
+	update_appearance()
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)
@@ -131,7 +125,7 @@
 		if(C.opened)
 			continue
 		C.locked = FALSE
-		C.update_icon()
+		C.update_appearance()
 
 	return 1
 
@@ -142,15 +136,14 @@
 		. /= 10
 
 /obj/machinery/door_timer/proc/set_timer(value)
-	var/new_time = CLAMP(value,0,MAX_TIMER)
+	var/new_time = clamp(value,0,MAX_TIMER)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 
-/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/door_timer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "brig_timer", name, 300, 200, master_ui, state)
+		ui = new(user, src, "BrigTimer", name)
 		ui.open()
 
 //icon update function
@@ -158,18 +151,18 @@
 // if BROKEN, display blue screen of death icon AI uses
 // if timing=true, run update display function
 /obj/machinery/door_timer/update_icon()
-	if(stat & (NOPOWER))
-		icon_state = "frame"
+	. = ..()
+	if(machine_stat & (NOPOWER))
 		return
 
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		set_picture("ai_bsod")
 		return
 
 	if(timing)
 		var/disp1 = id
 		var/time_left = time_left(seconds = TRUE)
-		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]~[add_zero(num2text(time_left % 60), 2)]"
+		var/disp2 = "[add_leading(num2text((time_left / 60) % 60), 2, "0")]:[add_leading(num2text(time_left % 60), 2, "0")]"
 		if(length(disp2) > CHARS_PER_LINE)
 			disp2 = "Error"
 		update_display(disp1, disp2)
@@ -190,6 +183,8 @@
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
 /obj/machinery/door_timer/proc/update_display(line1, line2)
+	line1 = uppertext(line1)
+	line2 = uppertext(line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
@@ -209,8 +204,10 @@
 
 
 /obj/machinery/door_timer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	. = TRUE
 
 	if(!allowed(usr))

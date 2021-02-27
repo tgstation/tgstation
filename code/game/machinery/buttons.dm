@@ -4,16 +4,18 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl"
 	var/skin = "doorctrl"
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 70)
-	anchored = TRUE
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, RAD = 100, FIRE = 90, ACID = 70)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+
+/obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
@@ -23,7 +25,7 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = TRUE
-		update_icon()
+		update_appearance()
 
 
 	if(!built && !device && device_type)
@@ -39,29 +41,34 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
+	setup_device()
 
-/obj/machinery/button/update_icon()
-	cut_overlays()
+/obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"
-		if(device)
-			add_overlay("button-device")
-		if(board)
-			add_overlay("button-board")
+		return ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_state = "[skin]-p"
+		return ..()
+	icon_state = skin
+	return ..()
 
-	else
-		if(stat & (NOPOWER|BROKEN))
-			icon_state = "[skin]-p"
-		else
-			icon_state = skin
+/obj/machinery/button/update_overlays()
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += "button-device"
+	if(board)
+		. += "button-board"
 
-/obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
-			update_icon()
+			update_appearance()
 		else
-			to_chat(user, "<span class='danger'>Maintenance Access Denied</span>")
+			to_chat(user, "<span class='alert'>Maintenance Access Denied.</span>")
 			flick("[skin]-denied", src)
 		return
 
@@ -84,19 +91,19 @@
 				req_access = board.accesses
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!device && !board && istype(W, /obj/item/wrench))
+		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			W.play_tool_sound(src)
 			if(W.use_tool(src, user, 40))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
-				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(src)
 
-		update_icon()
+		update_appearance()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
+	if(!user.combat_mode && !(W.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()
@@ -106,7 +113,7 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
@@ -122,7 +129,12 @@
 		A.id = id
 	initialized_button = 1
 
-/obj/machinery/button/attack_hand(mob/user)
+/obj/machinery/button/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(id)
+		id = "[port.id]_[id]"
+		setup_device()
+
+/obj/machinery/button/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -139,7 +151,7 @@
 				req_access = list()
 				req_one_access = list()
 				board = null
-			update_icon()
+			update_appearance()
 			to_chat(user, "<span class='notice'>You remove electronics from the button frame.</span>")
 
 		else
@@ -150,14 +162,14 @@
 			to_chat(user, "<span class='notice'>You change the button frame's front panel.</span>")
 		return
 
-	if((stat & (NOPOWER|BROKEN)))
+	if((machine_stat & (NOPOWER|BROKEN)))
 		return
 
 	if(device && device.next_activate > world.time)
 		return
 
 	if(!allowed(user))
-		to_chat(user, "<span class='danger'>Access Denied</span>")
+		to_chat(user, "<span class='alert'>Access Denied.</span>")
 		flick("[skin]-denied", src)
 		return
 
@@ -166,29 +178,66 @@
 
 	if(device)
 		device.pulsed()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
-	addtimer(CALLBACK(src, .proc/update_icon), 15)
-
-/obj/machinery/button/power_change()
-	..()
-	update_icon()
-
+	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 15)
 
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
 	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
+	var/sync_doors = TRUE
+
+/obj/machinery/button/door/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
 			var/obj/item/assembly/control/airlock/A = new(src)
-			device = A
 			A.specialfunctions = specialfunctions
+			device = A
 		else
-			device = new /obj/item/assembly/control(src)
+			var/obj/item/assembly/control/C = new(src)
+			C.sync_doors = sync_doors
+			device = C
 	..()
+
+/obj/machinery/button/door/incinerator_vent_toxmix
+	name = "combustion chamber vent control"
+	id = INCINERATOR_TOXMIX_VENT
+	req_access = list(ACCESS_TOXINS)
+
+/obj/machinery/button/door/incinerator_vent_atmos_main
+	name = "turbine vent control"
+	id = INCINERATOR_ATMOS_MAINVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/incinerator_vent_atmos_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_ATMOS_AUXVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/atmos_test_room_mainvent_1
+	name = "test chamber 1 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_1
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
+/obj/machinery/button/door/atmos_test_room_mainvent_2
+	name = "test chamber 2 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_2
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main
+	name = "turbine vent control"
+	id = INCINERATOR_SYNDICATELAVA_MAINVENT
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_SYNDICATELAVA_AUXVENT
+	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/button/massdriver
 	name = "mass driver button"
@@ -197,6 +246,9 @@
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/massdriver
 
+/obj/machinery/button/massdriver/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
@@ -204,12 +256,38 @@
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/igniter
 
+/obj/machinery/button/ignition/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/ignition/incinerator
+	name = "combustion chamber ignition switch"
+	desc = "A remote control switch for the combustion chamber's igniter."
+
+/obj/machinery/button/ignition/incinerator/toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
+
+/obj/machinery/button/ignition/incinerator/atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
+/obj/machinery/button/ignition/incinerator/syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
+
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/flasher
+
+/obj/machinery/button/curtain
+	name = "curtain button"
+	desc = "A remote control switch for a mechanical curtain."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/curtain
+
+/obj/machinery/button/flasher/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
@@ -220,9 +298,26 @@
 	req_access = list()
 	id = 1
 
+/obj/machinery/button/crematorium/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/item/wallframe/button
 	name = "button frame"
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+
+/obj/machinery/button/elevator
+	name = "elevator button"
+	desc = "Go back. Go back. Go back. Can you operate the elevator."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/elevator
+	req_access = list()
+	id = 1
+
+/obj/machinery/button/elevator/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>There's a small inscription on the button...</span>"
+	. += "<span class='notice'>THIS CALLS THE ELEVATOR! IT DOES NOT OPERATE IT! Interact with the elevator itself to use it!</span>"

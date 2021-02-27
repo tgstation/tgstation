@@ -2,13 +2,13 @@
 	MouseDrop:
 
 	Called on the atom you're dragging.  In a lot of circumstances we want to use the
-	recieving object instead, so that's the default action.  This allows you to drag
+	receiving object instead, so that's the default action.  This allows you to drag
 	almost anything into a trash can.
 */
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
 		return
-	if(SendSignal(COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is recieving will verify themselves for adjacency.
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
@@ -18,23 +18,15 @@
 	over.MouseDrop_T(src,usr)
 	return
 
-// recieve a mousedrop
+// receive a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
-	SendSignal(COMSIG_MOUSEDROPPED_ONTO, dropping, user)
+	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
 	return
 
 
-/client
-	var/list/atom/selected_target[2]
-	var/obj/item/active_mousedown_item = null
-	var/mouseParams = ""
-	var/mouseLocation = null
-	var/mouseObject = null
-	var/mouseControlObject = null
-	var/middragtime = 0
-	var/atom/middragatom
-
 /client/MouseDown(object, location, control, params)
+	if (mouse_down_icon)
+		mouse_pointer_icon = mouse_down_icon
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
 		selected_target[1] = object
@@ -47,6 +39,8 @@
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
 /client/MouseUp(object, location, control, params)
+	if (mouse_up_icon)
+		mouse_pointer_icon = mouse_up_icon
 	selected_target[1] = null
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseUp(object, location, params, mob)
@@ -61,7 +55,7 @@
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
 
-/mob/proc/canMobMousedown(object, location, params)
+/mob/proc/canMobMousedown(atom/object, location, params)
 
 /mob/living/carbon/canMobMousedown(atom/object, location, params)
 	var/obj/item/H = get_active_held_item()
@@ -80,40 +74,21 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
-/obj/item
-	var/canMouseDown = FALSE
-
-/obj/item/gun
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
-
 /obj/item/gun/CanItemAutoclick(object, location, params)
 	. = automatic
 
 /atom/proc/IsAutoclickable()
-	. = 1
+	return TRUE
 
-/obj/screen/IsAutoclickable()
-	. = 0
+/atom/movable/screen/IsAutoclickable()
+	return FALSE
 
-/obj/screen/click_catcher/IsAutoclickable()
-	. = 1
-
-//Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
-	mouseParams = params
-	mouseLocation = location
-	mouseObject = object
-	mouseControlObject = control
-	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(var/datum/D in mob.mousemove_intercept_objects)
-			D.onMouseMove(object, location, control, params)
-
-/datum/proc/onMouseMove(object, location, control, params)
-	return
+/atom/movable/screen/click_catcher/IsAutoclickable()
+	return TRUE
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	var/list/L = params2list(params)
-	if (L["middle"])
+	var/list/modifiers = params2list(params)
+	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if (src_object && src_location != over_location)
 			middragtime = world.time
 			middragatom = src_object
@@ -123,8 +98,7 @@
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
-	mouseControlObject = over_control
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)

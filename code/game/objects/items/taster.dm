@@ -8,13 +8,15 @@
 
 	var/taste_sensitivity = 15
 
-/obj/item/taster/get_spans()
-	return list()
-
 /obj/item/taster/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 
-	if(O.reagents)
-		var/message = O.reagents.generate_taste_message(taste_sensitivity)
+	if(!O.reagents)
+		to_chat(user, "<span class='notice'>[src] cannot taste [O], since [O.p_they()] [O.p_have()] have no reagents.</span>")
+	else if(O.reagents.total_volume == 0)
+		to_chat(user, "<span class='notice'>[src] cannot taste [O], since [O.p_they()] [O.p_are()] empty.")
+	else
+		var/message = O.reagents.generate_taste_message(user, taste_sensitivity)
 		to_chat(user, "<span class='notice'>[src] tastes <span class='italics'>[message]</span> in [O].</span>")

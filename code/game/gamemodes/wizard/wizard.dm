@@ -5,6 +5,7 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	report_type = "wizard"
 	antag_flag = ROLE_WIZARD
 	false_report_weight = 10
 	required_players = 20
@@ -23,13 +24,13 @@
 	wizards += wizard
 	wizard.assigned_role = ROLE_WIZARD
 	wizard.special_role = ROLE_WIZARD
-	log_game("[wizard.key] (ckey) has been selected as a Wizard") //TODO: Move these to base antag datum
+	log_game("[key_name(wizard)] has been selected as a Wizard") //TODO: Move these to base antag datum
 	if(GLOB.wizardstart.len == 0)
-		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
-		return 0
+		setup_error = "No wizard starting location found"
+		return FALSE
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.forceMove(pick(GLOB.wizardstart))
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/post_setup()
@@ -44,7 +45,7 @@
 
 
 /datum/game_mode/wizard/are_special_antags_dead()
-	for(var/datum/mind/wizard in wizards)
+	for(var/datum/mind/wizard in wizards | apprentices)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return FALSE
 
@@ -58,6 +59,14 @@
 
 	return TRUE
 
+/datum/game_mode/wizard/check_finished()
+	. = ..()
+	if(.)
+		finished = TRUE
+	else if(gamemode_ready && are_special_antags_dead() && !CONFIG_GET(keyed_list/continuous)[config_tag])
+		finished = TRUE
+		. = TRUE
+
 /datum/game_mode/wizard/set_round_result()
 	..()
 	if(finished)
@@ -66,7 +75,7 @@
 
 /datum/game_mode/wizard/special_report()
 	if(finished)
-		return "<span class='redtext big'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span></div>"
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)

@@ -1,7 +1,3 @@
-//
-// Sheet Exports
-//
-
 /datum/export/stack
 	unit_name = "sheet"
 
@@ -11,130 +7,125 @@
 		return S.amount
 	return 0
 
+// Hides
 
-// Leather, skin and other farming by-products.
-
-/datum/export/stack/skin
-	unit_name = ""
-
-// Monkey hide. Cheap.
 /datum/export/stack/skin/monkey
-	cost = 150
+	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "monkey hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/monkey)
 
-// Human skin. Illegal
 /datum/export/stack/skin/human
-	cost = 2000
-	contraband = TRUE
+	cost = CARGO_CRATE_VALUE * 0.5
 	unit_name = "piece"
 	message = "of human skin"
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
 
-// Goliath hide. Expensive.
 /datum/export/stack/skin/goliath_hide
-	cost = 2500
+	cost = CARGO_CRATE_VALUE
 	unit_name = "goliath hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
-// Cat hide. Just in case Runtime is catsploding again.
 /datum/export/stack/skin/cat
-	cost = 2000
-	contraband = TRUE
+	cost = CARGO_CRATE_VALUE * 0.75
 	unit_name = "cat hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/cat)
 
-// Corgi hide. You monster.
 /datum/export/stack/skin/corgi
-	cost = 2500
-	contraband = TRUE
+	cost = CARGO_CRATE_VALUE
 	unit_name = "corgi hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/corgi)
 
-// Lizard hide. Very expensive.
 /datum/export/stack/skin/lizard
-	cost = 5000
+	cost = CARGO_CRATE_VALUE * 0.75
 	unit_name = "lizard hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
 
-// Gondola hide. Mindbogglingly expensive.
 /datum/export/stack/skin/gondola
-	cost = 10000
+	cost = CARGO_CRATE_VALUE * 10
 	unit_name = "gondola hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
-// Alien hide. Extremely expensive.
 /datum/export/stack/skin/xeno
-	cost = 3000
+	cost = CARGO_CRATE_VALUE * 2.5
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
+
+/datum/export/stack/licenseplate
+	cost = CARGO_CRATE_VALUE * 0.125
+	unit_name = "license plate"
+	export_types = list(/obj/item/stack/license_plates/filled)
 
 
 // Common materials.
 // For base materials, see materials.dm
 
-// Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 305 // 2000u of plasma + 2000u of metal.
+	cost = CARGO_CRATE_VALUE * 0.41 // 2000u of plasma + 2000u of iron.
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
-// Reinforced Glass. Common building material. 1 glass + 0.5 metal, cost is rounded up.
+// 1 glass + 0.5 iron, cost is rounded up.
 /datum/export/stack/rglass
-	cost = 8
+	cost = CARGO_CRATE_VALUE * 0.02
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-// Bluespace Polycrystals. Uncommon.
-/datum/export/stack/bscrystal
-	cost = 750
-	message = "of bluespace crystals"
-	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+/datum/export/stack/plastitanium
+	cost = CARGO_CRATE_VALUE * 0.65 // plasma + titanium costs
+	message = "of plastitanium"
+	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
 
-// Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 50
+	cost = CARGO_CRATE_VALUE * 0.05
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
-// Cardboard. Cheap.
+/datum/export/stack/cloth
+	cost = CARGO_CRATE_VALUE * 0.025
+	message = "rolls of cloth"
+	export_types = list(/obj/item/stack/sheet/cloth)
+
+/datum/export/stack/durathread
+	cost = CARGO_CRATE_VALUE * 0.35
+	message = "rolls of durathread"
+	export_types = list(/obj/item/stack/sheet/durathread)
+
+
 /datum/export/stack/cardboard
-	cost = 2
+	cost = CARGO_CRATE_VALUE * 0.01
 	message = "of cardboard"
 	export_types = list(/obj/item/stack/sheet/cardboard)
 
-// Sandstone. Literally dirt cheap.
 /datum/export/stack/sandstone
-	cost = 1
+	cost = CARGO_CRATE_VALUE * 0.005
 	unit_name = "block"
 	message = "of sandstone"
 	export_types = list(/obj/item/stack/sheet/mineral/sandstone)
 
-// Cable.
 /datum/export/stack/cable
-	cost = 0.2
+	cost = CARGO_CRATE_VALUE * 0.001
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
+/datum/export/stack/ammonia_crystals
+	cost = CARGO_CRATE_VALUE * 0.125
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
+
+/datum/export/stack/pizza
+	cost = CARGO_CRATE_VALUE * 0.06
+	unit_name = "of sheetza"
+	export_types = list(/obj/item/stack/sheet/pizza)
+
+/datum/export/stack/meat
+	cost = CARGO_CRATE_VALUE * 0.04
+	unit_name = "of meat"
+	export_types = list(/obj/item/stack/sheet/meat)
+
+
 // Weird Stuff
 
-// Alien Alloy. Like plasteel, but better.
-// Major players would pay a lot to get some, so you can get a lot of money from producing and selling those.
-// Just don't forget to fire all your production staff before the end of month.
 /datum/export/stack/abductor
-	cost = 5000
+	cost = CARGO_CRATE_VALUE * 2
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
-
-// Adamantine. Does not occur naurally.
-/datum/export/stack/adamantine
-	unit_name = "bar"
-	cost = 7500
-	message = "of adamantine"
-	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
-
-// Mythril. Does not occur naurally.
-/datum/export/stack/mythril
-	cost = 15000
-	message = "of mythril"
-	export_types = list(/obj/item/stack/sheet/mineral/mythril)

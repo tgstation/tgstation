@@ -1,123 +1,54 @@
-// Organs.
+/datum/export/organ
+	include_subtypes = FALSE //CentCom doesn't need organs from non-humans.
 
+/datum/export/organ/heart
+	cost = CARGO_CRATE_VALUE * 0.2 //For the man who has everything and nothing.
+	unit_name = "humanoid heart"
+	export_types = list(/obj/item/organ/heart)
 
-// Alien organs
-/datum/export/organ/alien/get_cost(O, contr = 0, emag = 0)
-	. = ..()
-	if(emag) // Syndicate really wants some new bio-weapons.
-		. *= 2
+/datum/export/organ/eyes
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "humanoid eyes"
+	export_types = list(/obj/item/organ/eyes)
 
-/datum/export/organ/alien/brain
-	cost = 5000
-	unit_name = "alien brain"
-	export_types = list(/obj/item/organ/brain/alien)
+/datum/export/organ/ears
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "humanoid ears"
+	export_types = list(/obj/item/organ/ears)
 
-/datum/export/organ/alien/acid
-	cost = 5000
-	unit_name = "alien acid gland"
-	export_types = list(/obj/item/organ/alien/acid)
+/datum/export/organ/liver
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "humanoid liver"
+	export_types = list(/obj/item/organ/liver)
 
-/datum/export/organ/alien/hivenode
-	cost = 5000
-	unit_name = "alien hive node"
-	export_types = list(/obj/item/organ/alien/hivenode)
+/datum/export/organ/lungs
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "humanoid lungs"
+	export_types = list(/obj/item/organ/lungs)
 
-/datum/export/organ/alien/neurotoxin
-	cost = 5000
-	unit_name = "alien neurotoxin gland"
-	export_types = list(/obj/item/organ/alien/neurotoxin)
+/datum/export/organ/stomach
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "humanoid stomach"
+	export_types = list(/obj/item/organ/stomach)
 
-/datum/export/organ/alien/resinspinner
-	cost = 5000
-	unit_name = "alien resin spinner"
+/datum/export/organ/tongue
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "humanoid tounge"
+	export_types = list(/obj/item/organ/tongue)
 
-/datum/export/organ/alien/plasmavessel
-	cost = 5000
-	unit_name = "alien plasma vessel"
-	export_types = list(/obj/item/organ/alien/plasmavessel)
-
-/datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/alien/plasmavessel/P)
-	return ..() + (P.max_plasma * 2) + (P.plasma_rate * 20)
-
-
-
-/datum/export/organ/alien/embryo
-	cost = 5000 // Allows buyer to set up his own alien farm.
-	unit_name = "alien embryo"
-	export_types = list(/obj/item/organ/body_egg/alien_embryo)
-
-/datum/export/organ/alien/eggsac
-	cost = 10000 // Even better than a single embryo.
-	unit_name = "alien egg sac"
-	export_types = list(/obj/item/organ/alien/eggsac)
-
-
-// Other alien organs.
-/datum/export/organ/alien/abductor
-	cost = 2500
-	unit_name = "abductor gland"
-	export_types = list(/obj/item/organ/heart/gland)
-
-/datum/export/organ/alien/changeling_egg
-	cost = 50000 // Holy. Fuck.
-	unit_name = "changeling egg"
-	export_types = list(/obj/item/organ/body_egg/changeling_egg)
-
-
-/datum/export/organ/hivelord
-	cost = 1500
-	unit_name = "active regenerative core"
-	export_types = list(/obj/item/organ/regenerative_core)
-
-/datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/regenerative_core/C)
-	if(C.inert)
-		return ..() / 3
-	if(C.preserved)
-		return ..() * 2
-	return ..()
-
-// Mutant race organs.
-/datum/export/organ/mutant/cat_ears
-	cost = 1000
-	unit_name = "cat ears pair"
-	export_types = list(/obj/item/organ/ears/cat)
-
-/datum/export/organ/mutant/cat_tail
-	cost = 1000
-	unit_name = "cat tail"
-	export_types = list(/obj/item/organ/tail/cat)
-
-/datum/export/organ/mutant/lizard_tail
-	cost = 200
+/datum/export/organ/tail/lizard
+	cost = CARGO_CRATE_VALUE * 1.25
 	unit_name = "lizard tail"
 	export_types = list(/obj/item/organ/tail/lizard)
 
-// Human organs.
 
-// Do not put human brains here, they are not sellable for a purpose.
-// If they would be sellable, X-Porter cannon's finishing move (selling victim's organs) will be instakill with no revive.
+/datum/export/organ/tail/cat
+	cost = CARGO_CRATE_VALUE * 1.5
+	unit_name = "cat tail"
+	export_types = list(/obj/item/organ/tail/cat)
 
-/datum/export/organ/human
-	contraband = TRUE
-	include_subtypes = FALSE
+/datum/export/organ/ears/cat
+	cost = CARGO_CRATE_VALUE
+	unit_name = "cat ears"
+	export_types = list(/obj/item/organ/ears/cat)
 
-/datum/export/organ/human/heart
-	cost = 500
-	unit_name = "heart"
-	export_types = list(/obj/item/organ/heart)
-
-/datum/export/organ/human/lungs
-	cost = 400
-	unit_name = "pair"
-	message = "of lungs"
-	export_types = list(/obj/item/organ/lungs)
-
-/datum/export/organ/human/appendix
-	cost = 50
-	unit_name = "appendix"
-	export_types = list(/obj/item/organ/appendix)
-
-/datum/export/organ/human/appendix/get_cost(obj/item/organ/appendix/O)
-	if(O.inflamed)
-		return 0
-	return ..()

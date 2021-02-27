@@ -11,14 +11,14 @@ GLOBAL_PROTECT(href_token)
 
 	var/target
 	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
-	var/client/owner	= null
-	var/fakekey			= null
+	var/client/owner = null
+	var/fakekey = null
 
 	var/datum/marked_datum
 
 	var/spamcooldown = 0
 
-	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
+	var/admincaster_screen = 0 //TODO: remove all these 5 variables, they are completly unacceptable
 	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
 	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
@@ -27,6 +27,8 @@ GLOBAL_PROTECT(href_token)
 	var/href_token
 
 	var/deadmined
+
+	var/datum/filter_editor/filteriffic
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -39,12 +41,10 @@ GLOBAL_PROTECT(href_token)
 		return
 	if(!ckey)
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a ckey")
-		return
+		CRASH("Admin datum created without a ckey")
 	if(!istype(R))
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a rank")
-		return
+		CRASH("Admin datum created without a rank")
 	target = ckey
 	name = "[ckey]'s admin datum ([R])"
 	rank = R
@@ -55,7 +55,7 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
-	if (force_active || (R.rights & R_AUTOLOGIN))
+	if (force_active || (R.rights & R_AUTOADMIN))
 		activate()
 	else
 		deactivate()
@@ -78,7 +78,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
 	if (GLOB.directory[target])
-		associate(GLOB.directory[target])	//find the client for a ckey if they are connected and associate them with us
+		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
 
 /datum/admins/proc/deactivate()
@@ -93,7 +93,7 @@ GLOBAL_PROTECT(href_token)
 	var/client/C
 	if ((C = owner) || (C = GLOB.directory[target]))
 		disassociate()
-		C.verbs += /client/proc/readmin
+		add_verb(C, /client/proc/readmin)
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
@@ -112,8 +112,9 @@ GLOBAL_PROTECT(href_token)
 			activate()
 		owner = C
 		owner.holder = src
-		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
-		owner.verbs -= /client/proc/readmin
+		owner.add_admin_verbs() //TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
+		remove_verb(owner, /client/proc/readmin)
+		owner.init_verbs() //re-initialize the verb list
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
@@ -125,29 +126,27 @@ GLOBAL_PROTECT(href_token)
 	if(owner)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
+		owner.init_verbs()
 		owner.holder = null
 		owner = null
 
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank.rights))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)
-		return 1 //they have no rights
-	if(rank.rights == 65535)
-		return 1 //we have all the rights
+		return TRUE //they have no rights
+	if(rank.rights == R_EVERYTHING)
+		return TRUE //we have all the rights
 	if(src == other)
-		return 1 //you always have more rights than yourself
+		return TRUE //you always have more rights than yourself
 	if(rank.rights != other.rank.rights)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
-			return 1 //we have all the rights they have and more
-	return 0
-
-/datum/admins/can_vv_get(var_name, var_value)
-	return FALSE //nice try trialmin
+			return TRUE //we have all the rights they have and more
+	return FALSE
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
@@ -161,34 +160,34 @@ generally it would be used like so:
 /proc/admin_proc()
 	if(!check_rights(R_ADMIN))
 		return
-	to_chat(world, "you have enough rights!")
+	to_chat(world, "you have enough rights!", confidential = TRUE)
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
 */
 /proc/check_rights(rights_required, show_msg=1)
-	if(usr && usr.client)
+	if(usr?.client)
 		if (check_rights_for(usr.client, rights_required))
-			return 1
+			return TRUE
 		else
 			if(show_msg)
-				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
-	return 0
+				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>", confidential = TRUE)
+	return FALSE
 
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
-	if(usr && usr.client)
+	if(usr?.client)
 		if(usr.client.holder)
 			if(!other || !other.holder)
-				return 1
+				return TRUE
 			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
-	return 0
+	return FALSE
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
-	if(subject && subject.holder)
+	if(subject?.holder)
 		return subject.holder.check_for_rights(rights_required)
-	return 0
+	return FALSE
 
 /proc/GenerateToken()
 	. = ""

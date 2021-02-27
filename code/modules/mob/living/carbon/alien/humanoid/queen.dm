@@ -2,19 +2,23 @@
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
-	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
-	unique_name = 0
 	pixel_x = -16
+	base_pixel_x = -16
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
-/mob/living/carbon/alien/humanoid/royal/can_inject()
-	return 0
+/mob/living/carbon/alien/humanoid/royal/Initialize()
+	. = ..()
+	// as a wise man once wrote: "pull over that ass too fat"
+	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, target_zone, injection_flags)
+	return FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen
 	name = "alien queen"
@@ -32,7 +36,7 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name
@@ -40,7 +44,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	smallsprite.Grant(src)
-	..()
+	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
@@ -49,10 +53,6 @@
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	internal_organs += new /obj/item/organ/alien/eggsac
 	..()
-
-/mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
-	. = ..()
-	. += 3
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
@@ -63,14 +63,14 @@
 	action_icon_state = "alien_egg"
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
+	if(!check_vent_block(user))
+		return FALSE
+
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
 		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
 		return FALSE
 
-	if(!check_vent_block(user))
-		return FALSE
-
-	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	user.visible_message("<span class='alertalien'>[user] lays an egg!</span>")
 	new /obj/structure/alien/egg(user.loc)
 	return TRUE
 
@@ -88,27 +88,31 @@
 	var/obj/item/queenpromote/prom
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
 		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
-		return 0
+		return
 	else
 		for(prom in user)
 			to_chat(user, "<span class='noticealien'>You discard [prom].</span>")
 			qdel(prom)
-			return 0
+			return
 
 		prom = new (user.loc)
 		if(!user.put_in_active_hand(prom, 1))
 			to_chat(user, "<span class='warning'>You must empty your hands before preparing the parasite.</span>")
-			return 0
+			return
 		else //Just in case telling the player only once is not enough!
 			to_chat(user, "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>")
-	return 0
+	return
 
 /obj/item/queenpromote
 	name = "\improper royal parasite"
 	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
 	icon_state = "alien_medal"
-	flags_1 = ABSTRACT_1|NODROP_1|DROPDEL_1
+	item_flags = ABSTRACT | DROPDEL
 	icon = 'icons/mob/alien.dmi'
+
+/obj/item/queenpromote/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
 	if(!isalienadult(M) || isalienroyal(M))

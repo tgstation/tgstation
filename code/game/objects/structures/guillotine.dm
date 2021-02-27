@@ -1,6 +1,6 @@
 #define GUILLOTINE_BLADE_MAX_SHARP  10 // This is maxiumum sharpness and will decapitate without failure
 #define GUILLOTINE_DECAP_MIN_SHARP  7  // Minimum amount of sharpness for decapitation. Any less and it will just do severe brute damage
-#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is 
+#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is
 #define GUILLOTINE_BLADE_RAISED     1
 #define GUILLOTINE_BLADE_MOVING     2
 #define GUILLOTINE_BLADE_DROPPED    3
@@ -21,7 +21,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_buckled_mobs = 1
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	var/blade_status = GUILLOTINE_BLADE_RAISED
@@ -33,12 +33,23 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
+/obj/structure/guillotine/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/sheet/plasteel))
+		to_chat(user, "<span class='notice'>You start repairing the guillotine with the plasteel...</span>")
+		if(blade_sharpness<10)
+			if(do_after(user,100,target=user))
+				blade_sharpness = min(10,blade_sharpness+3)
+				I.use(1)
+				to_chat(user, "<span class='notice'>You repair the guillotine with the plasteel.</span>")
+			else
+				to_chat(user, "<span class='notice'>You stop repairing the guillotine with the plasteel.</span>")
+		else
+			to_chat(user, "<span class='warning'>The guillotine is already fully repaired!</span>")
+
 /obj/structure/guillotine/examine(mob/user)
-	..()
+	. = ..()
 
-	var/msg = ""
-
-	msg += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
+	var/msg = "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
 
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
 		msg += "The blade is raised, ready to fall, and"
@@ -50,15 +61,12 @@
 	else
 		msg += "The blade is hidden inside the stocks."
 
+	. += msg
+
 	if (LAZYLEN(buckled_mobs))
-		msg += "<br/>"
-		msg += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
+		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
 
-	to_chat(user, msg)
-
-	return msg
-
-/obj/structure/guillotine/attack_hand(mob/user)
+/obj/structure/guillotine/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)
 
 	// Currently being used by something
@@ -75,7 +83,7 @@
 			return
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
-				if (user.a_intent == INTENT_HARM)
+				if (user.combat_mode)
 					user.visible_message("<span class='warning'>[user] begins to pull the lever!</span>",
 						                 "<span class='warning'>You begin to the pull the lever.</span>")
 					current_action = GUILLOTINE_ACTION_INUSE
@@ -104,7 +112,7 @@
 	icon_state = "guillotine_raised"
 
 /obj/structure/guillotine/proc/drop_blade(mob/user)
-	if (buckled_mobs.len && blade_sharpness)
+	if (has_buckled_mobs() && blade_sharpness)
 		var/mob/living/carbon/human/H = buckled_mobs[1]
 
 		if (!H)
@@ -115,10 +123,10 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/bladeslice.ogg', 100, 1)
+		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
-			add_logs(user, H, "beheaded", src)
+			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
@@ -144,7 +152,7 @@
 					delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
-			add_logs(user, H, "dropped the blade on", src, " non-fatally")
+			log_combat(user, H, "dropped the blade on", src, " non-fatally")
 			H.emote("scream")
 
 		if (blade_sharpness > 1)
@@ -158,7 +166,7 @@
 		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
 			return
-		
+
 		if (blade_status == GUILLOTINE_BLADE_RAISED)
 			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
 				blade_status = GUILLOTINE_BLADE_SHARPENING
@@ -167,7 +175,7 @@
 					user.visible_message("<span class='notice'>[user] sharpens the large blade of the guillotine.</span>",
 						                 "<span class='notice'>You sharpen the large blade of the guillotine.</span>")
 					blade_sharpness += 1
-					playsound(src, 'sound/items/unsheath.ogg', 100, 1)
+					playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
 					return
 				else
 					blade_status = GUILLOTINE_BLADE_RAISED
@@ -181,25 +189,26 @@
 	else
 		return ..()
 
-/obj/structure/guillotine/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/obj/structure/guillotine/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if (!anchored)
-		to_chat(usr, "<span class='warning'>The [src] needs to be wrenched to the floor!</span>")
+		to_chat(usr, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
-		to_chat(usr, "<span class='warning'>It doesn't look like they can fit into this properly!</span>")
+		to_chat(usr, "<span class='warning'>It doesn't look like [M.p_they()] can fit into this properly!</span>")
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)
 		to_chat(usr, "<span class='warning'>You need to raise the blade before buckling someone in!</span>")
 		return FALSE
 
-	return ..(M, force, FALSE)
+	return ..(M, user, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
 
 /obj/structure/guillotine/post_buckle_mob(mob/living/M)
 	if (!istype(M, /mob/living/carbon/human))
 		return
 
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "dying", /datum/mood_event/deaths_door)
 	var/mob/living/carbon/human/H = M
 
 	if (H.dna)
@@ -224,6 +233,7 @@
 	M.regenerate_icons()
 	M.pixel_y -= -GUILLOTINE_HEAD_OFFSET // Move their body back
 	M.layer -= GUILLOTINE_LAYER_DIFF
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "dying")
 	..()
 
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)
@@ -238,6 +248,7 @@
 	return ..()
 
 /obj/structure/guillotine/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if (current_action)
 		return
 
@@ -246,7 +257,7 @@
 	if (do_after(user, GUILLOTINE_WRENCH_DELAY, target = src))
 		current_action = 0
 		default_unfasten_wrench(user, I, 0)
-		dir = SOUTH
+		setDir(SOUTH)
 		return TRUE
 	else
 		current_action = 0

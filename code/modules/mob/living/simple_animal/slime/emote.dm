@@ -26,15 +26,17 @@
 	key = "moodnone"
 	var/mood = null
 
-/datum/emote/slime/mood/run_emote(mob/user, params)
+/datum/emote/slime/mood/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	var/mob/living/simple_animal/slime/S = user
-	S.mood = mood
-	S.regenerate_icons()
+	if(!.)
+		return
+	var/mob/living/simple_animal/slime/slime_user = user
+	slime_user.mood = mood
+	slime_user.regenerate_icons()
 
 /datum/emote/slime/mood/sneaky
 	key = "moodsneaky"
-	mood = "mischevous"
+	mood = "mischievous"
 
 /datum/emote/slime/mood/smile
 	key = "moodsmile"

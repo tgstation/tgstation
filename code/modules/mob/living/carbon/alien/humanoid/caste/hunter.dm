@@ -4,16 +4,11 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh"
-	var/obj/screen/leap_icon = null
+	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
-
-/mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	. = -1	//hunters are sanic
-	. += ..()	//but they still need to slow down on stun
-
 
 //Hunter verbs
 
@@ -26,7 +21,6 @@
 	else
 		return
 
-
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
 	face_atom(A)
 	if(leap_on_click)
@@ -34,11 +28,10 @@
 	else
 		..()
 
-
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(!canmove || leaping)
+	if(body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED) || leaping)
 		return
 
 	if(pounce_cooldown > world.time)
@@ -51,52 +44,45 @@
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
-		leaping = 1
-		weather_immunities += "lava"
+		leaping = TRUE
+		//Because the leaping sprite is bigger than the normal one
+		body_position_pixel_x_offset = -32
+		body_position_pixel_y_offset = -32
+		LAZYADD(weather_immunities,"lava")
 		update_icons()
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
-	leaping = 0
-	weather_immunities -= "lava"
+	leaping = FALSE
+	body_position_pixel_x_offset = 0
+	body_position_pixel_y_offset = 0
+	LAZYREMOVE(weather_immunities, "lava")
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
+/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 
 	if(!leaping)
 		return ..()
 
 	pounce_cooldown = world.time + pounce_cooldown_time
-	if(A)
-		if(isliving(A))
-			var/mob/living/L = A
+	if(hit_atom)
+		if(isliving(hit_atom))
+			var/mob/living/L = hit_atom
 			var/blocked = FALSE
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
+			if(ishuman(hit_atom))
+				var/mob/living/carbon/human/H = hit_atom
 				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
 					blocked = TRUE
 			if(!blocked)
-				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(100)
+				L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
+				L.Paralyze(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Knockdown(40, 1, 1)
+				Paralyze(40, ignore_canstun = TRUE)
 
 			toggle_leap(0)
-		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Knockdown(40, 1, 1)
-
-		if(leaping)
-			leaping = 0
-			update_icons()
-			update_canmove()
-
-
-/mob/living/carbon/alien/humanoid/float(on)
-	if(leaping)
-		return
-	..()
-
+		else if(hit_atom.density && !hit_atom.CanPass(src))
+			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>[src] smashes into [hit_atom]!</span>")
+			Paralyze(40, ignore_canstun = TRUE)
 

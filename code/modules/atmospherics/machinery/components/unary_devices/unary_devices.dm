@@ -13,17 +13,7 @@
 
 /obj/machinery/atmospherics/components/unary/on_construction()
 	..()
-	update_icon()
-
-/obj/machinery/atmospherics/components/unary/hide(intact)
-	update_icon()
-	..(intact)
-
-/obj/machinery/atmospherics/components/unary/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer))
-		atmosanalyzer_scan(airs[1], user)
-	else
-		return ..()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/proc/assign_uid_vents()
 	uid = num2text(gl_uid++)

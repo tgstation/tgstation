@@ -1,6 +1,6 @@
 /obj/machinery/door/unpowered
 
-/obj/machinery/door/unpowered/CollidedWith(atom/movable/AM)
+/obj/machinery/door/unpowered/Bumped(atom/movable/AM)
 	if(src.locked)
 		return
 	..()
@@ -20,6 +20,6 @@
 	icon = 'icons/turf/shuttle.dmi'
 	name = "door"
 	icon_state = "door1"
-	opacity = 1
+	opacity = TRUE
 	density = TRUE
 	explosion_block = 1

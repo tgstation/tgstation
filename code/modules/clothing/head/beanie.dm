@@ -1,11 +1,13 @@
 
 //BeanieStation13 Redux
 
+//Plus a bobble hat, lets be inclusive!!
+
 /obj/item/clothing/head/beanie //Default is white, this is meant to be seen
 	name = "white beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
 	icon_state = "beanie" //Default white
-	item_color = "beanie"
+	custom_price = PAYCHECK_ASSISTANT * 1.2
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
@@ -52,26 +54,37 @@
 /obj/item/clothing/head/beanie/christmas
 	name = "christmas beanie"
 	icon_state = "beaniechristmas"
-	item_color = "beaniechristmas"
 
 /obj/item/clothing/head/beanie/striped
 	name = "striped beanie"
 	icon_state = "beaniestriped"
-	item_color = "beaniestriped"
 
 /obj/item/clothing/head/beanie/stripedred
 	name = "red striped beanie"
 	icon_state = "beaniestripedred"
-	item_color = "beaniestripedred"
 
 /obj/item/clothing/head/beanie/stripedblue
 	name = "blue striped beanie"
 	icon_state = "beaniestripedblue"
-	item_color = "beaniestripedblue"
 
 /obj/item/clothing/head/beanie/stripedgreen
 	name = "green striped beanie"
 	icon_state = "beaniestripedgreen"
-	item_color = "beaniestripedgreen"
+
+/obj/item/clothing/head/beanie/durathread
+	name = "durathread beanie"
+	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "beaniedurathread"
+	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, RAD = 0, FIRE = 30, ACID = 5)
+
+/obj/item/clothing/head/beanie/waldo
+	name = "red striped bobble hat"
+	desc = "If you're going on a worldwide hike, you'll need some cold protection."
+	icon_state = "waldo_hat"
+
+/obj/item/clothing/head/beanie/rasta
+	name = "rastacap"
+	desc = "Perfect for tucking in those dreadlocks."
+	icon_state = "beanierasta"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet

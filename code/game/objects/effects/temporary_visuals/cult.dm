@@ -1,11 +1,11 @@
 //temporary visual effects(/obj/effect/temp_visual) used by cult stuff
 /obj/effect/temp_visual/cult
 	icon = 'icons/effects/cult_effects.dmi'
-	randomdir = 0
+	randomdir = FALSE
 	duration = 10
 
 /obj/effect/temp_visual/cult/sparks
-	randomdir = 1
+	randomdir = TRUE
 	name = "blood sparks"
 	icon_state = "bloodsparkles"
 
@@ -28,7 +28,7 @@
 	icon_state = "cultout"
 
 /obj/effect/temp_visual/cult/sac
-	name = "maw of Nar-Sie"
+	name = "maw of Nar'Sie"
 	icon_state = "sacconsume"
 
 /obj/effect/temp_visual/cult/door
@@ -47,6 +47,7 @@
 /obj/effect/temp_visual/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
+	plane = FLOOR_PLANE
 
 /obj/effect/temp_visual/cult/portal
 	icon_state = "space"

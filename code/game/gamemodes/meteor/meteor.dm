@@ -1,6 +1,7 @@
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
+	report_type = "meteor"
 	false_report_weight = 1
 	var/meteordelay = 2000
 	var/nometeors = 0
@@ -25,7 +26,7 @@
 	if (prob(meteorminutes/2))
 		wavetype = GLOB.meteors_catastrophic
 
-	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
+	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
 

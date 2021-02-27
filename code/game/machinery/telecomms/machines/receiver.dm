@@ -1,7 +1,7 @@
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
-	primarily headsets. They then just relay this information to all linked devices,
-	which can would probably be network hubs.
+	primarily headsets. Then they just relay this information to all linked devices,
+	which would probably be network hubs.
 
 	Link to Processor Units in case receiver can't send to bus units.
 */
@@ -11,7 +11,6 @@
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	circuit = /obj/item/circuitboard/machine/telecomms/receiver
@@ -34,7 +33,7 @@
 
 	for(var/obj/machinery/telecomms/hub/H in links)
 		for(var/obj/machinery/telecomms/relay/R in H.links)
-			if(R.can_receive(signal) && R.z in signal.levels)
+			if(R.can_receive(signal) && (R.z in signal.levels))
 				return TRUE
 
 	return FALSE

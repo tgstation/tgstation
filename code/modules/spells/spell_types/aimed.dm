@@ -1,15 +1,15 @@
 
 /obj/effect/proc_holder/spell/aimed
 	name = "aimed projectile spell"
-	var/projectile_type = /obj/item/projectile/magic/teleport
+	base_icon_state = "projectile"
+	var/projectile_type = /obj/projectile/magic/teleport
 	var/deactive_msg = "You discharge your projectile..."
 	var/active_msg = "You charge your projectile!"
-	var/base_icon_state = "projectile"
 	var/active_icon_state = "projectile"
 	var/list/projectile_var_overrides = list()
-	var/projectile_amount = 1	//Projectiles per cast.
-	var/current_amount = 0	//How many projectiles left.
-	var/projectiles_per_fire = 1		//Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
+	var/projectile_amount = 1 //Projectiles per cast.
+	var/current_amount = 0 //How many projectiles left.
+	var/projectiles_per_fire = 1 //Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -29,7 +29,7 @@
 		remove_ranged_ability(msg)
 		on_deactivation(user)
 	else
-		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"
+		msg = "<span class='notice'>[active_msg] <B>Left-click to shoot it at a target!</B></span>"
 		current_amount = projectile_amount
 		add_ranged_ability(user, msg, TRUE)
 		on_activation(user)
@@ -43,6 +43,8 @@
 /obj/effect/proc_holder/spell/aimed/update_icon()
 	if(!action)
 		return
+
+	. = ..()
 	action.button_icon_state = "[base_icon_state][active]"
 	action.UpdateButtonIcon()
 
@@ -75,7 +77,7 @@
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
 	current_amount--
 	for(var/i in 1 to projectiles_per_fire)
-		var/obj/item/projectile/P = new projectile_type(user.loc)
+		var/obj/projectile/P = new projectile_type(user.loc)
 		P.firer = user
 		P.preparePixelProjectile(target, user)
 		for(var/V in projectile_var_overrides)
@@ -85,38 +87,38 @@
 		P.fire()
 	return TRUE
 
-/obj/effect/proc_holder/spell/aimed/proc/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
+/obj/effect/proc_holder/spell/aimed/proc/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
 	return
 
 /obj/effect/proc_holder/spell/aimed/lightningbolt
 	name = "Lightning Bolt"
-	desc = "Fire a high powered lightning bolt at your foes!"
+	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
 	school = "evocation"
-	charge_max = 200
-	clothes_req = 1
-	invocation = "UN'LTD P'WAH"
-	invocation_type = "shout"
-	cooldown_min = 30
-	active_icon_state = "lightning"
+	charge_max = 100
+	clothes_req = FALSE
+	invocation = "P'WAH, UNLIM'TED P'WAH"
+	invocation_type = INVOCATION_SHOUT
+	cooldown_min = 20
 	base_icon_state = "lightning"
+	action_icon_state = "lightning0"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
-	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_boom" = FALSE)
-	active_msg = "You energize your hand with arcane lightning!"
+	projectile_var_overrides = list("zap_range" = 15, "zap_power" = 20000, "zap_flags" = ZAP_MOB_DAMAGE)
+	active_msg = "You energize your hands with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
-	projectile_type = /obj/item/projectile/magic/aoe/lightning
+	projectile_type = /obj/projectile/magic/aoe/lightning
 
 /obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
+	desc = "This spell fires an explosive fireball at a target."
 	school = "evocation"
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "ONI SOMA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-	projectile_type = /obj/item/projectile/magic/aoe/fireball
+	projectile_type = /obj/projectile/magic/aoe/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
 	sound = 'sound/magic/fireball.ogg'
@@ -124,26 +126,33 @@
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
 
+/obj/effect/proc_holder/spell/aimed/fireball/fire_projectile(list/targets, mob/living/user)
+	var/range = 6 + 2*spell_level
+	projectile_var_overrides = list("range" = range)
+	return ..()
+
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
-	desc = "Blazing hot rapid-fire homing cards. Banish your foes with its mystical power!"
+	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
 	school = "evocation"
 	charge_max = 50
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "Sigi'lu M'Fan 'Tasia"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 40
 	cooldown_min = 10
 	projectile_amount = 5
 	projectiles_per_fire = 7
-	projectile_type = /obj/item/projectile/spellcard
+	projectile_type = /obj/projectile/spellcard
+	base_icon_state = "spellcard"
+	action_icon_state = "spellcard0"
 	var/datum/weakref/current_target_weakref
 	var/projectile_turnrate = 10
 	var/projectile_pixel_homing_spread = 32
 	var/projectile_initial_spread_amount = 30
 	var/projectile_location_spread_amount = 12
 	var/datum/component/lockon_aiming/lockon_component
-	ranged_clickcd_override = 1
+	ranged_clickcd_override = TRUE
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_activation(mob/M)
 	QDEL_NULL(lockon_component)
@@ -162,7 +171,7 @@
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_deactivation(mob/M)
 	QDEL_NULL(lockon_component)
 
-/obj/effect/proc_holder/spell/aimed/spell_cards/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
+/obj/effect/proc_holder/spell/aimed/spell_cards/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
 	if(current_target_weakref)
 		var/atom/A = current_target_weakref.resolve()
 		if(A && get_dist(A, user) < 7)

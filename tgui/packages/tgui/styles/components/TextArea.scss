@@ -1,0 +1,63 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../functions.scss' as *;
+@use './Input.scss';
+
+$text-color: Input.$text-color !default;
+$background-color: Input.$background-color !default;
+$border-color: Input.$border-color !default;
+$border-radius: Input.$border-radius !default;
+
+.TextArea {
+  position: relative;
+  display: inline-block;
+  border: base.em(1px) solid $border-color;
+  border: base.em(1px) solid rgba($border-color, 0.75);
+  border-radius: $border-radius;
+  background-color: $background-color;
+  margin-right: base.em(2px);
+  line-height: base.em(17px);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.TextArea--fluid {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.TextArea__textarea {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+  line-height: base.em(17px);
+  min-height: base.em(17px);
+  margin: 0;
+  padding: 0 0.5em;
+  font-family: inherit;
+  background-color: transparent;
+  color: inherit;
+  box-sizing: border-box;
+  // Make sure the div and the textarea wrap words in the same way
+  word-wrap: break-word;
+  overflow: hidden;
+
+  &:-ms-input-placeholder {
+    font-style: italic;
+    color: #777;
+    color: rgba(255, 255, 255, 0.45);
+  }
+}

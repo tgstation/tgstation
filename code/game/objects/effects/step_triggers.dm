@@ -30,7 +30,7 @@
 /* Sends a message to mob when triggered*/
 
 /obj/effect/step_trigger/message
-	var/message	//the message to give to the mob
+	var/message //the message to give to the mob
 	var/once = 1
 	mobs_only = TRUE
 
@@ -44,27 +44,25 @@
 
 /obj/effect/step_trigger/thrower
 	var/direction = SOUTH // the direction of throw
-	var/tiles = 3	// if 0: forever until atom hits a stopper
+	var/tiles = 3 // if 0: forever until atom hits a stopper
 	var/immobilize = 1 // if nonzero: prevents mobs from moving while they're being flung
-	var/speed = 1	// delay of movement
+	var/speed = 1 // delay of movement
 	var/facedir = 0 // if 1: atom faces the direction of movement
 	var/nostop = 0 // if 1: will only be stopped by teleporters
 	var/list/affecting = list()
 
 /obj/effect/step_trigger/thrower/Trigger(atom/A)
-	if(!A || !ismovableatom(A))
+	if(!A || !ismovable(A))
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
-	var/stopthrow = 0
+	var/stopthrow = FALSE
 	for(var/obj/effect/step_trigger/thrower/T in orange(2, src))
 		if(AM in T.affecting)
 			return
 
-	if(ismob(AM))
-		var/mob/M = AM
-		if(immobilize)
-			M.canmove = 0
+	if(immobilize)
+		ADD_TRAIT(AM, TRAIT_IMMOBILIZED, src)
 
 	affecting.Add(AM)
 	while(AM && !stopthrow)
@@ -82,11 +80,11 @@
 		if(!nostop)
 			for(var/obj/effect/step_trigger/T in get_step(AM, direction))
 				if(T.stopper && T != src)
-					stopthrow = 1
+					stopthrow = TRUE
 		else
 			for(var/obj/effect/step_trigger/teleporter/T in get_step(AM, direction))
 				if(T.stopper)
-					stopthrow = 1
+					stopthrow = TRUE
 
 		if(AM)
 			var/predir = AM.dir
@@ -98,10 +96,8 @@
 
 	affecting.Remove(AM)
 
-	if(ismob(AM))
-		var/mob/M = AM
-		if(immobilize)
-			M.canmove = 1
+	REMOVE_TRAIT(AM, TRAIT_IMMOBILIZED, src)
+
 
 /* Stops things thrown by a thrower, doesn't do anything */
 
@@ -110,7 +106,7 @@
 /* Instant teleporter */
 
 /obj/effect/step_trigger/teleporter
-	var/teleport_x = 0	// teleportation coordinates (if one is null, then no teleport!)
+	var/teleport_x = 0 // teleportation coordinates (if one is null, then no teleport!)
 	var/teleport_y = 0
 	var/teleport_z = 0
 
@@ -140,7 +136,7 @@
 /obj/effect/step_trigger/teleport_fancy
 	var/locationx
 	var/locationy
-	var/uses = 1	//0 for infinite uses
+	var/uses = 1 //0 for infinite uses
 	var/entersparks = 0
 	var/exitsparks = 0
 	var/entersmoke = 0

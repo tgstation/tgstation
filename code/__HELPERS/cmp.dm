@@ -23,6 +23,19 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
 	return sorttext(a.fields[GLOB.cmp_field], b.fields[GLOB.cmp_field])
 
+// Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
+/proc/cmp_datum_numeric_asc(datum/a, datum/b, variable)
+	return cmp_numeric_asc(a.vars[variable], b.vars[variable])
+
+/proc/cmp_datum_numeric_dsc(datum/a, datum/b, variable)
+	return cmp_numeric_dsc(a.vars[variable], b.vars[variable])
+
+/proc/cmp_datum_text_asc(datum/a, datum/b, variable)
+	return sorttext(b.vars[variable], a.vars[variable])
+
+/proc/cmp_datum_text_dsc(datum/a, datum/b, variable)
+	return sorttext(a.vars[variable], b.vars[variable])
+
 /proc/cmp_ckey_asc(client/a, client/b)
 	return sorttext(b.ckey, a.ckey)
 
@@ -30,7 +43,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return sorttext(a.ckey, b.ckey)
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return initial(b.init_order) - initial(a.init_order)	//uses initial() so it can be used on types
+	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return sorttext(b.name, a.name)
@@ -38,14 +51,11 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority
 
+/proc/cmp_filter_data_priority(list/A, list/B)
+	return A["priority"] - B["priority"]
+
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
-
-/proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
-	return B.priority - A.priority
-
-/proc/cmp_clockscripture_priority(datum/clockwork_scripture/A, datum/clockwork_scripture/B)
-	return initial(A.sort_priority) - initial(B.sort_priority)
 
 /proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
 	return initial(A.cost) - initial(B.cost)
@@ -81,3 +91,58 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
+
+/proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
+	var/a_sign = SIGN(initial(A.value) * -1)
+	var/b_sign = SIGN(initial(B.value) * -1)
+
+	// Neutral traits go last.
+	if(a_sign == 0)
+		a_sign = 2
+	if(b_sign == 0)
+		b_sign = 2
+
+	var/a_name = initial(A.name)
+	var/b_name = initial(B.name)
+
+	if(a_sign != b_sign)
+		return a_sign - b_sign
+	else
+		return sorttext(b_name, a_name)
+
+/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
+	return A.display_order - B.display_order
+
+/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
+	return sorttext(initial(b.name),initial(a.name))
+
+/proc/cmp_typepaths_asc(A, B)
+	return sorttext("[B]","[A]")
+
+/proc/cmp_pdaname_asc(obj/item/pda/A, obj/item/pda/B)
+	return sorttext(B.owner, A.owner)
+
+/proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
+	return sorttext(B.ownjob, A.ownjob)
+
+/proc/cmp_num_string_asc(A, B)
+	return text2num(A) - text2num(B)
+
+/proc/cmp_mob_realname_dsc(mob/A,mob/B)
+	return sorttext(A.real_name,B.real_name)
+
+/**
+ * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
+ *
+ * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
+ * This prevents any reagent_containers from being consumed before the reagents they contain, which can
+ * lead to runtimes and item duplication when it happens.
+ */
+/proc/cmp_crafting_req_priority(A, B)
+	var/lhs
+	var/rhs
+
+	lhs = ispath(A, /datum/reagent) ? 0 : 1
+	rhs = ispath(B, /datum/reagent) ? 0 : 1
+
+	return lhs - rhs

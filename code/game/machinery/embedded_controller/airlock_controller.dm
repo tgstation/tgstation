@@ -1,17 +1,17 @@
 //States for airlock_control
-#define AIRLOCK_STATE_INOPEN		-2
-#define AIRLOCK_STATE_PRESSURIZE	-1
-#define AIRLOCK_STATE_CLOSED		0
-#define AIRLOCK_STATE_DEPRESSURIZE	1
-#define AIRLOCK_STATE_OUTOPEN		2
+#define AIRLOCK_STATE_INOPEN -2
+#define AIRLOCK_STATE_PRESSURIZE -1
+#define AIRLOCK_STATE_CLOSED 0
+#define AIRLOCK_STATE_DEPRESSURIZE 1
+#define AIRLOCK_STATE_OUTOPEN 2
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
-	var/exterior_door_tag
-	var/interior_door_tag
-	var/airpump_tag
-	var/sensor_tag
-	var/sanitize_external
+	var/exterior_door_tag //Burn chamber facing door
+	var/interior_door_tag //Station facing door
+	var/airpump_tag //See: dp_vent_pump.dm
+	var/sensor_tag //See: /obj/machinery/airlock_sensor
+	var/sanitize_external //Before the interior airlock opens, do we first drain all gases inside the chamber and then repressurize?
 
 	state = AIRLOCK_STATE_CLOSED
 	var/target_state = AIRLOCK_STATE_CLOSED
@@ -97,7 +97,7 @@
 							"sigtype" = "command"
 						))
 						if(memory["pump_status"] == "siphon")
-							signal.data["stabalize"] = 1
+							signal.data["stabilize"] = 1
 						else if(memory["pump_status"] != "release")
 							signal.data["power"] = 1
 						post_signal(signal)
@@ -196,20 +196,47 @@
 /obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
+	base_icon_state = "airlock_control"
 
 	name = "airlock console"
 	density = FALSE
 
 	frequency = FREQ_AIRLOCK_CONTROL
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
-	var/id_tag
 	var/exterior_door_tag
 	var/interior_door_tag
 	var/airpump_tag
 	var/sensor_tag
 	var/sanitize_external
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_TOXMIX_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_ATMOS_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_syndicatelava
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
 	. = ..()
@@ -228,14 +255,12 @@
 	new_prog.master = src
 	program = new_prog
 
-/obj/machinery/embedded_controller/radio/airlock_controller/update_icon()
+/obj/machinery/embedded_controller/radio/airlock_controller/update_icon_state()
 	if(on && program)
-		if(program.memory["processing"])
-			icon_state = "airlock_control_process"
-		else
-			icon_state = "airlock_control_standby"
-	else
-		icon_state = "airlock_control_off"
+		icon_state = "[base_icon_state]_[program.memory["processing"] ? "process" : "standby"]"
+		return ..()
+	icon_state = "[base_icon_state]_off"
+	return ..()
 
 
 /obj/machinery/embedded_controller/radio/airlock_controller/return_text()

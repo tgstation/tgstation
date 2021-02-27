@@ -1,0 +1,1409 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ay" = (
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"aM" = (
+/turf/open/floor/wood,
+/area/ruin/powered)
+"aP" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"aZ" = (
+/obj/structure/sign/poster/ripped,
+/turf/closed/wall/rust,
+/area/icemoon/underground/explored)
+"bR" = (
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/obj/structure/fluff/fokoff_sign,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"bY" = (
+/obj/structure/flora/stump,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"cj" = (
+/obj/structure/table,
+/obj/item/food/fishandchips,
+/turf/open/floor/iron/checker,
+/area/ruin/powered)
+"cB" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"dh" = (
+/obj/machinery/door/airlock/wood,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"fD" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/item/bedsheet/random,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"gG" = (
+/obj/structure/table/wood,
+/obj/item/food/sashimi{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = -10
+	},
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 10;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"hD" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
+"hI" = (
+/obj/item/reagent_containers/food/drinks/beer,
+/turf/open/floor/plating/ice/icemoon,
+/area/icemoon/underground/explored)
+"iz" = (
+/obj/structure/fence/door/opened{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"iB" = (
+/turf/closed/mineral/snowmountain/icemoon,
+/area/icemoon/underground/explored)
+"jk" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"jP" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"kl" = (
+/obj/structure/sign/poster/official/nanotrasen_logo,
+/turf/closed/wall,
+/area/icemoon/underground/explored)
+"ks" = (
+/obj/structure/flora/rock/icy,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"la" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/mob/living/simple_animal/hostile/skeleton/eskimo{
+	name = "Village Hunter"
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"lg" = (
+/obj/structure/flora/grass/both,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"li" = (
+/obj/structure/dresser,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"lo" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"mi" = (
+/obj/effect/decal/remains/human,
+/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
+	health = 450;
+	maxHealth = 450;
+	name = "Right Hand of the Elder"
+	},
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
+"mI" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/grass/both,
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"nR" = (
+/obj/structure/chair/sofa/left,
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/icemoon/underground/explored)
+"oB" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin/empty,
+/obj/item/clothing/under/misc/pj/blue,
+/obj/item/clothing/shoes/sneakers/white,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"oF" = (
+/obj/structure/flora/rock/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"pc" = (
+/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/area/icemoon/underground/explored)
+"pj" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"pH" = (
+/obj/structure/sign/poster/official/work_for_a_future,
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"pI" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"pP" = (
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"pV" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"rC" = (
+/obj/structure/closet/secure_closet/freezer,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/turf/open/floor/iron/checker,
+/area/ruin/powered)
+"sG" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/structure/toilet{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"sY" = (
+/obj/structure/sink/kitchen{
+	dir = 4;
+	pixel_x = -12
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/ruin/powered)
+"tg" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"tt" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/ruin/powered)
+"tF" = (
+/obj/structure/fence,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"tM" = (
+/obj/structure/statue/snow/snowlegion{
+	desc = "An off-putting snowman, something about it gives you a sense of dread instead of holiday cheer."
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"tN" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/unexplored)
+"tX" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"us" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"ut" = (
+/obj/item/flashlight/lantern{
+	on = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"vi" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/fence/door,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"wQ" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"xc" = (
+/turf/open/floor/plating/ice/icemoon,
+/area/icemoon/underground/explored)
+"xN" = (
+/obj/structure/bed/dogbed{
+	pixel_y = 14
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"yb" = (
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"yS" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"zR" = (
+/obj/machinery/door/airlock/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"zT" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"AG" = (
+/obj/structure/showcase/machinery/tv,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/holofloor/wood,
+/area/ruin/powered)
+"AM" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/item/pickaxe,
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
+"AN" = (
+/obj/structure/closet/cabinet,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/reagent_containers/glass/bottle/venom,
+/obj/item/reagent_containers/glass/bottle/curare,
+/obj/item/kitchen/knife/combat/survival,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Bq" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Cd" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"Cl" = (
+/obj/structure/sacrificealtar,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/kitchen/knife/bloodletter,
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
+"Dm" = (
+/obj/structure/flora/grass/brown,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"DI" = (
+/obj/structure/closet/emcloset,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/flashlight/lantern,
+/turf/open/floor/iron/freezer,
+/area/ruin/powered)
+"DM" = (
+/obj/structure/flora/bush,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Ed" = (
+/obj/machinery/door/airlock/wood,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Ei" = (
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/icemoon/underground/explored)
+"EF" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/obj/effect/decal/remains/human,
+/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
+	health = 450;
+	maxHealth = 450;
+	name = "Left Hand of the Elder"
+	},
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
+"FR" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"Gr" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/chips,
+/obj/item/trash/semki{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/clothing/neck/petcollar,
+/turf/open/floor/iron/freezer,
+/area/ruin/powered)
+"Gy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"GK" = (
+/obj/item/clothing/head/bearpelt,
+/obj/structure/table/wood,
+/obj/item/food/burger/fish,
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Ha" = (
+/obj/structure/mirror{
+	broken = 1
+	},
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"Hf" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Hx" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/under/rank/cargo/miner,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/card/id/mining,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"IA" = (
+/obj/structure/fireplace{
+	fuel_added = 1000;
+	lit = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"Kd" = (
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"LZ" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Nq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/iron/freezer,
+/area/ruin/powered)
+"Og" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Os" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"Pp" = (
+/obj/effect/spawner/randomsnackvend,
+/turf/open/floor/holofloor/wood,
+/area/ruin/powered)
+"PQ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "disperses into the air in a cloud of red mist, you feel slightly more at ease.";
+	desc = "You can't quite make out what you're seeing.";
+	faction = list("cult");
+	health = 500;
+	maxHealth = 500;
+	melee_damage_lower = 10;
+	melee_damage_upper = 30;
+	name = "Village Elder"
+	},
+/turf/open/floor/engine/cult,
+/area/ruin/powered)
+"Qh" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/item/bodypart/head,
+/obj/item/bodypart/l_arm{
+	pixel_x = -9;
+	pixel_y = -9
+	},
+/obj/item/bodypart/l_leg,
+/obj/item/bodypart/r_arm,
+/obj/item/bodypart/r_leg{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/bodypart/chest,
+/obj/item/organ/heart,
+/obj/item/multitool,
+/turf/open/floor/iron/freezer,
+/area/ruin/powered)
+"Qt" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/item/restraints/legcuffs/beartrap{
+	armed = 1
+	},
+/obj/structure/flora/grass/both,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"QR" = (
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"Rv" = (
+/obj/structure/flora/grass/both,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Si" = (
+/obj/structure/mirror,
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"Sk" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"SN" = (
+/turf/open/floor/iron/freezer,
+/area/ruin/powered)
+"SZ" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Tc" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"TW" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/grass/both,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"UI" = (
+/obj/machinery/washing_machine,
+/obj/effect/decal/cleanable/blood,
+/obj/item/food/meat/slab/corgi,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Vn" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"Ws" = (
+/obj/structure/fence/cut/medium{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"WH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/bedsheet/cult,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Ze" = (
+/turf/closed/wall,
+/area/icemoon/underground/explored)
+"Zx" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plating/ice/icemoon,
+/area/icemoon/underground/explored)
+"ZG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/under/suit/tan,
+/turf/open/floor/wood,
+/area/ruin/powered)
+
+(1,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(2,1,1) = {"
+tN
+tN
+tN
+tN
+pc
+Og
+Og
+bR
+Og
+Og
+Og
+jP
+Og
+Og
+Og
+Rv
+Og
+Og
+Og
+Og
+Og
+Og
+Og
+tN
+tN
+tN
+tN
+tN
+"}
+(3,1,1) = {"
+tN
+tN
+tN
+xc
+pc
+Og
+Og
+aZ
+pI
+iB
+Og
+kl
+Og
+Og
+Og
+Og
+Og
+Og
+pI
+Og
+Og
+Og
+Og
+Og
+bY
+tN
+tN
+tN
+"}
+(4,1,1) = {"
+tN
+tN
+tN
+pc
+Og
+Og
+Ei
+Ze
+iB
+ks
+Ei
+Ze
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Tc
+pc
+pc
+Og
+Og
+pc
+tN
+tN
+"}
+(5,1,1) = {"
+tN
+tN
+Og
+Og
+Og
+Rv
+Ei
+Ei
+Ei
+FR
+pI
+Ei
+Ei
+Vn
+Vn
+Vn
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+pc
+Og
+Og
+Og
+tN
+"}
+(6,1,1) = {"
+tN
+pI
+Og
+Og
+bY
+Ei
+Ei
+Ei
+pI
+zT
+zT
+zT
+Ei
+Vn
+UI
+Vn
+Vn
+wQ
+wQ
+QR
+QR
+wQ
+Ei
+Ei
+Og
+Rv
+Og
+tN
+"}
+(7,1,1) = {"
+tN
+Og
+oF
+Og
+Ei
+Ei
+Vn
+Vn
+Vn
+Vn
+Og
+zT
+Bq
+pH
+jk
+tX
+Vn
+QR
+DI
+SN
+Qh
+wQ
+Ei
+Ei
+oF
+Og
+Og
+tN
+"}
+(8,1,1) = {"
+tN
+Og
+Og
+Og
+Ei
+Ei
+Vn
+cj
+sY
+Vn
+Og
+zT
+Vn
+Vn
+jk
+oB
+Vn
+wQ
+DI
+tt
+Gr
+QR
+lg
+Ei
+Ei
+Og
+Og
+tN
+"}
+(9,1,1) = {"
+tN
+Og
+Og
+Ei
+Ei
+la
+Vn
+rC
+ut
+Vn
+tF
+iz
+Vn
+AG
+aM
+yb
+Vn
+wQ
+Nq
+SN
+QR
+QR
+Og
+Ei
+Ei
+Og
+Og
+tN
+"}
+(10,1,1) = {"
+tN
+Og
+Kd
+Ei
+Ei
+lo
+Ha
+li
+Hf
+SZ
+zT
+zT
+Vn
+Pp
+aM
+pP
+Vn
+wQ
+QR
+pV
+wQ
+Og
+Tc
+Ei
+Ei
+Og
+Og
+tN
+"}
+(11,1,1) = {"
+tN
+Og
+pc
+Ei
+Ei
+lo
+Vn
+Hx
+fD
+Vn
+yS
+zT
+Vn
+Vn
+SZ
+Vn
+Vn
+Og
+Og
+zT
+tg
+Bq
+Og
+Ei
+Ei
+Og
+Og
+tN
+"}
+(12,1,1) = {"
+tN
+Og
+pc
+Ei
+Ei
+lo
+Vn
+Vn
+Vn
+Vn
+Og
+zT
+Og
+Bq
+zT
+Tc
+DM
+zT
+zT
+zT
+Ws
+Og
+Og
+Ei
+Ei
+Ei
+Og
+tN
+"}
+(13,1,1) = {"
+tN
+Og
+pc
+Ei
+Ei
+us
+Sk
+Qt
+vi
+Og
+yS
+zT
+zT
+zT
+zT
+Og
+Og
+zT
+Og
+Vn
+Vn
+Vn
+Vn
+Ei
+Ei
+Ei
+pI
+tN
+"}
+(14,1,1) = {"
+tN
+Og
+Ei
+Ei
+Ei
+Ei
+Bq
+pj
+mI
+Og
+Og
+Og
+Og
+Og
+zT
+Og
+Og
+zT
+Og
+Vn
+LZ
+AN
+Vn
+Ei
+Ei
+Ei
+Og
+tN
+"}
+(15,1,1) = {"
+tN
+Og
+Ei
+Vn
+Vn
+Vn
+Vn
+Vn
+Vn
+Vn
+Vn
+Og
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zR
+cB
+GK
+Vn
+Ei
+Ei
+bY
+Og
+tN
+"}
+(16,1,1) = {"
+tN
+Og
+Ei
+Vn
+EF
+hD
+Si
+aP
+WH
+ZG
+Vn
+Og
+zT
+Tc
+Og
+Og
+Og
+Og
+Og
+Vn
+Vn
+Vn
+Vn
+Ei
+Ei
+Og
+Og
+tN
+"}
+(17,1,1) = {"
+tN
+Og
+Ei
+Vn
+Cl
+PQ
+Ed
+jk
+aM
+aM
+Vn
+Og
+zT
+Og
+Og
+Og
+Bq
+Og
+Og
+Og
+Gy
+sG
+Vn
+Ei
+Ei
+Og
+Og
+tN
+"}
+(18,1,1) = {"
+tN
+Og
+Ei
+Vn
+mi
+AM
+Vn
+ay
+Os
+jk
+dh
+zT
+zT
+Og
+Og
+Og
+Og
+TW
+Og
+Og
+Vn
+Vn
+Vn
+Ei
+Ei
+Og
+Og
+tN
+"}
+(19,1,1) = {"
+tN
+Og
+Ei
+Vn
+Vn
+Vn
+Vn
+IA
+gG
+aM
+Vn
+Og
+Og
+Og
+pc
+Dm
+Og
+Og
+tM
+Og
+Og
+Og
+Bq
+Ei
+Ei
+Og
+Dm
+tN
+"}
+(20,1,1) = {"
+tN
+Og
+Ei
+Ei
+Ei
+nR
+Vn
+xN
+Cd
+jk
+Vn
+TW
+Og
+pc
+xc
+pc
+pc
+Og
+Og
+Og
+Og
+Og
+Og
+Ei
+Ei
+Og
+Og
+tN
+"}
+(21,1,1) = {"
+tN
+Og
+Og
+pj
+Ei
+Ei
+Vn
+Vn
+Vn
+Vn
+Vn
+Og
+Dm
+pc
+xc
+xc
+xc
+pc
+pj
+Og
+Og
+DM
+Ei
+Ei
+Ei
+Og
+Og
+tN
+"}
+(22,1,1) = {"
+tN
+bY
+Og
+Og
+Ei
+Ei
+Ei
+Ei
+Bq
+Og
+Og
+Og
+pc
+xc
+hI
+Zx
+xc
+xc
+pc
+pc
+Og
+Ei
+Ei
+Ei
+bY
+Og
+Og
+tN
+"}
+(23,1,1) = {"
+tN
+tN
+pI
+Og
+Og
+Ei
+Ei
+Ei
+Ei
+DM
+Tc
+pc
+pc
+xc
+xc
+xc
+xc
+xc
+xc
+Ei
+Ei
+Ei
+Ei
+Og
+Og
+Og
+Og
+tN
+"}
+(24,1,1) = {"
+tN
+tN
+tN
+pc
+Og
+Og
+Og
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+xc
+xc
+xc
+xc
+xc
+Ei
+Ei
+Ei
+Ei
+pI
+oF
+Og
+Og
+Og
+tN
+"}
+(25,1,1) = {"
+tN
+tN
+tN
+xc
+pc
+pc
+Og
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Og
+Og
+Og
+Og
+Og
+Og
+tN
+"}
+(26,1,1) = {"
+tN
+tN
+tN
+xc
+pc
+oF
+Og
+pI
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+Ei
+pc
+Og
+Og
+Og
+pc
+tN
+Og
+Og
+tN
+"}
+(27,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+Og
+Og
+Og
+Og
+Og
+Og
+Og
+pI
+oF
+Og
+Og
+Og
+Og
+Og
+bY
+Tc
+pc
+tN
+tN
+pI
+Og
+tN
+"}
+(28,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}

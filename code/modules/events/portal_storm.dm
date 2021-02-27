@@ -17,8 +17,8 @@
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
+	boss_types = list(/mob/living/simple_animal/hostile/construct/artificer/hostile = 6)
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/juggernaut/hostile = 8,\
 						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event/portal_storm
@@ -66,15 +66,15 @@
 /datum/round_event/portal_storm/tick()
 	spawn_effects(get_random_station_turf())
 
-	if(spawn_hostile())
-		var/type = safepick(hostile_types)
+	if(spawn_hostile() && length(hostile_types))
+		var/type = pick(hostile_types)
 		hostile_types[type] = hostile_types[type] - 1
 		spawn_mob(type, hostiles_spawn)
 		if(!hostile_types[type])
 			hostile_types -= type
 
-	if(spawn_boss())
-		var/type = safepick(boss_types)
+	if(spawn_boss() && length(boss_types))
+		var/type = pick(boss_types)
 		boss_types[type] = boss_types[type] - 1
 		spawn_mob(type, boss_spawn)
 		if(!boss_types[type])
@@ -97,7 +97,7 @@
 		return
 	T = get_step(T, SOUTHWEST) //align center of image with turf
 	flick_overlay_static(storm, T, 15)
-	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
+	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)
@@ -106,11 +106,12 @@
 
 /datum/round_event/portal_storm/proc/spawn_boss()
 	if(!boss_types || !boss_types.len)
-		return 0
+		return FALSE
 
 	if(activeFor == next_boss_spawn)
 		next_boss_spawn += CEILING(number_of_hostiles / number_of_bosses, 1)
-		return 1
+		return TRUE
+	return FALSE
 
 /datum/round_event/portal_storm/proc/time_to_end()
 	if(!hostile_types.len && !boss_types.len)

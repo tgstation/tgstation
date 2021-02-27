@@ -9,18 +9,17 @@
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
-	update_icon()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+	update_appearance()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
 	if(floorbuffer)
-		AddComponent(/datum/component/cleaning)
+		AddElement(/datum/element/cleaning)
 
 /obj/vehicle/ridden/janicart/Destroy()
 	if(mybag)
 		qdel(mybag)
 		mybag = null
-	. = ..()
+	return ..()
 
 /obj/item/janiupgrade
 	name = "floor buffer upgrade"
@@ -29,9 +28,9 @@
 	icon_state = "upgrade"
 
 /obj/vehicle/ridden/janicart/examine(mob/user)
-	..()
+	. = ..()
 	if(floorbuffer)
-		to_chat(user, "It has been upgraded with a floor buffer.")
+		. += "It has been upgraded with a floor buffer."
 
 /obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))
@@ -42,7 +41,7 @@
 			return
 		to_chat(user, "<span class='notice'>You hook the trashbag onto [src].</span>")
 		mybag = I
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/janiupgrade))
 		if(floorbuffer)
 			to_chat(user, "<span class='warning'>[src] already has a floor buffer!</span>")
@@ -50,19 +49,21 @@
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
-		AddComponent(/datum/component/cleaning)
-		update_icon()
+		AddElement(/datum/element/cleaning)
+		update_appearance()
+	else if(mybag)
+		mybag.attackby(I, user)
 	else
 		return ..()
 
-/obj/vehicle/ridden/janicart/update_icon()
-	cut_overlays()
+/obj/vehicle/ridden/janicart/update_overlays()
+	. = ..()
 	if(mybag)
-		add_overlay("cart_garbage")
+		. += "cart_garbage"
 	if(floorbuffer)
-		add_overlay("cart_buffer")
+		. += "cart_buffer"
 
-/obj/vehicle/ridden/janicart/attack_hand(mob/user)
+/obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -70,7 +71,7 @@
 		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)
 		mybag = null
-		update_icon()
+		update_appearance()
 
 /obj/vehicle/ridden/janicart/upgraded
 	floorbuffer = TRUE

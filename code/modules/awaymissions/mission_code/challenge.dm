@@ -19,7 +19,8 @@
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "emitter"
+	icon_state = "emitter_+a"
+	base_icon_state = "emitter_+a"
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
@@ -28,9 +29,9 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-	active = 1
+	active = TRUE
 	locked = TRUE
-	state = 2
+	welded = TRUE
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()
 	return

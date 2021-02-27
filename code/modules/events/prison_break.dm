@@ -8,11 +8,11 @@
 	announceWhen = 50
 	endWhen = 20
 	var/list/area/areasToOpen = list()
-	var/list/potential_areas = list(/area/bridge,
-									/area/engine,
+	var/list/potential_areas = list(/area/command,
+									/area/engineering,
 									/area/medical,
 									/area/security,
-									/area/quartermaster,
+									/area/cargo,
 									/area/science)
 	var/severity = 1
 
@@ -32,7 +32,7 @@
 	if(areasToOpen && areasToOpen.len > 0)
 		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 	else
-		log_world("ERROR: Could not initate grey-tide. No areas in the list!")
+		log_world("ERROR: Could not initiate grey-tide. No areas in the list!")
 		kill()
 
 
@@ -44,13 +44,10 @@
 /datum/round_event/grey_tide/end()
 	for(var/area/A in areasToOpen)
 		for(var/obj/O in A)
-			if(istype(O, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/temp = O
-				temp.overload_lighting()
-			else if(istype(O, /obj/structure/closet/secure_closet))
+			if(istype(O, /obj/structure/closet/secure_closet))
 				var/obj/structure/closet/secure_closet/temp = O
 				temp.locked = FALSE
-				temp.update_icon()
+				temp.update_appearance()
 			else if(istype(O, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O
 				if(temp.critical_machine) //Skip doors in critical positions, such as the SM chamber.
@@ -59,3 +56,4 @@
 			else if(istype(O, /obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O
 				temp.timer_end(forced = TRUE)
+

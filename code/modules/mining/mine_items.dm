@@ -28,15 +28,18 @@
 	new /obj/item/storage/backpack/duffelbag(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
@@ -71,16 +74,24 @@
 	circuit = /obj/item/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
-	no_destination_swap = 1
-	var/global/list/dumb_rev_heads = list()
+	no_destination_swap = TRUE
+	var/static/list/dumb_rev_heads = list()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
+/obj/machinery/computer/shuttle/mining/attack_hand(mob/user, list/modifiers)
 	if(is_station_level(user.z) && user.mind && is_head_revolutionary(user) && !(user.mind in dumb_rev_heads))
 		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return
 	. = ..()
+
+/obj/machinery/computer/shuttle/mining/common
+	name = "lavaland shuttle console"
+	desc = "Used to call and send the lavaland shuttle."
+	circuit = /obj/item/circuitboard/computer/mining_shuttle/common
+	shuttleId = "mining_common"
+	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
+
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 

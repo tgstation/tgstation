@@ -15,13 +15,13 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "f" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned)
 "g" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -42,7 +42,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/structure/chair,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
@@ -65,17 +65,16 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "l" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "m" = (
-/obj/machinery/computer/shuttle/white_ship,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plating/abductor,
@@ -85,7 +84,6 @@
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
-	dheight = 0;
 	dir = 8;
 	dwidth = 4;
 	height = 9;
@@ -93,10 +91,9 @@
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 4;
-	preferred_direction = 1;
 	width = 9
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{
@@ -106,11 +103,12 @@
 /obj/structure/table/glass,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/hardsuit/engine/elite,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
-/obj/structure/chair{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
 /turf/open/floor/plating/abductor,

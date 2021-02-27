@@ -2,7 +2,7 @@
 	if(!check_rights())
 		return
 	log_admin("[key_name(usr)] checked the player panel.")
-	var/dat = "<html><head><title>Player Panel</title></head>"
+	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge; charset=UTF-8'/><title>Player Panel</title></head>"
 
 	//javascript, the part that does most of the work~
 	dat += {"
@@ -38,15 +38,11 @@
 								}
 								var ltd = tr.getElementsByTagName("td");
 								var td = ltd\[0\];
-								var lsearch = td.getElementsByTagName("b");
+								var lsearch = td.getElementsByClassName("filter_data");
 								var search = lsearch\[0\];
-								//var inner_span = li.getElementsByTagName("span")\[1\] //Should only ever contain one element.
-								//document.write("<p>"+search.innerText+"<br>"+filter+"<br>"+search.innerText.indexOf(filter))
 								if ( search.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
-									//document.write("a");
-									//ltr.removeChild(tr);
-									td.innerHTML = "";
+									tr.innerHTML = "";
 									i--;
 								}
 							}catch(err) {   }
@@ -58,27 +54,36 @@
 					var debug = document.getElementById("debug");
 
 					locked_tabs = new Array();
-
 				}
 
-				function expand(id,job,name,real_name,image,key,ip,antagonist,ref){
+				function expand(data_id,target_id){
+
+					job = document.getElementById(data_id+"_job").textContent
+					name = document.getElementById(data_id+"_name").textContent
+					real_name = document.getElementById(data_id+"_rname").textContent
+					old_names = document.getElementById(data_id+"_prevnames").textContent
+					key = document.getElementById(data_id+"_key").textContent
+					ip = document.getElementById(data_id+"_lastip").textContent
+					antagonist = document.getElementById(data_id+"_isantag").textContent
+					ref = document.getElementById(data_id+"_ref").textContent
 
 					clearAll();
 
-					var span = document.getElementById(id);
+					var span = document.getElementById(target_id);
 					var ckey = key.toLowerCase().replace(/\[^a-z@0-9\]+/g,"");
 
 					body = "<table><tr><td>";
 
 					body += "</td><td align='center'>";
 
-					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b></font>"
+					body += "<font size='2'><b>"+job+" "+name+"</b><br><b>Real name "+real_name+"</b><br><b>Played by "+key+" ("+ip+")</b><br><b>Old names :"+old_names+"</b></font>";
 
 					body += "</td><td align='center'>";
 
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
+					body += "<a href='?_src_=vars;[HrefToken()];skill="+ref+"'>SP</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
 					if (job == "Cyborg")
 						body += "<a href='?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "
@@ -87,7 +92,7 @@
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];individuallog="+ref+"'>LOGS</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a href='?_src_=holder;[HrefToken()];secrets=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
+						body += "<font size='2'><a href='?_src_=holder;[HrefToken()];check_antagonist=1'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
 
@@ -102,7 +107,7 @@
 
 						var id = span.getAttribute("id");
 
-						if(!(id.indexOf("item")==0))
+						if(!id || !(id.indexOf("item")==0))
 							continue;
 
 						var pass = 1;
@@ -147,9 +152,6 @@
 					locked_tabs.push(id);
 					var notice_span = document.getElementById(notice_span_id);
 					notice_span.innerHTML = "<font color='red'>Locked</font> ";
-					//link.setAttribute("onClick","attempt('"+id+"','"+link_id+"','"+notice_span_id+"');");
-					//document.write("removeFromLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
-					//document.write("aa - "+link.getAttribute("onClick"));
 				}
 
 				function attempt(ab){
@@ -172,8 +174,6 @@
 					locked_tabs\[index\] = "";
 					var notice_span = document.getElementById(notice_span_id);
 					notice_span.innerHTML = "";
-					//var link = document.getElementById(link_id);
-					//link.setAttribute("onClick","addToLocked('"+id+"','"+link_id+"','"+notice_span_id+"')");
 				}
 
 				function selectTextField(){
@@ -231,10 +231,10 @@
 			if(isliving(M))
 
 				if(iscarbon(M)) //Carbon stuff
-					if(ishuman(M))
-						M_job = M.job
-					else if(ismonkey(M))
+					if(ismonkey(M))
 						M_job = "Monkey"
+					else if(ishuman(M))
+						M_job = M.job
 					else if(isalien(M)) //aliens
 						if(islarva(M))
 							M_job = "Alien larva"
@@ -277,6 +277,12 @@
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)
 			var/M_key = html_encode(M.key)
+			var/previous_names = ""
+			if(M_key)
+				var/datum/player_details/P = GLOB.player_details[ckey(M_key)]
+				if(P)
+					previous_names = P.played_names.Join(",")
+			previous_names = html_encode(previous_names)
 
 			//output for each mob
 			dat += {"
@@ -285,9 +291,18 @@
 					<td align='center' bgcolor='[color]'>
 						<span id='notice_span[i]'></span>
 						<a id='link[i]'
-						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"[REF(M)]")'
+						onmouseover='expand("data[i]","item[i]")'
 						>
 						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
+						<span hidden class='filter_data'>[M_name] [M_rname] [M_key] [M_job] [previous_names]</span>
+						<span hidden id="data[i]_name">[M_name]</span>
+						<span hidden id="data[i]_job">[M_job]</span>
+						<span hidden id="data[i]_rname">[M_rname]</span>
+						<span hidden id="data[i]_prevnames">[previous_names]</span>
+						<span hidden id="data[i]_key">[M_key]</span>
+						<span hidden id="data[i]_lastip">[M.lastKnownIP]</span>
+						<span hidden id="data[i]_isantag">[is_antagonist]</span>
+						<span hidden id="data[i]_ref">[REF(M)]</span>
 						</a>
 						<br><span id='item[i]'></span>
 					</td>

@@ -29,11 +29,11 @@
 	var/datum/mind/Mind = new /datum/mind(selected.key)
 	Mind.assigned_role = "Lone Operative"
 	Mind.special_role = "Lone Operative"
-	Mind.active = 1
+	Mind.active = TRUE
 	Mind.transfer_to(operative)
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
-	message_admins("[key_name_admin(operative)] has been made into lone operative by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")
 	log_game("[key_name(operative)] was spawned as a lone operative by an event.")
 	spawned_mobs += operative
 	return SUCCESSFUL_SPAWN

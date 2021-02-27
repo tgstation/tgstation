@@ -5,15 +5,14 @@
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
 		#include "map_files\Mining\Lavaland.dmm"
-		#include "map_files\generic\City_of_Cogs.dmm"
 		#include "map_files\debug\runtimestation.dmm"
+		#include "map_files\debug\multiz.dmm"
 		#include "map_files\Deltastation\DeltaStation2.dmm"
+		#include "map_files\KiloStation\KiloStation.dmm"
 		#include "map_files\MetaStation\MetaStation.dmm"
-		#include "map_files\OmegaStation\OmegaStation.dmm"
-		#include "map_files\PubbyStation\PubbyStation.dmm"
-		#include "map_files\BoxStation\BoxStation.dmm"
+		#include "map_files\IceBoxStation\IceBoxStation.dmm"
 
-		#ifdef TRAVISBUILDING
+		#ifdef CIBUILDING
 			#include "templates.dm"
 		#endif
 	#endif

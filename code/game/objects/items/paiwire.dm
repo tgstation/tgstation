@@ -3,11 +3,16 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
-	flags_1 = NOBLUDGEON_1
-	var/obj/machinery/machine
+	item_flags = NOBLUDGEON
+	var/obj/machinery/machine //what machine we're currently hacking.
+
+/obj/item/pai_cable/machine/Destroy()
+	machine = null
+	return ..()
+
 
 /obj/item/pai_cable/proc/plugin(obj/machinery/M, mob/living/user)
 	if(!user.transferItemToLoc(src, M))
 		return
-	user.visible_message("[user] inserts [src] into a data port on [M].", "<span class='notice'>You insert [src] into a data port on [M].</span>", "<span class='italics'>You hear the satisfying click of a wire jack fastening into place.</span>")
+	user.visible_message("<span class='notice'>[user] inserts [src] into a data port on [M].</span>", "<span class='notice'>You insert [src] into a data port on [M].</span>", "<span class='hear'>You hear the satisfying click of a wire jack fastening into place.</span>")
 	machine = M

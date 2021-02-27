@@ -10,7 +10,7 @@
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
-	var/list/mobs	 = list()
+	var/list/mobs  = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!is_station_level(H.z))
@@ -27,7 +27,7 @@
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!moblocs)
 			break //locs aren't always unique, so this may come into play
-		do_teleport(H, moblocs[moblocs.len])
+		do_teleport(H, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -46,7 +46,7 @@
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
-	var/list/mobs	 = list()
+	var/list/mobs  = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		mobnames += H.real_name
@@ -79,7 +79,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleminds/start()
-	var/list/mobs	 = list()
+	var/list/mobs  = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H.stat || !H.mind || iswizard(H))
@@ -91,11 +91,11 @@
 
 	shuffle_inplace(mobs)
 
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new /obj/effect/proc_holder/spell/targeted/mind_transfer
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
 	while(mobs.len > 1)
 		var/mob/living/carbon/human/H = pick(mobs)
 		mobs -= H
-		swapper.cast(list(H), mobs[mobs.len], 1)
+		swapper.cast(list(H), mobs[mobs.len], TRUE)
 		mobs -= mobs[mobs.len]
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

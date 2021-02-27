@@ -23,14 +23,18 @@
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
 
+//reinforced window construction states
+#define RWINDOW_FRAME_BOLTED 3
+#define RWINDOW_BARS_CUT 4
+#define RWINDOW_POPPED 5
+#define RWINDOW_BOLTS_OUT 6
+#define RWINDOW_BOLTS_HEATED 7
+#define RWINDOW_SECURE 8
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
-
-//plastic flaps construction states
-#define PLASTIC_FLAPS_NORMAL 0
-#define PLASTIC_FLAPS_DETACHED 1
 
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
@@ -45,11 +49,6 @@
 #define GLASS_CORE 4
 #define AI_READY_CORE 5
 
-//emitter construction defines
-#define EM_UNSECURED 0
-#define EM_SECURED 1
-#define EM_WELDED 2
-
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2
@@ -58,29 +57,12 @@
 #define FLOODLIGHT_NEEDS_WIRES 0
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
-#define FLOODLIGHT_NEEDS_WRENCHING 3
 
 //other construction-related things
 
-//windows affected by nar-sie turn this color.
+//windows affected by Nar'Sie turn this color.
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
-//let's just pretend fulltile windows being children of border windows is fine
-#define FULLTILE_WINDOW_DIR NORTHEAST
-
-//Material defines, for determining how much of a given material an item contains
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PLASMA		"$plasma"
-#define MAT_BLUESPACE	"$bluespace"
-#define MAT_BANANIUM	"$bananium"
-#define MAT_TITANIUM	"$titanium"
-#define MAT_BIOMASS		"$biomass"
-#define MAT_PLASTIC	"$plastic"
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
@@ -89,30 +71,49 @@
 #define MAXCOIL 30
 
 //tablecrafting defines
-#define CAT_NONE	""
-#define CAT_WEAPONRY	"Weaponry"
-#define CAT_WEAPON	"Weapons"
-#define CAT_AMMO	"Ammunition"
-#define CAT_ROBOT	"Robots"
-#define CAT_MISC	"Misc"
+#define CAT_NONE ""
+#define CAT_WEAPONRY "Weaponry"
+#define CAT_WEAPON "Weapons"
+#define CAT_AMMO "Ammunition"
+#define CAT_ROBOT "Robots"
+#define CAT_MISC "Misc"
 #define CAT_PRIMAL  "Tribal"
-#define CAT_CLOTHING	"Clothing"
-#define CAT_FOOD	"Foods"
-#define CAT_BREAD	"Breads"
-#define CAT_BURGER	"Burgers"
-#define CAT_CAKE	"Cakes"
-#define CAT_EGG	"Egg-Based Food"
-#define CAT_MEAT	"Meats"
-#define CAT_MISCFOOD	"Misc. Food"
-#define CAT_PASTRY	"Pastries"
-#define CAT_PIE	"Pies"
-#define CAT_PIZZA	"Pizzas"
-#define CAT_SALAD	"Salads"
-#define CAT_SANDWICH	"Sandwiches"
-#define CAT_SOUP	"Soups"
-#define CAT_SPAGHETTI	"Spaghettis"
+#define CAT_CLOTHING "Clothing"
+#define CAT_FOOD "Foods"
+#define CAT_BREAD "Breads"
+#define CAT_BURGER "Burgers"
+#define CAT_CAKE "Cakes"
+#define CAT_EGG "Egg-Based Food"
+#define CAT_MEAT "Meats"
+#define CAT_MISCFOOD "Misc. Food"
+#define CAT_PASTRY "Pastries"
+#define CAT_PIE "Pies"
+#define CAT_PIZZA "Pizzas"
+#define CAT_SALAD "Salads"
+#define CAT_SANDWICH "Sandwiches"
+#define CAT_SOUP "Soups"
+#define CAT_SPAGHETTI "Spaghettis"
+#define CAT_ICE "Frozen"
+#define CAT_DRINK "Drinks"
+#define CAT_CHEMISTRY "Chemistry"
 
-#define RCD_FLOORWALL 1
-#define RCD_AIRLOCK 2
-#define RCD_DECONSTRUCT 3
-#define RCD_WINDOWGRILLE 4
+//rcd modes
+#define RCD_FLOORWALL 0
+#define RCD_AIRLOCK 1
+#define RCD_DECONSTRUCT 2
+#define RCD_WINDOWGRILLE 3
+#define RCD_MACHINE 4
+#define RCD_COMPUTER 5
+#define RCD_FURNISHING 6
+
+#define RCD_UPGRADE_FRAMES (1<<0)
+#define RCD_UPGRADE_SIMPLE_CIRCUITS (1<<1)
+#define RCD_UPGRADE_SILO_LINK (1<<2)
+#define RCD_UPGRADE_FURNISHING (1<<3)
+
+#define RPD_UPGRADE_UNWRENCH (1<<0)
+
+#define RCD_WINDOW_FULLTILE "full tile"
+#define RCD_WINDOW_DIRECTIONAL "directional"
+#define RCD_WINDOW_NORMAL "glass"
+#define RCD_WINDOW_REINFORCED "reinforced glass"
