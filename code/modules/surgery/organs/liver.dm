@@ -101,11 +101,75 @@
 			if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
 				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
-		else //for when our liver's failing
-			C.liver_failure(delta_time, times_fired)
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
+
+/obj/item/organ/liver/handle_failing_organs(delta_time)
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+		return
+	return ..()
+
+/obj/item/organ/liver/on_change_organ_failure(old_stage)
+	switch(failure_stage)
+		if(ORGAN_FAILURE_STAGE_1)
+			to_chat(owner,"<span class='danger'>You feel stabbing pain in your abdomen!</danger>")
+		if(ORGAN_FAILURE_STAGE_2)
+			to_chat(owner,"<span class='danger'>You feel a burning sensation in your gut!</danger>")
+			owner.vomit()
+		if(ORGAN_FAILURE_STAGE_3)
+			to_chat(owner,"<span class='danger'>You feel painful acid in your throat!</danger>")
+			owner.vomit(blood = TRUE)
+		if(ORGAN_FAILURE_STAGE_4)
+			to_chat(owner,"<span class='danger'>Overwhelming pain knocks you out!</danger>")
+			owner.vomit(blood = TRUE)
+			owner.emote("Scream")
+			owner.AdjustUnconscious(2.5 SECONDS)
+		if(ORGAN_FAILURE_STAGE_5)
+			to_chat(owner,"<span class='danger'>You feel as if yout guts are about to melt!</danger>")
+			owner.vomit(blood = TRUE)
+			owner.emote("Scream")
+			owner.AdjustUnconscious(5 SECONDS)
+
+/obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
+	switch(failure_stage)
+		if(ORGAN_FAILURE_STAGE_1 to ORGAN_FAILURE_STAGE_2)
+			examine_list += "<span class='notice'>[owner]'s eyes are slightly yellow.</span>"
+		if(ORGAN_FAILURE_STAGE_3 to ORGAN_FAILURE_STAGE_4)
+			examine_list += "<span class='notice'>[owner]'s eyes are completely yellow, and he is visibly suffering.</span>"
+		if(ORGAN_FAILURE_STAGE_5)
+			examine_list += "<span class='danger'>[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they] don't look like they will be alive for much longer.</span>"
+
+//WE don't have stage 1 because it is like a warning time before the effects of your liver being dead catch up to you.
+
+/obj/item/organ/liver/organ_failure_stage_2(delta_time)
+	owner.adjustToxLoss(0.2 * delta_time)
+	owner.adjust_disgust(1)
+	return
+
+/obj/item/organ/liver/organ_failure_stage_3(delta_time)
+	owner.adjustToxLoss(0.4 * delta_time)
+	owner.drowsyness += 1
+	owner.adjust_disgust(2)
+	return
+
+/obj/item/organ/liver/organ_failure_stage_4(delta_time)
+	owner.adjustToxLoss(0.6 * delta_time)
+	owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
+	owner.drowsyness += 2
+	owner.adjust_disgust(3)
+	if(DT_PROB(1.5, delta_time))
+		owner.emote("drool")
+	return
+
+/obj/item/organ/liver/organ_failure_stage_5(delta_time)
+	owner.adjustToxLoss(0.8 * delta_time)
+	owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
+	owner.drowsyness += 3
+	owner.adjust_disgust(4)
+	if(DT_PROB(3, delta_time))
+		owner.emote("drool")
+	return
 
 /obj/item/organ/liver/on_death()
 	. = ..()
