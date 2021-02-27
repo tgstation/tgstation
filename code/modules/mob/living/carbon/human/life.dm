@@ -38,7 +38,7 @@
 		if(stat != DEAD)
 			//heart attack stuff
 			handle_heart(delta_time, times_fired)
-			//handle_liver(delta_time, times_fired)
+			handle_liver(delta_time, times_fired)
 
 		dna.species.spec_life(src, delta_time, times_fired) // for mutantraces
 	else
