@@ -501,28 +501,3 @@
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
-
-/datum/reagent/test
-	name = "testchem"
-	addiction_types = list(/datum/addiction/medicine = 500)
-
-/*
-/datum/reagent/test/on_mob_add(mob/living/L, amount)
-	. = ..()
-	if(!ishuman(L))
-		return
-	var/mob/living/carbon/human/human_mob = L
-	hallucination2 = new(human_mob, TRUE, severity = 1)
-
-/datum/reagent/test/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = ..()
-	if(prob(5))
-		hallucination2.increment_fake_damage()
-		return
-	if(prob(5))
-		hallucination2.add_fake_limb(severity = 1)
-
-/datum/reagent/test/on_mob_delete(mob/living/L)
-	. = ..()
-	QDEL_NULL(hallucination2)
-*/

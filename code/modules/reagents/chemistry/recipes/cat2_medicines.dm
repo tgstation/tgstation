@@ -169,9 +169,9 @@
 	required_temp = 370
 	mix_message = "The mixture rapidly turns into a dense pink liquid."
 	optimal_temp = 420
-	overheat_temp = 720 //Ash will be created before this - so it's pretty rare that overheat is actually triggered
-	optimal_ph_min = 2
-	optimal_ph_max = 7
+	overheat_temp = 570 //Ash will be created before this - so it's pretty rare that overheat is actually triggered
+	optimal_ph_min = 3.5
+	optimal_ph_max = 8.5
 	determin_ph_range = 2
 	temp_exponent_factor = 0.75
 	ph_exponent_factor = 1.25
@@ -217,7 +217,7 @@
 	temp_exponent_factor = 4
 	ph_exponent_factor = 2
 	thermic_constant = -20
-	H_ion_release = 4
+	H_ion_release = 3
 	rate_up_lim = 50
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -229,7 +229,7 @@
 	if(oxy)
 		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
 	else
-		holder.ph += 0.2*step_reaction_vol//pH drifts faster
+		holder.adjust_all_reagents_ph(-0.2*step_reaction_vol)//pH drifts faster
 
 //Sleepytime for chem
 /datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
@@ -237,9 +237,9 @@
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/healing/tirimol, 7.5*bonus, 2, ignore_eyes = TRUE) //since we're smoke/air based
 		clear_products(holder, 5)//since we attacked
-		explode_invert_smoke(holder, equilibrium)
+		explode_invert_smoke(holder, equilibrium, 3)
 	else
-		explode_invert_smoke(holder, equilibrium)
+		explode_invert_smoke(holder, equilibrium, 3)
 
 /datum/chemical_reaction/medicine/tirimol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
@@ -257,14 +257,14 @@
 	required_temp = 320
 	optimal_temp = 280
 	overheat_temp = NO_OVERHEAT
-	optimal_ph_min = 4
-	optimal_ph_max = 7
+	optimal_ph_min = 4.25
+	optimal_ph_max = 8.75
 	determin_ph_range = 6
 	temp_exponent_factor = 1
 	ph_exponent_factor = 0.5
 	thermic_constant = -500
-	H_ion_release = -5
-	rate_up_lim = 45
+	H_ion_release = -5.5
+	rate_up_lim = 20
 	purity_min = 0.35
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
@@ -283,8 +283,8 @@
 	required_temp = 380
 	optimal_temp = 400
 	overheat_temp = 410
-	optimal_ph_min = 3
-	optimal_ph_max = 7.5
+	optimal_ph_min = 2.5
+	optimal_ph_max = 7
 	determin_ph_range = 4
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 1
@@ -320,13 +320,13 @@
 	required_temp = 250
 	optimal_temp = 310
 	overheat_temp = NO_OVERHEAT
-	optimal_ph_min = 5
-	optimal_ph_max = 9
+	optimal_ph_min = 6
+	optimal_ph_max = 10
 	determin_ph_range = 6
 	temp_exponent_factor = 2
 	ph_exponent_factor = 0.5
 	thermic_constant = -20
-	H_ion_release = -5
+	H_ion_release = -5.5
 	rate_up_lim = 20 //affected by pH too
 	purity_min = 0.3
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -342,13 +342,13 @@
 	required_temp = 255
 	optimal_temp = 350
 	overheat_temp = 450
-	optimal_ph_min = 2
+	optimal_ph_min = 5
 	optimal_ph_max = 9
 	determin_ph_range = 3
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1
 	thermic_constant = 150
-	H_ion_release = -5
+	H_ion_release = -2
 	rate_up_lim = 15
 	purity_min = 0.55
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -359,7 +359,7 @@
 	. = ..()
 	if(off_cooldown(holder, equilibrium, 1, "lub"))
 		explode_shockwave(holder, equilibrium, 3, 2)
-		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1) // this is 2 mintues long (!) cut it up!
 	if(off_cooldown(holder, equilibrium, 1, "dub", 0.5))
 		explode_shockwave(holder, equilibrium, 3, 2, implosion = TRUE)
 		playsound(holder.my_atom, 'sound/health/slowbeat.ogg', 50, 1)

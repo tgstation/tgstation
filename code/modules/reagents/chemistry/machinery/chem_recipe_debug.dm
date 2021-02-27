@@ -123,6 +123,7 @@
 
 /obj/machinery/chem_recipe_debug/proc/relay_ended_reaction()
 	if(reagents.reagent_list)
+		var/cached_purity
 		say("Reaction completed for [cached_reactions[index]] final temperature = [reagents.chem_temp], ph = [reagents.ph], time taken = [react_time]s.")
 		var/datum/chemical_reaction/reaction = cached_reactions[index]
 		for(var/reagent_type in reaction.results)
@@ -133,11 +134,11 @@
 					say("[other_reagent]")
 				var/obj/item/reagent_containers/glass/beaker/bluespace/beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 				reagents.trans_to(beaker)
-				beaker.name = "[cached_reactions[index]]"
-				if(failed > 0)
+				beaker.name = "[cached_reactions[index]] failed"
+				if(!failed)
 					problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [reagent_type] in holder after reaction! Trying alternative setup. index:[index]</span>\n"
-				failed++
-				continue
+					failed++
+					return
 			say("Reaction has a product [reagent_type] [reagent.volume]u purity of [reagent.purity]")
 			if(reagent.purity < 0.9)
 				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [reagent.volume]u <span class='boldwarning'>purity of [reagent.purity]</span> index:[index]\n"
@@ -147,17 +148,18 @@
 				minorImpurity++
 			if(reagent.volume < reaction.results[reagent_type])
 				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] <span class='warning'>[reagent.volume]u</span> purity of [reagent.purity] index:[index]\n"
+			cached_purity = reagent.purity
 		if(beaker_spawn && reagents.total_volume)
 			var/obj/item/reagent_containers/glass/beaker/bluespace/beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 			reagents.trans_to(beaker)
-			beaker.name = "[cached_reactions[index]]"
+			beaker.name = "[cached_reactions[index]] purity: [cached_purity]"
 		reagents.clear_reagents()
 		reagents.chem_temp = 300
-		if(failed > 1)
-			index++
-			failed = 0
+		index++
+		failed = 0
 	else
 		say("No reagents left in beaker!")
+		index++
 
 /obj/machinery/chem_recipe_debug/proc/setup_reaction()
 	react_time = 0

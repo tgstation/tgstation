@@ -299,7 +299,7 @@
 
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
-/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
+/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0 clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	var/sum_volume = 0
@@ -318,8 +318,10 @@
 		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
+	if(!force_range)
+		force_range = sum_volume/5
 	if(invert_reagents.reagent_list)
-		smoke.set_up(invert_reagents, (sum_volume/5), holder.my_atom)
+		smoke.set_up(invert_reagents, force_range, holder.my_atom)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
@@ -370,7 +372,7 @@
 			movey.throw_at(target, moving_power, 1)
 		else
 			var/distance = get_dist(movey, this_turf)
-			var/moving_power = max(4 - distance, 1)//Make sure we're thrown out of range of the next one
+			var/moving_power = max(3 - distance, 1)//Make sure we're thrown out of range of the next one
 			var/atom/throw_target = get_edge_target_turf(movey, get_dir(movey, get_step_away(movey, this_turf)))
 			movey.throw_at(throw_target, moving_power, 1)
 
@@ -491,7 +493,7 @@
 			continue
 		if(target.get_eye_protection() && !ignore_eyes)
 			continue
-		to_chat(target, "The [holder] launches some of [holder.p_their()] contents at you!")
+		to_chat(target, "The [holder.name] launches some of [holder.p_their()] contents at you!")
 		target.reagents.add_reagent(reagent, vol)
 
 
