@@ -276,7 +276,7 @@
 
 /obj/structure/fluff/tram_rail
 	name = "tram railing"
-	desc = "Great for trams, not so great for staking."
+	desc = "Great for trams, not so great for skating."
 	icon = 'icons/obj/tram_railing.dmi'
 	icon_state = "rail"
 	layer = MID_TURF_LAYER
