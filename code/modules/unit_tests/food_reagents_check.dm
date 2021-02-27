@@ -12,7 +12,7 @@
 
 	var/list/food_paths = subtypesof(/obj/item/food) - not_food
 
-	for(var/obj/item/food/food_path as anything in food_paths)
+	for(var/food_path in food_paths)
 		var/obj/item/food/spawned_food = new food_path
 
 		if(!spawned_food.reagents)
