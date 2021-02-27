@@ -1,7 +1,7 @@
 name: GBP
 on:
   pull_request_target:
-    types: [closed]
+    types: [closed, opened]
 jobs:
   gbp:
     runs-on: ubuntu-latest
