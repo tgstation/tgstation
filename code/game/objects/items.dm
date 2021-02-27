@@ -1106,6 +1106,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 #undef MAX_MATS_PER_BITE
 
+/**
+ * Updates all action buttons associated with this item
+ */
+/obj/item/proc/update_item_action_buttons(status_only = FALSE, force = FALSE)
+	for(var/current_action in actions)
+		var/datum/action/action = current_action
+		action.UpdateButtonIcon(status_only, force)
+
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
