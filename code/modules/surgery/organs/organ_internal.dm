@@ -101,7 +101,7 @@
 	START_PROCESSING(SSobj, src)
 
 
-/obj/item/organ/proc/on_owner_examine()
+/obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
 	return
 
 /obj/item/organ/proc/on_find(mob/living/finder)
