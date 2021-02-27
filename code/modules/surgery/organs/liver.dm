@@ -189,7 +189,7 @@
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN
-#undef LIVER_FAILURE_LIVER_FAILURE_DIVIDER
+#undef LIVER_FAILURE_DIVIDER
 
 /obj/item/organ/liver/get_availability(datum/species/S)
 	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
