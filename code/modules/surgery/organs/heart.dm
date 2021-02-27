@@ -261,7 +261,7 @@
 /obj/item/organ/heart/ethereal
 	name = "Crystal core"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
-	desc = "A crystal-like organ that functions similar to a heart for Ethereals, it can revive it's owner."
+	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
 	///Cooldown for the next time we can crystalize
 	COOLDOWN_DECLARE(crystalize_cooldown)
@@ -302,13 +302,13 @@
 
 	switch(timeleft(crystalize_timer_id))
 		if(0 to CRYSTALIZE_STAGE_ENGULFING)
-			examine_list += "<span class='warning'>Crystals are almost engulfing [examined_human] </span>"
+			examine_list += "<span class='warning'>Crystals are almost engulfing [examined_human]! </span>"
 		if(CRYSTALIZE_STAGE_ENGULFING to CRYSTALIZE_STAGE_ENCROACHING)
-			examine_list += "<span class='notice'>Crystals are starting to cover [examined_human] </span>"
+			examine_list += "<span class='notice'>Crystals are starting to cover [examined_human]. </span>"
 		if(CRYSTALIZE_STAGE_SMALL to INFINITY)
-			examine_list += "<span class='notice'>Some crystals are coming out of [examined_human] </span>"
+			examine_list += "<span class='notice'>Some crystals are coming out of [examined_human]. </span>"
 
-///On stat changes, if the victim is no longer dead but theyre crystalizing, cancel it, if they become dead, start the crystalizing process if possible
+///On stat changes, if the victim is no longer dead but they're crystalizing, cancel it, if they become dead, start the crystalizing process if possible
 /obj/item/organ/heart/ethereal/proc/on_stat_change(mob/living/victim, new_stat)
 	SIGNAL_HANDLER
 
@@ -325,7 +325,7 @@
 		return //lol double rip
 
 	to_chat(victim, "<span class='nicegreen'>Crystals start forming around your dead body</span>")
-	victim.visible_message("<span class='notice'>Crystals start forming around [victim]</span>")
+	victim.visible_message("<span class='notice'>Crystals start forming around [victim].</span>")
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
@@ -338,7 +338,7 @@
 /obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
 	SIGNAL_HANDLER
 	to_chat(defender, "<span class='notice'>The crystals on your corpse are gently broken off, and will need some time to recover.</span>")
-	defender.visible_message("<span class='notice'>The crystals on [defender] are gently broken off</span>")
+	defender.visible_message("<span class='notice'>The crystals on [defender] are gently broken off.</span>")
 	deltimer(crystalize_timer_id)
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, defender), CRYSTALIZE_DISARM_WAIT_TIME, TIMER_STOPPABLE) //Lets us restart the timer on disarm
 
@@ -383,8 +383,8 @@
 	stop_crystalization_process(ethereal)
 
 /obj/structure/ethereal_crystal
-	name = "Ethereal Ressurection Crystal"
-	desc = "It seems to contain the corpse of an Ethereal mending its wounds."
+	name = "Ethereal Resurrection Crystal"
+	desc = "It seems to contain the corpse of an ethereal mending its wounds."
 	icon = 'icons/obj/ethereal_crystal.dmi'
 	icon_state = "ethereal_crystal"
 	damage_deflection = 0
@@ -400,8 +400,8 @@
 /obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/heart/ethereal/ethereal_heart)
 	. = ..()
 	src.ethereal_heart = ethereal_heart
-	ethereal_heart.owner.visible_message("<span class='notice'>The crystals fully encase [ethereal_heart.owner]</span>")
-	to_chat(ethereal_heart.owner, "<span class='notice'>You are encased in a huge crystal.</span>")
+	ethereal_heart.owner.visible_message("<span class='notice'>The crystals fully encase [ethereal_heart.owner]!</span>")
+	to_chat(ethereal_heart.owner, "<span class='notice'>You are encased in a huge crystal!</span>")
 	playsound(get_turf(src), 'sound/effects/ethereal_crystalization.ogg', 50)
 	ethereal_heart.owner.forceMove(src) //put that ethereal in
 	add_atom_colour(ethereal_heart.ethereal_color, FIXED_COLOUR_PRIORITY)
@@ -433,7 +433,7 @@
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
 	ethereal_heart.owner.revive(TRUE, FALSE)
-	to_chat(ethereal_heart.owner, "<span class='notice'>You burst out of the crystal with vigour...</span><span class='userdanger'>But at a cost.</span>")
+	to_chat(ethereal_heart.owner, "<span class='notice'>You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost.</span>")
 	var/datum/brain_trauma/picked_trauma
 	if(prob(6)) //6% chance for a severe trauma
 		picked_trauma = pick(subtypesof(/datum/brain_trauma/severe))
@@ -442,4 +442,3 @@
 	ethereal_heart.owner.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive.ogg', 100)
 	qdel(src)
-
