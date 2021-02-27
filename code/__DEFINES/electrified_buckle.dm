@@ -10,5 +10,5 @@
 #define SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE (1<<4)
 
 
-///does nothing except allow us to not use GetComponent
+///This trait signifies that the object can be used to electrify things buckled to it
 #define TRAIT_ELECTRIFIED_BUCKLE "electrified buckle"
