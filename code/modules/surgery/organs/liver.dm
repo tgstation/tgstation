@@ -138,7 +138,7 @@
 		if(ORGAN_FAILURE_STAGE_3 to ORGAN_FAILURE_STAGE_4)
 			examine_list += "<span class='notice'>[owner]'s eyes are completely yellow, and he is visibly suffering.</span>"
 		if(ORGAN_FAILURE_STAGE_5)
-			examine_list += "<span class='danger'>[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they] don't look like they will be alive for much longer.</span>"
+			examine_list += "<span class='danger'>[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they()] don't look like they will be alive for much longer.</span>"
 
 //WE don't have stage 1 because it is like a warning time before the effects of your liver being dead catch up to you.
 
