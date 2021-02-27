@@ -1,16 +1,5 @@
 ///Global list of recipes for atmospheric machines to use
 GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
-///Defines for each var of the recipes in the list
-#define META_RECIPE_ID 1
-#define META_RECIPE_MACHINE_TYPE 2
-#define META_RECIPE_NAME 3
-#define META_RECIPE_MIN_TEMP 4
-#define META_RECIPE_MAX_TEMP 5
-#define META_RECIPE_REACTION_TYPE 6
-#define META_RECIPE_ENERGY_RELEASE 7
-#define META_RECIPE_DANGER 8
-#define META_RECIPE_REQUIREMENTS 9
-#define META_RECIPE_PRODUCTS 10
 ///Defines for the recipes var
 #define ENDOTHERMIC_REACTION "endothermic"
 #define EXOTHERMIC_REACTION "exothermic"
@@ -19,35 +8,11 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
  * Global proc to build the gas recipe global list
  */
 /proc/gas_recipes_list()
-	. = subtypesof(/datum/gas_recipe)
-	for(var/recipe_path in .)
-		var/list/recipe_info = new(10)
+	. = list()
+	for(var/recipe_path in subtypesof(/datum/gas_recipe))
 		var/datum/gas_recipe/recipe = new recipe_path()
 
-		recipe_info[META_RECIPE_ID] = initial(recipe.id)
-		recipe_info[META_RECIPE_MACHINE_TYPE] = initial(recipe.machine_type)
-		recipe_info[META_RECIPE_NAME] = initial(recipe.name)
-		recipe_info[META_RECIPE_MIN_TEMP] = initial(recipe.min_temp)
-		recipe_info[META_RECIPE_MAX_TEMP] = initial(recipe.max_temp)
-		recipe_info[META_RECIPE_REACTION_TYPE] = initial(recipe.reaction_type)
-		recipe_info[META_RECIPE_ENERGY_RELEASE] = initial(recipe.energy_release)
-		recipe_info[META_RECIPE_DANGER] = initial(recipe.dangerous)
-		recipe_info[META_RECIPE_REQUIREMENTS] = recipe.requirements
-		recipe_info[META_RECIPE_PRODUCTS] = recipe.products
-
-		.[recipe_path] = recipe_info
-
-/*
- * Global helper proc to help pass recipes path by just using the id
- */
-/proc/recipe_id2path(id)
-	var/list/meta_recipe = GLOB.gas_recipe_meta
-	if(id in meta_recipe)
-		return id
-	for(var/path in meta_recipe)
-		if(meta_recipe[path][META_RECIPE_ID] == id)
-			return path
-	return ""
+		.[recipe.id] = recipe
 
 /datum/gas_recipe
 	///Id of the recipe for easy identification in the code
@@ -67,7 +32,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	var/dangerous = FALSE
 	///Gas required for the recipe to work
 	var/list/requirements
-	///Products made from the machine
+	///Products made from the recipe
 	var/list/products
 
 /datum/gas_recipe/crystallizer
@@ -78,19 +43,19 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Metallic hydrogen"
 	min_temp = 50000
 	max_temp = 150000
-	reaction_type = "ENDOTHERMIC_REACTION"
+	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 250000
-	requirements = list(/datum/gas/hydrogen = 600, /datum/gas/bz = 200)
-	products = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 2)
+	requirements = list(/datum/gas/hydrogen = 60, /datum/gas/bz = 20)
+	products = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 1)
 
 /datum/gas_recipe/crystallizer/healium_grenade
 	id = "healium_g"
 	name = "Healium crystal"
 	min_temp = 200
 	max_temp = 400
-	reaction_type = "ENDOTHERMIC_REACTION"
+	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 100000
-	requirements = list(/datum/gas/healium = 400, /datum/gas/freon = 800, /datum/gas/plasma = 50)
+	requirements = list(/datum/gas/healium = 50, /datum/gas/freon = 100, /datum/gas/plasma = 10)
 	products = list(/obj/item/grenade/gas_crystal/healium_crystal = 1)
 
 /datum/gas_recipe/crystallizer/proto_nitrate_grenade
@@ -98,9 +63,9 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Proto nitrate crystal"
 	min_temp = 200
 	max_temp = 400
-	reaction_type = "EXOTHERMIC_REACTION"
+	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 150000
-	requirements = list(/datum/gas/proto_nitrate = 400, /datum/gas/nitrogen = 800, /datum/gas/oxygen = 800)
+	requirements = list(/datum/gas/proto_nitrate = 50, /datum/gas/nitrogen = 80, /datum/gas/oxygen = 80)
 	products = list(/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1)
 
 /datum/gas_recipe/crystallizer/hot_ice
@@ -108,27 +73,27 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Hot ice"
 	min_temp = 15
 	max_temp = 35
-	reaction_type = "ENDOTHERMIC_REACTION"
+	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 300000
-	requirements = list(/datum/gas/freon = 500, /datum/gas/plasma = 400, /datum/gas/oxygen = 300)
-	products = list(/obj/item/stack/sheet/hot_ice = 3)
+	requirements = list(/datum/gas/freon = 50, /datum/gas/plasma = 40, /datum/gas/oxygen = 30)
+	products = list(/obj/item/stack/sheet/hot_ice = 1)
 
 /datum/gas_recipe/crystallizer/ammonia_crystal
 	id = "ammonia_crystal"
 	name = "Ammonia crystal"
 	min_temp = 200
 	max_temp = 240
-	reaction_type = "EXOTHERMIC_REACTION"
+	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 15000
-	requirements = list(/datum/gas/hydrogen = 500, /datum/gas/nitrogen = 400)
-	products = list(/obj/item/stack/ammonia_crystals = 4)
+	requirements = list(/datum/gas/hydrogen = 50, /datum/gas/nitrogen = 40)
+	products = list(/obj/item/stack/ammonia_crystals = 2)
 
 /datum/gas_recipe/crystallizer/shard
 	id = "crystal_shard"
 	name = "Supermatter crystal shard"
 	min_temp = TCMB
 	max_temp = 5
-	reaction_type = "EXOTHERMIC_REACTION"
+	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 1500000
 	dangerous = TRUE
 	requirements = list(/datum/gas/hypernoblium = 1500, /datum/gas/antinoblium = 1500, /datum/gas/bz = 2000, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
@@ -139,9 +104,9 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Nitrous oxide crystal"
 	min_temp = 50
 	max_temp = 350
-	reaction_type = "EXOTHERMIC_REACTION"
+	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 350000
-	requirements = list(/datum/gas/nitrous_oxide = 1000, /datum/gas/bz = 50)
+	requirements = list(/datum/gas/nitrous_oxide = 100, /datum/gas/bz = 5)
 	products = list(/obj/item/grenade/gas_crystal/nitrous_oxide_crystal = 1)
 
 /datum/gas_recipe/crystallizer/diamond
@@ -149,7 +114,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Diamond"
 	min_temp = 10000
 	max_temp = 30000
-	reaction_type = "ENDOTHERMIC_REACTION"
+	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 650000
 	requirements = list(/datum/gas/carbon_dioxide = 10000)
 	products = list(/obj/item/stack/sheet/mineral/diamond = 1)
@@ -159,7 +124,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Plasma sheet"
 	min_temp = 100
 	max_temp = 140
-	reaction_type = "ENDOTHERMIC_REACTION"
+	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 15000
 	requirements = list(/datum/gas/plasma = 25)
 	products = list(/obj/item/stack/sheet/mineral/plasma = 1)
@@ -169,9 +134,9 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Crystal Cell"
 	min_temp = 50
 	max_temp = 90
-	reaction_type = "ENDOTHERMIC_REACTION"
+	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 80000
-	requirements = list(/datum/gas/plasma = 4000, /datum/gas/helium = 1000, /datum/gas/bz = 50)
+	requirements = list(/datum/gas/plasma = 800, /datum/gas/helium = 100, /datum/gas/bz = 50)
 	products = list(/obj/item/stock_parts/cell/crystal_cell = 1)
 
 /datum/gas_recipe/crystallizer/zaukerite
@@ -179,7 +144,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Zaukerite sheet"
 	min_temp = 5
 	max_temp = 20
-	reaction_type = "EXOTHERMIC_REACTION"
+	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 29000
 	requirements = list(/datum/gas/antinoblium = 100, /datum/gas/zauker = 500, /datum/gas/bz = 75)
 	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)
