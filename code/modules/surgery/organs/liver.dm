@@ -132,8 +132,6 @@
 			owner.AdjustUnconscious(5 SECONDS)
 
 /obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
 	if(!ishuman(user))
 		return
 
