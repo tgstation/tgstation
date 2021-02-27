@@ -196,6 +196,12 @@
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/mask/gas/cyborg
+	name = "cyborg visor"
+	desc = "Beep boop."
+	icon_state = "death"
+	resistance_flags = FLAMMABLE
+
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
