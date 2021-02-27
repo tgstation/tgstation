@@ -71,6 +71,8 @@
 	. = ..()
 
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
+	if(!owner)//Unit test has a very strange interation where hands spawned will no longer have a target causing the beam to runtime
+		return
 	//Adapted from the end of the curse - but lasts a short time
 	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 8)//Larger range so you have more time to dodge
