@@ -1,7 +1,7 @@
-/// Makes sure that spawned food has reagents (or else it can't be eaten).
-/datum/unit_test/food_reagents_check
+/// Makes sure that spawned food has reagents and the edible component (or else it can't be eaten).
+/datum/unit_test/food_edibility_check
 
-/datum/unit_test/food_reagents_check/Run()
+/datum/unit_test/food_edibility_check/Run()
 	var/list/not_food = list(
 	/obj/item/food/grown,
 	/obj/item/food/grown/mushroom,
@@ -17,5 +17,8 @@
 
 		if(!spawned_food.reagents)
 			Fail("[food_path] does not have any reagents, making it inedible!")
+
+		if(!spawned_food.GetComponent(/datum/component/edible))
+			Fail("[food_path] does not have the edible component, making it inedible!")
 
 		qdel(spawned_food)
