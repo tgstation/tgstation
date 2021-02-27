@@ -467,7 +467,7 @@
 	owner.SetAllImmobility(0)
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
-	owner.playsound_local(owner, 'sound/health/fastbeat.ogg', 40)
+	owner.playsound_local(owner, 'sound/health/fastbeat.ogg', 65)
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
