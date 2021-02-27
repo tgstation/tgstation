@@ -387,7 +387,7 @@
 //Creates a ring of fire in a set range around the beaker location
 /datum/chemical_reaction/proc/explode_fire_vortex(datum/reagents/holder, datum/equilibrium/equilibrium, x_offset = 1, y_offset = 1, reverse = FALSE, id = "f_vortex", )
 	var/increment = reverse ? -1 : 1
-	if(!equilibrium.data)
+	if(isnull(equilibrium.data["[id]_tar"]))
 		equilibrium.data = list("[id]_x" = x_offset, "[id]_y" = y_offset, "[id]_tar" = "[id]_y")//tar is the current movement direction the cyclone is moving in
 	if(equilibrium.data["[id]_tar"] == "[id]_x")
 		if(equilibrium.data["[id]_x"] >= x_offset)

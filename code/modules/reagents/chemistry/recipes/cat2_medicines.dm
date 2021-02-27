@@ -112,7 +112,7 @@
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/hydrogen = 2)
 	required_temp = 50
 	optimal_temp = 300
-	overheat_temp = 350
+	overheat_temp = 315
 	optimal_ph_min = 4.8
 	optimal_ph_max = 9
 	determin_ph_range = 3
@@ -136,7 +136,6 @@
 /datum/chemical_reaction/medicine/hercuri
 	results = list(/datum/reagent/medicine/c2/hercuri = 5)
 	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
-
 	is_cold_recipe = TRUE
 	required_temp = 47
 	optimal_temp = 10

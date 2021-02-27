@@ -226,21 +226,33 @@
 	ph = 0.8
 	tox_damage = 0
 	addiction_types = list(/datum/addiction/medicine = 2.5)
+	data = list("method" = null)
+	///The method in which the reagent was exposed
+	var/method
 
 /datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
-	. = ..()
-	var/heating = rand(creation_purity*reac_volume*0.5, creation_purity*reac_volume*2)
-	if(methods & INGEST)
-		owner.reagents?.chem_temp += (heating * REM *normalise_creation_purity() * delta_time)
-	if(methods & VAPOR)
-		exposed_mob.adjust_bodytemperature((heating) * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	if(methods & INJECT)
+	method = methods
+	data["method"] = method
+	..()
+
+/datum/reagent/inverse/hercuri/on_new(data)
+	method = data["method"]
+	..()
+
+/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	var/heating = rand(creation_purity * REM * 3, creation_purity * REM * 6)
+	if(method & INGEST)
+		owner.reagents?.chem_temp += heating * REM * delta_time
+	if(method & VAPOR)
+		owner.adjust_bodytemperature(heating * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	if(method & INJECT)
 		if(!ishuman(owner))
-			return
+			return ..()
 		var/mob/living/carbon/human/human_mob = owner
-		human_mob.adjust_coretemperature(heating * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
+		human_mob.adjust_coretemperature(heating * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	else
-		exposed_mob.adjust_fire_stacks(1 * (reac_volume * 0.05))
+		owner.adjust_fire_stacks(heating * 0.05)
+	..()
 
 /datum/reagent/inverse/healing/tirimol
 	name = "Super Melatonin"//It's melatonin, but super!
@@ -260,18 +272,16 @@
 		if(10 to INFINITY)
 			owner.Sleeping(40)
 			. = 1
-			if(owner.IsSleeping() && !cached_reagent_list)
+			if(owner.IsSleeping())
 				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 					if(reagent in cached_reagent_list)
 						continue
 					if(!istype(reagent, /datum/reagent/medicine))
 						continue
-					if(reagent.creation_purity <= reagent.inverse_chem_val)//Only affect pure types
-						continue
 					reagent.creation_purity *= 1.25
 					cached_reagent_list += reagent
 
-			else if(!owner.IsSleeping() && cached_reagent_list)
+			else if(!owner.IsSleeping() && length(cached_reagent_list))
 				for(var/datum/reagent/reagent as anything in cached_reagent_list)
 					if(!reagent)
 						continue
@@ -354,13 +364,16 @@
 //Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
 /datum/reagent/inverse/technetium
 	name = "Technetium 99"
-	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Has a very low metabolism rate and will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
-	metabolization_rate = 0.01 * REM
+	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
+	metabolization_rate = 0.3 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 	tox_damage = 0
+	///Accumulates radiation, then adds it as a whole number to the owner
+	var/radiation_ticker
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	owner.radiation += creation_purity * delta_time * 0.05// 0 - 0.05
+	//for some reason radiation doesn't work when small
+	owner.radiation += creation_purity * delta_time * 0.5
 	..()
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
@@ -380,9 +393,7 @@
 	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 		if(reagent in cached_reagent_list)
 			continue
-		if(!istype(reagent, /datum/reagent/medicine))
-			continue
-		if(reagent.creation_purity <= reagent.inverse_chem_val)//Only affect pure types
+		if(istype(reagent, /datum/reagent/medicine))
 			continue
 		reagent.creation_purity *= 0.8
 		cached_reagent_list += reagent
@@ -427,7 +438,7 @@
 	name = "Nooartrium"
 	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
 	ph = 14
-	metabolization_rate = 1 * REM
+	metabolization_rate = 0.4 * REM
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
@@ -444,21 +455,24 @@
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	ADD_TRAIT(owner, TRAIT_NODEATH, type)
+	owner.status_flags = owner.status_flags & ~CANUNCONSCIOUS
 	owner.set_stat(CONSCIOUS)
+	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
+	owner.SetAllImmobility(0)
 	owner.updatehealth()
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
+	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
 	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
 		iter_wound.blood_flow += (1-creation_purity)
 	if(!back_from_the_dead)
 		return ..()
 	//Following is for those brought back from the dead only
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
-	owner.adjustOrganLoss( min(ORGAN_SLOT_HEART, 2 * (1-creation_purity) * delta_time), 1)
+	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -496,5 +510,6 @@
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
+	owner.status_flags |= CANUNCONSCIOUS
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
