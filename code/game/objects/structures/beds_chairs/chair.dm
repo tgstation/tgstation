@@ -81,8 +81,8 @@
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
-		var/image/export_to_component = image(icon = 'icons/obj/chairs.dmi', loc=loc, icon_state = "echair_over")
-		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE), W, list(export_to_component))
+		var/image/export_to_component = image('icons/obj/chairs.dmi', loc, "echair_over")
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), W, list(export_to_component), TRUE)
 		return
 	. = ..()
 

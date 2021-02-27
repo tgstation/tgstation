@@ -75,6 +75,7 @@
 		holder.process_activation(src, 1, 0)
 	if(holder && (wire_type & WIRE_PULSE_SPECIAL))
 		holder.process_activation(src, 0, 1)
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
 	return TRUE
 
 // What the device does when turned on
