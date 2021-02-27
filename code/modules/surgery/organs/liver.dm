@@ -1,6 +1,6 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.005 //lower values lower how harmful toxins are to the liver
-#define LIVER_FAILURE_LIVER_FAILURE_DIVIDER 60
+#define LIVER_FAILURE_DIVIDER 60
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
