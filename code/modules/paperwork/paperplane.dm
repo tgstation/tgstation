@@ -30,6 +30,8 @@
 		newPaper.forceMove(src)
 	else
 		internalPaper = new(src)
+	if(internalPaper.icon_state == "cpaper" || internalPaper.icon_state == "cpaper_words")
+		icon_state = "paperplane_carbon" // It's the purple carbon copy. Use the purple paper plane
 	update_appearance()
 
 /obj/item/paperplane/Exited(atom/movable/AM, atom/newLoc)
