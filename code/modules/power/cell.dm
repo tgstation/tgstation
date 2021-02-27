@@ -385,6 +385,20 @@
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
 
+/obj/item/stock_parts/cell/crystal_cell
+	name = "crystal power cell"
+	desc = "A very high power cell made from crystallized plasma"
+	icon_state = "crystal_cell"
+	maxcharge = 50000
+	chargerate = 0
+	custom_materials = null
+	grind_results = null
+	rating = 5
+
+/obj/item/stock_parts/cell/crystal_cell/Initialize()
+	. = ..()
+	charge = 50000
+
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = 5000
 	charge = 5000

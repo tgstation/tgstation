@@ -1751,6 +1751,8 @@
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_main_processes.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_parts.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_procs.dm"
+#include "code\modules\atmospherics\machinery\components\gas_recipe_machines\atmos_machines_recipes.dm"
+#include "code\modules\atmospherics\machinery\components\gas_recipe_machines\crystallizer.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\filter.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\mixer.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\trinary_devices.dm"
