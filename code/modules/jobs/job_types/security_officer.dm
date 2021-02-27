@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	if(dep_trim)
 		var/obj/item/card/id/worn_id = H.wear_id
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
+		H.sec_hud_set_ID()
 
 	var/teleport = 0
 	if(!CONFIG_GET(flag/sec_start_brig))
