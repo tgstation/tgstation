@@ -34,7 +34,6 @@
 
 //Random healing of the 4 main groups
 /datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	. = ..()
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
@@ -45,6 +44,7 @@
 			owner.adjustToxLoss(-0.5)
 		if("oxy")
 			owner.adjustOxyLoss(-0.5)
+	..()
 
 // C2 medications
 // Helbital
@@ -139,6 +139,7 @@
 
 /datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 4  * REAGENTS_METABOLISM
+	..()
 
 /datum/reagent/peptides_failed
 	name = "Prion peptides"
@@ -161,11 +162,11 @@
 
 /datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/owner)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-	return
+	return ..()
 
 /datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/owner)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-	return
+	return ..()
 
 //failed
 /datum/reagent/inverse/ichiyuri
@@ -360,6 +361,7 @@
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.radiation += creation_purity * delta_time * 0.05// 0 - 0.05
+	..()
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
@@ -387,10 +389,11 @@
 	..()
 
 /datum/reagent/inverse/healing/syriniver/on_mob_delete(mob/living/living_mob)
+	. = ..()
 	if(!(iscarbon(living_mob)))
-		return ..()
+		return
 	if(!cached_reagent_list)
-		return ..()
+		return
 	for(var/datum/reagent/reagent as anything in cached_reagent_list)
 		if(!reagent)
 			continue
@@ -445,6 +448,7 @@
 	owner.updatehealth()
 	back_from_the_dead = TRUE
 	owner.emote("gasp")
+	..()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.playsound_local(owner, 'sound/health/slowbeat.ogg', 40)
@@ -454,7 +458,7 @@
 		return ..()
 	//Following is for those brought back from the dead only
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
-	owner.adjustOrganLoss(ORGAN_SLOT_HEART, 2 * (1-creation_purity) * delta_time)
+	owner.adjustOrganLoss( min(ORGAN_SLOT_HEART, 2 * (1-creation_purity) * delta_time), 1)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -462,6 +466,7 @@
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		remove_buffs(owner)
+	..()
 
 /datum/reagent/inverse/penthrite/on_mob_delete(mob/living/carbon/owner)
 	remove_buffs(owner)
