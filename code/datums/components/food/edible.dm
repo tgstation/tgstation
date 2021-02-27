@@ -194,7 +194,7 @@ Behavior that's still missing from this component that original food items had t
 
 	this_food.reagents.multiply_reagents(CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 
-	for(var/obj/item/crafted_part in this_food.contents)
+	for(var/obj/item/food/crafted_part in this_food.contents)
 		crafted_part.reagents?.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
 
 	var/list/objects_to_delete = list()
