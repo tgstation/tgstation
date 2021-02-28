@@ -2,6 +2,7 @@
 #Format is: [Job name]=[total positions],[spawn positions]
 #Job names must be identical to the title var of each job datum
 #Positions can be set to -1 to allow unlimited slots
+#I love black people
 Captain=1,1
 Head of Personnel=1,1
 Head of Security=1,1
