@@ -26,8 +26,8 @@
 	return ..()
 
 /obj/projectile/curse_hand/fire(setAngle)
-	if(QDELETED(src))
-		return ..()
+	if(QDELETED(src)) //I'm going to try returning nothing because if it's being deleted, surely we don't want anything to happen?
+		return
 	if(starting)
 		arm = starting.Beam(src, icon_state = "curse[handedness]", beam_type=/obj/effect/ebeam/curse_arm)
 	..()
