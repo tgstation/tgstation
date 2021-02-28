@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Watermelon slices spawned by an admin or by a map are edible"

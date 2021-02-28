@@ -27,10 +27,10 @@
 1381265 = 5 # TankNut
 1389934 = 17 # MrPerson
 1446540 = 8 # pubby
-1489801 = -4 # Gurkenglas
+1489801 = -1 # Gurkenglas
 1496804 = 7 # dearmochi
 1499676 = 45 # willox
-1516236 = 209 # stylemistake
+1516236 = 245 # stylemistake
 1717049 = 5 # Ralms
 1784490 = 7 # EvilJackCarver
 1898905 = 7 # JAremko
@@ -60,7 +60,7 @@
 3919824 = 8 # Palladinium
 3927690 = 10 # Putnam3145
 4043781 = 5 # RemieRichards
-4047233 = 833 # AnturK
+4047233 = 851 # AnturK
 4081722 = 42 # Iamgoofball
 4140974 = 11 # Low3
 4176358 = 8 # Incoming5643
@@ -268,7 +268,7 @@
 20824501 = 36 # nicbn
 20852857 = 8 # RandolfTheMeh
 20977204 = 20 # NotRanged
-20987591 = 135 # Qustinnus
+20987591 = 127 # Qustinnus
 20996272 = 5 # factoryman942
 21011228 = 6 # xmikey555
 21224958 = 3 # Xsdew
@@ -308,7 +308,7 @@
 24967815 = 5 # TheSmallBlue
 24975989 = 265 # Timberpoes
 25063394 = -11 # AffectedArc07
-25089914 = -3 # cacogen
+25089914 = 8 # cacogen
 25136265 = 4 # alexkar598
 25163791 = 5 # obscolene
 25239573 = 33 # Yenwodyah
@@ -382,7 +382,7 @@
 33834933 = 78 # Tlaltecuhtli
 33846895 = 64 # Gamer025
 33932119 = 4 # read-0nly
-33956696 = 9 # Thalpy
+33956696 = 13 # Thalpy
 34068333 = 5 # Gh0sT2242
 34215067 = 8 # Alomga
 34385243 = 5 # SIX10
@@ -396,7 +396,7 @@
 34965105 = 11 # rhomm-dev
 35031555 = 5 # Cyprex
 35091844 = -30 # XSlayer300
-35135081 = 126 # Mothblocks
+35135081 = 128 # Mothblocks
 35203040 = 4 # Kurgis
 35280504 = 5 # gwhit94
 35285914 = 0 # Spyroshark
@@ -464,7 +464,7 @@
 41198990 = -3 # Isy232
 41324849 = 2 # duckay
 41690870 = 8 # NoxVS
-41715314 = 111 # ArcaneMusic
+41715314 = 114 # ArcaneMusic
 41774524 = 6 # FrostyFridge
 42041276 = 273 # Rohesie
 42044220 = 24 # SteelSlayer
@@ -476,7 +476,7 @@
 42553659 = 32 # Surrealaser
 42606352 = 7 # ATH1909
 42711790 = 7 # dootdoom
-42839747 = 8 # Ghilker
+42839747 = -1 # Ghilker
 43144601 = 8 # JeserTheFox
 43266738 = 19 # rdragan
 43283605 = 3 # Danaleja2005
@@ -484,7 +484,7 @@
 43689235 = 4 # DalekThePerson
 43698041 = 9 # Bokkiewokkie
 43841046 = 2 # Aurelien3189
-43862960 = 123 # Arkatos1
+43862960 = 128 # Arkatos1
 43917079 = 5 # plapatin
 44061148 = 4 # CrazyClown12
 44090982 = 46 # prodirus
@@ -555,7 +555,7 @@
 51841793 = 5 # Investigator77
 51863163 = 42 # MrMelbert
 51925758 = 47 # interestingusernam3
-51932756 = 56 # ArcaneDefence
+51932756 = 62 # ArcaneDefence
 52075484 = 5 # Timmeye
 52262416 = 3 # AcapitalA
 52428261 = 2 # Kuro-ai
@@ -684,4 +684,4 @@
 77595131 = -5 # Windryn
 77650203 = 11 # Neo-0
 78963858 = 8 # Kush1Push1
-79515258 = -3 # Burgermancoding
+79515258 = 0 # Burgermancoding

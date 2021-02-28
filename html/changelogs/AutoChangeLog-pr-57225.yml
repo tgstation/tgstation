@@ -1,0 +1,5 @@
+author: "Qustinnus, Kryson & uglykoala"
+delete-after: True
+changes: 
+  - rscadd: "Ethereals now crystalize on death, allowing them to heal themselves unless the crystal is destroyed, but giving them a brain trauma when its succesful.
+tweak: ethereals now stay emagged for longer"
