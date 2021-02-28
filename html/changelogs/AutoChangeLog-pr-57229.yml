@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Emagging escape pod console will now properly allow you to launch the pod even without required alert level. Farewell, security!"
