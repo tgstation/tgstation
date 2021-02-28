@@ -137,6 +137,9 @@
 
 	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
 		transform = transform.Scale(5) // BIG slap
+		if(HAS_TRAIT(user, TRAIT_HULK))
+			transform = transform.Scale(2)
+			color = COLOR_GREEN
 		user.do_attack_animation(the_table)
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
