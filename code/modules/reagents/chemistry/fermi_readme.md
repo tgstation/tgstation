@@ -180,11 +180,11 @@ See above for purity mechanics, but this is where you set the reagents that are 
 
 The flags you can set for `var/chemical_flags` are:
 ```dm 
-#define REAGENT_DEAD_PROCESS (1<<0)	//allows on_mob_dead() if present in a dead body
+#define REAGENT_DEAD_PROCESS (1<<0) //allows on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT (1<<1) //Do not split the chem at all during processing - ignores all purity effects
 #define REAGENT_INVISIBLE (1<<2) //Doesn't appear on handheld health analyzers.
 #define REAGENT_SNEAKYNAME (1<<3) //When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SPLITRETAINVOL (1<<4)  //Retains initial volume of chem when splitting for purity effects 
+#define REAGENT_SPLITRETAINVOL (1<<4) //Retains initial volume of chem when splitting for purity effects 
 #define REAGENT_CAN_BE_SYNTHESIZED (1<<5) //Lets a given reagent be synthesized, important for random reagents and things like the odysseus syringe gun
 
 /datum/reagent
