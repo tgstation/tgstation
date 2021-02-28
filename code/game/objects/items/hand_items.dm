@@ -113,6 +113,8 @@
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 	hitsound = 'sound/effects/snap.ogg'
+	/// How many smaller table smacks we can do before we're out
+	var/table_smacks_left = 3
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
@@ -125,6 +127,28 @@
 	"<span class='notice'>You slap [M]!</span>",\
 	"<span class='hear'>You hear a slap.</span>")
 	return
+
+/obj/item/slapper/attack_obj(obj/hit_object, mob/living/user)
+	if(!istype(hit_object, /obj/structure/table))
+		return ..()
+
+	var/obj/structure/table/the_table = hit_object
+	user.do_attack_animation(the_table)
+	if(user.combat_mode)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human_user = user
+			if(istype(human_user.shoes, /obj/item/clothing/shoes/cowboy))
+				human_user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
+				human_user.client?.give_award(/datum/award/achievement/misc/hot_damn, human_user)
+		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
+		user.visible_message("<b><span class='danger'>[user] slams [user.p_their()] fist down on [the_table]!</span></b>", "<b><span class='danger'>You slam your hand down on [the_table]!</span></b>")
+		qdel(src)
+	else
+		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 40, TRUE)
+		user.visible_message("<span class='notice'>[user] smacks [user.p_their()] hand on [the_table].</span>", "<span class='notice'>You smack your hand on [the_table].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		table_smacks_left--
+		if(table_smacks_left <= 0)
+			qdel(src)
 
 /obj/item/noogie
 	name = "noogie"
