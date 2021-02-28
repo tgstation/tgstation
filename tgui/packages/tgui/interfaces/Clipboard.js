@@ -75,8 +75,7 @@ export const Clipboard = (props, context) => {
                           color="transparent"
                           iconColor="black"
                           onClick={() =>
-                            act("move_top_paper", { ref: paper_ref[index] })
-                          }
+                            act("move_top_paper", { ref: paper_ref[index] })}
                         />
                       </Flex.Item>
                       <Flex.Item align="center" grow={1}>
@@ -86,24 +85,21 @@ export const Clipboard = (props, context) => {
                         <Button
                           icon={pen ? "pen" : "eye"}
                           onClick={() =>
-                            act("edit_paper", { ref: paper_ref[index] })
-                          }
+                            act("edit_paper", { ref: paper_ref[index] })}
                         />
                         <Button
                           icon="tag"
                           onClick={() =>
-                            act("rename_paper", { ref: paper_ref[index] })
-                          }
+                            act("rename_paper", { ref: paper_ref[index] })}
                         />
                         <Button
                           icon="eject"
                           onClick={() =>
-                            act("remove_paper", { ref: paper_ref[index] })
-                          }
+                            act("remove_paper", { ref: paper_ref[index] })}
                         />
                       </Flex.Item>
                     </Flex>
-                    <Box style={{ height: "0.25em" }}></Box>
+                    <Box style={{ height: "0.25em" }} />
                   </>
                 ))}
               </>
