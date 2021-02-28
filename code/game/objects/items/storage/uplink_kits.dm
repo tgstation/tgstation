@@ -240,13 +240,15 @@
 			
 		if(TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			/obj/item/storage/toolbox/emergency/old/ancientbundle //Items fit neatly into a classic toolbox just to remind you what the theme is.
-			new /obj/item/card/emag(src)
-			new /obj/item/pen/sleepy(src)
-			new /obj/item/reagent_containers/pill/cyanide(src)
-			new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
-			new /obj/item/gun/ballistic/revolver(src)
-			new /obj/item/implanter/freedom(src)
-			new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+			
+/obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
+	new /obj/item/card/emag(src)
+	new /obj/item/pen/sleepy(src)
+	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
+	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/implanter/freedom(src)
+	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
