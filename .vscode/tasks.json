@@ -9,7 +9,7 @@
 			},
 			"options": {
 				"env": {
-					"DM_EXE": "${config:tgstationTestExplorer.apps.dreammaker}"
+					"DM_EXE": "${config:dreammaker.byondPath}"
 				}
 			},
 			"problemMatcher": [
