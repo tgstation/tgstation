@@ -1,9 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "Crystallizer, a machine that converts gas mixtures into solid matter, usually crystals. Select a recipe and see the requirements to make that object. The green port is the input, the red port is the cooling/heating."
-  - rscdel: "removed zauker gas grenade"
-  - rscadd: "added n2o crystals (releases small amounts of n2o gas)"
-  - rscadd: "added crystal cells (high power cell but not rechargeable)"
-  - rscadd: "added zaukerite and relative recipes (aestetic item/bragging rights)"
-  - rscadd: "added gas recipe datums for multiple machines support"

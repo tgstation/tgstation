@@ -1,8 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - qol: "Improved the chemistry debug tools for people to use
-tweak: adjusted Helbital, Libital, probital, lenturi, aiuri, hercuri, convermol, tirimol, seiver, multiver, syriniver, synthflesh and penthrite to better use the new chemistry mechanics - see the wiki!
-tweak: Gave Helbital, Libital, probital, lenturi, aiuri, hercuri, convermol, tirimol, seiver, multiver, syriniver, synthflesh and penthrite impure mechanics"
-  - soundadd: "added a laugh for hel"
-  - code_imp: "Improved some of the reagents code to handle this"
