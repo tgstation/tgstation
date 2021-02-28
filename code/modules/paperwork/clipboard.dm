@@ -43,7 +43,7 @@
 	if(pen)
 		. += "<span class='notice'>Ctrl-click to remove [pen].</span>"
 	if(toppaper)
-		. += "<span class='notice'>Ctrl-click to remove the topmost paper, [toppaper].</span>"
+		. += "<span class='notice'>Alt-click to remove [toppaper].</span>"
 
 /obj/item/clipboard/proc/remove_paper(obj/item/paper/Paper, mob/user)
 	if(istype(Paper))
