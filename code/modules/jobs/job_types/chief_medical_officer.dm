@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_MEDICAL
 
 	outfit = /datum/outfit/job/cmo
+	departments = DEPARTMENT_MEDICAL | DEPARTMENT_COMMAND
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED

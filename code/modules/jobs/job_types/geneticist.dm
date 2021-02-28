@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/geneticist
+	departments = DEPARTMENT_MEDICAL
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI

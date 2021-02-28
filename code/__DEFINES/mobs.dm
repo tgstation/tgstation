@@ -135,6 +135,14 @@
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
 
+//Health doll screws for human mobs
+#define SCREWYDOLL_HEAD /obj/item/bodypart/head
+#define SCREWYDOLL_CHEST /obj/item/bodypart/chest
+#define SCREWYDOLL_L_ARM /obj/item/bodypart/l_arm
+#define SCREWYDOLL_R_ARM /obj/item/bodypart/r_arm
+#define SCREWYDOLL_L_LEG /obj/item/bodypart/l_leg
+#define SCREWYDOLL_R_LEG /obj/item/bodypart/r_leg
+
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
 #define BEAUTY_LEVEL_BAD -33

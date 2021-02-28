@@ -928,7 +928,47 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = ..()
 	if(.)
 		return
-	dust_mob(user, cause = "hand")
+	if(user.incorporeal_move || user.status_flags & GODMODE)
+		return
+
+	. = TRUE
+	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+		dust_mob(user, cause = "hand")
+		return
+
+	if(!user.is_mouth_covered())
+		if(user.combat_mode)
+			dust_mob(user,
+				"<span class='danger'>As [user] tries to take a bite out of [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash.</span>",
+				"<span class='userdanger'>You try to take a bite out of [src], but find [p_them()] far too hard to get anywhere before everything starts burning and your ears fill with ringing!</span>",
+				"attempted bite"
+			)
+			return
+
+		var/obj/item/organ/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+		if(licking_tongue)
+			dust_mob(user,
+				"<span class='danger'>As [user] hesitantly leans in and licks [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!</span>",
+				"<span class='userdanger'>You tentatively lick [src], but you can't figure out what it tastes like before everything starts burning and your ears fill with ringing!</span>",
+				"attempted lick"
+			)
+			return
+
+	var/obj/item/bodypart/head/forehead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(forehead)
+		dust_mob(user,
+			"<span class='danger'>As [user]'s forehead bumps into [src], inducing a resonance... Everything goes silent before [user.p_their()] [forehead] flashes to ash!</span>",
+			"<span class='userdanger'>You feel your forehead bump into [src] and everything suddenly goes silent. As your head fills with ringing you come to realize that that was not a wise decision.</span>",
+			"failed lick"
+		)
+		return
+
+	dust_mob(user,
+		"<span class='danger'>[user] leans in and tries to lick [src], inducing a resonance... [user.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",
+		"<span class='userdanger'>You lean in and try to lick [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",
+		"failed lick"
+	)
+
 
 /obj/machinery/power/supermatter_crystal/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
 	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too

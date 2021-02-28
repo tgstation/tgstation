@@ -15,6 +15,7 @@
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
+	departments = DEPARTMENT_SERVICE
 
 /datum/outfit/job/psychologist
 	name = "Psychologist"

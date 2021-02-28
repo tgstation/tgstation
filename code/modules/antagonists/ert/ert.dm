@@ -8,6 +8,7 @@
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
+	var/datum/outfit/plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 	var/role = "Security Officer"
 	var/list/name_source
 	var/random_names = TRUE
@@ -87,19 +88,34 @@
 /datum/antagonist/ert/commander
 	role = "Commander"
 	outfit = /datum/outfit/centcom/ert/commander
+	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
 
 /datum/antagonist/ert/commander/red
 	outfit = /datum/outfit/centcom/ert/commander/alert
 
+/datum/antagonist/ert/janitor
+	role = "Janitor"
+	outfit = /datum/outfit/centcom/ert/janitor
+
+/datum/antagonist/ert/janitor/heavy
+	role = "Heavy Duty Janitor"
+	outfit = /datum/outfit/centcom/ert/janitor/heavy
+
 /datum/antagonist/ert/deathsquad
 	name = "Deathsquad Trooper"
 	outfit = /datum/outfit/centcom/death_commando
+	plasmaman_outfit = /datum/outfit/plasmaman/centcom_commander
 	role = "Trooper"
 	rip_and_tear = TRUE
 
 /datum/antagonist/ert/deathsquad/New()
 	. = ..()
 	name_source = GLOB.commando_names
+
+/datum/antagonist/ert/deathsquad/leader
+	name = "Deathsquad Officer"
+	outfit = /datum/outfit/centcom/death_commando
+	role = "Officer"
 
 /datum/antagonist/ert/medic/inquisitor
 	outfit = /datum/outfit/centcom/ert/medic/inquisitor
@@ -133,22 +149,10 @@
 	. = ..()
 	owner.holy_role = HOLY_ROLE_PRIEST
 
-/datum/antagonist/ert/janitor
-	role = "Janitor"
-	outfit = /datum/outfit/centcom/ert/janitor
-
-/datum/antagonist/ert/janitor/heavy
-	role = "Heavy Duty Janitor"
-	outfit = /datum/outfit/centcom/ert/janitor/heavy
-
-/datum/antagonist/ert/deathsquad/leader
-	name = "Deathsquad Officer"
-	outfit = /datum/outfit/centcom/death_commando
-	role = "Officer"
-
 /datum/antagonist/ert/intern
 	name = "CentCom Intern"
 	outfit = /datum/outfit/centcom/centcom_intern
+	plasmaman_outfit = /datum/outfit/plasmaman/centcom_intern
 	random_names = FALSE
 	role = "Intern"
 
@@ -167,6 +171,7 @@
 /datum/antagonist/ert/clown
 	role = "Clown"
 	outfit = /datum/outfit/centcom/ert/clown
+	plasmaman_outfit = /datum/outfit/plasmaman/party_comedian
 
 /datum/antagonist/ert/clown/New()
 	. = ..()
@@ -175,14 +180,17 @@
 /datum/antagonist/ert/janitor/party
 	role = "Party Cleaning Service"
 	outfit = /datum/outfit/centcom/ert/janitor/party
+	plasmaman_outfit = /datum/outfit/plasmaman/party_janitor
 
 /datum/antagonist/ert/security/party
 	role = "Party Bouncer"
 	outfit = /datum/outfit/centcom/ert/security/party
+	plasmaman_outfit = /datum/outfit/plasmaman/party_bouncer
 
 /datum/antagonist/ert/engineer/party
 	role = "Party Constructor"
 	outfit = /datum/outfit/centcom/ert/engineer/party
+	plasmaman_outfit = /datum/outfit/plasmaman/party_constructor
 
 /datum/antagonist/ert/clown/party
 	role = "Party Comedian"
@@ -204,6 +212,10 @@
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
+	if(isplasmaman(H))
+		H.equipOutfit(plasmaman_outfit)
+		H.internal = H.get_item_for_held_index(2)
+		H.update_internals_hud_icon(1)
 	H.equipOutfit(outfit)
 
 
@@ -275,6 +287,7 @@
 	name = "Undercover Cop"
 	role = "Undercover Cop"
 	outfit = /datum/outfit/families_police/beatcop
+	plasmaman_outfit = /datum/outfit/plasmaman/security
 	var/free_clothes = list(/obj/item/clothing/glasses/hud/spacecop/hidden,
 						/obj/item/clothing/under/rank/security/officer/beatcop,
 						/obj/item/clothing/head/spacepolice)

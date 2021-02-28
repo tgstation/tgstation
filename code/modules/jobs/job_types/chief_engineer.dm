@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_ENGINEERING
 
 	outfit = /datum/outfit/job/ce
+	departments = DEPARTMENT_ENGINEERING | DEPARTMENT_COMMAND
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_ENG

@@ -16,7 +16,7 @@
 	bot_core_type = /obj/machinery/bot_core/hygienebot
 	window_id = "autoclean"
 	window_name = "Automatic Crew Cleaner X2"
-	pass_flags = PASSMOB | PASSFLAPS
+	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
 	path_image_color = "#993299"
 	allow_pai = FALSE
 	layer = ABOVE_MOB_LAYER

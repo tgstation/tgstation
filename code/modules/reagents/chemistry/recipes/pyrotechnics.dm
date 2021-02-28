@@ -466,7 +466,7 @@
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/phosphorus = 1)
 	required_temp = 0
 	optimal_temp = 20
-	overheat_temp = 9999//Replace with NO_OVERHEAT when part 2 is in
+	overheat_temp = NO_OVERHEAT
 	temp_exponent_factor = 10
 	thermic_constant = 0
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE

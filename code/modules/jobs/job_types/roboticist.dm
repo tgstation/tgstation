@@ -11,6 +11,7 @@
 	bounty_types = CIV_JOB_ROBO
 
 	outfit = /datum/outfit/job/roboticist
+	departments = DEPARTMENT_SCIENCE
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI

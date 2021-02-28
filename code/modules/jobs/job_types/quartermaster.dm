@@ -17,6 +17,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	bounty_types = CIV_JOB_RANDOM
+	departments = DEPARTMENT_CARGO
 
 /datum/job/quartermaster/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

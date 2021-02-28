@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/hop
+	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SRV

@@ -998,6 +998,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 ///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/var/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
 	if(!LAZYLEN(embedding))
+		disableEmbedding()
 		return
 
 	AddElement(/datum/element/embed,\

@@ -12,6 +12,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/detective
+	departments = DEPARTMENT_SECURITY
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SEC

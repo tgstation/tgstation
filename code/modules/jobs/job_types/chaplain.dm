@@ -13,6 +13,7 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
+	departments = DEPARTMENT_SERVICE
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)

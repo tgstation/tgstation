@@ -872,11 +872,16 @@
 			hud_used.healthdoll.cut_overlays()
 			if(stat != DEAD)
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/X in bodyparts)
-					var/obj/item/bodypart/BP = X
-					var/damage = BP.burn_dam + BP.brute_dam
-					var/comparison = (BP.max_damage/5)
+				for(var/obj/item/bodypart/body_part as anything in bodyparts)
 					var/icon_num = 0
+					//Hallucinations
+					if(body_part.type in hal_screwydoll)
+						icon_num = hal_screwydoll[body_part.type]
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
+						continue
+					//Not hallucinating
+					var/damage = body_part.burn_dam + body_part.brute_dam
+					var/comparison = (body_part.max_damage/5)
 					if(damage)
 						icon_num = 1
 					if(damage > (comparison))
@@ -890,7 +895,7 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
 					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
 				for(var/t in get_disabled_limbs()) //Disabled limbs

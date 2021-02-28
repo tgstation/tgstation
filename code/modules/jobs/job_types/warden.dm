@@ -21,6 +21,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
 	bounty_types = CIV_JOB_SEC
+	departments = DEPARTMENT_SECURITY
 
 /datum/outfit/job/warden
 	name = "Warden"
