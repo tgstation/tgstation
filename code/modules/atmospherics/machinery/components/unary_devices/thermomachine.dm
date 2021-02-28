@@ -52,6 +52,16 @@
 	if(board)
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
+
+	var/turf/turf = get_turf(src)
+	var/obj/machinery/atmospherics/device
+	for(device in turf.contents)
+		if(device.piping_layer != piping_layer || device == src)
+			continue
+		to_chat(user, "<span class='notice'>You can't finish the construction because something is hogging the pipe,\
+		 try to remove the obstruction or change the thermomachine pipe layer to a non obstucted one.</span>")
+		deconstruct(FALSE)
+		return
 	return..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
