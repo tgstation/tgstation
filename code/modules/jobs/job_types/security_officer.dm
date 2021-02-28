@@ -23,6 +23,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 	bounty_types = CIV_JOB_SEC
+	departments = DEPARTMENT_SECURITY
 
 /datum/job/officer/get_access()
 	var/list/L = list()
