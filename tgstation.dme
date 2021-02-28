@@ -126,6 +126,7 @@
 #include "code\__DEFINES\status_effects.dm"
 #include "code\__DEFINES\storage.dm"
 #include "code\__DEFINES\subsystems.dm"
+#include "code\__DEFINES\supermatter.dm"
 #include "code\__DEFINES\tgs.config.dm"
 #include "code\__DEFINES\tgs.dm"
 #include "code\__DEFINES\tgui.dm"
