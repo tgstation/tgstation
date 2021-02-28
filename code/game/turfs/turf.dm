@@ -3,10 +3,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
-	flags_1 = CAN_BE_DIRTY_1
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE // Important for interaction with and visualization of openspace.
 	luminosity = 1
-
+	var/turf_flags = NONE
 	var/intact = 1
 
 	// baseturfs can be either a list or a single turf type.
