@@ -78,13 +78,16 @@
 	if(flags_1 & NODECONSTRUCT_1)
 		return ..()
 	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		if(!user.temporarilyRemoveItemFromInventory(W))
-			return
-		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
-		var/image/export_to_component = image('icons/obj/chairs.dmi', loc, "echair_over")
-		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), W, list(export_to_component), TRUE)
+		electrify_self(W, user)
 		return
 	. = ..()
+
+/obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user)
+	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
+		return
+	to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
+	var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
+	AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), TRUE)
 
 /obj/structure/chair/wrench_act(mob/living/user, obj/item/I)
 	. = ..()

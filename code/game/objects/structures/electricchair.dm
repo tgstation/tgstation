@@ -18,3 +18,5 @@
 		W.play_tool_sound(src)
 		C.setDir(dir)
 		qdel(src)
+		return
+	. = ..()

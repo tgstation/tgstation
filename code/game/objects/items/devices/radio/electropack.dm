@@ -75,10 +75,10 @@
 
 		L.Paralyze(100)
 
-	if(master && isassembly(master))
-		var/obj/item/assembly/master_as_assembly = master
-		master_as_assembly.pulsed()
-	else if (master)
+	if(master)
+		if(isassembly(master))
+			var/obj/item/assembly/master_as_assembly = master
+			master_as_assembly.pulsed()
 		master.receive_signal()
 
 /obj/item/electropack/proc/set_frequency(new_frequency)
