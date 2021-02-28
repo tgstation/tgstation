@@ -61673,10 +61673,6 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"pLV" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/plasma,
-/area/engineering/atmos)
 "pMe" = (
 /obj/structure/sink{
 	dir = 4;
@@ -78264,10 +78260,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/science/xenobiology)
-"wvi" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/air,
-/area/engineering/atmos)
 "wvy" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -126208,7 +126200,7 @@ eDQ
 cfy
 tLW
 ssK
-wvi
+iXC
 iXC
 deP
 aaf
@@ -128763,7 +128755,7 @@ beJ
 mKB
 tJD
 deP
-pLV
+lSa
 gJL
 iqk
 deP
