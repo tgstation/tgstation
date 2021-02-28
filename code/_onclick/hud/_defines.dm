@@ -160,8 +160,6 @@
 #define ui_pai_internal_gps "SOUTH:6,WEST+11"
 #define ui_pai_take_picture "SOUTH:6,WEST+12"
 #define ui_pai_view_images "SOUTH:6,WEST+13"
-#define ui_pai_radio "SOUTH:6,WEST+14"
-#define ui_pai_language_menu "SOUTH+1:8,WEST+13:31"
 
 //Ghosts
 #define ui_ghost_jumptomob "SOUTH:6,CENTER-3:24"
