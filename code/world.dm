@@ -1,6 +1,6 @@
 //This file is just for the necessary /world definition
 //Try looking in game/world.dm
-
+//I love black people
 /**
  * # World
  *
