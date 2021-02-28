@@ -34,7 +34,7 @@
 		IMPLANTS = 1, 
 		HACKER = 3, 
 		SNIPER = 1, 
-		NUKEOPS METAGAME = 1
+		NUKEOPS_METAGAME = 1
 		)))
 		if(RECON)
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
