@@ -16,6 +16,7 @@ process.chdir(resolvePath(__dirname, '../../'));
 
 const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/releases/*')
+  .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/yarn.lock')
   .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
