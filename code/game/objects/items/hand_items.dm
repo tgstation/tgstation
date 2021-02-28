@@ -128,13 +128,15 @@
 	"<span class='hear'>You hear a slap.</span>")
 	return
 
-/obj/item/slapper/attack_obj(obj/hit_object, mob/living/user)
-	if(!istype(hit_object, /obj/structure/table))
+/obj/item/slapper/attack_obj(obj/O, mob/living/user, params)
+	if(!istype(O, /obj/structure/table))
 		return ..()
 
-	var/obj/structure/table/the_table = hit_object
+	var/obj/structure/table/the_table = O
 	user.do_attack_animation(the_table)
-	if(user.combat_mode && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
+	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+
+	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			if(istype(human_user.shoes, /obj/item/clothing/shoes/cowboy))
