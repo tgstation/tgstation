@@ -191,7 +191,7 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
-	using.screen_loc = ui_borg_language_menu
+	using.screen_loc = widescreen_layout ? ui_ai_language_menu_wide : ui_ai_language_menu
 	using.hud = src
 	static_inventory += using
 
@@ -287,12 +287,12 @@
 
 //Multicamera mode
 	using = new /atom/movable/screen/ai/multicam()
-	using.screen_loc = ui_ai_multicam
+	using.screen_loc = widescreen_layout ? ui_ai_multicam_wide : ui_ai_multicam
 	using.hud = src
 	static_inventory += using
 
 //Add multicamera camera
 	using = new /atom/movable/screen/ai/add_multicam()
-	using.screen_loc = ui_ai_add_multicam
+	using.screen_loc = widescreen_layout ? ui_ai_add_multicam_wide : ui_ai_add_multicam
 	using.hud = src
 	static_inventory += using

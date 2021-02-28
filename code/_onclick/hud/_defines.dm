@@ -126,7 +126,7 @@
 #define ui_alien_language_menu "EAST-3:24,SOUTH:5"
 #define ui_alien_combat_toggle "EAST-2:26,SOUTH:5"
 
-// AI
+//AI
 #define ui_ai_core "SOUTH:6,WEST"
 #define ui_ai_camera_list "SOUTH:6,WEST+1"
 #define ui_ai_track_with_camera "SOUTH:6,WEST+2"
@@ -144,8 +144,14 @@
 #define ui_ai_sensor "SOUTH:6,WEST+14"
 #define ui_ai_multicam "SOUTH+1:6,WEST+13"
 #define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
+#define ui_ai_language_menu "CENTER+4:29,SOUTH+1:9"
 
-// pAI
+//AI widescreen
+#define ui_ai_multicam_wide "SOUTH:6,WEST+16"
+#define ui_ai_add_multicam_wide "SOUTH:6,WEST+15"
+#define ui_ai_language_menu_wide "SOUTH:6:2,WEST+16:17"
+
+//pAI
 #define ui_pai_software "SOUTH:6,WEST"
 #define ui_pai_shell "SOUTH:6,WEST+1"
 #define ui_pai_chassis "SOUTH:6,WEST+2"
@@ -160,6 +166,11 @@
 #define ui_pai_internal_gps "SOUTH:6,WEST+11"
 #define ui_pai_take_picture "SOUTH:6,WEST+12"
 #define ui_pai_view_images "SOUTH:6,WEST+13"
+#define ui_pai_radio "SOUTH:6,WEST+14"
+#define ui_pai_language_menu "SOUTH+1:8,WEST+13:31"
+
+//pAI widescreen
+#define ui_pai_language_menu_wide "SOUTH:6:1,WEST+14:18"
 
 //Ghosts
 #define ui_ghost_jumptomob "SOUTH:6,CENTER-3:24"
@@ -168,5 +179,7 @@
 #define ui_ghost_teleport "SOUTH:6,CENTER:24"
 #define ui_ghost_pai "SOUTH: 6, CENTER+1:24"
 #define ui_ghost_mafia "SOUTH: 6, CENTER+2:24"
+#define ui_ghost_language_menu "SOUTH: 22, CENTER+3:8"
 
+//Families
 #define ui_wanted_lvl "NORTH,11"
