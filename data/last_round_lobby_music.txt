@@ -116,3 +116,6 @@ config/title_music/sounds/It Was At That Point I Realised.ogg
 config/title_music/sounds/Artificial Intelligence Bomb.ogg
 config/title_music/sounds/3D Galax.ogg
 config/title_music/sounds/Stranded.ogg
+config/title_music/sounds/Renai Circulation.ogg
+config/title_music/sounds/Hat Kid's Spaceship.ogg
+config/title_music/sounds/In The Garden.ogg
