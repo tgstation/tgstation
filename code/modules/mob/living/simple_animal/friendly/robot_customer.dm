@@ -74,7 +74,8 @@
 
 /mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)
 	. = ..()
-	playsound(get_turf(src), 'sound/effects/tourist_talk.ogg', 100, TRUE)
+	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+	playsound(get_turf(src), customer_info.speech_sound, TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 5)
 
 /mob/living/simple_animal/robot_customer/examine(mob/user)
 	. = ..()
