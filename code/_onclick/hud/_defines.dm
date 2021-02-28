@@ -144,12 +144,6 @@
 #define ui_ai_sensor "SOUTH:6,WEST+14"
 #define ui_ai_multicam "SOUTH+1:6,WEST+13"
 #define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
-#define ui_ai_language_menu "CENTER+4:29,SOUTH+1:9"
-
-//AI widescreen
-#define ui_ai_multicam_wide "SOUTH:6,WEST+16"
-#define ui_ai_add_multicam_wide "SOUTH:6,WEST+15"
-#define ui_ai_language_menu_wide "SOUTH:6:2,WEST+16:17"
 
 //pAI
 #define ui_pai_software "SOUTH:6,WEST"
@@ -168,9 +162,6 @@
 #define ui_pai_view_images "SOUTH:6,WEST+13"
 #define ui_pai_radio "SOUTH:6,WEST+14"
 #define ui_pai_language_menu "SOUTH+1:8,WEST+13:31"
-
-//pAI widescreen
-#define ui_pai_language_menu_wide "SOUTH:6:1,WEST+14:18"
 
 //Ghosts
 #define ui_ghost_jumptomob "SOUTH:6,CENTER-3:24"

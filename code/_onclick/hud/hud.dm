@@ -68,8 +68,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/spacesuit
 	// subtypes can override this to force a specific UI style
 	var/ui_style
-	/// If the owner has widescreen preference
-	var/widescreen_layout = FALSE
 
 /datum/hud/New(mob/owner)
 	mymob = owner
@@ -82,7 +80,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hide_actions_toggle.InitialiseIcon(src)
 	if(mymob.client)
 		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
-		widescreen_layout = mymob.client.prefs.widescreenpref
 
 	hand_slots = list()
 
@@ -267,14 +264,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	ui_style = new_ui_style
 	build_hand_slots()
 	hide_actions_toggle.InitialiseIcon(src)
-
-/datum/hud/proc/update_hud_layout(new_hud_style)
-	if(widescreen_layout == new_hud_style)
-		return
-
-	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots + hand_slots)
-		if(item.screen_loc == ui_style)
-			item.icon = new_ui_style
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
