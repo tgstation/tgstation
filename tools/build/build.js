@@ -54,7 +54,7 @@ const taskDm = new Task('dm')
     const dmPath = await (async () => {
       // Search in array of paths
       const paths = [
-        ...(process.env.DM_EXE && process.env.DM_EXE.split(',')),
+        ...((process.env.DM_EXE && process.env.DM_EXE.split(',')) || []),
         'C:\\Program Files\\BYOND\\bin\\dm.exe',
         'C:\\Program Files (x86)\\BYOND\\bin\\dm.exe',
         ['reg', 'HKLM\\Software\\Dantom\\BYOND', 'installpath'],
