@@ -1,18 +1,20 @@
 
 
 /datum/ai_controller/dog
-	blackboard = list(BB_SIMPLE_CARRY_ITEM = null,\
-	BB_FETCH_TARGET = null,\
-	BB_FETCH_DELIVER_TO = null,\
-	BB_DOG_FRIENDS = list(),\
-	BB_FETCH_IGNORE_LIST = list(),\
-	BB_FETCH_RESET_IGNORE_CD = 0,\
-	BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,\
-	BB_DOG_HEEL_CD = 0,\
-	BB_DOG_COMMAND_CD = 0,\
-	BB_DOG_PLAYING_DEAD = FALSE,\
-	BB_DOG_HARASS_TARGET = null)
+	blackboard = list(\
+		BB_SIMPLE_CARRY_ITEM = null,\
+		BB_FETCH_TARGET = null,\
+		BB_FETCH_DELIVER_TO = null,\
+		BB_DOG_FRIENDS = list(),\
+		BB_FETCH_IGNORE_LIST = list(),\
+		BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,\
+		BB_DOG_PLAYING_DEAD = FALSE,\
+		BB_DOG_HARASS_TARGET = null)
 	ai_movement = /datum/ai_movement/jps
+
+	COOLDOWN_DECLARE(heel_cooldown)
+	COOLDOWN_DECLARE(command_cooldown)
+	COOLDOWN_DECLARE(reset_ignore_cooldown)
 
 
 /datum/ai_controller/dog/process(delta_time)
@@ -53,12 +55,12 @@
 	var/mob/living/living_pawn = pawn
 
 	// occasionally reset our ignore list
-	if((world.time > blackboard[BB_FETCH_RESET_IGNORE_CD] + AI_FETCH_IGNORE_DURATION) && length(blackboard[BB_FETCH_IGNORE_LIST]))
-		blackboard[BB_FETCH_RESET_IGNORE_CD] = world.time
+	if(COOLDOWN_FINISHED(src, reset_ignore_cooldown) && length(blackboard[BB_FETCH_IGNORE_LIST]))
+		COOLDOWN_START(src, reset_ignore_cooldown, AI_FETCH_IGNORE_DURATION)
 		blackboard[BB_FETCH_IGNORE_LIST] = list()
 
 	// if we were just ordered to heel, chill out for a bit
-	if((world.time < blackboard[BB_DOG_HEEL_CD] + AI_DOG_HEEL_DURATION))
+	if(!COOLDOWN_FINISHED(src, heel_cooldown))
 		return
 
 	// if we're not already carrying something and we have a fetch target (and we're not already doing something with it), see if we can eat/equip it
@@ -97,7 +99,7 @@
 		return
 
 	// if we were just ordered to heel, chill out for a bit
-	if((world.time < blackboard[BB_DOG_HEEL_CD] + AI_DOG_HEEL_DURATION))
+	if(!COOLDOWN_FINISHED(src, heel_cooldown))
 		return
 
 	// if we're just ditzing around carrying something, occasionally print a message so people know we have something
@@ -109,15 +111,15 @@
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 	else if(DT_PROB(10, delta_time))
-		living_pawn.manual_emote(pick("dances around.","chases its tail!"))
-		//INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, living_pawn)
+		living_pawn.manual_emote(pick("dances around.","chases [living_pawn.p_their()] tail!"))
+		living_pawn.AddComponent(/datum/component/spinny)
 
 /// Someone has thrown something, see if it's someone we care about and start listening to the thrown item so we can see if we want to fetch it when it lands
 /datum/ai_controller/dog/proc/listened_throw(datum/source, mob/living/carbon/carbon_thrower)
 	SIGNAL_HANDLER
 	if(blackboard[BB_FETCH_TARGET] || blackboard[BB_FETCH_DELIVER_TO] || blackboard[BB_DOG_PLAYING_DEAD]) // we're already busy
 		return
-	if((world.time < blackboard[BB_DOG_HEEL_CD] + AI_DOG_HEEL_DURATION)) // if we were just ordered to heel, chill out for a bit
+	if(!COOLDOWN_FINISHED(src, heel_cooldown))
 		return
 	if(!can_see(pawn, carbon_thrower, length=AI_DOG_VISION_RANGE))
 		return
@@ -181,7 +183,7 @@
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
 	SIGNAL_HANDLER
 
-	if((world.time < blackboard[BB_DOG_COMMAND_CD] + AI_DOG_COMMAND_COOLDOWN)) // command cooldown
+	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
 
 	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !istype(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE) // busy or no command
@@ -190,7 +192,7 @@
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
 		return
 
-	blackboard[BB_DOG_COMMAND_CD] = world.time
+	COOLDOWN_START(src, command_cooldown, AI_DOG_COMMAND_COOLDOWN)
 
 	switch(blackboard[BB_DOG_ORDER_MODE])
 		if(DOG_COMMAND_FETCH)
@@ -234,18 +236,18 @@
 	if(!blackboard[BB_DOG_FRIENDS][speaker])
 		return
 
-	if((world.time < blackboard[BB_DOG_COMMAND_CD] + AI_DOG_COMMAND_COOLDOWN))
+	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
 	var/command
-	if(findtext(spoken_text, "heel") || findtext(spoken_text, "sit"))
+	if(findtext(spoken_text, "heel") || findtext(spoken_text, "sit") || findtext(spoken_text, "stay"))
 		command = COMMAND_HEEL
 	else if(findtext(spoken_text, "fetch") || findtext(spoken_text, "get it"))
 		command = COMMAND_FETCH
 	else if(findtext(spoken_text, "attack") || findtext(spoken_text, "sic"))
 		command = COMMAND_ATTACK
-	else if(findtext(spoken_text, "play dead") || findtext(spoken_text, "die"))
+	else if(findtext(spoken_text, "play dead"))
 		command = COMMAND_DIE
 	else
 		return
@@ -253,13 +255,14 @@
 	if(!can_see(pawn, speaker, length=AI_DOG_VISION_RANGE))
 		return
 
-	blackboard[BB_DOG_COMMAND_CD] = world.time
+	COOLDOWN_START(src, command_cooldown, AI_DOG_COMMAND_COOLDOWN)
+
 	switch(command)
 		// heel: stop what you're doing, relax and try not to do anything for a little bit
 		if(COMMAND_HEEL)
 			pawn.visible_message("<span class='notice'>[pawn]'s ears prick up at [speaker]'s voice, and [pawn.p_they()] sit[pawn.p_s()] down obediently, awaiting further orders.</span>")
 			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
-			blackboard[BB_DOG_HEEL_CD] = world.time
+			COOLDOWN_START(src, heel_cooldown, AI_DOG_HEEL_DURATION)
 			CancelActions()
 		// fetch: whatever the speaker points to, try and bring it back
 		if(COMMAND_FETCH)

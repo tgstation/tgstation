@@ -281,7 +281,7 @@
 						return
 
 					item_to_add.forceMove(src)
-					src.inventory_back = item_to_add
+					inventory_back = item_to_add
 					update_corgi_fluff()
 					regenerate_icons()
 			if("card")
@@ -296,7 +296,7 @@
 					to_chat(usr, "<span class='warning'>You can't pin [item_to_add] to [src]!</span>")
 					return
 				item_to_add.forceMove(src)
-				src.access_card = item_to_add
+				access_card = item_to_add
 
 		show_inv(usr)
 	else

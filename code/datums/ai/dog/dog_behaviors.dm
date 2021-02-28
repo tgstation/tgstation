@@ -1,7 +1,7 @@
 /datum/ai_behavior/battle_screech/dog
 	screeches = list("barks","howls")
 
-// Fetching makes the pawn chase after whatever it's targeting and pick it up when it's in range, with the dog_equip behavior
+/// Fetching makes the pawn chase after whatever it's targeting and pick it up when it's in range, with the dog_equip behavior
 /datum/ai_behavior/fetch
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
@@ -31,7 +31,7 @@
 		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
 
-// This is simply a behaviour to pick up a fetch target
+/// This is simply a behaviour to pick up a fetch target
 /datum/ai_behavior/simple_equip/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/fetch_target = controller.blackboard[BB_FETCH_TARGET]
@@ -70,7 +70,7 @@
 
 
 
-// This behavior involves dropping off a carried item to a specified person (or place)
+/// This behavior involves dropping off a carried item to a specified person (or place)
 /datum/ai_behavior/deliver_item
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
@@ -87,7 +87,7 @@
 	. = ..()
 	controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
-// Actually drop the fetched item to the target
+/// Actually drop the fetched item to the target
 /datum/ai_behavior/deliver_item/proc/deliver_item(datum/ai_controller/controller)
 	var/obj/item/carried_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
 	var/atom/movable/return_target = controller.blackboard[BB_FETCH_DELIVER_TO]
@@ -104,7 +104,7 @@
 	controller.blackboard[BB_SIMPLE_CARRY_ITEM] = null
 	return TRUE
 
-// This behavior involves either eating a snack we can reach, or begging someone holding a snack
+/// This behavior involves either eating a snack we can reach, or begging someone holding a snack
 /datum/ai_behavior/eat_snack
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
@@ -127,7 +127,7 @@
 		finish_action(controller, TRUE)
 
 
-// This behavior involves either eating a snack we can reach, or begging someone holding a snack
+/// This behavior involves either eating a snack we can reach, or begging someone holding a snack
 /datum/ai_behavior/play_dead
 	behavior_flags = NONE
 
@@ -160,7 +160,7 @@
 		simple_pawn.transform = simple_pawn.transform.Turn(180)
 	simple_pawn.density = initial(simple_pawn.density)
 
-// This behavior involves either eating a snack we can reach, or begging someone holding a snack
+/// This behavior involves either eating a snack we can reach, or begging someone holding a snack
 /datum/ai_behavior/harass
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
