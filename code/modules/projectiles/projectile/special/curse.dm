@@ -33,7 +33,8 @@
 /obj/projectile/curse_hand/prehit_pierce(atom/target)
 	return (target == original)? PROJECTILE_PIERCE_NONE : PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/curse_hand/Destroy()
+/// The visual effect for the hand disappearing
+/obj/projectile/curse_hand/proc/finale()
 	if(arm)
 		QDEL_NULL(arm)
 	if((movement_type & PHASING))
@@ -46,7 +47,15 @@
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
 	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, beam_type=/obj/effect/ebeam/curse_arm)
 	animate(D.visuals, alpha = 0, time = 32)
+
+/obj/projectile/curse_hand/on_range()
+	finale()
 	return ..()
+
+/obj/projectile/curse_hand/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if (. == BULLET_ACT_HIT)
+		finale()
 
 /obj/projectile/curse_hand/hel //Used in helbital's impure reagent
 	name = "Hel's grasp"
