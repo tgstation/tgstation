@@ -1,0 +1,11 @@
+{
+    "map_name": "Heaven Station",
+    "map_path": "map_files/HeavenStation",
+    "map_file": "HeavenStation.dmm",
+    "shuttles": {
+	    "emergency": "emergency_meta",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_delta",
+	    "whiteship": "whiteship_delta"
+    }
+}

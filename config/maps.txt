@@ -49,6 +49,10 @@ map lavastation
 	votable
 endmap
 
+map heavenstation
+	maxplayers 50
+	votable
+endmap
 
 map runtimestation
 endmap
