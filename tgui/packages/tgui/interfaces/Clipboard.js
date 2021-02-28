@@ -11,7 +11,7 @@ import { Window } from "../layouts";
 
 export const Clipboard = (props, context) => {
   const { act, data } = useBackend(context);
-  var { pen, top_paper, top_paper_ref, paper, paper_ref } = data;
+  const { pen, top_paper, top_paper_ref, paper, paper_ref } = data;
   return (
     <Window resizable title="Clipboard" theme="nt" width={400} height={500}>
       <Window.Content backgroundColor="#704D25" scrollable>
