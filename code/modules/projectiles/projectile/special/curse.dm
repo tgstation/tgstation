@@ -26,6 +26,8 @@
 	return ..()
 
 /obj/projectile/curse_hand/fire(setAngle)
+	if(QDELETED(src))
+		return ..()
 	if(starting)
 		arm = starting.Beam(src, icon_state = "curse[handedness]", beam_type=/obj/effect/ebeam/curse_arm)
 	..()
