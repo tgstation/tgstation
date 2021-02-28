@@ -224,7 +224,7 @@
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
-			reaction.overly_impure(holder, src, vol_added)
+			reaction.overly_impure(holder, src, step_volume_added)
 
 	//did we explode?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
