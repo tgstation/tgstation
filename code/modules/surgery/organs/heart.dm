@@ -290,8 +290,7 @@
 /obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/C, admin_heal)
 	SIGNAL_HANDLER
 
-	if(current_crystal)
-		qdel(current_crystal) //Kicks out the ethereal
+	QDEL_NULL(current_crystal) //Kicks out the ethereal
 
 ///Ran when examined while crystalizing, gives info about the amount of time left
 /obj/item/organ/heart/ethereal/proc/on_examine(mob/living/carbon/human/examined_human, mob/user, list/examine_list)
