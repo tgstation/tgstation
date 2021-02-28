@@ -260,7 +260,7 @@
 
 /obj/item/organ/heart/ethereal
 	name = "Crystal core"
-	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
+	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
 	///Cooldown for the next time we can crystalize
@@ -274,6 +274,10 @@
 	///Color of the heart, is set by the species on gain
 	var/ethereal_color = "#9c3030"
 
+/obj/item/organ/heart/ethereal/Initialize()
+	. = ..()
+	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
+
 
 /obj/item/organ/heart/ethereal/Insert(mob/living/carbon/M, special = 0)
 	. = ..()
@@ -286,6 +290,13 @@
 	stop_crystalization_process(M)
 	QDEL_NULL(current_crystal)
 	return ..()
+
+/obj/item/organ/heart/ethereal/update_overlays()
+	. = ..()
+	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
+	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
+	. += shine
+
 
 /obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/C, admin_heal)
 	SIGNAL_HANDLER
@@ -395,6 +406,8 @@
 	var/obj/item/organ/heart/ethereal/ethereal_heart
 	///Timer for the healing process. Stops if destroyed.
 	var/crystal_heal_timer
+	///Is the crystal still being built? True by default, gets changed after a timer.
+	var/being_built = TRUE
 
 /obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/heart/ethereal/ethereal_heart)
 	. = ..()
@@ -407,6 +420,13 @@
 	crystal_heal_timer = addtimer(CALLBACK(src, .proc/heal_ethereal), CRYSTALIZE_HEAL_TIME, TIMER_STOPPABLE)
 	set_light(4, 10, ethereal_heart.ethereal_color)
 	update_icon()
+	flick("ethereal_crystal_forming", src)
+	addtimer(CALLBACK(src, .proc/start_crystalization), 1 SECONDS)
+
+/obj/structure/ethereal_crystal/proc/start_crystalization()
+	being_built = FALSE
+	update_icon()
+
 
 /obj/structure/ethereal_crystal/obj_destruction(damage_flag)
 	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive_fail.ogg', 100)
@@ -426,9 +446,10 @@
 
 /obj/structure/ethereal_crystal/update_overlays()
 	. = ..()
-	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
-	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-	. += shine
+	if(!being_built)
+		var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
+		shine.appearance_flags = RESET_COLOR //No color on this, just pure white
+		. += shine
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
 	ethereal_heart.owner.revive(TRUE, FALSE)
