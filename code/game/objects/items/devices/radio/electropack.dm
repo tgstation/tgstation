@@ -60,7 +60,6 @@
 /obj/item/electropack/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
-
 	if(isliving(loc) && on)
 		if(shock_cooldown)
 			return
@@ -76,7 +75,10 @@
 
 		L.Paralyze(100)
 
-	if(master)
+	if(master && isassembly(master))
+		var/obj/item/assembly/master_as_assembly = master
+		master_as_assembly.pulsed()
+	else if (master)
 		master.receive_signal()
 
 /obj/item/electropack/proc/set_frequency(new_frequency)

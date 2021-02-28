@@ -7,7 +7,7 @@
 /datum/component/electrified_buckle
 	///if usage_flags has SHOCK_REQUIREMENT_ITEM, this is the item required to be inside parent in order for it to shock buckled mobs
 	var/obj/item/required_object
-	///this is casted to the overlay we put on parent_chair TODO: make this an argument for initialize
+	///this is casted to the overlay we put on parent_chair
 	var/list/requested_overlays
 	///it will only shock once every ELECTRIC_BUCKLE_WAIT_TIME
 	COOLDOWN_DECLARE(electric_buckle_cooldown)
@@ -40,6 +40,7 @@
 		required_object.Move(parent_as_movable)
 		RegisterSignal(required_object, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/move_required_object_from_nullspace)
+
 		if(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECEIVED)
 			shock_on_loop = FALSE
 			RegisterSignal(required_object, COMSIG_ASSEMBLY_PULSED, .proc/shock_on_demand)
@@ -53,6 +54,7 @@
 
 	ADD_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
 
+	//if parent wants us to manually shock on some specified action
 	if(signal_to_register_from_parent)
 		RegisterSignal(parent, signal_to_register_from_parent, .proc/shock_on_demand)
 		requested_signal_parent_emits = signal_to_register_from_parent
