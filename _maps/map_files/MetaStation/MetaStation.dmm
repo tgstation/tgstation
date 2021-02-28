@@ -52889,6 +52889,7 @@
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "mpE" = (
