@@ -16,6 +16,8 @@
 	var/trait_to_give
 	///What traits are incompatible with this one?
 	var/blacklist
+	///Extra flags for station traits such as it being abstract
+	var/trait_flags
 
 
 /datum/station_trait/New()
