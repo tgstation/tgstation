@@ -71,7 +71,7 @@ const taskDm = new Task('dm')
           path += '/bin/dm.exe';
         }
         // Check if path exists
-        if (stat(path)) {
+        if (path && stat(path)) {
           return path;
         }
       }
