@@ -10,6 +10,7 @@
 	if(controller.blackboard[BB_VENDING_BUSY_TILTING])
 		return
 
+	controller.ai_movement.stop_moving_towards(controller)
 	controller.blackboard[BB_VENDING_BUSY_TILTING] = TRUE
 	var/turf/target_turf = get_turf(controller.blackboard[BB_VENDING_CURRENT_TARGET])
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target_turf)

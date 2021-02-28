@@ -22,6 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 	bounty_types = CIV_JOB_ENG
+	departments = DEPARTMENT_ENGINEERING
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"

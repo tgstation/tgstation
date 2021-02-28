@@ -108,9 +108,6 @@
 	/// Any clothing accessory item
 	var/accessory = null
 
-	/// Set to FALSE if your outfit requires runtime parameters
-	var/can_be_admin_equipped = TRUE
-
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
 	  *

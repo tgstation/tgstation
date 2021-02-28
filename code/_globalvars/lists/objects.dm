@@ -17,8 +17,11 @@ GLOBAL_LIST_EMPTY(alarmdisplay)         //list of all machines or programs that 
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity) //list of all singularities on the station
 GLOBAL_LIST_EMPTY(mechpad_list) //list of all /obj/machinery/mechpad
 
-GLOBAL_LIST(chemical_reactions_list) //list of all /datum/chemical_reaction datums. Used during chemical reactions
+GLOBAL_LIST(chemical_reactions_list) //list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
+GLOBAL_LIST(chemical_reactions_list_product_index) //list of all /datum/chemical_reaction datums. Used for the reaction lookup UI. Indexed by PRODUCT type
 GLOBAL_LIST(chemical_reagents_list) //list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with their associated product and result ids. Used for reaction lookups
+GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(crafting_recipes) //list of all table craft recipes
@@ -30,9 +33,10 @@ GLOBAL_LIST_EMPTY(poi_list) //list of points of interest for observe/follow
 GLOBAL_LIST_EMPTY(pinpointer_list) //list of all pinpointers. Used to change stuff they are pointing to all at once.
 GLOBAL_LIST_EMPTY(zombie_infection_list) // A list of all zombie_infection organs, for any mass "animation"
 GLOBAL_LIST_EMPTY(meteor_list) // List of all meteors.
-GLOBAL_LIST_EMPTY(active_jammers)             // List of active radio jammers
+GLOBAL_LIST_EMPTY(active_jammers)  // List of active radio jammers
 GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(trophy_cases)
+GLOBAL_LIST_EMPTY(experiment_handlers)
 ///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
 GLOBAL_LIST_EMPTY(editable_sign_types)
 

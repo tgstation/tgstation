@@ -115,6 +115,13 @@
 		return
 	return ..()
 
+/mob/living/simple_animal/bot/mulebot/Cross(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM))
+		RunOver(AM)
+
+
+
 /// returns true if the bot is fully powered.
 /mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
 	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
@@ -137,7 +144,7 @@
 		if(open)
 			turn_off()
 		else
-			update_icon() //this is also handled by turn_off(), so no need to call this twice.
+			update_appearance() //this is also handled by turn_off(), so no need to call this twice.
 	else if(istype(I, /obj/item/stock_parts/cell) && open)
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a power cell!</span>")
@@ -184,6 +191,7 @@
 	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
+	. = ..()
 	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
@@ -453,7 +461,7 @@
 
 	load = AM
 	mode = BOT_IDLE
-	update_icon()
+	update_appearance()
 
 ///resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.
 /mob/living/simple_animal/bot/mulebot/proc/get_load_name()
@@ -478,7 +486,7 @@
 	if(QDELETED(load))
 		if(load) //if our thing was qdel'd, there's likely a leftover reference. just clear it and remove the overlay. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
 			load = null
-			update_icon()
+			update_appearance()
 		return
 
 	mode = BOT_IDLE
@@ -497,7 +505,7 @@
 	if(dirn) //move the thing to the delivery point.
 		cached_load.Move(get_step(loc,dirn), dirn)
 
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/get_status_tab_items()
 	. = ..()
@@ -637,7 +645,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, 250, id=access_card, exclude=avoid)
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -723,7 +731,6 @@
 			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
 	return ..()
 
-// called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
@@ -790,7 +797,7 @@
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
-		cell.update_icon()
+		cell.update_appearance()
 		cell = null
 
 	do_sparks(3, TRUE, src)
@@ -806,7 +813,7 @@
 	if(load)
 		unload()
 
-/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
@@ -871,7 +878,7 @@
 
 	load = AM
 	mode = BOT_IDLE
-	update_icon()
+	update_appearance()
 
 
 /mob/living/simple_animal/bot/mulebot/paranormal/update_overlays()

@@ -53,7 +53,7 @@ at the cost of risking a vicious bite.**/
 	return TRUE
 
 
-/obj/structure/moisture_trap/attack_hand(mob/user)
+/obj/structure/moisture_trap/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(iscyborg(user) || isalien(user))
 		return

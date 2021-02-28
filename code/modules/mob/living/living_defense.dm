@@ -74,7 +74,7 @@
 	. = combat_mode
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
-		hud_used.action_intent.update_icon()
+		hud_used.action_intent.update_appearance()
 	if(silent || !(client?.prefs.toggles & SOUND_COMBATMODE))
 		return
 	if(combat_mode)
@@ -213,62 +213,63 @@
 		to_chat(M, "<span class='danger'>You glomp [src]!</span>")
 		return TRUE
 
-/mob/living/attack_animal(mob/living/simple_animal/M)
-	M.face_atom(src)
-	if(M.melee_damage_upper == 0)
-		visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>", \
-						"<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, "<span class='notice'>You [M.friendly_verb_simple] [src]!</span>")
+/mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	user.face_atom(src)
+	if(user.melee_damage_upper == 0)
+		visible_message("<span class='notice'>\The [user] [user.friendly_verb_continuous] [src]!</span>", \
+						"<span class='notice'>\The [user] [user.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='notice'>You [user.friendly_verb_simple] [src]!</span>")
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_PACIFISM))
-		to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
 		return FALSE
 
-	if(M.attack_sound)
-		playsound(loc, M.attack_sound, 50, TRUE, TRUE)
-	M.do_attack_animation(src)
-	visible_message("<span class='danger'>\The [M] [M.attack_verb_continuous] [src]!</span>", \
-					"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-	to_chat(M, "<span class='danger'>You [M.attack_verb_simple] [src]!</span>")
-	log_combat(M, src, "attacked")
+	if(user.attack_sound)
+		playsound(loc, user.attack_sound, 50, TRUE, TRUE)
+	user.do_attack_animation(src)
+	visible_message("<span class='danger'>\The [user] [user.attack_verb_continuous] [src]!</span>", \
+					"<span class='userdanger'>\The [user] [user.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, "<span class='danger'>You [user.attack_verb_simple] [src]!</span>")
+	log_combat(user, src, "attacked")
 	return TRUE
 
-/mob/living/attack_hand(mob/living/carbon/human/user, modifiers)
+/mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if (user.apply_martial_art(src, modifiers))
 		return TRUE
 
-/mob/living/attack_paw(mob/living/carbon/human/M, modifiers)
+/mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
+		to_chat(user, "No attacking people at spawn, you jackass.")
 		return FALSE
 
-	if (M.apply_martial_art(src, modifiers))
+	if (user.apply_martial_art(src, modifiers))
 		return TRUE
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if (M != src)
-			M.disarm(src)
+		if (user != src)
+			user.disarm(src)
 			return TRUE
-	if (M.combat_mode)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
-			return FALSE
+	if (!user.combat_mode)
+		return FALSE
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
+		return FALSE
 
-		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
-			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
-			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-							"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='danger'>You bite [src]!</span>")
-			return TRUE
-		else
-			visible_message("<span class='danger'>[M.name]'s bite misses [src]!</span>", \
-							"<span class='danger'>You avoid [M.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='warning'>Your bite misses [src]!</span>")
+	if(user.is_muzzled() || user.is_mouth_covered(FALSE, TRUE))
+		to_chat(user, "<span class='warning'>You can't bite with your mouth covered!</span>")
+		return FALSE
+	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
+	if (prob(75))
+		log_combat(user, src, "attacked")
+		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		visible_message("<span class='danger'>[user.name] bites [src]!</span>", \
+						"<span class='userdanger'>[user.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='danger'>You bite [src]!</span>")
+		return TRUE
+	else
+		visible_message("<span class='danger'>[user.name]'s bite misses [src]!</span>", \
+						"<span class='danger'>You avoid [user.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your bite misses [src]!</span>")
 
 	return FALSE
 
@@ -297,20 +298,20 @@
 		return FALSE
 	return FALSE
 
-/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
+/mob/living/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
-	if(M.combat_mode)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
+	if(user.combat_mode)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
 			return FALSE
-		M.do_attack_animation(src)
+		user.do_attack_animation(src)
 		return TRUE
 	else
-		visible_message("<span class='notice'>[M] caresses [src] with its scythe-like arm.</span>", \
-						"<span class='notice'>[M] caresses you with its scythe-like arm.</span>", null, null, M)
-		to_chat(M, "<span class='notice'>You caress [src] with your scythe-like arm.</span>")
+		visible_message("<span class='notice'>[user] caresses [src] with its scythe-like arm.</span>", \
+						"<span class='notice'>[user] caresses you with its scythe-like arm.</span>", null, null, user)
+		to_chat(user, "<span class='notice'>You caress [src] with your scythe-like arm.</span>")
 		return FALSE
 
 /mob/living/attack_hulk(mob/living/carbon/human/user)
@@ -394,12 +395,12 @@
 	return TRUE
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !is_blind()))
 		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
 		return TRUE
 	return FALSE
 

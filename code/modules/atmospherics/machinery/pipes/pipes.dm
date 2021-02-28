@@ -83,6 +83,10 @@
 			qdel(meter)
 	. = ..()
 
+/obj/machinery/atmospherics/pipe/update_icon()
+	. = ..()
+	update_layer()
+
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])
