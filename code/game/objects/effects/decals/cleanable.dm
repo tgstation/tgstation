@@ -28,7 +28,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	AddComponent(/datum/component/beauty, beauty)
+	AddElement(/datum/element/beauty, beauty)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -87,7 +87,7 @@
 	..()
 	if(iscarbon(AM) && blood_state && bloodiness > 0)
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
-		update_icon()
+		update_appearance()
 
 /obj/effect/decal/cleanable/wash(clean_types)
 	. = ..()

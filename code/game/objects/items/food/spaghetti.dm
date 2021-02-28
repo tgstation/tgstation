@@ -8,6 +8,7 @@
 	microwaved_type = /obj/item/food/spaghetti/boiledspaghetti
 	tastes = list("pasta" = 1)
 	foodtypes = GRAIN
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/spaghetti/Initialize()
 	. = ..()

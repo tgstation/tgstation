@@ -3,6 +3,7 @@
 	desc = "A device used to perform \"enhanced interrogation\" through invasive mental conditioning."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "hypnochair"
+	base_icon_state = "hypnochair"
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = FALSE
@@ -17,11 +18,11 @@
 /obj/machinery/hypnochair/Initialize()
 	. = ..()
 	open_machine()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/hypnochair/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_icon()
+		update_appearance()
 		return
 	if(default_pry_open(I))
 		return
@@ -97,7 +98,7 @@
 	interrogating = TRUE
 	START_PROCESSING(SSobj, src)
 	start_time = world.time
-	update_icon()
+	update_appearance()
 	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
 
 /obj/machinery/hypnochair/process(delta_time)
@@ -117,7 +118,7 @@
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	var/temp_trigger = trigger_phrase
 	trigger_phrase = "" //Erase evidence, in case the subject is able to look at the panel afterwards
 	audible_message("<span class='notice'>[src] pings!</span>")
@@ -140,7 +141,7 @@
 	deltimer(timerid)
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 
 	if(QDELETED(victim))
 		victim = null
@@ -169,14 +170,8 @@
 	victim = null
 
 /obj/machinery/hypnochair/update_icon_state()
-	icon_state = initial(icon_state)
-	if(state_open)
-		icon_state += "_open"
-	if(occupant)
-		if(interrogating)
-			icon_state += "_active"
-		else
-			icon_state += "_occupied"
+	icon_state = "[base_icon_state][state_open ? "_open" : null][occupant ? "_[interrogating ? "active" : "occupied"]" : null]"
+	return ..()
 
 /obj/machinery/hypnochair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)

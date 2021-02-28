@@ -43,6 +43,8 @@
 /obj/effect/proc_holder/spell/aimed/update_icon()
 	if(!action)
 		return
+
+	. = ..()
 	action.button_icon_state = "[base_icon_state][active]"
 	action.UpdateButtonIcon()
 

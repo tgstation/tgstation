@@ -90,7 +90,7 @@
 					var/new_angle_s = P.Angle + rand(120,240)
 					while(new_angle_s > 180) // Translate to regular projectile degrees
 						new_angle_s -= 360
-					P.setAngle(new_angle_s)
+					P.set_angle(new_angle_s)
 
 				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
@@ -683,18 +683,17 @@
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/LB = X
-		missing -= LB.body_zone
-		if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
+	for(var/obj/item/bodypart/body_part as anything in bodyparts)
+		missing -= body_part.body_zone
+		if(body_part.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
 			continue
 		var/self_aware = FALSE
 		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
 			self_aware = TRUE
-		var/limb_max_damage = LB.max_damage
+		var/limb_max_damage = body_part.max_damage
 		var/status = ""
-		var/brutedamage = LB.brute_dam
-		var/burndamage = LB.burn_dam
+		var/brutedamage = body_part.brute_dam
+		var/burndamage = body_part.burn_dam
 		if(hallucination)
 			if(prob(30))
 				brutedamage += rand(30,40)
@@ -707,21 +706,24 @@
 				status = "no damage"
 
 		else
+			if(body_part.type in hal_screwydoll)//Are we halucinating?
+				brutedamage = (hal_screwydoll[body_part.type] * 0.2)*limb_max_damage
+
 			if(brutedamage > 0)
-				status = LB.light_brute_msg
+				status = body_part.light_brute_msg
 			if(brutedamage > (limb_max_damage*0.4))
-				status = LB.medium_brute_msg
+				status = body_part.medium_brute_msg
 			if(brutedamage > (limb_max_damage*0.8))
-				status = LB.heavy_brute_msg
+				status = body_part.heavy_brute_msg
 			if(brutedamage > 0 && burndamage > 0)
 				status += " and "
 
 			if(burndamage > (limb_max_damage*0.8))
-				status += LB.heavy_burn_msg
+				status += body_part.heavy_burn_msg
 			else if(burndamage > (limb_max_damage*0.2))
-				status += LB.medium_burn_msg
+				status += body_part.medium_burn_msg
 			else if(burndamage > 0)
-				status += LB.light_burn_msg
+				status += body_part.light_burn_msg
 
 			if(status == "")
 				status = "OK"
@@ -729,33 +731,33 @@
 		if(status == "OK" || status == "no damage")
 			no_damage = TRUE
 		var/isdisabled = ""
-		if(LB.bodypart_disabled)
+		if(body_part.bodypart_disabled)
 			isdisabled = " is disabled"
 			if(no_damage)
 				isdisabled += " but otherwise"
 			else
 				isdisabled += " and"
-		combined_msg += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>"
+		combined_msg += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [body_part.name][isdisabled][self_aware ? " has " : " is "][status].</span>"
 
-		for(var/thing in LB.wounds)
+		for(var/thing in body_part.wounds)
 			var/datum/wound/W = thing
 			var/msg
 			switch(W.severity)
 				if(WOUND_SEVERITY_TRIVIAL)
-					msg = "\t <span class='danger'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)].</span>"
+					msg = "\t <span class='danger'>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)].</span>"
 				if(WOUND_SEVERITY_MODERATE)
-					msg = "\t <span class='warning'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</span>"
+					msg = "\t <span class='warning'>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!</span>"
 				if(WOUND_SEVERITY_SEVERE)
-					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
+					msg = "\t <span class='warning'><b>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
 				if(WOUND_SEVERITY_CRITICAL)
-					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
+					msg = "\t <span class='warning'><b>Your [body_part.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
 			combined_msg += msg
 
-		for(var/obj/item/I in LB.embedded_objects)
+		for(var/obj/item/I in body_part.embedded_objects)
 			if(I.isEmbedHarmless())
-				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>"
+				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [I] stuck to your [body_part.name]!</a>"
 			else
-				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>"
+				combined_msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [I] embedded in your [body_part.name]!</a>"
 
 	for(var/t in missing)
 		combined_msg += "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
