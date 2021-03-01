@@ -41,7 +41,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
-		update_icon()
+		update_appearance()
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
@@ -94,7 +94,7 @@
 
 		//Update everything
 		attack_self(usr)
-		update_icon()
+		update_appearance()
 
 /obj/item/folder/documents
 	name = "folder- 'TOP SECRET'"
@@ -103,7 +103,7 @@
 /obj/item/folder/documents/Initialize()
 	. = ..()
 	new /obj/item/documents/nanotrasen(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/folder/syndicate
 	icon_state = "folder_syndie"
@@ -116,7 +116,7 @@
 /obj/item/folder/syndicate/red/Initialize()
 	. = ..()
 	new /obj/item/documents/syndicate/red(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/folder/syndicate/blue
 	icon_state = "folder_sblue"
@@ -124,9 +124,9 @@
 /obj/item/folder/syndicate/blue/Initialize()
 	. = ..()
 	new /obj/item/documents/syndicate/blue(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/folder/syndicate/mining/Initialize()
 	. = ..()
 	new /obj/item/documents/syndicate/mining(src)
-	update_icon()
+	update_appearance()

@@ -59,7 +59,7 @@
 			mutantears = /obj/item/organ/ears
 		if(H.dna.features["tail_human"] == "Cat")
 			var/obj/item/organ/tail/cat/tail = new
-			tail.Insert(H, drop_if_replaced = FALSE)
+			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 		else
 			mutant_organs = list()
 	return ..()

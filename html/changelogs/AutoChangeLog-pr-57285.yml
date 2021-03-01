@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "xenos and random event mobs can't spawn in atmos tanks"

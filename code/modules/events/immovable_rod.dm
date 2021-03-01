@@ -249,7 +249,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(smeared_mob.density || prob(10))
 		smeared_mob.ex_act(EXPLODE_HEAVY)
 
-/obj/effect/immovablerod/attack_hand(mob/living/user)
+/obj/effect/immovablerod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

@@ -276,19 +276,26 @@
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(atom/source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
-		new /obj/effect/hotspot(T)
+		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
+		if(frozen)
+			drake_fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY)
 		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
 			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
-			L.adjustFireLoss(20)
-			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+			if(!frozen)
+				L.adjustFireLoss(20)
+				to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+				continue
+			L.adjustFireLoss(10)
+			L.apply_status_effect(/datum/status_effect/ice_block_talisman, 20)
+			to_chat(L, "<span class='userdanger'>You're hit by [source]'s freezing breath!</span>")
 
 		// deals damage to mechs
 		for(var/obj/vehicle/sealed/mecha/M in T.contents)

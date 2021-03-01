@@ -52,7 +52,7 @@
 	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
-	P.update_icon()
+	P.update_appearance()
 
 	if(ismob(loc))
 		var/mob/M = loc

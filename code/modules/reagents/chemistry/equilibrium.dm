@@ -12,9 +12,9 @@
 */
 /datum/equilibrium
 	///The chemical reaction that is presently being processed
-	var/datum/chemical_reaction/reaction 
+	var/datum/chemical_reaction/reaction
 	///The location/reagents datum the processing is taking place
-	var/datum/reagents/holder 
+	var/datum/reagents/holder
 	///How much product we can make multiplied by the input recipe's products/required_reagents numerical values
 	var/multiplier = INFINITY
 	///The sum total of each of the product's numerical's values. This is so the addition/deletion is kept at the right values for multiple product reactions
@@ -24,7 +24,7 @@
 	///The target volume the reaction is headed towards. This is updated every tick, so isn't the total value for the reaction, it's just a way to ensure we can't make more than is possible.
 	var/step_target_vol = INFINITY
 	///How much of the reaction has been made so far. Mostly used for subprocs, but it keeps track across the whole reaction and is added to every step.
-	var/reacted_vol = 0 
+	var/reacted_vol = 0
 	///What our last delta_ph was
 	var/reaction_quality = 1
 	///If we're done with this reaction so that holder can clear it.
@@ -43,11 +43,13 @@
 	///Temp mod
 	var/thermic_mod = 1
 	///Allow us to deal with lag by "charging" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
-	var/time_deficit 
+	var/time_deficit
+	///Used to store specific data needed for a reaction, usually used to keep track of things between explosion calls. CANNOT be used as a part of chemical_recipe - those vars are static lookup tables.
+	var/data = list()
 
-/* 
+/*
 * Creates and sets up a new equlibrium object
-* 
+*
 * Arguments:
 * * input_reaction - the chemical_reaction datum that will be processed
 * * input_holder - the reagents datum that the output will be put into
@@ -68,7 +70,7 @@
 		return
 	LAZYADD(holder.reaction_list, src)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
-	
+
 
 /datum/equilibrium/Destroy()
 	if(reacted_vol < target_vol) //We did NOT finish from reagents - so we can restart this reaction given property changes in the beaker. (i.e. if it stops due to low temp, this will allow it to fast restart when heated up again)
@@ -78,9 +80,9 @@
 	reaction = null
 	return ..()
 
-/* 
-* Check to make sure our input vars are sensible - truncated version of check_reagent_properties() 
-* 
+/*
+* Check to make sure our input vars are sensible - truncated version of check_reagent_properties()
+*
 * (as the setup in holder.dm checks for that already - this is a way to reduce calculations on New())
 * Don't call this unless you know what you're doing, this is an internal proc
 */
@@ -88,7 +90,7 @@
 	//Make sure we have the right multipler for on_reaction()
 	for(var/single_reagent in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent]), CHEMICAL_QUANTISATION_LEVEL))
-	if(multiplier == INFINITY) 
+	if(multiplier == INFINITY)
 		return FALSE
 	//Consider purity gating too? - probably not, purity is hard to determine
 	//To prevent reactions outside of the pH window from starting.
@@ -96,7 +98,7 @@
 		return FALSE
 	return TRUE
 
-/* 
+/*
 * Check to make sure our input vars are sensible - is the holder overheated? does it have the required reagents? Does it have the required calalysts?
 *
 * If you're adding more checks for reactions, this is the proc to edit
@@ -118,11 +120,9 @@
 	//Reagents check should be handled in the calculate_yield() from multiplier
 
 	//If the product/reactants are too impure
-	for(var/r in holder.reagent_list)
-		var/datum/reagent/reagent = r
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
-		for(var/c in reaction.required_catalysts)
-			var/datum/reagent/catalyst = c
+		for(var/datum/reagent/catalyst as anything in reaction.required_catalysts)
 			if(catalyst == reagent.type)
 				total_matching_catalysts++
 		if(istype(reagent, /datum/reagent/catalyst_agent))
@@ -151,7 +151,7 @@
 	multiplier = INFINITY
 	for(var/reagent in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(reagent) / reaction.required_reagents[reagent]), CHEMICAL_QUANTISATION_LEVEL))
-	
+
 	if(!length(reaction.results)) //Incase of no reagent product
 		product_ratio = 1
 		step_target_vol = INFINITY
@@ -194,9 +194,9 @@
 		if(time_deficit < 0.25)
 			delta_time += time_deficit
 			time_deficit = 0
-		else 
+		else
 			delta_time += 0.25
-			time_deficit = 0.25
+			time_deficit -= 0.25
 	return delta_time
 
 /*
@@ -205,16 +205,16 @@
 * This was moved from the start, to the end - after a reaction, so post reaction temperature changes aren't ignored.
 * overheated() is first - so double explosions can't happen (i.e. explosions that blow up the holder)
 */
-/datum/equilibrium/proc/check_fail_states()
+/datum/equilibrium/proc/check_fail_states(vol_added)
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
+		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src)
+			reaction.overheated(holder, src, vol_added)
 	else
 		if(holder.chem_temp > reaction.overheat_temp)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src)
+			reaction.overheated(holder, src, vol_added)
 
 	//is our product too impure?
 	for(var/product in reaction.results)
@@ -223,8 +223,8 @@
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
-			reaction.overly_impure(holder, src)
-	
+			reaction.overly_impure(holder, src, vol_added)
+
 	//did we explode?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
 		return FALSE
@@ -250,7 +250,7 @@
 		return
 	if(!calculate_yield())//So that this can detect if we're missing reagents
 		to_delete = TRUE
-		return 
+		return
 	delta_time = deal_with_time(delta_time)
 
 	delta_t = 0 //how far off optimal temp we care
@@ -267,7 +267,7 @@
 	//Lower range
 	else if (cached_ph < reaction.optimal_ph_min) //If we're outside of the optimal lower bound
 		if (cached_ph < (reaction.optimal_ph_min - reaction.determin_ph_range)) //If we're outside of the deterministic bound
-			delta_ph = 0 //0% purity 
+			delta_ph = 0 //0% purity
 		else //We're in the deterministic phase
 			delta_ph = (((cached_ph - (reaction.optimal_ph_min - reaction.determin_ph_range))**reaction.ph_exponent_factor)/((reaction.determin_ph_range**reaction.ph_exponent_factor))) //main pH calculation
 	//Upper range
@@ -276,7 +276,7 @@
 			delta_ph = 0 //0% purity
 		else  //We're in the deterministic phase
 			delta_ph = (((- cached_ph + (reaction.optimal_ph_max + reaction.determin_ph_range))**reaction.ph_exponent_factor)/(reaction.determin_ph_range**reaction.ph_exponent_factor))//Reverse - to + to prevent math operation failures.
-	
+
 	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
 		stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_ph] for set recipie pH vars. It's likely the recipe vars are wrong.")
@@ -293,7 +293,7 @@
 			return
 	else
 		if (cached_temp > reaction.optimal_temp && cached_temp <= reaction.required_temp)
-			delta_t = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
+			delta_t = (((reaction.required_temp - cached_temp)**reaction.temp_exponent_factor)/((reaction.required_temp - reaction.optimal_temp)**reaction.temp_exponent_factor))
 		else if (cached_temp <= reaction.optimal_temp)
 			delta_t = 1
 		else //Too cold
@@ -311,7 +311,7 @@
 
 	purity = delta_ph//set purity equal to pH offset
 
-	//Then adjust purity of result with beaker reagent purity. 
+	//Then adjust purity of result with beaker reagent purity.
 	purity *= reactant_purity(reaction)
 
 	//Then adjust it from the input modifier
@@ -333,15 +333,40 @@
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]), safety = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_ph(reagent, (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod))
+		var/pH_adjust
+		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
+			pH_adjust = ((delta_chem_factor * reaction.required_reagents[reagent])/target_vol)*(reaction.H_ion_release*h_ion_mod)
+		else //Default adds pH independant of volume
+			pH_adjust = (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod)
+		holder.adjust_specific_reagent_ph(reagent, pH_adjust)
 
 	var/step_add
 	for(var/product in reaction.results)
 		//create the products
 		step_add = delta_chem_factor * reaction.results[product]
-		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+		//If we make purities in real time
+		if(reaction.reaction_flags & REACTION_REAL_TIME_SPLIT && purity < 1)
+			var/datum/reagent/product_ref = GLOB.chemical_reagents_list[product]
+			if(purity < reaction.purity_min && product_ref.failed_chem) //If we're failed
+				holder.add_reagent(product_ref.failed_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
+			else if(purity < product_ref.inverse_chem_val && product_ref.inverse_chem) //If we're inverse
+				holder.add_reagent(product_ref.inverse_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
+			else if(product_ref.impure_chem && product_ref.impure_chem) //if we're impure
+				holder.add_reagent(product*purity, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+				holder.add_reagent(product_ref.impure_chem*(1-purity), step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
+			else //We can get here if the flag is set, but there's no associated impure_chem assigned. In some cases this is desired (i.e. multiver only wants to real time split it's inverse chem)
+				holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+		//Default handiling
+		else
+			holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+
 		//Apply pH changes
-		holder.adjust_specific_reagent_ph(product, step_add*reaction.H_ion_release)
+		var/pH_adjust
+		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
+			pH_adjust = (step_add/target_vol)*(reaction.H_ion_release*h_ion_mod)
+		else
+			pH_adjust = step_add*(reaction.H_ion_release*h_ion_mod)
+		holder.adjust_specific_reagent_ph(product, pH_adjust)
 		reacted_vol += step_add
 		total_step_added += step_add
 
@@ -351,12 +376,12 @@
 		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]<spans>")
 		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
 	#endif
-		
+
 	//Apply thermal output of reaction to beaker
 	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY)
 		holder.chem_temp += (reaction.thermic_constant* total_step_added*thermic_mod) //old method - for every bit added, the whole temperature is adjusted
 	else //Standard mechanics
-		var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod * SPECIFIC_HEAT_DEFAULT 
+		var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod * SPECIFIC_HEAT_DEFAULT
 		holder.adjust_thermal_energy(heat_energy, 0, 10000) //heat is relative to the beaker conditions
 
 	//Give a chance of sounds
@@ -369,7 +394,7 @@
 	reaction_quality = purity
 
 	//post reaction checks
-	if(!(check_fail_states()))
+	if(!(check_fail_states(total_step_added)))
 		to_delete = TRUE
 
 	//end reactions faster so plumbing is faster

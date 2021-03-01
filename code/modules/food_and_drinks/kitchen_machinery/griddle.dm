@@ -72,18 +72,18 @@
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
 		AddToGrill(I, user)
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
-/obj/machinery/griddle/attack_hand(mob/user)
+/obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	on = !on
 	if(on)
 		begin_processing()
 	else
 		end_processing()
-	update_icon()
+	update_appearance()
 	update_grill_audio()
 
 
@@ -132,8 +132,8 @@
 			visible_message("<span class='danger'>[griddled_item] doesn't seem to be doing too great on the [src]!</span>")
 
 /obj/machinery/griddle/update_icon_state()
-	. = ..()
 	icon_state = "griddle[variant]_[on ? "on" : "off"]"
+	return ..()
 
 /obj/machinery/griddle/stand
 	name = "griddle stand"

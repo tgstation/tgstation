@@ -27,12 +27,12 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/check_swing)
 
-/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
+/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
 	if(!proximity)
 		return
-	if(!source.combat_mode)
+	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))
@@ -65,7 +65,7 @@
 		if(35 to 41)
 			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
-/datum/mutation/human/hulk/on_life()
+/datum/mutation/human/hulk/on_life(delta_time, times_fired)
 	if(owner.health < 0)
 		on_losing(owner)
 		to_chat(owner, "<span class='danger'>You suddenly feel very weak.</span>")

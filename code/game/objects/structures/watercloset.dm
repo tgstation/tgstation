@@ -15,10 +15,10 @@
 /obj/structure/toilet/Initialize()
 	. = ..()
 	open = round(rand(0, 1))
-	update_icon()
+	update_appearance()
 
 
-/obj/structure/toilet/attack_hand(mob/living/user)
+/obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -75,11 +75,12 @@
 			w_items -= I.w_class
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 
 
 /obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
+	return ..()
 
 /obj/structure/toilet/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -99,7 +100,7 @@
 		if(I.use_tool(src, user, 30))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='hear'>You hear grinding porcelain.</span>")
 			cistern = !cistern
-			update_icon()
+			update_appearance()
 	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		I.play_tool_sound(src)
 		deconstruct()
@@ -159,7 +160,7 @@
 	. = ..()
 	hiddenitem = new /obj/item/food/urinalcake
 
-/obj/structure/urinal/attack_hand(mob/living/user)
+/obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -276,7 +277,7 @@
 	. = ..()
 	. += "<span class='notice'>[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.</span>"
 
-/obj/structure/sink/attack_hand(mob/living/user)
+/obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -480,7 +481,7 @@
 	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
 
-/obj/structure/water_source/attack_hand(mob/living/user)
+/obj/structure/water_source/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -599,7 +600,7 @@
 	resistance_flags = UNACIDABLE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/water_source/puddle/attack_hand(mob/M)
+/obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
@@ -636,22 +637,21 @@
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
-	update_icon()
-
-/obj/structure/curtain/update_icon()
-	if(!open)
-		icon_state = "[icon_type]-closed"
-		layer = WALL_OBJ_LAYER
-		density = TRUE
-		open = FALSE
-		if(opaque_closed)
-			set_opacity(TRUE)
-	else
-		icon_state = "[icon_type]-open"
+	if(open)
 		layer = SIGN_LAYER
 		density = FALSE
-		open = TRUE
 		set_opacity(FALSE)
+	else
+		layer = WALL_OBJ_LAYER
+		density = TRUE
+		if(opaque_closed)
+			set_opacity(TRUE)
+
+	update_appearance()
+
+/obj/structure/curtain/update_icon_state()
+	icon_state = "[icon_type]-[open ? "open" : "closed"]"
+	return ..()
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
@@ -678,7 +678,7 @@
 	return TRUE
 
 
-/obj/structure/curtain/attack_hand(mob/user)
+/obj/structure/curtain/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -751,5 +751,5 @@
 	if(opaque_closed)
 		set_opacity(TRUE)
 
-/obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user)
+/obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
 		return

@@ -46,26 +46,29 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
+/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!enemies.len && DT_PROB(0.5, delta_time))
 			Retaliate()
 
-		if(enemies.len && prob(10))
+		if(enemies.len && DT_PROB(5, delta_time))
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat == CONSCIOUS)
-		udder.generateMilk()
-		eat_plants()
-		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-				var/step = get_step(src, direction)
-				if(step)
-					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
-						Move(step, get_dir(src, step))
+	if(stat != CONSCIOUS)
+		return
+
+	udder.generateMilk()
+	eat_plants()
+	if(pulledby)
+		return
+
+	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+		var/step = get_step(src, direction)
+		if(step && ((locate(/obj/structure/spacevine) in step) || (locate(/obj/structure/glowshroom) in step)))
+			Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
@@ -173,19 +176,19 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
-/mob/living/simple_animal/cow/Life()
+/mob/living/simple_animal/cow/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M, modifiers)
+/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/user, list/modifiers)
 	if(!stat && LAZYACCESS(modifiers, RIGHT_CLICK) && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
+		user.visible_message("<span class='warning'>[user] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
-		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
+		to_chat(src, "<span class='userdanger'>You are tipped over by [user]!</span>")
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = icon_dead
-		addtimer(CALLBACK(src, .proc/cow_tipped, M), rand(20,50))
+		addtimer(CALLBACK(src, .proc/cow_tipped, user), rand(20,50))
 
 	else
 		..()
@@ -221,10 +224,10 @@
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
 ///Give intense wisdom to the attacker if they're being friendly about it
-/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
-	if(!stat && !M.combat_mode)
-		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
-		M.mind?.adjust_experience(pick(GLOB.skill_types), 500)
+/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/user, list/modifiers)
+	if(!stat && !user.combat_mode)
+		to_chat(user, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
+		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
 		do_smoke(1, get_turf(src))
 		qdel(src)
 		return
@@ -277,17 +280,17 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life()
+/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(1,2)
+		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life()
+/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	amount_grown = 0
 
@@ -366,16 +369,16 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
+/mob/living/simple_animal/chicken/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type)
+	if((!stat && DT_PROB(1.5, delta_time) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6,6)
-		E.pixel_y = rand(-6,6)
+		E.pixel_x = rand(-6, 6)
+		E.pixel_y = rand(-6, 6)
 		if(eggsFertile)
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)

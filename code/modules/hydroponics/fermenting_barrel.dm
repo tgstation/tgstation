@@ -57,24 +57,23 @@
 	else
 		return ..()
 
-/obj/structure/fermenting_barrel/attack_hand(mob/user)
-	if(can_open)
-		open = !open
-		if(open)
-			reagents.flags &= ~(DRAINABLE)
-			reagents.flags |= REFILLABLE | TRANSPARENT
-			to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
-		else
-			reagents.flags |= DRAINABLE
-			reagents.flags &= ~(REFILLABLE | TRANSPARENT)
-			to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
-	update_icon()
+/obj/structure/fermenting_barrel/attack_hand(mob/user, list/modifiers)
+	if(!can_open)
+		return
+	open = !open
+	if(open)
+		reagents.flags &= ~(DRAINABLE)
+		reagents.flags |= REFILLABLE | TRANSPARENT
+		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
+	else
+		reagents.flags |= DRAINABLE
+		reagents.flags &= ~(REFILLABLE | TRANSPARENT)
+		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
+	update_appearance()
 
 /obj/structure/fermenting_barrel/update_icon_state()
-	if(open)
-		icon_state = "barrel_open"
-	else
-		icon_state = "barrel"
+	icon_state = open ? "barrel_open" : "barrel"
+	return ..()
 
 /datum/crafting_recipe/fermenting_barrel
 	name = "Wooden Barrel"
