@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Flex, NoticeBox, NumberInput, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, NoticeBox, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -30,20 +30,23 @@ const ShoppingTab = (props, context) => {
       <Section mb={-0.9}>
         <Stack.Item>
           <Stack>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
+                fluid
                 color="green"
                 content="Fruits and Veggies"
                 onClick={() => setShopIndex(1)} />
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
+                fluid
                 color="white"
                 content="Milk and Eggs"
                 onClick={() => setShopIndex(2)} />
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
+                fluid
                 color="olive"
                 content="Sauces and Reagents"
                 onClick={() => setShopIndex(3)} />
@@ -108,8 +111,17 @@ const CheckoutTab = (props, context) => {
             <Stack.Item textAlign="center">
               Checkout list:
             </Stack.Item>
-            {checkout_list.length && (
-              <Divider />
+            <Divider />
+            {!checkout_list.length && (
+              <>
+                <Box align="center" mt="15%" fontSize="40px">
+                  Nothing!
+                </Box>
+                <br />
+                <Box align="center" mt={2} fontSize="15px">
+                  (Go order something, will ya?)
+                </Box>
+              </>
             )}
             <Stack.Item grow>
               {checkout_list.map(item => (
@@ -127,11 +139,10 @@ const CheckoutTab = (props, context) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        animated
                         value={item.amt && item.amt || 0}
                         width="41px"
                         minValue={0}
-                        maxValue={50}
+                        maxValue={item.cost > 10 && 50 || 10}
                         onChange={(e, value) => act('cart_set', {
                           target: item.ref,
                           amt: value,
@@ -142,7 +153,6 @@ const CheckoutTab = (props, context) => {
                 </Stack.Item>
               ))}
             </Stack.Item>
-
           </Stack>
         </Section>
       </Stack.Item>
@@ -163,7 +173,7 @@ const CheckoutTab = (props, context) => {
                 fluid
                 color="yellow"
                 content="Express"
-                onClick={() => act('purchase')} />
+                onClick={() => act('express')} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -172,8 +182,31 @@ const CheckoutTab = (props, context) => {
   );
 };
 
+const OrderSent = (props, context) => {
+  const { act, data } = useBackend(context);
+  return (
+    <Dimmer>
+      <Stack vertical>
+        <Stack.Item>
+          <Icon
+            color="green"
+            name="plane-arrival"
+            size={10}
+          />
+        </Stack.Item>
+        <Stack.Item mt={40} fontSize="15px" color="green">
+          Order sent! Locked until the cargo shuttle arrives...
+        </Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
+};
+
 export const ProduceConsole = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    already_ordered,
+  } = data;
   const [
     tabIndex,
     setTabIndex,
@@ -185,6 +218,9 @@ export const ProduceConsole = (props, context) => {
       width={400}
       height={400}>
       <Window.Content>
+        {!!already_ordered && (
+          <OrderSent />
+        )}
         <Stack vertical fill>
           <Stack.Item>
             <Section fill>

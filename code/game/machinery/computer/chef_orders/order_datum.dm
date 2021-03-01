@@ -26,15 +26,45 @@
 
 //Fruits and Veggies
 
-/datum/orderable_item/potatoes
+/datum/orderable_item/potato
 	name = "Potato"
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/food/grown/potato
 
-/datum/orderable_item/tomatoes
+/datum/orderable_item/tomato
 	name = "Tomato"
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/food/grown/tomato
+
+/datum/orderable_item/carrot
+	name = "Carrot"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/carrot
+
+/datum/orderable_item/eggplant
+	name = "Eggplant"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/eggplant
+
+/datum/orderable_item/mushroom
+	name = "Plump Helmet"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/mushroom/plumphelmet
+
+/datum/orderable_item/cabbage
+	name = "Cabbage"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/cabbage
+
+/datum/orderable_item/beets
+	name = "Onion"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/onion
+
+/datum/orderable_item/apple
+	name = "Apple"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance =/obj/item/food/grown/apple
 
 /datum/orderable_item/garlic
 	name = "Garlic"
@@ -81,3 +111,20 @@
 	item_instance = /obj/item/reagent_containers/food/condiment/enzyme
 	cost_per_order = 40
 
+/datum/orderable_item/salt
+	name = "Salt Shaker"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/saltshaker
+	cost_per_order = 15
+
+/datum/orderable_item/pepper
+	name = "Pepper Mill"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/peppermill
+	cost_per_order = 15
+
+/datum/orderable_item/soysauce
+	name = "Soy Sauce"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/soysauce
+	cost_per_order = 15

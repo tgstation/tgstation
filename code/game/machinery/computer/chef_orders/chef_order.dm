@@ -36,9 +36,12 @@
 		ui = new(user, src, "ProduceConsole", name)
 		ui.open()
 
-/obj/machinery/computer/chef_order/ui_static_data(mob/user)
+/obj/machinery/computer/chef_order/ui_data(mob/user)
 	. = ..()
 	.["already_ordered"] = SSshuttle.chef_groceries.len
+
+/obj/machinery/computer/chef_order/ui_static_data(mob/user)
+	. = ..()
 	.["total_cost"] = get_total_cost()
 	.["order_datums"] = list()
 	for(var/datum/orderable_item/item as anything in order_datums)
@@ -55,9 +58,9 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/chef = usr
-	if(!istype(chef))
+	if(!isliving(usr))
 		return
+	var/mob/living/chef = usr
 	//this is null if the action doesn't need it (purchase, quickpurchase)
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in order_datums
 	switch(action)
@@ -67,7 +70,7 @@
 				grocery_list -= wanted_item
 			update_static_data(chef)
 		if("purchase")
-			if(SSshuttle.chef_groceries.len)
+			if(SSshuttle.chef_groceries.len || !grocery_list.len)
 				return
 			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
 			if(!chef_card || !chef_card.registered_account)
@@ -77,8 +80,29 @@
 			if(!chef_card.registered_account.adjust_money(-final_cost))
 				say("Sorry, but you do not have enough money.")
 				return
-			say("purchased [english_list(grocery_list)] items")
+			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			SSshuttle.chef_groceries = grocery_list.Copy()
+			grocery_list.Cut()
+			update_static_data(chef)
+		if("express")
+			if(SSshuttle.chef_groceries.len || !grocery_list.len)
+				return
+			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
+			if(!chef_card || !chef_card.registered_account)
+				say("No bank account detected!")
+				return
+			var/final_cost = get_total_cost()
+			final_cost *= 1.25
+			if(!chef_card.registered_account.adjust_money(-final_cost))
+				say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
+				return
+			var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+			pod.explosionSize = list(0,0,0,0)
+			for(var/datum/orderable_item/item as anything in grocery_list)//every order
+				for(var/amt in 1 to grocery_list[item])//every order amount
+					new item.item_instance.type(pod)
+			var/turf/T = get_turf(chef)
+			new /obj/effect/pod_landingzone(T, pod)
 			grocery_list.Cut()
 			update_static_data(chef)
 	. = TRUE
