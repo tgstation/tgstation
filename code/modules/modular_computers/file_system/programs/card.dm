@@ -18,8 +18,6 @@
 	var/authenticated_user
 	/// The regions this program has access to based on the authenticated ID.
 	var/list/region_access = list()
-	/// List of subordinate jobs for head roles on the authenticated ID.
-	var/list/head_subordinates = list()
 	/// List of job templates that can be applied to ID cards from this program.
 	var/list/job_templates = list()
 	/// Which departments this program has access to. See region defines.
@@ -59,14 +57,6 @@
 			region_access |= info["regions"]
 			head_types |= info["head"]
 			job_templates |= info["templates"]
-
-	head_subordinates.Cut()
-	if(length(head_types))
-		for(var/occupation in SSjob.occupations)
-			var/datum/job/job = occupation
-			for(var/head in head_types)
-				if(head in job.department_head)
-					head_subordinates += job.title
 
 	if(length(region_access))
 		minor = TRUE
@@ -162,7 +152,7 @@
 			if(!computer || !authenticated_user)
 				return TRUE
 			if(minor)
-				if(!(target_id_card.trim?.assignment in head_subordinates) && target_id_card.trim?.assignment != "Assistant")
+				if(!(target_id_card.trim?.type in job_templates) && target_id_card.trim?.assignment != "Assistant")
 					to_chat(usr, "<span class='notice'>Software error: You do not have the necessary permissions to demote this card.</span>")
 					return TRUE
 
