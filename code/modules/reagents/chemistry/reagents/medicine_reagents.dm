@@ -1443,18 +1443,18 @@
 	description = "Induces a cryostasis in the patient's organs, preventing them from decaying while dead. Slows down surgery while in a patient."
 	taste_description = "ice"
 	ph = 8.6
-	creation_purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PUIRTY
 	metabolization_rate = 0.05 * REM
 	color = "#03f4fc"
 	impure_chem = null
-	inverse_chem_val = 0.5 //0.43 is the minimum that is possible really
+	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/cryosenium
 	failed_chem = null
 	chemical_flags = REAGENT_DEAD_PROCESS
 
 /datum/reagent/medicine/cryosenium/on_mob_add(mob/living/consumer, amount)
 	. = ..()
-	consumer.mob_surgery_speed_mod = (1-normalise_creation_purity())*0.5 //0.33 - 0.66
+	consumer.mob_surgery_speed_mod = (0.4 * (1 - creation_purity))+0.1 //10% - 30% slower
 	consumer.color = "#03f4fc"
 
 /datum/reagent/medicine/cryosenium/on_mob_delete(mob/living/consumer)
