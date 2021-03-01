@@ -35,11 +35,14 @@
 	if((usage_flags & SHOCK_REQUIREMENT_ITEM) && QDELETED(input_item))
 		return COMPONENT_INCOMPATIBLE
 
+	if(HAS_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE))
+		return COMPONENT_INCOMPATIBLE
+
 	if(usage_flags & SHOCK_REQUIREMENT_ITEM)
 		required_object = input_item
 		required_object.Move(parent_as_movable)
 		RegisterSignal(required_object, COMSIG_PARENT_PREQDELETED, .proc/delete_self)
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/move_required_object_from_nullspace)
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/move_required_object_from_contents)
 
 		if(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECEIVED)
 			shock_on_loop = FALSE
@@ -59,8 +62,9 @@
 		RegisterSignal(parent, signal_to_register_from_parent, .proc/shock_on_demand)
 		requested_signal_parent_emits = signal_to_register_from_parent
 
-	requested_overlays = overlays_to_add
-	parent_as_movable.add_overlay(requested_overlays)
+	if(overlays_to_add)
+		requested_overlays = overlays_to_add
+		parent_as_movable.add_overlay(requested_overlays)
 
 	parent_as_movable.name = "electrified [initial(parent_as_movable.name)]"
 
@@ -86,6 +90,8 @@
 
 	if(required_object)
 		UnregisterSignal(required_object, list(COMSIG_PARENT_PREQDELETED, COMSIG_ASSEMBLY_PULSED))
+		if(parent_as_movable && (required_object in parent_as_movable.contents))
+			required_object.Move(parent_as_movable.loc)
 
 	required_object = null
 	STOP_PROCESSING(SSprocessing, src)
@@ -94,10 +100,11 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/component/electrified_buckle/proc/move_required_object_from_nullspace()
+/datum/component/electrified_buckle/proc/move_required_object_from_contents(datum/source, mob/living/user, obj/item/tool, tool_type)
 	SIGNAL_HANDLER
 	var/atom/movable/parent_as_movable = parent
 	if(!QDELETED(parent_as_movable))
+		tool.play_tool_sound(parent_as_movable)
 		required_object.Move(parent_as_movable.loc)
 	delete_self()
 

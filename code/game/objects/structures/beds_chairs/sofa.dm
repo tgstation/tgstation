@@ -10,6 +10,14 @@
 	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
 	return ..()
 
+/obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user)
+	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
+		return
+	var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1)
+	AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
+	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
+		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
+
 /obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
 	. = ..()
 	update_armrest()
