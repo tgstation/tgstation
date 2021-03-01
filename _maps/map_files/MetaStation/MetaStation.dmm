@@ -34489,7 +34489,6 @@
 /area/service/chapel/office)
 "eOi" = (
 /obj/structure/table/wood,
-/obj/item/stamp/captain,
 /obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
@@ -49416,11 +49415,23 @@
 /area/engineering/storage/tcomms)
 "kTZ" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko{
-	pixel_x = -6;
-	pixel_y = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 13;
+	pixel_y = 2
+	},
+/obj/item/food/hotcrossbun{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "kUc" = (
@@ -54776,11 +54787,10 @@
 /area/engineering/storage/tech)
 "nbL" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko{
-	pixel_x = -6;
-	pixel_y = 6
-	},
 /obj/structure/cable,
+/obj/item/modular_computer/laptop/preset/civilian{
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "nbM" = (
@@ -68046,7 +68056,6 @@
 /turf/open/floor/iron,
 /area/security/office)
 "slZ" = (
-/obj/structure/chair/comfy/brown,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine/cult,
 /area/service/library)
@@ -78725,9 +78734,15 @@
 /area/maintenance/aft/secondary)
 "wFR" = (
 /obj/structure/table/glass,
-/obj/item/food/chips,
+/obj/item/food/chips{
+	pixel_x = 8
+	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko{
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/engineering/break_room)
