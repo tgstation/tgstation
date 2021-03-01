@@ -65,17 +65,17 @@ const ShoppingTab = (props, context) => {
                         {"\""+item.desc+"\""}
                         <br/>
                         <Box textAlign="right">
-                          {item.name+" cost "+item.cost+" per order."}
+                          {item.name+" costs "+item.cost+" per order."}
                         </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
                         animated
-                        value={item.amt && item.amt}
+                        value={item.amt && item.amt || 0}
                         width="41px"
                         minValue={0}
-                        maxValue={100}
-                        onChange={(value) => act('set_code', {
+                        maxValue={50}
+                        onChange={(e, value) => act('cart_set', {
                           target: item.ref,
                           amt: value,
                         })} />
@@ -93,10 +93,82 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
+  const {
+    order_datums,
+    total_cost,
+  } = data;
+  const checkout_list = order_datums.filter(food => (
+    food && food.amt
+  ))
   return (
-    <Section fill>
-      Checkout!!
-    </Section>
+    <Stack vertical fill>
+      <Stack.Item grow>
+        <Section fill scrollable>
+          <Stack vertical fill>
+            <Stack.Item textAlign="center">
+              Checkout list:
+            </Stack.Item>
+            {checkout_list.length && (
+              <Divider />
+            )}
+            <Stack.Item grow>
+            {checkout_list.map(item => (
+              <Stack.Item key={item}>
+                  <Stack>
+                    <Stack.Item grow>
+                      {item.name}
+                    </Stack.Item>
+                    <Stack.Item mt={-1} color="label" fontSize="10px">
+                        {"\""+item.desc+"\""}
+                        <br/>
+                        <Box textAlign="right">
+                          {item.name+" costs "+item.cost+" per order."}
+                        </Box>
+                    </Stack.Item>
+                    <Stack.Item mt={-0.5}>
+                      <NumberInput
+                        animated
+                        value={item.amt && item.amt || 0}
+                        width="41px"
+                        minValue={0}
+                        maxValue={50}
+                        onChange={(e, value) => act('cart_set', {
+                          target: item.ref,
+                          amt: value,
+                        })} />
+                    </Stack.Item>
+                  </Stack>
+                <Divider />
+              </Stack.Item>
+            ))}
+            </Stack.Item>
+
+          </Stack>
+        </Section>
+      </Stack.Item>
+      <Stack.Item>
+        <Section>
+          <Stack>
+            <Stack.Item mt={0.5}>
+              Total Cost: {total_cost}
+            </Stack.Item>
+            <Stack.Item grow textAlign="center">
+              <Button
+                fluid
+                content="Purchase"
+                onClick={() => act('purchase')} />
+            </Stack.Item>
+            <Stack.Item textAlign="center">
+              <Button
+                fluid
+                color="yellow"
+                content="Express"
+                onClick={() => act('purchase')} />
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 

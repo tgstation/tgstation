@@ -38,6 +38,7 @@
 
 /obj/machinery/computer/chef_order/ui_static_data(mob/user)
 	. = ..()
+	.["already_ordered"] = SSshuttle.chef_groceries.len
 	.["total_cost"] = get_total_cost()
 	.["order_datums"] = list()
 	for(var/datum/orderable_item/item as anything in order_datums)
@@ -66,13 +67,18 @@
 				grocery_list -= wanted_item
 			update_static_data(chef)
 		if("purchase")
+			if(SSshuttle.chef_groceries.len)
+				return
 			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
+			if(!chef_card || !chef_card.registered_account)
+				say("No bank account detected!")
+				return
 			var/final_cost = get_total_cost()
 			if(!chef_card.registered_account.adjust_money(-final_cost))
 				say("Sorry, but you do not have enough money.")
 				return
 			say("purchased [english_list(grocery_list)] items")
+			SSshuttle.chef_groceries = grocery_list.Copy()
 			grocery_list.Cut()
 			update_static_data(chef)
-	to_chat(world, action)
 	. = TRUE

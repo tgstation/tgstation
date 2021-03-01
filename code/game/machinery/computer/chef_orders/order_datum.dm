@@ -45,19 +45,19 @@
 
 /datum/orderable_item/milk
 	name = "Milk"
-	category_index = CATEGORY_FRUITS_VEGGIES
+	category_index = CATEGORY_MILK_EGGS
 	item_instance = /obj/item/reagent_containers/food/condiment/milk
 	cost_per_order = 30
 
 /datum/orderable_item/soymilk
 	name = "Soy Milk"
-	category_index = CATEGORY_FRUITS_VEGGIES
+	category_index = CATEGORY_MILK_EGGS
 	item_instance = /obj/item/reagent_containers/food/condiment/soymilk
 	cost_per_order = 30
 
 /datum/orderable_item/eggs
 	name = "Egg Carton"
-	category_index = CATEGORY_FRUITS_VEGGIES
+	category_index = CATEGORY_MILK_EGGS
 	item_instance = /obj/item/storage/fancy/egg_box
 	cost_per_order = 40
 
@@ -69,8 +69,15 @@
 	item_instance = /obj/item/reagent_containers/food/condiment/flour
 	cost_per_order = 30
 
+/datum/orderable_item/sugar
+	name = "Sugar Sack"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/sugar
+	cost_per_order = 30
+
 /datum/orderable_item/enzyme
 	name = "Universal Enzyme"
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/enzyme
 	cost_per_order = 40
+

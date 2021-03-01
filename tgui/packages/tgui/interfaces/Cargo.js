@@ -1,6 +1,6 @@
 import { toArray } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
+import { AnimatedNumber, Box, Button, Divider, Flex, LabeledList, NoticeBox, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -73,6 +73,7 @@ export const CargoContent = (props, context) => {
 const CargoStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    grocery,
     away,
     docked,
     loan,
@@ -98,7 +99,10 @@ const CargoStatus = (props, context) => {
         <LabeledList.Item label="Shuttle">
           {docked && !requestonly && can_send &&(
             <Button
+              color={grocery && "orange" || "green"}
               content={location}
+              tooltip={grocery && "The chef is waiting on their grocery supplies." || ""}
+              tooltipPosition="right"
               onClick={() => act('send')} />
           ) || location}
         </LabeledList.Item>
