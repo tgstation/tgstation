@@ -347,14 +347,14 @@
 * Freezes the player in a block of ice
 * Will be removed when the required reagent is removed too
 */
-/obj/screen/alert/status_effect/freon/stasis/cryosenium
+/atom/movable/screen/alert/status_effect/freon/cryosenium
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! You will be free when the chem runs out."
 
 /datum/status_effect/cryosenium
 	id = "cryosenium"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 600 //Will remove self when reagent is processed, though limited to 60s to be safe. I suppose if you're freezing the dying you want time but I'd rather have this incase oops 1000u
-	alert_type = /obj/screen/alert/status_effect/freon/stasis/cryosenium
+	alert_type = /atom/movable/screen/alert/status_effect/freon/cryosenium
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/cryosenium/on_apply()
