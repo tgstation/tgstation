@@ -429,3 +429,41 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "portal exit"
 	icon_state = "portal_exit"
 	var/id
+
+
+/obj/effect/landmark/start/hangover
+	name = "hangover spawn"
+	icon_state = "hangover_spawn"
+
+/obj/effect/landmark/start/hangover/Initialize()
+	. = ..()
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
+		return
+	if(prob(60))
+		new /obj/effect/decal/cleanable/vomit(get_turf(src))
+
+///Spawns the mob with some drugginess/drunkeness, and some disgust.
+/obj/effect/landmark/start/hangover/proc/make_hungover(mob/M)
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/spawned_carbon = M
+	if(prob(50))
+		spawned_carbon.adjust_drugginess(rand(15, 20))
+	else
+		spawned_carbon.drunkenness += rand(15, 25)
+	spawned_carbon.adjust_disgust(rand(5, 60)) //How hungover are you?
+
+/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/M, buckle)
+	. = ..()
+	make_hungover(M)
+
+/obj/effect/landmark/start/hangover/closet
+	name = "hangover spawn closet"
+	icon_state = "hangover_spawn_closet"
+
+/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/M, buckle)
+	M.make_hungover(M)
+	for(var/obj/structure/closet in contents)
+		M.forceMove(closet)
+		return //If we found a closet return
+	..() //Call parent as fallback

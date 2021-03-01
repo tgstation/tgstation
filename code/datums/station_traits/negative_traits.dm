@@ -24,7 +24,7 @@
 	show_in_report = TRUE
 	report_message = "Sorry for that, we didn't expect to fly into that vomiting goose while bringing you to your new station."
 	trait_to_give = STATION_TRAIT_LATE_ARRIVALS
-	blacklist = list(/datum/station_trait/random_spawns)
+	blacklist = list(/datum/station_trait/random_spawns, /datum/station_trait/hangover)
 
 /datum/station_trait/random_spawns
 	name = "Drive-by landing"
@@ -33,7 +33,16 @@
 	show_in_report = TRUE
 	report_message = "Sorry for that, we missed your station by a few miles, so we just launched you towards your station in pods. Hope you don't mind!"
 	trait_to_give = STATION_TRAIT_RANDOM_ARRIVALS
-	blacklist = list(/datum/station_trait/late_arrivals)
+	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/hangover)
+
+/datum/station_trait/hangover
+	name = "Hangover"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 200000
+	show_in_report = TRUE
+	report_message = "Ohh....Man....That mandatory office party from last shift...God that was awesome..I woke up in some random toilet 3 sectors away..."
+	trait_to_give = STATION_TRAIT_HANGOVER
+	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/random_spawns))
 
 /datum/station_trait/blackout
 	name = "Blackout"

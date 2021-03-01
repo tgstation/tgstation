@@ -70,6 +70,9 @@
 	/// Should this job be allowed to be picked for the bureaucratic error event?
 	var/allow_bureaucratic_error = TRUE
 
+	///Is this job affected by weird spawns like the ones from station traits
+	var/random_spawns_possible = TRUE
+
 /datum/job/New()
 	. = ..()
 	var/list/jobs_changes = get_map_changes()
