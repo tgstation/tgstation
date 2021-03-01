@@ -2964,6 +2964,7 @@
 #include "code\modules\reagents\chem_splash.dm"
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
+#include "code\modules\reagents\chemistry\chem_wiki_render.dm"
 #include "code\modules\reagents\chemistry\colors.dm"
 #include "code\modules\reagents\chemistry\equilibrium.dm"
 #include "code\modules\reagents\chemistry\holder.dm"
