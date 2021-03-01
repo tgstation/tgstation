@@ -227,6 +227,15 @@
 	var/pda_slot = ITEM_SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	// If mandatory dufflebags are enabled, we try and respect their
+	// grey vs department preference, but ENFORCE dufflebags.
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_DUFFLEBAGS))
+		switch(H.backpack)
+			if(GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL)
+				H.backpack = GDUFFELBAG
+			if(DSATCHEL, DDUFFELBAG, DBACKPACK)
+				H.backpack = DDUFFELBAG
+
 	switch(H.backpack)
 		if(GBACKPACK)
 			back = /obj/item/storage/backpack //Grey backpack

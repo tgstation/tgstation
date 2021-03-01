@@ -90,3 +90,24 @@
 /datum/station_trait/slow_shuttle/on_round_start()
 	. = ..()
 	SSshuttle.supply.callTime *= 1.5
+
+/datum/station_trait/dufflebags
+	name = "Dufflebags"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	show_in_report = TRUE
+	trait_to_give = STATION_TRAIT_DUFFLEBAGS
+
+/datum/station_trait/dufflebags/New()
+	. = ..()
+	report_message = pick(list(
+		"Nanotrasen are interested if the higher volume of dufflebags affect employee productivity; thus all crewmembers have been equipped with them.",
+		"Today's shift is sponsored by DuffleCo.",
+		"An ambassador from the Wizard Federation broke into the employee equipment factory, but only replaced all the bags with dufflebags.",
+		"Cloning is illegal; Nanotrasen doesn't clone new employees; Nanotrasen didn't make a mistake with the cloning template making everyone irrationally prefer dufflebags.",
+		"In a bid to drive up sales of satchels and backpacks, the Nanotrasen Economic Divison has made dufflebags the mandatory shiftstart equipment selection.",
+		"u a big man and need a big bag",
+		"dufflebags cost the company less and therefore are in your best interest to have because you love the company dont you? you wouldnt want to cause us pain? you arent a bad person and love helping the company yes?",
+		"We want you to and that is enough reason.",
+		"Someone on the Commander team keeps trying to have \"duffleskirt\" catch on. To shut them up, we're making you all have dufflebags this shift.",
+	))
