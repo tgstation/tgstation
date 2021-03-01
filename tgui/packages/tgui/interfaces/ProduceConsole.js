@@ -24,7 +24,7 @@ const ShoppingTab = (props, context) => {
   ] = useLocalState(context, 'shop-index', 1);
   const mapped_food = order_datums.filter(food => (
     food && food.cat === shopIndex
-  ))
+  ));
   return (
     <Stack fill vertical>
       <Section mb={-0.9}>
@@ -57,30 +57,30 @@ const ShoppingTab = (props, context) => {
             <Divider />
             {mapped_food.map(item => (
               <Stack.Item key={item}>
-                  <Stack>
-                    <Stack.Item grow>
-                      {item.name}
-                    </Stack.Item>
-                    <Stack.Item mt={-1} color="label" fontSize="10px">
-                        {"\""+item.desc+"\""}
-                        <br/>
-                        <Box textAlign="right">
-                          {item.name+" costs "+item.cost+" per order."}
-                        </Box>
-                    </Stack.Item>
-                    <Stack.Item mt={-0.5}>
-                      <NumberInput
-                        animated
-                        value={item.amt && item.amt || 0}
-                        width="41px"
-                        minValue={0}
-                        maxValue={50}
-                        onChange={(e, value) => act('cart_set', {
-                          target: item.ref,
-                          amt: value,
-                        })} />
-                    </Stack.Item>
-                  </Stack>
+                <Stack>
+                  <Stack.Item grow>
+                    {item.name}
+                  </Stack.Item>
+                  <Stack.Item mt={-1} color="label" fontSize="10px">
+                    {"\""+item.desc+"\""}
+                    <br />
+                    <Box textAlign="right">
+                      {item.name+" costs "+item.cost+" per order."}
+                    </Box>
+                  </Stack.Item>
+                  <Stack.Item mt={-0.5}>
+                    <NumberInput
+                      animated
+                      value={item.amt && item.amt || 0}
+                      width="41px"
+                      minValue={0}
+                      maxValue={50}
+                      onChange={(e, value) => act('cart_set', {
+                        target: item.ref,
+                        amt: value,
+                      })} />
+                  </Stack.Item>
+                </Stack>
                 <Divider />
               </Stack.Item>
             ))}
@@ -99,7 +99,7 @@ const CheckoutTab = (props, context) => {
   } = data;
   const checkout_list = order_datums.filter(food => (
     food && food.amt
-  ))
+  ));
   return (
     <Stack vertical fill>
       <Stack.Item grow>
@@ -112,18 +112,18 @@ const CheckoutTab = (props, context) => {
               <Divider />
             )}
             <Stack.Item grow>
-            {checkout_list.map(item => (
-              <Stack.Item key={item}>
+              {checkout_list.map(item => (
+                <Stack.Item key={item}>
                   <Stack>
                     <Stack.Item grow>
                       {item.name}
                     </Stack.Item>
                     <Stack.Item mt={-1} color="label" fontSize="10px">
-                        {"\""+item.desc+"\""}
-                        <br/>
-                        <Box textAlign="right">
-                          {item.name+" costs "+item.cost+" per order."}
-                        </Box>
+                      {"\""+item.desc+"\""}
+                      <br />
+                      <Box textAlign="right">
+                        {item.name+" costs "+item.cost+" per order."}
+                      </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
@@ -138,9 +138,9 @@ const CheckoutTab = (props, context) => {
                         })} />
                     </Stack.Item>
                   </Stack>
-                <Divider />
-              </Stack.Item>
-            ))}
+                  <Divider />
+                </Stack.Item>
+              ))}
             </Stack.Item>
 
           </Stack>
