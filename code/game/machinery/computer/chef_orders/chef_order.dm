@@ -9,17 +9,25 @@
 	var/list/order_datums = list()
 	var/list/grocery_list = list()
 
+	var/obj/item/radio/radio
+	var/radio_channel = RADIO_CHANNEL_SUPPLY
+
 	light_color = LIGHT_COLOR_ORANGE
 
 /obj/machinery/computer/chef_order/Initialize()
 	. = ..()
+	radio = new(src)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.recalculateChannels()
 
 	for(var/path in subtypesof(/datum/orderable_item))
 		order_datums += new path
 
 /obj/machinery/computer/chef_order/Destroy()
-	. = ..()
+	QDEL_NULL(radio)
 	QDEL_LIST(order_datums)
+	. = ..()
 
 /obj/machinery/computer/chef_order/proc/get_total_cost()
 	. = 0
@@ -81,6 +89,8 @@
 				say("Sorry, but you do not have enough money.")
 				return
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+			var/message = "The chef has ordered groceries! Please make sure it gets to them pronto!"
+			radio.talk_into(src, message, radio_channel)
 			SSshuttle.chef_groceries = grocery_list.Copy()
 			grocery_list.Cut()
 			update_static_data(chef)

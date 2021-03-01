@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NoticeBox, NumberInput, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;

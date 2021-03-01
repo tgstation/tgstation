@@ -1,6 +1,6 @@
 import { toArray } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Divider, Flex, LabeledList, NoticeBox, Section, Table, Tabs } from '../components';
+import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 

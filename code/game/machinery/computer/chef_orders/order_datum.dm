@@ -91,6 +91,12 @@
 	item_instance = /obj/item/storage/fancy/egg_box
 	cost_per_order = 40
 
+/datum/orderable_item/fillet
+	name = "Fish Fillet"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/fishmeat
+	cost_per_order = 12
+
 //Reagents
 
 /datum/orderable_item/flour
