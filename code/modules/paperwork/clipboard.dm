@@ -141,7 +141,6 @@
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
-	to_chat(usr, "Executing action [action]")
 	switch(action)
 		// Take the pen out
 		if("remove_pen")
