@@ -166,7 +166,7 @@
 
 /datum/chemical_reaction/medicine/pyroxadone
 	results = list(/datum/reagent/medicine/pyroxadone = 2)
-	required_reagents = list(/datum/reagent/medicine/cryoxadone = 1, /datum/reagent/toxin/slimejelly = 1)
+	required_reagents = list(/datum/reagent/medicine/cryoxadone = 1, /datum/reagent/clf3 = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE |REACTION_TAG_BURN | REACTION_TAG_TOXIN | REACTION_TAG_OXY | REACTION_TAG_CLONE
 
 /datum/chemical_reaction/medicine/clonexadone
