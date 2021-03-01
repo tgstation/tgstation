@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Janitor cyborgs are no longer capable of placing their bucket module on their own head, and feeble attempts to replace a no drop hat atop a cyborg's head will be met with failure."
