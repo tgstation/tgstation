@@ -43,10 +43,13 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	toolbox_color = new_toolbox_color
-	update_icon()
-	var/datum/job/engineer/J = new/datum/job/engineer
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
+	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
+
 	if(toolbox_color == "s")
 		health = 100
 		maxHealth = 100
@@ -64,11 +67,11 @@
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/bot_reset()
 	..()
@@ -265,9 +268,9 @@
 		if(path.len == 0)
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, 30, id=access_card,simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, 30, id=access_card,simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -388,7 +391,8 @@
 	if(!QDELETED(src))
 		go_idle()
 
-/mob/living/simple_animal/bot/floorbot/update_icon()
+/mob/living/simple_animal/bot/floorbot/update_icon_state()
+	. = ..()
 	icon_state = "[toolbox_color]floorbot[on]"
 
 /mob/living/simple_animal/bot/floorbot/explode()

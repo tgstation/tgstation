@@ -369,17 +369,19 @@
 	turn_off() //Falsey value, turn off.
 
 
-///Triggered right before the parent light flags change.
+///Triggered right after the parent light flags change.
 /datum/component/overlay_lighting/proc/on_light_flags_change(atom/source, old_flags)
 	SIGNAL_HANDLER
 	var/new_flags = source.light_flags
 	var/atom/movable/movable_parent = parent
-	if(new_flags & LIGHT_ATTACHED)
-		if(!(movable_parent.light_flags & LIGHT_ATTACHED)) //Gained the LIGHT_ATTACHED property.
-			overlay_lighting_flags |= LIGHTING_ATTACHED
-			if(ismovable(movable_parent.loc))
-				set_parent_attached_to(movable_parent.loc)
-	else if(movable_parent.light_flags & LIGHT_ATTACHED) //Lost the LIGHT_ATTACHED property.
+	if(!((new_flags ^ old_flags) & LIGHT_ATTACHED))
+		return
+
+	if(new_flags & LIGHT_ATTACHED) // Gained the [LIGHT_ATTACHED] property
+		overlay_lighting_flags |= LIGHTING_ATTACHED
+		if(ismovable(movable_parent.loc))
+			set_parent_attached_to(movable_parent.loc)
+	else // Lost the [LIGHT_ATTACHED] property
 		overlay_lighting_flags &= ~LIGHTING_ATTACHED
 		set_parent_attached_to(null)
 

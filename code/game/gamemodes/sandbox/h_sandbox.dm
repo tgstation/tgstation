@@ -180,7 +180,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
 				var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)
-				hsb.update_icon() // hackish but it wasn't meant to be spawned I guess?
+				hsb.update_appearance() // hackish but it wasn't meant to be spawned I guess?
 
 			//
 			// Stacked Materials
@@ -205,11 +205,10 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// All access ID
 			//
 			if("hsbaaid")
-				var/obj/item/card/id/gold/ID = new(usr.loc)
+				var/obj/item/card/id/advanced/debug/ID = new(usr.loc)
 				ID.registered_name = usr.real_name
-				ID.assignment = "Sandbox"
-				ID.access = get_all_accesses()
 				ID.update_label()
+				ID.update_icon()
 
 			//
 			// RCD - starts with full clip
@@ -301,3 +300,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")
+
+/// Simple helper trim for sandbox mode's ID cards. Comes with station AA.
+/datum/id_trim/sandbox
+	assignment = "Sandbox"
+	trim_state = "trim_captain"
+
+/datum/id_trim/sandbox/New()
+	. = ..()
+	access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))

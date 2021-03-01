@@ -329,8 +329,6 @@
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
 
-
-
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
 	desc = "Stem the tide with four Security Barrier grenades. Requires Security access to open."
@@ -1615,6 +1613,22 @@
 					/obj/item/reagent_containers/food/drinks/bottle/champagne)
 	crate_name = "wedding crate"
 
+/// Box of 7 grey IDs.
+/datum/supply_pack/service/greyidbox
+	name = "Grey ID Card Multipack Cate"
+	desc = "A convenient crate containing a box of cheap ID cards in a handy wallet-sized form factor. Cards come in every colour you can imagne, as long as it's grey."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/box/ids)
+	crate_name = "basic id card crate"
+
+/// Single silver ID.
+/datum/supply_pack/service/silverid
+	name = "Silver ID Card Crate"
+	desc = "Did we forget to hire any Heads of Staff? Recruit your own with this high value ID card capable of holding advanced levels of access in a handy wallet-sized form factor"
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/card/id/advanced/silver)
+	crate_name = "silver id card crate"
+
 /datum/supply_pack/service/emptycrate
 	name = "Empty Crate"
 	desc = "It's an empty crate, for all your storage needs."
@@ -1824,7 +1838,7 @@
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
 				fourfiveeight.boxtag_set = TRUE
-				fourfiveeight.update_icon()
+				fourfiveeight.update_appearance()
 				qdel(P)
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
@@ -1859,7 +1873,7 @@
 			P.pizza = new replacement_type
 			P.boxtag = P.pizza.boxtag
 			P.boxtag_set = TRUE
-			P.update_icon()
+			P.update_appearance()
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \

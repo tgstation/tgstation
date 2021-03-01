@@ -195,30 +195,32 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
 		var/obj/item/card/id/id = null
+
 		if(worn)
 			id = worn.GetID()
 		if(id)
-			id.icon_state = "gold"
-			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-		else
-			id = new /obj/item/card/id/gold(H.loc)
-			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-			id.registered_name = H.real_name
-			id.assignment = "Captain"
-			id.update_label()
+			if(id == worn)
+				worn = null
+			qdel(id)
 
-			if(worn)
-				if(istype(worn, /obj/item/pda))
-					var/obj/item/pda/PDA = worn
-					PDA.id = id
-					id.forceMove(PDA)
-				else if(istype(worn, /obj/item/storage/wallet))
-					var/obj/item/storage/wallet/W = worn
-					W.front_id = id
-					id.forceMove(W)
-					W.update_icon()
-			else
-				H.equip_to_slot(id,ITEM_SLOT_ID)
+		id = new /obj/item/card/id/advanced/debug()
+
+		id.registered_name = H.real_name
+		id.update_label()
+		id.update_icon()
+
+		if(worn)
+			if(istype(worn, /obj/item/pda))
+				var/obj/item/pda/PDA = worn
+				PDA.id = id
+				id.forceMove(PDA)
+			else if(istype(worn, /obj/item/storage/wallet))
+				var/obj/item/storage/wallet/W = worn
+				W.front_id = id
+				id.forceMove(W)
+				W.update_icon()
+		else
+			H.equip_to_slot(id,ITEM_SLOT_ID)
 
 	else
 		alert("Invalid mob")
@@ -534,8 +536,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
-		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+		outfits[initial(O.name)] = path
 
 	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sortList(outfits)
 	if (isnull(dresscode))
@@ -549,8 +550,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/job_outfits = list()
 		for(var/path in job_paths)
 			var/datum/outfit/O = path
-			if(initial(O.can_be_admin_equipped))
-				job_outfits[initial(O.name)] = path
+			job_outfits[initial(O.name)] = path
 
 		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sortList(job_outfits)
 		dresscode = job_outfits[dresscode]
@@ -562,8 +562,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/plasmaman_outfits = list()
 		for(var/path in plasmaman_paths)
 			var/datum/outfit/O = path
-			if(initial(O.can_be_admin_equipped))
-				plasmaman_outfits[initial(O.name)] = path
+			plasmaman_outfits[initial(O.name)] = path
 
 		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sortList(plasmaman_outfits)
 		dresscode = plasmaman_outfits[dresscode]

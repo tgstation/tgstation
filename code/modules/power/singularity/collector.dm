@@ -6,7 +6,7 @@
 #define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
-	desc = "A device which uses Hawking Radiation and plasma to produce power."
+	desc = "A device which uses radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
@@ -97,7 +97,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		loaded_tank = W
-		update_icon()
+		update_appearance()
 	else if(W.GetID())
 		if(allowed(user))
 			if(active)
@@ -171,7 +171,7 @@
 	if(active)
 		toggle_power()
 	else
-		update_icon()
+		update_appearance()
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
@@ -185,7 +185,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		. += "on"
+		. += loaded_tank ? "on" : "error"
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
 	active = !active
@@ -195,7 +195,7 @@
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
-	update_icon()
+	update_appearance()
 	return
 
 #undef RAD_COLLECTOR_EFFICIENCY

@@ -36,7 +36,7 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
@@ -538,7 +538,7 @@
 
 /obj/item/storage/box/ids/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id(src)
+		new /obj/item/card/id/advanced(src)
 
 //Some spare PDAs in a box
 /obj/item/storage/box/pdas
@@ -565,7 +565,7 @@
 
 /obj/item/storage/box/silver_ids/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id/silver(src)
+		new /obj/item/card/id/advanced/silver(src)
 
 /obj/item/storage/box/prisoner
 	name = "box of prisoner IDs"
@@ -575,13 +575,13 @@
 
 /obj/item/storage/box/prisoner/PopulateContents()
 	..()
-	new /obj/item/card/id/prisoner/one(src)
-	new /obj/item/card/id/prisoner/two(src)
-	new /obj/item/card/id/prisoner/three(src)
-	new /obj/item/card/id/prisoner/four(src)
-	new /obj/item/card/id/prisoner/five(src)
-	new /obj/item/card/id/prisoner/six(src)
-	new /obj/item/card/id/prisoner/seven(src)
+	new /obj/item/card/id/advanced/prisoner/one(src)
+	new /obj/item/card/id/advanced/prisoner/two(src)
+	new /obj/item/card/id/advanced/prisoner/three(src)
+	new /obj/item/card/id/advanced/prisoner/four(src)
+	new /obj/item/card/id/advanced/prisoner/five(src)
+	new /obj/item/card/id/advanced/prisoner/six(src)
+	new /obj/item/card/id/advanced/prisoner/seven(src)
 
 /obj/item/storage/box/seccarts
 	name = "box of PDA security cartridges"
@@ -914,6 +914,7 @@
 		icon_state = "[inhand_icon_state]"
 	else
 		icon_state = "[inhand_icon_state]_closed"
+	return ..()
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))

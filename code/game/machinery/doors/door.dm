@@ -4,11 +4,13 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
+	base_icon_state = "door"
 	opacity = TRUE
 	density = TRUE
 	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = AREA_USAGE_ENVIRON
+	pass_flags_self = PASSDOORS
 	max_integrity = 350
 	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -239,6 +241,12 @@
 /obj/machinery/door/attackby_secondary(obj/item/weapon, mob/user, params)
 	if (weapon.tool_behaviour == TOOL_WELDER)
 		try_to_weld_secondary(weapon, user)
+	if (weapon.tool_behaviour == TOOL_CROWBAR)
+		var/forced_open = FALSE
+		if(istype(weapon, /obj/item/crowbar))
+			var/obj/item/crowbar/crowbar = weapon
+			forced_open = crowbar.force_opens
+		try_to_crowbar(weapon, user, forced_open)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -276,10 +284,8 @@
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon_state()
-	if(density)
-		icon_state = "door1"
-	else
-		icon_state = "door0"
+	icon_state = "[base_icon_state][density]"
+	return ..()
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -311,7 +317,7 @@
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
-	update_icon()
+	update_appearance()
 	set_opacity(0)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
@@ -340,7 +346,7 @@
 	density = TRUE
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	sleep(5)
-	update_icon()
+	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE

@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon() //ensures that ammo counters (if present) get updated
+		update_appearance() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -145,7 +145,7 @@ RLD
 				to_chat(user, no_ammo_message)
 			return FALSE
 		matter -= amount
-		update_icon()
+		update_appearance()
 		return TRUE
 	else
 		if(silo_mats.on_hold())
@@ -194,10 +194,19 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/proc/check_menu(mob/living/user)
+/**
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The living mob interacting with the menu
+ * * remote_anchor The remote anchor for the menu
+ */
+/obj/item/construction/proc/check_menu(mob/living/user, remote_anchor)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
+		return FALSE
+	if(remote_anchor && user.remote_control != remote_anchor)
 		return FALSE
 	return TRUE
 
@@ -348,7 +357,14 @@ RLD
 		if("WEST")
 			computer_dir = 8
 
-/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
+/**
+ * Customizes RCD's airlock settings based on user's choices
+ *
+ * Arguments:
+ * * user The mob that is choosing airlock settings
+ * * remote_anchor The remote anchor for radial menus. If set, it will also remove proximity restrictions from the menus
+ */
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user, remote_anchor)
 	if(!user)
 		return
 
@@ -394,15 +410,11 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if(!check_menu(user))
-		return
+	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -443,9 +455,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -674,7 +684,7 @@ RLD
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
@@ -733,9 +743,8 @@ RLD
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "rcd"
-	inhand_icon_state = "rcdammo"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rcdammo"
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -825,6 +834,7 @@ RLD
 
 /obj/item/construction/rld/update_icon_state()
 	icon_state = "rld-[round(matter/matter_divisor)]"
+	return ..()
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -1009,18 +1019,20 @@ RLD
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/pill_press = 20,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/iv_drip/plumbing = 20
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type

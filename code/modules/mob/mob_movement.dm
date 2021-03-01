@@ -247,7 +247,7 @@
 						R.reveal(20)
 						R.stun(20)
 					return
-				if(stepTurf.flags_1 & NOJAUNT_1)
+				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
 					return
 				if (locate(/obj/effect/blessing, stepTurf))
@@ -479,7 +479,7 @@
 		m_intent = MOVE_INTENT_RUN
 	if(hud_used?.static_inventory)
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_icon()
+			selector.update_appearance()
 
 ///Moves a mob upwards in z level
 /mob/verb/up()

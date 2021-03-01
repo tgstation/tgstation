@@ -15,6 +15,7 @@
 	optimal_ph_max = 10
 	thermic_constant = 0
 	H_ion_release = 0
+	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)
@@ -57,16 +58,17 @@
 		new /obj/item/food/chocolatebar(location)
 	return
 
-/datum/chemical_reaction/chocolate_bar3
+/datum/chemical_reaction/food/chocolate_bar3
 	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
+	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/chocolate_bar3/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/chocolate_bar3/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/chocolatebar(location)
 	return
 
-/datum/chemical_reaction/soysauce
+/datum/chemical_reaction/food/soysauce
 	results = list(/datum/reagent/consumable/soysauce = 5)
 	required_reagents = list(/datum/reagent/consumable/soymilk = 4, /datum/reagent/toxin/acid = 1)
 
@@ -177,6 +179,18 @@
 	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
 	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
+
+/datum/chemical_reaction/food/failed_nutriconversion
+	results = list(/datum/reagent/peptides_failed = 0.5)
+	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
+	required_catalysts = list(/datum/reagent/impurity/probital_failed = 0.5)
+	thermic_constant = 100 // a tell
+
+/datum/chemical_reaction/food/failed_protein_peptide
+	results = list(/datum/reagent/peptides_failed = 0.5)
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
+	required_catalysts = list(/datum/reagent/impurity/probital_failed = 0.5)
+	thermic_constant = 100 // a tell
 
 /datum/chemical_reaction/food/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 5)

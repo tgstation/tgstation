@@ -14,7 +14,8 @@
 	short_desc = "You are a sentient ecosystem, an example of the mastery over life that your creators possessed."
 	flavour_text = "Your masters, benevolent as they were, created uncounted seed vaults and spread them across \
 	the universe to every planet they could chart. You are in one such seed vault. \
-	Your goal is to cultivate and spread life wherever it will go while waiting for contact from your creators. \
+	Your goal is to protect the vault you are assigned to, cultivate the seeds passed onto you, \
+	and eventually bring life to this desolate planet while waiting for contact from your creators. \
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	assignedrole = "Lifebringer"
 
@@ -433,7 +434,8 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -475,7 +477,6 @@
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_info = "As the captain, this whole operation falls on your shoulders. You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough."
 	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
-	id_access_list = list(150,151)
 
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
@@ -487,6 +488,7 @@
 	head = /obj/item/clothing/head/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	id_trim = /datum/id_trim/battlecruiser/captain
 
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec
@@ -605,7 +607,7 @@
 
 /obj/effect/mob_spawn/human/pirate/captain
 	rank = "Renegade Leader"
-	outfit = /datum/outfit/pirate/captain
+	outfit = /datum/outfit/pirate/space/captain
 
 /obj/effect/mob_spawn/human/pirate/gunner
 	rank = "Rogue"
@@ -711,7 +713,7 @@
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
-	id = /obj/item/card/id/syndicate_command/crew_id
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
 
 /datum/outfit/syndicatespace/syndicaptain
@@ -725,7 +727,7 @@
 	back = /obj/item/storage/backpack
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
-	id = /obj/item/card/id/syndicate_command/captain_id
+	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	implants = list(/obj/item/implant/weapons_auth)
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)
 
@@ -746,7 +748,7 @@
 	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
 	mob_gender = "female"
 	name = "lifeguard sleeper"
-	id_job = "Lifeguard"
+	outfit = /datum/outfit/beachbum/lifeguard
 	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/beachbum
@@ -755,13 +757,16 @@
 	r_pocket = /obj/item/storage/wallet/random
 	l_pocket = /obj/item/food/pizzaslice/dank
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
 	if(visualsOnly)
 		return
 	H.dna.add_mutation(STONER)
+
+/datum/outfit/beachbum/lifeguard
+	id_trim = /datum/id_trim/lifeguard
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -773,7 +778,6 @@
 	short_desc = "You are a space bartender!"
 	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
 	assignedrole = "Space Bartender"
-	id_job = "Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -782,7 +786,8 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/space_bartender
 
 /datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

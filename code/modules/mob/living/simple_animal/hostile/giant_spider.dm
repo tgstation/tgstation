@@ -55,8 +55,8 @@
 	maxHealth = 80
 	health = 80
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
-	unsuitable_cold_damage = 20
-	unsuitable_heat_damage = 20
+	unsuitable_cold_damage = 10
+	unsuitable_heat_damage = 10
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
@@ -80,6 +80,8 @@
 	var/datum/action/innate/spider/lay_web/lay_web
 	///The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
+	/// Short description of what this mob is capable of, for radial menu uses
+	var/menu_description = "Versatile spider variant for frontline combat. Jack of all trades, master of none. Does not inject toxin."
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()
@@ -101,6 +103,9 @@
 	GLOB.spidermobs -= src
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/giant_spider/mob_negates_gravity()
+	return ..() || (locate(/obj/structure/spider/stickyweb) in loc)
+
 /**
  * # Spider Hunter
  *
@@ -121,6 +126,7 @@
 	poison_per_bite = 10
 	move_to_delay = 5
 	speed = -0.1
+	menu_description = "Fast spider variant specializing in catching running prey, but has less health. Toxin injection of 10u per bite."
 
 /**
  * # Spider Nurse
@@ -144,6 +150,7 @@
 	melee_damage_upper = 10
 	poison_per_bite = 3
 	web_speed = 0.25
+	menu_description = "Support spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
@@ -200,6 +207,7 @@
 	gold_core_spawnable = NO_SPAWN
 	charger = TRUE
 	charge_distance = 4
+	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
 	///Whether or not the tarantula is currently walking on webbing.
 	var/silk_walking = TRUE
 	///The spider's charge ability
@@ -243,6 +251,7 @@
 	poison_type = /datum/reagent/toxin/venom
 	speed = -0.5
 	gold_core_spawnable = NO_SPAWN
+	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage. Venom injection of 6u per bite."
 
 /**
  * # Spider Broodmother
@@ -267,6 +276,7 @@
 	melee_damage_upper = 10
 	poison_per_bite = 3
 	gold_core_spawnable = NO_SPAWN
+	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 	///If the spider is trying to cocoon something, what that something is.
 	var/atom/movable/cocoon_target
 	///How many humans this spider has drained but not layed enriched eggs for.
@@ -395,6 +405,7 @@
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
 	action.UpdateButtonIcon()
+	return ..()
 
 /obj/effect/proc_holder/wrap/Click()
 	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/midwife))
@@ -452,6 +463,7 @@
 /obj/effect/proc_holder/tarantula_charge/update_icon()
 	action.button_icon_state = "wrap_[active]"
 	action.UpdateButtonIcon()
+	return ..()
 
 /obj/effect/proc_holder/tarantula_charge/Click()
 	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/tarantula))
@@ -615,6 +627,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
+	menu_description = "Versatile ice spider variant for frontline combat. Jack of all trades, master of none. Immune to temperature damage. Does not inject frost oil."
 
 /**
  * # Ice Nurse Spider
@@ -630,6 +643,7 @@
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
+	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Immune to temperature damage. Frost oil injection of 3u per bite."
 
 /**
  * # Ice Hunter Spider
@@ -646,6 +660,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
+	menu_description = "Fast ice spider variant specializing in catching running prey, but has less health. Immune to temperature damage. Frost oil injection of 10u per bite."
 
 /**
  * # Flesh Spider
@@ -661,6 +676,7 @@
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
+	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health. Toxin injection of 10u per bite."
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh/Moved(atom/oldloc, dir)
 	. = ..()
@@ -694,6 +710,7 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard
 	maxHealth = 80
 	health = 80
+	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl. Venom injection of 6u per bite."
 
 /mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard/Initialize()
 	. = ..()

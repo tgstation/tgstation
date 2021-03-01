@@ -16,7 +16,6 @@
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
-			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/camera_bug(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
@@ -79,7 +78,6 @@
 			new /obj/item/storage/toolbox/syndicate(src)
 			new /obj/item/camera_bug(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/card/id/syndicate(src)
 
 		if("lordsingulo")
 			new /obj/item/sbeacondrop(src)
@@ -87,7 +85,7 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/storage/toolbox/syndicate(src)
-			new /obj/item/card/mining_access_card(src)
+			new /obj/item/card/id/advanced/mining(src)
 			new /obj/item/stack/spacecash/c10000(src)
 			new /obj/item/toy/spinningtoy(src) //lol
 
@@ -127,7 +125,6 @@
 			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/card/id/syndicate(src)
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 			new /obj/item/reagent_containers/glass/rag(src)
 
@@ -137,14 +134,12 @@
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
-			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 
 		if("darklord")
 			new /obj/item/dualsaber(src)
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-			new /obj/item/card/id/syndicate(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
 			new /obj/item/book/granter/spell/summonitem(src)
 
@@ -259,7 +254,6 @@
 	new /obj/item/clothing/suit/space/syndicate/contract(src)
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/card/id/syndicate(src)
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 

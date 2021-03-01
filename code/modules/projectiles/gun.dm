@@ -5,7 +5,7 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "detective"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
@@ -108,7 +108,7 @@
 		pin = null
 	if(A == chambered)
 		chambered = null
-		update_icon()
+		update_appearance()
 	if(A == bayonet)
 		clear_bayonet()
 	if(A == gun_light)
@@ -122,7 +122,7 @@
 	if(!can_unsuppress)
 		return
 	suppressed = null
-	update_icon()
+	update_appearance()
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
@@ -299,7 +299,7 @@
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
-	if(chambered?.BB)
+	if(chambered?.loaded_projectile)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
 				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
@@ -325,11 +325,13 @@
 		firing_burst = FALSE
 		return FALSE
 	process_chamber()
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(user)
+		if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
+			target = pick(orange(2, target))
 		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
 
 	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
@@ -343,10 +345,7 @@
 	var/randomized_gun_spread = 0
 	var/rand_spr = rand()
 	if(spread)
-		randomized_gun_spread = rand(0,spread)
-	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
-		user.blind_eyes(1)
-		bonus_spread += 25
+		randomized_gun_spread =	rand(0,spread)
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
@@ -373,7 +372,7 @@
 			shoot_with_empty_chamber(user)
 			return
 		process_chamber()
-		update_icon()
+		update_appearance()
 		semicd = TRUE
 		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
 
@@ -395,7 +394,7 @@
 			return ..()
 	return
 
-/obj/item/gun/attack_obj(obj/O, mob/living/user)
+/obj/item/gun/attack_obj(obj/O, mob/living/user, params)
 	if(user.combat_mode)
 		if(bayonet)
 			O.attackby(bayonet, user)
@@ -426,7 +425,7 @@
 			return
 		to_chat(user, "<span class='notice'>You attach [K] to [src]'s bayonet lug.</span>")
 		bayonet = K
-		update_icon()
+		update_appearance()
 
 	else
 		return ..()
@@ -513,7 +512,7 @@
 	if(!bayonet)
 		return
 	bayonet = null
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/gun/proc/clear_gunlight()
@@ -574,7 +573,7 @@
 	update_gunlight()
 
 /obj/item/gun/proc/update_gunlight()
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -643,16 +642,16 @@
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
 
-	if(chambered?.BB)
-		chambered.BB.damage *= 5
-		if(chambered.BB.wound_bonus != CANT_WOUND)
-			chambered.BB.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
+	if(chambered?.loaded_projectile)
+		chambered.loaded_projectile.damage *= 5
+		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
 	var/fired = process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
-	if(!fired && chambered?.BB)
-		chambered.BB.damage /= 5
-		if(chambered.BB.wound_bonus != CANT_WOUND)
-			chambered.BB.wound_bonus -= 5
+	if(!fired && chambered?.loaded_projectile)
+		chambered.loaded_projectile.damage /= 5
+		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			chambered.loaded_projectile.wound_bonus -= 5
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
