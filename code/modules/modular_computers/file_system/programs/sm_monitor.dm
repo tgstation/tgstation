@@ -130,9 +130,10 @@
 		data["SM_integrity"] = active.get_integrity()
 		data["SM_power"] = active.power
 		data["SM_ambienttemp"] = air.temperature
+		data["SM_ambientpressure"] = air.return_pressure()
 		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency 
 		data["SM_moles"] = 0
-		//data["SM_EPR"] = round((air.total_moles / air.group_multiplier) / 23.1, 0.01)
+		
 		var/list/gasdata = list()
 
 		if(air.total_moles())
