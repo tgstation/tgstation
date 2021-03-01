@@ -94,10 +94,10 @@
 	clothing_sets = list("japanese_animes")
 
 	found_seat_lines = list("Konnichiwa!", "Arigato gozaimasuuu~", "I hope there's some beef stroganoff...")
-	cant_find_seat_lines = list("I want to sit under the cherry tree already, senpai!", "Give me a seat before my Tsundere becomes Yandere!", "This place has less seating than a capsule hotel in space Tokyo!")
+	cant_find_seat_lines = list("I want to sit under the cherry tree already, senpai!", "Give me a seat before my Tsundere becomes Yandere!", "This place has less seating than a capsule hotel!")
 	leave_mad_lines = list("I can't believe you did this! WAAAAAAAAAAAAAH!!", "I-It's not like I ever wanted your food! B-baka...")
 	leave_happy_lines = list("Oh CHEF! This is the happiest day of my life. I love you!", "I take a potato chip.... AND EAT IT!", "Itadakimasuuu~", "Gochisousama desu!")
-	wait_for_food_lines = list("No food yet? I guess it can't be helped.", "I can't wait to finally meet you burger-sama...", "Hurry up,")
+	wait_for_food_lines = list("No food yet? I guess it can't be helped.", "I can't wait to finally meet you burger-sama...", "Give me my food, you meanie!")
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/tofu = 10, /datum/crafting_recipe/food/milosoup = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/muffin/berry = 2, /obj/item/food/beef_stroganoff = 2),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/sake = 10, /datum/chemical_reaction/drink/cafe_latte = 8, /datum/reagent/consumable/ethanol/aloe = 6, /datum/reagent/consumable/tea = 4, /datum/reagent/consumable/ethanol/bastion_bourbon = 2))
