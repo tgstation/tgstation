@@ -116,7 +116,7 @@
 #define ui_borg_store "CENTER+2:16,SOUTH:5"
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
-#define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"
+#define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
@@ -144,6 +144,7 @@
 #define ui_ai_sensor "SOUTH:6,WEST+14"
 #define ui_ai_multicam "SOUTH+1:6,WEST+13"
 #define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
+#define ui_ai_language_menu "SOUTH+1:8,WEST+11:30"
 
 //pAI
 #define ui_pai_software "SOUTH:6,WEST"
@@ -160,6 +161,8 @@
 #define ui_pai_internal_gps "SOUTH:6,WEST+11"
 #define ui_pai_take_picture "SOUTH:6,WEST+12"
 #define ui_pai_view_images "SOUTH:6,WEST+13"
+#define ui_pai_radio "SOUTH:6,WEST+14"
+#define ui_pai_language_menu "SOUTH+1:8,WEST+13:31"
 
 //Ghosts
 #define ui_ghost_jumptomob "SOUTH:6,CENTER-3:24"
