@@ -432,7 +432,7 @@
 
 /datum/chemical_reaction/cryostylane
 	results = list(/datum/reagent/cryostylane = 3)
-	required_reagents = list(/datum/reagent/ice = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
+	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
 	required_temp = -200
 	optimal_temp = 300
 	overheat_temp = NO_OVERHEAT //There is an overheat - 50 see reaction_step()
@@ -470,7 +470,7 @@
 /datum/chemical_reaction/cryostylane/reaction_finish(datum/reagents/holder, react_vol)
 	. = ..()
 	if(holder.chem_temp < CRYOSTYLANE_UNDERHEAT_TEMP)
-		overheated(holder, reaction, step_reaction_vol)
+		overheated(holder, null, react_vol) //replace null with fix win 2.3 is merged
 
 //Freezes the area around you!
 /datum/chemical_reaction/cryostylane/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
@@ -479,7 +479,7 @@
 		return ..()
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	holder.my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
-	freeze_radius(holder, equilibrium, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS)
+	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS)
 	clear_reactants(holder, 15)
 	holder.chem_temp += 100
 
