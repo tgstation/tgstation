@@ -78,11 +78,9 @@
 	physical = null
 	return ..()
 
-/obj/item/modular_computer/pre_attack(atom/A, mob/living/user, params)
-	//if((LAZYACCESS(params, RIGHT_CLICK)) && active_program?.tap(A, user, params))
-	if((!user.combat_mode) && active_program?.tap(A, user, params))
-		to_chat(world, "[params]")
-		return
+/obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
+	if(active_program?.tap(A, user, params))
+		return TRUE
 	..()
 
 /obj/item/modular_computer/AltClick(mob/user)
