@@ -65,7 +65,7 @@
 		return
 
 	// Similar to formaldehyde except it slows down surgery too
-	if(C.reagents.has_reagent(/datum/reagent/medicine/cryosenium))
+	if(C.reagents.has_reagent(/datum/reagent/cryostylane))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead

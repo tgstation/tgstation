@@ -640,9 +640,10 @@
 			master = reagent
 
 	return master
+/*							MOB/CARBON RELATED PROCS 								*/
 
 /**
- * Triggers metabolizing the reagents in this holder
+ * Triggers metabolizing for all the reagents in this holder
  *
  * Arguments:
  * * mob/living/carbon/C - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
@@ -653,38 +654,50 @@
 	var/list/cached_reagents = reagent_list
 	if(owner)
 		expose_temperature(owner.bodytemperature, 0.25)
-	var/need_mob_update = 0
+	var/need_mob_update = FALSE
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(QDELETED(reagent.holder))
-			continue
-
-		if(!owner)
-			owner = reagent.holder.my_atom
-
-		if(owner && reagent)
-			if(owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
-				if(liverless && !reagent.self_consuming) //need to be metabolized
-					continue
-				if(!reagent.metabolizing)
-					reagent.metabolizing = TRUE
-					reagent.on_mob_metabolize(owner)
-				if(can_overdose)
-					if(reagent.overdose_threshold)
-						if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
-							reagent.overdosed = TRUE
-							need_mob_update += reagent.overdose_start(owner)
-							log_game("[key_name(owner)] has started overdosing on [reagent.name] at [reagent.volume] units.")
-					for(var/addiction in reagent.addiction_types)
-						owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
-
-					if(reagent.overdosed)
-						need_mob_update += reagent.overdose_process(owner, delta_time, times_fired)
-
-				need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
+		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
 		owner.update_stamina()
 	update_total()
+
+/*
+ * Metabolises a single reagent for a target owner carbon mob. See above.
+ *
+ * Arguments:
+ * * mob/living/carbon/C - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * can_overdose - Allows overdosing
+ * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
+ */
+/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
+	var/need_mob_update = FALSE
+	if(QDELETED(reagent.holder))
+		return
+
+	if(!owner)
+		owner = reagent.holder.my_atom
+
+	if(owner && reagent)
+		if(owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
+			if(liverless && !reagent.self_consuming) //need to be metabolized
+				return
+			if(!reagent.metabolizing)
+				reagent.metabolizing = TRUE
+				reagent.on_mob_metabolize(owner)
+			if(can_overdose)
+				if(reagent.overdose_threshold)
+					if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
+						reagent.overdosed = TRUE
+						need_mob_update += reagent.overdose_start(owner)
+						log_game("[key_name(owner)] has started overdosing on [reagent.name] at [reagent.volume] units.")
+				for(var/addiction in reagent.addiction_types)
+					owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
+
+				if(reagent.overdosed)
+					need_mob_update += reagent.overdose_process(owner, delta_time, times_fired)
+
+			need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
@@ -699,6 +712,53 @@
 		if(reagent.metabolizing)
 			reagent.metabolizing = FALSE
 			reagent.on_mob_end_metabolize(C)
+
+/*Processes the reagents in the holder and converts them, only called in a mob/living/carbon on addition
+*
+* Arguments:
+* * reagent - the added reagent datum/object
+* * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
+* * added_purity - the purity of the added volume
+*/
+/datum/reagents/proc/process_mob_reagent_purity(_reagent, added_volume, added_purity)
+	var/datum/reagent/R = has_reagent(_reagent)
+	if(!R)
+		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!") //This can happen from smoking, where the volume is 0 after adding?
+		return
+	if (R.purity == 1)
+		return
+	if(R.chemical_flags & REAGENT_DONOTSPLIT)
+		return
+	if(R.purity < 0)
+		stack_trace("Purity below 0 for chem: [type]!")
+		R.purity = 0
+
+	if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem
+		remove_reagent(R.type, added_volume, FALSE)
+		add_reagent(R.inverse_chem, added_volume, FALSE, added_purity = 1-R.creation_purity)
+		var/datum/reagent/inverse_reagent = has_reagent(R.inverse_chem)
+		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
+			inverse_reagent.name = R.name//Negative effects are hidden
+			if(inverse_reagent.chemical_flags & REAGENT_INVISIBLE)
+				inverse_reagent.chemical_flags |= (REAGENT_INVISIBLE)
+	else if (R.impure_chem)
+		var/impureVol = added_volume * (1 - R.purity) //turns impure ratio into impure chem
+		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
+			remove_reagent(R.type, impureVol, FALSE)
+		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
+	R.chemical_flags |= REAGENT_DONOTSPLIT
+
+///Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
+/datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, delta_time, times_fired)
+	var/need_mob_update = FALSE
+	for(var/datum/reagent/reagent as anything in reagent_list)
+		if(!reagent.chemical_flags & REAGENT_IGNORE_STASIS)
+			continue
+		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose = TRUE)
+	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
+		owner.updatehealth()
+		owner.update_stamina()
+	update_total()
 
 /**
  * Calls [/datum/reagent/proc/on_move] on every reagent in this holder
@@ -1086,41 +1146,6 @@
 				selected_reaction = competitor
 	return selected_reaction
 
-/*Processes the reagents in the holder and converts them, only called in a mob/living/carbon on addition
-*
-* Arguments:
-* * reagent - the added reagent datum/object
-* * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
-* * added_purity - the purity of the added volume
-*/
-/datum/reagents/proc/process_mob_reagent_purity(_reagent, added_volume, added_purity)
-	var/datum/reagent/R = has_reagent(_reagent)
-	if(!R)
-		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!") //This can happen from smoking, where the volume is 0 after adding?
-		return
-	if (R.purity == 1)
-		return
-	if(R.chemical_flags & REAGENT_DONOTSPLIT)
-		return
-	if(R.purity < 0)
-		stack_trace("Purity below 0 for chem: [type]!")
-		R.purity = 0
-
-	if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem
-		remove_reagent(R.type, added_volume, FALSE)
-		add_reagent(R.inverse_chem, added_volume, FALSE, added_purity = 1-R.creation_purity)
-		var/datum/reagent/inverse_reagent = has_reagent(R.inverse_chem)
-		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
-			inverse_reagent.name = R.name//Negative effects are hidden
-			if(inverse_reagent.chemical_flags & REAGENT_INVISIBLE)
-				inverse_reagent.chemical_flags |= (REAGENT_INVISIBLE)
-	else if (R.impure_chem)
-		var/impureVol = added_volume * (1 - R.purity) //turns impure ratio into impure chem
-		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
-			remove_reagent(R.type, impureVol, FALSE)
-		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-	R.chemical_flags |= REAGENT_DONOTSPLIT
-
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
@@ -1133,7 +1158,6 @@
 		else
 			total_volume += reagent.volume
 	recalculate_sum_ph()
-
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
@@ -1335,7 +1359,7 @@
 		return
 
 	. = chem_temp
-	chem_temp = _temperature
+	chem_temp = clamp(_temperature, 0, 99999)
 	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, .)
 
 /*

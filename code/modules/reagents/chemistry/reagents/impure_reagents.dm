@@ -52,27 +52,46 @@
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
 
-//Freezes you in a block of ice for a small amount of time, 1s = 1u. Still does the
-/datum/reagent/inverse/cryosenium
+/*
+* Freezes the player in a block of ice, 1s = 1u
+* Will be removed when the required reagent is removed too
+* is processed on the dead.
+*/
+/atom/movable/screen/alert/status_effect/freon/cryostylane
+	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! You will be free when the chem runs out."
+
+/datum/reagent/inverse/cryostylane
 	name = "Cyrogelidia"
 	description = "Freezes the live or dead patient in an incuded cyrostasis ice block."
 	reagent_state = LIQUID
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
-	chemical_flags = REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS
 	metabolization_rate = 1 * REM
+	///The cube we're stasis'd in
+	var/obj/structure/ice_stasis/cube
+	var/atom/movable/screen/alert/status_effect/freon/cryostylane_alert
 
-/datum/reagent/inverse/cryosenium/on_mob_add(mob/living/carbon/owner, amount)
-	owner.apply_status_effect(/datum/status_effect/cryosenium)
+/datum/reagent/inverse/cryostylane/on_mob_add(mob/living/carbon/owner, amount)
+	cube = new /obj/structure/ice_stasis(get_turf(owner))
+	cube.color = COLOR_CYAN
+	cube.anchored = TRUE
+	owner.forceMove(cube)
+	owner.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
+	cryostylane_alert = owner.throw_alert("cryostylane_alert", /atom/movable/screen/alert/status_effect/freon/cryostylane)
+	cryostylane_alert.attached_effect = src //so the alert can reference us, if it needs to
 	..()
 
-/datum/reagent/inverse/cryosenium/on_mob_life(mob/living/carbon/owner)
-	if(owner.has_status_effect(/datum/status_effect/cryosenium))
-		return ..()
-	owner.reagents.remove_reagent(type, volume) //remove it all if we're past 60s
+/datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	if(!cube || owner.loc != cube)
+		owner.reagents.remove_reagent(type, volume) //remove it all if we're past 60s
+	if(current_cycle > 60)
+		metabolization_rate += 0.01
 	..()
 
-/datum/reagent/inverse/cryosenium/on_mob_delete(mob/living/carbon/owner, amount)
-	owner.remove_status_effect(/datum/status_effect/cryosenium)
+/datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/carbon/owner, amount)
+	QDEL_NULL(cube)
+	owner.remove_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
+	owner.clear_alert("cryostylane_alert")
 	..()
