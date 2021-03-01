@@ -25,7 +25,7 @@
 	. = 0
 	for(var/datum/orderable_item/item as anything in grocery_list)
 		for(var/i in 1 to grocery_list[item]) //for how many times we bought it
-			. += item.cost_per_order //add it's price
+			. += item.cost_per_order //add its price
 
 /obj/machinery/computer/chef_order/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
