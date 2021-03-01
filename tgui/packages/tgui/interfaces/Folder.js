@@ -25,15 +25,13 @@ export const Folder = (props, context) => {
                       <Button
                         icon="search"
                         onClick={() =>
-                          act("examine", { ref: contents_ref[index] })
-                        }
+                          act("examine", { ref: contents_ref[index] })}
                       />
                     }
                     <Button
                       icon="eject"
                       onClick={() =>
-                        act("remove", { ref: contents_ref[index] })
-                      }
+                        act("remove", { ref: contents_ref[index] })}
                     />
                   </Flex.Item>
                 </Flex>
