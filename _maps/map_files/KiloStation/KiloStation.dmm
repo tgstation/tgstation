@@ -70065,10 +70065,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"lUY" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/n2o,
-/area/engineering/atmos)
 "lVw" = (
 /turf/closed/wall/rust,
 /area/command/gateway)
@@ -88303,10 +88299,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/engineering/atmos)
-"waz" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "waQ" = (
 /obj/machinery/door/firedoor,
@@ -117807,7 +117799,7 @@ nVD
 idD
 knR
 thE
-waz
+thE
 idD
 mrF
 xcO
@@ -122702,7 +122694,7 @@ ckE
 ine
 qbM
 jQf
-lUY
+oNT
 idD
 acm
 aaa
