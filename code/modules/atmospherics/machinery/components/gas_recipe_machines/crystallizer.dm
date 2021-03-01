@@ -33,6 +33,7 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
 	. = ..()
 	internal = new
+	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
@@ -328,7 +329,7 @@
 			. = TRUE
 		if("gas_input")
 			var/_gas_input = params["gas_input"]
-			gas_input = clamp(_gas_input, 0, 50)
+			gas_input = clamp(_gas_input, 0, 500)
 	update_icon()
 
 #undef MIN_PROGRESS_AMOUNT
