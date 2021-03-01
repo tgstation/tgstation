@@ -1,3 +1,17 @@
+//Ported from /vg/station13, which was in turn forked from baystation12;
+//Please do not bother them with bugs from this port, however, as it has been modified quite a bit.
+//Modifications include removing the world-ending full supermatter variation, and leaving only the shard.
+
+//Zap constants, speeds up targeting
+
+#define BIKE (COIL + 1)
+#define COIL (ROD + 1)
+#define ROD (LIVING + 1)
+#define LIVING (MACHINERY + 1)
+#define MACHINERY (OBJECT + 1)
+#define OBJECT (LOWEST + 1)
+#define LOWEST (1)
+
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal

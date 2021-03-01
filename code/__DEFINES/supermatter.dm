@@ -1,17 +1,3 @@
-//Ported from /vg/station13, which was in turn forked from baystation12;
-//Please do not bother them with bugs from this port, however, as it has been modified quite a bit.
-//Modifications include removing the world-ending full supermatter variation, and leaving only the shard.
-
-//Zap constants, speeds up targeting
-
-#define BIKE (COIL + 1)
-#define COIL (ROD + 1)
-#define ROD (LIVING + 1)
-#define LIVING (MACHINERY + 1)
-#define MACHINERY (OBJECT + 1)
-#define OBJECT (LOWEST + 1)
-#define LOWEST (1)
-
 #define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY 3
