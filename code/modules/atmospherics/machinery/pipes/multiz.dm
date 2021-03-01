@@ -45,18 +45,11 @@
 ///Attempts to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet
 /obj/machinery/atmospherics/pipe/multiz/pipeline_expansion()
 	var/turf/T = get_turf(src)
-	var/list/above_adapters = list()
-	var/list/below_adapters = list()
 	for(var/obj/machinery/atmospherics/pipe/multiz/above in SSmapping.get_turf_above(T))
-		above_adapters += above
-	for(var/obj/machinery/atmospherics/pipe/multiz/below in SSmapping.get_turf_below(T))
-		below_adapters += below
-
-	for(var/obj/machinery/atmospherics/pipe/multiz/below in below_adapters)
-		if(below && below.piping_layer == piping_layer)
-			below.pipeline_expansion() //If we've got one below us, force it to add us on facebook
-	for(var/obj/machinery/atmospherics/pipe/multiz/above in above_adapters)
 		if(above && above.piping_layer == piping_layer)
 			nodes += above
 			above.nodes += src //Two way travel :)
+	for(var/obj/machinery/atmospherics/pipe/multiz/below in SSmapping.get_turf_below(T))
+		if(below && below.piping_layer == piping_layer)
+			below.pipeline_expansion() //If we've got one below us, force it to add us on facebook
 	return ..()
