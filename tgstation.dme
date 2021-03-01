@@ -933,6 +933,8 @@
 #include "code\game\machinery\computer\station_alert.dm"
 #include "code\game\machinery\computer\teleporter.dm"
 #include "code\game\machinery\computer\warrant.dm"
+#include "code\game\machinery\computer\chef_orders\chef_order.dm"
+#include "code\game\machinery\computer\chef_orders\order_datum.dm"
 #include "code\game\machinery\computer\prisoner\_prisoner.dm"
 #include "code\game\machinery\computer\prisoner\gulag_teleporter.dm"
 #include "code\game\machinery\computer\prisoner\management.dm"
