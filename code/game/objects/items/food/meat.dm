@@ -1195,3 +1195,13 @@
 	. = ..()
 	if(prob(50))
 		icon_state = "fried_chicken2"
+
+/obj/item/food/beef_stroganoff
+	name = "beef stroganoff"
+	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."
+	icon_state = "beefstroganoff"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("beef" = 3, "sour cream" = 1, "salt" = 1, "pepper" = 1)
+	foodtypes = MEAT | VEGETABLES | DAIRY
+	trash_type = /obj/item/trash/plate
+	w_class = WEIGHT_CLASS_SMALL

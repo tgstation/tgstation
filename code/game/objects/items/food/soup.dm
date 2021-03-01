@@ -154,7 +154,7 @@
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "milosoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("milo" = 1) // wtf is milo
+	tastes = list("milo" = 1) // wtf is milo //i don't know either but hey i guess japanese tourists will order it
 	foodtypes = VEGETABLES
 
 /obj/item/food/soup/mushroom
