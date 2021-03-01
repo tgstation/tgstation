@@ -18,6 +18,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 
+	job_family_heirlooms = list(/obj/item/bikehorn/golden)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()

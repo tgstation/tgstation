@@ -24,6 +24,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
+	job_family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
+
 /datum/job/captain/get_access()
 	return get_all_accesses()
 

@@ -18,6 +18,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 
+	job_family_heirlooms = list(/obj/item/storage/pill_bottle)
+
 /datum/outfit/job/psychologist
 	name = "Psychologist"
 	jobtype = /datum/job/psychologist

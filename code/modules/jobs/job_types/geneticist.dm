@@ -19,6 +19,8 @@
 	display_order = JOB_DISPLAY_ORDER_GENETICIST
 	bounty_types = CIV_JOB_SCI
 
+	job_family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
+
 /datum/outfit/job/geneticist
 	name = "Geneticist"
 	jobtype = /datum/job/geneticist

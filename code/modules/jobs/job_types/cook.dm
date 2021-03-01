@@ -20,6 +20,8 @@
 	display_order = JOB_DISPLAY_ORDER_COOK
 	bounty_types = CIV_JOB_CHEF
 
+	job_family_heirlooms = list(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
+
 /datum/outfit/job/cook
 	name = "Cook"
 	jobtype = /datum/job/cook

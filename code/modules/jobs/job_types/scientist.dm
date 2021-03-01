@@ -22,6 +22,8 @@
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
 
+	job_family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
+
 /datum/outfit/job/scientist
 	name = "Scientist"
 	jobtype = /datum/job/scientist

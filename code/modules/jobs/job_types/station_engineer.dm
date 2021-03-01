@@ -23,6 +23,8 @@
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
+	job_family_heirlooms = list(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+
 /datum/outfit/job/engineer
 	name = "Station Engineer"
 	jobtype = /datum/job/engineer
@@ -55,4 +57,3 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	head = null
 	internals_slot = ITEM_SLOT_SUITSTORE
-

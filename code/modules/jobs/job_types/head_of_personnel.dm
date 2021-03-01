@@ -38,6 +38,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
+	job_family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
+
 /datum/outfit/job/hop
 	name = "Head of Personnel"
 	jobtype = /datum/job/hop
@@ -57,4 +59,3 @@
 	..()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
-

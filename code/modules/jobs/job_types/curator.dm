@@ -16,6 +16,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 
+	job_family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
+
 /datum/outfit/job/curator
 	name = "Curator"
 	jobtype = /datum/job/curator

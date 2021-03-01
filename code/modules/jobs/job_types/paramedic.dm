@@ -21,6 +21,8 @@
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 	bounty_types = CIV_JOB_MED
 
+	job_family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+
 /datum/outfit/job/paramedic
 	name = "Paramedic"
 	jobtype = /datum/job/paramedic

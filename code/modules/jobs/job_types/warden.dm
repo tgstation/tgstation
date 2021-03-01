@@ -24,6 +24,8 @@
 	display_order = JOB_DISPLAY_ORDER_WARDEN
 	bounty_types = CIV_JOB_SEC
 
+	job_family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
+
 /datum/job/warden/get_access()
 	var/list/L = list()
 	L = ..() | check_config_for_sec_maint()
@@ -52,4 +54,3 @@
 	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
-
