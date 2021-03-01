@@ -14,7 +14,7 @@
 	return OXYLOSS
 
 /obj/item/folder/Initialize()
-	update_overlays()
+	update_icon()
 	. = ..()
 
 /obj/item/folder/Destroy()
@@ -47,7 +47,7 @@
 		Item.forceMove(user.loc)
 		user.put_in_hands(Item)
 		to_chat(user, "<span class='notice'>You remove [Item] from [src].</span>")
-		update_overlays()
+		update_icon()
 
 /obj/item/folder/AltClick(mob/user)
 	..()
@@ -83,10 +83,11 @@
 		ui.open()
 
 /obj/item/folder/ui_data(mob/user)
-	// prepare data for TGUI
 	var/list/data = list()
-	data["folder_name"] = "[name]"
+	if(istype(src, /obj/item/folder/syndicate))
+		data["theme"] = "syndicate"
 	data["bg_color"] = "[bg_color]"
+	data["folder_name"] = "[name]"
 
 	data["contents"] = list()
 	data["contents_ref"] = list()
@@ -112,7 +113,7 @@
 			. = TRUE
 		// Inspect the item
 		if("examine")
-			var/obj/item/Item = locate(params["read"]) in src
+			var/obj/item/Item = locate(params["ref"]) in src
 			if(istype(Item))
 				usr.examinate(Item)
 				. = TRUE

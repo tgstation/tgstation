@@ -4,11 +4,12 @@ import { Window } from "../layouts";
 
 export const Folder = (props, context) => {
   const { act, data } = useBackend(context);
-  const { folder_name, bg_color, contents, contents_ref } = data;
+  const { theme, bg_color, folder_name, contents, contents_ref } = data;
   return (
-    <Window title={folder_name || "Folder"} width={400} height={500}>
+    <Window title={folder_name || "Folder"} theme={theme} width={400} height={500}>
       <Window.Content backgroundColor={bg_color || "#7f7f7f"} scrollable>
-        {contents.length > 0 && (
+        {contents.length > 0 ? (
+          <>
             {contents.map((item, index) => (
               <>
                 <Flex
@@ -39,14 +40,13 @@ export const Folder = (props, context) => {
                 <Box style={{ height: "0.25em" }} />
               </>
             ))}
-            :{
-
-              <Section>
-                <Box color="grey" align="center">
-                  This folder is empty!
-                </Box>
-              </Section>
-            }
+          </>
+        ) : (
+          <Section>
+            <Box color="lightgrey" align="center">
+              This folder is empty!
+            </Box>
+          </Section>
         )}
       </Window.Content>
     </Window>
