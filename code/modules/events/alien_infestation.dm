@@ -5,6 +5,8 @@
 
 	min_players = 10
 
+	dynamic_should_hijack = TRUE
+
 /datum/round_event_control/alien_infestation/canSpawnEvent()
 	. = ..()
 	if(!.)
@@ -15,7 +17,7 @@
 			return FALSE
 
 /datum/round_event/ghost_role/alien_infestation
-	announceWhen	= 400
+	announceWhen = 400
 
 	minimum_required = 1
 	role_name = "alien larva"

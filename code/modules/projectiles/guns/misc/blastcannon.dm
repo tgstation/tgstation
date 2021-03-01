@@ -8,15 +8,13 @@
 	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
 	icon_state = "empty_blastcannon"
 	inhand_icon_state = "blastcannon_empty"
+	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
-	/// The icon state used when this is loaded with a bomb.
-	var/icon_state_loaded = "loaded_blastcannon"
-
 	/// The TTV this contains that will be used to create the projectile
 	var/obj/item/transfer_valve/bomb
 	/// Additional volume added to the gasmixture used to calculate the bombs power.
@@ -60,12 +58,12 @@
 		user.put_in_hands(bomb)
 		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
-	update_icon()
+	update_appearance()
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	. = ..()
-	icon_state = bomb ? icon_state_loaded : initial(icon_state)
+	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
+	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
 	if(!istype(bomb_to_attach))
@@ -80,7 +78,7 @@
 
 	user.visible_message("<span class='warning'>[user] attaches [bomb_to_attach] to [src]!</span>")
 	bomb = bomb_to_attach
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /// Handles the bomb power calculations
@@ -113,7 +111,7 @@
 	var/power =  bomb ? calculate_bomb() : debug_power
 	power = min(power, max_power)
 	QDEL_NULL(bomb)
-	update_icon()
+	update_appearance()
 
 	var/heavy = power * 0.25
 	var/medium = power * 0.5
@@ -137,7 +135,7 @@
 	damage = 0
 	nodamage = FALSE
 	movement_type = FLYING
-	projectile_phasing = ALL		// just blows up the turfs lmao
+	projectile_phasing = ALL // just blows up the turfs lmao
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavyr = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]

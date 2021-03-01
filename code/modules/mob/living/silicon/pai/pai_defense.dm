@@ -30,7 +30,7 @@
 /mob/living/silicon/pai/ex_act(severity, target)
 	take_holo_damage(severity * 50)
 	switch(severity)
-		if(1)	//RIP
+		if(1) //RIP
 			qdel(card)
 			qdel(src)
 		if(2)
@@ -40,7 +40,7 @@
 			fold_in(force = 1)
 			Paralyze(200)
 
-/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, modifiers)
+/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(user.combat_mode)
 		user.do_attack_animation(src)
 		if (user.name == master)

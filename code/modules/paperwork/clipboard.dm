@@ -8,8 +8,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
-	var/obj/item/pen/haspen		//The stored pen.
-	var/obj/item/paper/toppaper	//The topmost piece of paper.
+	var/obj/item/pen/haspen //The stored pen.
+	var/obj/item/paper/toppaper //The topmost piece of paper.
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 
@@ -18,12 +18,12 @@
 	return BRUTELOSS//the clipboard's clip is very strong. industrial duty. can kill a man easily.
 
 /obj/item/clipboard/Initialize()
-	update_icon()
+	update_appearance()
 	. = ..()
 
 /obj/item/clipboard/Destroy()
 	QDEL_NULL(haspen)
-	QDEL_NULL(toppaper)	//let movable/Destroy handle the rest
+	QDEL_NULL(toppaper) //let movable/Destroy handle the rest
 	return ..()
 
 /obj/item/clipboard/update_overlays()
@@ -41,10 +41,10 @@
 			return
 		toppaper = W
 		to_chat(user, "<span class='notice'>You clip the paper onto \the [src].</span>")
-		update_icon()
+		update_appearance()
 	else if(toppaper)
 		toppaper.attackby(user.get_active_held_item(), user)
-		update_icon()
+		update_appearance()
 
 
 /obj/item/clipboard/attack_self(mob/user)
@@ -54,7 +54,7 @@
 	else
 		dat += "<A href='?src=[REF(src)];addpen=1'>Add Pen</A><BR><HR>"
 
-	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with.	-Pete
+	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with. -Pete
 	if(toppaper)
 		var/obj/item/paper/P = toppaper
 		dat += "<A href='?src=[REF(src)];write=[REF(P)]'>Write</A> <A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A> - <A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A><BR><HR>"
@@ -123,4 +123,4 @@
 
 		//Update everything
 		attack_self(usr)
-		update_icon()
+		update_appearance()

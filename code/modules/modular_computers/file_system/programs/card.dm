@@ -9,6 +9,7 @@
 /datum/computer_file/program/card_mod
 	filename = "plexagonidwriter"
 	filedesc = "Plexagon Access Management"
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	transfer_access = ACCESS_HEADS
@@ -160,7 +161,7 @@
 			else
 				var/obj/item/I = user.get_active_held_item()
 				if(istype(I, /obj/item/card/id))
-					return card_slot2.try_insert(I)
+					return card_slot2.try_insert(I, user)
 			return FALSE
 		if("PRG_terminate")
 			if(!computer || !authenticated)

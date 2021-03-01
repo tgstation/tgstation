@@ -1,5 +1,5 @@
 /obj/item/computer_hardware/card_slot
-	name = "primary RFID card module"	// \improper breaks the find_hardware_by_name proc
+	name = "primary RFID card module" // \improper breaks the find_hardware_by_name proc
 	desc = "A module allowing this computer to read or write data on ID cards. Necessary for some programs to run properly."
 	power_usage = 10 //W
 	icon_state = "card_mini"
@@ -47,6 +47,11 @@
 
 	if(stored_card)
 		return FALSE
+
+	// item instead of player is checked so telekinesis will still work if the item itself is close
+	if(!in_range(src, I))
+		return FALSE
+
 	if(user)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
@@ -68,7 +73,7 @@
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE
 
-	if(user)
+	if(user && !issilicon(user) && in_range(src, user))
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(drop_location())

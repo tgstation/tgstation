@@ -75,7 +75,7 @@
 /obj/item/phylactery
 	name = "phylactery"
 	desc = "Stores souls. Revives liches. Also repels mosquitos."
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "bluespace"
 	color = COLOR_VERY_DARK_LIME_GREEN
 	light_system = MOVABLE_LIGHT

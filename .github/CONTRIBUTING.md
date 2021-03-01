@@ -212,7 +212,19 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
-You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces.
+Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
+
+```dm
+// Bad
+#define SPECIES_MOTH			"moth"
+#define SPECIES_LIZARDMAN		"lizardman"
+#define SPECIES_FELINID			"felinid"
+
+// Good
+#define SPECIES_MOTH "moth"
+#define SPECIES_LIZARDMAN "lizardman"
+#define SPECIES_FELINID "felinid"
+```
 
 ### No hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
@@ -355,6 +367,33 @@ This is good:
 	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
 
+### Avoid unnecessary type checks and obscuring nulls in lists
+Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
+
+If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
+
+Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
+
+This is bad:
+```DM
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
+This is good:
+```DM
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing as anything in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
@@ -436,6 +475,78 @@ When adding new signals to root level procs, eg;
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
+### Use descriptive and obvious names
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
+
+#### Don't use abbreviations
+Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
+
+```dm
+// What is M? The user? The target?
+// What is A? The target? The item?
+/proc/use_item(mob/M, atom/A)
+
+// Much better!
+/proc/use_item(mob/user, atom/target)
+```
+
+Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
+
+#### Naming things when typecasting
+When typecasting, keep your names descriptive:
+```dm
+var/mob/living/living_target = target
+var/mob/living/carbon/carbon_target = living_target
+```
+
+Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
+
+Note that it's okay, semantically, to use the same variable name as the type, e.g.:
+```dm
+var/atom/atom
+var/client/client
+var/mob/mob
+```
+
+Your editor may highlight the variable names, but BYOND, and we, accept these as variable names:
+
+```dm
+// This functions properly!
+var/client/client = CLIENT_FROM_VAR(usr)
+// vvv this may be highlighted, but it's fine!
+client << browse(...)
+```
+
+#### Name things as directly as possible
+`was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
+
+#### Avoid negative variable names
+`is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
+
+#### Exceptions to variable names
+
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+
+Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
+
+```dm
+// Bad
+for (var/datum/reagent/R as anything in reagents)
+
+// Good
+for (var/datum/reagent/deadly_reagent as anything in reagents)
+
+// Allowed, but still has the potential to not be clear. What does `i` refer to?
+for (var/i in 1 to 12)
+
+// Better
+for (var/month in 1 to 12)
+
+// Bad, only use `i` for numeral loops
+for (var/i in reagents)
+```
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
@@ -444,6 +555,8 @@ The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/chi
 * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
 * Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
+
+* Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
@@ -496,38 +609,6 @@ The former is faster than the latter, as shown by the following profile results:
 https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
-
-
-#### For loops without `istype`
-A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
-```DM
-var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
-var/obj/item/sword/best_sword
-for(var/obj/item/sword/S in bag_of_items)
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using `istype()` (or some internal-magic similar to `istype()` - this is BYOND, after all). This is fine in its current state for `bag_of_items`, but if `bag_of_items` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
-```DM
-var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword
-for(var/obj/item/sword/S in bag_of_swords)
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-specifies a type for DM to filter by.
-
-With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
-you can circumvent DM's filtering and automatic `istype()` checks by writing the loop as such:
-```DM
-var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword
-for(var/s in bag_of_swords)
-	var/obj/item/sword/S = s
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type, causing runtime errors.
 
 #### Dot variable
 Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
@@ -587,7 +668,6 @@ Regarding sprites & sounds, you must credit the artist and possibly the codebase
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-* Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
 * Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
 * Code which violates GitHub's [terms of service](https://github.com/site/terms).
 

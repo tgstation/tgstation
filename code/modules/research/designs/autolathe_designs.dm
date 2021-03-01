@@ -1168,6 +1168,7 @@
 	materials = list(/datum/material/plastic = 500)
 	build_path = /obj/item/stack/sticky_tape
 	category = list("initial", "Misc")
+	maxstack = 5
 
 /datum/design/sticky_tape/surgical
 	name = "Surgical Tape"
@@ -1211,3 +1212,24 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/control
 	category = list("initial","Misc")
+
+
+/datum/design/holosign/restaurant
+	name = "Restaurant Seating Projector"
+	desc = "A holographic projector that creates seating designation for restaurants."
+	id = "holosignrestaurant"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	build_path = /obj/item/holosign_creator/robot_seat/restaurant
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/holosign/bar
+	name = "Bar Seating Projector"
+	desc = "A holographic projector that creates seating designation for bars."
+	id = "holosignbar"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
+	build_path = /obj/item/holosign_creator/robot_seat/bar
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

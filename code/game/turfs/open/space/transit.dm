@@ -35,8 +35,8 @@
 	set waitfor = FALSE
 	if(!AM || istype(AM, /obj/docking_port))
 		return
-	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
-		return			// Don't move multi tile objects if their origin isn't in transit
+	if(AM.loc != src) // Multi-tile objects are "in" multiple locs but its loc is it's true placement.
+		return // Don't move multi tile objects if their origin isn't in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
@@ -78,7 +78,7 @@
 
 /turf/open/space/transit/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
 
@@ -88,6 +88,7 @@
 
 /turf/open/space/transit/update_icon_state()
 	icon_state = "speedspace_ns_[get_transit_state(src)]"
+	return ..()
 
 /proc/get_transit_state(turf/T)
 	var/p = 9

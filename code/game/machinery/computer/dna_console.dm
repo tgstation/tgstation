@@ -284,7 +284,7 @@
 		data["radStrength"] = radstrength
 		data["radDuration"] = radduration
 		data["stdDevStr"] = radstrength * RADIATION_STRENGTH_MULTIPLIER
-		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2)))	//hardcoded values from a z-table for a normal distribution
+		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2))) //hardcoded values from a z-table for a normal distribution
 			if(0 to 0.25)
 				data["stdDevAcc"] = ">95 %"
 			if(0.25 to 0.5)
@@ -573,7 +573,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to swap out
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
@@ -710,7 +710,7 @@
 		//  referred to as a "Research" type. Expects a string with 0 or 1, which
 		//  then gets converted to a number.
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
@@ -784,7 +784,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from.
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "disk" - From inserted diskette
 		if("save_console")
@@ -818,7 +818,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from
-		//	Expected results:
+		// Expected results:
 		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		if("save_disk")
@@ -1195,8 +1195,8 @@
 		// params["type"] - Type of injector to create
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_injector")
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
@@ -1274,8 +1274,8 @@
 		// params["type"] - Type of genetic makeup copy to implement
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_apply")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
@@ -1311,8 +1311,8 @@
 		// params["type"] - Type of genetic makeup copy to implement
 		//  Expected results:
 		//   "ue" - Unique Enzyme, changes name and blood type
-		//	 "ui" - Unique Identity, changes looks
-		//	 "mixed" - Combination of both ue and ui
+		//  "ui" - Unique Identity, changes looks
+		//  "mixed" - Combination of both ue and ui
 		if("makeup_delay")
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
@@ -1391,7 +1391,7 @@
 			// GUARD CHECK - If the name is null or blank, reject.
 			// GUARD CHECK - If the name isn't in the list of advanced injectors, we
 			//  want to reject this as it shouldn't be possible ever do this.
-			//	Unexpected result
+			// Unexpected result
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
@@ -1415,7 +1415,7 @@
 			// GUARD CHECK - If the name is null or blank, reject.
 			// GUARD CHECK - If the name isn't in the list of advanced injectors, we
 			//  want to reject this as it shouldn't be possible ever do this.
-			//	Unexpected result
+			// Unexpected result
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
@@ -1449,7 +1449,7 @@
 		if("add_advinj_mut")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
-			// 	This is needed because this operation can only be completed from the
+			// This is needed because this operation can only be completed from the
 			//  genetic sequencer.
 			if(!can_modify_occupant())
 				return
@@ -1635,7 +1635,7 @@
 		// Check validity of occupent for DNA Modification
 		// DNA Modification:
 		//   requires DNA
-		//	   this DNA can not be bad
+		//    this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
 	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
@@ -2018,7 +2018,7 @@
 	var/mutation
 
 	// Assume the occupant is valid and the check has been carried out before
-	// 	calling this proc with the relevant flags.
+	// calling this proc with the relevant flags.
 	if(target_flags & SEARCH_OCCUPANT)
 		mutation = (locate(ref) in scanner_occupant.dna.mutations)
 		if(mutation)
@@ -2069,11 +2069,11 @@
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
-		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-chance makes people mad though
+		ran = pick(-1,1) //hacky, statistically should almost never happen. 0-chance makes people mad though
 	else if(ran < 0)
-		ran = round(ran)	//negative, so floor it
+		ran = round(ran) //negative, so floor it
 	else
-		ran = -round(-ran)	//positive, so ceiling it
+		ran = -round(-ran) //positive, so ceiling it
 	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
 
 	/**
@@ -2092,7 +2092,7 @@
 		return
 
 	var/len = length_char(scanner_occupant.dna.uni_identity)
-	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2																																																		 //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
+	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2  //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 	var/hex = copytext_char(scanner_occupant.dna.uni_identity, num, num+1)
 	hex = scramble(hex, radstrength, radduration)
 

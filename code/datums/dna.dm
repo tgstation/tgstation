@@ -29,9 +29,9 @@
 
 	QDEL_NULL(species)
 
-	mutations.Cut()					//This only references mutations, just dereference.
-	temporary_mutations.Cut()		//^
-	previous.Cut()					//^
+	mutations.Cut() //This only references mutations, just dereference.
+	temporary_mutations.Cut() //^
+	previous.Cut() //^
 
 	return ..()
 

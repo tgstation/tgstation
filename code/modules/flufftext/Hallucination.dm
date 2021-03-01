@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/battle = 20,
 	/datum/hallucination/dangerflash = 15,
 	/datum/hallucination/hudscrew = 12,
+	/datum/hallucination/fake_health_doll = 12,
 	/datum/hallucination/fake_alert = 12,
 	/datum/hallucination/weird_sounds = 8,
 	/datum/hallucination/stationmessage = 7,
@@ -25,12 +26,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	))
 
 
-/mob/living/carbon/proc/handle_hallucinations()
+/mob/living/carbon/proc/handle_hallucinations(delta_time, times_fired)
 	if(!hallucination)
 		return
 
-	hallucination = max(hallucination - 1, 0)
-
+	hallucination = max(hallucination - (0.5 * delta_time), 0)
 	if(world.time < next_hallucination)
 		return
 
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(target.client)
 			target.client.images |= current_image
 
-/obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
+/obj/effect/hallucination/simple/update_icon(updates=ALL, new_state, new_icon, new_px=0, new_py=0)
 	image_state = new_state
 	if(new_icon)
 		image_icon = new_icon
@@ -143,6 +143,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		image_icon = initial(image_icon)
 	px = new_px
 	py = new_py
+	. = ..()
 	Show()
 
 /obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
@@ -248,7 +249,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	name = "alien hunter ([rand(1, 1000)])"
 
 /obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	update_icon("alienh_pounce")
+	update_icon(ALL, "alienh_pounce")
 	if(hit_atom == target && target.stat!=DEAD)
 		target.Paralyze(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class='userdanger'>[name] pounces on you!</span>")
@@ -1152,6 +1153,62 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target.clear_alert(alert_type, clear_override = TRUE)
 	qdel(src)
 
+///Causes the target to see incorrect health damages on the healthdoll
+/datum/hallucination/fake_health_doll
+	var/timer_id = null
+
+///Creates a specified doll hallucination, or picks one randomly
+/datum/hallucination/fake_health_doll/New(mob/living/carbon/human/human_mob, forced = TRUE, specific_limb, severity, duration = 500)
+	. = ..()
+	if(!specific_limb)
+		specific_limb = pick(list(SCREWYDOLL_HEAD, SCREWYDOLL_CHEST, SCREWYDOLL_L_ARM, SCREWYDOLL_R_ARM, SCREWYDOLL_L_LEG, SCREWYDOLL_R_LEG))
+	if(!severity)
+		severity = rand(1, 5)
+	LAZYSET(human_mob.hal_screwydoll, specific_limb, severity)
+	human_mob.update_health_hud()
+
+	timer_id = addtimer(CALLBACK(src, .proc/cleanup), duration, TIMER_STOPPABLE)
+
+///Increments the severity of the damage seen on the doll
+/datum/hallucination/fake_health_doll/proc/increment_fake_damage()
+	if(!ishuman(target))
+		stack_trace("Somehow [target] managed to get a fake health doll hallucination, while not being a human mob.")
+	var/mob/living/carbon/human/human_mob = target
+	for(var/entry in human_mob.hal_screwydoll)
+		human_mob.hal_screwydoll[entry] = clamp(human_mob.hal_screwydoll[entry]+1, 1, 5)
+	human_mob.update_health_hud()
+
+///Adds a fake limb to the hallucination datum effect
+/datum/hallucination/fake_health_doll/proc/add_fake_limb(specific_limb, severity)
+	if(!specific_limb)
+		specific_limb = pick(list(SCREWYDOLL_HEAD, SCREWYDOLL_CHEST, SCREWYDOLL_L_ARM, SCREWYDOLL_R_ARM, SCREWYDOLL_L_LEG, SCREWYDOLL_R_LEG))
+	if(!severity)
+		severity = rand(1, 5)
+	var/mob/living/carbon/human/human_mob = target
+	LAZYSET(human_mob.hal_screwydoll, specific_limb, severity)
+	target.update_health_hud()
+
+/datum/hallucination/fake_health_doll/target_deleting()
+	if(isnull(timer_id))
+		return
+	deltimer(timer_id)
+	timer_id = null
+	..()
+
+///Cleans up the hallucinations - this deletes any overlap, but that shouldn't happen.
+/datum/hallucination/fake_health_doll/proc/cleanup()
+	qdel(src)
+
+//So that the associated addition proc cleans it up correctly
+/datum/hallucination/fake_health_doll/Destroy()
+	if(!ishuman(target))
+		stack_trace("Somehow [target] managed to get a fake health doll hallucination, while not being a human mob.")
+	var/mob/living/carbon/human/human_mob = target
+	LAZYNULL(human_mob.hal_screwydoll)
+	human_mob.update_health_hud()
+	..()
+
+
 /datum/hallucination/items/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
 	..()
@@ -1183,7 +1240,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		halitem.plane = ABOVE_HUD_PLANE
 		switch(rand(1,6))
 			if(1) //revolver
-				halitem.icon = 'icons/obj/guns/projectile.dmi'
+				halitem.icon = 'icons/obj/guns/ballistic.dmi'
 				halitem.icon_state = "revolver"
 				halitem.name = "Revolver"
 			if(2) //c4

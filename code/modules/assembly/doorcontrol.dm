@@ -59,7 +59,7 @@
 	id = "badmin" // Set it to null for MEGAFUN.
 	var/specialfunctions = OPEN
 	/*
-	Bitflag, 	1= open (OPEN)
+	Bitflag, 1= open (OPEN)
 				2= idscan (IDSCAN)
 				4= bolts (BOLTS)
 				8= shock (SHOCK)
@@ -83,7 +83,7 @@
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
 					D.locked = !D.locked
-					D.update_icon()
+					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
 					D.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)

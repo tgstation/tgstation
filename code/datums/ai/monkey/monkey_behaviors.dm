@@ -21,6 +21,10 @@
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 	var/best_force = controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND]
 
+	if(!isturf(living_pawn.loc))
+		finish_action(controller, FALSE)
+		return
+
 	if(!target)
 		finish_action(controller, FALSE)
 		return
@@ -31,6 +35,7 @@
 
 	// Strong weapon
 	else if(target.force > best_force)
+		living_pawn.drop_all_held_items()
 		living_pawn.put_in_hands(target)
 		controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND] = target.force
 		finish_action(controller, TRUE)
@@ -77,7 +82,7 @@
 
 	var/mob/living/living_pawn = controller.pawn
 
-	victim.visible_message("<span class='warning'>[living_pawn] starts trying to take [target] from [controller.current_movement_target]!</span>", "<span class='danger'>[living_pawn] tries to take [target]!</span>")
+	victim.visible_message("<span class='warning'>[living_pawn] starts trying to take [target] from [victim]!</span>", "<span class='danger'>[living_pawn] tries to take [target]!</span>")
 
 	controller.blackboard[BB_MONKEY_PICKPOCKETING] = TRUE
 
@@ -138,7 +143,7 @@
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
 
-	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn))	// if right next to perp
+	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // if right next to perp
 		// check if target has a weapon
 		var/obj/item/W
 		for(var/obj/item/I in target.held_items)

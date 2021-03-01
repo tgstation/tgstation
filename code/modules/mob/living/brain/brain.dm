@@ -27,12 +27,12 @@
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()
-	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
-		if(stat!=DEAD)	//If not dead.
-			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
-		if(mind)	//You aren't allowed to return to brains that don't exist
+	if(key) //If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
+		if(stat!=DEAD) //If not dead.
+			death(1) //Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
+		if(mind) //You aren't allowed to return to brains that don't exist
 			mind.current = null
-		ghostize()		//Ghostize checks for key so nothing else is necessary.
+		ghostize() //Ghostize checks for key so nothing else is necessary.
 	container = null
 	return ..()
 
@@ -49,7 +49,7 @@
 /mob/living/brain/get_ear_protection()//no ears
 	return 2
 
-/mob/living/brain/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/brain/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing
 
 /mob/living/brain/can_be_revived()

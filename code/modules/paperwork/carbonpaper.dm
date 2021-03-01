@@ -15,9 +15,12 @@
 		icon_state = "paper_stack"
 	if(info)
 		icon_state = "[icon_state]_words"
+	return ..()
 
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
-	if(!copied)
+	if(copied || iscopy)
+		to_chat(user, "<span class='notice'>There are no more carbon copies attached to this paper!</span>")
+	else
 		var/obj/item/paper/carbon/C = src
 		var/copycontents = C.info
 		var/obj/item/paper/carbon/Copy = new /obj/item/paper/carbon(user.loc)
@@ -34,10 +37,8 @@
 		Copy.update_icon_state()
 		C.update_icon_state()
 		user.put_in_hands(Copy)
-	else
-		to_chat(user, "<span class='notice'>There are no more carbon copies attached to this paper!</span>")
 
-/obj/item/paper/carbon/attack_hand(mob/living/user)
+/obj/item/paper/carbon/attack_hand(mob/living/user, list/modifiers)
 	if(loc == user && user.is_holding(src))
 		removecopy(user)
 		return

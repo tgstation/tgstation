@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
 		return
 	busy = TRUE
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
 
 	START_PROCESSING(SSfastprocess, src)
@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	. = ..()
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
-		update_icon()
+		update_appearance()
 		. = TRUE
 
 /obj/machinery/washing_machine/proc/wash_cycle()
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(color_source)
 		qdel(color_source)
 		color_source = null
-	update_icon()
+	update_appearance()
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
@@ -282,11 +282,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/update_icon_state()
 	if(busy)
 		icon_state = "wm_running_[bloody_mess]"
-	else if(bloody_mess)
+		return ..()
+	if(bloody_mess)
 		icon_state = "wm_[state_open]_blood"
-	else
-		var/full = contents.len ? 1 : 0
-		icon_state = "wm_[state_open]_[full]"
+		return ..()
+
+	var/full = contents.len ? 1 : 0
+	icon_state = "wm_[state_open]_[full]"
+	return ..()
 
 /obj/machinery/washing_machine/update_overlays()
 	. = ..()
@@ -298,7 +301,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return
 
 	if(default_deconstruction_screwdriver(user, null, null, W))
-		update_icon()
+		update_appearance()
 		return
 
 	else if(!user.combat_mode)
@@ -319,12 +322,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			return TRUE
 		if(W.dye_color)
 			color_source = W
-		update_icon()
+		update_appearance()
 
 	else
 		return ..()
 
-/obj/machinery/washing_machine/attack_hand(mob/living/user)
+/obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -339,14 +342,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(state_open)
 			if(istype(L, /mob/living/simple_animal/pet))
 				L.forceMove(src)
-				update_icon()
+				update_appearance()
 		return
 
 	if(!state_open)
 		open_machine()
 	else
 		state_open = FALSE //close the door
-		update_icon()
+		update_appearance()
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))

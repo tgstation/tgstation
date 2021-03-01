@@ -186,3 +186,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	..(key, I, FALSE)
 	seer = M
 	add_hud_to(seer)
+
+
+/datum/atom_hud/alternate_appearance/basic/food_demands

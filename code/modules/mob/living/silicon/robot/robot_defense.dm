@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>The wires seem fine, there's no need to fix them.</span>")
 		return
 
-	if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
+	if(W.tool_behaviour == TOOL_CROWBAR) // crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = FALSE
@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				update_icons()
 		return
 
-	if(istype(W, /obj/item/stock_parts/cell) && opened)	// trying to put a cell inside
+	if(istype(W, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
 		if(wiresexposed)
 			to_chat(user, "<span class='warning'>Close the cover first!</span>")
 		else if(cell)
@@ -74,13 +74,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 		return
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened)	// wire hacking or radio management
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened) // wire hacking or radio management
 		if(!cell) //haxing
 			wiresexposed = !wiresexposed
 			to_chat(user, "<span class='notice'>The wires have been [wiresexposed ? "exposed" : "unexposed"].</span>")
 		else //radio
 			if(shell)
-				to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>")	//Prevent AI radio key theft
+				to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>") //Prevent AI radio key theft
 			else if(radio)
 				radio.attackby(W,user)//Push it to the radio to let it handle everything
 			else
@@ -100,6 +100,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 
 	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+		if(user == src)
+			to_chat(user,  "<span class='notice'>You can't seem to manage to place [W] on your head by yourself!</span>" )
+			return
 		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
 			to_chat(user, "<span class='warn'>You can't seem to remove [src]'s existing headwear!</span>")
 			return
@@ -163,7 +166,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		return
 
-	if (W.GetID())			// trying to unlock the interface with an ID card
+	if (W.GetID()) // trying to unlock the interface with an ID card
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else
@@ -235,22 +238,22 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
-	if (modifiers && modifiers["right"])
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(body_position == STANDING_UP)
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()
 			if(I)
 				uneq_active()
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
-				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
+				visible_message("<span class='danger'>[user] disarmed [src]!</span>", \
+					"<span class='userdanger'>[user] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
 				Stun(40)
-				step(src,get_dir(M,src))
-				log_combat(M, src, "pushed")
-				visible_message("<span class='danger'>[M] forces back [src]!</span>", \
-					"<span class='userdanger'>[M] forces back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				step(src,get_dir(user,src))
+				log_combat(user, src, "pushed")
+				visible_message("<span class='danger'>[user] forces back [src]!</span>", \
+					"<span class='userdanger'>[user] forces back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
@@ -275,11 +278,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	return
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
+/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	add_fingerprint(user)
 	if(opened && !wiresexposed && !issilicon(user))
 		if(cell)
-			cell.update_icon()
+			cell.update_appearance()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
 			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
