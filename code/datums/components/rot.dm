@@ -19,7 +19,7 @@
 
 /datum/component/rot/process(delta_time)
 	var/atom/A = parent
-	
+
 	//SSprocessing goes off per 1 second
 	time_remaining -= delta_time * 1 SECONDS
 	if(time_remaining <= 0)
@@ -62,6 +62,10 @@
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
 	if(C.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
+		return
+
+	// Similar to formaldehyde except it slows down surgery too
+	if(C.reagents.has_reagent(/datum/reagent/medicine/cryosenium))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead

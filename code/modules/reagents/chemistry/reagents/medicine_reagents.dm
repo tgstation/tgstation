@@ -1436,3 +1436,38 @@
 	clot_rate = 0.2
 	passive_bleed_modifier = 0.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+//Pauses organ decay while slowing surgery speed down by 2x - 3x (depending on purity, of course!)
+/datum/reagent/medicine/cryosenium
+	name = "Cryosenium"
+	description = "Induces a cryostasis in the patient's organs, preventing them from decaying while dead. Slows down surgery while in a patient."
+	taste_description = "ice"
+	ph = 8.6
+	creation_purity = REAGENT_STANDARD_PUIRTY
+	metabolization_rate = 0.05 * REM
+	color = "#03f4fc"
+	impure_chem = null
+	inverse_chem_val = 0.5 //0.43 is the minimum that is possible really
+	inverse_chem = /datum/reagent/inverse/cryosenium
+	failed_chem = null
+	chemical_flags = REAGENT_DEAD_PROCESS
+
+/datum/reagent/medicine/cryosenium/on_mob_add(mob/living/consumer, amount)
+	. = ..()
+	consumer.mob_surgery_speed_mod = (1-normalise_creation_purity())*0.5 //0.33 - 0.66
+	consumer.color = "#03f4fc"
+
+/datum/reagent/medicine/cryosenium/on_mob_delete(mob/living/consumer)
+	. = ..()
+	consumer.mob_surgery_speed_mod = 1
+	consumer.color = "#ffffff"
+
+//Pauses decay! Does do something, I promise.
+/datum/reagent/medicine/cryosenium/on_mob_dead(mob/living/carbon/consumer)
+	. = ..()
+	metabolization_rate = 0.05 * REM
+
+/datum/reagent/medicine/cryosenium/on_mob_life(mob/living/carbon/consumer)
+	if(consumer.stat > DEAD)
+		metabolization_rate = 0.25 * REM//faster consumption when alive
+	..()

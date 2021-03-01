@@ -51,3 +51,28 @@
 	ph = 1.5
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
+
+//Freezes you in a block of ice for a small amount of time, 1s = 1u. Still does the
+/datum/reagent/inverse/cryosenium
+	name = "Cyrogelidia"
+	description = "Freezes the live or dead patient in an incuded cyrostasis ice block."
+	reagent_state = LIQUID
+	color = "#03dbfc"
+	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
+	ph = 14
+	chemical_flags = REAGENT_DEAD_PROCESS
+	metabolization_rate = 1 * REM
+
+/datum/reagent/inverse/cryosenium/on_mob_add(mob/living/carbon/owner, amount)
+	owner.apply_status_effect(/datum/status_effect/cryosenium)
+	..()
+
+/datum/reagent/inverse/cryosenium/on_mob_life(mob/living/carbon/owner)
+	if(owner.has_status_effect(/datum/status_effect/cryosenium))
+		return ..()
+	owner.reagents.remove_reagent(type, volume) //remove it all if we're past 60s
+	..()
+
+/datum/reagent/inverse/cryosenium/on_mob_delete(mob/living/carbon/owner, amount)
+	owner.remove_status_effect(/datum/status_effect/cryosenium)
+	..()
