@@ -8,6 +8,7 @@
 //During the process you get really hungry, then some of your items slowly start teleport around you,
 //then alternative versions of yourself are brought in from a different universe and they yell at you.
 //and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative
+//Spraying this on lockers allows you to create eigenlinked lockers - see the eigenstate subsystem for using this to create your own links
 
 /datum/reagent/eigenstate
 	name = "Eigenstasium"
