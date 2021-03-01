@@ -70,7 +70,7 @@
 	/// Should this job be allowed to be picked for the bureaucratic error event?
 	var/allow_bureaucratic_error = TRUE
 
-	/// List of all heirlooms this job type has available. List of types.
+	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/job_family_heirlooms
 
 /datum/job/New()
