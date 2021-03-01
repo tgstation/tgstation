@@ -128,23 +128,21 @@
 	/// A reference to our heirloom.
 	var/obj/item/heirloom
 	/// Where our heirloom is spawning.
-	var/where
+	var/heirloom_spawn_loc
 
 /datum/quirk/family_heirloom/on_spawn()
 	/// The quirk holder, casted to human
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	/// The quirk holder's species
-	var/datum/species/holder_species = human_holder.dna?.species
 	/// The heirloom we will spawn
 	var/obj/item/heirloom_type
 
-	// 50% chance, if we have a set species heirloom, to choose from that pool
+	/// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
+	var/datum/species/holder_species = human_holder.dna?.species
 	if(holder_species && LAZYLEN(holder_species.species_family_heirlooms) && prob(50))
 		heirloom_type = pick(holder_species.species_family_heirlooms)
-	// Otherwise, we just draw from our job's hairloom pool
 	else
 		/// Our quirk holder's job
-		var/datum/job/holder_job = SSjob.GetJob(human_holder.mind.assigned_role)
+		var/datum/job/holder_job = SSjob.GetJob(human_holder.mind?.assigned_role)
 		if(holder_job && LAZYLEN(holder_job.job_family_heirlooms))
 			heirloom_type = pick(holder_job.job_family_heirlooms)
 
@@ -159,10 +157,10 @@
 		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
 		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
-	where = human_holder.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+	heirloom_spawn_loc = human_holder.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
-	if(where == LOCATION_BACKPACK)
+	if(heirloom_spawn_loc == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
