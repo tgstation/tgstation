@@ -353,7 +353,7 @@
 /datum/status_effect/cryosenium
 	id = "cryosenium"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = 600 //Will remove self when reagent is processed, though limited to 60s to be safe. I suppose if you're freezing the dying you want time but I'd rather have this incase oops 1000u
+	duration = 60 SECONDS //Will remove self when reagent is processed, though limited to 60s to be safe. I suppose if you're freezing the dying you want time but I'd rather have this incase oops 1000u
 	alert_type = /atom/movable/screen/alert/status_effect/freon/cryosenium
 	var/obj/structure/ice_stasis/cube
 
