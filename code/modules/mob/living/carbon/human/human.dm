@@ -612,10 +612,6 @@
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		threatcount -= 1
 
-	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/card/id/syndicate))
-		threatcount -= 5
-
 	return threatcount
 
 

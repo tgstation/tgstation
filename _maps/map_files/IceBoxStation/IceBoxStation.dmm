@@ -29899,6 +29899,10 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/item/storage/box/silver_ids{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /obj/item/storage/box/ids,
 /turf/open/floor/iron,
 /area/command/bridge)
@@ -30924,6 +30928,10 @@
 "fMy" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = 37;
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/command/bridge)
 "fMz" = (
@@ -43494,10 +43502,6 @@
 "oMm" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/bounty_board{
-	dir = 8;
-	pixel_x = 32
-	},
 /turf/open/floor/iron,
 /area/command/bridge)
 "oMA" = (
@@ -47158,6 +47162,10 @@
 /obj/structure/table/reinforced,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = -28
+	},
 /turf/open/floor/iron,
 /area/command/bridge)
 "rtx" = (
@@ -53728,6 +53736,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
 "vRV" = (

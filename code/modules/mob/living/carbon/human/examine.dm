@@ -56,8 +56,6 @@
 			. += "<span class='warning'>[t_He] [t_has] [num_hands > 1 ? "" : "a"] blood-stained hand[num_hands > 1 ? "s" : ""]!</span>"
 
 	//handcuffed?
-
-	//handcuffed?
 	if(handcuffed)
 		if(istype(handcuffed, /obj/item/restraints/handcuffs/cable))
 			. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] restrained with cable!</span>"
@@ -93,6 +91,12 @@
 	//ID
 	if(wear_id && !(wear_id.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
+
+		. += wear_id.get_id_examine_strings(user)
+		//var/list/extended_id_examine = wear_id.get_id_examine_strings(user)
+
+		//for(var/examine_string in extended_id_examine)
+		//	. += examine_string
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()
