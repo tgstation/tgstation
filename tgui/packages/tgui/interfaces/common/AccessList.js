@@ -173,7 +173,7 @@ export const FormatWildcards = (props, context) => {
         if (wcLeft < 0) {
           wcLimit = "∞";
         }
-        const wcLeftStr = "" + wcUsage + "/" + wcLimit;
+        const wcLeftStr = `${wcUsage}/${wcLimit}`;
         return (
           <Tabs.Tab
             key={wildcard}
