@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Right clicking someone in combat mode as a hulk will now shove them, like it does for normal humans"
