@@ -80,7 +80,7 @@
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	..()
 
 /obj/item/modular_computer/AltClick(mob/user)
