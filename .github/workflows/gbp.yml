@@ -9,6 +9,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: GBP action
-      uses: tgstation/gbp-action@v1.1
+      uses: tgstation/gbp-action@master
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
