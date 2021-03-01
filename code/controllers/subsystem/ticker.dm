@@ -357,6 +357,10 @@ SUBSYSTEM_DEF(ticker)
 	else
 		LAZYADD(round_end_events, cb)
 
+//Remove a callback from this list to be called on roundend
+/datum/controller/subsystem/ticker/proc/remove_roundend_callback(datum/callback/cb)
+	LAZYREMOVE(round_end_events, cb)
+
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb) //BOOM
 		qdel(bomb)

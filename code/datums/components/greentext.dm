@@ -1,18 +1,27 @@
+/**
+ * A component which can be added to items
+ * The holder of this item gets an antag datum
+ * if they are on the centcom z-lvel at the end of the round and still hold the item they win!
+*/
+
 /datum/component/greentext
 	var/mob/living/last_holder = null
 	var/mob/living/current_holder
 	var/list/color_altered_mobs = list()
 	var/quiet = FALSE
 
-/datum/component/greentext/Initialize(_quiet = FALSE)
+/datum/component/greentext/Initialize(quiet = FALSE)
 	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	quiet = _quiet
+	src.quiet = quiet
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/unequip)
 	var/roundend_callback = CALLBACK(src, .proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
+/**
+ * Called when the item is picked up
+*/
 /datum/component/greentext/proc/equip(source, mob/living/user)
 	SIGNAL_HANDLER
 	if (user == current_holder)
@@ -26,18 +35,24 @@
 		last_holder = user
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
-	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
+	user.add_atom_colour(COLOR_GREEN, ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
 
+/**
+ * Called when the item is dropped
+*/
 /datum/component/greentext/proc/unequip(source, mob/living/user)
 	SIGNAL_HANDLER
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
-		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
+		user.add_atom_colour(COLOR_RED, ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder = null
 	current_holder = null
 	STOP_PROCESSING(SSobj, src)
 
+/**
+ * Called on roundend
+*/
 /datum/component/greentext/proc/check_winner()
 	if(!current_holder)
 		return
@@ -48,3 +63,6 @@
 		current_holder.log_message("won with greentext!!!", LOG_ATTACK, color="green")
 		color_altered_mobs -= current_holder
 		qdel(src)
+
+/datum/component/greentext/Destroy()
+	SSticker.remove_roundend_callback(CALLBACK(src, .proc/check_winner))
