@@ -146,7 +146,7 @@
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/food/grown/bluecherries
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07, /datum/reagent/oxygen = 0.07)
 	rarity = 10
 
 /obj/item/food/grown/bluecherries
