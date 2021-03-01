@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - bugfix: "several duplicate items around metastation have been removed"
