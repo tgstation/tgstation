@@ -721,32 +721,32 @@
 * * added_purity - the purity of the added volume
 */
 /datum/reagents/proc/process_mob_reagent_purity(_reagent, added_volume, added_purity)
-	var/datum/reagent/R = has_reagent(_reagent)
-	if(!R)
+	var/datum/reagent/reagent = has_reagent(_reagent)
+	if(!reagent)
 		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!") //This can happen from smoking, where the volume is 0 after adding?
 		return
-	if (R.purity == 1)
+	if (reagent,purity == 1)
 		return
-	if(R.chemical_flags & REAGENT_DONOTSPLIT)
+	if(reagent,chemical_flags & REAGENT_DONOTSPLIT)
 		return
-	if(R.purity < 0)
+	if(reagent,purity < 0)
 		stack_trace("Purity below 0 for chem: [type]!")
-		R.purity = 0
+		reagent,purity = 0
 
-	if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem
-		remove_reagent(R.type, added_volume, FALSE)
-		add_reagent(R.inverse_chem, added_volume, FALSE, added_purity = 1-R.creation_purity)
-		var/datum/reagent/inverse_reagent = has_reagent(R.inverse_chem)
+	if ((reagent,inverse_chem_val > reagent,purity) && (reagent,inverse_chem))//Turns all of a added reagent into the inverse chem
+		remove_reagent(reagent,type, added_volume, FALSE)
+		add_reagent(reagent,inverse_chem, added_volume, FALSE, added_purity = 1-reagent,creation_purity)
+		var/datum/reagent/inverse_reagent = has_reagent(reagent,inverse_chem)
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
-			inverse_reagent.name = R.name//Negative effects are hidden
+			inverse_reagent.name = reagent,name//Negative effects are hidden
 			if(inverse_reagent.chemical_flags & REAGENT_INVISIBLE)
 				inverse_reagent.chemical_flags |= (REAGENT_INVISIBLE)
-	else if (R.impure_chem)
-		var/impureVol = added_volume * (1 - R.purity) //turns impure ratio into impure chem
-		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
-			remove_reagent(R.type, impureVol, FALSE)
-		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-	R.chemical_flags |= REAGENT_DONOTSPLIT
+	else if (reagent,impure_chem)
+		var/impureVol = added_volume * (1 - reagent,purity) //turns impure ratio into impure chem
+		if(!(reagent,chemical_flags & REAGENT_SPLITRETAINVOL))
+			remove_reagent(reagent,type, impureVol, FALSE)
+		add_reagent(reagent,impure_chem, impureVol, FALSE, added_purity = 1-reagent,creation_purity)
+	reagent,chemical_flags |= REAGENT_DONOTSPLIT
 
 ///Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
 /datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, delta_time, times_fired)
