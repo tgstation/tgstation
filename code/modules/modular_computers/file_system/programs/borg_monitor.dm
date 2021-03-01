@@ -38,6 +38,13 @@
 		return FALSE
 	DL_source = borgo
 	DL_progress = 0
+
+	var/username = "unknown user"
+	var/obj/item/card/id/stored_card = computer.GetID()
+	if(istype(stored_card) && stored_card.registered_name)
+		username = "user [stored_card.registered_name]"
+	to_chat(borgo, "<span class='userdanger'>Request received from [username] for the system log file. Upload in progress.</span>")//Damning evidence may be contained, so warn the borg
+	borgo.logevent("File request by [username]: /var/logs/syslog")
 	return TRUE
 
 /datum/computer_file/program/borg_monitor/process_tick()
@@ -48,6 +55,7 @@
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(DL_source)
 	if(!here.Adjacent(there))//If someone walked away, cancel the download
+		to_chat(DL_source, "<span class='warn'>Log upload failed: general connection error.</span>")//Let the borg know the upload stopped
 		DL_source = null
 		DL_progress = -1
 		return
@@ -61,7 +69,8 @@
 			loglist.Insert(1,"System log of unit [DL_source.name]")
 		DL_progress = -1
 		DL_source = null
-		for(var/datum/tgui/window in SStgui.open_uis_by_src[src])
+		for(var/datum/tgui/window in SStgui.open_uis_by_src[REF(src)])
+			to_chat(world, "DEBUG -- found [window]")
 			window.send_full_update()
 		return
 

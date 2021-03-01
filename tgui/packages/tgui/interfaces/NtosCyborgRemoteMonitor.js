@@ -21,9 +21,9 @@ export const ProgressSwitch = (param) => {
     case 0:
       return 'Connecting';
     case 25:
-      return 'Requesting Data';
-    case 50:
       return 'Starting Transfer';
+    case 50:
+      return 'Downloading';
     case 75:
       return 'Downloading';
     case 100:
@@ -145,7 +145,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
           </Section>
         </Flex.Item>
         <Flex.Item
-          height={40}>
+          height={50}>
           <Section
             fill
             scrollable
