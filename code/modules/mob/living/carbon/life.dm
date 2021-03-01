@@ -756,7 +756,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver?.organ_flags & ORGAN_FAILING))
+	if(liver?.organ_flags & ORGAN_FAILING)
 		return TRUE
 
 /////////////
