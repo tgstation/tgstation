@@ -184,10 +184,8 @@
 		. += "ptank"
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if(active && !loaded_tank)
-		. += "error"
-	if(active && loaded_tank)
-		. += "on"
+	if(active)
+		. += loaded_tank ? "on" : "error"
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
 	active = !active
