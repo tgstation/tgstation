@@ -200,7 +200,7 @@
 
 /datum/reagent/medicine/pyroxadone
 	name = "Pyroxadone"
-	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
+	description = "A mixture of cryoxadone and an extremely flammable reagent, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
 	ph = 12
