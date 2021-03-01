@@ -89,7 +89,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
                 maxValue={logScale(50000)}
                 ranges={{
                   good: [-Infinity, logScale(SM_bad_moles_amount * 0.75)],
-                  average: [logScale(SM_bad_moles_amount * 0.75), logScale(SM_bad_moles_amount)],
+                  average: [logScale(SM_bad_moles_amount * 0.75), 
+                    logScale(SM_bad_moles_amount)],
                   bad: [logScale(SM_bad_moles_amount), Infinity],
                 }}>
                 {toFixed(SM_moles) + ' moles'}
