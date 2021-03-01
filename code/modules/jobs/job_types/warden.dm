@@ -48,8 +48,5 @@
 	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
-<<<<<<< HEAD
-=======
 
 	id_trim = /datum/id_trim/job/warden
->>>>>>> master

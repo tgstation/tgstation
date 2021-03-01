@@ -53,9 +53,6 @@
 	..()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
-<<<<<<< HEAD
-=======
-
 
 /obj/item/paper/fluff/ids_for_dummies
 	name = "Memo: New IDs and You"
@@ -79,4 +76,3 @@
 <li>Don't forget to set a custom occupation! SecHUDs now interface direct with the ID card's trim and display the trim's job icon even when a custom assignment is set.</li>
 </ol>
 	"}
->>>>>>> master
