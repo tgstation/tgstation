@@ -147,17 +147,12 @@
 	. = ..()
 
 /obj/item/hand_tele/pre_attack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	var/portal_location = last_portal_location
 
-	if (isweakref(portal_location))
-		var/datum/weakref/last_portal_location_ref = last_portal_location
-		portal_location = last_portal_location_ref.resolve()
-
-	if (isnull(portal_location))
+	if (isnull(last_portal_location))
 		to_chat(user, "<span class='warning'>[src] flashes briefly. No target is locked in.</span>")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	try_create_portal_to(user, portal_location)
+	try_create_portal_to(user, last_portal_location)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -190,16 +185,13 @@
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		last_portal_location = PORTAL_LOCATION_DANGEROUS
-	else if (!IS_WEAKREF_OF(teleport_location, last_portal_location))
-		if (isweakref(teleport_location))
-			var/datum/weakref/about_to_replace_location_ref = last_portal_location
-			var/obj/machinery/computer/teleporter/about_to_replace_location = about_to_replace_location_ref.resolve()
-			if (about_to_replace_location)
-				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
+	else if (teleport_location != last_portal_location)
+		if (ismachinery(teleport_location))
+			UnregisterSignal(teleport_location, list(COMSIG_TELEPORTER_NEW_TARGET, COMSIG_PARENT_QDELETING))
 
-		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
+		RegisterSignal(teleport_location, list(COMSIG_TELEPORTER_NEW_TARGET, COMSIG_PARENT_QDELETING), .proc/on_teleporter_new_target)
 
-		last_portal_location = WEAKREF(teleport_location)
+		last_portal_location = teleport_location
 
 /// Takes either PORTAL_LOCATION_DANGEROUS or an /obj/machinery/computer/teleport/computer.
 /obj/item/hand_tele/proc/try_create_portal_to(mob/user, teleport_location)
@@ -267,12 +259,13 @@
 
 	return TRUE
 
+///if the old target is the new target, or the teleporter is deleting, null the reference
 /obj/item/hand_tele/proc/on_teleporter_new_target(datum/source)
 	SIGNAL_HANDLER
 
-	if (IS_WEAKREF_OF(source, last_portal_location))
+	if (source == last_portal_location)
 		last_portal_location = null
-		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
+		UnregisterSignal(source, list(COMSIG_TELEPORTER_NEW_TARGET, COMSIG_PARENT_QDELETING))
 
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
