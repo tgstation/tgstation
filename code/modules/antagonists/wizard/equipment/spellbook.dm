@@ -730,7 +730,7 @@
 			qdel(possible_entry)
 
 /obj/item/spellbook/ui_state(mob/user)
-	return GLOB.admin_state
+	return GLOB.conscious_state
 
 /obj/item/spellbook/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
