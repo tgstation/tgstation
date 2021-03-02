@@ -115,7 +115,7 @@
 	found_seat_lines = list("I wonder if giant monsters attack here too...", "Hajimemashite.", "Konbanwa.", "Where's the conveyor belt...")
 	cant_find_seat_lines = list("Please, a seat. I just want a seat.", "I'm on a schedule here. Where is my seat?", "...I see why this place is suffering. They won't even seat you.")
 	leave_mad_lines = list("This place is just downright shameful, and I'm telling my coworkers.", "What a waste of my time.", "I hope you don't take pride in the operation you run here.")
-	leave_happy_lines = list("Thank you for the hospitality.", "Itadakimasu.", "Business calls.")
+	leave_happy_lines = list("Thank you for the hospitality.", "Otsukaresama deshita.", "Business calls.")
 	wait_for_food_lines = list("Zzzzzzzzzz...", "Dame da ne~", "Dame yo dame na no yo~")
 	//restaurant food is same - the bar drinks are not
 	orderable_objects = list(
