@@ -358,6 +358,10 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
+/obj/item/circuitboard/machine/circuit_imprinter/offstation
+	name = "Ancient Circuit Imprinter (Machine Board)"
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/offstation
+
 /obj/item/circuitboard/machine/circuit_imprinter/department
 	name = "Departmental Circuit Imprinter (Machine Board)"
 	icon_state = "generic"

@@ -60,7 +60,7 @@
 /datum/design/netcard/basic
 	name = "Network Card"
 	id = "netcard_basic"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/iron = 250, /datum/material/glass = 100)
 	build_path = /obj/item/computer_hardware/network_card
 	category = list("Computer Parts")
@@ -69,7 +69,7 @@
 /datum/design/netcard/advanced
 	name = "Advanced Network Card"
 	id = "netcard_advanced"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 200)
 	build_path = /obj/item/computer_hardware/network_card/advanced
 	category = list("Computer Parts")
@@ -78,7 +78,7 @@
 /datum/design/netcard/wired
 	name = "Wired Network Card"
 	id = "netcard_wired"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 400)
 	build_path = /obj/item/computer_hardware/network_card/wired
 	category = list("Computer Parts")
@@ -88,7 +88,7 @@
 /datum/design/portabledrive/basic
 	name = "Data Disk"
 	id = "portadrive_basic"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 800)
 	build_path = /obj/item/computer_hardware/hard_drive/portable
 	category = list("Computer Parts")
@@ -97,7 +97,7 @@
 /datum/design/portabledrive/advanced
 	name = "Advanced Data Disk"
 	id = "portadrive_advanced"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 1600)
 	build_path = /obj/item/computer_hardware/hard_drive/portable/advanced
 	category = list("Computer Parts")
@@ -106,7 +106,7 @@
 /datum/design/portabledrive/super
 	name = "Super Data Disk"
 	id = "portadrive_super"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 3200)
 	build_path = /obj/item/computer_hardware/hard_drive/portable/super
 	category = list("Computer Parts")
@@ -211,7 +211,7 @@
 /datum/design/cpu
 	name = "Processor Board"
 	id = "cpu_normal"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 1600)
 	build_path = /obj/item/computer_hardware/processor_unit
 	category = list("Computer Parts")
@@ -220,7 +220,7 @@
 /datum/design/cpu/small
 	name = "Microprocessor"
 	id = "cpu_small"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 800)
 	build_path = /obj/item/computer_hardware/processor_unit/small
 	category = list("Computer Parts")
@@ -229,7 +229,7 @@
 /datum/design/cpu/photonic
 	name = "Photonic Processor Board"
 	id = "pcpu_normal"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 6400, /datum/material/gold = 2000)
 	build_path = /obj/item/computer_hardware/processor_unit/photonic
 	category = list("Computer Parts")
@@ -238,7 +238,7 @@
 /datum/design/cpu/photonic/small
 	name = "Photonic Microprocessor"
 	id = "pcpu_small"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 3200, /datum/material/gold = 1000)
 	build_path = /obj/item/computer_hardware/processor_unit/photonic/small
 	category = list("Computer Parts")
