@@ -75,7 +75,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 8)
 	tastes = list("vegetables" = 1)
 	foodtypes = VEGETABLES
-	venue_value = FOOD_PRICE_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/soup/nettle
 	name = "nettle soup"
@@ -156,6 +156,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("milo" = 1) // wtf is milo //i don't know either but hey i guess japanese tourists will order it
 	foodtypes = VEGETABLES
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/soup/mushroom
 	name = "chantrelle soup"

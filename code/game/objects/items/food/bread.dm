@@ -45,6 +45,7 @@
 	icon_state = "breadslice"
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/breadslice/plain/Initialize()
 	. = ..()

@@ -96,15 +96,16 @@
 	found_seat_lines = list("Konnichiwa!", "Arigato gozaimasuuu~", "I hope there's some beef stroganoff...")
 	cant_find_seat_lines = list("I want to sit under the cherry tree already, senpai!", "Give me a seat before my Tsundere becomes Yandere!", "This place has less seating than a capsule hotel!")
 	leave_mad_lines = list("I can't believe you did this! WAAAAAAAAAAAAAH!!", "I-It's not like I ever wanted your food! B-baka...", "I was gonna show you my tip!")
-	leave_happy_lines = list("Oh CHEF! This is the happiest day of my life. I love you!", "I take a potato chip.... AND EAT IT!", "Itadakimasuuu~", "Gochisousama desu!")
+	leave_happy_lines = list("Oh NOURISHMENT PROVIDER! This is the happiest day of my life. I love you!", "I take a potato chip.... AND EAT IT!", "Itadakimasuuu~", "Gochisousama desu!")
 	wait_for_food_lines = list("No food yet? I guess it can't be helped.", "I can't wait to finally meet you burger-sama...", "Give me my food, you meanie!")
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/breadslice/plain = 5, /datum/crafting_recipe/food/milosoup = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/muffin/berry = 2, /obj/item/food/beef_stroganoff = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/sake = 10, /datum/chemical_reaction/drink/cafe_latte = 8, /datum/reagent/consumable/ethanol/aloe = 6, /datum/reagent/consumable/tea = 4, /datum/reagent/consumable/ethanol/bastion_bourbon = 2))
+	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/breadslice/plain = 5, /obj/item/food/soup/milo = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/muffin/berry = 2, /obj/item/food/beef_stroganoff = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/sake = 10, /datum/reagent/consumable/cafe_latte = 8, /datum/reagent/consumable/ethanol/aloe = 6, /datum/reagent/consumable/tea = 4, /datum/reagent/consumable/ethanol/bastion_bourbon = 2))
 
 /datum/customer_data/japanese/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	//leaving and eaten
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.ai_controller.blackboard[BB_CUSTOMER_EATING])
 		var/mutable_appearance/you_won_my_heart = mutable_appearance('icons/effects/effects.dmi', "love_hearts")
+		you_won_my_heart.appearance_flags = RESET_COLOR
 		return you_won_my_heart
 

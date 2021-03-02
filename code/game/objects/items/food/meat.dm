@@ -82,6 +82,7 @@
 	tastes = list("tofu" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/tofu/prison
 	name = "soggy tofu"
@@ -444,6 +445,8 @@
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_TINY
+	//spider eggs, xenomeat. both of those events have to happen or xenobio memes
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/sashimi/Initialize()
 	. = ..()
@@ -1205,3 +1208,5 @@
 	foodtypes = MEAT | VEGETABLES | DAIRY
 	trash_type = /obj/item/trash/plate
 	w_class = WEIGHT_CLASS_SMALL
+	//basic ingredients, but a lot of them. just covering costs here
+	venue_value = FOOD_PRICE_NORMAL
