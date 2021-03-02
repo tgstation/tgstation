@@ -1,8 +1,9 @@
 ///Robot customers
 /mob/living/simple_animal/robot_customer
 	name = "space-tourist bot"
-	maxHealth = 50000000 //go fuck yourself
-	health = 50000000
+	maxHealth = 1000 //go fuck yourself
+	health = 1000
+	status_flags = GODMODE //:trollface:
 	desc = "I wonder what they'll order..."
 	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
@@ -12,6 +13,7 @@
 	AIStatus = AI_OFF
 	del_on_death = TRUE
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/robot_customer
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
