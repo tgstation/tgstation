@@ -97,8 +97,8 @@
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtypes = CLOTH
 
-	/// A weak reference to the clothing that created us
-	var/datum/weakref/clothing
+	/// Reference to the clothing we were created as a food holder for
+	var/obj/item/clothing/creatorclothing
 
 /obj/item/food/clothing/MakeEdible()
 	AddComponent(/datum/component/edible,\
@@ -115,9 +115,8 @@
 		after_eat = CALLBACK(src, .proc/after_eat))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
-	var/obj/item/clothing/resolved_clothing = clothing.resolve()
-	if (resolved_clothing)
-		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE)
+	if (creatorclothing)
+		creatorclothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE)
 	else
 		qdel(src)
 
@@ -126,10 +125,17 @@
 		if (isnull(moth_snack))
 			moth_snack = new
 			moth_snack.name = name
-			moth_snack.clothing = WEAKREF(src)
+			moth_snack.creatorclothing = src
+			moth_snack.RegisterSignal(moth_snack, COMSIG_PARENT_QDELETING, /obj/item/food/clothing.proc/on_creatorclothing_del)
 		moth_snack.attack(attacker, user, params)
 	else
 		return ..()
+
+///Called when the parent clothing that we contained is eaten, doesnt need to be qdelled, it collects itself on parent del asis
+/obj/item/food/clothing/proc/on_creatorclothing_del()
+	SIGNAL_HANDLER
+	creatorclothing = null
+
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
