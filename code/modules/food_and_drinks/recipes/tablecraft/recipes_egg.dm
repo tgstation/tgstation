@@ -60,6 +60,6 @@
 		/obj/item/food/boiledegg = 2,
 		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/chawanmushi
+	result = /obj/item/food/chawanmushi
 	subcategory = CAT_EGG
 	
