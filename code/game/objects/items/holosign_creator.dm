@@ -20,6 +20,8 @@
 
 /obj/item/holosign_creator/examine(mob/user)
 	. = ..()
+	if(!signs)
+		return
 	. += "<span class='notice'>It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.</span>"
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
@@ -64,6 +66,13 @@
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+
+/obj/item/holosign_creator/Destroy()
+	. = ..()
+	if(LAZYLEN(signs))
+		for(var/H in signs)
+			qdel(H)
+
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"

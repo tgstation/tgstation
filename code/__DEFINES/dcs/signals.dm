@@ -27,6 +27,11 @@
 #define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
 /// crewmember joined the game (mob/living, rank)
 #define COMSIG_GLOB_CREWMEMBER_JOINED "!crewmember_joined"
+/// Random event is trying to roll. (/datum/round_event_control/random_event)
+/// Called by (/datum/round_event_control/preRunEvent).
+#define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
+	/// Do not allow this random event to continue.
+	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 
 /// signals from globally accessible objects
 
@@ -287,9 +292,9 @@
 
 /////////////////
 
-///from base of area/Entered(): (/area)
+///from base of area/Entered(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_ENTER_AREA "enter_area"
-///from base of area/Exited(): (/area)
+///from base of area/Exited(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
@@ -518,6 +523,8 @@
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+///from end of fully_heal(): (admin_revive)
+#define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 
 ///From /datum/component/creamed/Initialize()
 #define COMSIG_MOB_CREAMED "mob_creamed"
@@ -909,6 +916,8 @@
 ///called on an object by its NTNET connection component on a port distruction (port, list/data))
 #define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
 
+///Restaurant
+#define COMSIG_ITEM_SOLD_TO_CUSTOMER "item_sold_to_customer"
 
 //Nanites
 
@@ -1072,7 +1081,7 @@
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
-///from base of mob/RangedAttack(): (atom/A, params)
+///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///From base of atom/ctrl_click(): (atom/A)
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"

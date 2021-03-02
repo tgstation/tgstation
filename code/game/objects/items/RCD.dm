@@ -1021,9 +1021,10 @@ RLD
 	/obj/machinery/plumbing/tank = 20,
 	/obj/machinery/plumbing/synthesizer = 15,
 	/obj/machinery/plumbing/reaction_chamber = 15,
-	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/buffer = 10,
 	/obj/machinery/plumbing/pill_press = 20,
 	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
+	/obj/machinery/plumbing/acclimator = 10,
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,

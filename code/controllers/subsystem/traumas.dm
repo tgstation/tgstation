@@ -122,8 +122,8 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/rnd/research_director,
 			/obj/item/clothing/under/rank/medical/chief_medical_officer, /obj/item/clothing/under/rank/engineering/chief_engineer,
 			/obj/item/clothing/under/rank/centcom/officer, /obj/item/clothing/under/rank/centcom/commander,
-			/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/silver, /obj/item/card/id/gold,
-			/obj/item/card/id/captains_spare, /obj/item/card/id/centcom, /obj/machinery/door/airlock/command,
+			/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/advanced/silver, /obj/item/card/id/advanced/gold,
+			/obj/item/card/id/advanced/centcom, /obj/machinery/door/airlock/command, /obj/item/card/id/advanced/black,
 		)),
 
 		"the supernatural"  = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome,

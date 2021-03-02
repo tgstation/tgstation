@@ -233,7 +233,7 @@
 			if(DRILL_YELLING)
 				message += "!!"
 			if(DRILL_CANADIAN)
-				message = " [message]"
+				message = "[message]"
 				var/list/canadian_words = strings("canadian_replacement.json", "canadian")
 
 				for(var/key in canadian_words)

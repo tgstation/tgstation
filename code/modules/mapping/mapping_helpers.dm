@@ -174,7 +174,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/no_lava/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	T.flags_1 |= NO_LAVA_GEN_1
+	T.turf_flags |= NO_LAVA_GEN
 
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector

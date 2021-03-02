@@ -338,6 +338,15 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
+/obj/item/circuitboard/machine/crystallizer
+	name = "Crystallizer (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/components/binary/crystallizer
+	req_components = list(
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stack/sheet/glass = 10,
+		/obj/item/stack/sheet/plasteel = 5)
+
 //Generic
 
 /obj/item/circuitboard/machine/circuit_imprinter
@@ -1191,6 +1200,12 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/restaurant_portal
+	name = "Restaurant Portal"
+	icon_state = "service"
+	build_path = /obj/machinery/restaurant_portal
+	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"

@@ -167,22 +167,23 @@
 
 //Easter Recipes + food
 /obj/item/food/hotcrossbun
-	bite_consumption = 2
-	name = "hot-cross bun"
-	desc = "The Cross represents the Assistants that died for your sins."
+	name = "hot cross bun"
+	desc = "The cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
-	foodtypes = SUGAR | GRAIN
-	tastes = list("easter")
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
+	foodtypes = SUGAR | GRAIN | BREAKFAST
+	tastes = list("pastry" = 1, "easter" = 1)
+	bite_consumption = 2
 
 /datum/crafting_recipe/food/hotcrossbun
-	name = "Hot-Cross Bun"
+	name = "Hot Cross Bun"
 	reqs = list(
-		/obj/item/food/bread/plain = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/food/hotcrossbun
 
-	subcategory = CAT_MISCFOOD
+	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"

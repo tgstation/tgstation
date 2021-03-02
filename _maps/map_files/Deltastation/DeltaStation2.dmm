@@ -29135,8 +29135,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cqu" = (
-/obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29147,6 +29145,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "cqH" = (
@@ -66665,6 +66664,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hop)
 "gDQ" = (
@@ -69065,8 +69065,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "hzj" = (
-/obj/structure/table/wood,
-/obj/item/clothing/head/fedora,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -69077,6 +69075,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "hzE" = (
@@ -73928,6 +73927,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/head/fedora,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "jqu" = (
@@ -80433,10 +80433,6 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "lLY" = (
-/obj/item/radio/intercom{
-	pixel_x = -26;
-	pixel_y = 26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -80446,6 +80442,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = -27;
+	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -88938,6 +88938,7 @@
 /obj/item/reagent_containers/glass/bowl,
 /obj/effect/turf_decal/bot,
 /obj/item/food/dough,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "oJI" = (
@@ -103602,6 +103603,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/toy/figure/bartender,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "udl" = (
@@ -113574,6 +113576,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "xRL" = (

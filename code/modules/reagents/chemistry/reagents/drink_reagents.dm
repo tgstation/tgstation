@@ -329,6 +329,7 @@
 	glass_name = "pitcher of lemonade"
 	glass_desc = "This drink leaves you feeling nostalgic for some reason."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/tea/arnold_palmer
 	name = "Arnold Palmer"

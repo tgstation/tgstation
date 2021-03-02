@@ -3,8 +3,10 @@
 		return
 
 	var/announcement
-	if(!istype(sound, /sound))
-		sound = SSstation.announcer.event_sounds[sound] || SSstation.announcer.get_rand_alert_sound()
+	if(!sound)
+		sound = SSstation.announcer.get_rand_alert_sound()
+	else if(SSstation.announcer.event_sounds[sound])
+		sound = SSstation.announcer.event_sounds[sound]
 
 	if(type == "Priority")
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"

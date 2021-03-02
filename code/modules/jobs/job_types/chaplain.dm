@@ -9,12 +9,11 @@
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
-	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
+	departments = DEPARTMENT_SERVICE
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
@@ -135,3 +134,5 @@
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
+
+	id_trim = /datum/id_trim/job/chaplain

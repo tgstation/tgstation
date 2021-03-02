@@ -16,8 +16,6 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
-	///Delay between atom movements, if this is not a multiplication of the delay in
-	var/move_delay
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
@@ -115,7 +113,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 				return
 
 			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
-				ai_movement.start_moving_towards(src, current_movement_target) //Then start moving
+				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
 
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
 				current_behavior.perform(delta_time, src)
