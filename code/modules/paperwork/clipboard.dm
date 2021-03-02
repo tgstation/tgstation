@@ -23,7 +23,7 @@
 	 * when attacking the clipboard.
 	 * (As you can't organise contents directly in BYOND)
 	 */
-	var/obj/item/paper/toppaper
+	var/obj/item/paper/toppaper // TODO: weakref https://github.com/tgstation/tgstation/pull/55711/files
 
 /obj/item/clipboard/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -41,23 +41,25 @@
 /obj/item/clipboard/examine()
 	. = ..()
 	if(pen)
-		. += "<span class='notice'>Ctrl-click to remove [pen].</span>"
+		. += "<span class='notice'>Alt-click to remove [pen].</span>"
 	if(toppaper)
-		. += "<span class='notice'>Alt-click to remove [toppaper].</span>"
+		. += "<span class='notice'>Right-click to remove [toppaper].</span>" // TODO: debug this
 
-/obj/item/clipboard/proc/remove_paper(obj/item/paper/Paper, mob/user)
-	if(istype(Paper))
-		Paper.forceMove(user.loc)
-		user.put_in_hands(Paper)
-		to_chat(user, "<span class='notice'>You remove [Paper] from [src].</span>")
-		if(Paper == toppaper)
+/// Take out the topmost paper
+/obj/item/clipboard/proc/remove_paper(obj/item/paper/paper, mob/user)
+	if(!istype(paper))
+		return
+	paper.forceMove(user.loc)
+	user.put_in_hands(paper)
+	to_chat(user, "<span class='notice'>You remove [paper] from [src].</span>")
+	if(paper == toppaper)
+		toppaper = null
+		var/obj/item/paper/newtop = locate(/obj/item/paper) in src
+		if(newtop && (newtop != paper))
+			toppaper = newtop
+		else
 			toppaper = null
-			var/obj/item/paper/newtop = locate(/obj/item/paper) in src
-			if(newtop && (newtop != Paper))
-				toppaper = newtop
-			else
-				toppaper = null
-		update_icon()
+	update_icon()
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
 	pen.forceMove(user.loc)
@@ -69,13 +71,7 @@
 /obj/item/clipboard/AltClick(mob/user)
 	..()
 	if(toppaper)
-		remove_paper(toppaper, user)
-	else
 		remove_pen(user)
-
-/obj/item/clipboard/CtrlClick(mob/user)
-	..()
-	remove_pen(user)
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
@@ -86,19 +82,25 @@
 		. += "clipboard_pen"
 	. += "clipboard_over"
 
-/obj/item/clipboard/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/paper))
+/obj/item/clipboard/attack_hand(mob/user, list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		remove_paper(toppaper, user)
+		return TRUE
+	. = ..()
+
+/obj/item/clipboard/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/paper))
 		//Add paper into the clipboard
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(weapon, src))
 			return
-		toppaper = W
-		to_chat(user, "<span class='notice'>You clip [W] onto [src].</span>")
-	else if(istype(W, /obj/item/pen) && !pen)
+		toppaper = weapon
+		to_chat(user, "<span class='notice'>You clip [weapon] onto [src].</span>")
+	else if(istype(weapon, /obj/item/pen) && !pen)
 		//Add a pen into the clipboard, attack (write) if there is already one
-		if(!usr.transferItemToLoc(W, src))
+		if(!usr.transferItemToLoc(weapon, src))
 			return
-		pen = W
-		to_chat(usr, "<span class='notice'>You slot [W] into [src].</span>")
+		pen = weapon
+		to_chat(usr, "<span class='notice'>You slot [weapon] into [src].</span>")
 	else if(toppaper)
 		toppaper.attackby(user.get_active_held_item(), user)
 	update_appearance()
@@ -119,17 +121,17 @@
 	var/list/data = list()
 	data["pen"] = "[pen]"
 
-	var/obj/item/paper/P = toppaper
-	data["top_paper"] = "[P]"
-	data["top_paper_ref"] = "[REF(P)]"
+	var/obj/item/paper/paper = toppaper
+	data["top_paper"] = "[paper]"
+	data["top_paper_ref"] = "[REF(paper)]"
 
 	data["paper"] = list()
 	data["paper_ref"] = list()
-	for(P in src)
-		if(P == toppaper)
+	for(paper in src)
+		if(paper == toppaper)
 			continue
-		data["paper"] += "[P]"
-		data["paper_ref"] += "[REF(P)]"
+		data["paper"] += "[paper]"
+		data["paper_ref"] += "[REF(paper)]"
 
 	return data
 
@@ -149,29 +151,29 @@
 				. = TRUE
 		// Take paper out
 		if("remove_paper")
-			var/obj/item/paper/P = locate(params["ref"]) in src
-			if(istype(P))
-				remove_paper(P, usr)
+			var/obj/item/paper/paper = locate(params["ref"]) in src
+			if(istype(paper))
+				remove_paper(paper, usr)
 				. = TRUE
 		// Look at (or edit) the paper
 		if("edit_paper")
-			var/obj/item/paper/P = locate(params["ref"]) in src
-			if(istype(P))
-				P.ui_interact(usr)
+			var/obj/item/paper/paper = locate(params["ref"]) in src
+			if(istype(paper))
+				paper.ui_interact(usr)
 				update_icon()
 				. = TRUE
 		// Move paper to the top
 		if("move_top_paper")
-			var/obj/item/paper/P = locate(params["ref"]) in src
-			if(istype(P))
-				toppaper = P
-				to_chat(usr, "<span class='notice'>You move [P] to the top.</span>")
+			var/obj/item/paper/paper = locate(params["ref"]) in src
+			if(istype(paper))
+				toppaper = paper
+				to_chat(usr, "<span class='notice'>You move [paper] to the top.</span>")
 				update_icon()
 				. = TRUE
 		// Rename the paper (it's a verb)
 		if("rename_paper")
-			var/obj/item/paper/P = locate(params["ref"]) in src
-			if(istype(P))
-				P.rename()
+			var/obj/item/paper/paper = locate(params["ref"]) in src
+			if(istype(paper))
+				paper.rename()
 				update_icon()
 				. = TRUE

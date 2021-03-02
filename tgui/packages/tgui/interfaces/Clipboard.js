@@ -28,7 +28,7 @@ export const Clipboard = (props, context) => {
               </LabeledList.Item>
             </LabeledList>
           ) : (
-            <Box color="grey" align="center">
+            <Box color="white" align="center">
               No pen attached!
             </Box>
           )}
@@ -107,8 +107,8 @@ export const Clipboard = (props, context) => {
           </>
         ) : (
           <Section>
-            <Box color="grey" align="center">
-              No paper attached!
+            <Box color="white" align="center">
+              The clipboard is empty!
             </Box>
           </Section>
         )}
