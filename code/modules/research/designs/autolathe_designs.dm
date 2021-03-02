@@ -1218,7 +1218,7 @@
 	name = "Restaurant Seating Projector"
 	desc = "A holographic projector that creates seating designation for restaurants."
 	id = "holosignrestaurant"
-	build_type = AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/restaurant
 	category = list("Equipment")
@@ -1228,7 +1228,7 @@
 	name = "Bar Seating Projector"
 	desc = "A holographic projector that creates seating designation for bars."
 	id = "holosignbar"
-	build_type = AUTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/bar
 	category = list("Equipment")
