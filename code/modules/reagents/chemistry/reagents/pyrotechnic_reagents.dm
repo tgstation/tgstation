@@ -222,7 +222,7 @@
 	purity = REAGENT_STANDARD_PUIRTY
 	self_consuming = TRUE
 	impure_chem = null
-	inverse_chem_val = 0.5
+	inverse_chem_val = 0.25
 	inverse_chem = /datum/reagent/inverse/cryostylane
 	failed_chem = null
 	burning_volume = 0.05
@@ -236,7 +236,7 @@
 
 /datum/reagent/cryostylane/on_mob_add(mob/living/consumer, amount)
 	. = ..()
-	consumer.mob_surgery_speed_mod = (CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT //10% - 30% slower
+	consumer.mob_surgery_speed_mod = 1-((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT) //10% - 30% slower
 	consumer.color = COLOR_CYAN
 
 /datum/reagent/cryostylane/on_mob_delete(mob/living/consumer)
@@ -250,7 +250,7 @@
 	metabolization_rate = 0.05 * REM //slower consumption when dead
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/consumer, delta_time, times_fired)
-	metabolization_rate = 0.5 * REM//faster consumption when alive
+	metabolization_rate = 0.25 * REM//faster consumption when alive
 	if(consumer.reagents.has_reagent(/datum/reagent/oxygen))
 		consumer.reagents.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * delta_time)
 		consumer.adjust_bodytemperature(-15 * REM * delta_time)

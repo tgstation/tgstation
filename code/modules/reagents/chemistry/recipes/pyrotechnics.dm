@@ -441,7 +441,7 @@
 	determin_ph_range = 6
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 1
-	thermic_constant = -15
+	thermic_constant = -7.5
 	H_ion_release = 0
 	rate_up_lim = 10
 	purity_min = 0.2
@@ -489,7 +489,7 @@
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	holder.my_atom.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS)
-	new /obj/structure/statue/snow/snowman(holder.my_atom)
+	new /obj/structure/statue/snow/snowman(holder.my_atom.loc)
 	clear_reactants(holder)
 	clear_products(holder)
 

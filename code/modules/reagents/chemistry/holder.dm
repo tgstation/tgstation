@@ -834,7 +834,7 @@
 			var/meets_ph_requirement = FALSE
 			var/granularity = 1
 			if(!(reaction.reaction_flags & REACTION_INSTANT))
-				granularity = 0.01
+				granularity = CHEMICAL_VOLUME_MINIMUM
 
 			for(var/req_reagent in cached_required_reagents)
 				if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*granularity)))

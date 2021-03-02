@@ -442,12 +442,12 @@
 * * radius - the range of the effect
 * * freeze_duration - how long the icey spots remain for
 */
-/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50)
+/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS)
 	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
 		if(!istype(any_turf, /turf/open))
 			continue
 		var/turf/open/open_turf = any_turf
-		open_turf.MakeSlippery(TURF_WET_PERMAFROST, 10, freeze_duration, freeze_duration)
+		open_turf.MakeSlippery(TURF_WET_PERMAFROST, freeze_duration, freeze_duration, freeze_duration)
 		open_turf.temperature = temp
 
 ///Clears the beaker of the reagents only
