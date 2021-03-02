@@ -147,6 +147,10 @@
 
 	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
 	if(removed_id)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
 		return removed_id
 
@@ -163,6 +167,10 @@
 		return FALSE
 
 	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
 		return TRUE
 
