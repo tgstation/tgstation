@@ -8,6 +8,7 @@
 						ANNOUNCER_GRANOMALIES = 'sound/ai/default/granomalies.ogg',
 						ANNOUNCER_INTERCEPT = 'sound/ai/default/intercept.ogg',
 						ANNOUNCER_IONSTORM = 'sound/ai/default/ionstorm.ogg',
+						ANNOUNCER_METEORS = 'sound/ai/default/meteors.ogg',
 						ANNOUNCER_OUTBREAK5 = 'sound/ai/default/outbreak5.ogg',
 						ANNOUNCER_OUTBREAK7 = 'sound/ai/default/outbreak7.ogg',
 						ANNOUNCER_POWEROFF = 'sound/ai/default/poweroff.ogg',
