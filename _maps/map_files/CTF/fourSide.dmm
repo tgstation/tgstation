@@ -57,17 +57,7 @@
 /area/ctf)
 "dI" = (
 /obj/machinery/capture_the_flag/red,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "dV" = (
 /obj/structure/barricade/security/ctf,
@@ -379,17 +369,7 @@
 /area/ctf)
 "uD" = (
 /obj/machinery/capture_the_flag/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "uN" = (
 /obj/effect/turf_decal/tile/green,
@@ -475,18 +455,8 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "BB" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
 /obj/machinery/capture_the_flag/green,
-/turf/open/floor/iron/white,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "Cd" = (
 /obj/effect/turf_decal/tile/blue,
@@ -727,18 +697,8 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "Sg" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
 /obj/machinery/capture_the_flag/yellow,
-/turf/open/floor/iron/white,
+/turf/open/floor/circuit/green/off,
 /area/ctf)
 "Sw" = (
 /obj/effect/turf_decal/tile/red{
@@ -949,7 +909,7 @@ eK
 eK
 eK
 eK
-eK
+rs
 eK
 eK
 eK
@@ -1007,9 +967,9 @@ eK
 eK
 eK
 eK
-eK
+rs
 dI
-eK
+rs
 eK
 eK
 eK
@@ -1067,7 +1027,7 @@ eK
 eK
 eK
 eK
-eK
+rs
 eK
 eK
 eK
@@ -2457,7 +2417,7 @@ QI
 (28,1,1) = {"
 QI
 ye
-ye
+rs
 ye
 QI
 rs
@@ -2509,15 +2469,15 @@ rs
 rs
 QI
 jS
-jS
+rs
 jS
 QI
 "}
 (29,1,1) = {"
 QI
-ye
+rs
 BB
-ye
+rs
 QI
 rs
 rs
@@ -2567,15 +2527,15 @@ rs
 rs
 rs
 QI
-jS
+rs
 Sg
-jS
+rs
 QI
 "}
 (30,1,1) = {"
 QI
 ye
-ye
+rs
 ye
 QI
 rs
@@ -2627,7 +2587,7 @@ rs
 rs
 QI
 jS
-jS
+rs
 jS
 QI
 "}
@@ -4017,7 +3977,7 @@ GR
 GR
 GR
 GR
-GR
+rs
 GR
 GR
 GR
@@ -4075,9 +4035,9 @@ GR
 GR
 GR
 GR
-GR
+rs
 uD
-GR
+rs
 GR
 GR
 GR
@@ -4135,7 +4095,7 @@ GR
 GR
 GR
 GR
-GR
+rs
 GR
 GR
 GR
