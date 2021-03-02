@@ -66,7 +66,7 @@
 	open = FALSE
 	restaurant_portal.update_icon()
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
+	for(var/mob/living/simple_animal/robot_customer AS_TYPELESS in current_visitors)
 		robot_customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE //LEAVEEEEEE
 
 /obj/machinery/restaurant_portal

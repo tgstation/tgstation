@@ -222,7 +222,7 @@
 	if(!..())
 		return FALSE
 
-	for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
+	for(var/obj/item/seeds/found_seed AS_TYPELESS in seed_blacklist)
 		if(istype(source_seed, found_seed))
 			return FALSE
 

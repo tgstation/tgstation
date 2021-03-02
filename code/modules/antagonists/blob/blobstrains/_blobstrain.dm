@@ -7,23 +7,23 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	/// The color that stuff like healing effects and the overmind camera gets
 	var/complementary_color = COLOR_BLACK
 	/// A short description of the power and its effects
-	var/shortdesc = null 
+	var/shortdesc = null
 	/// Any long, blob-tile specific effects
-	var/effectdesc = null 
+	var/effectdesc = null
 	/// Short descriptor of what the strain does damage-wise, generally seen in the reroll menu
 	var/analyzerdescdamage = "Unknown. Report this bug to a coder, or just adminhelp."
 	/// Short descriptor of what the strain does in general, generally seen in the reroll menu
 	var/analyzerdesceffect
 	/// Blobbernaut attack verb
-	var/blobbernaut_message = "slams" 
+	var/blobbernaut_message = "slams"
 	/// Message sent to any mob hit by the blob
-	var/message = "The blob strikes you" 
+	var/message = "The blob strikes you"
 	/// Gets added onto 'message' if the mob stuck is of type living
 	var/message_living = null
 	/// Stores world.time to figure out when to next give resources
 	var/resource_delay = 0
 	/// For blob-mobs and extinguishing-based effects
-	var/fire_based = FALSE 
+	var/fire_based = FALSE
 	var/mob/camera/blob/overmind
 	/// The amount of health regenned on core_process
 	var/base_core_regen = BLOB_CORE_HP_REGEN
@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.strong_reinforce_range += core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range += core_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
+	for(var/obj/structure/blob/special/node/N AS_TYPELESS in overmind.node_blobs)
 		N.max_spores += node_spore_bonus
 		N.claim_range += node_range_bonus
 		N.pulse_range += node_range_bonus
@@ -89,15 +89,15 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		N.strong_reinforce_range += node_strong_reinforcement_range_bonus
 		N.reflector_reinforce_range += node_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/factory/F as anything in overmind.factory_blobs)
+	for(var/obj/structure/blob/special/factory/F AS_TYPELESS in overmind.factory_blobs)
 		F.max_spores += factory_spore_bonus
 
-	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
+	for(var/obj/structure/blob/B AS_TYPELESS in overmind.all_blobs)
 		B.max_integrity *= max_structure_health_multiplier
 		B.obj_integrity *= max_structure_health_multiplier
 		B.update_appearance()
 
-	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
+	for(var/mob/living/simple_animal/hostile/blob/BM AS_TYPELESS in overmind.blob_mobs)
 		BM.maxHealth *= max_mob_health_multiplier
 		BM.health *= max_mob_health_multiplier
 		BM.update_icons() //If it's getting a new strain, tell it what it does!
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
+	for(var/obj/structure/blob/special/node/N AS_TYPELESS in overmind.node_blobs)
 		N.max_spores -= node_spore_bonus
 		N.claim_range -= node_range_bonus
 		N.pulse_range -= node_range_bonus
@@ -121,17 +121,17 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		N.strong_reinforce_range -= node_strong_reinforcement_range_bonus
 		N.reflector_reinforce_range -= node_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/factory/F as anything in overmind.factory_blobs)
+	for(var/obj/structure/blob/special/factory/F AS_TYPELESS in overmind.factory_blobs)
 		F.max_spores -= factory_spore_bonus
 
-	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
+	for(var/obj/structure/blob/B AS_TYPELESS in overmind.all_blobs)
 		B.max_integrity /= max_structure_health_multiplier
 		B.obj_integrity /= max_structure_health_multiplier
 
-	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
+	for(var/mob/living/simple_animal/hostile/blob/BM AS_TYPELESS in overmind.blob_mobs)
 		BM.maxHealth /= max_mob_health_multiplier
 		BM.health /= max_mob_health_multiplier
-		
+
 
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 

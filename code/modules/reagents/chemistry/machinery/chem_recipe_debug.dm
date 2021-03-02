@@ -209,13 +209,13 @@
 	data["minTemp"] = min_temp
 
 	var/list/beaker_contents = list()
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagents.reagent_list)
 		beaker_contents.len++
 		beaker_contents[length(beaker_contents)] = list("name" = reagent.name, "volume" = round(reagent.volume, 0.01), "purity" = round(reagent.purity))
 	data["chamberContents"] = beaker_contents
 
 	var/list/queued_reactions = list()
-	for(var/datum/chemical_reaction/reaction as anything in reaction_names)
+	for(var/datum/chemical_reaction/reaction AS_TYPELESS in reaction_names)
 		var/datum/reagent/reagent = find_reagent_object_from_type(reaction.results[1])
 		queued_reactions.len++
 		queued_reactions[length(queued_reactions)] = list("name" = reagent.name)
@@ -223,7 +223,7 @@
 
 	var/list/active_reactions = list()
 	var/flashing = DISABLE_FLASHING //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
-	for(var/datum/equilibrium/equilibrium as anything in reagents.reaction_list)
+	for(var/datum/equilibrium/equilibrium AS_TYPELESS in reagents.reaction_list)
 		if(!length(reagents.reaction_list))//I'm not sure why when it explodes it causes the gui to fail (it's missing danger (?) )
 			stack_trace("Chem debug managed to find an equilibrium in a location where there should be none (skipping this entry and continuing). This is usually because of an ill timed explosion.")
 			continue

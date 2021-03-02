@@ -463,7 +463,7 @@ GENE SCANNER
 
 		if(LAZYLEN(M.mind?.active_addictions))
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following types of drug:</span>\n"
-			for(var/datum/addiction/addiction_type as anything in M.mind.active_addictions)
+			for(var/datum/addiction/addiction_type AS_TYPELESS in M.mind.active_addictions)
 				render_list += "<span class='alert ml-2'>[initial(addiction_type.name)]</span>\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject is not addicted to any types of drug.</span>\n"

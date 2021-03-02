@@ -131,7 +131,7 @@
 
 /datum/reagents/Destroy()
 	//We're about to delete all reagents, so lets cleanup
-	for(var/datum/reagent/reagent as anything in reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagent_list)
 		qdel(reagent)
 	reagent_list = null
 	if(is_reacting) //If false, reaction list should be cleaned up
@@ -188,11 +188,11 @@
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/old_heat_capacity = 0
 	if(reagtemp != cached_temp)
-		for(var/datum/reagent/iter_reagent as anything in cached_reagents)
+		for(var/datum/reagent/iter_reagent AS_TYPELESS in cached_reagents)
 			old_heat_capacity += iter_reagent.specific_heat * iter_reagent.volume
 
 	//add the reagent to the existing if it exists
-	for(var/datum/reagent/iter_reagent as anything in cached_reagents)
+	for(var/datum/reagent/iter_reagent AS_TYPELESS in cached_reagents)
 		if(iter_reagent.type == reagent)
 			if(override_base_ph)
 				added_ph = iter_reagent.ph
@@ -263,7 +263,7 @@
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+	for(var/datum/reagent/cached_reagent AS_TYPELESS in cached_reagents)
 		if(cached_reagent.type == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
@@ -312,7 +312,7 @@
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
 		var/part = amount / total_volume
-		for(var/datum/reagent/reagent as anything in cached_reagents)
+		for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 			remove_reagent(reagent.type, reagent.volume * part)
 
 		//finish_reacting() //A just in case - update total is in here - should be unneeded, make sure to test this
@@ -326,7 +326,7 @@
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		var/matches = 0
 		// Switch between how we check the reagent type
 		if(strict)
@@ -345,7 +345,7 @@
 /// Fuck this one reagent
 /datum/reagents/proc/del_reagent(target_reagent_typepath)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(reagent.type == target_reagent_typepath)
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
@@ -370,7 +370,7 @@
 /// Remove every reagent except this one
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+	for(var/datum/reagent/cached_reagent AS_TYPELESS in cached_reagents)
 		if(cached_reagent.type != reagent)
 			del_reagent(cached_reagent.type)
 			update_total()
@@ -378,7 +378,7 @@
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		del_reagent(reagent.type)
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CLEAR_REAGENTS)
 
@@ -391,7 +391,7 @@
  */
 /datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
+	for(var/datum/reagent/holder_reagent AS_TYPELESS in cached_reagents)
 		if (holder_reagent.type == reagent)
 			if(!amount)
 				if(needs_metabolizing && !holder_reagent.metabolizing)
@@ -458,7 +458,7 @@
 	var/transfer_log = list()
 	if(!round_robin)
 		var/part = amount / src.total_volume
-		for(var/datum/reagent/reagent as anything in cached_reagents)
+		for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 			if(remove_blacklisted && !(reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
 			var/transfer_amount = reagent.volume * part
@@ -479,7 +479,7 @@
 				R.process_mob_reagent_purity(reagent.type, transfer_amount * multiplier, reagent.purity)
 	else
 		var/to_transfer = amount
-		for(var/datum/reagent/reagent as anything in cached_reagents)
+		for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 			if(!to_transfer)
 				break
 			if(remove_blacklisted && !(reagent.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
@@ -574,7 +574,7 @@
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		var/copy_amount = reagent.volume * part
 		if(preserve_data)
 			trans_data = reagent.data
@@ -595,7 +595,7 @@
 	if(!total_volume)
 		return
 	var/change = (multiplier - 1) //Get the % change
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(change > 0)
 			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity)
 		else
@@ -610,7 +610,7 @@
 	var/list/cached_reagents = reagent_list
 	var/name
 	var/max_volume = 0
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(reagent.volume > max_volume)
 			max_volume = reagent.volume
 			name = reagent.name
@@ -622,7 +622,7 @@
 	var/list/cached_reagents = reagent_list
 	var/max_type
 	var/max_volume = 0
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(reagent.volume > max_volume)
 			max_volume = reagent.volume
 			max_type = reagent.type
@@ -634,7 +634,7 @@
 	var/list/cached_reagents = reagent_list
 	var/datum/reagent/master
 	var/max_volume = 0
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(reagent.volume > max_volume)
 			max_volume = reagent.volume
 			master = reagent
@@ -654,7 +654,7 @@
 	if(owner)
 		expose_temperature(owner.bodytemperature, 0.25)
 	var/need_mob_update = 0
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(QDELETED(reagent.holder))
 			continue
 
@@ -689,7 +689,7 @@
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(QDELETED(reagent.holder))
 			continue
 		if(keep_liverless && reagent.self_consuming) //Will keep working without a liver
@@ -709,7 +709,7 @@
  */
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		reagent.on_move(A, Running)
 	update_total()
 
@@ -721,7 +721,7 @@
  */
 /datum/reagents/proc/conditional_update(atom/A)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		reagent.on_update(A)
 	update_total()
 
@@ -753,8 +753,8 @@
 
 	. = 0
 	var/list/possible_reactions = list()
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		for(var/datum/chemical_reaction/reaction as anything in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
+		for(var/datum/chemical_reaction/reaction AS_TYPELESS in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 			if(!reaction)
 				continue
 
@@ -820,7 +820,7 @@
 
 	update_previous_reagent_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
-	for(var/datum/chemical_reaction/selected_reaction as anything in possible_reactions)
+	for(var/datum/chemical_reaction/selected_reaction AS_TYPELESS in possible_reactions)
 		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
@@ -828,7 +828,7 @@
 			continue
 		else
 			var/exists = FALSE
-			for(var/datum/equilibrium/E_exist as anything in reaction_list)
+			for(var/datum/equilibrium/E_exist AS_TYPELESS in reaction_list)
 				if(ispath(E_exist.reaction.type, selected_reaction.type)) //Don't add duplicates
 					exists = TRUE
 
@@ -870,7 +870,7 @@
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
 	var/num_reactions = 0
-	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
+	for(var/datum/equilibrium/equilibrium AS_TYPELESS in reaction_list)
 		//Continue reacting
 		equilibrium.react_timestep(delta_time)
 		num_reactions++
@@ -928,7 +928,7 @@
 	STOP_PROCESSING(SSreagents, src)
 	is_reacting = FALSE
 	//Cap off values
-	for(var/datum/reagent/reagent as anything in reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagent_list)
 		reagent.volume = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
@@ -943,7 +943,7 @@
 */
 /datum/reagents/proc/force_stop_reacting()
 	var/list/mix_message = list()
-	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
+	for(var/datum/equilibrium/equilibrium AS_TYPELESS in reaction_list)
 		mix_message += end_reaction(equilibrium)
 	if(length(mix_message))
 		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
@@ -961,7 +961,7 @@
 /datum/reagents/proc/force_stop_reagent_reacting(datum/reagent/reagent)
 	var/any_stopped = FALSE
 	var/list/mix_message = list()
-	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
+	for(var/datum/equilibrium/equilibrium AS_TYPELESS in reaction_list)
 		for(var/result in equilibrium.reaction.results)
 			if(result == reagent.type)
 				mix_message += end_reaction(equilibrium)
@@ -981,9 +981,9 @@
 		CRASH("transfer_reactions() had a [target] ([target.type]) passed to it when it was set to qdel, or it isn't a reagents datum.")
 	if(!reaction_list)
 		return
-	for(var/datum/equilibrium/reaction_source as anything in reaction_list)
+	for(var/datum/equilibrium/reaction_source AS_TYPELESS in reaction_list)
 		var/exists = FALSE
-		for(var/datum/equilibrium/reaction_target as anything in target.reaction_list) //Don't add duplicates
+		for(var/datum/equilibrium/reaction_target AS_TYPELESS in target.reaction_list) //Don't add duplicates
 			if(reaction_source.reaction.type == reaction_target.reaction.type)
 				exists = TRUE
 		if(exists)
@@ -1010,7 +1010,7 @@
 		return TRUE
 
 	//Check our last reactions
-	for(var/datum/chemical_reaction/reaction as anything in failed_but_capable_reactions)
+	for(var/datum/chemical_reaction/reaction AS_TYPELESS in failed_but_capable_reactions)
 		if(reaction.is_cold_recipe)
 			if(reaction.required_temp < chem_temp)
 				return TRUE
@@ -1023,7 +1023,7 @@
 
 /datum/reagents/proc/update_previous_reagent_list()
 	LAZYNULL(previous_reagent_list)
-	for(var/datum/reagent/reagent as anything in reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagent_list)
 		LAZYADD(previous_reagent_list, reagent.type)
 
 ///Old reaction mechanics, edited to work on one only
@@ -1077,7 +1077,7 @@
 		return FALSE
 	var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
 	//select the reaction with the most extreme temperature requirements
-	for(var/datum/chemical_reaction/competitor as anything in possible_reactions)
+	for(var/datum/chemical_reaction/competitor AS_TYPELESS in possible_reactions)
 		if(selected_reaction.is_cold_recipe)
 			if(competitor.required_temp <= selected_reaction.required_temp)
 				selected_reaction = competitor
@@ -1125,7 +1125,7 @@
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
 	total_volume = 0
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if((reagent.volume < 0.05) && !is_reacting)
 			del_reagent(reagent.type)
 		else if(reagent.volume <= CHEMICAL_VOLUME_MINIMUM)//For clarity
@@ -1156,7 +1156,7 @@
 		return null
 
 	var/list/reagents = list()
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		reagents[reagent] = reagent.volume * volume_modifier
 
 	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
@@ -1184,7 +1184,7 @@
 /// Get the amount of this reagent
 /datum/reagents/proc/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+	for(var/datum/reagent/cached_reagent AS_TYPELESS in cached_reagents)
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return 0
@@ -1192,7 +1192,7 @@
 /// Get the purity of this reagent
 /datum/reagents/proc/get_reagent_purity(reagent)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+	for(var/datum/reagent/cached_reagent AS_TYPELESS in cached_reagents)
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.purity, 0.01)
 	return 0
@@ -1201,7 +1201,7 @@
 /datum/reagents/proc/get_reagent_names()
 	var/list/names = list()
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		names += reagent.name
 
 	return jointext(names, ",")
@@ -1209,14 +1209,14 @@
 /// helper function to preserve data across reactions (needed for xenoarch)
 /datum/reagents/proc/get_data(reagent_id)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(reagent.type == reagent_id)
 			return reagent.data
 
 /// helper function to preserve data across reactions (needed for xenoarch)
 /datum/reagents/proc/set_data(reagent_id, new_data)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagents)
 		if(reagent.type == reagent_id)
 			reagent.data = new_data
 
@@ -1258,7 +1258,7 @@
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
-		for(var/datum/reagent/reagent as anything in reagent_list)
+		for(var/datum/reagent/reagent AS_TYPELESS in reagent_list)
 			if(!reagent.taste_mult)
 				continue
 
@@ -1347,7 +1347,7 @@
 * * value - How much to adjust the base pH by
 */
 /datum/reagents/proc/adjust_all_reagents_ph(value, lower_limit = 0, upper_limit = 14)
-	for(var/datum/reagent/reagent as anything in reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagent_list)
 		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
 
 /*
@@ -1360,7 +1360,7 @@
 * * value - How much to adjust the base pH by
 */
 /datum/reagents/proc/adjust_specific_reagent_list_ph(list/input_reagents_list, value, lower_limit = 0, upper_limit = 14)
-	for(var/datum/reagent/reagent as anything in input_reagents_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in input_reagents_list)
 		if(!reagent) //We can call this with missing reagents.
 			continue
 		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
@@ -1390,7 +1390,7 @@
 		ph = CHEMICAL_NORMAL_PH
 		return
 	var/total_ph = 0
-	for(var/datum/reagent/reagent as anything in reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagent_list)
 		total_ph += (reagent.ph * reagent.volume)
 	//Keep limited
 	ph = clamp(total_ph/total_volume, 0, 14)
@@ -1410,7 +1410,7 @@
 		for(var/r in external_list)
 			data += "[r] ([round(external_list[r], 0.1)]u)"
 	else
-		for(var/datum/reagent/reagent as anything in reagent_list) //no reagents will be left behind
+		for(var/datum/reagent/reagent AS_TYPELESS in reagent_list) //no reagents will be left behind
 			data += "[reagent.type] ([round(reagent.volume, 0.1)]u)"
 			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
@@ -1676,7 +1676,7 @@
 			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
 			//Get sub reaction possibilities, but ignore ones that need a specific holder atom
 			var/sub_index = 0
-			for(var/datum/chemical_reaction/sub_reaction as anything in sub_reactions)
+			for(var/datum/chemical_reaction/sub_reaction AS_TYPELESS in sub_reactions)
 				if(sub_reaction.required_container)//So we don't have slime reactions confusing things
 					sub_index++
 					continue

@@ -120,9 +120,9 @@
 	//Reagents check should be handled in the calculate_yield() from multiplier
 
 	//If the product/reactants are too impure
-	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in holder.reagent_list)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
-		for(var/datum/reagent/catalyst as anything in reaction.required_catalysts)
+		for(var/datum/reagent/catalyst AS_TYPELESS in reaction.required_catalysts)
 			if(catalyst == reagent.type)
 				total_matching_catalysts++
 		if(istype(reagent, /datum/reagent/catalyst_agent))
@@ -414,7 +414,7 @@
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0
 	var/cached_purity
-	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in holder.reagent_list)
 		if (reagent in cached_reagents)
 			cached_purity += reagent.purity
 			i++

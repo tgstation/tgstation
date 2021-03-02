@@ -4,7 +4,7 @@
 
 ///Put your movement behavior in here!
 /datum/ai_movement/dumb/process(delta_time)
-	for(var/datum/ai_controller/controller as anything in moving_controllers)
+	for(var/datum/ai_controller/controller AS_TYPELESS in moving_controllers)
 		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
 			continue
 		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)

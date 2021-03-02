@@ -304,7 +304,7 @@
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	var/sum_volume = 0
 	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
-	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+	for(var/datum/reagent/reagent AS_TYPELESS in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		if(!(reagent.type in required_reagents) || !(reagent.type in results))
 			continue
 		if(reagent.inverse_chem)
@@ -335,7 +335,7 @@
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
-	for (var/datum/reagent/reagent as anything in holder.reagent_list)
+	for (var/datum/reagent/reagent AS_TYPELESS in holder.reagent_list)
 		if((reagent.type in required_reagents) || (reagent.type in results))
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
@@ -355,7 +355,7 @@
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
 		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
-	for(var/atom/movable/movey as anything in orange(range, this_turf))
+	for(var/atom/movable/movey AS_TYPELESS in orange(range, this_turf))
 		if(!istype(movey, /atom/movable))
 			continue
 		if(isliving(movey) && damage)
@@ -430,7 +430,7 @@
 	if(fire_range == 0)
 		new /obj/effect/hotspot(location)
 		return
-	for(var/turf/turf as anything in range(fire_range, location))
+	for(var/turf/turf AS_TYPELESS in range(fire_range, location))
 		new /obj/effect/hotspot(turf)
 
 ///////////END FIRE BASED EXPLOSIONS

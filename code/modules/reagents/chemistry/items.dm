@@ -240,7 +240,7 @@
 /obj/item/burner/process()
 	var/current_heat = 0
 	var/number_of_burning_reagents = 0
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagents.reagent_list)
 		reagent.burn(reagents) //burn can set temperatures of reagents
 		if(!isnull(reagent.burning_temperature))
 			current_heat += reagent.burning_temperature

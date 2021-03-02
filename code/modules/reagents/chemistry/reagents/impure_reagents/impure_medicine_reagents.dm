@@ -279,7 +279,7 @@
 			owner.Sleeping(40)
 			. = 1
 			if(owner.IsSleeping())
-				for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+				for(var/datum/reagent/reagent AS_TYPELESS in owner.reagents.reagent_list)
 					if(reagent in cached_reagent_list)
 						continue
 					if(!istype(reagent, /datum/reagent/medicine))
@@ -288,7 +288,7 @@
 					cached_reagent_list += reagent
 
 			else if(!owner.IsSleeping() && length(cached_reagent_list))
-				for(var/datum/reagent/reagent as anything in cached_reagent_list)
+				for(var/datum/reagent/reagent AS_TYPELESS in cached_reagent_list)
 					if(!reagent)
 						continue
 					reagent.creation_purity *= 0.8
@@ -298,7 +298,7 @@
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/owner)
 	if(owner.IsSleeping())
 		owner.visible_message("<span class='notice'>[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!</span>")//small way of letting people know the supersnooze is ended
-	for(var/datum/reagent/reagent as anything in cached_reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagent_list)
 		if(!reagent)
 			continue
 		reagent.creation_purity *= 0.8
@@ -396,7 +396,7 @@
 	if(!(iscarbon(living_mob)))
 		return ..()
 	var/mob/living/carbon/owner = living_mob
-	for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in owner.reagents.reagent_list)
 		if(reagent in cached_reagent_list)
 			continue
 		if(istype(reagent, /datum/reagent/medicine))
@@ -411,7 +411,7 @@
 		return
 	if(!cached_reagent_list)
 		return
-	for(var/datum/reagent/reagent as anything in cached_reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in cached_reagent_list)
 		if(!reagent)
 			continue
 		reagent.creation_purity *= 1.25
@@ -478,7 +478,7 @@
 		return ..()
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	//Following is for those brought back from the dead only
-	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
+	for(var/datum/wound/iter_wound AS_TYPELESS in owner.all_wounds)
 		iter_wound.blood_flow += (1-creation_purity)
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
 	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)

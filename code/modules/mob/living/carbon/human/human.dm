@@ -872,7 +872,7 @@
 			hud_used.healthdoll.cut_overlays()
 			if(stat != DEAD)
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/obj/item/bodypart/body_part as anything in bodyparts)
+				for(var/obj/item/bodypart/body_part AS_TYPELESS in bodyparts)
 					var/icon_num = 0
 					//Hallucinations
 					if(body_part.type in hal_screwydoll)

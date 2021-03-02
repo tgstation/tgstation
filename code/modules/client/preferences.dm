@@ -1527,7 +1527,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("briefoutfit")
 					var/list/valid_paths = list()
-					for(var/datum/outfit/outfit_path as anything in subtypesof(/datum/outfit))
+					for(var/datum/outfit/outfit_path AS_TYPELESS in subtypesof(/datum/outfit))
 						valid_paths[initial(outfit_path.name)] = outfit_path
 					var/new_outfit = input(user, "Choose your briefing officer outfit:", "Game Preference") as null|anything in valid_paths
 					new_outfit = valid_paths[new_outfit]

@@ -388,7 +388,7 @@ SUBSYSTEM_DEF(ticker)
 	var/mob/dead/new_player/picked_spare_id_candidate
 
 	// Find a suitable player to hold captaincy.
-	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+	for(var/mob/dead/new_player/new_player_mob AS_TYPELESS in GLOB.new_player_list)
 		if(is_banned_from(new_player_mob.ckey, list("Captain")))
 			CHECK_TICK
 			continue
@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(ticker)
 	if(length(spare_id_candidates))
 		picked_spare_id_candidate = pick(spare_id_candidates)
 
-	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+	for(var/mob/dead/new_player/new_player_mob AS_TYPELESS in GLOB.new_player_list)
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
 			var/player_assigned_role = new_player_human.mind.assigned_role
@@ -424,7 +424,7 @@ SUBSYSTEM_DEF(ticker)
 		CHECK_TICK
 
 	if(captainless)
-		for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		for(var/mob/dead/new_player/new_player_mob AS_TYPELESS in GLOB.new_player_list)
 			var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 			if(new_player_human)
 				to_chat(new_player_mob, "<span class='notice'>Captainship not forced on anyone.</span>")

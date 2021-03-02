@@ -92,7 +92,7 @@
 /datum/venue/bar/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	var/datum/reagent/ordered_reagent_type = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
 
-	for(var/datum/reagent/reagent as anything in order_item.reagents.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in order_item.reagents.reagent_list)
 		if(reagent.type != ordered_reagent_type)
 			continue
 		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)

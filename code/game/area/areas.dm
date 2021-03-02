@@ -574,7 +574,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Entered(atom/movable/M)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+	for(var/atom/movable/recipient AS_TYPELESS in M.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
 	if(!isliving(M))
 		return
@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Exited(atom/movable/M)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+	for(var/atom/movable/recipient AS_TYPELESS in M.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 

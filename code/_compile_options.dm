@@ -59,6 +59,13 @@
 #define USE_EXTOOLS
 #endif
 
+//as anything is broken before this version
+#if DM_BUILD < 1540
+#define AS_TYPELESS as()
+#else
+#define AS_TYPELESS as anything
+#endif
+
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.

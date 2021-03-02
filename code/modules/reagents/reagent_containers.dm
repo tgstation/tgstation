@@ -90,7 +90,7 @@
 			"<span class='userdanger'>You feel drenched!</span>",
 		)
 
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+	for(var/datum/reagent/reagent AS_TYPELESS in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
 
 	if(isturf(target) && reagents.reagent_list.len && thrownby)

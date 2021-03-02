@@ -188,7 +188,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(BM)
 			BM.overmind = null
 			BM.update_icons()
-	for(var/obj/structure/blob/blob_structure as anything in all_blobs)
+	for(var/obj/structure/blob/blob_structure AS_TYPELESS in all_blobs)
 		blob_structure.overmind = null
 	all_blobs = null
 	resource_blobs = null
