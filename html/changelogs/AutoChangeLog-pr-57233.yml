@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "The ruin of Ratvar will now properly spawn in Lavaland"
