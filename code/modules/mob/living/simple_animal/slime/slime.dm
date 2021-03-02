@@ -40,6 +40,8 @@
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
+	footstep_type = FOOTSTEP_MOB_SLIME
+
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
 
@@ -101,7 +103,6 @@
 	set_colour(new_colour)
 	. = ..()
 	set_nutrition(700)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
