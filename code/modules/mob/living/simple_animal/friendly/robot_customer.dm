@@ -3,7 +3,6 @@
 	name = "space-tourist bot"
 	maxHealth = 1000 //go fuck yourself
 	health = 1000
-	status_flags = GODMODE //:trollface:
 	desc = "I wonder what they'll order..."
 	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
@@ -84,8 +83,3 @@
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 		. += "<span class='notice'>Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"</span>"
 
-
-
-/mob/living/simple_animal/robot_customer/Login()
-	. = ..()
-	status_flags &= ~GODMODE //owned admin
