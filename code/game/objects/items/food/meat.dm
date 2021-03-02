@@ -52,6 +52,7 @@
 	tastes = list("fish" = 1, "breadcrumbs" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/fishandchips
 	name = "fish and chips"
@@ -60,6 +61,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/fishfry
 	name = "fish fry"
@@ -118,6 +120,7 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = MEAT | ALCOHOL
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/raw_meatball
 	name = "raw meatball"
@@ -169,6 +172,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/meatball/human
 	name = "strange meatball"
@@ -281,6 +285,7 @@
 	var/roasted = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sausage/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 30)
@@ -450,6 +455,7 @@
 	tastes = list("\"chicken\"" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/nugget/Initialize()
 	. = ..()
@@ -511,6 +517,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("tender meat" = 3, "metal" = 1)
 	foodtypes = MEAT | GROSS
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/monkey
 	name = "meat-kebab"
@@ -518,6 +525,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 3, "metal" = 1)
 	foodtypes = MEAT
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/tofu
 	name = "tofu-kebab"
@@ -525,6 +533,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 15)
 	tastes = list("tofu" = 3, "metal" = 1)
 	foodtypes = VEGETABLES
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/tail
 	name = "lizard-tail kebab"
@@ -541,6 +550,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rat meat" = 1, "metal" = 1)
 	foodtypes = MEAT | GROSS
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/rat/double
 	name = "double rat-kebab"
@@ -855,9 +865,9 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/cooking_oil = 3)
 	tastes = list("beef" = 1, "cod fish" = 1)
 
-/obj/item/food/meat/slab/gondola/MakeProcessable()
+/obj/item/food/meat/slab/penguin/MakeProcessable()
 	. = ..()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 30)
 
 /obj/item/food/meat/slab/penguin/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/penguin, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?

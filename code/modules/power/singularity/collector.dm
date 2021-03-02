@@ -6,7 +6,7 @@
 #define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
-	desc = "A device which uses Hawking Radiation and plasma to produce power."
+	desc = "A device which uses radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
 	anchored = FALSE
@@ -185,7 +185,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		. += "on"
+		. += loaded_tank ? "on" : "error"
 
 /obj/machinery/power/rad_collector/proc/toggle_power()
 	active = !active
