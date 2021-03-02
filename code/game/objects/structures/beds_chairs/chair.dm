@@ -83,15 +83,22 @@
 	. = ..()
 
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
-/obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user)
+/obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
 		return
-	var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
-	AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
-	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
+	if(!overlays_from_child_procs || overlays_from_child_procs.len == 0)
+		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
 	else
-		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto this chair!")
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
+
+	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
+		to_chat(user, "<span class='notice'>You connect the shock kit to the [name], electrifying it </span>")
+	else
+		user.put_in_active_hand(input_shock_kit)
+		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
+
 
 /obj/structure/chair/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -217,15 +224,10 @@
 /obj/structure/chair/comfy/shuttle/GetArmrest()
 	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
 
-/obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user)
-	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
-		return
-	var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1)
-	AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
-	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
-	else
-		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto this chair!")
+/obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
+	if(!overlays_from_child_procs)
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+	. = ..()
 
 /obj/structure/chair/office
 	anchored = FALSE
@@ -239,13 +241,10 @@
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
-/obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user)
-	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
-		return
-	var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1)
-	AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
-	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, "<span class='notice'>You connect the shock kit to the chair, turning it electric. </span>")
+/obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
+	if(!overlays_from_child_procs)
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+	. = ..()
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
