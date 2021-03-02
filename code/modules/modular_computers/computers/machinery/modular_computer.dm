@@ -74,7 +74,7 @@
 		. += "broken"
 
 /// Eats the "source" arg because update_icon actually expects args now.
-/obj/machinery/modular_computer/proc/relay_icon_update(obj/item/modular_computer/processor/source, updates, updated)
+/obj/machinery/modular_computer/proc/relay_icon_update(datum/source, updates, updated)
 	SIGNAL_HANDLER
 	return update_icon(updates)
 
