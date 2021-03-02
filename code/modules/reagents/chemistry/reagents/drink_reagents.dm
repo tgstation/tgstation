@@ -281,6 +281,7 @@
 	glass_name = "glass of coffee"
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M, delta_time, times_fired)
 	M.Jitter(5 * REM * delta_time)
@@ -307,6 +308,7 @@
 	glass_name = "glass of tea"
 	glass_desc = "Drinking it from here would not seem right."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (2 * REM * delta_time), 0)
@@ -684,6 +686,7 @@
 	glass_name = "soy latte"
 	glass_desc = "A nice and refreshing beverage while you're reading."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
@@ -706,6 +709,7 @@
 	glass_name = "cafe latte"
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
@@ -753,6 +757,7 @@
 	glass_name = "cherry shake"
 	glass_desc = "A cherry flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/bluecherryshake
 	name = "Blue Cherry Shake"
