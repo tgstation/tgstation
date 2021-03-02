@@ -36,9 +36,10 @@
 	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/effect/mine/Crossed(atom/movable/AM)
+	. = ..()
+
 	if(triggered || !isturf(loc) || !armed)
 		return
-	. = ..()
 
 	if(AM.movement_type & FLYING)
 		return
