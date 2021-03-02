@@ -360,13 +360,13 @@
 			var/datum/excited_group/EG = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
 				EG.add_turf(src)
-			if(!enemy_excited_group && enemy_tile.flags_1 & EXCITED_CLEANUP_1)
+			if(!enemy_excited_group && enemy_tile.turf_flags & EXCITED_CLEANUP)
 				EG.add_turf(enemy_tile)
 			our_excited_group = excited_group
 	if(our_excited_group)
 		our_excited_group.breakdown_cooldown = breakdown //Update with the old data
 		our_excited_group.dismantle_cooldown = dismantle
-	flags_1 &= ~EXCITED_CLEANUP_1
+	turf_flags &= ~EXCITED_CLEANUP
 
 //////////////////////////SPACEWIND/////////////////////////////
 
@@ -528,7 +528,7 @@
 		var/turf/open/T = t
 		T.excited_group = null
 		if(will_cleanup)
-			T.flags_1 |= EXCITED_CLEANUP_1
+			T.turf_flags |= EXCITED_CLEANUP
 	if(will_cleanup)
 		SSair.add_to_cleanup(src)
 	turf_list.Cut()
