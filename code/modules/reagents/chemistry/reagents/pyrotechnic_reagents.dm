@@ -222,7 +222,7 @@
 	purity = REAGENT_STANDARD_PUIRTY
 	self_consuming = TRUE
 	impure_chem = null
-	inverse_chem_val = 0.25
+	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/cryostylane
 	failed_chem = null
 	burning_volume = 0.05
