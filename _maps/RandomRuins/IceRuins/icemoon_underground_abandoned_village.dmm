@@ -409,7 +409,7 @@
 /obj/item/clothing/under/rank/cargo/miner,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/card/id/mining,
+/obj/item/card/id/advanced/mining,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/powered)

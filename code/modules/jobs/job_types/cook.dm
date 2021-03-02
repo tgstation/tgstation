@@ -10,8 +10,6 @@
 
 	outfit = /datum/outfit/job/cook
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
@@ -19,6 +17,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_COOK
 	bounty_types = CIV_JOB_CHEF
+	departments = DEPARTMENT_SERVICE
 
 /datum/outfit/job/cook
 	name = "Cook"
@@ -35,6 +34,8 @@
 		/obj/item/choice_beacon/ingredient = 1
 	)
 	skillchips = list(/obj/item/skillchip/job/chef)
+
+	id_trim = /datum/id_trim/job/cook
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

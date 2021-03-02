@@ -19,18 +19,17 @@
 	belt = /obj/item/gun/energy/pulse/pistol/m1911
 	r_pocket = /obj/item/lighter
 	back = /obj/item/storage/backpack/satchel/leather
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/specops_officer
 
 /datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Special Ops Officer")
-	W.assignment = "Special Ops Officer"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
@@ -138,6 +137,7 @@
 	if(outfit_id)
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
+		outfit_id.update_icon()
 
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
@@ -150,7 +150,7 @@
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/pirate/space/captain
 	name = "Space Pirate Captain (EVA)"
@@ -166,25 +166,14 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	gloves = /obj/item/clothing/gloves/color/black
-
-	id = /obj/item/card/id/silver
-
-	///special fluff for the ID's job
-	var/scale_assignment = "Silver Scale Member"
-
-/datum/outfit/pirate/silverscale/post_equip(mob/living/carbon/human/equipped)
-	..()
-	var/obj/item/card/id/outfit_id = equipped.wear_id
-	if(outfit_id)
-		outfit_id.assignment = scale_assignment
-		outfit_id.update_label()
+	id_trim = /datum/id_trim/pirate/silverscale
+	id = /obj/item/card/id/advanced/silver
 
 /datum/outfit/pirate/silverscale/captain
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 	head = /obj/item/clothing/head/crown
-
-	scale_assignment = "Silver Scale VIP"
+	id_trim = /datum/id_trim/pirate/silverscale/captain
 
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
@@ -198,18 +187,18 @@
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	l_pocket = /obj/item/food/grown/banana
 	r_pocket = /obj/item/bikehorn
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced/gold
 	l_hand = /obj/item/fireaxe
+	id_trim = /datum/id_trim/tunnel_clown
 
 /datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.assignment = "Tunnel Clown!"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/psycho
 	name = "Masked Killer"
@@ -243,8 +232,9 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon/black
 	belt = /obj/item/pda/heads
+	id_trim = /datum/id_trim/reaper_assassin
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
@@ -269,11 +259,10 @@
 	pda.ownjob = "Reaper"
 	pda.update_label()
 
-	var/obj/item/card/id/syndicate/W = H.wear_id
-	W.access = get_all_accesses()
-	W.assignment = "Reaper"
+	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/centcom/commander
 	name = "CentCom Commander"
@@ -290,18 +279,17 @@
 	r_pocket = /obj/item/lighter
 	l_pocket = /obj/item/ammo_box/a357
 	back = /obj/item/storage/backpack/satchel/leather
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/commander
 
 /datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("CentCom Commander")
-	W.assignment = "CentCom Commander"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/ghost_cultist
@@ -366,18 +354,18 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/ballistic/revolver/mateba
 
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/admiral
 
 /datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Admiral")
-	W.assignment = "Admiral"
+
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/mobster
@@ -390,16 +378,17 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/gun/ballistic/automatic/tommygun
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/mobster
 
 /datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Assistant"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/plasmaman
 	name = "Plasmaman"
@@ -426,7 +415,7 @@
 	suit_store = /obj/item/tank/internals/emergency_oxygen/double
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
-	id = /obj/item/card/id/ert/deathsquad
+	id = /obj/item/card/id/advanced/black/deathsquad
 	ears = /obj/item/radio/headset/headset_cent/alt
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
@@ -438,6 +427,8 @@
 		/obj/item/flashlight=1,\
 		/obj/item/grenade/c4/x4=1)
 
+	id_trim = /datum/id_trim/centcom/deathsquad
+
 /datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
@@ -446,11 +437,9 @@
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()//They get full station access.
-	W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
-	W.assignment = "Death Commando"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/centcom/death_commando/officer
@@ -476,7 +465,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	belt = /obj/item/storage/belt/utility/chief/full
 	shoes = /obj/item/clothing/shoes/magboots/advance
-	id = /obj/item/card/id/debug
+	id = /obj/item/card/id/advanced/debug
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
 	box = /obj/item/storage/box/debugtools
@@ -494,6 +483,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 /datum/outfit/admin //for admeem shenanigans and testing things that arent related to equipment, not a subtype of debug just in case debug changes things
 	name = "Admin outfit"
@@ -505,7 +495,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	belt = /obj/item/storage/belt/utility/chief/full
 	shoes = /obj/item/clothing/shoes/magboots/advance
-	id = /obj/item/card/id/debug
+	id = /obj/item/card/id/advanced/debug
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
 	box = /obj/item/storage/box/debugtools
@@ -524,3 +514,4 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()

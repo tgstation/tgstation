@@ -30,7 +30,7 @@
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)
-	if(req_access?.len)
+	if(LAZYLEN(req_access))
 		icon_state = "[icon_state]"
 		base_state = icon_state
 	for(var/i in 1 to shards)

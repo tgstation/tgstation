@@ -70065,10 +70065,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"lUY" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/n2o,
-/area/engineering/atmos)
 "lVw" = (
 /turf/closed/wall/rust,
 /area/command/gateway)
@@ -71110,6 +71106,10 @@
 	},
 /obj/item/healthanalyzer,
 /obj/item/hand_labeler,
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = 5;
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "mzV" = (
@@ -72950,6 +72950,7 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hop)
 "nFz" = (
@@ -85436,10 +85437,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/status_display/evac{
-	pixel_x = 32;
-	pixel_y = 32
-	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "uAx" = (
@@ -88302,10 +88299,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/engineering/atmos)
-"waz" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "waQ" = (
 /obj/machinery/door/firedoor,
@@ -117806,7 +117799,7 @@ nVD
 idD
 knR
 thE
-waz
+thE
 idD
 mrF
 xcO
@@ -122701,7 +122694,7 @@ ckE
 ine
 qbM
 jQf
-lUY
+oNT
 idD
 acm
 aaa
