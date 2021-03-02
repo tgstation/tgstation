@@ -56,9 +56,9 @@
 	name = "Chawanmushi"
 	reqs = list(
 		/datum/reagent/water = 5,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
+        /datum/reagent/consumable/soysauce = 5,
+        /obj/item/food/boiledegg = 2,
+        /obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
 	subcategory = CAT_EGG
