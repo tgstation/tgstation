@@ -1,8 +1,3 @@
-
-/obj/item/clothing/gloves
-	var/transfer_blood = 0
-
-
 /obj/item/reagent_containers/glass/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
