@@ -40,8 +40,8 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/carbon/C = user.mob
-	C.throw_mode_off(THROW_MODE_HOLD)
+	var/mob/living/carbon/carbon_user = user.mob
+	carbon_user.throw_mode_off(THROW_MODE_HOLD)
 /datum/keybinding/carbon/give
 	hotkey_keys = list("G")
 	name = "Give_Item"
@@ -53,6 +53,6 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/carbon/C = user.mob
-	C.give()
+	var/mob/living/carbon/carbon_user = user.mob
+	carbon_user.give()
 	return TRUE
