@@ -1950,6 +1950,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Between the Sheets"
 	glass_desc = "The only drink that comes with a label reminding you of Nanotrasen's zero-tolerance promiscuity policy."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L, delta_time, times_fired)
 	..()
