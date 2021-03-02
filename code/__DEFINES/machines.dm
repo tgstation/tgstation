@@ -42,6 +42,10 @@
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 #define NANITE_COMPILER  (1<<7) //Prints nanite disks
+/// Protolathes for offstation roles. More limited tech tree.
+#define AWAY_LATHE (1<<8)
+/// Imprinters for offstation roles. More limited tech tree.
+#define AWAY_IMPRINTER (1<<9)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
