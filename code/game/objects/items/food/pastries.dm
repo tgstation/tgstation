@@ -627,6 +627,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/khachapuri
 	name = "khachapuri"
