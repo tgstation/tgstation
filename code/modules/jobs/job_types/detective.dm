@@ -22,7 +22,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 
-	job_family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
 
 /datum/outfit/job/detective
 	name = "Detective"

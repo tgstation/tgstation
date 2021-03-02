@@ -17,7 +17,7 @@
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 	departments = DEPARTMENT_SERVICE
 
-	job_family_heirlooms = list(/obj/item/storage/pill_bottle)
+	family_heirlooms = list(/obj/item/storage/pill_bottle)
 
 /datum/outfit/job/psychologist
 	name = "Psychologist"

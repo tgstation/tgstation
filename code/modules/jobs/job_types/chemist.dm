@@ -20,7 +20,7 @@
 	bounty_types = CIV_JOB_CHEM
 	departments = DEPARTMENT_MEDICAL
 
-	job_family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
+	family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 
 /datum/outfit/job/chemist
 	name = "Chemist"

@@ -138,13 +138,13 @@
 
 	/// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
 	var/datum/species/holder_species = human_holder.dna?.species
-	if(holder_species && LAZYLEN(holder_species.species_family_heirlooms) && prob(50))
-		heirloom_type = pick(holder_species.species_family_heirlooms)
+	if(holder_species && LAZYLEN(holder_species.family_heirlooms) && prob(50))
+		heirloom_type = pick(holder_species.family_heirlooms)
 	else
 		/// Our quirk holder's job
 		var/datum/job/holder_job = SSjob.GetJob(human_holder.mind?.assigned_role)
-		if(holder_job && LAZYLEN(holder_job.job_family_heirlooms))
-			heirloom_type = pick(holder_job.job_family_heirlooms)
+		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
+			heirloom_type = pick(holder_job.family_heirlooms)
 
 	// If we didn't find an heirloom somehow, throw them a generic one
 	if(!heirloom_type)

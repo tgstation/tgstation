@@ -23,7 +23,7 @@
 	bounty_types = CIV_JOB_SEC
 	departments = DEPARTMENT_SECURITY
 
-	job_family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
+	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
 
 /datum/outfit/job/warden
 	name = "Warden"

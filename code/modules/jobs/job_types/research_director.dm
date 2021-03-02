@@ -23,7 +23,7 @@
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
 
-	job_family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
+	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 
 /datum/job/research_director/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

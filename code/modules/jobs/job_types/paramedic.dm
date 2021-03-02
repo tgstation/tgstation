@@ -18,7 +18,7 @@
 	bounty_types = CIV_JOB_MED
 	departments = DEPARTMENT_MEDICAL
 
-	job_family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"

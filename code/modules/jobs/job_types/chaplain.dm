@@ -15,7 +15,7 @@
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 	departments = DEPARTMENT_SERVICE
 
-	job_family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
+	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)

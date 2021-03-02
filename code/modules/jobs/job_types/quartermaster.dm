@@ -24,7 +24,7 @@
 	if(announce_captaincy)
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to extreme staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
 
-	job_family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
+	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"

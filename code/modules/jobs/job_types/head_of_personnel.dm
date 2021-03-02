@@ -25,7 +25,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
-	job_family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
 
 /datum/job/head_of_personnel/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

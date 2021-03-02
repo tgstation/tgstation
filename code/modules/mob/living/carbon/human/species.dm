@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/icon/ass_image
 
 	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
-	var/list/species_family_heirlooms
+	var/list/family_heirlooms
 
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results

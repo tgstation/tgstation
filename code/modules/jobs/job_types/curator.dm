@@ -15,7 +15,7 @@
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 	departments = DEPARTMENT_SERVICE
 
-	job_family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
+	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
 
 /datum/outfit/job/curator
 	name = "Curator"

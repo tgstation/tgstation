@@ -20,7 +20,7 @@
 	bounty_types = CIV_JOB_VIRO
 	departments = DEPARTMENT_MEDICAL
 
-	job_family_heirlooms = list(/obj/item/reagent_containers/syringe)
+	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 /datum/outfit/job/virologist
 	name = "Virologist"

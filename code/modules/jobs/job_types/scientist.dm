@@ -18,7 +18,7 @@
 	bounty_types = CIV_JOB_SCI
 	departments = DEPARTMENT_SCIENCE
 
-	job_family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
+	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 
 /datum/outfit/job/scientist
 	name = "Scientist"

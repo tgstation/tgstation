@@ -20,7 +20,7 @@
 	bounty_types = CIV_JOB_ENG
 	departments = DEPARTMENT_ENGINEERING
 
-	job_family_heirlooms = list(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"

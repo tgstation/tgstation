@@ -71,7 +71,7 @@
 	var/allow_bureaucratic_error = TRUE
 
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
-	var/list/job_family_heirlooms
+	var/list/family_heirlooms
 
 /datum/job/New()
 	. = ..()

@@ -11,7 +11,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 
-	job_family_heirlooms = list(/obj/item/pen/blue)
+	family_heirlooms = list(/obj/item/pen/blue)
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
