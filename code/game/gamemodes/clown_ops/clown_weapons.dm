@@ -200,7 +200,6 @@
 	bomb.det_time = det_time
 	if(iscarbon(loc))
 		to_chat(loc, "<span class='danger'>[src] begins to beep.</span>")
-		var/mob/living/carbon/C = loc
 	bomb.arm_grenade(loc, null, FALSE)
 
 /obj/item/grown/bananapeel/bombanana/ComponentInitialize()
