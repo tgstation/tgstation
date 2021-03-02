@@ -441,14 +441,17 @@
 * * temp - the temperature to set the air to
 * * radius - the range of the effect
 * * freeze_duration - how long the icey spots remain for
+* * snowball_chance - the chance to spawn a snowball on a turf
 */
-/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS)
+/datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS, snowball_chance = 0)
 	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
 		if(!istype(any_turf, /turf/open))
 			continue
 		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, freeze_duration, freeze_duration, freeze_duration)
 		open_turf.temperature = temp
+		if(prob(snowball_chance))
+			new /obj/item/toy/snowball(open_turf)
 
 ///Clears the beaker of the reagents only
 ///if volume is not set, it will remove all of the reactant
