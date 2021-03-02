@@ -3614,7 +3614,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "hD" = (
-/obj/machinery/rnd/production/protolathe,
+/obj/machinery/rnd/production/protolathe/offstation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -3900,7 +3900,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ii" = (
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
