@@ -656,7 +656,7 @@
 		expose_temperature(owner.bodytemperature, 0.25)
 	var/need_mob_update = FALSE
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		need_mob_update = metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
+		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
 		owner.update_stamina()
@@ -673,7 +673,7 @@
 /datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
 	var/need_mob_update = FALSE
 	if(QDELETED(reagent.holder))
-		return
+		return FALSE
 
 	if(!owner)
 		owner = reagent.holder.my_atom

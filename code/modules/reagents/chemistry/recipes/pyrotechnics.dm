@@ -488,7 +488,7 @@
 /datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsoundlocal_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS)
 	new /obj/structure/statue/snow/snowman(local_turf)
