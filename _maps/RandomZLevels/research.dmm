@@ -2863,13 +2863,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "gw" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/human/geneticist{
 	brute_damage = 145;
-	id_job = "Geneticist";
-	name = "Geneticist";
-	oxy_damage = 55;
-	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/rnd/geneticist
+	oxy_damage = 55
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3842,13 +3838,9 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "in" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/human/geneticist{
 	brute_damage = 145;
-	id_job = "Geneticist";
-	name = "Geneticist";
-	oxy_damage = 55;
-	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/rnd/geneticist
+	oxy_damage = 55
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -4646,13 +4638,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kj" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/human/geneticist{
 	brute_damage = 145;
-	id_job = "Geneticist";
-	name = "Geneticist";
-	oxy_damage = 55;
-	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/rnd/geneticist
+	oxy_damage = 55
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue{
@@ -5522,13 +5510,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/human/geneticist{
 	brute_damage = 145;
-	id_job = "Geneticist";
-	name = "Geneticist";
-	oxy_damage = 55;
-	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/rnd/geneticist
+	oxy_damage = 55
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)

@@ -13,7 +13,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -59,7 +59,7 @@
 
 	var/ambience_index = AMBIENCE_GENERIC
 	var/list/ambientsounds
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
 	var/list/cameras

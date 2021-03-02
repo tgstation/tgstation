@@ -27,6 +27,8 @@
 	var/prefix_file = "strings/names/american_prefix.txt"
 	///Base icon for the customer
 	var/base_icon = "amerifat"
+	///Sound to use when this robot type speaks
+	var/speech_sound = 'sound/effects/tourist_talk.ogg'
 
 /datum/customer_data/New()
 	. = ..()
@@ -75,6 +77,7 @@
 	leave_mad_lines = list("Sacre bleu!", "Merde! This place is shittier than the Rhine!")
 	leave_happy_lines = list("Hon hon hon.", "A good effort.")
 	wait_for_food_lines = list("Hon hon hon")
+	speech_sound = 'sound/effects/tourist_talk_french.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 15, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 10))

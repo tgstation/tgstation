@@ -9,8 +9,6 @@
 
 	outfit = /datum/outfit/job/curator
 
-	access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
-	minimal_access = list(ACCESS_LIBRARY, ACCESS_AUX_BASE, ACCESS_MINING_STATION)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
@@ -34,6 +32,8 @@
 		/obj/item/soapstone = 1,
 		/obj/item/barcodescanner = 1
 	)
+
+	id_trim = /datum/id_trim/job/curator
 
 /datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
