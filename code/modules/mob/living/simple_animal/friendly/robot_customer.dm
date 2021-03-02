@@ -85,3 +85,7 @@
 		. += "<span class='notice'>Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"</span>"
 
 
+
+/mob/living/simple_animal/robot_customer/Login()
+	. = ..()
+	S.status_flags |= GODMODE //owned admin
