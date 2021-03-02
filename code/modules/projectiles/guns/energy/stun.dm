@@ -2,7 +2,7 @@
 	name = "taser gun"
 	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range."
 	icon_state = "taser"
-	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
+	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
@@ -13,7 +13,6 @@
 	inhand_icon_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_revolver)
 	can_flashlight = FALSE
-	pin = null
 	shaded_charge = 1
 
 /obj/item/gun/energy/e_gun/advtaser
@@ -29,6 +28,9 @@
 	can_flashlight = FALSE
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+
+/obj/item/gun/energy/e_gun/advtaser/cyborg/emp_act()
+	return
 
 /obj/item/gun/energy/disabler
 	name = "disabler"
@@ -46,3 +48,6 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+
+/obj/item/gun/energy/disabler/cyborg/emp_act()
+	return

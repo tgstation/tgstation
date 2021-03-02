@@ -76,7 +76,7 @@
 			M.temporarilyRemoveItemFromInventory(noz, TRUE)
 		noz.forceMove(src)
 
-/obj/item/watertank/attack_hand(mob/user)
+/obj/item/watertank/attack_hand(mob/user, list/modifiers)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)
 		toggle_mister(user)
 	else
@@ -84,8 +84,8 @@
 
 /obj/item/watertank/MouseDrop(obj/over_object)
 	var/mob/M = loc
-	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	return ..()
 
@@ -126,7 +126,7 @@
 	tank = loc
 	if(!istype(tank))
 		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -149,7 +149,7 @@
 	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	inhand_icon_state = "waterbackpackjani"
-	custom_price = 1200
+	custom_price = PAYCHECK_EASY * 5
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
@@ -186,6 +186,7 @@
 	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
 	inhand_icon_state = "waterbackpackatmos"
 	icon_state = "waterbackpackatmos"
+	worn_icon_state = "waterbackpackatmos"
 	volume = 200
 	slowdown = 0
 
@@ -422,7 +423,7 @@
 	var/inj_am = injection_amount * delta_time
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
-	update_icon()
+	update_appearance()
 	user.update_inv_back() //for overlays update
 
 //Operator backpack spray

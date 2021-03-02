@@ -41,11 +41,6 @@
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
 
-/obj/item/bodypart/chest/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
-
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "larva_chest"
@@ -79,7 +74,6 @@
 	. = ..()
 	if(. == FALSE)
 		return
-	var/mob/living/carbon/owner = null
 	if(owner)
 		if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
 			ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
@@ -129,8 +123,8 @@
 		owner.set_usable_hands(owner.usable_hands + 1)
 
 	if(owner.hud_used)
-		var/obj/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_icon()
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_appearance()
 
 
 /obj/item/bodypart/l_arm/monkey
@@ -150,12 +144,6 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/l_arm/devil
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
@@ -181,7 +169,6 @@
 	. = ..()
 	if(. == FALSE)
 		return
-	var/mob/living/carbon/owner = null
 	if(owner)
 		if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
 			ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
@@ -231,8 +218,8 @@
 		owner.set_usable_hands(owner.usable_hands + 1)
 
 	if(owner.hud_used)
-		var/obj/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_icon()
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_appearance()
 
 
 /obj/item/bodypart/r_arm/monkey
@@ -252,12 +239,6 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/r_arm/devil
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -347,12 +328,6 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/l_leg/devil
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
@@ -444,9 +419,3 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/r_leg/devil
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART

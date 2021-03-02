@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/more_caves,
-/area/icemoon/surface/outdoors/unexplored)
+/turf/open/genturf,
+/area/mine/unexplored)
 "b" = (
-/turf/closed/mineral/random/snow/more_caves,
-/area/icemoon/surface/outdoors/unexplored)
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface)
 "c" = (
 /turf/closed/wall/mineral/bronze,
 /area/icemoon/surface)
@@ -39,6 +39,11 @@
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/floor/bronze,
 /area/icemoon/surface)
+"w" = (
+/turf/open/floor/bronze{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/icemoon/surface)
 "x" = (
 /obj/effect/mob_spawn/human/skeleton,
 /obj/item/clothing/suit/bronze,
@@ -54,16 +59,6 @@
 	desc = "You can still feel the embers of a once great empire in your hand...";
 	name = "drained clockwork slab"
 	},
-/turf/open/floor/bronze,
-/area/icemoon/surface)
-"A" = (
-/turf/open/floor/bronze{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/icemoon/surface)
-"H" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/structure/fans/tiny,
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "P" = (
@@ -88,8 +83,9 @@
 	},
 /area/icemoon/surface)
 "U" = (
-/obj/machinery/door/airlock/bronze,
-/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/bronze{
+	use_power = 0
+	},
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "V" = (
@@ -285,8 +281,8 @@ a
 c
 c
 c
-H
-H
+U
+U
 c
 c
 c
@@ -873,8 +869,8 @@ a
 a
 a
 c
-A
-A
+w
+w
 c
 a
 a
@@ -900,7 +896,7 @@ b
 U
 k
 n
-H
+U
 a
 a
 a
@@ -914,10 +910,10 @@ a
 a
 a
 a
-A
+w
 x
-A
-A
+w
+w
 a
 a
 a
@@ -931,7 +927,7 @@ a
 a
 a
 a
-H
+U
 n
 i
 U
@@ -942,7 +938,7 @@ b
 U
 i
 P
-H
+U
 a
 a
 a
@@ -956,10 +952,10 @@ a
 a
 a
 a
-A
+w
 R
 Q
-A
+w
 a
 a
 a
@@ -973,7 +969,7 @@ a
 a
 a
 a
-H
+U
 v
 d
 U
@@ -999,8 +995,8 @@ a
 a
 a
 c
-A
-A
+w
+w
 c
 a
 a
@@ -1587,8 +1583,8 @@ a
 c
 c
 c
-H
-H
+U
+U
 c
 c
 c

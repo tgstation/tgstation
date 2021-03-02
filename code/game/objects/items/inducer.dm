@@ -22,8 +22,8 @@
 	var/totransfer = min(cell.charge,(powertransfer * coefficient))
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
-	cell.update_icon()
-	target.update_icon()
+	cell.update_appearance()
+	target.update_appearance()
 
 /obj/item/inducer/get_cell()
 	return cell
@@ -33,8 +33,8 @@
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
-/obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
-	if(user.a_intent == INTENT_HARM)
+/obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user, params)
+	if(user.combat_mode)
 		return ..()
 
 	if(cantbeused(user))
@@ -46,7 +46,7 @@
 	return ..()
 
 /obj/item/inducer/proc/cantbeused(mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to use [src]!</span>")
 		return TRUE
 
@@ -66,12 +66,12 @@
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
 			opened = TRUE
-			update_icon()
+			update_appearance()
 			return
 		else
 			to_chat(user, "<span class='notice'>You close the battery compartment.</span>")
 			opened = FALSE
-			update_icon()
+			update_appearance()
 			return
 	if(istype(W, /obj/item/stock_parts/cell))
 		if(opened)
@@ -80,7 +80,7 @@
 					return
 				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 				cell = W
-				update_icon()
+				update_appearance()
 				return
 			else
 				to_chat(user, "<span class='warning'>[src] already has \a [cell] installed!</span>")
@@ -125,7 +125,7 @@
 				induce(C, coefficient)
 				do_sparks(1, FALSE, A)
 				if(O)
-					O.update_icon()
+					O.update_appearance()
 			else
 				break
 		if(done_any) // Only show a message if we succeeded at least once
@@ -135,8 +135,8 @@
 	recharging = FALSE
 
 
-/obj/item/inducer/attack(mob/M, mob/user)
-	if(user.a_intent == INTENT_HARM)
+/obj/item/inducer/attack(mob/M, mob/living/user)
+	if(user.combat_mode)
 		return ..()
 
 	if(cantbeused(user))
@@ -150,10 +150,10 @@
 /obj/item/inducer/attack_self(mob/user)
 	if(opened && cell)
 		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
-		cell.update_icon()
+		cell.update_appearance()
 		user.put_in_hands(cell)
 		cell = null
-		update_icon()
+		update_appearance()
 
 
 /obj/item/inducer/examine(mob/living/M)
@@ -167,11 +167,9 @@
 
 /obj/item/inducer/update_overlays()
 	. = ..()
-	if(opened)
-		if(!cell)
-			. += "inducer-nobat"
-		else
-			. += "inducer-bat"
+	if(!opened)
+		return
+	. += "inducer-[cell ? "bat" : "nobat"]"
 
 /obj/item/inducer/sci
 	icon_state = "inducer-sci"
@@ -183,7 +181,7 @@
 
 /obj/item/inducer/sci/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/inducer/syndicate
 	icon_state = "inducer-syndi"

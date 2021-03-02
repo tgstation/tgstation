@@ -1,12 +1,12 @@
 /* Parrots!
  * Contains
- * 		Defines
- *		Inventory (headset stuff)
- *		Attack responces
- *		AI
- *		Procs / Verbs (usable by players)
- *		Sub-types
- *		Hear & say (the things we do for gimmicks)
+ * Defines
+ * Inventory (headset stuff)
+ * Attack responces
+ * AI
+ * Procs / Verbs (usable by players)
+ * Sub-types
+ * Hear & say (the things we do for gimmicks)
  */
 
 /*
@@ -15,15 +15,15 @@
 
 //Only a maximum of one action and one intent should be active at any given time.
 //Actions
-#define PARROT_PERCH	(1<<0)	//Sitting/sleeping, not moving
-#define PARROT_SWOOP	(1<<1)	//Moving towards or away from a target
-#define PARROT_WANDER	(1<<2)	//Moving without a specific target in mind
+#define PARROT_PERCH (1<<0) //Sitting/sleeping, not moving
+#define PARROT_SWOOP (1<<1) //Moving towards or away from a target
+#define PARROT_WANDER (1<<2) //Moving without a specific target in mind
 
 //Intents
-#define PARROT_STEAL	(1<<3)	//Flying towards a target to steal it/from it
-#define PARROT_ATTACK	(1<<4)	//Flying towards a target to attack it
-#define PARROT_RETURN	(1<<5)	//Flying towards its perch
-#define PARROT_FLEE		(1<<6)	//Flying away from its attacker
+#define PARROT_STEAL (1<<3) //Flying towards a target to steal it/from it
+#define PARROT_ATTACK (1<<4) //Flying towards a target to attack it
+#define PARROT_RETURN (1<<5) //Flying towards its perch
+#define PARROT_FLEE (1<<6) //Flying away from its attacker
 
 
 /mob/living/simple_animal/parrot
@@ -46,7 +46,7 @@
 
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/cracker/ = 1)
+	butcher_results = list(/obj/item/food/cracker = 1)
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
@@ -57,13 +57,13 @@
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
 	stop_automated_movement = 1
-	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
+	combat_mode = TRUE //parrots now start "aggressive" since only player parrots will nuzzle.
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	friendly_verb_continuous = "grooms"
 	friendly_verb_simple = "groom"
 	mob_size = MOB_SIZE_SMALL
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10
@@ -74,7 +74,7 @@
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
-	var/parrot_stuck = 0	//If parrot_lastmove hasn't changed, this will increment until it reaches parrot_stuck_threshold
+	var/parrot_stuck = 0 //If parrot_lastmove hasn't changed, this will increment until it reaches parrot_stuck_threshold
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
@@ -142,16 +142,17 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	buckled = null
-	pixel_x = initial(pixel_x)
-	pixel_y = initial(pixel_y)
+	pixel_x = base_pixel_x
+	pixel_y = base_pixel_y
 
-	..(gibbed)
+	return ..()
+
 
 /mob/living/simple_animal/parrot/get_status_tab_items()
 	. = ..()
 	. += ""
 	. += "Held Item: [held_item]"
-	. += "Mode: [a_intent]"
+	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -188,12 +189,17 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
+	var/list/dat = list()
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Headset:</B> <A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'>Nothing"]</A>"
+	dat += "<table>"
+	dat += "<tr><td><B>Headset:</B></td><td><A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
 
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "window=mob[REF(src)]")
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
 
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
@@ -217,6 +223,7 @@
 				for(var/possible_phrase in speak)
 					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
 						possible_phrase = copytext_char(possible_phrase, 3)
+		show_inv(usr)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -265,6 +272,8 @@
 
 					if(headset_to_add.translate_binary)
 						available_channels.Add(MODE_TOKEN_BINARY)
+		show_inv(usr)
+
 	else
 		return ..()
 
@@ -273,37 +282,37 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/user, list/modifiers)
 	..()
 	if(client)
 		return
-	if(!stat && M.a_intent == INTENT_HARM)
+	if(!stat && user.combat_mode)
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-		parrot_interest = M
+		parrot_interest = user
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
 		if(health > 30) //Let's get in there and squawk it up!
 			parrot_state |= PARROT_ATTACK
 		else
-			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
+			parrot_state |= PARROT_FLEE //Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && M.a_intent == INTENT_HELP)
+	if(stat != DEAD && !user.combat_mode)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	return attack_hand(M)
+/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/human/user, list/modifiers)
+	return attack_hand(modifiers)
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M)
-	return attack_hand(M)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 //Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
+/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..() //goodbye immortal parrots
 
 	if(client)
@@ -312,14 +321,14 @@
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-	if(M.melee_damage_upper > 0 && !stat)
-		parrot_interest = M
+	if(user.melee_damage_upper > 0 && !stat)
+		parrot_interest = user
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = icon_living
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
-	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/reagent_containers/food/snacks/cracker))
+	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/food/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -332,7 +341,7 @@
 				parrot_state |= PARROT_FLEE
 			icon_state = icon_living
 			drop_held_item(0)
-	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
+	else if(istype(O, /obj/item/food/cracker)) //Poly wants a cracker.
 		qdel(O)
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
@@ -358,7 +367,7 @@
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/Life()
+/mob/living/simple_animal/parrot/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 
 	//Sprite update for when a parrot gets pulled
@@ -461,12 +470,12 @@
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
-				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
+				if(istype(AM, /obj/item) || isliving(AM)) //If stealable item
 					parrot_interest = AM
 					manual_emote("turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
-				else	//Else it's a perch
+				else //Else it's a perch
 					parrot_perch = AM
 					parrot_state = PARROT_SWOOP | PARROT_RETURN
 					return
@@ -562,7 +571,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = INTENT_HARM
+			set_combat_mode(TRUE)
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -635,7 +644,7 @@
 					item = I
 					break
 		if(item)
-			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
+			if(!get_path_to(src, item))
 				item = null
 				continue
 			return item
@@ -758,7 +767,7 @@
 
 
 //parrots will eat crackers instead of dropping them
-	if(istype(held_item, /obj/item/reagent_containers/food/snacks/cracker) && (drop_gently))
+	if(istype(held_item, /obj/item/food/cracker) && (drop_gently))
 		qdel(held_item)
 		held_item = null
 		if(health < maxHealth)
@@ -771,7 +780,7 @@
 		if(istype(held_item, /obj/item/grenade))
 			var/obj/item/grenade/G = held_item
 			G.forceMove(drop_location())
-			G.prime()
+			G.detonate()
 			to_chat(src, "<span class='danger'>You let go of [held_item]!</span>")
 			held_item = null
 			return 1
@@ -856,13 +865,13 @@
 	if(stat || !client)
 		return
 
-	if(a_intent != INTENT_HELP)
+	if(combat_mode)
 		melee_damage_upper = 0
-		a_intent = INTENT_HELP
+		set_combat_mode(FALSE)
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = INTENT_HARM
-	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
+		set_combat_mode(TRUE)
+	to_chat(src, "<span class='notice'>You will now [combat_mode ? "Harm" : "Help"] others.</span>")
 	return
 
 /*
@@ -900,7 +909,7 @@
 
 	. = ..()
 
-/mob/living/simple_animal/parrot/poly/Life()
+/mob/living/simple_animal/parrot/poly/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -920,9 +929,9 @@
 /mob/living/simple_animal/parrot/poly/proc/Read_Memory()
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-		S["phrases"] 			>> speech_buffer
-		S["roundssurvived"]		>> rounds_survived
-		S["longestsurvival"]	>> longest_survival
+		S["phrases"] >> speech_buffer
+		S["roundssurvived"] >> rounds_survived
+		S["longestsurvival"] >> longest_survival
 		S["longestdeathstreak"] >> longest_deathstreak
 		fdel("data/npc_saves/Poly.sav")
 	else

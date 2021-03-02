@@ -93,7 +93,7 @@
 					var/mob/living/M = T
 					if(!M.can_inject())
 						continue
-					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
+					if((M.body_position == STANDING_UP) || !range_left)
 						D.reagents.expose(M, VAPOR)
 						puff_reagent_left -= 1
 						var/contained = D.reagents.log_list() // looks like more copypasta but now the reagents are in a different place fuck you old coder
@@ -129,6 +129,21 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+
+	//Cooling method
+	if(istype(I, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = I
+		if(extinguisher.safety)
+			return
+		if (extinguisher.reagents.total_volume < 1)
+			to_chat(user, "<span class='warning'>\The [extinguisher] is empty!</span>")
+			return
+		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
+		reagents.expose_temperature(cooling)
+		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
+		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		extinguisher.reagents.remove_all(1)
+
 	return ..()
 
 /obj/item/reagent_containers/spray/verb/empty()
@@ -144,18 +159,23 @@
 		reagents.expose(usr.loc)
 		src.reagents.clear_reagents()
 
-/obj/item/reagent_containers/spray/on_reagent_change(changetype)
-	var/total_reagent_weight
-	var/amount_of_reagents
-	for (var/datum/reagent/R in reagents.reagent_list)
-		total_reagent_weight = total_reagent_weight + R.reagent_weight
-		amount_of_reagents++
+/// Handles updating the spreay distance when the reagents change.
+/obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
+	. = ..()
+	var/total_reagent_weight = 0
+	var/number_of_reagents = 0
+	var/amount_of_reagents = holder.total_volume
+	var/list/cached_reagents = holder.reagent_list
+	for(var/datum/reagent/reagent in cached_reagents)
+		total_reagent_weight += reagent.reagent_weight * reagent.volume
+		number_of_reagents++
 
-	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+	if(total_reagent_weight && number_of_reagents && amount_of_reagents) //don't bother if the container is empty - DIV/0
 		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
-		spray_range = clamp(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+		spray_range = clamp(round((initial(spray_range) / average_reagent_weight) - ((number_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
 	else
 		spray_range = initial(spray_range)
+
 	if(stream_mode == 0)
 		current_range = spray_range
 
@@ -248,7 +268,7 @@
 	var/generate_amount = 5
 	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 	can_fill_from_container = FALSE
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
@@ -258,7 +278,7 @@
 	volume = 3
 	generate_type = /datum/reagent/clf3
 	generate_amount = 1
-	generate_delay = 40		//deciseconds
+	generate_delay = 40 //deciseconds
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
 	. = ..()
@@ -285,7 +305,7 @@
 /obj/item/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagents in a given area."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -335,7 +355,7 @@
 	var/generate_amount = 50
 	var/generate_type = /datum/reagent/space_cleaner
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
 	. = ..()
@@ -374,7 +394,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = 900
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()

@@ -1,6 +1,7 @@
 /datum/computer_file/program/borg_monitor
 	filename = "siliconnect"
 	filedesc = "SiliConnect"
+	category = PROGRAM_CATEGORY_ROBO
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
@@ -8,6 +9,14 @@
 	transfer_access = ACCESS_ROBOTICS
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
+	program_icon = "project-diagram"
+	var/emagged = FALSE
+
+/datum/computer_file/program/borg_monitor/run_emag()
+	if(emagged)
+		return FALSE
+	emagged = TRUE
+	return TRUE
 
 /datum/computer_file/program/borg_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -35,7 +44,7 @@
 			status = R.stat,
 			shell_discon = shell,
 			charge = R.cell ? round(R.cell.percent()) : null,
-			module = R.module ? "[R.module.name] Module" : "No Module Detected",
+			module = R.model ? "[R.model.name] Model" : "No Model Detected",
 			upgrades = upgrade,
 			ref = REF(R)
 		)
@@ -43,7 +52,8 @@
 	return data
 
 /datum/computer_file/program/borg_monitor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -54,10 +64,14 @@
 			var/ID = checkID()
 			if(!ID)
 				return
+			if(R.stat == DEAD) //Dead borgs will listen to you no longer
+				to_chat(usr, "<span class='warn'>Error -- Could not open a connection to unit:[R]</span>")
 			var/message = stripped_input(usr, message = "Enter message to be sent to remote cyborg.", title = "Send Message")
 			if(!message)
 				return
 			to_chat(R, "<br><br><span class='notice'>Message from [ID] -- \"[message]\"</span><br>")
+			to_chat(usr, "Message sent to [R]: [message]")
+			R.logevent("Message from [ID] -- \"[message]\"")
 			SEND_SOUND(R, 'sound/machines/twobeep_high.ogg')
 			if(R.connected_ai)
 				to_chat(R.connected_ai, "<br><br><span class='notice'>Message from [ID] to [R] -- \"[message]\"</span><br>")
@@ -76,12 +90,15 @@
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)
+		if(emagged)
+			return "STDERR:UNDF"
 		return FALSE
 	return ID.registered_name
 
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"
 	filedesc = "Roboverlord"
+	category = PROGRAM_CATEGORY_ROBO
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
@@ -90,6 +107,9 @@
 	available_on_syndinet = TRUE
 	transfer_access = null
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
+
+/datum/computer_file/program/borg_monitor/syndicate/run_emag()
+	return FALSE
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if((get_turf(computer)).z != (get_turf(R)).z)

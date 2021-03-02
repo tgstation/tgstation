@@ -26,8 +26,7 @@
 	response_harm_simple = "squish"
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	a_intent = INTENT_HELP
-	ventcrawler = VENTCRAWLER_ALWAYS
+	combat_mode = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	stat_attack = HARD_CRIT
 	gender = NEUTER
@@ -49,6 +48,8 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
 	udder = new()
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
@@ -113,7 +114,7 @@
 	name = "guthen"
 	gender = FEMALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
@@ -137,7 +138,7 @@
 	resize = 0.45
 	update_transform()
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	growth++
 	if(growth > 50) //originally used a timer for this but was more problem that it's worth.
@@ -154,7 +155,7 @@
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
 	visible_message("<span class='notice'>[src] grows up into [L].</span>")
-	Destroy()
+	qdel(src)
 
 //Gutlunch udder
 /obj/item/udder/gutlunch

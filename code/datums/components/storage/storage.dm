@@ -1,63 +1,57 @@
-#define COLLECT_ONE 0
-#define COLLECT_EVERYTHING 1
-#define COLLECT_SAME 2
-
-#define DROP_NOTHING 0
-#define DROP_AT_PARENT 1
-#define DROP_AT_LOCATION 2
-
 // External storage-related logic:
 // /mob/proc/ClickOn() in /_onclick/click.dm - clicking items in storages
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
 
 /datum/component/storage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
+	var/datum/component/storage/concrete/master //If not null, all actions act on master and this is just an access point.
 
-	var/list/can_hold								//if this is set, only items, and their children, will fit
-	var/list/cant_hold								//if this is set, items, and their children, won't fit
-	var/list/exception_hold           //if set, these items will be the exception to the max size of object that can fit.
+	var/list/can_hold //if this is set, only items, and their children, will fit
+	var/list/cant_hold //if this is set, items, and their children, won't fit
+	var/list/exception_hold //if set, these items will be the exception to the max size of object that can fit.
+	/// If set can only contain stuff with this single trait present.
+	var/list/can_hold_trait
 
 	var/can_hold_description
 
-	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
+	var/list/mob/is_using //lazy list of mobs looking at the contents of this storage.
 
-	var/locked = FALSE								//when locked nothing can see inside or use it.
+	var/locked = FALSE //when locked nothing can see inside or use it.
 
-	var/max_w_class = WEIGHT_CLASS_SMALL			//max size of objects that will fit.
-	var/max_combined_w_class = 14					//max combined sizes of objects that will fit.
-	var/max_items = 7								//max number of objects that will fit.
+	var/max_w_class = WEIGHT_CLASS_SMALL //max size of objects that will fit.
+	var/max_combined_w_class = 14 //max combined sizes of objects that will fit.
+	var/max_items = 7 //max number of objects that will fit.
 
 	var/emp_shielded = FALSE
 
-	var/silent = FALSE								//whether this makes a message when things are put in.
-	var/click_gather = FALSE						//whether this can be clicked on items to pick it up rather than the other way around.
-	var/rustle_sound = TRUE							//play rustle sound on interact.
-	var/allow_quick_empty = FALSE					//allow empty verb which allows dumping on the floor of everything inside quickly.
-	var/allow_quick_gather = FALSE					//allow toggle mob verb which toggles collecting all items from a tile.
+	var/silent = FALSE //whether this makes a message when things are put in.
+	var/click_gather = FALSE //whether this can be clicked on items to pick it up rather than the other way around.
+	var/rustle_sound = TRUE //play rustle sound on interact.
+	var/allow_quick_empty = FALSE //allow empty verb which allows dumping on the floor of everything inside quickly.
+	var/allow_quick_gather = FALSE //allow toggle mob verb which toggles collecting all items from a tile.
 
 	var/collection_mode = COLLECT_EVERYTHING
 
-	var/insert_preposition = "in"					//you put things "in" a bag, but "on" a tray.
+	var/insert_preposition = "in" //you put things "in" a bag, but "on" a tray.
 
-	var/display_numerical_stacking = FALSE			//stack things of the same type and show as a single object with a number.
+	var/display_numerical_stacking = FALSE //stack things of the same type and show as a single object with a number.
 
-	var/obj/screen/storage/boxes					//storage display object
-	var/obj/screen/close/closer						//close button object
+	var/atom/movable/screen/storage/boxes //storage display object
+	var/atom/movable/screen/close/closer //close button object
 
-	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
+	var/allow_big_nesting = FALSE //allow storage objects of the same or greater size.
 
-	var/attack_hand_interact = TRUE					//interact on attack hand.
-	var/quickdraw = FALSE							//altclick interact
+	var/attack_hand_interact = TRUE //interact on attack hand.
+	var/quickdraw = FALSE //altclick interact
 
 	var/datum/action/item_action/storage_gather_mode/modeswitch_action
 
 	//Screen variables: Do not mess with these vars unless you know what you're doing. They're not defines so storage that isn't in the same location can be supported in the future.
-	var/screen_max_columns = 7							//These two determine maximum screen sizes.
+	var/screen_max_columns = 7 //These two determine maximum screen sizes.
 	var/screen_max_rows = INFINITY
-	var/screen_pixel_x = 16								//These two are pixel values for screen loc of boxes and closer
+	var/screen_pixel_x = 16 //These two are pixel values for screen loc of boxes and closer
 	var/screen_pixel_y = 16
-	var/screen_start_x = 4								//These two are where the storage starts being rendered, screen_loc wise.
+	var/screen_start_x = 4 //These two are where the storage starts being rendered, screen_loc wise.
 	var/screen_start_y = 2
 	//End
 
@@ -99,6 +93,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
@@ -123,10 +118,10 @@
 	can_hold_description = generate_hold_desc(can_hold_list)
 
 	if (can_hold_list != null)
-		can_hold = typecacheof(can_hold_list)
+		can_hold = string_list(typecacheof(can_hold_list))
 
 	if (cant_hold_list != null)
-		cant_hold = typecacheof(cant_hold_list)
+		cant_hold = string_list(typecacheof(cant_hold_list))
 
 /datum/component/storage/proc/generate_hold_desc(can_hold_list)
 	var/list/desc = list()
@@ -162,7 +157,7 @@
 
 /datum/component/storage/proc/master()
 	if(master == src)
-		return			//infinite loops yo.
+		return //infinite loops yo.
 	return master
 
 /datum/component/storage/proc/real_location()
@@ -190,20 +185,20 @@
 			hide_from(L)
 
 /datum/component/storage/proc/attack_self(datum/source, mob/M)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
 	if((M.get_active_held_item() == parent) && allow_quick_empty)
-		quick_empty(M)
+		INVOKE_ASYNC(src, .proc/quick_empty, M)
 
 /datum/component/storage/proc/preattack_intercept(datum/source, obj/O, mob/M, params)
 	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
-	. = COMPONENT_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
@@ -223,7 +218,7 @@
 		return
 	var/datum/progressbar/progress = new(M, len, I.loc)
 	var/list/rejections = list()
-	while(do_after(M, 10, TRUE, parent, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
+	while(do_after(M, 1 SECONDS, parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
 		stoplag(1)
 	progress.end_progress()
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
@@ -254,13 +249,13 @@
 			continue
 		if(I.type in rejections) // To limit bag spamming: any given type only complains once
 			continue
-		if(!can_be_inserted(I, stop_messages = TRUE))	// Note can_be_inserted still makes noise when the answer is no
+		if(!can_be_inserted(I, stop_messages = TRUE)) // Note can_be_inserted still makes noise when the answer is no
 			if(real_location.contents.len >= max_items)
 				break
-			rejections += I.type	// therefore full bags are still a little spammy
+			rejections += I.type // therefore full bags are still a little spammy
 			continue
 
-		handle_item_insertion(I, TRUE)	//The TRUE stops the "You put the [parent] into [S]" insertion message from being displayed.
+		handle_item_insertion(I, TRUE) //The TRUE stops the "You put the [parent] into [S]" insertion message from being displayed.
 
 		if (TICK_CHECK)
 			progress.update(progress.goal - things.len)
@@ -281,7 +276,7 @@
 	var/turf/T = get_turf(A)
 	var/list/things = contents()
 	var/datum/progressbar/progress = new(M, length(things), T)
-	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+	while (do_after(M, 1 SECONDS, T, NONE, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
 		stoplag(1)
 	progress.end_progress()
 
@@ -359,7 +354,7 @@
 			var/datum/numbered_display/ND = numerical_display_contents[type]
 			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
+			ND.sample_object.maptext = MAPTEXT("<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>")
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
 			cx++
@@ -535,7 +530,7 @@
 			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
 	return ret
 
-/datum/component/storage/proc/contents()			//ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
+/datum/component/storage/proc/contents() //ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
 	var/atom/real_location = real_location()
 	return real_location.contents.Copy()
 
@@ -558,7 +553,7 @@
 	to_chat(user, "<span class='notice'>[source] can hold: [can_hold_description]</span>")
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
@@ -575,14 +570,14 @@
 	// this must come before the screen objects only block, dunno why it wasn't before
 	if(over_object == M)
 		user_show_to_mob(M)
-	if(!istype(over_object, /obj/screen))
-		dump_content_at(over_object, M)
+	if(!istype(over_object, /atom/movable/screen))
+		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, M)
 		return
 	if(A.loc != M)
 		return
 	playsound(A, "rustle", 50, TRUE, -5)
-	if(istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 		return
 	A.add_fingerprint(M)
@@ -606,7 +601,7 @@
 		if(iscarbon(M) || isdrone(M))
 			var/mob/living/L = M
 			if(!L.incapacitated() && I == L.get_active_held_item())
-				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
+				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE)) //If it has storage it should be trying to dump, not insert.
 					handle_item_insertion(I, FALSE, L)
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
@@ -615,7 +610,7 @@
 	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
-		return FALSE	//no paradoxes for you
+		return FALSE //no paradoxes for you
 	var/atom/real_location = real_location()
 	var/atom/host = parent
 	if(real_location == I.loc)
@@ -634,7 +629,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold) || HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT)) //Items which this container can't hold.
+	if(is_type_in_typecache(I, cant_hold) || HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT) || (can_hold_trait && !HAS_TRAIT(I, can_hold_trait))) //Items which this container can't hold.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
@@ -643,7 +638,7 @@
 			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
 	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
-	if(biggerfish && biggerfish.max_w_class < max_w_class)//return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
+	if(biggerfish && biggerfish.max_w_class < max_w_class) //return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[I] can't fit in [host] while [real_location.loc] is in the way!</span>")
 		return FALSE
@@ -703,7 +698,7 @@
 /datum/component/storage/proc/update_icon()
 	if(isobj(parent))
 		var/obj/O = parent
-		O.update_icon()
+		O.update_appearance()
 
 /datum/component/storage/proc/signal_insertion_attempt(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
@@ -747,7 +742,7 @@
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
 	if(taking.len > amount)
 		taking.len = amount
-	if(inserted)			//duplicated code for performance, don't bother checking retval/checking for list every item.
+	if(inserted) //duplicated code for performance, don't bother checking retval/checking for list every item.
 		for(var/i in taking)
 			if(remove_from_storage(i, destination))
 				inserted |= i
@@ -774,8 +769,9 @@
 				return TRUE
 	return TRUE
 
+
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/atom/A = parent
 	if(!attack_hand_interact)
@@ -783,7 +779,7 @@
 	if(user.active_storage == src && A.loc == user) //if you're already looking inside the storage item
 		user.active_storage.close(user)
 		close(user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		return
 
 	if(rustle_sound)
@@ -791,23 +787,24 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == A && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
-			. = COMPONENT_NO_ATTACK_HAND
-			H.put_in_hands(A)
+		if(H.l_store == A && !H.get_active_held_item()) //Prevents opening if it's in a pocket.
+			. = COMPONENT_CANCEL_ATTACK_CHAIN
+			INVOKE_ASYNC(H, /mob.proc/put_in_hands, A)
 			H.l_store = null
 			return
 		if(H.r_store == A && !H.get_active_held_item())
-			. = COMPONENT_NO_ATTACK_HAND
-			H.put_in_hands(A)
+			. = COMPONENT_CANCEL_ATTACK_CHAIN
+			INVOKE_ASYNC(H, /mob.proc/put_in_hands, A)
 			H.r_store = null
 			return
 
 	if(A.loc == user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		if(locked)
 			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		else
 			show_to(user)
+
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER

@@ -16,6 +16,7 @@
 		/obj/effect/dummy/chameleon,
 		/obj/effect/wisp,
 		/obj/effect/mob_spawn,
+		/obj/effect/immovablerod,
 		))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
@@ -93,7 +94,7 @@
 			effect.start()
 
 // Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = TRUE)
 	if(!zlevels)
 		if (zlevel)
 			zlevels = list(zlevel)
@@ -110,6 +111,10 @@
 		if(!isfloorturf(random_location))
 			continue
 		var/turf/open/floor/F = random_location
+		var/area/destination_area = F.loc
+
+		if(cycle < 300 && destination_area.area_flags & NOTELEPORT)//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+			continue
 		if(!F.air)
 			continue
 
@@ -144,6 +149,16 @@
 				var/turf/open/lava/L = F
 				if(!L.is_safe())
 					continue
+
+		// Check that we're not warping onto a table or window
+		if(!dense_atoms)
+			var/density_found = FALSE
+			for(var/atom/movable/found_movable in F)
+				if(found_movable.density)
+					density_found = TRUE
+					break
+			if(density_found)
+				continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F

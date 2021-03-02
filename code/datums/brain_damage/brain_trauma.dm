@@ -16,7 +16,7 @@
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
 
 /datum/brain_trauma/Destroy()
-	if(brain && brain.traumas)
+	if(brain?.traumas)
 		brain.traumas -= src
 	if(owner)
 		on_lose()
@@ -25,7 +25,7 @@
 	return ..()
 
 //Called on life ticks
-/datum/brain_trauma/proc/on_life()
+/datum/brain_trauma/proc/on_life(delta_time, times_fired)
 	return
 
 //Called on death
@@ -56,8 +56,3 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-
-//Called when hugging. expand into generally interacting, where future coders could switch the intent?
-/datum/brain_trauma/proc/on_hug(mob/living/hugger, mob/living/hugged)
-	return

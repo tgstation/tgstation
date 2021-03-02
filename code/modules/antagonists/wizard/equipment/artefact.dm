@@ -6,17 +6,20 @@
 /obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	inhand_icon_state = "knife"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "bone_blade"
+	inhand_icon_state = "bone_blade"
+	worn_icon_state = "bone_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
-	var/spawn_type = /obj/singularity/wizard
+	var/spawn_type = /obj/tear_in_reality
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
@@ -87,7 +90,9 @@
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
-	icon_state = "clownrender"
+	icon_state = "banana_blade"
+	inhand_icon_state = "banana_blade"
+	worn_icon_state = "render"
 
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
@@ -96,57 +101,68 @@
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
-	icon_state = "clownrender"
 
-////TEAR IN REALITY
+#define TEAR_IN_REALITY_CONSUME_RANGE 3
+#define TEAR_IN_REALITY_SINGULARITY_SIZE STAGE_FOUR
 
-/obj/singularity/wizard
+/// Tear in reality, spawned by the veil render
+/obj/tear_in_reality
 	name = "tear in the fabric of reality"
 	desc = "This isn't right."
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	dissipate = 0
-	move_self = 0
-	consume_range = 3
-	grav_pull = 4
-	current_size = STAGE_FOUR
-	allowed_size = STAGE_FOUR
+	anchored = TRUE
+	density = TRUE
+	move_resist = INFINITY
+	layer = MASSIVE_OBJ_LAYER
+	light_range = 6
+	appearance_flags = LONG_GLIDE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/singularity/wizard/process()
-	move()
-	eat()
-	return
+/obj/tear_in_reality/Initialize(mapload)
+	. = ..()
 
-/obj/singularity/wizard/attack_tk(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		var/datum/component/mood/insaneinthemembrane = C.GetComponent(/datum/component/mood)
-		if(insaneinthemembrane.sanity < 15)
-			return //they've already seen it and are about to die, or are just too insane to care
-		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
-		insaneinthemembrane.sanity = 0
-		for(var/lore in typesof(/datum/brain_trauma/severe))
-			C.gain_trauma(lore)
-		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
+	AddComponent(
+		/datum/component/singularity, \
+		consume_range = TEAR_IN_REALITY_CONSUME_RANGE, \
+		notify_admins = !mapload, \
+		roaming = FALSE, \
+		singularity_size = TEAR_IN_REALITY_SINGULARITY_SIZE, \
+	)
 
-/obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
+/obj/tear_in_reality/attack_tk(mob/user)
+	if(!iscarbon(user))
+		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	var/mob/living/carbon/jedi = user
+	var/datum/component/mood/insaneinthemembrane = jedi.GetComponent(/datum/component/mood)
+	if(insaneinthemembrane.sanity < 15)
+		return //they've already seen it and are about to die, or are just too insane to care
+	to_chat(jedi, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+	insaneinthemembrane.sanity = 0
+	for(var/lore in typesof(/datum/brain_trauma/severe))
+		jedi.gain_trauma(lore)
+	addtimer(CALLBACK(src, .proc/deranged, jedi), 10 SECONDS)
+
+/obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
 		return
 	C.vomit(0, TRUE, TRUE, 3, TRUE)
 	C.spew_organ(3, 2)
 	C.death()
 
-/obj/singularity/wizard/mapped/admin_investigate_setup()
-	return
+#undef TEAR_IN_REALITY_CONSUME_RANGE
+#undef TEAR_IN_REALITY_SINGULARITY_SIZE
 
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/scrying
 	name = "scrying orb"
 	desc = "An incandescent orb of otherworldly energy, merely holding it gives you vision and hearing beyond mortal means, and staring into it lets you see the entire universe."
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state ="bluespace"
 	throw_speed = 3
 	throw_range = 7
@@ -383,9 +399,9 @@
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name].</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
-    user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-    user.gib()
-    return(BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.gib()
+	return(BRUTELOSS)
 
 /obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
@@ -402,7 +418,6 @@
 	heal_oxy = 25
 
 //Warp Whistle: Provides uncontrolled long distance teleportation.
-
 /obj/item/warpwhistle
 	name = "warp whistle"
 	desc = "One toot on this whistle will send you to a far away land!"
@@ -420,7 +435,8 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.update_mobility()
+	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
+
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -429,10 +445,11 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, TRUE)
-	user.mobility_flags &= ~MOBILITY_MOVE
+	ADD_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
+		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
 		return
 	user.invisibility = INVISIBILITY_MAXIMUM
 	user.status_flags |= GODMODE
@@ -445,7 +462,6 @@
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
-			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
 		breakout += 1

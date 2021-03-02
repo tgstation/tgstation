@@ -10,7 +10,7 @@
 	emote_see = list("clacks.")
 	speak_chance = 1
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/rawcrab = 2)
+	butcher_results = list(/obj/item/food/meat/rawcrab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -20,19 +20,22 @@
 	stop_automated_movement = 1
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/Life()
+/mob/living/simple_animal/crab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	//CRAB movement
 	if(!ckey && !stat)
-		if(isturf(loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(loc) && !resting && !buckled) //This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				var/east_vs_west = pick(4,8)
+				var/east_vs_west = pick(4, 8)
 				if(Process_Spacemove(east_vs_west))
 					Move(get_step(src,east_vs_west), east_vs_west)
 					turns_since_move = 0

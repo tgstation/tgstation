@@ -1,4 +1,4 @@
-/obj/screen/alert/status_effect/rainbow_protection
+/atom/movable/screen/alert/status_effect/rainbow_protection
 	name = "Rainbow Protection"
 	desc = "You are defended from harm, but so are those you might seek to injure!"
 	icon_state = "slime_rainbowshield"
@@ -6,7 +6,7 @@
 /datum/status_effect/rainbow_protection
 	id = "rainbow_protection"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/rainbow_protection
+	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -28,7 +28,7 @@
 	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
 
-/obj/screen/alert/status_effect/slimeskin
+/atom/movable/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
 	desc = "You are covered in a thick, non-neutonian gel."
 	icon_state = "slime_stoneskin"
@@ -36,7 +36,7 @@
 /datum/status_effect/slimeskin
 	id = "slimeskin"
 	duration = 300
-	alert_type = /obj/screen/alert/status_effect/slimeskin
+	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
@@ -88,14 +88,14 @@
 		old_location.visible_message("<span class='warning'>[owner] disappears in a flurry of sparks!</span>")
 		to_chat(owner, "<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
 
-/obj/screen/alert/status_effect/freon/stasis
+/atom/movable/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
 
 /datum/status_effect/frozenstasis
 	id = "slime_frozen"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1 //Will remove self when block breaks.
-	alert_type = /obj/screen/alert/status_effect/freon/stasis
+	alert_type = /atom/movable/screen/alert/status_effect/freon/stasis
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
@@ -146,7 +146,7 @@
 		owner.remove_status_effect(src)
 
 /datum/status_effect/slime_clone/on_remove()
-	if(clone && clone.mind && owner)
+	if(clone?.mind && owner)
 		clone.mind.transfer_to(owner)
 	else
 		if(owner && originalmind)
@@ -157,7 +157,7 @@
 		clone.unequip_everything()
 		qdel(clone)
 
-/obj/screen/alert/status_effect/clone_decay
+/atom/movable/screen/alert/status_effect/clone_decay
 	name = "Clone Decay"
 	desc = "You are simply a construct, and cannot maintain this form forever. You will be returned to your original body if you should fall."
 	icon_state = "slime_clonedecay"
@@ -166,7 +166,7 @@
 	id = "slime_clonedecay"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
-	alert_type = /obj/screen/alert/status_effect/clone_decay
+	alert_type = /atom/movable/screen/alert/status_effect/clone_decay
 
 /datum/status_effect/slime_clone_decay/tick()
 	owner.adjustToxLoss(1, 0)
@@ -175,7 +175,7 @@
 	owner.adjustFireLoss(1, 0)
 	owner.color = "#007BA7"
 
-/obj/screen/alert/status_effect/bloodchill
+/atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
 	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
 	icon_state = "bloodchill"
@@ -183,7 +183,7 @@
 /datum/status_effect/bloodchill
 	id = "bloodchill"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/bloodchill
+	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
@@ -199,7 +199,7 @@
 /datum/status_effect/bonechill
 	id = "bonechill"
 	duration = 80
-	alert_type = /obj/screen/alert/status_effect/bonechill
+	alert_type = /atom/movable/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
@@ -210,10 +210,13 @@
 		owner.adjustFireLoss(1)
 		owner.Jitter(3)
 		owner.adjust_bodytemperature(-10)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/humi = owner
+			humi.adjust_coretemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
-/obj/screen/alert/status_effect/bonechill
+/atom/movable/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
 	icon_state = "bloodchill"
@@ -469,7 +472,10 @@
 
 /datum/status_effect/stabilized/orange/tick()
 	var/body_temperature_difference = owner.get_body_temp_normal(apply_change=FALSE) - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5,body_temperature_difference))
+	owner.adjust_bodytemperature(min(5, body_temperature_difference))
+	if(ishuman(owner))
+		var/mob/living/carbon/human/humi = owner
+		humi.adjust_coretemperature(min(5, humi.get_body_temp_normal(apply_change=FALSE) - humi.coretemperature))
 	return ..()
 
 /datum/status_effect/stabilized/purple
@@ -569,16 +575,12 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/tick()
-	var/obj/item/I = owner.get_active_held_item()
-	var/obj/item/reagent_containers/food/snacks/F = I
-	if(istype(F))
-		if(F.cooked_type)
-			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
-			var/obj/item/result = F.microwave_act()
-			if(istype(result))
-				owner.put_in_hands(result)
+	var/obj/item/item = owner.get_active_held_item()
+	if(IS_EDIBLE(item))
+		if(item.microwave_act())
+			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [item]!</span>")
 	else
-		I.attackby(fire, owner)
+		item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
@@ -599,9 +601,9 @@
 		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
 		O.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/food/monkeycube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+		var/obj/item/food/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
@@ -633,7 +635,7 @@
 		H.physiology.hunger_mod /= 0.8
 
 //Bluespace has an icon because it's kinda active.
-/obj/screen/alert/status_effect/bluespaceslime
+/atom/movable/screen/alert/status_effect/bluespaceslime
 	name = "Stabilized Bluespace Extract"
 	desc = "You shouldn't see this, since we set it to change automatically!"
 	icon_state = "slime_bluespace_on"
@@ -646,7 +648,7 @@
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
 	colour = "bluespace"
-	alert_type = /obj/screen/alert/status_effect/bluespaceslime
+	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
 	var/healthcheck
 
 /datum/status_effect/stabilized/bluespace/tick()
@@ -903,7 +905,7 @@
 
 /datum/status_effect/stabilized/lightpink/tick()
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
-		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.has_reagent(/datum/reagent/medicine/epinephrine))
+		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
 			H.reagents.add_reagent(/datum/reagent/medicine/epinephrine,5)
 	return ..()

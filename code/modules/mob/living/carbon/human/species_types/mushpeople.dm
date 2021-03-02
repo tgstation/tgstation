@@ -1,8 +1,7 @@
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
 	id = "mush"
-	mutant_bodyparts = list("caps")
-	default_features = list("caps" = "Round")
+	mutant_bodyparts = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "DBBF92"
@@ -11,7 +10,7 @@
 
 	say_mod = "poofs" //what does a mushroom sound like
 	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_NOFLASH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_NOFLASH)
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
@@ -47,10 +46,10 @@
 	mush.remove(C)
 	QDEL_NULL(mush)
 
-/datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)

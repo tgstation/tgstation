@@ -19,9 +19,9 @@ It can charge at its target, and also heavily damaging anything directly hit in 
 If at half health it will start to charge from all sides with clones.
 
 When Bubblegum dies, it leaves behind a H.E.C.K. mining suit as well as a chest that can contain three things:
- 1. A bottle that, when activated, drives everyone nearby into a frenzy
- 2. A contract that marks for death the chosen target
- 3. A spellblade that can slice off limbs at range
+A. A bottle that, when activated, drives everyone nearby into a frenzy
+B. A contract that marks for death the chosen target
+C. A spellblade that can slice off limbs at range
 
 Difficulty: Hard
 
@@ -54,6 +54,7 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of blood warp
 	ranged = TRUE
 	pixel_x = -32
+	base_pixel_x = -32
 	del_on_death = TRUE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
@@ -93,7 +94,7 @@ Difficulty: Hard
 /datum/action/innate/megafauna_attack/hallucination_surround
 	name = "Surround Target"
 	icon_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall"
+	button_icon_state = "wall-0"
 	chosen_message = "<span class='colossus'>You are now surrounding the target you click on with hallucinations.</span>"
 	chosen_attack_num = 3
 
@@ -197,15 +198,15 @@ Difficulty: Hard
 			. += L
 
 /**
-  * Attack by override for bubblegum
-  *
-  * This is used to award the frenching achievement for hitting bubblegum with a tongue
-  *
-  * Arguments:
-  * * obj/item/W the item hitting bubblegum
-  * * mob/user The user of the item
-  * * params, extra parameters
-  */
+ * Attack by override for bubblegum
+ *
+ * This is used to award the frenching achievement for hitting bubblegum with a tongue
+ *
+ * Arguments:
+ * * obj/item/W the item hitting bubblegum
+ * * mob/user The user of the item
+ * * params, extra parameters
+ */
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/organ/tongue))
@@ -321,13 +322,12 @@ Difficulty: Hard
 		return TRUE
 	return FALSE
 
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/be_aggressive()
 	if(BUBBLEGUM_IS_ENRAGED)
 		return TRUE
-	if(isliving(target))
-		var/mob/living/livingtarget = target
-		return (livingtarget.stat != CONSCIOUS || !(livingtarget.mobility_flags & MOBILITY_STAND))
-	return FALSE
+	return isliving(target) && HAS_TRAIT(target, TRAIT_INCAPACITATED)
+
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_retreat_distance()
 	return (be_aggressive() ? null : initial(retreat_distance))
@@ -345,15 +345,14 @@ Difficulty: Hard
 	enrage_till = world.time + enrage_time
 	update_approach()
 	change_move_delay(3.75)
-	var/newcolor = rgb(149, 10, 10)
-	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
+	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
 	addtimer(cb, enrage_time)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(newcolor = rgb(149, 10, 10))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end()
 	update_approach()
 	change_move_delay()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(newmove = initial(move_to_delay))
 	move_to_delay = newmove
@@ -418,10 +417,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
-	if(.)
-		SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_BUBBLEGUM
+	if(!(flags_1 & ADMIN_SPAWNED_1))
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM] = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!charging)
 		..()
 
@@ -551,7 +550,7 @@ Difficulty: Hard
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum)) // hallucinations should not be stopping bubblegum or eachother
 		return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(delta_time = SSMOBS_DT, times_fired)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)

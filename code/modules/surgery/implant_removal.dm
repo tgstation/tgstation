@@ -1,7 +1,7 @@
 /datum/surgery/implant_removal
 	name = "Implant removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 
@@ -41,7 +41,7 @@
 		if(case && !case.imp)
 			case.imp = I
 			I.forceMove(case)
-			case.update_icon()
+			case.update_appearance()
 			display_results(user, target, "<span class='notice'>You place [I] into [case].</span>",
 				"<span class='notice'>[user] places [I] into [case]!</span>",
 				"<span class='notice'>[user] places it into [case]!</span>")

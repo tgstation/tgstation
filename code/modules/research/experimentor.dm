@@ -22,6 +22,7 @@
 	desc = "A \"replacement\" for the destructive analyzer with a slight tendency to catastrophically fail."
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
+	base_icon_state = "h_lathe"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
@@ -107,8 +108,8 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/living/user)
+	if(!user.combat_mode)
 		. = 1
 		if(!is_insertion_ready(user))
 			return
@@ -149,7 +150,7 @@
 					res += str
 				else if(SSresearch.science_tech.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N.id])	//JOY OF DISCOVERY!
+				if(SSresearch.science_tech.visible_nodes[N.id]) //JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output
@@ -194,7 +195,7 @@
 			use_power(750)
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
-				var/picked = pickweight(nodes)		//This should work.
+				var/picked = pickweight(nodes) //This should work.
 				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
@@ -236,7 +237,7 @@
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
-	icon_state = "h_lathe_wloop"
+	icon_state = "[base_icon_state]_wloop"
 	var/chosenchem
 	var/criticalReaction = is_type_in_typecache(exp_on,  critical_items_typecache)
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,7 +292,7 @@
 			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)
 			if(istype(loaded_item, /obj/item/grenade/chem_grenade))
 				var/obj/item/grenade/chem_grenade/CG = loaded_item
-				CG.prime()
+				CG.detonate()
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_GAS)
@@ -373,7 +374,7 @@
 					heat_capacity = 1
 				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
@@ -419,7 +420,7 @@
 					heat_capacity = 1
 				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
@@ -463,10 +464,6 @@
 		visible_message("<span class='notice'>[src] scans the [exp_on], revealing its true nature!</span>")
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
-		if (!R.revealed)
-			var/points = rand(3500,3750) // discovery reward
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			visible_message("<span class='notice'> This discovery netted [points] points for research.</span>")
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
@@ -527,11 +524,12 @@
 	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
-	update_icon()
+	update_appearance()
 	recentlyExperimented = FALSE
 
 /obj/machinery/rnd/experimentor/update_icon_state()
-	icon_state = "h_lathe"
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)
 	var/turf/T = get_turf(user)
@@ -605,21 +603,21 @@
 	smoke.start()
 
 /obj/item/relic/proc/corgicannon(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE)
+	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .proc/throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/clean(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE)
+	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
-	CL.prime()
+	CL.detonate()
 	warn_admins(user, "Smoke", 0)
 
 /obj/item/relic/proc/flash(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE)
+	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/flashbang/CB = new/obj/item/grenade/flashbang(user.loc)
-	CB.prime()
+	CB.detonate()
 	warn_admins(user, "Flash")
 
 /obj/item/relic/proc/petSpray(mob/user)

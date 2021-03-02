@@ -312,6 +312,22 @@
 	build_path = /obj/item/circuitboard/machine/dnascanner
 	category = list("Research Machinery")
 
+/datum/design/board/destructive_scanner
+	name = "Machine Design (Destructive Scanner Board)"
+	desc = "The circuit board for an experimental destructive scanner."
+	id = "destructive_scanner"
+	build_path = /obj/item/circuitboard/machine/destructive_scanner
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/doppler_array
+	name = "Machine Design (Tachyon-Doppler Research Array Board)"
+	desc = "The circuit board for a tachyon-doppler research array"
+	id = "doppler_array"
+	build_path = /obj/item/circuitboard/machine/doppler_array
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
 	desc = "The circuit board for a microwave."
@@ -497,6 +513,14 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/board/griddle
+	name = "Machine Design (Griddle)"
+	desc = "The circuit board for a Griddle."
+	id = "griddle"
+	build_path = /obj/item/circuitboard/machine/griddle
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/board/donksofttoyvendor
 	name = "Machine Design (Donksoft Toy Vendor Board)"
 	desc = "The circuit board for a Donksoft Toy Vendor."
@@ -609,6 +633,14 @@
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 
+
+/datum/design/board/restaurant_portal
+	name = "Machine Design (Restaurant Portal)"
+	desc = "The circuit board for a restaurant portal"
+	id = "restaurant_portal"
+	build_path = /obj/item/circuitboard/machine/restaurant_portal
+	category = list ("Misc. Machinery")
+
 /datum/design/board/vendatray
 	name = "Machine Design (Vend-a-Tray)"
 	desc = "The circuit board for a Vend-a-Tray."
@@ -638,3 +670,61 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
+
+//Hypertorus fusion reactor designs
+
+/datum/design/board/HFR_core
+	name = "Machine Design (HFR Core)"
+	desc = "The circuit board for an HFR Core."
+	id = "HFR_core"
+	build_path = /obj/item/circuitboard/machine/HFR_core
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/HFR_fuel_input
+	name = "Machine Design (HFR fuel input)"
+	desc = "The circuit board for a freezer/heater."
+	id = "HFR_fuel_input"
+	build_path = /obj/item/circuitboard/machine/HFR_fuel_input
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/HFR_waste_output
+	name = "Machine Design (HFR waste output)"
+	desc = "The circuit board for a freezer/heater."
+	id = "HFR_waste_output"
+	build_path = /obj/item/circuitboard/machine/HFR_waste_output
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/HFR_moderator_input
+	name = "Machine Design (HFR moderator input)"
+	desc = "The circuit board for a freezer/heater."
+	id = "HFR_moderator_input"
+	build_path = /obj/item/circuitboard/machine/HFR_moderator_input
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/HFR_corner
+	name = "Machine Design (HFR corner)"
+	desc = "The circuit board for a freezer/heater."
+	id = "HFR_corner"
+	build_path = /obj/item/circuitboard/machine/HFR_corner
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/HFR_interface
+	name = "Machine Design (HFR interface)"
+	desc = "The circuit board for a freezer/heater."
+	id = "HFR_interface"
+	build_path = /obj/item/circuitboard/machine/HFR_interface
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/crystallizer
+	name = "Machine Design (Crystallizer)"
+	desc = "The circuit board for a crystallizer."
+	id = "crystallizer"
+	build_path = /obj/item/circuitboard/machine/crystallizer
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

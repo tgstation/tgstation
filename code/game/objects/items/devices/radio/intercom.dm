@@ -56,17 +56,19 @@
 	return ..()
 
 /**
-  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
-  * functionality. What we DON'T want is attack_tk_grab attempting to pick up the
-  * intercom as if it was an ordinary item.
-  */
+ * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
+ * functionality. What we DON'T want is attack_tk_grab attempting to pick up the
+ * intercom as if it was an ordinary item.
+ */
 /obj/item/radio/intercom/attack_tk_grab(mob/user)
 	interact(user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
-/obj/item/radio/intercom/attack_hand(mob/user)
+/obj/item/radio/intercom/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -100,18 +102,15 @@
 
 /obj/item/radio/intercom/emp_act(severity)
 	. = ..() // Parent call here will set `on` to FALSE.
-	update_icon()
+	update_appearance()
 
 /obj/item/radio/intercom/end_emp_effect(curremp)
 	. = ..()
 	AreaPowerCheck() // Make sure the area/local APC is powered first before we actually turn back on.
 
-/obj/item/radio/intercom/update_icon()
-	. = ..()
-	if(on)
-		icon_state = initial(icon_state)
-	else
-		icon_state = "intercom-p"
+/obj/item/radio/intercom/update_icon_state()
+	icon_state = on ? initial(icon_state) : "intercom-p"
+	return ..()
 
 /**
  * Proc called whenever the intercom's area loses or gains power. Responsible for setting the `on` variable and calling `update_icon()`.
@@ -126,7 +125,7 @@
 		on = FALSE
 	else
 		on = current_area.powered(AREA_USAGE_EQUIP) // set "on" to the equipment power status of our area.
-	update_icon()
+	update_appearance()
 
 /obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
 	return FALSE
@@ -140,3 +139,9 @@
 	pixel_shift = 29
 	inverse = TRUE
 	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+
+/obj/item/radio/intercom/chapel
+	name = "Confessional intercom"
+	anonymize = TRUE
+	frequency = 1481
+	broadcasting = TRUE

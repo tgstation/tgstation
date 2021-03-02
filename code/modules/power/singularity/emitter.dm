@@ -3,6 +3,7 @@
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
+	base_icon_state = "emitter"
 
 	anchored = FALSE
 	density = TRUE
@@ -13,7 +14,9 @@
 	idle_power_usage = 10
 	active_power_usage = 300
 
+	/// The icon state used by the emitter when it's on.
 	var/icon_state_on = "emitter_+a"
+	/// The icon state used by the emitter when it's on and low on power.
 	var/icon_state_underpowered = "emitter_+u"
 	var/active = FALSE
 	var/powered = FALSE
@@ -26,7 +29,7 @@
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
-	var/projectile_type = /obj/projectile/beam/emitter
+	var/projectile_type = /obj/projectile/beam/emitter/hitscan
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
 
@@ -69,7 +72,7 @@
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
@@ -133,10 +136,11 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon_state()
-	if(active && powernet)
-		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
-	else
-		icon_state = initial(icon_state)
+	if(!active || !powernet)
+		icon_state = base_icon_state
+		return ..()
+	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
+	return ..()
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -158,7 +162,7 @@
 			log_game("Emitter turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
 			investigate_log("turned [active ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 
-			update_icon()
+			update_appearance()
 
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -166,33 +170,33 @@
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return TRUE
 
-/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
-	if(ismegafauna(M) && anchored)
+/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(ismegafauna(user) && anchored)
 		set_anchored(FALSE)
-		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+		user.visible_message("<span class='warning'>[user] rips [src] free from its moorings!</span>")
 	else
 		. = ..()
 	if(. && !anchored)
-		step(src, get_dir(M, src))
+		step(src, get_dir(user, src))
 
 /obj/machinery/power/emitter/process(delta_time)
 	if(machine_stat & (BROKEN))
 		return
 	if(!welded || (!powernet && active_power_usage))
 		active = FALSE
-		update_icon()
+		update_appearance()
 		return
 	if(active == TRUE)
 		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 			if(!powered)
 				powered = TRUE
-				update_icon()
+				update_appearance()
 				investigate_log("regained power and turned <font color='green'>ON</font> at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 		else
 			if(powered)
 				powered = FALSE
-				update_icon()
+				update_appearance()
 				investigate_log("lost power and turned <font color='red'>OFF</font> at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 				log_game("Emitter lost power in [AREACOORD(src)]")
 			return
@@ -372,10 +376,12 @@
 	name = "Prototype Emitter"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "protoemitter"
+	base_icon_state = "protoemitter"
 	icon_state_on = "protoemitter_+a"
 	icon_state_underpowered = "protoemitter_+u"
+	base_icon_state = "protoemitter"
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/view_range = 4.5
 	var/datum/action/innate/protoemitter/firing/auto
 
@@ -388,14 +394,14 @@
 		if(istype(I, /obj/item/turret_control))
 			qdel(I)
 	if(istype(buckled_mob))
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = buckled_mob.base_pixel_x
+		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
 	auto.Remove(buckled_mob)
 	. = ..()
 
-/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(user.incapacitated() || !istype(user))
 		return
 	for(var/atom/movable/A in get_turf(src))
@@ -413,7 +419,7 @@
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 
@@ -452,7 +458,7 @@
 				if(U.dropItemToGround(I))
 					var/obj/item/turret_control/TC = new /obj/item/turret_control()
 					U.put_in_hands(TC)
-			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				var/obj/item/turret_control/TC = new /obj/item/turret_control()
 				U.put_in_hands(TC)
 		UpdateButtonIcon()

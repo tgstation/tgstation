@@ -4,67 +4,56 @@
 	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
+	base_icon_state = "floor"
 	baseturfs = /turf/open/floor/plating
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
+	flags_1 = NO_SCREENTIPS_1
+	turf_flags = CAN_BE_DIRTY_1
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
 
-	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
-	var/icon_plating = "plating"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.04
 	heat_capacity = 10000
 	intact = TRUE
+	tiled_dirt = TRUE
+
 	var/broken = FALSE
 	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
 
-	tiled_dirt = TRUE
-
 
 /turf/open/floor/Initialize(mapload)
-	if (!broken_states)
-		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	. = ..()
+	if (broken_states)
+		stack_trace("broken_states defined at the object level for [type], move it to setup_broken_states()")
 	else
-		broken_states = typelist("broken_states", broken_states)
-	burnt_states = typelist("burnt_states", burnt_states)
+		broken_states = string_list(setup_broken_states())
+	if (burnt_states)
+		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
+	else
+		var/list/new_burnt_states = setup_burnt_states()
+		if(new_burnt_states)
+			burnt_states = string_list(new_burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
 		burnt = TRUE
-	. = ..()
-	//This is so damaged or burnt tiles or platings don't get remembered as the default tile
-	var/static/list/icons_to_ignore_at_floor_init = list("foam_plating", "plating","light_on","light_on_flicker1","light_on_flicker2",
-					"light_on_clicker3","light_on_clicker4","light_on_clicker5",
-					"light_on_broken","light_off","wall_thermite","grass", "sand",
-					"asteroid","asteroid_dug",
-					"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
-					"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
-					"basalt","basalt_dug",
-					"basalt0","basalt1","basalt2","basalt3","basalt4",
-					"basalt5","basalt6","basalt7","basalt8","basalt9","basalt10","basalt11","basalt12",
-					"snow","snow_dug","ice",
-					"snow0","snow1","snow2","snow3","snow4",
-					"snow5","snow6","snow7","snow8","snow9","snow10","snow11","snow12",
-					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "carpetsymbol", "carpetstar",
-					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
-					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
-					"ironsand12", "ironsand13", "ironsand14", "ironsand15")
-	if(broken || burnt || (icon_state in icons_to_ignore_at_floor_init)) //so damaged/burned tiles or plating icons aren't saved as the default
-		icon_regular_floor = "floor"
-	else
-		icon_regular_floor = icon_state
 	if(mapload && prob(33))
 		MakeDirty()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
+/turf/open/floor/proc/setup_broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/proc/setup_burnt_states()
+	return
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
@@ -86,7 +75,7 @@
 		if(1)
 			ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 		if(2)
-			switch(pick(1,2;75,3))
+			switch(rand(1,3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -94,7 +83,7 @@
 					else
 						ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 					if(prob(33))
-						new /obj/item/stack/sheet/metal(src)
+						new /obj/item/stack/sheet/iron(src)
 				if(2)
 					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 				if(3)
@@ -104,7 +93,7 @@
 						break_tile()
 					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33))
-						new /obj/item/stack/sheet/metal(src)
+						new /obj/item/stack/sheet/iron(src)
 		if(3)
 			if (prob(50))
 				src.break_tile()
@@ -121,8 +110,8 @@
 	. = ..()
 	update_visuals()
 
-/turf/open/floor/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
@@ -139,7 +128,7 @@
 /turf/open/floor/burn_tile()
 	if(broken || burnt)
 		return
-	if(burnt_states.len)
+	if(LAZYLEN(burnt_states))
 		icon_state = pick(burnt_states)
 	else
 		icon_state = pick(broken_states)
@@ -157,15 +146,13 @@
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(path, /turf/open/floor))
 		return ..()
-	var/old_icon = icon_regular_floor
 	var/old_dir = dir
 	var/turf/open/floor/W = ..()
-	W.icon_regular_floor = old_icon
 	W.setDir(old_dir)
-	W.update_icon()
+	W.update_appearance()
 	return W
 
-/turf/open/floor/attackby(obj/item/object, mob/user, params)
+/turf/open/floor/attackby(obj/item/object, mob/living/user, params)
 	if(!object || !user)
 		return TRUE
 	. = ..()
@@ -174,7 +161,7 @@
 	if(intact && istype(object, /obj/item/stack/tile))
 		try_replace_tile(object, user, params)
 		return TRUE
-	if(user.a_intent == INTENT_HARM && istype(object, /obj/item/stack/sheet))
+	if(user.combat_mode && istype(object, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/sheets = object
 		return sheets.on_attack_floor(user, params)
 	return FALSE
@@ -216,8 +203,8 @@
 
 /turf/open/floor/proc/spawn_tile()
 	if(!has_tile())
-		return
-	new floor_tile(src)
+		return null
+	return new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
@@ -288,7 +275,7 @@
 					new_window.req_one_access = the_rcd.airlock_electronics.one_access
 					new_window.unres_sides = the_rcd.airlock_electronics.unres_sides
 				new_window.autoclose = TRUE
-				new_window.update_icon()
+				new_window.update_appearance()
 				return TRUE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
@@ -304,7 +291,7 @@
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
 			new_airlock.autoclose = TRUE
-			new_airlock.update_icon()
+			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
@@ -346,11 +333,13 @@
 	name = "floor"
 	icon_state = "materialfloor"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	floor_tile = /obj/item/stack/tile/material
 
 /turf/open/floor/material/has_tile()
-	return custom_materials.len
+	return LAZYLEN(custom_materials)
 
 /turf/open/floor/material/spawn_tile()
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	. = ..()
+	if(.)
+		var/obj/item/stack/tile = .
+		tile.set_mats_per_unit(custom_materials, 1)

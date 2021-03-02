@@ -82,7 +82,7 @@ All the important duct code:
 		for(var/atom/movable/AM in get_step(src, D))
 			if(connect_network(AM, D))
 				add_connects(D)
-	update_icon()
+	update_appearance()
 
 ///see if whatever we found can be connected to
 /obj/machinery/duct/proc/connect_network(atom/movable/AM, direction, ignore_color)
@@ -109,7 +109,7 @@ All the important duct code:
 		add_neighbour(D, direction)
 
 		D.add_connects(opposite_dir)
-		D.update_icon()
+		D.update_appearance()
 		return TRUE //tell the current pipe to also update it's sprite
 	if(!(D in neighbours)) //we cool
 		if((duct_color != D.duct_color) && !(ignore_colors || D.ignore_colors))
@@ -137,7 +137,8 @@ All the important duct code:
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
 	var/opposite_dir = turn(direction, 180)
-	if(duct_layer != DUCT_LAYER_DEFAULT) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
+
+	if(duct_layer != P.ducting_layer)
 		return FALSE
 
 	if(!P.active)
@@ -160,7 +161,7 @@ All the important duct code:
 		duct.remove_duct(src)
 	lose_neighbours()
 	reset_connects(0)
-	update_icon()
+	update_appearance()
 	if(ispath(drop_on_wrench) && !QDELING(src))
 		new drop_on_wrench(drop_location())
 		qdel(src)
@@ -196,7 +197,7 @@ All the important duct code:
 	connects = 0
 	for(var/A in neighbours)
 		connects |= neighbours[A]
-	update_icon()
+	update_appearance()
 
 ///create a new duct datum
 /obj/machinery/duct/proc/create_duct()
@@ -254,6 +255,7 @@ All the important duct code:
 			if(D == WEST)
 				temp_icon += "_w"
 	icon_state = temp_icon
+	return ..()
 
 ///update the layer we are on
 /obj/machinery/duct/proc/handle_layer()
@@ -334,7 +336,7 @@ All the important duct code:
 	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
 	add_neighbour(D, direction)
 	connect_network(D, direction, TRUE)
-	update_icon()
+	update_appearance()
 
 ///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect.
 /obj/machinery/duct/multilayered
@@ -389,7 +391,7 @@ All the important duct code:
 	singular_name = "duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "ducts"
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	w_class = WEIGHT_CLASS_TINY
 	novariants = FALSE
 	max_amount = 50

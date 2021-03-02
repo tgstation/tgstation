@@ -10,10 +10,6 @@
 /obj/effect/landmark/singularity_act()
 	return
 
-// Please stop bombing the Observer-Start landmark.
-/obj/effect/landmark/ex_act()
-	return
-
 /obj/effect/landmark/singularity_pull()
 	return
 
@@ -45,7 +41,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
-		LAZYADDASSOC(GLOB.jobspawn_overrides, name, src)
+		LAZYADDASSOCLIST(GLOB.jobspawn_overrides, name, src)
 	if(name != "start")
 		tag = "start*[name]"
 
@@ -314,7 +310,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	return INITIALIZE_HINT_QDEL
 
 //objects with the stationloving component (nuke disk) respawn here.
-//also blobs that have their spawn forcemoved (running out of time when picking their spawn spot), santa and respawning devils
+//also blobs that have their spawn forcemoved (running out of time when picking their spawn spot) and santa
 /obj/effect/landmark/blobstart
 	name = "blobstart"
 	icon_state = "blob_start"
@@ -378,7 +374,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/thunderdome/one/Initialize(mapload)
 	..()
-	GLOB.tdome1	+= loc
+	GLOB.tdome1 += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/thunderdome/two

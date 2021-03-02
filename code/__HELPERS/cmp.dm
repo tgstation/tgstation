@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return sorttext(a.ckey, b.ckey)
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return initial(b.init_order) - initial(a.init_order)	//uses initial() so it can be used on types
+	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return sorttext(b.name, a.name)
@@ -56,9 +56,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
-
-/proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
-	return B.priority - A.priority
 
 /proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
 	return initial(A.cost) - initial(B.cost)
@@ -96,8 +93,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return A.totalResistance() - B.totalResistance()
 
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
-	var/a_sign = num2sign(initial(A.value) * -1)
-	var/b_sign = num2sign(initial(B.value) * -1)
+	var/a_sign = SIGN(initial(A.value) * -1)
+	var/b_sign = SIGN(initial(B.value) * -1)
 
 	// Neutral traits go last.
 	if(a_sign == 0)
@@ -133,3 +130,19 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_mob_realname_dsc(mob/A,mob/B)
 	return sorttext(A.real_name,B.real_name)
+
+/**
+ * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
+ *
+ * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
+ * This prevents any reagent_containers from being consumed before the reagents they contain, which can
+ * lead to runtimes and item duplication when it happens.
+ */
+/proc/cmp_crafting_req_priority(A, B)
+	var/lhs
+	var/rhs
+
+	lhs = ispath(A, /datum/reagent) ? 0 : 1
+	rhs = ispath(B, /datum/reagent) ? 0 : 1
+
+	return lhs - rhs

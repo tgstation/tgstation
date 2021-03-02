@@ -16,16 +16,16 @@
 	var/mob_gender = null
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
-	var/instant = FALSE	//fires on New
+	var/instant = FALSE //fires on New
 	var/short_desc = "The mapper forgot to set this!"
 	var/flavour_text = ""
 	var/important_info = ""
 	var/faction = null
-	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
-	var/random = FALSE		//Don't set a name or gender, just go random
+	var/permanent = FALSE //If true, the spawner will not disappear upon running out of uses.
+	var/random = FALSE //Don't set a name or gender, just go random
 	var/antagonist_type
 	var/objectives = null
-	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
+	var/uses = 1 //how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	var/burn_damage = 0
@@ -40,6 +40,9 @@
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
+	if(ghost_role == "No" || !loc || QDELETED(user))
+		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, "<span class='warning'>An admin has temporarily disabled non-admin ghost roles!</span>")
 		return
@@ -53,10 +56,6 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
-
-	if(ghost_role == "No" || !loc)
-		return
 	log_game("[key_name(user)] became [mob_name]")
 	create(ckey = user.ckey)
 
@@ -65,11 +64,10 @@
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
-		GLOB.poi_list |= src
+		AddElement(/datum/element/point_of_interest)
 		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
-	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
 	if(!LAZYLEN(spawners))
@@ -95,6 +93,9 @@
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
+		if(ishuman(M))
+			var/mob/living/carbon/human/hoomie = M
+			hoomie.body_type = mob_gender
 	if(faction)
 		M.faction = list(faction)
 	if(disease)
@@ -142,14 +143,10 @@
 /obj/effect/mob_spawn/human
 	mob_type = /mob/living/carbon/human
 	//Human specific stuff.
-	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
-	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
+	var/datum/outfit/outfit = /datum/outfit //If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
 	var/disable_sensors = TRUE
-	//All of these only affect the ID that the outfit has placed in the ID slot
-	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
-	var/id_access_list = null	//Allows you to manually add access to an ID card.
 	assignedrole = "Ghost Role"
 
 	var/husk = null
@@ -176,6 +173,8 @@
 
 	var/hairstyle
 	var/facial_hairstyle
+	var/haircolor
+	var/facial_haircolor
 	var/skin_tone
 
 /obj/effect/mob_spawn/human/Initialize()
@@ -203,6 +202,14 @@
 		H.facial_hairstyle = facial_hairstyle
 	else
 		H.facial_hairstyle = random_facial_hairstyle(H.gender)
+	if(haircolor)
+		H.hair_color = haircolor
+	else
+		H.hair_color = random_short_color()
+	if(facial_haircolor)
+		H.facial_hair_color = facial_haircolor
+	else
+		H.facial_hair_color = random_short_color()
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else
@@ -226,25 +233,15 @@
 			var/obj/item/clothing/under/C = H.w_uniform
 			if(istype(C))
 				C.sensor_mode = NO_SENSORS
+				H.update_suit_sensors()
 
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(H.age)
 			W.registered_age = H.age
-		if(id_access)
-			for(var/jobtype in typesof(/datum/job))
-				var/datum/job/J = new jobtype
-				if(J.title == id_access)
-					W.access = J.get_access()
-					break
-		if(id_access_list)
-			if(!islist(W.access))
-				W.access = list()
-			W.access |= id_access_list
-		if(id_job)
-			W.assignment = id_job
 		W.registered_name = H.real_name
 		W.update_label()
+		W.update_icon()
 
 //Instant version - use when spawning corpses during runtime
 /obj/effect/mob_spawn/human/corpse
@@ -281,7 +278,7 @@
 	qdel(src)
 
 /obj/effect/mob_spawn/slime
-	mob_type = 	/mob/living/simple_animal/slime
+	mob_type = /mob/living/simple_animal/slime
 	var/mobcolour = "grey"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
@@ -328,6 +325,11 @@
 	outfit = /datum/outfit/job/doctor
 	icon_state = "corpsedoctor"
 
+/obj/effect/mob_spawn/human/geneticist
+	name = "Geneticist"
+	outfit = /datum/outfit/job/geneticist
+	icon_state = "corpsescientist"
+
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
 	outfit = /datum/outfit/job/engineer/gloved
@@ -335,6 +337,9 @@
 
 /obj/effect/mob_spawn/human/engineer/rig
 	outfit = /datum/outfit/job/engineer/gloved/rig
+
+/obj/effect/mob_spawn/human/engineer/rig/gunner
+	outfit = /datum/outfit/job/engineer/gloved/rig/gunner
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
@@ -363,8 +368,6 @@
 
 /obj/effect/mob_spawn/human/bartender
 	name = "Space Bartender"
-	id_job = "Bartender"
-	id_access_list = list(ACCESS_BAR)
 	outfit = /datum/outfit/spacebartender
 
 /obj/effect/mob_spawn/human/beach
@@ -374,8 +377,6 @@
 
 /obj/effect/mob_spawn/human/bridgeofficer
 	name = "Bridge Officer"
-	id_job = "Bridge Officer"
-	id_access_list = list(ACCESS_CENT_CAPTAIN)
 	outfit = /datum/outfit/nanotrasenbridgeofficercorpse
 
 /datum/outfit/nanotrasenbridgeofficercorpse
@@ -385,12 +386,11 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/corpse/bridge_officer
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
-	id_job = "Commander"
-	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE)
 	outfit = /datum/outfit/nanotrasencommandercorpse
 
 /datum/outfit/nanotrasencommandercorpse
@@ -404,12 +404,11 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/corpse/commander
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
-	id_job = "Private Security Force"
-	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 	outfit = /datum/outfit/nanotrasensoldiercorpse
 
 /datum/outfit/nanotrasensoldiercorpse
@@ -421,7 +420,8 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/centcom/corpse/private_security
 
 /////////////////Spooky Undead//////////////////////
 //there are living variants of many of these, they're now in ghost_role_spawners.dm

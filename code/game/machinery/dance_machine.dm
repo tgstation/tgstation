@@ -13,6 +13,7 @@
 	var/datum/track/selection = null
 	/// Volume of the songs played
 	var/volume = 100
+	COOLDOWN_DECLARE(jukebox_error_cd)
 
 /obj/machinery/jukebox/disco
 	name = "radiant dance machine mark IV"
@@ -79,10 +80,8 @@
 	return ..()
 
 /obj/machinery/jukebox/update_icon_state()
-	if(active)
-		icon_state = "[initial(icon_state)]-active"
-	else
-		icon_state = "[initial(icon_state)]"
+	icon_state = "[initial(icon_state)][active ? "-active" : null]"
+	return ..()
 
 /obj/machinery/jukebox/ui_status(mob/user)
 	if(!anchored)
@@ -94,7 +93,7 @@
 		return UI_CLOSE
 	if(!songs.len && !isobserver(user))
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
-		playsound(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
+		user.playsound_local(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
 		return UI_CLOSE
 	return ..()
 
@@ -135,7 +134,10 @@
 			if(!active)
 				if(stop > world.time)
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
+					if(!COOLDOWN_FINISHED(src, jukebox_error_cd))
+						return
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
+					COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
 					return
 				activate_music()
 				START_PROCESSING(SSobj, src)
@@ -172,7 +174,7 @@
 
 /obj/machinery/jukebox/proc/activate_music()
 	active = TRUE
-	update_icon()
+	update_appearance()
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
 
@@ -392,8 +394,8 @@
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
 			for(var/mob/living/carbon/NS in rangers)
-				NS.set_resting(!NS.resting, TRUE)
-		 time--
+				NS.set_resting(!NS.resting, TRUE, TRUE)
+		time--
 
 /obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
@@ -455,7 +457,7 @@
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played)
+				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
 			if(get_dist(src,L) > 10)
 				rangers -= L
@@ -467,7 +469,7 @@
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
-		update_icon()
+		update_appearance()
 		stop = world.time + 100
 
 /obj/machinery/jukebox/disco/process()

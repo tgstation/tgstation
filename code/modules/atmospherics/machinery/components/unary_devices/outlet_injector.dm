@@ -27,7 +27,7 @@
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
@@ -35,7 +35,7 @@
 		volume_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [volume_rate] L/s.</span>")
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
@@ -64,12 +64,12 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 
 	if(air_contents.temperature > 0)
-		var/transfer_moles = air_contents.return_pressure() * volume_rate * delta_time / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (air_contents.return_pressure() * volume_rate * delta_time) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 		loc.assume_air(removed)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 
 		update_parents()
 
@@ -83,7 +83,7 @@
 	injecting = 1
 
 	if(air_contents.temperature > 0)
-		var/transfer_moles = air_contents.return_pressure() * volume_rate / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (air_contents.return_pressure() * volume_rate) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 		loc.assume_air(removed)
 		update_parents()
@@ -139,7 +139,7 @@
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
 	if(!("status" in signal.data)) //do not update_icon
-		update_icon()
+		update_appearance()
 
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, datum/tgui/ui)
@@ -156,7 +156,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -175,7 +176,7 @@
 			if(.)
 				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
@@ -208,7 +209,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
-	volume_rate = 400
+	volume_rate = MAX_TRANSFER_RATE
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste
 	name = "atmos waste outlet injector"
@@ -237,6 +238,54 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input
 	name = "carbon dioxide tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_CO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/bz_input
+	name = "bz tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_BZ
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/freon_input
+	name = "freon tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_FREON
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/halon_input
+	name = "halon tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HALON
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/healium_input
+	name = "healium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HEALIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hydrogen_input
+	name = "hydrogen tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_H2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hypernoblium_input
+	name = "hypernoblium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HYPERNOBLIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/miasma_input
+	name = "miasma tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_MIASMA
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitryl_input
+	name = "nitryl tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_NO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/pluoxium_input
+	name = "pluoxium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_PLUOXIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/proto_nitrate_input
+	name = "proto-nitrate tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/stimulum_input
+	name = "stimulum tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_STIMULUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/tritium_input
+	name = "tritium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_TRITIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/water_vapor_input
+	name = "water vapor tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_H2O
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/zauker_input
+	name = "zauker tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_ZAUKER
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/helium_input
+	name = "helium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HELIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/antinoblium_input
+	name = "antinoblium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_ANTINOBLIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
 	name = "incinerator chamber input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR

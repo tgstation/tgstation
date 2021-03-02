@@ -23,6 +23,7 @@
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
+#define CULT_OVERLAY_LAYER 2.01
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
 #define TURF_PLATING_DECAL_LAYER 2.031
@@ -37,7 +38,7 @@
 #define WIRE_LAYER 2.4
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
-#define GAS_SCRUBBER_LAYER 2.46 
+#define GAS_SCRUBBER_LAYER 2.46
 #define GAS_PIPE_VISIBLE_LAYER 2.47 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
@@ -52,6 +53,7 @@
 #define DOOR_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
+#define GATEWAY_UNDERLAY_LAYER 2.85
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
@@ -62,6 +64,7 @@
 #define ABOVE_OBJ_LAYER 3.2
 #define ABOVE_WINDOW_LAYER 3.3
 #define SIGN_LAYER 3.4
+#define CORGI_ASS_PIN_LAYER 3.41
 #define NOT_HIGH_OBJ_LAYER 3.5
 #define HIGH_OBJ_LAYER 3.6
 
@@ -126,27 +129,32 @@
 #define CAMERA_STATIC_LAYER 19
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
 
-#define ATMOS_GROUP_PLANE 20
-#define ATMOS_GROUP_LAYER 20
+#define RUNECHAT_PLANE 20
+
+#define ATMOS_GROUP_PLANE 21
+#define ATMOS_GROUP_LAYER 21
 
 //HUD layer defines
 
-#define FULLSCREEN_PLANE 21
-#define FLASH_LAYER 21
-#define FULLSCREEN_LAYER 21.1
-#define UI_DAMAGE_LAYER 21.2
-#define BLIND_LAYER 21.3
-#define CRIT_LAYER 21.4
-#define CURSE_LAYER 21.5
+#define FULLSCREEN_PLANE 31
+#define FLASH_LAYER 31
+#define FULLSCREEN_LAYER 31.1
+#define UI_DAMAGE_LAYER 31.2
+#define BLIND_LAYER 31.3
+#define CRIT_LAYER 31.4
+#define CURSE_LAYER 31.5
 #define FULLSCREEN_RENDER_TARGET "FULLSCREEN_PLANE"
 
-#define HUD_PLANE 22
-#define HUD_LAYER 22
+#define HUD_PLANE 42
+#define HUD_LAYER 42
 #define HUD_RENDER_TARGET "HUD_PLANE"
-#define ABOVE_HUD_PLANE 23
-#define ABOVE_HUD_LAYER 23
+#define ABOVE_HUD_PLANE 43
+#define ABOVE_HUD_LAYER 43
 #define ABOVE_HUD_RENDER_TARGET "ABOVE_HUD_PLANE"
 
-#define SPLASHSCREEN_LAYER 24
-#define SPLASHSCREEN_PLANE 24
+#define SPLASHSCREEN_LAYER 54
+#define SPLASHSCREEN_PLANE 54
 #define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
+
+///Plane master controller keys
+#define PLANE_MASTERS_GAME "plane_masters_game"

@@ -22,10 +22,10 @@ export const AtmosTempPump = (props, context) => {
               <NumberInput
                 animated
                 value={parseFloat(data.rate)}
-                unit="K/s"
+                unit="%"
                 width="75px"
                 minValue={0}
-                maxValue={4500}
+                maxValue={data.max_heat_transfer_rate}
                 step={1}
                 onChange={(e, value) => act('rate', {
                   rate: value,

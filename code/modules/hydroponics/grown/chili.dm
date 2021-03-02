@@ -5,7 +5,7 @@
 	icon_state = "seed-chili"
 	species = "chili"
 	plantname = "Chili Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/chili
+	product = /obj/item/food/grown/chili
 	lifespan = 20
 	maturation = 5
 	production = 5
@@ -19,14 +19,13 @@
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
 	reagents_add = list(/datum/reagent/consumable/capsaicin = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04)
 
-/obj/item/reagent_containers/food/snacks/grown/chili
+/obj/item/food/grown/chili
 	seed = /obj/item/seeds/chili
 	name = "chili"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
-	filling_color = "#FF0000"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 20
 
 // Ice Chili
@@ -36,22 +35,23 @@
 	icon_state = "seed-icepepper"
 	species = "chiliice"
 	plantname = "Chilly Pepper Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/icepepper
+	product = /obj/item/food/grown/icepepper
 	lifespan = 25
 	maturation = 4
 	production = 4
 	rarity = 20
+	genes = list(/datum/plant_gene/trait/chem_cooling)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/frostoil = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
+	graft_gene = /datum/plant_gene/trait/chem_cooling
 
-/obj/item/reagent_containers/food/snacks/grown/icepepper
+/obj/item/food/grown/icepepper
 	seed = /obj/item/seeds/chili/ice
 	name = "chilly pepper"
 	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
-	filling_color = "#0000CD"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 30
 
 // Ghost Chili
@@ -61,27 +61,28 @@
 	icon_state = "seed-chilighost"
 	species = "chilighost"
 	plantname = "Ghost Chili Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/ghost_chili
+	product = /obj/item/food/grown/ghost_chili
 	endurance = 10
 	maturation = 10
 	production = 10
 	yield = 3
 	rarity = 20
+	genes = list(/datum/plant_gene/trait/chem_heating)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.3, /datum/reagent/consumable/capsaicin = 0.55, /datum/reagent/consumable/nutriment = 0.04)
+	graft_gene = /datum/plant_gene/trait/chem_heating
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili
+/obj/item/food/grown/ghost_chili
 	seed = /obj/item/seeds/chili/ghost
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	var/mob/living/carbon/human/held_mob
-	filling_color = "#F8F8FF"
-	bitesize_mod = 4
-	foodtype = FRUIT
+	bite_consumption_mod = 4
+	foodtypes = FRUIT
 	wine_power = 50
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
+/obj/item/food/grown/ghost_chili/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -89,7 +90,7 @@
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili/process(delta_time)
+/obj/item/food/grown/ghost_chili/process(delta_time)
 	if(held_mob && loc == held_mob)
 		if(held_mob.is_holding(src))
 			if(istype(held_mob) && held_mob.gloves)

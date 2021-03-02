@@ -1,12 +1,14 @@
 /datum/computer_file/program/crew_manifest
 	filename = "plexagoncrew"
 	filedesc = "Plexagon Crew List"
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosCrewManifest"
+	program_icon = "clipboard-list"
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()
@@ -27,7 +29,8 @@
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/obj/item/computer_hardware/printer/printer

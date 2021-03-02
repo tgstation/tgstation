@@ -16,11 +16,13 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 200000, TRUE, /obj/item/stack)
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
+	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 100 * MINERAL_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, allowed_items=/obj/item/stack)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
-	. = ..()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/proc/on_step()
+	SIGNAL_HANDLER
+
 	var/mob/wearer = loc
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(on && istype(wearer))
@@ -28,7 +30,7 @@
 			on = !on
 			if(!always_noslip)
 				clothing_flags &= ~NOSLIP
-			update_icon()
+			update_appearance()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 		else
 			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(wearer.dir, 180))) //honk
@@ -50,7 +52,7 @@
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
-		update_icon()
+		update_appearance()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
 		if(!always_noslip)
 			if(on)
@@ -61,7 +63,5 @@
 		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon_state()
-	if(on)
-		icon_state = "clown_prototype_on"
-	else
-		icon_state = "clown_prototype_off"
+	icon_state = "clown_prototype_[on ? "on" : "off"]"
+	return ..()

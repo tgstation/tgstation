@@ -5,7 +5,7 @@
 
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
-	if(recharger && recharger.check_functionality())
+	if(recharger?.check_functionality())
 		if(recharger.use_power(amount))
 			return TRUE
 
@@ -22,7 +22,7 @@
 
 /obj/item/modular_computer/proc/give_power(amount)
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		return battery_module.battery.give(amount)
 	return 0
 

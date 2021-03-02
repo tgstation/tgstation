@@ -16,19 +16,18 @@
 	health = 15
 	see_in_dark = 10
 	harm_intent_damage = 6
-	melee_damage_lower = 6
-	melee_damage_upper = 5
+	melee_damage_lower = 5
+	melee_damage_upper = 6
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1)
 	pass_flags = PASSTABLE
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	speak_emote = list("squeaks")
 	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
 	var/min_oxy = 0
@@ -40,6 +39,7 @@
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus //Despite being a bat for... reasons, this is now a spider, and is one of the HoS' pets.
 	name = "Sergeant Araneus"
@@ -48,12 +48,12 @@
 	emote_hear = list("chitters")
 	faction = list("spiders")
 	harm_intent_damage = 3
-	health = 200
 	icon_dead = "guard_dead"
 	icon_gib = "guard_dead"
 	icon_living = "guard"
 	icon_state = "guard"
 	maxHealth = 250
+	health = 250
 	max_co2 = 5
 	max_tox = 2
 	melee_damage_lower = 15

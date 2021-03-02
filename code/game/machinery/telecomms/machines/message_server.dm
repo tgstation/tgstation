@@ -21,13 +21,15 @@
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
-/obj/machinery/blackbox_recorder/attack_hand(mob/living/user)
+/obj/machinery/blackbox_recorder/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(stored)
-		user.put_in_hands(stored)
+		stored.forceMove(drop_location())
+		if(Adjacent(user))
+			user.put_in_hands(stored)
 		stored = null
 		to_chat(user, "<span class='notice'>You remove the blackbox from [src]. The tapes stop spinning.</span>")
-		update_icon()
+		update_appearance()
 		return
 	else
 		to_chat(user, "<span class='warning'>It seems that the blackbox is missing...</span>")
@@ -42,7 +44,7 @@
 		"<span class='notice'>You press the device into [src], and it clicks into place. The tapes begin spinning again.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		stored = I
-		update_icon()
+		update_appearance()
 		return
 	return ..()
 
@@ -52,12 +54,9 @@
 		new /obj/effect/decal/cleanable/oil(loc)
 	return ..()
 
-/obj/machinery/blackbox_recorder/update_icon()
-	. = ..()
-	if(!stored)
-		icon_state = "blackbox_b"
-	else
-		icon_state = "blackbox"
+/obj/machinery/blackbox_recorder/update_icon_state()
+	icon_state = "blackbox[stored ? null : "_b"]"
+	return ..()
 
 /obj/item/blackbox
 	name = "\proper the blackbox"

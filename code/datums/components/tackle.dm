@@ -2,14 +2,14 @@
 #define MAX_TABLE_MESSES 12
 
 /**
-  * For when you want to throw a person at something and have fun stuff happen
-  *
-  * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
-  *	  intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
-  *	  roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
-  *	  and take a bit of extra damage and stun for each thing launched.
-  *
-  * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
+ * For when you want to throw a person at something and have fun stuff happen
+ *
+ * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
+ *   intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
+ *   roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
+ *   and take a bit of extra damage and stun for each thing launched.
+ *
+ * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
 */
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -81,11 +81,11 @@
 		to_chat(user, "<span class='warning'>You're too angry to remember how to tackle!</span>")
 		return
 
-	if(user.restrained())
+	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		to_chat(user, "<span class='warning'>You need free use of your hands to tackle!</span>")
 		return
 
-	if(!(user.mobility_flags & MOBILITY_STAND))
+	if(user.body_position == LYING_DOWN)
 		to_chat(user, "<span class='warning'>You must be standing to tackle!</span>")
 		return
 
@@ -100,7 +100,7 @@
 	user.face_atom(A)
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["alt"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["middle"])
+	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 
 	tackling = TRUE
@@ -116,7 +116,7 @@
 	if(get_dist(user, A) < min_distance)
 		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
-	user.Knockdown(base_knockdown, TRUE, TRUE)
+	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)
 	user.throw_at(A, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
@@ -163,7 +163,7 @@
 
 	switch(roll)
 		if(-INFINITY to -5)
-			user.visible_message("<span class='danger'>[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!</span>", "<span class='userdanger'>You botch your [tackle_word] and slam your head into [target], knocking yourself silly!</span>", target)
+			user.visible_message("<span class='danger'>[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!</span>", "<span class='userdanger'>You botch your [tackle_word] and slam your head into [target], knocking yourself silly!</span>", ignored_mobs = target)
 			to_chat(target, "<span class='userdanger'>[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into you, knocking [user.p_them()]self silly!</span>")
 
 			user.Paralyze(30)
@@ -173,7 +173,7 @@
 			user.gain_trauma(/datum/brain_trauma/mild/concussion)
 
 		if(-4 to -2) // glancing blow at best
-			user.visible_message("<span class='warning'>[user] lands a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!</span>", "<span class='userdanger'>You land a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!</span>", target)
+			user.visible_message("<span class='warning'>[user] lands a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!</span>", "<span class='userdanger'>You land a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!</span>", ignored_mobs = target)
 			to_chat(target, "<span class='userdanger'>[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!</span>")
 
 			user.Knockdown(30)
@@ -182,7 +182,7 @@
 				addtimer(CALLBACK(T, /mob/living/carbon/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH * 2)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
-			user.visible_message("<span class='warning'>[user] lands a passable [tackle_word] on [target], sending them both tumbling!</span>", "<span class='userdanger'>You land a passable [tackle_word] on [target], sending you both tumbling!</span>", target)
+			user.visible_message("<span class='warning'>[user] lands a passable [tackle_word] on [target], sending them both tumbling!</span>", "<span class='userdanger'>You land a passable [tackle_word] on [target], sending you both tumbling!</span>", ignored_mobs = target)
 			to_chat(target, "<span class='userdanger'>[user] lands a passable [tackle_word] on you, sending you both tumbling!</span>")
 
 			target.adjustStaminaLoss(stamina_cost)
@@ -191,7 +191,7 @@
 			target.Knockdown(25)
 
 		if(1 to 2) // solid hit, tackler has a slight advantage
-			user.visible_message("<span class='warning'>[user] lands a solid [tackle_word] on [target], knocking them both down hard!</span>", "<span class='userdanger'>You land a solid [tackle_word] on [target], knocking you both down hard!</span>", target)
+			user.visible_message("<span class='warning'>[user] lands a solid [tackle_word] on [target], knocking them both down hard!</span>", "<span class='userdanger'>You land a solid [tackle_word] on [target], knocking you both down hard!</span>", ignored_mobs = target)
 			to_chat(target, "<span class='userdanger'>[user] lands a solid [tackle_word] on you, knocking you both down hard!</span>")
 
 			target.adjustStaminaLoss(30)
@@ -200,10 +200,11 @@
 			target.Knockdown(20)
 
 		if(3 to 4) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
-			user.visible_message("<span class='warning'>[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!</span>", "<span class='userdanger'>You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!</span>", target)
+			user.visible_message("<span class='warning'>[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!</span>", "<span class='userdanger'>You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!</span>", ignored_mobs = target)
 			to_chat(target, "<span class='userdanger'>[user] lands an expert [tackle_word] on you, knocking you down hard and maintaining a passive grab!</span>")
 
 			user.SetKnockdown(0)
+			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -213,10 +214,11 @@
 				S.setGrabState(GRAB_PASSIVE)
 
 		if(5 to INFINITY) // absolutely BODIED
-			user.visible_message("<span class='warning'>[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", target)
+			user.visible_message("<span class='warning'>[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", "<span class='userdanger'>You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!</span>", ignored_mobs = target)
 			to_chat(target, "<span class='userdanger'>[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!</span>")
 
 			user.SetKnockdown(0)
+			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -229,14 +231,14 @@
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 /**
-  * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
-  *
-  * The base roll is between (-3, 3), with negative numbers favoring the target, and positive numbers favoring the tackler. The target and the tackler are both assessed for
-  *	how easy they are to knock over, with clumsiness and dwarfiness being strong maluses for each, and gigantism giving a bonus for each. These numbers and ideas
-  *	are absolutely subject to change.
+ * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
+ *
+ * The base roll is between (-3, 3), with negative numbers favoring the target, and positive numbers favoring the tackler. The target and the tackler are both assessed for
+ * how easy they are to knock over, with clumsiness and dwarfiness being strong maluses for each, and gigantism giving a bonus for each. These numbers and ideas
+ * are absolutely subject to change.
 
-  * In addition, after subtracting the defender's mod and adding the attacker's mod to the roll, the component's base (skill) mod is added as well. Some sources of tackles
-  *	are better at taking people down, like the bruiser and rocket gloves, while the dolphin gloves have a malus in exchange for better mobility.
+ * In addition, after subtracting the defender's mod and adding the attacker's mod to the roll, the component's base (skill) mod is added as well. Some sources of tackles
+ * are better at taking people down, like the bruiser and rocket gloves, while the dolphin gloves have a malus in exchange for better mobility.
 */
 /datum/component/tackler/proc/rollTackle(mob/living/carbon/target)
 	var/defense_mod = 0
@@ -313,28 +315,28 @@
 
 
 /**
-  * This is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
-  *	the roll, the more severe the result.
-  *
-  * Mod 1: Speed-
-  *	* Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
-  *	* For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
-  *
-  * Mod 2: Misc-
-  *	-Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
-  *		wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
-  *	* Wearing a helmet: -6
-  *	* Wearing riot armor: -6
-  *	* Clumsy: +6
-  *
-  * Effects: Below are the outcomes based off your roll, in order of increasing severity
-  *
-  *	* 1-67: Knocked down for a few seconds and a bit of brute and stamina damage
-  *	* 68-85: Knocked silly, gain some confusion as well as the above
-  *	* 86-92: Cranial trauma, get a concussion and more confusion, plus more damage
-  *	* 93-96: Knocked unconscious, get a random mild brain trauma, as well as a fair amount of damage
-  *	* 97-98: Massive head damage, probably crack your skull open, random mild brain trauma
-  *	* 99-Infinity: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
+ * This is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
+ * the roll, the more severe the result.
+ *
+ * Mod 1: Speed-
+ * * Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
+ * * For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
+ *
+ * Mod 2: Misc-
+ * -Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
+ * wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
+ * * Wearing a helmet: -6
+ * * Wearing riot armor: -6
+ * * Clumsy: +6
+ *
+ * Effects: Below are the outcomes based off your roll, in order of increasing severity
+ *
+ * * 1-67: Knocked down for a few seconds and a bit of brute and stamina damage
+ * * 68-85: Knocked silly, gain some confusion as well as the above
+ * * 86-92: Cranial trauma, get a concussion and more confusion, plus more damage
+ * * 93-96: Knocked unconscious, get a random mild brain trauma, as well as a fair amount of damage
+ * * 97-98: Massive head damage, probably crack your skull open, random mild brain trauma
+ * * 99-Infinity: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
 */
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	if(istype(hit, /obj/machinery/vending)) // before we do anything else-
@@ -385,7 +387,7 @@
 			user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
-			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 4.5)
 
 		if(97 to 98)
@@ -401,7 +403,7 @@
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			user.emote("gurgle")
 			shake_camera(user, 7, 7)
-			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 4.5)
 
 		if(93 to 96)
@@ -410,9 +412,9 @@
 			user.adjustBruteLoss(30)
 			user.Unconscious(100)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			shake_camera(user, 6, 6)
-			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 3.5)
 
 		if(86 to 92)
@@ -422,10 +424,10 @@
 			user.add_confusion(15)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			user.Knockdown(40)
 			shake_camera(user, 5, 5)
-			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			user.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 2.5)
 
 		if(68 to 85)
@@ -461,7 +463,7 @@
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
 			shard.updateEmbedding()
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.embedding = list()
+			shard.embedding = null
 			shard.updateEmbedding()
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)

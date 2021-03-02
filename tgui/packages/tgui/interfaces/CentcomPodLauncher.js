@@ -3,9 +3,9 @@ import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
-import { Component } from 'inferno';
+import { Component, Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Divider, Flex, Fragment, Input, Knob, LabeledControls, NumberInput, Section } from '../components';
+import { Box, Button, ByondUi, Divider, Input, Knob, LabeledControls, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const pod_grey = {
@@ -22,13 +22,8 @@ export const CentcomPodLauncher = (props, context) => {
   const [compact] = useCompact(context);
   return (
     <Window
-      resizable
-      key={'CPL_' + compact}
-      title={compact
-        ? "Use against Helen Weinstein"
-        : "Supply Pod Menu (Use against Helen Weinstein)"}
-      overflow="hidden"
-      width={compact ? 435 : 730}
+      title="Supply Pod Menu (Use against Helen Weinstein)"
+      width={compact ? 460 : 730}
       height={compact ? 360 : 440}>
       <CentcomPodLauncherContent />
     </Window>
@@ -39,53 +34,53 @@ const CentcomPodLauncherContent = (props, context) => {
   const [compact] = useCompact(context);
   return (
     <Window.Content>
-      <Flex direction="column" height="100%">
-        <Flex.Item grow={0} shrink={0}>
+      <Stack fill vertical>
+        <Stack.Item shrink={0}>
           <PodStatusPage />
-        </Flex.Item>
-        <Flex.Item mt={1} grow={1}>
-          <Flex height="100%">
-            <Flex.Item grow={1} shrink={0} basis="14.1em">
-              <Flex direction="column" height="100%" >
-                <Flex.Item grow={1}>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Stack fill>
+            <Stack.Item grow shrink={0} basis="14.1em">
+              <Stack fill vertical>
+                <Stack.Item grow>
                   <PresetsPage />
-                </Flex.Item>
-                <Flex.Item mt={1} grow={0}>
+                </Stack.Item>
+                <Stack.Item>
                   <ReverseMenu />
-                </Flex.Item>
-                <Flex.Item mt={1}>
+                </Stack.Item>
+                <Stack.Item>
                   <Section>
                     <LaunchPage />
                   </Section>
-                </Flex.Item>
-              </Flex>
-            </Flex.Item>
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
             {!compact && (
-              <Flex.Item ml={1} grow={3}>
+              <Stack.Item grow={3}>
                 <ViewTabHolder />
-              </Flex.Item>
+              </Stack.Item>
             )}
-            <Flex.Item ml={1} basis="8em">
-              <Flex direction="column" height="100%">
-                <Flex.Item>
+            <Stack.Item basis="8em">
+              <Stack fill vertical>
+                <Stack.Item>
                   <Bays />
-                </Flex.Item>
-                <Flex.Item mt={1} grow={1}>
+                </Stack.Item>
+                <Stack.Item grow>
                   <Timing />
-                </Flex.Item>
+                </Stack.Item>
                 {!compact && (
-                  <Flex.Item mt={1}>
+                  <Stack.Item>
                     <Sounds />
-                  </Flex.Item>
+                  </Stack.Item>
                 )}
-              </Flex>
-            </Flex.Item>
-            <Flex.Item ml={1} basis="11em">
+              </Stack>
+            </Stack.Item>
+            <Stack.Item basis="11em">
               <StylePage />
-            </Flex.Item>
-          </Flex>
-        </Flex.Item>
-      </Flex>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
     </Window.Content>
   );
 };
@@ -137,21 +132,37 @@ const REVERSE_OPTIONS = [
   {
     title: 'Walls',
     icon: 'square',
-
   },
   {
     title: 'Mechs',
     key: 'Mecha',
     icon: 'truck',
-
   },
 ];
-
 
 const DELAYS = [
   {
     title: 'Pre',
     tooltip: 'Time until pod gets to station',
+  },
+  {
+    title: 'Fall',
+    tooltip: 'Duration of pods\nfalling animation',
+  },
+  {
+    title: 'Open',
+    tooltip: 'Time it takes pod to open after landing',
+  },
+  {
+    title: 'Exit',
+    tooltip: 'Time for pod to\nleave after opening',
+  },
+];
+
+const REV_DELAYS = [
+  {
+    title: 'Pre',
+    tooltip: 'Time until pod appears above dropoff point',
   },
   {
     title: 'Fall',
@@ -191,66 +202,28 @@ const SOUNDS = [
 ];
 
 const STYLES = [
-  {
-    title: 'Standard',
-  },
-  {
-    title: 'Advanced',
-  },
-  {
-    title: 'Nanotrasen',
-  },
-  {
-    title: 'Syndicate',
-  },
-  {
-    title: 'Deathsquad',
-  },
-  {
-    title: 'Cultist',
-  },
-  {
-    title: 'Missile',
-  },
-  {
-    title: 'Syndie Missile',
-  },
-  {
-    title: 'Supply Box',
-  },
-  {
-    title: 'Clown Pod',
-  },
-  {
-    title: 'Fruit',
-  },
-  {
-    title: 'Invisible',
-  },
-  {
-    title: 'Gondola',
-  },
-  {
-    title: 'Seethrough',
-  },
+  { title: 'Standard' },
+  { title: 'Advanced' },
+  { title: 'Nanotrasen' },
+  { title: 'Syndicate' },
+  { title: 'Deathsquad' },
+  { title: 'Cultist' },
+  { title: 'Missile' },
+  { title: 'Syndie Missile' },
+  { title: 'Supply Box' },
+  { title: 'Clown Pod' },
+  { title: 'Fruit' },
+  { title: 'Invisible' },
+  { title: 'Gondola' },
+  { title: 'Seethrough' },
 ];
 
 const BAYS = [
-  {
-    title: '1',
-  },
-  {
-    title: '2',
-  },
-  {
-    title: '3',
-  },
-  {
-    title: '4',
-  },
-  {
-    title: 'ERT',
-  },
+  { title: '1' },
+  { title: '2' },
+  { title: '3' },
+  { title: '4' },
+  { title: 'ERT' },
 ];
 
 const EFFECTS_LOAD = [
@@ -417,6 +390,7 @@ const EFFECTS_HARM =[
     act: 'effectOrgans',
   },
 ];
+
 const EFFECTS_ALL = [
   {
     list: EFFECTS_LOAD,
@@ -445,8 +419,8 @@ const ViewTabHolder = (props, context) => {
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
-    <Section title="View" fill buttons={(
-      <Fragment>
+    <Section fill title="View" buttons={(
+      <>
         {(!!data.customDropoff && data.effectReverse===1) && (
           <Button
             inline
@@ -503,24 +477,22 @@ const ViewTabHolder = (props, context) => {
             act('refreshView');
           }}
         />
-      </Fragment>
+      </>
     )}>
-      <Flex direction="column" height="100%">
-        <Flex.Item m={0.5}>
+      <Stack fill vertical>
+        <Stack.Item>
           <TabPageComponent />
-        </Flex.Item>
-        <Flex.Item m={0.5} grow={1}>
-          <Section fill>
-            <ByondUi
-              fillPositionedParent
-              params={{
-                zoom: 0,
-                id: mapRef,
-                type: 'map',
-              }} />
-          </Section>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+        <Stack.Item grow>
+          <ByondUi
+            height="100%"
+            params={{
+              zoom: 0,
+              id: mapRef,
+              type: 'map',
+            }} />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
@@ -535,11 +507,10 @@ const TabPod = (props, context) => {
   );
 };
 
-
 const TabBay = (props, context) => {
-  const { act, data, config } = useBackend(context);
+  const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         content="Teleport"
         icon="street-view"
@@ -549,15 +520,14 @@ const TabBay = (props, context) => {
         disabled={!data.oldArea}
         icon="undo-alt"
         onClick={() => act('teleportBack')} />
-    </Fragment>
+    </>
   );
 };
 
 const TabDrop = (props, context) => {
-  const { act, data, config } = useBackend(context);
-  const { mapRef } = data;
+  const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         content="Teleport"
         icon="street-view"
@@ -567,7 +537,7 @@ const TabDrop = (props, context) => {
         disabled={!data.oldArea}
         icon="undo-alt"
         onClick={() => act('teleportBack')} />
-    </Fragment>
+    </>
   );
 };
 
@@ -576,10 +546,10 @@ const PodStatusPage = (props, context) => {
   const [compact, toggleCompact] = useCompact(context);
   return (
     <Section fill width="100%">
-      <Flex>
+      <Stack>
         {EFFECTS_ALL.map((list, i) => (
           <Fragment key={i}>
-            <Flex.Item>
+            <Stack.Item>
               <Box bold color="label" mb={1}>
                 {(compact === 1 && list.alt_label)
                   ? list.alt_label
@@ -623,14 +593,12 @@ const PodStatusPage = (props, context) => {
                   </Fragment>
                 ))}
               </Box>
-            </Flex.Item>
-            {i < EFFECTS_ALL.length &&(
-              <Flex.Item>
-                <Divider vertical />
-              </Flex.Item>
+            </Stack.Item>
+            {i < EFFECTS_ALL.length && (
+              <Stack.Divider />
             )}
-            {i === EFFECTS_ALL.length-1 &&(
-              <Flex.Item>
+            {i === EFFECTS_ALL.length - 1 &&(
+              <Stack.Item>
                 <Box color="label" mb={1}>
                   <b>Extras:</b>
                 </Box>
@@ -674,11 +642,11 @@ const PodStatusPage = (props, context) => {
                       onClick={() => toggleCompact()} />
                   )}
                 </Box>
-              </Flex.Item>
+              </Stack.Item>
             )}
           </Fragment>
         ))}
-      </Flex>
+      </Stack>
     </Section>
   );
 };
@@ -714,8 +682,8 @@ const ReverseMenu = (props, context) => {
           }} />
       )}>
       {data.effectReverse === 1 && (
-        <Flex direction="column" height="100%">
-          <Flex.Item maxHeight="20px" >
+        <Stack fill vertical>
+          <Stack.Item maxHeight="20px">
             <Button
               content="Dropoff Turf"
               selected={data.picking_dropoff_turf}
@@ -744,9 +712,9 @@ const ReverseMenu = (props, context) => {
                   act('tabSwitch', { tabIndex: 1 });
                 }
               }} />
-          </Flex.Item>
-          <Divider horizontal />
-          <Flex.Item maxHeight="20px">
+          </Stack.Item>
+          <Stack.Divider />
+          <Stack.Item maxHeight="20px">
             {REVERSE_OPTIONS.map((option, i) => (
               <Button
                 key={i}
@@ -765,13 +733,12 @@ const ReverseMenu = (props, context) => {
                     ? option.key
                     : option.title })} />
             ))}
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       )}
     </Section>
   );
 };
-
 
 class PresetsPage extends Component {
   constructor() {
@@ -790,22 +757,24 @@ class PresetsPage extends Component {
   }
 
   saveDataToPreset(id, data) {
-    storage.set("podlauncher_preset_"+id, data);
+    storage.set("podlauncher_preset_" + id, data);
   }
 
   async loadDataFromPreset(id, context) {
-    const { act, data } = useBackend(context);
-    act('loadDataFromPreset', { payload: await storage.get("podlauncher_preset_"+id) });
+    const { act } = useBackend(this.context);
+    act("loadDataFromPreset", {
+      payload: await storage.get("podlauncher_preset_" + id),
+    });
   }
 
   newPreset(presetName, hue, data) {
     let { presets } = this.state;
-    if (!presets || presets === undefined) {
+    if (!presets) {
       presets = [];
       presets.push("hi!");
     }
-    let id = createUuid();
-    let thing = { id, title: presetName, hue };
+    const id = createUuid();
+    const thing = { id, title: presetName, hue };
     presets.push(thing);
     storage.set("podlauncher_presetlist", presets);
     this.saveDataToPreset(id, data);
@@ -846,7 +815,7 @@ class PresetsPage extends Component {
         fill
         title="Presets"
         buttons={(
-          <Fragment>
+          <>
             {settingName === 0 && (
               <Button
                 color="transparent"
@@ -869,8 +838,8 @@ class PresetsPage extends Component {
               content=""
               icon="upload"
               tooltip="Loads preset"
-              onClick={() => { // Line break to meet line length reqs
-                this.loadDataFromPreset(presetIndex, this.context);
+              onClick={() => {
+                this.loadDataFromPreset(presetIndex);
               }} />
             <Button
               inline
@@ -879,9 +848,10 @@ class PresetsPage extends Component {
               tooltip="Deletes the selected preset"
               tooltipPosition="bottom-left"
               onClick={() => this.deletePreset(presetIndex)} />
-          </Fragment>)}>
+          </>
+        )}>
         {settingName === 1 && (
-          <Fragment>
+          <>
             <Button
               inline
               icon="check"
@@ -916,7 +886,7 @@ class PresetsPage extends Component {
               placeholder="Preset Name"
               onChange={(e, value) => setText(value)} />
             <Divider horizontal />
-          </Fragment>
+          </>
         )}
         {(!presets || presets.length === 0) && (
           <span style={pod_grey}>
@@ -1029,7 +999,7 @@ const Bays = (props, context) => {
       fill
       title="Bay"
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="trash"
             color="transparent"
@@ -1052,7 +1022,7 @@ const Bays = (props, context) => {
               options at the top left.`}
             tooltipOverrideLong
             tooltipPosition="bottom-right" />
-        </Fragment>
+        </>
       )}>
       {BAYS.map((bay, i) => (
         <Button
@@ -1068,47 +1038,86 @@ const Bays = (props, context) => {
 
 const Timing = (props, context) => {
   const { act, data } = useBackend(context);
-
   return (
     <Section
       fill
-      title="Delay"
+      title="Time"
       buttons={(
-        <Button
-          icon="undo"
-          color="transparent"
-          tooltip={multiline`
+        <>
+          <Button
+            icon="undo"
+            color="transparent"
+            tooltip={multiline`
             Reset all pod
             timings/delays`}
-          tooltipOverrideLong
-          tooltipPosition="bottom-right"
-          onClick={() => act('resetTiming')} />
+            tooltipOverrideLong
+            tooltipPosition="bottom-right"
+            onClick={() => act('resetTiming')} />
+          <Button
+            icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
+            selected={data.custom_rev_delay}
+            disabled={!data.effectReverse}
+            color="transparent"
+            tooltip={multiline`
+            Toggle Reverse Delays
+            Note: Top set is
+            normal delays, bottom set
+            is reversing pod's delays`}
+            tooltipOverrideLong
+            tooltipPosition="bottom-right"
+            onClick={() => act('toggleRevDelays')} />
+        </>
       )}>
-      <LabeledControls wrap>
-        {DELAYS.map((delay, i) => (
-          <LabeledControls.Item
-            key={i}
-            label={delay.title}>
-            <Knob
-              inline
-              step={0.02}
-              value={data["delay_"+(i+1)]/10}
-              unclamped
-              minValue={0}
-              unit={"s"}
-              format={value => toFixed(value, 2)}
-              maxValue={10}
-              color={(data["delay_"+(i+1)]/10) > 10 ? "orange" : "default"}
-              onDrag={(e, value) => {
-                act('editTiming', {
-                  timer: i + 1,
-                  value: Math.max(value, 0),
-                });
-              }} />
-          </LabeledControls.Item>
-        ))}
-      </LabeledControls>
+      <DelayHelper
+        delay_list={DELAYS}
+      />
+      {data.custom_rev_delay && (
+        <>
+          <Divider horizontal />
+          <DelayHelper
+            delay_list={REV_DELAYS}
+            reverse
+          />
+        </>
+      )||""}
     </Section>
+  );
+};
+
+const DelayHelper = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    delay_list,
+    reverse = false,
+  } = props;
+  return (
+    <LabeledControls wrap>
+      {delay_list.map((delay, i) => (
+        <LabeledControls.Item
+          key={i}
+          label={data.custom_rev_delay ? "" : delay.title}>
+          <Knob
+            inline
+            step={0.02}
+            size={data.custom_rev_delay ? 0.75 : 1}
+            value={(reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10}
+            unclamped
+            minValue={0}
+            unit={"s"}
+            format={value => toFixed(value, 2)}
+            maxValue={10}
+            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10)
+              > 10 ? "orange" : "default"}
+            onDrag={(e, value) => {
+              act('editTiming', {
+                timer: ""+(i + 1),
+                value: Math.max(value, 0),
+                reverse: reverse,
+              });
+            }} />
+        </LabeledControls.Item>
+      ))}
+    </LabeledControls>
   );
 };
 

@@ -6,6 +6,8 @@
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 	var/beauty = 0
+	///The type of cleaning required to clean the decal, CLEAN_TYPE_LIGHT_DECAL can be cleaned with mops and soap, CLEAN_TYPE_HARD_DECAL can be cleaned by soap, see __DEFINES/cleaning.dm for the others
+	var/clean_type = CLEAN_TYPE_LIGHT_DECAL
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -26,7 +28,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty))
+	AddElement(/datum/element/beauty, beauty)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -85,12 +87,14 @@
 	..()
 	if(iscarbon(AM) && blood_state && bloodiness > 0)
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
-		update_icon()
+		update_appearance()
 
 /obj/effect/decal/cleanable/wash(clean_types)
-	..()
-	qdel(src)
-	return TRUE
+	. = ..()
+	if (. || (clean_types & clean_type))
+		qdel(src)
+		return TRUE
+	return .
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

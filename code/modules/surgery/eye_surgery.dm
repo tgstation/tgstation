@@ -1,7 +1,7 @@
 /datum/surgery/eye_surgery
 	name = "Eye surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	requires_bodypart_type = 0
 
@@ -32,7 +32,7 @@
 	target.cure_blind(list(EYE_DAMAGE))
 	target.set_blindness(0)
 	target.cure_nearsighted(list(EYE_DAMAGE))
-	target.blur_eyes(35)	//this will fix itself slowly.
+	target.blur_eyes(35) //this will fix itself slowly.
 	E.setOrganDamage(0)
 	return ..()
 

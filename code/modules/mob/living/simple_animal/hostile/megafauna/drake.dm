@@ -9,31 +9,30 @@
 ///used whenever the drake generates a hotspot
 #define DRAKE_FIRE_EXPOSURE 50
 
-/*
-
-ASH DRAKE
-
-Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
-
-It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
-
-Whenever possible, the drake will breathe fire directly at it's target, igniting and heavily damaging anything caught in the blast.
-It also often causes lava to pool from the ground around you - many nearby turfs will temporarily turn into lava, dealing damage to anything on the turfs.
-The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
- - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
- - Sometimes, it will encase its target in an arena of lava
-
-When an ash drake dies, it leaves behind a chest that can contain four things:
- 1. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
- 2. A lava staff that allows its wielder to create lava
- 3. A spellbook and wand of fireballs
- 4. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
-
-When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
-
-Difficulty: Medium
-
-*/
+/*£
+ *
+ *ASH DRAKE
+ *
+ *Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
+ *
+ *It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+ *
+ *Whenever possible, the drake will breathe fire directly at it's target, igniting and heavily damaging anything caught in the blast.
+ *It also often causes lava to pool from the ground around you - many nearby turfs will temporarily turn into lava, dealing damage to anything on the turfs.
+ *The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
+ *Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
+ *Sometimes, it will encase its target in an arena of lava
+ *
+ *When an ash drake dies, it leaves behind a chest that can contain four things:
+ *A. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
+ *B. A lava staff that allows its wielder to create lava
+ *C. A spellbook and wand of fireballs
+ *D. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
+ *
+ *When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
+ *
+ *Intended Difficulty: Medium
+ */
 
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
@@ -58,6 +57,7 @@ Difficulty: Medium
 	move_to_delay = 5
 	ranged = TRUE
 	pixel_x = -16
+	base_pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
@@ -207,21 +207,27 @@ Difficulty: Medium
 	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)
+	var/list/mobs_with_clients = list()
 	while(amount > 0)
 		var/list/empty = indestructible_turfs.Copy() // can't place safe turfs on turfs that weren't changed to be open
-		var/any_attack = 0
+		var/any_attack = FALSE
 		for(var/turf/T in turfs)
 			for(var/mob/living/L in T.contents)
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
-					any_attack = 1
+					any_attack = TRUE
+					mobs_with_clients |= L
 			for(var/obj/vehicle/sealed/mecha/M in T.contents)
 				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
-				any_attack = 1
-		if(!any_attack)
+				any_attack = TRUE
+		if(!any_attack) // nothing to attack in the arena, time for enraged attack if we still have a cliented target.
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
 				qdel(D)
-			return FALSE // nothing to attack in the arena time for enraged attack if we still have a target
+			for(var/a in mobs_with_clients)
+				var/mob/living/L = a
+				if(!QDELETED(L) && L.client)
+					return FALSE
+			return TRUE
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -238,12 +244,12 @@ Difficulty: Medium
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
-	light_range = 10
+	set_light_range(10)
 	SLEEP_CHECK_DEATH(10) // run.
 	mass_fire(20, 15, 3)
 	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	light_range = initial(light_range)
+	set_light_range(initial(light_range))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
@@ -270,19 +276,26 @@ Difficulty: Medium
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(atom/source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
-		new /obj/effect/hotspot(T)
+		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
+		if(frozen)
+			drake_fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY)
 		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
 			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
-			L.adjustFireLoss(20)
-			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+			if(!frozen)
+				L.adjustFireLoss(20)
+				to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+				continue
+			L.adjustFireLoss(10)
+			L.apply_status_effect(/datum/status_effect/ice_block_talisman, 20)
+			to_chat(L, "<span class='userdanger'>You're hit by [source]'s freezing breath!</span>")
 
 		// deals damage to mechs
 		for(var/obj/vehicle/sealed/mecha/M in T.contents)
@@ -422,9 +435,6 @@ Difficulty: Medium
 	light_range = 2
 	duration = 13
 
-/obj/effect/temp_visual/lava_warning/ex_act()
-	return
-
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, reset_time = 10)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fall, reset_time)
@@ -540,9 +550,6 @@ Difficulty: Medium
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 9
-
-/obj/effect/temp_visual/target/ex_act()
-	return
 
 /obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
 	. = ..()

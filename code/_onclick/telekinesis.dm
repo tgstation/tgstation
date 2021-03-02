@@ -4,57 +4,74 @@
 	This needs more thinking out, but I might as well.
 */
 
-/*
-	Telekinetic attack:
-
-	By default, emulate the user's unarmed attack
-*/
-
 #define TK_MAXRANGE 15
 
+
+/**
+ * Telekinesis attack act, happens when the TK user clicks on a non-adjacent target in range.
+ *
+ * * By default, emulates the user's unarmed attack.
+ * * Called indirectly by the `COMSIG_MOB_ATTACK_RANGED` signal.
+ * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
+ */
 /atom/proc/attack_tk(mob/user)
 	if(user.stat || !tkMaxRangeCheck(user, src))
 		return
 	new /obj/effect/temp_visual/telekinesis(get_turf(src))
-	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	add_hiddenprint(user)
-	return
+	user.UnarmedAttack(src, FALSE) // attack_hand, attack_paw, etc
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/attack_tk(mob/user)
 	if(user.stat)
 		return
 	if(anchored)
 		return ..()
-	attack_tk_grab(user)
+	return attack_tk_grab(user)
+
 
 /obj/item/attack_tk(mob/user)
 	if(user.stat)
 		return
-	attack_tk_grab(user)
+	return attack_tk_grab(user)
 
+
+/**
+ * Telekinesis object grab act.
+ *
+ * * Called by `/obj/attack_tk()`.
+ * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
+ */
 /obj/proc/attack_tk_grab(mob/user)
 	var/obj/item/tk_grab/O = new(src)
 	O.tk_user = user
-	if(O.focus_object(src))
-		user.put_in_active_hand(O)
-		add_hiddenprint(user)
+	if(!O.focus_object(src))
+		return
+	user.put_in_active_hand(O)
+	add_hiddenprint(user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /mob/attack_tk(mob/user)
 	return
 
-/*
-	This is similar to item attack_self, but applies to anything
-	that you can grab with a telekinetic grab.
 
-	It is used for manipulating things at range, for example, opening and closing closets.
-	There are not a lot of defaults at this time, add more where appropriate.
-*/
-
+/**
+ * Telekinesis item attack_self act.
+ *
+ * * This is similar to item attack_self, but applies to anything that you can grab with a telekinetic grab.
+ * * It is used for manipulating things at range, for example, opening and closing closets..
+ * * Defined at the `/atom` level but only used at the `/obj/item` one.
+ * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
+ */
 /atom/proc/attack_self_tk(mob/user)
 	return
 
+
 /obj/item/attack_self_tk(mob/user)
-	attack_self(user)
+	if(attack_self(user))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 /*
@@ -76,6 +93,7 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
+	///Object focused / selected by the TK user
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
 
@@ -91,7 +109,7 @@
 
 /obj/item/tk_grab/process()
 	if(check_if_focusable(focus)) //if somebody grabs your thing, no waiting for them to put it down and hitting them again.
-		update_icon()
+		update_appearance()
 
 /obj/item/tk_grab/dropped(mob/user)
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
@@ -112,43 +130,53 @@
 	else
 		return ..()
 
+
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
 		return
-	if(QDELETED(focus))
+	if(QDELING(focus))
 		qdel(src)
 		return
-	focus.attack_self_tk(user)
-	update_icon()
+	if(focus.attack_self_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		. = TRUE
+	update_appearance()
+
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	. = ..()
+	if(.)
+		return
+
 	if(!target || !user)
 		return
 
 	if(!focus)
 		focus_object(target)
-		return
-	else if(!check_if_focusable(focus))
+		return TRUE
+
+	if(!check_if_focusable(focus))
 		return
 
 	if(target == focus)
-		target.attack_self_tk(user)
-		update_icon()
+		if(target.attack_self_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+			. = TRUE
+		update_appearance()
 		return
-
 
 	if(!isturf(target) && isitem(focus) && target.Adjacent(focus))
 		apply_focus_overlay()
 		var/obj/item/I = focus
-		I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
+		. = I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
 		if(check_if_focusable(focus))
 			focus.do_attack_animation(target, null, focus)
 	else
+		. = TRUE
 		apply_focus_overlay()
-		focus.throw_at(target, 10, 1,user)
+		//Only items can be thrown 10 tiles everything else only 1 tile
+		focus.throw_at(target, focus.tk_throw_range, 1,user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	update_icon()
+	update_appearance()
+
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
@@ -164,7 +192,7 @@
 	if(!check_if_focusable(target))
 		return
 	focus = target
-	update_icon()
+	update_appearance()
 	apply_focus_overlay()
 	return TRUE
 

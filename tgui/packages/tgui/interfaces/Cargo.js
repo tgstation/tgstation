@@ -1,11 +1,22 @@
 import { toArray } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 export const Cargo = (props, context) => {
+  return (
+    <Window
+      width={780}
+      height={750}>
+      <Window.Content scrollable>
+        <CargoContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const CargoContent = (props, context) => {
   const { act, data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
   const {
@@ -14,53 +25,48 @@ export const Cargo = (props, context) => {
   const cart = data.cart || [];
   const requests = data.requests || [];
   return (
-    <Window
-      width={780}
-      height={750}
-      resizable>
-      <Window.Content scrollable>
-        <CargoStatus />
-        <Section fitted>
-          <Tabs>
+    <Box>
+      <CargoStatus />
+      <Section fitted>
+        <Tabs>
+          <Tabs.Tab
+            icon="list"
+            selected={tab === 'catalog'}
+            onClick={() => setTab('catalog')}>
+            Catalog
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="envelope"
+            textColor={tab !== 'requests'
+              && requests.length > 0
+              && 'yellow'}
+            selected={tab === 'requests'}
+            onClick={() => setTab('requests')}>
+            Requests ({requests.length})
+          </Tabs.Tab>
+          {!requestonly && (
             <Tabs.Tab
-              icon="list"
-              selected={tab === 'catalog'}
-              onClick={() => setTab('catalog')}>
-              Catalog
-            </Tabs.Tab>
-            <Tabs.Tab
-              icon="envelope"
-              textColor={tab !== 'requests'
-                && requests.length > 0
+              icon="shopping-cart"
+              textColor={tab !== 'cart'
+                && cart.length > 0
                 && 'yellow'}
-              selected={tab === 'requests'}
-              onClick={() => setTab('requests')}>
-              Requests ({requests.length})
+              selected={tab === 'cart'}
+              onClick={() => setTab('cart')}>
+              Checkout ({cart.length})
             </Tabs.Tab>
-            {!requestonly && (
-              <Tabs.Tab
-                icon="shopping-cart"
-                textColor={tab !== 'cart'
-                  && cart.length > 0
-                  && 'yellow'}
-                selected={tab === 'cart'}
-                onClick={() => setTab('cart')}>
-                Checkout ({cart.length})
-              </Tabs.Tab>
-            )}
-          </Tabs>
-        </Section>
-        {tab === 'catalog' && (
-          <CargoCatalog />
-        )}
-        {tab === 'requests' && (
-          <CargoRequests />
-        )}
-        {tab === 'cart' && (
-          <CargoCart />
-        )}
-      </Window.Content>
-    </Window>
+          )}
+        </Tabs>
+      </Section>
+      {tab === 'catalog' && (
+        <CargoCatalog />
+      )}
+      {tab === 'requests' && (
+        <CargoRequests />
+      )}
+      {tab === 'cart' && (
+        <CargoCart />
+      )}
+    </Box>
   );
 };
 
@@ -75,6 +81,7 @@ const CargoStatus = (props, context) => {
     message,
     points,
     requestonly,
+    can_send,
   } = data;
   return (
     <Section
@@ -89,7 +96,7 @@ const CargoStatus = (props, context) => {
       )}>
       <LabeledList>
         <LabeledList.Item label="Shuttle">
-          {docked && !requestonly && (
+          {docked && !requestonly && can_send &&(
             <Button
               content={location}
               onClick={() => act('send')} />
@@ -122,6 +129,7 @@ export const CargoCatalog = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     self_paid,
+    app_cost,
   } = data;
   const supplies = toArray(data.supplies);
   const [
@@ -135,14 +143,14 @@ export const CargoCatalog = (props, context) => {
     <Section
       title="Catalog"
       buttons={!express && (
-        <Fragment>
+        <>
           <CargoCartButtons />
           <Button.Checkbox
             ml={2}
             content="Buy Privately"
             checked={self_paid}
             onClick={() => act('toggleprivate')} />
-        </Fragment>
+        </>
       )}>
       <Flex>
         <Flex.Item ml={-1} mr={1}>
@@ -190,7 +198,7 @@ export const CargoCatalog = (props, context) => {
                       onClick={() => act('add', {
                         id: pack.id,
                       })}>
-                      {formatMoney(self_paid && !pack.goody
+                      {formatMoney((self_paid && !pack.goody) || app_cost
                         ? Math.round(pack.cost * 1.1)
                         : pack.cost)}
                       {' cr'}
@@ -210,6 +218,8 @@ const CargoRequests = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     requestonly,
+    can_send,
+    can_approve_requests,
   } = data;
   const requests = data.requests || [];
   // Labeled list reimplementation to squeeze extra columns out of it
@@ -249,7 +259,7 @@ const CargoRequests = (props, context) => {
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
-              {!requestonly && (
+              {(!requestonly || can_send)&& can_approve_requests &&(
                 <Table.Cell collapsing>
                   <Button
                     icon="check"
@@ -277,14 +287,16 @@ const CargoCartButtons = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     requestonly,
+    can_send,
+    can_approve_requests,
   } = data;
   const cart = data.cart || [];
   const total = cart.reduce((total, entry) => total + entry.cost, 0);
-  if (requestonly) {
+  if (requestonly || !can_send || !can_approve_requests) {
     return null;
   }
   return (
-    <Fragment>
+    <>
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
         {cart.length === 1 && '1 item'}
@@ -297,7 +309,7 @@ const CargoCartButtons = (props, context) => {
         color="transparent"
         content="Clear"
         onClick={() => act('clear')} />
-    </Fragment>
+    </>
   );
 };
 
@@ -308,6 +320,7 @@ const CargoCart = (props, context) => {
     away,
     docked,
     location,
+    can_send,
   } = data;
   const cart = data.cart || [];
   return (
@@ -342,11 +355,13 @@ const CargoCart = (props, context) => {
                 {formatMoney(entry.cost)} cr
               </Table.Cell>
               <Table.Cell collapsing>
-                <Button
-                  icon="minus"
-                  onClick={() => act('remove', {
-                    id: entry.id,
-                  })} />
+                {can_send &&(
+                  <Button
+                    icon="minus"
+                    onClick={() => act('remove', {
+                      id: entry.id,
+                    })} />
+                )}
               </Table.Cell>
             </Table.Row>
           ))}

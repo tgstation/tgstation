@@ -83,8 +83,7 @@
 		standard_outfit_options = list()
 		for(var/path in subtypesof(/datum/outfit/job))
 			var/datum/outfit/O = path
-			if(initial(O.can_be_admin_equipped))
-				standard_outfit_options[initial(O.name)] = path
+			standard_outfit_options[initial(O.name)] = path
 		sortTim(standard_outfit_options, /proc/cmp_text_asc)
 	outfit_options = standard_outfit_options
 
@@ -258,31 +257,96 @@
 
 /datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
 	..()
-	var/obj/item/card/id/syndicate/agent_card = target
+	var/obj/item/card/id/advanced/chameleon/agent_card = target
 	if(istype(agent_card))
 		var/obj/item/card/id/copied_card = picked_item
-		agent_card.uses_overlays = initial(copied_card.uses_overlays)
-		agent_card.id_type_name = initial(copied_card.id_type_name)
+
+		// If the outfit comes with a special trim override, we'll steal some stuff from that.
+		var/new_trim = initial(copied_card.trim)
+
+		if(new_trim)
+			SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, TRUE)
+
+		// If the ID card hasn't been forged, we'll check if there has been an assignment set already by any new trim.
+		// If there has not, we set the assignment to the copied card's default as well as copying over the the
+		// default registered name from the copied card.
 		if(!agent_card.forged)
+			if(!agent_card.assignment)
+				agent_card.assignment = initial(copied_card.assignment)
+
 			agent_card.registered_name = initial(copied_card.registered_name)
-			agent_card.assignment = initial(copied_card.assignment)
+
+		agent_card.icon_state = initial(copied_card.icon_state)
+		if(ispath(copied_card, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/copied_advanced_card = copied_card
+			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
+
 		agent_card.update_label()
-		if(!agent_card.forged)
-			agent_card.name = initial(copied_card.name) //e.g. captain's spare ID, not Captain's ID Card (Captain)
+		agent_card.update_icon()
 
 /datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
 	..()
-	var/obj/item/card/id/syndicate/agent_card = target
+	var/obj/item/card/id/advanced/chameleon/agent_card = target
 	if(istype(agent_card) && istype(job_datum))
 		agent_card.forged = TRUE
-		agent_card.assignment = job_datum.title
+
+		// job_outfit is going to be a path.
+		var/datum/outfit/job/job_outfit = job_datum.outfit
+		if(!job_outfit)
+			return
+
+		// copied_card is also going to be a path.
+		var/obj/item/card/id/copied_card = initial(job_outfit.id)
+		if(!copied_card)
+			return
+
+		// If the outfit comes with a special trim override, we'll use that. Otherwise, use the card's default trim. Failing that, no trim at all.
+		var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.trim)
+
+		if(new_trim)
+			SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, FALSE)
+		else
+			agent_card.assignment = job_datum.title
+
+		agent_card.icon_state = initial(copied_card.icon_state)
+		if(ispath(copied_card, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/copied_advanced_card = copied_card
+			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
+
+		agent_card.update_label()
+		agent_card.update_icon()
+
+/datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
+	if(button)
+		button.name = "Change [chameleon_name] Appearance"
+
+	chameleon_blacklist |= typecacheof(target.type)
+	for(var/trim_path in typesof(chameleon_type))
+		if(ispath(trim_path) && ispath(trim_path, /datum/id_trim))
+			if(chameleon_blacklist[trim_path])
+				continue
+
+			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+
+			if(trim && trim.trim_state && trim.assignment)
+				var/chameleon_item_name = "[trim.assignment] ([trim.trim_state])"
+				chameleon_list[chameleon_item_name] = trim_path
+
+/datum/action/item_action/chameleon/change/id_trim/update_item(picked_trim_path)
+	var/obj/item/card/id/advanced/chameleon/agent_card = target
+
+	if(istype(agent_card))
+		SSid_access.apply_trim_to_chameleon_card(agent_card, picked_trim_path, TRUE)
+
+	agent_card.update_label()
+	agent_card.update_icon()
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
 	..()
 	var/obj/item/pda/agent_pda = target
 	if(istype(agent_pda))
 		agent_pda.update_label()
-		agent_pda.update_icon()
+		agent_pda.update_appearance()
 
 /datum/action/item_action/chameleon/change/pda/apply_job_data(datum/job/job_datum)
 	..()
@@ -462,10 +526,11 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
@@ -660,6 +725,7 @@
 	icon_state = "blacktie"
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -839,11 +905,11 @@
 		STOP_PROCESSING(SSfastprocess, src)
 		return
 
-	button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"
+	button.maptext = MAPTEXT("<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>")
 
 /**
-  * Clears the currently mimic'd skillchip, if any exists.
-  */
+ * Clears the currently mimic'd skillchip, if any exists.
+ */
 /datum/action/item_action/chameleon/change/skillchip/proc/clear_mimic_chip()
 	if(skillchip_mimic)
 		skillchip_mimic.on_removal(FALSE)

@@ -24,7 +24,7 @@
 	C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
 
 /datum/antagonist/obsessed/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/policy = get_policy(ROLE_OBSESSED)
 	if(policy)
 		to_chat(policy)
@@ -96,7 +96,7 @@
 		O.update_explanation_text()
 
 /datum/antagonist/obsessed/roundend_report_header()
-	return 	"<span class='header'>Someone became obsessed!</span><br>"
+	return "<span class='header'>Someone became obsessed!</span><br>"
 
 /datum/antagonist/obsessed/roundend_report()
 	var/list/report = list()
@@ -136,7 +136,7 @@
 
 /datum/objective/assassinate/obsessed/update_explanation_text()
 	..()
-	if(target && target.current)
+	if(target?.current)
 		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
@@ -148,7 +148,7 @@
 /datum/objective/assassinate/jealous/update_explanation_text()
 	..()
 	old = find_coworker(target)
-	if(target && target.current && old)
+	if(target?.current && old)
 		explanation_text = "Murder [target.name], [old]'s coworker."
 	else
 		explanation_text = "Free Objective"
@@ -210,7 +210,7 @@
 	if(timer == initial(timer))//just so admins can mess with it
 		timer += pick(-600, 0)
 	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
-	if(target && target.current && creeper)
+	if(target?.current && creeper)
 		creeper.trauma.attachedobsessedobj = src
 		explanation_text = "Spend [DisplayTimeText(timer)] around [target.name] while they're alive."
 	else
@@ -229,7 +229,7 @@
 	if(!hugs_needed)//just so admins can mess with it
 		hugs_needed = rand(4,6)
 	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
-	if(target && target.current && creeper)
+	if(target?.current && creeper)
 		explanation_text = "Hug [target.name] [hugs_needed] times while they're alive."
 	else
 		explanation_text = "Free Objective"
@@ -245,7 +245,7 @@
 
 /datum/objective/polaroid/update_explanation_text()
 	..()
-	if(target && target.current)
+	if(target?.current)
 		explanation_text = "Take a photo of [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
@@ -255,7 +255,7 @@
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/photo))
 				var/obj/item/photo/P = I

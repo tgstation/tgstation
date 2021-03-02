@@ -9,7 +9,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = 75
+	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
@@ -162,11 +162,7 @@
 	name = "chief engineer's envirogloves"
 	icon_state = "ceplasma"
 	inhand_icon_state = "ceplasma"
-
-/obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
-	name = "chief medical officer's envirogloves"
-	icon_state = "cmoplasma"
-	inhand_icon_state = "cmoplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/research_director
 	name = "research director's envirogloves"

@@ -22,19 +22,16 @@
 		circuit = null
 		if((state != GLASS_CORE) && (state != AI_READY_CORE))
 			state = EMPTY_CORE
-			update_icon()
+			update_appearance()
 	if(A == brain)
 		brain = null
-	. = ..()
+	return ..()
 
 
 /obj/structure/ai_core/Destroy()
-	if(circuit)
-		qdel(circuit)
-		circuit = null
-	if(brain)
-		qdel(brain)
-		brain = null
+	QDEL_NULL(circuit)
+	QDEL_NULL(brain)
+	QDEL_NULL(laws)
 	return ..()
 
 /obj/structure/ai_core/deactivated
@@ -72,7 +69,7 @@
 	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
 	. += "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>"
 
-/obj/structure/ai_core/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
+/obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
 		return FALSE
 	if(!safety_checks)
@@ -123,7 +120,7 @@
 						return
 					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
-					update_icon()
+					update_appearance()
 					state = CIRCUIT_CORE
 					circuit = P
 					return
@@ -132,13 +129,13 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 					state = SCREWED_CORE
-					update_icon()
+					update_appearance()
 					return
 				if(P.tool_behaviour == TOOL_CROWBAR)
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 					state = EMPTY_CORE
-					update_icon()
+					update_appearance()
 					circuit.forceMove(loc)
 					circuit = null
 					return
@@ -147,7 +144,7 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 					state = CIRCUIT_CORE
-					update_icon()
+					update_appearance()
 					return
 				if(istype(P, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = P
@@ -157,7 +154,7 @@
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							state = CABLED_CORE
-							update_icon()
+							update_appearance()
 					else
 						to_chat(user, "<span class='warning'>You need five lengths of cable to wire the AI core!</span>")
 					return
@@ -169,7 +166,7 @@
 						P.play_tool_sound(src)
 						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						state = SCREWED_CORE
-						update_icon()
+						update_appearance()
 						new /obj/item/stack/cable_coil(drop_location(), 5)
 					return
 
@@ -181,7 +178,7 @@
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
 							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 							state = GLASS_CORE
-							update_icon()
+							update_appearance()
 					else
 						to_chat(user, "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>")
 					return
@@ -209,7 +206,7 @@
 
 					brain = M
 					to_chat(user, "<span class='notice'>You add [M.name] to the frame.</span>")
-					update_icon()
+					update_appearance()
 					return
 
 				if(P.tool_behaviour == TOOL_CROWBAR && brain)
@@ -217,7 +214,7 @@
 					to_chat(user, "<span class='notice'>You remove the brain.</span>")
 					brain.forceMove(loc)
 					brain = null
-					update_icon()
+					update_appearance()
 					return
 
 			if(GLASS_CORE)
@@ -225,7 +222,7 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 					state = CABLED_CORE
-					update_icon()
+					update_appearance()
 					new /obj/item/stack/sheet/rglass(loc, 2)
 					return
 
@@ -240,8 +237,10 @@
 
 						if (brain.overrides_aicore_laws)
 							A = new /mob/living/silicon/ai(loc, brain.laws, B)
+							brain.laws = null //Brain's law datum is being donated, so we need the brain to let it go or the GC will eat it
 						else
 							A = new /mob/living/silicon/ai(loc, laws, B)
+							laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
@@ -250,7 +249,7 @@
 						qdel(src)
 					else
 						state = AI_READY_CORE
-						update_icon()
+						update_appearance()
 					return
 
 			if(AI_READY_CORE)
@@ -261,7 +260,7 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 					state = GLASS_CORE
-					update_icon()
+					update_appearance()
 					return
 	return ..()
 
@@ -282,6 +281,7 @@
 			icon_state = "4"
 		if(AI_READY_CORE)
 			icon_state = "ai-empty"
+	return ..()
 
 /obj/structure/ai_core/deconstruct(disassembled = TRUE)
 	if(state == GLASS_CORE)
@@ -312,7 +312,7 @@ That prevents a few funky behaviors.
 /obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
- //Transferring a carded AI to a core.
+	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = FALSE
 		AI.radio_enabled = TRUE

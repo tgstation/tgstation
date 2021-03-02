@@ -19,7 +19,7 @@
 		var/burnt_out = FALSE
 
 		if(L.pulling && isliving(L.pulling))
-			var/mob/living/M =	L.pulling
+			var/mob/living/M = L.pulling
 			if(LAZYLEN(M.mob_spell_list) || (LAZYLEN(M.mind?.spell_list)))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 					S.charge_counter = S.charge_max
@@ -67,12 +67,11 @@
 				break
 			else if(istype(item, /obj/item/stock_parts/cell))
 				var/obj/item/stock_parts/cell/C = item
-				if(!C.self_recharge)
-					if(prob(80))
-						C.maxcharge -= 200
-					if(C.maxcharge <= 1) //Div by 0 protection
-						C.maxcharge = 1
-						burnt_out = TRUE
+				if(prob(80))
+					C.maxcharge -= 200
+				if(C.maxcharge <= 1) //Div by 0 protection
+					C.maxcharge = 1
+					burnt_out = TRUE
 				C.charge = C.maxcharge
 				charged_item = C
 				break
@@ -81,17 +80,16 @@
 				for(I in item.contents)
 					if(istype(I, /obj/item/stock_parts/cell/))
 						var/obj/item/stock_parts/cell/C = I
-						if(!C.self_recharge)
-							if(prob(80))
-								C.maxcharge -= 200
-							if(C.maxcharge <= 1) //Div by 0 protection
-								C.maxcharge = 1
-								burnt_out = TRUE
+						if(prob(80))
+							C.maxcharge -= 200
+						if(C.maxcharge <= 1) //Div by 0 protection
+							C.maxcharge = 1
+							burnt_out = TRUE
 						C.charge = C.maxcharge
 						if(istype(C.loc, /obj/item/gun))
 							var/obj/item/gun/G = C.loc
 							G.process_chamber()
-						item.update_icon()
+						item.update_appearance()
 						charged_item = item
 						break
 		if(!charged_item)

@@ -8,7 +8,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/food/meat/slab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -60,7 +60,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
 	if(length(nummies))
 		var/obj/item/E = pick(nummies)
-		if(!(E.custom_materials && E.custom_materials[SSmaterials.GetMaterialRef(/datum/material/plastic)]))
+		if(!E.has_material_type(/datum/material/plastic))
 			nummies -= E // remove non-plastic item from queue
 			E = locate(/obj/item/reagent_containers/food) in nummies // find food
 		if(E && E.loc == loc)
@@ -70,7 +70,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/suffocator)
 	if(stat == DEAD || choking) // plapatin I swear to god
 		return FALSE
-	if(suffocator.custom_materials && suffocator.custom_materials[SSmaterials.GetMaterialRef(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
+	if(suffocator.has_material_type(/datum/material/plastic)) // dumb goose'll swallow food or drink with plastic in it
 		visible_message("<span class='danger'>[src] hungrily gobbles up \the [suffocator]! </span>")
 		visible_message("<span class='boldwarning'>[src] is choking on \the [suffocator]! </span>")
 		suffocator.forceMove(src)
@@ -103,7 +103,7 @@
 	// 5% chance every round to have anarchy mode deadchat control on birdboat.
 	if(prob(5))
 		desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
-		deadchat_plays_goose()
+		deadchat_plays()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
@@ -156,17 +156,17 @@
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/Life()
+/mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(choking && !stat)
 		do_jitter_animation(50)
-		if(prob(20))
+		if(DT_PROB(10, delta_time))
 			emote("gasp")
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
 	if(!choking)
 		return
-	deathmessage = "lets out one final oxygen-deprived honk before they go limp and lifeless.."
+	deathmessage = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
 	death()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
@@ -233,14 +233,16 @@
 		vomitTimeBonus = 0
 
 /// A proc to make it easier for admins to make the goose playable by deadchat.
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
+		"vomit" = CALLBACK(src, .proc/vomit_prestart, 25),
+		"honk" = CALLBACK(src, /atom/movable.proc/say, "HONK!!!"),
+		"spin" = CALLBACK(src, /mob.proc/emote, "spin")), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
 	stop_automated_movement = TRUE
-	AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
-	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST),
-	 "vomit" = CALLBACK(src, .proc/vomit_prestart, 25)), 12 SECONDS, 4 SECONDS)
 
 /datum/action/cooldown/vomit
 	name = "Vomit"

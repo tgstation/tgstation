@@ -1,18 +1,18 @@
 /**
-  * # Outfit datums
-  *
-  * This is a clean system of applying outfits to mobs, if you need to equip someone in a uniform
-  * this is the way to do it cleanly and properly.
-  *
-  * You can also specify an outfit datum on a job to have it auto equipped to the mob on join
-  *
-  * /mob/living/carbon/human/proc/equipOutfit(outfit) is the mob level proc to equip an outfit
-  * and you pass it the relevant datum outfit
-  *
-  * outfits can also be saved as json blobs downloadable by a client and then can be uploaded
-  * by that user to recreate the outfit, this is used by admins to allow for custom event outfits
-  * that can be restored at a later date
-  */
+ * # Outfit datums
+ *
+ * This is a clean system of applying outfits to mobs, if you need to equip someone in a uniform
+ * this is the way to do it cleanly and properly.
+ *
+ * You can also specify an outfit datum on a job to have it auto equipped to the mob on join
+ *
+ * /mob/living/carbon/human/proc/equipOutfit(outfit) is the mob level proc to equip an outfit
+ * and you pass it the relevant datum outfit
+ *
+ * outfits can also be saved as json blobs downloadable by a client and then can be uploaded
+ * by that user to recreate the outfit, this is used by admins to allow for custom event outfits
+ * that can be restored at a later date
+ */
 /datum/outfit
 	///Name of the outfit (shows up in the equip admin verb)
 	var/name = "Naked"
@@ -53,6 +53,9 @@
 	/// Type path of item to go in the idcard slot
 	var/id = null
 
+	/// Type path of ID card trim associated with this outfit.
+	var/id_trim = null
+
 	/// Type path of item for left pocket slot
 	var/l_pocket = null
 
@@ -88,21 +91,25 @@
 	/// Internals box. Will be inserted at the start of backpack_contents
 	var/box
 
-	/** 
+	/**
 	  * Any implants the mob should start implanted with
 	  *
 	  * Format of this list is (typepath, typepath, typepath)
 	  */
 	var/list/implants = null
 
-  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	/**
+	  * Any skillchips the mob should have in their brain.
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/skillchips = null
+
+	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
 	/// Any clothing accessory item
 	var/accessory = null
-
-	/// Set to FALSE if your outfit requires runtime parameters
-	var/can_be_admin_equipped = TRUE
 
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
@@ -114,43 +121,43 @@
 	var/list/chameleon_extras
 
 /**
-  * Called at the start of the equip proc
-  *
-  * Override to change the value of the slots depending on client prefs, species and
-  * other such sources of change
-  *
-  * Extra Arguments
-  * * visualsOnly true if this is only for display (in the character setup screen)
-  *
-  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
-  */
+ * Called at the start of the equip proc
+ *
+ * Override to change the value of the slots depending on client prefs, species and
+ * other such sources of change
+ *
+ * Extra Arguments
+ * * visualsOnly true if this is only for display (in the character setup screen)
+ *
+ * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
+ */
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for customization depending on client prefs,species etc
 	return
 
 /**
-  * Called after the equip proc has finished
-  *
-  * All items are on the mob at this point, use this proc to toggle internals
-  * fiddle with id bindings and accesses etc
-  *
-  * Extra Arguments
-  * * visualsOnly true if this is only for display (in the character setup screen)
-  *
-  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
-  */
+ * Called after the equip proc has finished
+ *
+ * All items are on the mob at this point, use this proc to toggle internals
+ * fiddle with id bindings and accesses etc
+ *
+ * Extra Arguments
+ * * visualsOnly true if this is only for display (in the character setup screen)
+ *
+ * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
+ */
 /datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
 /**
-  * Equips all defined types and paths to the mob passed in
-  *
-  * Extra Arguments
-  * * visualsOnly true if this is only for display (in the character setup screen)
-  *
-  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
-  */
+ * Equips all defined types and paths to the mob passed in
+ *
+ * Extra Arguments
+ * * visualsOnly true if this is only for display (in the character setup screen)
+ *
+ * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
+ */
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
@@ -179,6 +186,10 @@
 		H.equip_to_slot_or_del(new glasses(H),ITEM_SLOT_EYES, TRUE)
 	if(id)
 		H.equip_to_slot_or_del(new id(H),ITEM_SLOT_ID, TRUE)
+	if(id_trim && H.wear_id)
+		var/obj/item/card/id/id_card = H.wear_id
+		if(istype(id_card) && !SSid_access.apply_trim_to_card(id_card, id_trim))
+			WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)
 
@@ -233,21 +244,36 @@
 				var/obj/item/implant/I = new implant_type(H)
 				I.implant(H, null, TRUE)
 
+		// Insert the skillchips associated with this outfit into the target.
+		if(skillchips)
+			for(var/skillchip_path in skillchips)
+				var/obj/item/skillchip/skillchip_instance = new skillchip_path()
+				var/implant_msg = H.implant_skillchip(skillchip_instance)
+				if(implant_msg)
+					stack_trace("Failed to implant [H] with [skillchip_instance], on job [src]. Failure message: [implant_msg]")
+					qdel(skillchip_instance)
+					return
+
+				var/activate_msg = skillchip_instance.try_activate_skillchip(TRUE, TRUE)
+				if(activate_msg)
+					CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
+
+
 	H.update_body()
 	return TRUE
 
 /**
-  * Apply a fingerprint from the passed in human to all items in the outfit
-  *
-  * Used for forensics setup when the mob is first equipped at roundstart
-  * essentially calls add_fingerprint to every defined item on the human
-  *
-  */
+ * Apply a fingerprint from the passed in human to all items in the outfit
+ *
+ * Used for forensics setup when the mob is first equipped at roundstart
+ * essentially calls add_fingerprint to every defined item on the human
+ *
+ */
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
+		H.back.add_fingerprint(H,1) //The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)
 			I.add_fingerprint(H,1)
 	if(H.wear_id)
@@ -288,6 +314,7 @@
 /datum/outfit/proc/get_chameleon_disguise_info()
 	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
 	types += chameleon_extras
+	types += skillchips
 	listclearnulls(types)
 	return types
 

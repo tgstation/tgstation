@@ -1,4 +1,6 @@
 #define DEFAULT_METEOR_LIFETIME 1800
+#define MAP_EDGE_PAD 5
+
 GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
@@ -46,17 +48,17 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/startx
 	switch(startSide)
 		if(NORTH)
-			starty = world.maxy-(TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			starty = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
+			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
-			startx = world.maxx-(TRANSITIONEDGE+1)
+			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD)
 		if(SOUTH)
-			starty = (TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			starty = (TRANSITIONEDGE + MAP_EDGE_PAD)
+			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
-			startx = (TRANSITIONEDGE+1)
+			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = (TRANSITIONEDGE + MAP_EDGE_PAD)
 	. = locate(startx, starty, Z)
 
 /proc/spaceDebrisFinishLoc(startSide, Z)
@@ -64,17 +66,17 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/endx
 	switch(startSide)
 		if(NORTH)
-			endy = (TRANSITIONEDGE+1)
-			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			endy = (TRANSITIONEDGE + MAP_EDGE_PAD)
+			endx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			endy = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
-			endx = (TRANSITIONEDGE+1)
+			endy = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			endx = (TRANSITIONEDGE + MAP_EDGE_PAD)
 		if(SOUTH)
-			endy = world.maxy-(TRANSITIONEDGE+1)
-			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			endy = world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD)
+			endx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			endy = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
-			endx = world.maxx-(TRANSITIONEDGE+1)
+			endy = rand((TRANSITIONEDGE + MAP_EDGE_PAD),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			endx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD)
 	. = locate(endx, endy, Z)
 
 ///////////////////////
@@ -174,9 +176,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		make_debris()
 		meteor_effect()
 		qdel(src)
-
-/obj/effect/meteor/ex_act()
-	return
 
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
@@ -290,13 +289,13 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/human, /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 
 /obj/effect/meteor/meaty/Initialize()
 	for(var/path in meteordrop)
-		if(path == /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant)
+		if(path == /obj/item/food/meat/slab/human/mutant)
 			meteordrop -= path
 			meteordrop += pick(subtypesof(path))
 
@@ -322,7 +321,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
+	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/Initialize()
@@ -373,7 +372,7 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	hits = 10
 	heavy = TRUE
 	dropamt = 1
-	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/reagent_containers/food/snacks/grown/pumpkin)
+	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
 	threat = 100
 
 /obj/effect/meteor/pumpkin/Initialize()
@@ -381,3 +380,4 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////
 #undef DEFAULT_METEOR_LIFETIME
+#undef MAP_EDGE_PAD

@@ -251,7 +251,7 @@
 	var/mob/holder
 	var/phase_time = 0
 	var/phase_time_length = 3
-	var/obj/screen/chronos_target/target_ui
+	var/atom/movable/screen/chronos_target/target_ui
 	var/obj/item/clothing/suit/space/chronos/chronosuit
 
 /obj/effect/chronos_cam/singularity_act()
@@ -261,7 +261,7 @@
 	return
 
 /obj/effect/chronos_cam/proc/create_target_ui()
-	if(holder && holder.client && chronosuit)
+	if(holder?.client && chronosuit)
 		if(target_ui)
 			remove_target_ui()
 		target_ui = new(src, holder)
@@ -311,13 +311,13 @@
 			holder.unset_machine()
 	return ..()
 
-/obj/screen/chronos_target
+/atom/movable/screen/chronos_target
 	name = "target display"
 	screen_loc = "CENTER,CENTER"
 	color = list(1,0,0,0, 0,1,0,0.8, 0,0,1,0.933, 0,0,0,0, 0,0,0,0)
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 
-/obj/screen/chronos_target/Initialize(mapload, mob/living/carbon/human/user)
+/atom/movable/screen/chronos_target/Initialize(mapload, mob/living/carbon/human/user)
 	if(user)
 		vis_contents += user
 	else

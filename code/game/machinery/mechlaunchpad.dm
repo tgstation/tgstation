@@ -47,10 +47,10 @@
 	return TRUE
 
 /**
-  * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad
-  * Arguments:
-  * * where - where the supply pod will land after grabbing the mech
-  */
+ * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad
+ * Arguments:
+ * * where - where the supply pod will land after grabbing the mech
+ */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/obj/structure/closet/supplypod/mechpod/pod = new()
 	var/turf/target_turf = get_turf(where)
@@ -62,9 +62,7 @@
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=TRUE)
-	landingDelay = 0
-	openingDelay = 0
-	departureDelay = 0
+	delays = list(POD_TRANSIT = 0, POD_FALLING = 4, POD_OPENING = 0, POD_LEAVING = 0)
 	effectOrgans = TRUE
 	effectQuiet = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'

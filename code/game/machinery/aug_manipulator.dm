@@ -3,11 +3,11 @@
 	desc = "A machine for custom fitting augmentations, with in-built spraypainter."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
+	base_icon_state = "pdapainter"
 	density = TRUE
 	obj_integrity = 200
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
-	var/initial_icon_state
 	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 
 /obj/machinery/aug_manipulator/examine(mob/user)
@@ -16,23 +16,21 @@
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
-    initial_icon_state = initial(icon_state)
-    return ..()
+	if(!base_icon_state)
+		base_icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/aug_manipulator/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "[initial_icon_state]-broken"
-		return
-
-	if(powered())
-		icon_state = initial_icon_state
-	else
-		icon_state = "[initial_icon_state]-off"
+		icon_state = "[base_icon_state]-broken"
+		return ..()
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
+	return ..()
 
 /obj/machinery/aug_manipulator/update_overlays()
 	. = ..()
 	if(storedpart)
-		. += "[initial_icon_state]-closed"
+		. += "[base_icon_state]-closed"
 
 /obj/machinery/aug_manipulator/Destroy()
 	QDEL_NULL(storedpart)
@@ -50,9 +48,9 @@
 /obj/machinery/aug_manipulator/handle_atom_del(atom/A)
 	if(A == storedpart)
 		storedpart = null
-		update_icon()
+		update_appearance()
 
-/obj/machinery/aug_manipulator/attackby(obj/item/O, mob/user, params)
+/obj/machinery/aug_manipulator/attackby(obj/item/O, mob/living/user, params)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
@@ -71,9 +69,9 @@
 				return
 			storedpart = O
 			O.add_fingerprint(user)
-			update_icon()
+			update_appearance()
 
-	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return
@@ -88,13 +86,13 @@
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 				set_machine_stat(machine_stat & ~BROKEN)
 				obj_integrity = max(obj_integrity, max_integrity)
-				update_icon()
+				update_appearance()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
 		return ..()
 
-/obj/machinery/aug_manipulator/attack_hand(mob/user)
+/obj/machinery/aug_manipulator/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -114,12 +112,12 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  * * part The body part that is being customized
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ * * part The body part that is being customized
+ */
 /obj/machinery/aug_manipulator/proc/check_menu(mob/living/user, obj/item/bodypart/part)
 	if(!istype(user))
 		return FALSE
@@ -135,7 +133,7 @@
 	if(storedpart)
 		storedpart.forceMove(get_turf(src))
 		storedpart = null
-		update_icon()
+		update_appearance()
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 

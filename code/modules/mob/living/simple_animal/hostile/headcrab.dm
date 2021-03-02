@@ -1,4 +1,4 @@
-#define EGG_INCUBATION_TIME 120
+#define EGG_INCUBATION_TIME 4 MINUTES
 
 /mob/living/simple_animal/hostile/headcrab
 	name = "headslug"
@@ -20,9 +20,12 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
+
+/mob/living/simple_animal/hostile/headcrab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -54,18 +57,18 @@
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	var/datum/mind/origin
-	var/time
+	var/time = 0
 
-/obj/item/organ/body_egg/changeling_egg/egg_process()
+/obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
-	time++
+	time += delta_time
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
-	var/mob/living/carbon/monkey/M = new(owner)
+	var/mob/living/carbon/human/species/monkey/M = new(owner)
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)

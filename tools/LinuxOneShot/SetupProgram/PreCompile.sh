@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# REPO MAINTAINERS: KEEP CHANGES TO THIS IN SYNC WITH /tools/tgs4_scripts/PreCompile.sh
+
 set -e
 set -x
 
@@ -26,18 +28,18 @@ if ! [ -x "$has_cargo" ]; then
 	. ~/.profile
 fi
 
-# apt packages
+# apt packages, libssl needed by rust-g but not included in TGS barebones install
 if ! { [ -x "$has_git" ] && [ -x "$has_grep" ] && [ -f "/usr/lib/i386-linux-gnu/libssl.so" ] && [ -f "/usr/bin/mysql" ] && [ -d "/usr/include/mysql" ]; }; then
 	echo "Installing apt dependencies..."
 	if ! [ -x "$has_sudo" ]; then
 		dpkg --add-architecture i386
 		apt-get update
-		apt-get install -y git libssl-dev:i386 grep mysql-client
+		apt-get install -y git libssl-dev:i386 grep mysql-client lib32z1 pkg-config libssl-dev
 		rm -rf /var/lib/apt/lists/*
 	else
 		sudo dpkg --add-architecture i386
 		sudo apt-get update
-		sudo apt-get install -y git libssl-dev:i386 grep mysql-client
+		sudo apt-get install -y git libssl-dev:i386 grep mysql-client lib32z1 pkg-config libssl-dev
 		sudo rm -rf /var/lib/apt/lists/*
 	fi
 fi
@@ -56,9 +58,16 @@ fi
 echo "Deploying rust-g..."
 cd rust-g
 git checkout "$RUST_G_VERSION"
-~/.cargo/bin/cargo build --release
-mv target/release/librust_g.so "$1/rust_g"
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
+mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
+
+# compile tgui
+echo "Compiling tgui..."
+cd "$1"
+chmod +x tools/bootstrap/node  # Workaround for https://github.com/tgstation/tgstation-server/issues/1167
+env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js
+cd "$original_dir"
 
 if [ ! -d "../GameStaticFiles/config" ]; then
 	echo "Creating initial config..."
@@ -74,3 +83,10 @@ if [ "$DATABASE_EXISTS" != "ss13_db" ]; then
     mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db < "$1/$TGS_PREFIXED_SCHEMA_FILE"
     mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db -e "INSERT INTO \`SS13_schema_revision\` (\`major\`, \`minor\`) VALUES ($TGS_SCHEMA_MAJOR_VERSION, $TGS_SCHEMA_MINOR_VERSION)"
 fi
+
+# compile tgui
+echo "Compiling tgui..."
+cd "$1"
+chmod +x tools/bootstrap/node  # Workaround for https://github.com/tgstation/tgstation-server/issues/1167
+chmod +x tgui/bin/tgui
+env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js

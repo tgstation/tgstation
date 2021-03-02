@@ -31,6 +31,10 @@
 	slippery_foam = FALSE
 	var/absorbed_plasma = 0
 
+/obj/effect/particle_effect/foam/firefighting/ComponentInitialize()
+	..()
+	RemoveElement(/datum/element/atmos_sensitive)
+
 /obj/effect/particle_effect/foam/firefighting/process()
 	..()
 
@@ -46,7 +50,7 @@
 		if(G.temperature > T20C)
 			G.temperature = max(G.temperature/2,T20C)
 		G.garbage_collect()
-		T.air_update_turf()
+		T.air_update_turf(FALSE, FALSE)
 
 /obj/effect/particle_effect/foam/firefighting/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -64,9 +68,6 @@
 	if(!istype(L))
 		return
 	L.adjust_fire_stacks(-2)
-
-/obj/effect/particle_effect/foam/firefighting/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
 
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
@@ -90,9 +91,13 @@
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
-	create_reagents(1000) //limited by the size of the reagent holder anyway.
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
+
+/obj/effect/particle_effect/foam/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
@@ -188,20 +193,18 @@
 		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		F.metal = metal
 
+/obj/effect/particle_effect/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 475
 
-/obj/effect/particle_effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 475))) //foam dissolves when heated
+/obj/effect/particle_effect/foam/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(prob(max(0, exposed_temperature - 475)))   //foam dissolves when heated
 		kill_foam()
-
-
-/obj/effect/particle_effect/foam/metal/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
 
 
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect_system/foam_spread
-	var/amount = 10		// the size of the foam spread.
+	var/amount = 10 // the size of the foam spread.
 	var/obj/chemholder
 	effect_type = /obj/effect/particle_effect/foam
 	var/metal = 0
@@ -221,7 +224,7 @@
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new /obj()
-	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/reagents/R = new/datum/reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //same as above
 	chemholder.reagents = R
 	R.my_atom = chemholder
 
@@ -256,7 +259,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
 	density = TRUE
-	opacity = TRUE 	// changed in New()
+	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -268,20 +271,24 @@
 
 /obj/structure/foamedmetal/Initialize()
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/foamedmetal/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
 	. = ..()
 	move_update_air(T)
 
-/obj/structure/foamedmetal/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/foamedmetal/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attack_hand(mob/user)
+/obj/structure/foamedmetal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -302,6 +309,7 @@
 	icon_state = "atmos_resin"
 	alpha = 120
 	max_integrity = 10
+	pass_flags_self = PASSGLASS
 
 /obj/structure/foamedmetal/resin/Initialize()
 	. = ..()
@@ -319,21 +327,15 @@
 					continue
 				G_gases[I][MOLES] = 0
 			G.garbage_collect()
-			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
 			if(!U.welded)
 				U.welded = TRUE
-				U.update_icon()
+				U.update_appearance()
 				U.visible_message("<span class='danger'>[U] sealed shut!</span>")
 		for(var/mob/living/L in O)
 			L.extinguish_mob()
 		for(var/obj/item/Item in O)
 			Item.extinguish()
-
-/obj/structure/foamedmetal/resin/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return TRUE
 
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM

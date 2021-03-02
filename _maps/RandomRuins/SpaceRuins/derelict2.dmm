@@ -7,7 +7,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "c" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
@@ -17,7 +17,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "e" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -38,21 +38,21 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "i" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "j" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "k" = (
 /obj/structure/window/reinforced,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "l" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -65,7 +65,7 @@
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "n" = (
 /obj/structure/table,
@@ -78,30 +78,30 @@
 /obj/item/trash/plate{
 	pixel_x = -10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "o" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "p" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "q" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "r" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 
 (1,1,1) = {"

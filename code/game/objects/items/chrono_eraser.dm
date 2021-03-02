@@ -111,7 +111,7 @@
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
 			var/mob/living/user = loc
-			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && (user.mobility_flags & MOBILITY_STAND) && (user.stat == CONSCIOUS))
+			if(currentpos == startpos && isliving(user) && user.body_position == STANDING_UP && !HAS_TRAIT(user, TRAIT_INCAPACITATED) && (field in view(CHRONO_BEAM_RANGE, currentpos)))
 				return TRUE
 		field_disconnect(F)
 		return FALSE
@@ -189,18 +189,19 @@
 			cached_icon.Insert(mob_icon, "frame[i]")
 
 		mob_underlay = mutable_appearance(cached_icon, "frame1")
-		update_icon()
+		update_appearance()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
 	START_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/chrono_field/Destroy()
-	if(gun && gun.field_check(src))
+	if(gun?.field_check(src))
 		gun.field_disconnect(src)
 	return ..()
 
-/obj/structure/chrono_field/update_icon()
+/obj/structure/chrono_field/update_overlays()
+	. = ..()
 	var/ttk_frame = 1 - (timetokill / initial(timetokill))
 	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
@@ -229,7 +230,7 @@
 			captured.Unconscious(80)
 			if(captured.loc != src)
 				captured.forceMove(src)
-			update_icon()
+			update_appearance()
 			if(gun)
 				if(gun.field_check(src))
 					timetokill -= delta_time

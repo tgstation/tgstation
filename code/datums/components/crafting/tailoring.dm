@@ -54,7 +54,7 @@
 	name = "Security HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -64,7 +64,7 @@
 	name = "Security HUD removal"
 	result = /obj/item/clothing/glasses/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1)
 	category = CAT_CLOTHING
 
@@ -72,7 +72,7 @@
 	name = "Medical HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/health/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -82,7 +82,7 @@
 	name = "Medical HUD removal"
 	result = /obj/item/clothing/glasses/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/health/sunglasses = 1)
 	category = CAT_CLOTHING
 
@@ -90,7 +90,7 @@
 	name = "Diagnostic HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -100,7 +100,7 @@
 	name = "Diagnostic HUD removal"
 	result = /obj/item/clothing/glasses/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
 	category = CAT_CLOTHING
 
@@ -108,7 +108,7 @@
 	name = "Science Glasses"
 	result = /obj/item/clothing/glasses/sunglasses/chemical
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/science = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
 				  /obj/item/stack/cable_coil = 5)
@@ -118,7 +118,7 @@
 	name = "Chemical Scanner removal"
 	result = /obj/item/clothing/glasses/sunglasses
 	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/chemical = 1)
 	category = CAT_CLOTHING
 
@@ -126,7 +126,7 @@
 	name = "Ghost Sheet"
 	result = /obj/item/clothing/suit/ghost_sheet
 	time = 5
-	tools = list(TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/bedsheet = 1)
 	category = CAT_CLOTHING
 
@@ -142,4 +142,25 @@
 	result = /obj/effect/spawner/lootdrop/lizardboots
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1, /obj/item/stack/sheet/leather = 1)
 	time = 60
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonsuit
+	name = "Prisoner Uniform (Suit)"
+	result = /obj/item/clothing/under/rank/prisoner
+	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates = 1)
+	time = 20
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonskirt
+	name = "Prisoner Uniform (Skirt)"
+	result = /obj/item/clothing/under/rank/prisoner/skirt
+	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates = 1)
+	time = 20
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonshoes
+	name = "Orange Prison Shoes"
+	result = /obj/item/clothing/shoes/sneakers/orange
+	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/license_plates = 1)
+	time = 10
 	category = CAT_CLOTHING

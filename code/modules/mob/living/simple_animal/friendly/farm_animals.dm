@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/food/meat/slab = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -46,26 +46,29 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
+/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!enemies.len && DT_PROB(0.5, delta_time))
 			Retaliate()
 
-		if(enemies.len && prob(10))
+		if(enemies.len && DT_PROB(5, delta_time))
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat == CONSCIOUS)
-		udder.generateMilk()
-		eat_plants()
-		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-				var/step = get_step(src, direction)
-				if(step)
-					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
-						Move(step, get_dir(src, step))
+	if(stat != CONSCIOUS)
+		return
+
+	udder.generateMilk()
+	eat_plants()
+	if(pulledby)
+		return
+
+	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+		var/step = get_step(src, direction)
+		if(step && ((locate(/obj/structure/spacevine) in step) || (locate(/obj/structure/glowshroom) in step)))
+			Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
@@ -125,7 +128,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
+	butcher_results = list(/obj/item/food/meat/slab = 6)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -140,7 +143,7 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	food_type = list(/obj/item/food/grown/wheat)
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
@@ -171,27 +174,21 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-	D.drive_verb = "ride"
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
-/mob/living/simple_animal/cow/Life()
+/mob/living/simple_animal/cow/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
+/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/user, list/modifiers)
+	if(!stat && LAZYACCESS(modifiers, RIGHT_CLICK) && icon_state != icon_dead)
+		user.visible_message("<span class='warning'>[user] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
-		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
+		to_chat(src, "<span class='userdanger'>You are tipped over by [user]!</span>")
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = icon_dead
-		addtimer(CALLBACK(src, .proc/cow_tipped, M), rand(20,50))
+		addtimer(CALLBACK(src, .proc/cow_tipped, user), rand(20,50))
 
 	else
 		..()
@@ -227,10 +224,10 @@
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
 ///Give intense wisdom to the attacker if they're being friendly about it
-/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_HELP)
-		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
-		M.mind?.adjust_experience(pick(GLOB.skill_types), 500)
+/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/user, list/modifiers)
+	if(!stat && !user.combat_mode)
+		to_chat(user, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
+		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
 		do_smoke(1, get_turf(src))
 		qdel(src)
 		return
@@ -253,7 +250,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1)
+	butcher_results = list(/obj/item/food/meat/slab/chicken = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -264,7 +261,6 @@
 	attack_verb_simple = "kick"
 	health = 3
 	maxHealth = 3
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -276,24 +272,25 @@
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = base_pixel_x + rand(-6, 6)
+	pixel_y = base_pixel_y + rand(0, 10)
 	add_cell_sample()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life()
+/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(1,2)
+		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life()
+/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	amount_grown = 0
 
@@ -312,9 +309,9 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2)
-	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
+	var/egg_type = /obj/item/food/egg
+	food_type = list(/obj/item/food/grown/wheat)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -325,7 +322,6 @@
 	attack_verb_simple = "kick"
 	health = 15
 	maxHealth = 15
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
 	var/body_color
@@ -347,10 +343,12 @@
 	icon_state = "[icon_prefix]_[body_color]"
 	icon_living = "[icon_prefix]_[body_color]"
 	icon_dead = "[icon_prefix]_[body_color]_dead"
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = base_pixel_x + rand(-6, 6)
+	pixel_y = base_pixel_y + rand(0, 10)
 	++chicken_count
 	add_cell_sample()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chicken/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -371,22 +369,22 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
+/mob/living/simple_animal/chicken/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type)
+	if((!stat && DT_PROB(1.5, delta_time) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6,6)
-		E.pixel_y = rand(-6,6)
+		E.pixel_x = rand(-6, 6)
+		E.pixel_y = rand(-6, 6)
 		if(eggsFertile)
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/reagent_containers/food/snacks/egg/process(delta_time)
+/obj/item/food/egg/var/amount_grown = 0
+/obj/item/food/egg/process(delta_time)
 	if(isturf(loc))
 		amount_grown += rand(1,2) * delta_time
 		if(amount_grown >= 200)
@@ -436,7 +434,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently nudges"
@@ -449,5 +447,5 @@
 	health = 75
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/apple)
+	food_type = list(/obj/item/food/grown/apple)
 	footstep_type = FOOTSTEP_MOB_SHOE

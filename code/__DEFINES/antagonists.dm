@@ -24,16 +24,6 @@
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
 
-
-//Blob
-/// blob gets a free reroll every X time
-#define BLOB_REROLL_TIME 2400
-#define BLOB_SPREAD_COST 4
-/// blob refunds this much if it attacks and doesn't spread
-#define BLOB_ATTACK_REFUND 2
-#define BLOB_REFLECTOR_COST 15
-
-
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -48,13 +38,13 @@
 #define DEATHSQUAD "ds"
 #define DEATHSQUAD_LEADER "ds_leader"
 
-//Shuttle hijacking
-/// Does not stop hijacking but itself won't hijack
-#define HIJACK_NEUTRAL 0
-/// Needs to be present for shuttle to be hijacked
-#define HIJACK_HIJACKER 1
-/// Prevents hijacking same way as non-antags
-#define HIJACK_PREVENT 2
+//Shuttle elimination hijacking
+/// Does not stop elimination hijacking but itself won't elimination hijack
+#define ELIMINATION_NEUTRAL 0
+/// Needs to be present for shuttle to be elimination hijacked
+#define ELIMINATION_ENABLED 1
+/// Prevents elimination hijack same way as non-antags
+#define ELIMINATION_PREVENT 2
 
 //Syndicate Contracts
 #define CONTRACT_STATUS_INACTIVE 1
@@ -75,8 +65,22 @@
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 
+GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/basic,/datum/eldritch_knowledge/living_heart,/datum/eldritch_knowledge/codex_cicatrix))
+
+
 #define PATH_SIDE "Side"
 
 #define PATH_ASH "Ash"
 #define PATH_RUST "Rust"
 #define PATH_FLESH "Flesh"
+#define PATH_VOID "Void"
+
+
+/// How many telecrystals a normal traitor starts with
+#define TELECRYSTALS_DEFAULT 20
+/// How many telecrystals mapper/admin only "precharged" uplink implant
+#define TELECRYSTALS_PRELOADED_IMPLANT 10
+/// The normal cost of an uplink implant; used for calcuating how many
+/// TC to charge someone if they get a free implant through choice or
+/// because they have nothing else that supports an implant.
+#define UPLINK_IMPLANT_TELECRYSTAL_COST 4

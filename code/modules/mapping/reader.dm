@@ -22,6 +22,9 @@
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
 
+	///any turf in this list is skipped inside of build_coordinate
+	var/list/turf_blacklist = list()
+
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
 	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
@@ -38,9 +41,9 @@
 /// - `x_offset`, `y_offset`, `z_offset`: Positions representign where to load the map (Optional).
 /// - `cropMap`: When true, the map will be cropped to fit the existing world dimensions (Optional).
 /// - `measureOnly`: When true, no changes will be made to the world (Optional).
-/// - `no_changeturf`: When true, [turf/AfterChange] won't be called on loaded turfs
+/// - `no_changeturf`: When true, [/turf/proc/AfterChange] won't be called on loaded turfs
 /// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
-/// - `placeOnTop`: Whether to use [turf/PlaceOnTop] rather than [turf/ChangeTurf] (Optional).
+/// - `placeOnTop`: Whether to use [/turf/proc/PlaceOnTop] rather than [/turf/proc/ChangeTurf] (Optional).
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
 	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)
@@ -162,15 +165,15 @@
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 		for(var/line in gset.gridLines)
-			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper) //Reverse operation and check if it is out of bounds of cropping.
 				--ycrd
 				continue
 			if(ycrd <= world.maxy && ycrd >= 1)
 				var/xcrd = gset.xcrd + x_offset - 1
 				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper) //Same as above.
 						++xcrd
-						continue								//X cropping.
+						continue //X cropping.
 					if(xcrd > world.maxx)
 						if(cropMap)
 							break
@@ -303,6 +306,10 @@
 	////////////////
 	//Instanciation
 	////////////////
+
+	for (var/turf_in_blacklist in turf_blacklist)
+		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
+			return
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
@@ -474,4 +481,9 @@
 
 /datum/parsed_map/Destroy()
 	..()
+	turf_blacklist.Cut()
+	parsed_bounds.Cut()
+	bounds.Cut()
+	grid_models.Cut()
+	gridSets.Cut()
 	return QDEL_HINT_HARDDEL_NOW

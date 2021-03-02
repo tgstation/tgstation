@@ -3,6 +3,7 @@
 	desc = "This injects the person with DNA."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "dnainjector"
+	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
@@ -16,8 +17,8 @@
 
 	var/used = 0
 
-/obj/item/dnainjector/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/dnainjector/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
@@ -39,7 +40,7 @@
 				M.dna.unique_enzymes = fields["UE"]
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
-			if(fields["UI"])	//UI+UE
+			if(fields["UI"]) //UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack("[log_msg] [loc_name(user)]")
@@ -47,7 +48,7 @@
 	return FALSE
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(used)
@@ -55,7 +56,7 @@
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
-		if (!humantarget.can_inject(user, 1))
+		if (!humantarget.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 			return
 	log_combat(user, target, "attempted to inject", src)
 
@@ -72,7 +73,7 @@
 
 	log_combat(user, target, "injected", src)
 
-	if(!inject(target, user))	//Now we actually do the heavy lifting.
+	if(!inject(target, user)) //Now we actually do the heavy lifting.
 		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
 
 	used = 1
@@ -436,7 +437,7 @@
 	var/duration = 600
 
 /obj/item/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
-	if(M.stat == DEAD)	//prevents dead people from having their DNA changed
+	if(M.stat == DEAD) //prevents dead people from having their DNA changed
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
@@ -446,7 +447,7 @@
 		var/endtime = world.time+duration
 		for(var/mutation in remove_mutations)
 			if(mutation == RACEMUT)
-				if(ishuman(M))
+				if(!ismonkey(M))
 					continue
 				M = M.dna.remove_mutation(mutation)
 			else
@@ -454,7 +455,7 @@
 		for(var/mutation in add_mutations)
 			if(M.dna.get_mutation(mutation))
 				continue //Skip permanent mutations we already have.
-			if(mutation == RACEMUT && ishuman(M))
+			if(mutation == RACEMUT && !ismonkey(M))
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 				M = M.dna.add_mutation(mutation, MUT_OTHER, endtime)
@@ -473,7 +474,7 @@
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 				M.dna.temporary_mutations[UE_CHANGED] = endtime
-			if(fields["UI"])	//UI+UE
+			if(fields["UI"]) //UI+UE
 				if(!M.dna.previous["UI"])
 					M.dna.previous["UI"] = M.dna.uni_identity
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])

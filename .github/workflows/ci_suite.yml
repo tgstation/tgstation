@@ -1,0 +1,120 @@
+name: CI Suite
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+jobs:
+  run_linters:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Run Linters
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm
+      - name: Install Tools
+        run: |
+          pip3 install setuptools
+          bash tools/ci/install_node.sh
+          bash tools/ci/install_spaceman_dmm.sh dreamchecker
+          tools/bootstrap/python -c ''
+      - name: Run Linters
+        run: |
+          bash tools/ci/check_filedirs.sh tgstation.dme
+          bash tools/ci/check_changelogs.sh
+          find . -name "*.php" -print0 | xargs -0 -n1 php -l
+          find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
+          tgui/bin/tgui --lint
+          tgui/bin/tgui --test
+          bash tools/ci/check_grep.sh
+          tools/bootstrap/python -m dmi.test
+          tools/bootstrap/python -m mapmerge2.dmm_test
+          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Annotate Lints
+        uses: yogstation13/DreamAnnotate@v1
+        if: always()
+        with:
+          outputFile: output-annotations.txt
+
+  compile_all_maps:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Compile Maps
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND
+          key: ${{ runner.os }}-byond
+      - name: Compile All Maps
+        run: |
+          bash tools/ci/install_byond.sh
+          source $HOME/BYOND/byond/bin/byondsetup
+          python3 tools/ci/template_dm_generator.py
+          tgui/bin/tgui --build
+          bash tools/ci/dm.sh -DCIBUILDING -DCITESTING -DALL_MAPS tgstation.dme
+
+  run_all_tests:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Integration Tests
+    runs-on: ubuntu-20.04
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND
+          key: ${{ runner.os }}-byond
+      - name: Setup database
+        run: |
+          sudo systemctl start mysql
+          mysql -u root -proot -e 'CREATE DATABASE tg_ci;'
+          mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
+          mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
+          mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+      - name: Install rust-g
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update || true
+          sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
+          bash tools/ci/install_rust_g.sh
+      - name: Compile and run tests
+        run: |
+          bash tools/ci/install_byond.sh
+          source $HOME/BYOND/byond/bin/byondsetup
+          tgui/bin/tgui --build
+          bash tools/ci/dm.sh -DCIBUILDING tgstation.dme
+          bash tools/ci/run_server.sh
+
+  test_windows:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Windows Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Compile
+        run: pwsh tools/ci/build.ps1
+      - name: Create artifact
+        run: |
+          md deploy
+          bash tools/deploy.sh ./deploy
+      - name: Deploy artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: deploy
+          path: deploy

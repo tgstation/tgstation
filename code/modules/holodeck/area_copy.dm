@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
 			else if(istype(original.vars[V], /datum) || ismob(original.vars[V]))
-				continue	// this would reference the original's object, that will break when it is used or deleted.
+				continue // this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]
 
@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
 
-		N.update_icon()
+		N.update_appearance()
 		if(ismachinery(O))
 			var/obj/machinery/M = O
 			M.power_change()
@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 			if(M.circuit)
 				M.circuit.flags_1 |= HOLOGRAM_1
 
-	if(ismob(O))	//Overlays are carried over despite disallowing them, if a fix is found remove this.
+	if(ismob(O)) //Overlays are carried over despite disallowing them, if a fix is found remove this.
 		var/mob/M = O
 		M.cut_overlays()
 		M.regenerate_icons()
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
 	//       Movement based on lower left corner. Tiles that do not fit
-	//		 into the new area will not be moved.
+	//  into the new area will not be moved.
 
 	if(!A || !src)
 		return 0
@@ -142,8 +142,6 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
-			CALCULATE_ADJACENT_TURFS(T1)
-			SSair.add_to_active(T1,1)
-
+			CALCULATE_ADJACENT_TURFS(T1, KILL_EXCITED)
 
 	return copiedobjs

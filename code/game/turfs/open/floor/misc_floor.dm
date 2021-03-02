@@ -2,12 +2,12 @@
 	name = "commemorative plaque"
 	icon_state = "plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
-	floor_tile = /obj/item/stack/tile/plasteel
+	floor_tile = /obj/item/stack/tile/iron
 	tiled_dirt = FALSE
 
 /turf/open/floor/vault
 	icon_state = "rockvault"
-	floor_tile = /obj/item/stack/tile/plasteel
+	floor_tile = /obj/item/stack/tile/iron
 
 //Circuit flooring, glows a little
 /turf/open/floor/circuit
@@ -20,25 +20,25 @@
 
 /turf/open/floor/circuit/Initialize()
 	SSmapping.nuke_tiles += src
-	update_icon()
+	update_appearance()
 	. = ..()
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
 	return ..()
 
-/turf/open/floor/circuit/update_icon()
-	if(on)
-		if(LAZYLEN(SSmapping.nuke_threats))
-			icon_state = "rcircuitanim"
-			set_light_color(LIGHT_COLOR_FLARE)
-		else
-			icon_state = icon_normal
-			set_light_color(initial(light_color))
-		set_light(1.4, 0.5)
-	else
-		icon_state = "[icon_normal]off"
+/turf/open/floor/circuit/update_appearance(updates)
+	. = ..()
+	if(!on)
 		set_light(0)
+		return
+
+	set_light_color(LAZYLEN(SSmapping.nuke_threats) ? LIGHT_COLOR_FLARE : initial(light_color))
+	set_light(1.4, 0.5)
+
+/turf/open/floor/circuit/update_icon_state()
+	icon_state = on ? (LAZYLEN(SSmapping.nuke_threats) ? "rcircuitanim" : icon_normal) : "[icon_normal]off"
+	return ..()
 
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"
@@ -104,17 +104,14 @@
 /turf/open/floor/pod
 	name = "pod floor"
 	icon_state = "podfloor"
-	icon_regular_floor = "podfloor"
 	floor_tile = /obj/item/stack/tile/pod
 
 /turf/open/floor/pod/light
 	icon_state = "podfloor_light"
-	icon_regular_floor = "podfloor_light"
 	floor_tile = /obj/item/stack/tile/pod/light
 
 /turf/open/floor/pod/dark
 	icon_state = "podfloor_dark"
-	icon_regular_floor = "podfloor_dark"
 	floor_tile = /obj/item/stack/tile/pod/dark
 
 
@@ -122,9 +119,13 @@
 	name = "high-traction floor"
 	icon_state = "noslip"
 	floor_tile = /obj/item/stack/tile/noslip
-	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
-	burnt_states = list("noslip-scorched1","noslip-scorched2")
 	slowdown = -0.3
+
+/turf/open/floor/noslip/setup_broken_states()
+	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
+
+/turf/open/floor/noslip/setup_burnt_states()
+	return list("noslip-scorched1","noslip-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -132,7 +133,7 @@
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "floor"
-	floor_tile = /obj/item/stack/tile/plasteel
+	floor_tile = /obj/item/stack/tile/iron
 
 /turf/open/floor/bluespace
 	slowdown = -1
@@ -155,6 +156,14 @@
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
 
+/turf/open/floor/bronze/lavaland
+	planetary_atmos = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/bronze/icemoon
+	planetary_atmos = TRUE
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/white
 	name = "white floor"
 	desc = "A tile in a pure white color."
@@ -172,19 +181,36 @@
 	heat_capacity = 900
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
-	broken_states = list("plastic-damaged1","plastic-damaged2")
+
+/turf/open/floor/plastic/setup_broken_states()
+	return list("plastic-damaged1","plastic-damaged2")
 
 /turf/open/floor/eighties
 	name = "retro floor"
 	desc = "This one takes you back."
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
-	broken_states = list("damaged")
+
+/turf/open/floor/eighties/setup_broken_states()
+	return list("eighties_damaged")
 
 /turf/open/floor/plating/rust
 	name = "rusted plating"
 	desc = "Corrupted steel."
 	icon_state = "plating_rust"
 
+/turf/open/floor/plating/rust/plasma
+	initial_gas_mix = "plasma=104;TEMP=293.15"
+
 /turf/open/floor/plating/rust/rust_heretic_act()
 	return
+
+/turf/open/floor/stone
+	name = "stone brick floor"
+	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
+		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
+		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
+		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
+		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
+		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
+	icon_state = "stone_floor"

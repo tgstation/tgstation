@@ -10,10 +10,11 @@
 	max_integrity = 250
 	integrity_failure = 0.1
 	custom_materials = list(/datum/material/iron = 2000)
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	layer = OBJ_LAYER
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-	layer = OBJ_LAYER
+
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
@@ -23,8 +24,10 @@
 
 /obj/structure/chair/Initialize()
 	. = ..()
-	if(!anchored)	//why would you put these on the shuttle?
+	if(!anchored) //why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+	if(prob(0.2))
+		name = "tactical [name]"
 
 /obj/structure/chair/ComponentInitialize()
 	. = ..()
@@ -37,7 +40,7 @@
 	var/mob/living/L = user
 
 	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 			return FALSE
 		else
 			return TRUE
@@ -50,7 +53,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -63,8 +66,8 @@
 				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
-/obj/structure/chair/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/chair/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/chair/narsie_act()
 	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
@@ -89,11 +92,13 @@
 	else
 		return ..()
 
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
-		..()
-	else
-		setDir(turn(dir,-90))
+		return ..()
+	setDir(turn(dir,-90))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
@@ -238,9 +243,9 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
+		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+		if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/obj/item/C = new item_chair(loc)
@@ -249,7 +254,7 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
-/obj/structure/chair/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+/obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
 
 /obj/structure/chair/stool/bar
@@ -318,7 +323,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -413,9 +418,9 @@
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 
-/obj/structure/chair/bronze/AltClick(mob/living/user)
+/obj/structure/chair/bronze/AltClick(mob/user)
 	turns = 0
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message("<span class='notice'>[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER.</span>", \
@@ -466,7 +471,7 @@
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 60, 1, Mob, 0))
+		if(do_after(Mob, 6 SECONDS, progress = FALSE))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)

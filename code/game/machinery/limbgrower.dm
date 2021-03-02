@@ -61,7 +61,7 @@
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	..()
 
-/obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
+/obj/machinery/limbgrower/attackby(obj/item/O, mob/living/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
 		return
@@ -73,7 +73,7 @@
 	if(panel_open && default_deconstruction_crowbar(O))
 		return
 
-	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+	if(user.combat_mode) //so we can hit the machine
 		return ..()
 
 /obj/machinery/limbgrower/Topic(href, href_list)
@@ -115,10 +115,10 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	if(reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh, being_built.reagents_list[/datum/reagent/medicine/c2/synthflesh]*prod_coeff))	//sanity check, if this happens we are in big trouble
+	if(reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh, being_built.reagents_list[/datum/reagent/medicine/c2/synthflesh]*prod_coeff)) //sanity check, if this happens we are in big trouble
 		reagents.remove_reagent(/datum/reagent/medicine/c2/synthflesh,being_built.reagents_list[/datum/reagent/medicine/c2/synthflesh]*prod_coeff)
 		var/buildpath = being_built.build_path
-		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
+		if(ispath(buildpath, /obj/item/bodypart)) //This feels like spatgheti code, but i need to initilise a limb somehow
 			build_limb(buildpath)
 		else
 			//Just build whatever it is
@@ -135,7 +135,7 @@
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
 	if(selected_category=="human" || selected_category=="lizard" || selected_category=="ethereal") //Species with greyscale parts should be included here
-		if(selected_category=="human")			//humans don't use the full colour spectrum, they use random_skin_tone
+		if(selected_category=="human") //humans don't use the full colour spectrum, they use random_skin_tone
 			limb.skin_tone = random_skin_tone()
 		else
 			limb.species_color = random_short_color()
@@ -150,7 +150,7 @@
 	limb.desc = "A synthetically produced [selected_category] limb, grown in a tube. This one is for the [parse_zone(limb.body_zone)]."
 	limb.species_id = selected_category
 	limb.update_icon_dropped()
-	limb.original_owner = "limb grower"	 //prevents updating the icon, so a lizard arm on a human stays a lizard arm etc.
+	limb.original_owner = "limb grower"  //prevents updating the icon, so a lizard arm on a human stays a lizard arm etc.
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0

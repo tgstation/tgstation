@@ -86,8 +86,9 @@
 /obj/structure/window/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
-	icon_state = "smooth"
-	smoothing_flags = SMOOTH_CORNERS
+	icon_state = "pod_window-0"
+	base_icon_state = "pod_window"
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 
@@ -142,6 +143,7 @@
 /obj/machinery/sleeper/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "sleeper"
+	base_icon_state = "sleeper"
 
 /obj/machinery/sleeper/survival_pod/update_overlays()
 	. = ..()
@@ -174,7 +176,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -206,7 +208,7 @@
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 5)
-		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
+		var/obj/item/food/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
@@ -226,7 +228,7 @@
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
 	density = TRUE
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
 
@@ -257,8 +259,11 @@
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 
+/obj/structure/fans/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 //Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"
@@ -276,7 +281,7 @@
 
 /obj/item/fakeartefact
 	name = "expensive forgery"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,

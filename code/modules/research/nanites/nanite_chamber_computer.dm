@@ -60,12 +60,13 @@
 	return data
 
 /obj/machinery/computer/nanite_chamber_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("toggle_lock")
 			chamber.locked = !chamber.locked
-			chamber.update_icon()
+			chamber.update_appearance()
 			. = TRUE
 		if("set_safety")
 			var/threshold = text2num(params["value"])

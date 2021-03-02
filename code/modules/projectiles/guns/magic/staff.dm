@@ -2,6 +2,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 	worn_icon_state = null
+	icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
@@ -76,7 +77,7 @@
 
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
-	desc = "A deadly combination of laziness and boodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
+	desc = "A deadly combination of laziness and bloodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
 	fire_sound = 'sound/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/spellblade
 	icon_state = "spellblade"

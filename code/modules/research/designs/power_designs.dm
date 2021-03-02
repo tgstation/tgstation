@@ -56,16 +56,6 @@
 	category = list("Misc","Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/light_replacer
-	name = "Light Replacer"
-	desc = "A device to automatically replace lights. Refill with working light bulbs."
-	id = "light_replacer"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000)
-	build_path = /obj/item/lightreplacer
-	category = list("Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/inducer
 	name = "Inducer"
 	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."

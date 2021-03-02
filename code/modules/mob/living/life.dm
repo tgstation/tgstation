@@ -1,11 +1,16 @@
 /// This divisor controls how fast body temperature changes to match the environment
-#define BODYTEMP_DIVISOR 8
+#define BODYTEMP_DIVISOR 16
 
-/mob/living/proc/Life(times_fired)
+/**
+ * Handles the biological and general over-time processes of the mob.
+ *
+ *
+ * Arguments:
+ * - delta_time: The amount of time that has elapsed since this last fired.
+ * - times_fired: The number of times SSmobs has fired
+ */
+/mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
-
-	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
 
 	if (client)
 		var/turf/T = get_turf(src)
@@ -36,35 +41,35 @@
 
 		if(stat != DEAD)
 			//Mutations and radiation
-			handle_mutations_and_radiation()
+			handle_mutations_and_radiation(delta_time, times_fired)
 
 		if(stat != DEAD)
 			//Breathing, if applicable
-			handle_breathing(times_fired)
+			handle_breathing(delta_time, times_fired)
 
-		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		handle_diseases(delta_time, times_fired)// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
-		handle_wounds()
+		handle_wounds(delta_time, times_fired)
 
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
 
 		if(stat != DEAD)
 			//Random events (vomiting etc)
-			handle_random_events()
+			handle_random_events(delta_time, times_fired)
 
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
-			handle_environment(environment)
+			handle_environment(environment, delta_time, times_fired)
 
-		handle_gravity()
+		handle_gravity(delta_time, times_fired)
 
 		if(stat != DEAD)
-			handle_traits() // eye, ear, brain damages
-			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+			handle_traits(delta_time, times_fired) // eye, ear, brain damages
+			handle_status_effects(delta_time, times_fired) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
-	handle_fire()
+	handle_fire(delta_time, times_fired)
 
 	if(machine)
 		machine.check_eye(src)
@@ -72,39 +77,40 @@
 	if(stat != DEAD)
 		return 1
 
-/mob/living/proc/handle_breathing(times_fired)
+/mob/living/proc/handle_breathing(delta_time, times_fired)
 	return
 
-/mob/living/proc/handle_mutations_and_radiation()
+/mob/living/proc/handle_mutations_and_radiation(delta_time, times_fired)
 	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
-/mob/living/proc/handle_diseases()
+/mob/living/proc/handle_diseases(delta_time, times_fired)
 	return
 
-/mob/living/proc/handle_wounds()
+/mob/living/proc/handle_wounds(delta_time, times_fired)
 	return
 
-/mob/living/proc/handle_random_events()
+/mob/living/proc/handle_random_events(delta_time, times_fired)
 	return
 
 // Base mob environment handler for body temperature
-/mob/living/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/proc/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/loc_temp = get_temperature(environment)
+	var/temp_delta = loc_temp - bodytemperature
 
-	if(loc_temp < bodytemperature) // it is cold here
+	if(temp_delta < 0) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
-			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX))
+			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * delta_time, temp_delta))
 	else // this is a hot place
-		adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX))
+		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * delta_time, temp_delta))
 
-/mob/living/proc/handle_fire()
+/mob/living/proc/handle_fire(delta_time, times_fired)
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		set_fire_stacks(min(0, fire_stacks + 1)) //So we dry ourselves back to default, nonflammable.
+		set_fire_stacks(min(0, fire_stacks + (0.5 * delta_time))) //So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
 	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.1) //the fire is slowly consumed
+		adjust_fire_stacks(-0.05 * delta_time) //the fire is slowly consumed
 	else
 		extinguish_mob()
 		return TRUE //mob was put out, on_fire = FALSE via extinguish_mob(), no need to update everything down the chain.
@@ -113,7 +119,7 @@
 		extinguish_mob() //If there's no oxygen in the tile we're on, put out the fire
 		return TRUE
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	location.hotspot_expose(700, 25 * delta_time, TRUE)
 
 /**
  * Get the fullness of the mob
@@ -144,53 +150,30 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-/**
- * Removes reagents from the mob
- *
- * This will locate the reagent in the mob and remove it from reagent holders
- * Vars:
- * * reagent (typepath) takes a PATH to a reagent.
- * * custom_amount (int)(optional) checks for having a specific amount of that chemical.
- * * safety (bool) check for the trans_id_to
- */
-/mob/living/proc/remove_reagent(reagent, custom_amount, safety)
-	if(!custom_amount)
-		custom_amount = get_reagent_amount(reagent)
-	return reagents.remove_reagent(reagent, custom_amount, safety)
-
-/**
- * Returns the amount of a reagent from the mob
- *
- * This will locate the reagent in the mob and return the total amount from all reagent holders
- * Vars:
- * * reagent (typepath) takes a PATH to a reagent.
- */
-/mob/living/proc/get_reagent_amount(reagent)
-	return reagents.get_reagent_amount(reagent)
-
 //this updates all special effects: knockdown, druggy, stuttering, etc..
-/mob/living/proc/handle_status_effects()
+/mob/living/proc/handle_status_effects(delta_time, times_fired)
+	return
 
-/mob/living/proc/handle_traits()
+/mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes
-	if(eye_blind)	//blindness, heals slowly over time
+	if(eye_blind) //blindness, heals slowly over time
 		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-3)
+			adjust_blindness(-1.5 * delta_time)
 		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			adjust_blindness(-1)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		adjust_blurriness(-1)
+			adjust_blindness(-0.5 * delta_time)
+	else if(eye_blurry) //blurry eyes heal slowly
+		adjust_blurriness(-0.5 * delta_time)
 
 /mob/living/proc/update_damage_hud()
 	return
 
-/mob/living/proc/handle_gravity()
+/mob/living/proc/handle_gravity(delta_time, times_fired)
 	var/gravity = mob_has_gravity()
 	update_gravity(gravity)
 
 	if(gravity > STANDARD_GRAVITY)
 		gravity_animate()
-		handle_high_gravity(gravity)
+		handle_high_gravity(gravity, delta_time, times_fired)
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
@@ -202,9 +185,11 @@
 	sleep(10)
 	animate(get_filter("gravity"), y = 0, time = 10)
 
-/mob/living/proc/handle_high_gravity(gravity)
-	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
-		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
-		adjustBruteLoss(min(grav_stregth,3))
+/mob/living/proc/handle_high_gravity(gravity, delta_time, times_fired)
+	if(gravity < GRAVITY_DAMAGE_THRESHOLD) //Aka gravity values of 3 or more
+		return
+
+	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
+	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * delta_time)
 
 #undef BODYTEMP_DIVISOR

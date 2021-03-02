@@ -30,7 +30,7 @@
 /mob/living/silicon/pai/ex_act(severity, target)
 	take_holo_damage(severity * 50)
 	switch(severity)
-		if(1)	//RIP
+		if(1) //RIP
 			qdel(card)
 			qdel(src)
 		if(2)
@@ -40,23 +40,20 @@
 			fold_in(force = 1)
 			Paralyze(200)
 
-/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
-	switch(user.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
-		if("disarm")
-			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
-		if("harm")
-			user.do_attack_animation(src)
-			if (user.name == master)
-				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				if(do_after(user, 1 SECONDS, TRUE, src))
-					fold_in()
-					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
-			else
-				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
-				take_holo_damage(2)
+/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(user.combat_mode)
+		user.do_attack_animation(src)
+		if (user.name == master)
+			visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
+			if(do_after(user, 1 SECONDS, TRUE, src))
+				fold_in()
+				if(user.put_in_hands(card))
+					user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
+		else
+			visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
+			take_holo_damage(2)
+	else
+		visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
 
 /mob/living/silicon/pai/bullet_act(obj/projectile/Proj)
 	if(Proj.stun)

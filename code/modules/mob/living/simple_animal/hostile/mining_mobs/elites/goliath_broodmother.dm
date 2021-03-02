@@ -4,17 +4,17 @@
 #define CALL_CHILDREN 4
 
 /**
-  * # Goliath Broodmother
-  *
-  * A stronger, faster variation of the goliath.  Has the ability to spawn baby goliaths, which it can later detonate at will.
-  * When it's health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
-  * It's attacks are as follows:
-  * - Spawns a 3x3/plus shape of tentacles on the target location
-  * - Spawns 2 baby goliaths on its tile, up to a max of 8.  Children blow up when they die.
-  * - The broodmother lets out a noise, and is able to move faster for 6.5 seconds.
-  * - Summons your children around you.
-  * The broodmother is a fight revolving around stage control, as the activator has to manage the baby goliaths and the broodmother herself, along with all the tendrils.
-  */
+ * # Goliath Broodmother
+ *
+ * A stronger, faster variation of the goliath.  Has the ability to spawn baby goliaths, which it can later detonate at will.
+ * When it's health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
+ * It's attacks are as follows:
+ * - Spawns a 3x3/plus shape of tentacles on the target location
+ * - Spawns 2 baby goliaths on its tile, up to a max of 8.  Children blow up when they die.
+ * - The broodmother lets out a noise, and is able to move faster for 6.5 seconds.
+ * - Summons your children around you.
+ * The broodmother is a fight revolving around stage control, as the activator has to manage the baby goliaths and the broodmother herself, along with all the tendrils.
+ */
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother
 	name = "goliath broodmother"
@@ -97,7 +97,7 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life()
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //Checks if they are dead as a rock.
 		return
@@ -133,7 +133,7 @@
 		children_list += newchild
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
-	ranged_cooldown = world.time + 70
+	ranged_cooldown = world.time + 100
 	playsound(src,'sound/spookoween/insane_low_laugh.ogg', 200, 1)
 	visible_message("<span class='warning'>[src] starts picking up speed!</span>")
 	color = "#FF0000"

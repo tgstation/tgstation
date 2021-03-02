@@ -10,9 +10,9 @@
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
 	var/can_rotate = TRUE
-	var/framebuildstacktype = /obj/item/stack/sheet/metal
+	var/framebuildstacktype = /obj/item/stack/sheet/iron
 	var/framebuildstackamount = 5
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 0
 	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
 	var/rotation_angle = -1
@@ -26,9 +26,9 @@
 		add_overlay(deflector_overlay)
 
 	if(rotation_angle == -1)
-		setAngle(dir2angle(dir))
+		set_angle(dir2angle(dir))
 	else
-		setAngle(rotation_angle)
+		set_angle(rotation_angle)
 
 	if(admin)
 		can_rotate = FALSE
@@ -43,7 +43,7 @@
 			else
 				. += "<span class='notice'>Use screwdriver to unlock the rotation.</span>"
 
-/obj/structure/reflector/proc/setAngle(new_angle)
+/obj/structure/reflector/proc/set_angle(new_angle)
 	if(can_rotate)
 		rotation_angle = new_angle
 		if(deflector_overlay)
@@ -157,14 +157,14 @@
 		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
 		return FALSE
 	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	if(!isnull(new_angle))
-		setAngle(SIMPLIFY_DEGREES(new_angle))
+		set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	else if(finished)
 		rotate(user)
@@ -195,7 +195,7 @@
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.setAngle(new_angle)
+	P.set_angle_centered(new_angle)
 	return ..()
 
 //DOUBLE
@@ -219,7 +219,7 @@
 /obj/structure/reflector/double/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.setAngle(new_angle)
+	P.set_angle_centered(new_angle)
 	return ..()
 
 //BOX
@@ -241,7 +241,7 @@
 	anchored = TRUE
 
 /obj/structure/reflector/box/auto_reflect(obj/projectile/P)
-	P.setAngle(rotation_angle)
+	P.set_angle_centered(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/ex_act()

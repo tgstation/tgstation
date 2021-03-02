@@ -23,9 +23,9 @@
 	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
 	var/adminNamed = FALSE //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
 	var/bluespace = FALSE //If true, the pod deletes (in a shower of sparks) after landing
-	var/landingDelay = 30 //How long the pod takes to land after launching
-	var/openingDelay = 30 //How long the pod takes to open after landing
-	var/departureDelay = 30 //How long the pod takes to leave after opening. If bluespace = TRUE, it deletes. If reversing = TRUE, it flies back to centcom.
+	var/delays = list(POD_TRANSIT = 30, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	var/reverse_delays = list(POD_TRANSIT = 30, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	var/custom_rev_delay = FALSE
 	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
 	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
@@ -38,7 +38,6 @@
 	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the GLOB.podstyles list in cargo.dm defines to get the proper icon/name/desc for the pod.
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off it's newly-acquired cargo to
-	var/fallDuration = 4
 	var/fallingSoundLength = 11
 	var/fallingSound = 'sound/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
@@ -64,7 +63,6 @@
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
-	landingDelay = 15 //Slightly quicker than the supplypod
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
@@ -73,16 +71,16 @@
 	style = STYLE_SYNDICATE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
-	landingDelay = 25 //Longer than others
+	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
-	landingDelay = 20 //Very speedy!
+	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/closet/supplypod/Initialize(var/customStyle = FALSE)
+/obj/structure/closet/supplypod/Initialize(mapload, customStyle = FALSE)
 	. = ..()
 	if (!loc)
 		var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit
@@ -109,7 +107,7 @@
 		door = "[base]_door"
 	else
 		door = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
@@ -117,7 +115,7 @@
 		icon_state = GLOB.podstyles[style][POD_BASE] + "_reverse"
 	pixel_x = initial(pixel_x)
 	transform = matrix()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/backToNonReverseIcon()
 	fin_mask = initial(fin_mask)
@@ -125,33 +123,35 @@
 		icon_state = GLOB.podstyles[style][POD_BASE]
 	pixel_x = initial(pixel_x)
 	transform = matrix()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/closet_update_overlays(list/new_overlays)
 	return
 
 /obj/structure/closet/supplypod/update_overlays()
 	. = ..()
-	if (style == STYLE_INVISIBLE)
+	if(style == STYLE_INVISIBLE)
 		return
-	if (rubble)
+
+	if(rubble)
 		. += rubble.getForeground(src)
-	if (style == STYLE_SEETHROUGH)
-		for (var/atom/A in contents)
+
+	if(style == STYLE_SEETHROUGH)
+		for(var/atom/A in contents)
 			var/mutable_appearance/itemIcon = new(A)
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
 			. += itemIcon
-		for (var/t in turfs_in_cargo)//T is just a turf's type
+		for(var/t in turfs_in_cargo)//T is just a turf's type
 			var/turf/turf_type = t
 			var/mutable_appearance/itemIcon = mutable_appearance(initial(turf_type.icon), initial(turf_type.icon_state))
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
 			. += itemIcon
 		return
 
-	if (opened) //We're opened means all we have to worry about is masking a decal if we have one
-		if (!decal) //We don't have a decal to mask
+	if(opened) //We're opened means all we have to worry about is masking a decal if we have one
+		if(!decal) //We don't have a decal to mask
 			return
-		if (!door) //We have a decal but no door, so let's just add the decal
+		if(!door) //We have a decal but no door, so let's just add the decal
 			. += decal
 			return
 		var/icon/masked_decal = new(icon, decal) //The decal we want to apply
@@ -161,23 +161,25 @@
 		door_masker.Blend("#000000", ICON_SUBTRACT)
 		masked_decal.Blend(door_masker, ICON_ADD)
 		. += masked_decal
-	else //If we're closed
-		if (!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
-			if (decal)
-				. += decal
-			return
-		else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
-			. += door	
-		else
-			var/icon/masked_door = new(icon, door) //The door we want to apply
-			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
-			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
-			fin_masker.SwapColor("#ffffffff", null)
-			fin_masker.Blend("#000000", ICON_SUBTRACT)
-			masked_door.Blend(fin_masker, ICON_ADD)
-			. += masked_door
-		if (decal)
+		return
+
+	//If we're closed
+	if(!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
+		if(decal)
 			. += decal
+		return
+	else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
+		. += door
+	else
+		var/icon/masked_door = new(icon, door) //The door we want to apply
+		var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
+		fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
+		fin_masker.SwapColor("#ffffffff", null)
+		fin_masker.Blend("#000000", ICON_SUBTRACT)
+		masked_door.Blend(fin_masker, ICON_ADD)
+		. += masked_door
+	if(decal)
+		. += decal
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
 	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
@@ -194,7 +196,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = TRUE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -212,9 +214,8 @@
 		var/obj/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
 		var/turf/error_landmark_turf = get_turf(error_landmark)
 		reverse_dropoff_coords = list(error_landmark_turf.x, error_landmark_turf.y, error_landmark_turf.z)
-	landingDelay = initial(landingDelay) //Reset the landing timers so we land on whatever turf we're aiming at normally. Will be changed to be editable later (tm)
-	fallDuration = initial(fallDuration) //This is so if someone adds a really long dramatic landing time they don't have to sit through it twice on the pod's return trip
-	openingDelay = initial(openingDelay)
+	if (custom_rev_delay)
+		delays = reverse_delays
 	backToNonReverseIcon()
 	var/turf/return_turf = locate(reverse_dropoff_coords[1], reverse_dropoff_coords[2], reverse_dropoff_coords[3])
 	new /obj/effect/pod_landingzone(return_turf, src)
@@ -274,11 +275,11 @@
 		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		moveToNullspace()
-		addtimer(CALLBACK(src, .proc/open_pod, benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
+		addtimer(CALLBACK(src, .proc/open_pod, benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (style == STYLE_SEETHROUGH)
 		open_pod(src)
 	else
-		addtimer(CALLBACK(src, .proc/open_pod, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
+		addtimer(CALLBACK(src, .proc/open_pod, src), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/proc/open_pod(atom/movable/holder, broken = FALSE, forced = FALSE) //The holder var represents an atom whose contents we will be working with
 	if (!holder)
@@ -306,9 +307,9 @@
 		startExitSequence(src)
 	else
 		if (reversing)
-			addtimer(CALLBACK(src, .proc/SetReverseIcon), departureDelay/2) //Finish up the pod's duties after a certain amount of time
+			addtimer(CALLBACK(src, .proc/SetReverseIcon), delays[POD_LEAVING]/2) //Finish up the pod's duties after a certain amount of time
 		if(!stay_after_drop) // Departing should be handled manually
-			addtimer(CALLBACK(src, .proc/startExitSequence, holder), departureDelay*(4/5)) //Finish up the pod's duties after a certain amount of time
+			addtimer(CALLBACK(src, .proc/startExitSequence, holder), delays[POD_LEAVING]*(4/5)) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
 	if (leavingSound)
@@ -329,7 +330,7 @@
 	take_contents(holder)
 	playsound(holder, close_sound, soundVolume*0.75, TRUE, -3)
 	holder.setClosed()
-	addtimer(CALLBACK(src, .proc/preReturn, holder), departureDelay * 0.2) //Start to leave a bit after closing for cinematic effect
+	addtimer(CALLBACK(src, .proc/preReturn, holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
 
 /obj/structure/closet/supplypod/take_contents(atom/movable/holder)
 	var/turf/turf_underneath = holder.drop_location()
@@ -411,17 +412,17 @@
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
 	opened = TRUE
 	density = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	density = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	density = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
@@ -434,7 +435,7 @@
 		return
 	rubble = new /obj/effect/supplypod_rubble(T)
 	rubble.setStyle(rubble_type, src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/Moved()
 	deleteRubble()
@@ -443,7 +444,7 @@
 /obj/structure/closet/supplypod/proc/deleteRubble()
 	rubble?.fadeAway()
 	rubble = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/addGlow()
 	if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML)
@@ -457,10 +458,12 @@
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
-	glow_effect.fadeAway(openingDelay)
+	glow_effect.fadeAway(delays[POD_OPENING])
+	glow_effect = null
 
 /obj/structure/closet/supplypod/Destroy()
 	deleteRubble()
+	endGlow()
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
 	return ..()
 
@@ -536,7 +539,7 @@
 /obj/effect/pod_landingzone_effect/Initialize(mapload, obj/structure/closet/supplypod/pod)
 	. = ..()
 	transform = matrix() * 1.5
-	animate(src, transform = matrix()*0.01, time = pod.landingDelay+pod.fallDuration)
+	animate(src, transform = matrix()*0.01, time = pod.delays[POD_TRANSIT]+pod.delays[POD_FALLING])
 
 /obj/effect/pod_landingzone //This is the object that forceMoves the supplypod to it's location
 	name = "Landing Zone Indicator"
@@ -551,9 +554,6 @@
 	var/obj/effect/pod_landingzone_effect/helper
 	var/list/smoke_effects = new /list(13)
 
-/obj/effect/ex_act()
-	return
-
 /obj/effect/pod_landingzone/Initialize(mapload, podParam, single_order = null, clientman)
 	. = ..()
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
@@ -562,11 +562,12 @@
 	if (!pod.effectStealth)
 		helper = new (drop_location(), pod)
 		alpha = 255
-	animate(src, transform = matrix().Turn(90), time = pod.landingDelay+pod.fallDuration)
+	animate(src, transform = matrix().Turn(90), time = pod.delays[POD_TRANSIT]+pod.delays[POD_FALLING])
 	if (single_order)
 		if (istype(single_order, /datum/supply_order))
 			var/datum/supply_order/SO = single_order
-			SO.generate(pod)
+			if (SO.pack.crate_type)
+				SO.generate(pod)
 		else if (istype(single_order, /atom/movable))
 			var/atom/movable/O = single_order
 			O.forceMove(pod)
@@ -574,23 +575,23 @@
 		mob_in_pod.reset_perspective(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
 		for (var/mob/living/target_living in get_turf(src))
-			target_living.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
-	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.fallDuration < pod.fallingSoundLength)
+			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
+	if (pod.delays[POD_FALLING] == initial(pod.delays[POD_FALLING]) && pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
-	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
+	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
 	if (soundStartTime < 0)
 		soundStartTime = 1
 	if (!pod.effectQuiet && !(pod.pod_flags & FIRST_SOUNDS))
 		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
-	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.landingDelay)
+	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.delays[POD_TRANSIT])
 
 /obj/effect/pod_landingzone/proc/playFallingSound()
 	playsound(src, pod.fallingSound, pod.soundVolume, TRUE, 6)
 
 /obj/effect/pod_landingzone/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.addGlow()
-	pod.update_icon()
+	pod.update_appearance()
 	if (pod.style != STYLE_INVISIBLE)
 		pod.add_filter("motionblur",1,list("type"="motion_blur", "x"=0, "y"=3))
 	pod.forceMove(drop_location())
@@ -604,9 +605,9 @@
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
 	if (pod.style != STYLE_INVISIBLE)
-		animate(pod.get_filter("motionblur"), y = 0, time = pod.fallDuration, flags = ANIMATION_PARALLEL)
-		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.fallDuration, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL) //Make the pod fall! At an angle!
-	addtimer(CALLBACK(src, .proc/endLaunch), pod.fallDuration, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+		animate(pod.get_filter("motionblur"), y = 0, time = pod.delays[POD_FALLING], flags = ANIMATION_PARALLEL)
+		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING, flags = ANIMATION_PARALLEL) //Make the pod fall! At an angle!
+	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
 	if (pod.style == STYLE_INVISIBLE || pod.style == STYLE_SEETHROUGH)
@@ -620,17 +621,17 @@
 		smoke_effects[i] = smoke_part
 		smoke_part.pixel_x = sin(rotation)*32 * i
 		smoke_part.pixel_y = abs(cos(rotation))*32 * i
-		smoke_part.filters += filter(type = "blur", size = 4)
-		var/time = (pod.fallDuration / length(smoke_effects))*(length(smoke_effects)-i)
+		smoke_part.add_filter("smoke_blur", 1, gauss_blur_filter(size = 4))
+		var/time = (pod.delays[POD_FALLING] / length(smoke_effects))*(length(smoke_effects)-i)
 		addtimer(CALLBACK(smoke_part, /obj/effect/supplypod_smoke/.proc/drawSelf, i), time, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
-		QDEL_IN(smoke_part, pod.fallDuration + 35)
+		QDEL_IN(smoke_part, pod.delays[POD_FALLING] + 35)
 
 /obj/effect/pod_landingzone/proc/drawSmoke()
 	if (pod.style == STYLE_INVISIBLE || pod.style == STYLE_SEETHROUGH)
 		return
 	for (var/obj/effect/supplypod_smoke/smoke_part in smoke_effects)
 		animate(smoke_part, alpha = 0, time = 20, flags = ANIMATION_PARALLEL)
-		animate(smoke_part.filters[1], size = 6, time = 15, easing = CUBIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+		animate(smoke_part.get_filter("smoke_blur"), size = 6, time = 15, easing = CUBIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /obj/effect/pod_landingzone/proc/endLaunch()
 	pod.tryMakeRubble(drop_location())

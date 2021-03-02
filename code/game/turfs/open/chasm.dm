@@ -4,8 +4,9 @@
 	desc = "Watch your step."
 	baseturfs = /turf/open/chasm
 	icon = 'icons/turf/floors/chasms.dmi'
-	icon_state = "smooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	icon_state = "chasms-255"
+	base_icon_state = "chasms"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_TURF_CHASM)
 	canSmoothWith = list(SMOOTH_GROUP_TURF_CHASM)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
@@ -67,10 +68,10 @@
 			else
 				to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
 			return
-	if(istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/iron))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
+			var/obj/item/stack/tile/iron/S = C
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
@@ -80,7 +81,7 @@
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+			to_chat(user, "<span class='warning'>The plating is going to need some support! Place iron rods first.</span>")
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland
@@ -94,6 +95,8 @@
 // Chasms for Ice moon, with planetary atmos and glow
 /turf/open/chasm/icemoon
 	icon = 'icons/turf/floors/icechasms.dmi'
+	icon_state = "icechasms-255"
+	base_icon_state = "icechasms"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/icemoon
@@ -104,6 +107,8 @@
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'
+	icon_state = "junglechasm-255"
+	base_icon_state = "junglechasm"
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/jungle

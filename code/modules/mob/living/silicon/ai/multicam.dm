@@ -1,34 +1,34 @@
 //Picture in picture
 
-/obj/screen/movable/pic_in_pic/ai
+/atom/movable/screen/movable/pic_in_pic/ai
 	var/mob/living/silicon/ai/ai
 	var/mutable_appearance/highlighted_background
 	var/highlighted = FALSE
 	var/mob/camera/ai_eye/pic_in_pic/aiEye
 
-/obj/screen/movable/pic_in_pic/ai/Initialize()
+/atom/movable/screen/movable/pic_in_pic/ai/Initialize()
 	. = ..()
 	aiEye = new /mob/camera/ai_eye/pic_in_pic()
 	aiEye.screen = src
 
-/obj/screen/movable/pic_in_pic/ai/Destroy()
+/atom/movable/screen/movable/pic_in_pic/ai/Destroy()
 	set_ai(null)
 	QDEL_NULL(aiEye)
 	return ..()
 
-/obj/screen/movable/pic_in_pic/ai/Click()
+/atom/movable/screen/movable/pic_in_pic/ai/Click()
 	..()
 	if(ai)
 		ai.select_main_multicam_window(src)
 
-/obj/screen/movable/pic_in_pic/ai/make_backgrounds()
+/atom/movable/screen/movable/pic_in_pic/ai/make_backgrounds()
 	..()
 	highlighted_background = new /mutable_appearance()
 	highlighted_background.icon = 'icons/misc/pic_in_pic.dmi'
 	highlighted_background.icon_state = "background_highlight"
 	highlighted_background.layer = SPACE_LAYER
 
-/obj/screen/movable/pic_in_pic/ai/add_background()
+/atom/movable/screen/movable/pic_in_pic/ai/add_background()
 	if((width > 0) && (height > 0))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
@@ -37,35 +37,35 @@
 		standard_background.transform = M
 		add_overlay(highlighted ? highlighted_background : standard_background)
 
-/obj/screen/movable/pic_in_pic/ai/set_view_size(width, height, do_refresh = TRUE)
-	aiEye.static_visibility_range =	(round(max(width, height) / 2) + 1)
+/atom/movable/screen/movable/pic_in_pic/ai/set_view_size(width, height, do_refresh = TRUE)
+	aiEye.static_visibility_range = (round(max(width, height) / 2) + 1)
 	if(ai)
 		ai.camera_visibility(aiEye)
 	..()
 
-/obj/screen/movable/pic_in_pic/ai/set_view_center(atom/target, do_refresh = TRUE)
+/atom/movable/screen/movable/pic_in_pic/ai/set_view_center(atom/target, do_refresh = TRUE)
 	..()
 	aiEye.setLoc(get_turf(target))
 
-/obj/screen/movable/pic_in_pic/ai/refresh_view()
+/atom/movable/screen/movable/pic_in_pic/ai/refresh_view()
 	..()
 	aiEye.setLoc(get_turf(center))
 
-/obj/screen/movable/pic_in_pic/ai/proc/highlight()
+/atom/movable/screen/movable/pic_in_pic/ai/proc/highlight()
 	if(highlighted)
 		return
 	highlighted = TRUE
 	cut_overlay(standard_background)
 	add_overlay(highlighted_background)
 
-/obj/screen/movable/pic_in_pic/ai/proc/unhighlight()
+/atom/movable/screen/movable/pic_in_pic/ai/proc/unhighlight()
 	if(!highlighted)
 		return
 	highlighted = FALSE
 	cut_overlay(highlighted_background)
 	add_overlay(standard_background)
 
-/obj/screen/movable/pic_in_pic/ai/proc/set_ai(mob/living/silicon/ai/new_ai)
+/atom/movable/screen/movable/pic_in_pic/ai/proc/set_ai(mob/living/silicon/ai/new_ai)
 	if(ai)
 		ai.multicam_screens -= src
 		ai.all_eyes -= aiEye
@@ -86,7 +86,7 @@
 	name = ""
 	icon = 'icons/misc/pic_in_pic.dmi'
 	icon_state = "room_background"
-	flags_1 = NOJAUNT_1
+	flags_1 = NOJAUNT
 
 /area/ai_multicam_room
 	name = "ai_multicam_room"
@@ -120,14 +120,14 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	invisibility = INVISIBILITY_OBSERVER
 	mouse_opacity = MOUSE_OPACITY_ICON
 	icon_state = "ai_pip_camera"
-	var/obj/screen/movable/pic_in_pic/ai/screen
+	var/atom/movable/screen/movable/pic_in_pic/ai/screen
 	var/list/cameras_telegraphed = list()
 	var/telegraph_cameras = TRUE
 	var/telegraph_range = 7
 	ai_detector_color = COLOR_ORANGE
 
 /mob/camera/ai_eye/pic_in_pic/GetViewerClient()
-	if(screen && screen.ai)
+	if(screen?.ai)
 		return screen.ai.client
 
 /mob/camera/ai_eye/pic_in_pic/setLoc(turf/T)
@@ -135,7 +135,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		forceMove(T)
 	else
 		moveToNullspace()
-	if(screen && screen.ai)
+	if(screen?.ai)
 		screen.ai.camera_visibility(src)
 	else
 		GLOB.cameranet.visibility(src)
@@ -168,14 +168,14 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			continue
 		cameras_telegraphed -= C
 		C.in_use_lights--
-		C.update_icon()
+		C.update_appearance()
 	for (var/V in add)
 		var/obj/machinery/camera/C = V
 		if(QDELETED(C))
 			continue
 		cameras_telegraphed |= C
 		C.in_use_lights++
-		C.update_icon()
+		C.update_appearance()
 
 /mob/camera/ai_eye/pic_in_pic/proc/disable_camera_telegraphing()
 	telegraph_cameras = FALSE
@@ -184,7 +184,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		if(QDELETED(C))
 			continue
 		C.in_use_lights--
-		C.update_icon()
+		C.update_appearance()
 	cameras_telegraphed.Cut()
 
 /mob/camera/ai_eye/pic_in_pic/Destroy()
@@ -204,7 +204,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		if(!silent)
 			to_chat(src, "<span class='warning'>Cannot place more than [max_multicams] multicamera windows.</span>")
 		return
-	var/obj/screen/movable/pic_in_pic/ai/C = new /obj/screen/movable/pic_in_pic/ai()
+	var/atom/movable/screen/movable/pic_in_pic/ai/C = new /atom/movable/screen/movable/pic_in_pic/ai()
 	C.set_view_size(3, 3, FALSE)
 	C.set_view_center(get_turf(eyeobj))
 	C.set_ai(src)
@@ -235,7 +235,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	reset_perspective(GLOB.ai_camera_room_landmark)
 	if(client)
 		for(var/V in multicam_screens)
-			var/obj/screen/movable/pic_in_pic/P = V
+			var/atom/movable/screen/movable/pic_in_pic/P = V
 			P.show_to(client)
 
 /mob/living/silicon/ai/proc/end_multicam()
@@ -245,13 +245,13 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	select_main_multicam_window(null)
 	if(client)
 		for(var/V in multicam_screens)
-			var/obj/screen/movable/pic_in_pic/P = V
+			var/atom/movable/screen/movable/pic_in_pic/P = V
 			P.unshow_to(client)
 	reset_perspective()
 	to_chat(src, "<span class='notice'>Multiple-camera viewing mode deactivated.</span>")
 
 
-/mob/living/silicon/ai/proc/select_main_multicam_window(obj/screen/movable/pic_in_pic/ai/P)
+/mob/living/silicon/ai/proc/select_main_multicam_window(atom/movable/screen/movable/pic_in_pic/ai/P)
 	if(master_multicam == P)
 		return
 

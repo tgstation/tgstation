@@ -73,7 +73,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -188,7 +188,7 @@
 	var/can_infest_dead = FALSE
 
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == DEAD || !isturf(loc))
 		return
@@ -202,14 +202,17 @@
 					infest(victim)
 					return //This will qdelete the legion.
 
+///Create a legion at the location of a corpse. Exists so that legion subtypes can override it with their own type of legion.
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/make_legion(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
+		return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
+	else
+		return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion(H.loc)
 
+///Create a new legion using the supplied human H
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
-		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
-	else
-		L = new(H.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = make_legion(H)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
@@ -336,7 +339,7 @@
 			belt = null
 			backpack_contents = list()
 			if(prob(70))
-				backpack_contents += pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/reagent_containers/food/snacks/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
+				backpack_contents += pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
 			if(prob(30))
 				backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
 			if(prob(10))
@@ -368,7 +371,6 @@
 			r_pocket = /obj/item/tank/internals/emergency_oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Operative")
-			id_job = "Operative"
 			outfit = /datum/outfit/syndicatecommandocorpse
 		if("Shadow")
 			mob_species = /datum/species/shadow
@@ -402,6 +404,9 @@
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	loot = list(/obj/item/organ/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
+	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
 
 // Snow Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow

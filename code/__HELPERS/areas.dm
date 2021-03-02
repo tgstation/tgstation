@@ -1,8 +1,8 @@
 #define BP_MAX_ROOM_SIZE 300
 
-GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/engineering, \
-															    /area/engine/supermatter, \
-															    /area/engine/atmospherics_engine, \
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineering/main, \
+															    /area/engineering/supermatter, \
+															    /area/engineering/atmospherics_engine, \
 															    /area/ai_monitored/turret_protected/ai))
 
 // Gets an atmos isolated contained space
@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
 				return FALSE
 			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
-			if(!cardinal_cache["[dir]"] || checkT.blocks_air || !CANATMOSPASS(sourceT, checkT))
+			if(!cardinal_cache["[dir]"] || !TURFS_CAN_SHARE(sourceT, checkT))
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 

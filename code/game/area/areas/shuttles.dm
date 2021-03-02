@@ -13,6 +13,7 @@
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = /area/shuttle
+	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 
 /area/shuttle/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
@@ -28,7 +29,7 @@
 
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
-	ambientsounds = HIGHSEC
+	ambience_index = AMBIENCE_DANGER
 	area_limited_icon_smoothing = /area/shuttle/syndicate
 
 /area/shuttle/syndicate/bridge
@@ -53,6 +54,10 @@
 /area/shuttle/pirate
 	name = "Pirate Shuttle"
 	requires_power = TRUE
+
+/area/shuttle/pirate/flying_dutchman
+	name = "Flying Dutchman"
+	requires_power = FALSE
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
@@ -134,14 +139,26 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
+	area_limited_icon_smoothing = /area/shuttle/escape
+	flags_1 = CAN_BE_DIRTY_1
+	area_flags = NO_ALERTS | CULT_PERMITTED
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"
 
+/area/shuttle/escape/brig
+	name = "Escape Shuttle Brig"
+	icon_state = "shuttlered"
+
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
 	area_flags = NOTELEPORT
+
+/area/shuttle/escape/simulation
+	name = "Medieval Reality Simulation Dome"
+	icon_state = "shuttlectf"
+	area_flags = NOTELEPORT
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/escape/arena
 	name = "The Arena"

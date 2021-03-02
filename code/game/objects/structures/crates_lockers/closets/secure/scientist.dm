@@ -15,6 +15,7 @@
 	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
+	new /obj/item/clothing/head/beret/science(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/cartridge/rd(src)
 	new /obj/item/radio/headset/heads/rd(src)
@@ -27,6 +28,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/rd(src)
 	new /obj/item/storage/box/skillchips/science(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
 
 
 /obj/structure/closet/secure_closet/cytology

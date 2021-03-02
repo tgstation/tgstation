@@ -1,6 +1,3 @@
-/obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
-	SEND_SIGNAL(src, COMSIG_SHOES_STEP_ACTION)
-
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
@@ -26,15 +23,7 @@
 	inhand_icon_state = "sneakboots"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-
-/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_FEET)
-		ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
-
-/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
-	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
-	return ..()
+	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -52,12 +41,14 @@
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
 	can_be_tied = FALSE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
 	icon_state = "black"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
@@ -76,15 +67,21 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 75)
 	can_be_bloody = FALSE
-	custom_price = 600
+	custom_price = PAYCHECK_EASY * 3
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
-	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
+	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
 
-/obj/item/clothing/shoes/galoshes/dry/step_action()
+/obj/item/clothing/shoes/galoshes/dry/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+
+/obj/item/clothing/shoes/galoshes/dry/proc/on_step()
+	SIGNAL_HANDLER
+
 	var/turf/open/t_loc = get_turf(src)
 	SEND_SIGNAL(t_loc, COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
 
@@ -97,10 +94,11 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
 	lace_time = 20 SECONDS // how the hell do these laces even work??
+	species_exception = list(/datum/species/golem/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -184,6 +182,7 @@
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -291,11 +290,11 @@
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
-	lace_time = 8 SECONDS
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)
+	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
@@ -306,6 +305,7 @@
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	actions_types = list(/datum/action/item_action/wheelys)
 	///False means wheels are not popped out
 	var/wheelToggle = FALSE
@@ -346,7 +346,7 @@
 	else
 		worn_icon_state = "[initial(icon_state)]"
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(wheels)
@@ -359,8 +359,8 @@
 	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
-	custom_premium_price = 300
-	custom_price = 300
+	custom_premium_price = PAYCHECK_EASY * 5
+	custom_price = PAYCHECK_EASY * 5
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
@@ -369,9 +369,8 @@
 	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
-	custom_premium_price = 100
-	custom_price = 100
-
+	custom_premium_price = PAYCHECK_EASY * 1.6
+	custom_price = PAYCHECK_EASY * 1.6
 
 /obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
@@ -419,7 +418,7 @@
 	icon_state = "cowboy_brown"
 	permeability_coefficient = 0.05 //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 	var/list/occupants = list()
 	var/max_occupants = 4
 	can_be_tied = FALSE
@@ -445,7 +444,7 @@
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
-	if(user.stat || !(user.mobility_flags & MOBILITY_USE) || user.restrained() || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='warning'>[src] are full!</span>")
@@ -501,6 +500,7 @@
 	name = "grilling sandals"
 	icon_state = "cookflops"
 	can_be_tied = FALSE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"
@@ -513,3 +513,25 @@
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = "JackFrostShoes_worn"
+/obj/item/clothing/shoes/swagshoes
+	name = "swag shoes"
+	desc = "They got me for my foams!"
+	icon_state = "SwagShoes"
+	inhand_icon_state = "SwagShoes"
+
+/obj/item/clothing/shoes/gunboots //admin boots that fire gunshots randomly while walking
+	name = "gunboots"
+	desc = "This is what all those research points added up to, the ultimate workplace hazard."
+	icon_state = "jackboots"
+	inhand_icon_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	/// What projectile do we shoot?
+	var/projectile_type = /obj/projectile/bullet/c10mm
+	/// Each step, this is the chance we fire a shot
+	var/shot_prob = 50
+
+/obj/item/clothing/shoes/gunboots/Initialize()
+	. = ..()
+	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))

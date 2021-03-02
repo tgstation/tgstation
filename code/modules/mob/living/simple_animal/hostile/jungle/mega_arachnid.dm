@@ -15,6 +15,7 @@
 	speed = 1
 	ranged = 1
 	pixel_x = -16
+	base_pixel_x = -16
 	move_to_delay = 10
 	aggro_vision_range = 9
 	speak_emote = list("chitters")
@@ -26,7 +27,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
+/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(target && ranged_cooldown > world.time && iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -66,4 +67,4 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 	icon_state = "tentacle_end"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'

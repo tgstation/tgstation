@@ -1,17 +1,23 @@
 /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
-	caliber = "40mm"
+	caliber = CALIBER_40MM
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/grenadelauncher
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
-	caliber = "40mm"
+	caliber = CALIBER_40MM
 	max_ammo = 1
 
 /obj/item/ammo_box/magazine/internal/rocketlauncher
 	name = "rocket launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
-	caliber = "84mm"
+	caliber = CALIBER_84MM
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/foamfinger
+	name = "foam finger magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/rocket
+	caliber = CALIBER_84MM
+	max_ammo = 5000

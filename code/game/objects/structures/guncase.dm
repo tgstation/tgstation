@@ -20,7 +20,7 @@
 				I.forceMove(src)
 			if(contents.len >= capacity)
 				break
-	update_icon()
+	update_appearance()
 
 /obj/structure/guncase/update_overlays()
 	. = ..()
@@ -29,12 +29,9 @@
 		for(var/i in 1 to contents.len)
 			gun_overlay.pixel_x = 3 * (i - 1)
 			. += new /mutable_appearance(gun_overlay)
-	if(open)
-		. += "[icon_state]_open"
-	else
-		. += "[icon_state]_door"
+	. += "[icon_state]_[open ? "open" : "door"]"
 
-/obj/structure/guncase/attackby(obj/item/I, mob/user, params)
+/obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category) && open)
@@ -42,18 +39,18 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		return
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		open = !open
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
-/obj/structure/guncase/attack_hand(mob/user)
+/obj/structure/guncase/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -63,14 +60,14 @@
 		show_menu(user)
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 
 /**
-  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
-  *
-  * Arguments:
-  * * user The mob to which we are showing the radial menu
-  */
+ * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
+ *
+ * Arguments:
+ * * user The mob to which we are showing the radial menu
+ */
 /obj/structure/guncase/proc/show_menu(mob/user)
 	if(!LAZYLEN(contents))
 		return
@@ -95,14 +92,14 @@
 		return
 	if(!user.put_in_hands(weapon))
 		weapon.forceMove(get_turf(src))
-	update_icon()
+	update_appearance()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/structure/guncase/proc/check_menu(mob/living/carbon/human/user)
 	if(!open)
 		return FALSE
@@ -113,7 +110,7 @@
 	return TRUE
 
 /obj/structure/guncase/handle_atom_del(atom/A)
-	update_icon()
+	update_appearance()
 
 /obj/structure/guncase/contents_explosion(severity, target)
 	for(var/thing in contents)

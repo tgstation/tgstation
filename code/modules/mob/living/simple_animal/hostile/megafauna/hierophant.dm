@@ -380,7 +380,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed)
 	hierophant_burst(src, original, burst_range, spread_speed)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Life()
+/mob/living/simple_animal/hostile/megafauna/hierophant/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
 		if(target || loc == spawned_beacon.loc)
@@ -516,18 +516,23 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/wall //smoothing and pooling were not friends, but pooling is dead.
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
-	icon_state = "wall"
+	icon_state = "hierophant_wall_temp-0"
+	base_icon_state = "hierophant_wall_temp"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
+	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	duration = 100
-	smoothing_flags = SMOOTH_CORNERS
 
 /obj/effect/temp_visual/hierophant/wall/Initialize(mapload, new_caster)
 	. = ..()
-	QUEUE_SMOOTH_NEIGHBORS(src)
-	QUEUE_SMOOTH(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		QUEUE_SMOOTH(src)
 
 /obj/effect/temp_visual/hierophant/wall/Destroy()
-	QUEUE_SMOOTH_NEIGHBORS(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
@@ -673,7 +678,7 @@ Difficulty: Hard
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)
+		if((friendly_fire_check && caster?.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
@@ -698,7 +703,7 @@ Difficulty: Hard
 		hit_things += M
 		for(var/O in M.occupants)
 			var/mob/living/occupant = O
-			if(friendly_fire_check && caster && caster.faction_check_mob(occupant))
+			if(friendly_fire_check && caster?.faction_check_mob(occupant))
 				continue
 			to_chat(occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
@@ -726,9 +731,6 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/ex_act()
-	return
-
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = I
@@ -739,7 +741,7 @@ Difficulty: Hard
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null
-				H.update_icon()
+				H.update_appearance()
 				user.update_action_buttons_icon()
 				qdel(src)
 		else

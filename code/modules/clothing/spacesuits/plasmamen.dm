@@ -1,4 +1,4 @@
- //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
+//Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
 
 
 /obj/item/clothing/suit/space/eva/plasmaman
@@ -45,7 +45,7 @@
 	tint = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 100, ACID = 75)
 	resistance_flags = FIRE_PROOF
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_on = FALSE
 	var/helmet_on = FALSE
@@ -55,14 +55,14 @@
 	var/smile_state = "envirohelm_smile"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	visor_flags_inv = HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize()
 	. = ..()
 	visor_toggling()
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -74,10 +74,10 @@
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
 			helmet_on = FALSE
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_icon()
+			update_appearance()
 		else
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_icon()
+			update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
@@ -93,7 +93,7 @@
 				smile = TRUE
 				smile_color = CR.paint_color
 				to_chat(user, "You draw a smiley on the helmet visor.")
-				update_icon()
+				update_appearance()
 		else
 			to_chat(user, "<span class='warning'>Seems like someone already drew something on this helmet's visor!</span>")
 
@@ -112,7 +112,7 @@
 	. = ..()
 	if(smile && (clean_types & CLEAN_TYPE_PAINT))
 		smile = FALSE
-		update_icon()
+		update_appearance()
 		return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)

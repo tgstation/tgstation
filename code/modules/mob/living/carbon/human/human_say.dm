@@ -27,7 +27,7 @@
 			return real_name
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling && changeling.mimicing )
+		if(changeling?.mimicing )
 			return changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
@@ -54,12 +54,12 @@
 	return special_voice
 
 /mob/living/carbon/human/binarycheck()
-	if(ears)
-		var/obj/item/radio/headset/dongle = ears
-		if(!istype(dongle))
-			return FALSE
-		if(dongle.translate_binary)
-			return TRUE
+	if(stat >= SOFT_CRIT || !ears)
+		return FALSE
+	var/obj/item/radio/headset/dongle = ears
+	if(!istype(dongle))
+		return FALSE
+	return dongle.translate_binary
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()

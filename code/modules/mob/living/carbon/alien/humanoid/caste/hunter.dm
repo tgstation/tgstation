@@ -4,7 +4,7 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh"
-	var/obj/screen/leap_icon = null
+	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
@@ -31,7 +31,7 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || leaping)
+	if(body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED) || leaping)
 		return
 
 	if(pounce_cooldown > world.time)
@@ -44,13 +44,18 @@
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
-		leaping = 1
+		leaping = TRUE
+		//Because the leaping sprite is bigger than the normal one
+		body_position_pixel_x_offset = -32
+		body_position_pixel_y_offset = -32
 		LAZYADD(weather_immunities,"lava")
 		update_icons()
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
-	leaping = 0
+	leaping = FALSE
+	body_position_pixel_x_offset = 0
+	body_position_pixel_y_offset = 0
 	LAZYREMOVE(weather_immunities, "lava")
 	update_icons()
 
@@ -74,22 +79,10 @@
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Paralyze(40, 1, 1)
+				Paralyze(40, ignore_canstun = TRUE)
 
 			toggle_leap(0)
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>[src] smashes into [hit_atom]!</span>")
-			Paralyze(40, 1, 1)
-
-		if(leaping)
-			leaping = FALSE
-			update_icons()
-			update_mobility()
-
-
-/mob/living/carbon/alien/humanoid/float(on)
-	if(leaping)
-		return
-	..()
-
+			Paralyze(40, ignore_canstun = TRUE)
 

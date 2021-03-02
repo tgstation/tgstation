@@ -9,6 +9,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	name = "destructive analyzer"
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
+	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 	var/decon_mod = 0
 
@@ -25,8 +26,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/living/user)
+	if(!user.combat_mode)
 		. = 1
 		if(!is_insertion_ready(user))
 			return
@@ -41,14 +42,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 		updateUsrDialog()
 
 /obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
-	update_icon()
+	update_appearance()
 	reset_busy()
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
-	if(loaded_item)
-		icon_state = "d_analyzer_l"
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
+	return ..()
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src))
@@ -63,13 +62,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/food = thing.GetDeconstructableContents()
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
-	for(var/mob/M in thing)
-		M.death()
+	for(var/mob/living/victim in thing)
+		victim.death()
 
 	qdel(thing)
 	loaded_item = null
 	if (!innermode)
-		update_icon()
+		update_appearance()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id, mob/user)
@@ -112,11 +111,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
-		var/loaded_type = loaded_item.type
-		if(destroy_item(loaded_item))
-			stored_research.add_point_list(point_value)
-			stored_research.deconstructed_items[loaded_type] = point_value
-
+		destroy_item(loaded_item)
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
@@ -124,7 +119,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return FALSE
 	loaded_item.forceMove(get_turf(src))
 	loaded_item = null
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user)
@@ -133,7 +128,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	popup.set_content(ui_deconstruct())
 	popup.open()
 
-/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct()		//Legacy code
+/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct() //Legacy code
 	var/list/l = list()
 	if(!loaded_item)
 		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"

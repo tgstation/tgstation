@@ -11,7 +11,7 @@
 	. = ..()
 	AddComponent(/datum/component/swabbing, TRUE, TRUE, FALSE, null, CALLBACK(src, .proc/update_swab_icon), max_items = 1)
 
-/obj/item/swab/proc/update_swab_icon(overlays, var/list/swabbed_items)
+/obj/item/swab/proc/update_swab_icon(overlays, list/swabbed_items)
 	if(LAZYLEN(swabbed_items))
 		var/datum/biological_sample/sample = LAZYACCESS(swabbed_items, 1) //Use the first one as our target
 		var/mutable_appearance/swab_overlay = mutable_appearance(icon, "swab_[sample.sample_color]")

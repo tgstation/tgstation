@@ -10,8 +10,9 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	grind_results = list(/datum/reagent/iodine = 4)
+	material_flags = MATERIAL_NO_EFFECTS
 	var/datum/picture/picture
-	var/scribble		//Scribble on the back.
+	var/scribble //Scribble on the back.
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
@@ -21,7 +22,7 @@
 	if(!istype(P))
 		return
 	picture = P
-	update_icon()
+	update_appearance()
 	if(P.caption)
 		scribble = P.caption
 	if(setname && P.picture_name)
@@ -32,12 +33,21 @@
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 
+
+	if(!P.see_ghosts) ///Dont bother with this last bit if we can't see ghosts
+		return
+	for(var/i in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
+		if(isobserver(i))
+			set_custom_materials(list(/datum/material/hauntium = 2000))
+			break
+
 /obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
-		return
+		return ..()
 	var/icon/I = picture.get_small_icon(initial(icon_state))
 	if(I)
 		icon = I
+	return ..()
 
 /obj/item/photo/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...

@@ -27,7 +27,7 @@
 	var/list/resulting_atoms = list()
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
-/datum/micro_organism/cell_line/proc/handle_growth(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/proc/handle_growth(obj/machinery/plumbing/growing_vat/vat)
 	if(!try_eat(vat.reagents))
 		return FALSE
 	growth = max(growth, growth + calculate_growth(vat.reagents, vat.biological_sample)) //Prevent you from having minus growth.
@@ -36,7 +36,7 @@
 	return TRUE
 
 ///Tries to consume the required reagents. Can only do this if all of them are available. Reagents is the growing vats reagents
-/datum/micro_organism/cell_line/proc/try_eat(var/datum/reagents/reagents)
+/datum/micro_organism/cell_line/proc/try_eat(datum/reagents/reagents)
 	for(var/i in required_reagents)
 		if(!reagents.has_reagent(i))
 			return FALSE
@@ -45,7 +45,7 @@
 	return TRUE
 
 ///Apply modifiers on growth_rate based on supplementary and supressive reagents. Reagents is the growing vats reagents
-/datum/micro_organism/cell_line/proc/calculate_growth(var/datum/reagents/reagents, var/datum/biological_sample/biological_sample)
+/datum/micro_organism/cell_line/proc/calculate_growth(datum/reagents/reagents, datum/biological_sample/biological_sample)
 	. = growth_rate
 
 	//Handle growth based on supplementary reagents here.
@@ -63,14 +63,14 @@
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
 
 	//Handle debuffing growth based on viruses here.
-	for(var/datum/micro_organism/cell_line/virus in biological_sample.micro_organisms)
+	for(var/datum/micro_organism/virus/active_virus in biological_sample.micro_organisms)
 		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
 			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM)
 			continue //This virus is stopped, We have antiviral stuff
 		. -= virus_suspectibility
 
 ///Called once a cell line reaches 100 growth. Then we check if any cell_line is too far so we can perform an epic fail roll
-/datum/micro_organism/cell_line/proc/finish_growing(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/proc/finish_growing(obj/machinery/plumbing/growing_vat/vat)
 	var/risk = 0 //Penalty for failure, goes up based on how much growth the other cell_lines have
 
 	for(var/datum/micro_organism/cell_line/cell_line in vat.biological_sample.micro_organisms)
@@ -85,20 +85,21 @@
 	succeed_growing(vat)
 	return TRUE
 
-/datum/micro_organism/cell_line/proc/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/proc/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have dissipated!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
 
 
-/datum/micro_organism/cell_line/proc/succeed_growing(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(0, vat.loc)
 	smoke.start()
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
 			var/atom/thing = new created_thing(get_turf(vat))
+			ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 			vat.visible_message("<span class='nicegreen'>[thing] pops out of [vat]!</span>")
 
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
@@ -112,7 +113,7 @@
 		. += return_reagent_text("It hates:", suppressive_reagents)
 
 ///Return a nice list of all the reagents in a specific category with a specific prefix. This needs to be reworked because the formatting sucks ass.
-/datum/micro_organism/cell_line/proc/return_reagent_text(var/prefix_text = "It requires:", var/list/reagentlist)
+/datum/micro_organism/cell_line/proc/return_reagent_text(prefix_text = "It requires:", list/reagentlist)
 	if(!reagentlist.len)
 		return
 	var/all_reagents_text

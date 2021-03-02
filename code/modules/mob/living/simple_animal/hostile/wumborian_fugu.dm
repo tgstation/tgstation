@@ -20,6 +20,7 @@
 	maxHealth = 50
 	health = 50
 	pixel_x = -16
+	base_pixel_x = -16
 	harm_intent_damage = 5
 	obj_damage = 0
 	melee_damage_lower = 0
@@ -46,9 +47,9 @@
 	QDEL_NULL(E)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/Life()
+/mob/living/simple_animal/hostile/asteroid/fugu/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!wumbo)
-		inflate_cooldown = max((inflate_cooldown - 1), 0)
+		inflate_cooldown = max((inflate_cooldown - (0.5 * delta_time)), 0)
 	if(target && AIStatus == AI_ON)
 		E.Activate()
 	..()

@@ -41,6 +41,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list()
 	mutatelist = list()
+	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1)
 
 /obj/item/seeds/starthistle/corpse_flower/pre_attack(obj/machinery/hydroponics/I)
 	if(istype(I, /obj/machinery/hydroponics))
@@ -62,7 +63,7 @@
 	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*3.5*MIASMA_CORPSE_MOLES*delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(stank)
-	T.air_update_turf()
+	T.air_update_turf(FALSE, FALSE)
 
 //Galaxy Thistle
 /obj/item/seeds/galaxythistle
@@ -71,7 +72,7 @@
 	icon_state = "seed-galaxythistle"
 	species = "galaxythistle"
 	plantname = "Galaxythistle"
-	product = /obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	product = /obj/item/food/grown/galaxythistle
 	lifespan = 70
 	endurance = 40
 	maturation = 3
@@ -91,14 +92,13 @@
 	if(!nogenes)
 		unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
 
-/obj/item/reagent_containers/food/snacks/grown/galaxythistle
+/obj/item/food/grown/galaxythistle
 	seed = /obj/item/seeds/galaxythistle
 	name = "galaxythistle flower head"
 	desc = "This spiny cluster of florets reminds you of the highlands."
 	icon_state = "galaxythistle"
-	filling_color = "#1E7549"
-	bitesize_mod = 3
-	foodtype = VEGETABLES
+	bite_consumption_mod = 3
+	foodtypes = VEGETABLES
 	wine_power = 35
 	tastes = list("thistle" = 2, "artichoke" = 1)
 
@@ -109,7 +109,7 @@
 	icon_state = "seed-cabbage"
 	species = "cabbage"
 	plantname = "Cabbages"
-	product = /obj/item/reagent_containers/food/snacks/grown/cabbage
+	product = /obj/item/food/grown/cabbage
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -123,14 +123,13 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	seed_flags = null
 
-/obj/item/reagent_containers/food/snacks/grown/cabbage
+/obj/item/food/grown/cabbage
 	seed = /obj/item/seeds/cabbage
 	name = "cabbage"
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
-	filling_color = "#90EE90"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	wine_power = 20
 
 // Sugarcane
@@ -140,7 +139,7 @@
 	icon_state = "seed-sugarcane"
 	species = "sugarcane"
 	plantname = "Sugarcane"
-	product = /obj/item/reagent_containers/food/snacks/grown/sugarcane
+	product = /obj/item/food/grown/sugarcane
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
@@ -151,14 +150,13 @@
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
 
-/obj/item/reagent_containers/food/snacks/grown/sugarcane
+/obj/item/food/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
 	name = "sugarcane"
 	desc = "Sickly sweet."
 	icon_state = "sugarcane"
-	filling_color = "#FFD700"
-	bitesize_mod = 2
-	foodtype = VEGETABLES | SUGAR
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES | SUGAR
 	distill_reagent = /datum/reagent/consumable/ethanol/rum
 
 // Gatfruit
@@ -168,7 +166,7 @@
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
 	plantname = "Gatfruit Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+	product = /obj/item/food/grown/shell/gatfruit
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
@@ -181,14 +179,14 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	reagents_add = list(/datum/reagent/sulfur = 0.1, /datum/reagent/carbon = 0.1, /datum/reagent/nitrogen = 0.07, /datum/reagent/potassium = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+/obj/item/food/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
 	name = "gatfruit"
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
-	trash = /obj/item/gun/ballistic/revolver
-	bitesize_mod = 2
-	foodtype = FRUIT
+	trash_type = /obj/item/gun/ballistic/revolver
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	tastes = list("gunpowder" = 1)
 	wine_power = 90 //It burns going down, too.
 
@@ -199,37 +197,36 @@
 	icon_state = "seed-cherry_bomb"
 	species = "cherry_bomb"
 	plantname = "Cherry Bomb Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
+	product = /obj/item/food/grown/cherry_bomb
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
 	rarity = 60 //See above
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb
+/obj/item/food/grown/cherry_bomb
 	name = "cherry bombs"
 	desc = "You think you can hear the hissing of a tiny fuse."
 	icon_state = "cherry_bomb"
-	filling_color = rgb(20, 20, 20)
 	seed = /obj/item/seeds/cherry/bomb
-	bitesize_mod = 2
-	volume = 125 //Gives enough room for the gunpowder at max potency
+	bite_consumption_mod = 2
+	max_volume = 125 //Gives enough room for the gunpowder at max potency
 	max_integrity = 40
 	wine_power = 80
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
+/obj/item/food/grown/cherry_bomb/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
 	log_bomber(user, "primed a", src, "for detonation")
-	prime()
+	detonate()
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
+/obj/item/food/grown/cherry_bomb/deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		prime()
+		detonate()
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
+/obj/item/food/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
+/obj/item/food/grown/cherry_bomb/proc/detonate(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
 	reagents.chem_temp = 1000 //Sets off the gunpowder
@@ -242,7 +239,7 @@
 	icon_state = "seed-aloe"
 	species = "aloe"
 	plantname = "Aloe"
-	product = /obj/item/reagent_containers/food/snacks/grown/aloe
+	product = /obj/item/food/grown/aloe
 	lifespan = 60
 	endurance = 25
 	maturation = 4
@@ -252,17 +249,48 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/aloe
+/obj/item/food/grown/aloe
 	seed = /obj/item/seeds/aloe
 	name = "aloe"
 	desc = "Cut leaves from the aloe plant."
 	icon_state = "aloe"
-	filling_color = "#90EE90"
-	bitesize_mod = 5
-	foodtype = VEGETABLES
+	bite_consumption_mod = 5
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
-/obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
+/obj/item/food/grown/aloe/microwave_act(obj/machinery/microwave/M)
 	new /obj/item/stack/medical/aloe(drop_location(), 2)
 	qdel(src)
+
+/obj/item/seeds/shrub
+	name = "pack of shrub seeds"
+	desc = "These seeds grow into hedge shrubs."
+	icon_state = "seed-shrub"
+	species = "shrub"
+	plantname = "Shrubbery"
+	product = /obj/item/grown/shrub
+	lifespan = 40
+	endurance = 30
+	maturation = 4
+	production = 6
+	yield = 2
+	instability = 10
+	growthstages = 3
+	reagents_add = list()
+
+/obj/item/grown/shrub
+	seed = /obj/item/seeds/shrub
+	name = "shrub"
+	desc = "A shrubbery, it looks nice and it was only a few credits too. Plant it on the ground to grow a hedge, shrubbing skills not required."
+	icon_state = "shrub"
+
+/obj/item/grown/shrub/attack_self(mob/user)
+	var/turf/player_turf = get_turf(user)
+	if(player_turf?.is_blocked_turf(TRUE))
+		return FALSE
+	user.visible_message("<span class='danger'>[user] begins to plant \the [src]...</span>")
+	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
+		new /obj/structure/fluff/hedge/opaque(user.drop_location())
+		to_chat(user, "<span class='notice'>You plant \the [src].</span>")
+		qdel(src)

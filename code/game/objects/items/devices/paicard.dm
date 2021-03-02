@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
+	custom_premium_price = PAYCHECK_HARD * 1.25
 	var/alert_cooldown ///don't spam alart messages.
 	var/mob/living/silicon/pai/pai
 	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
@@ -20,18 +21,18 @@
 /obj/item/paicard/Initialize()
 	SSpai.pai_card_list += src
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/paicard/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname == NAMEOF(src, emotion_icon))
-		update_icon()
+		update_appearance()
 
 /obj/item/paicard/handle_atom_del(atom/A)
 	if(A == pai) //double check /mob/living/silicon/pai/Destroy() if you change these.
 		pai = null
 		emotion_icon = initial(emotion_icon)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/item/paicard/update_overlays()
@@ -145,14 +146,14 @@
 
 	attack_self(usr)
 
-// 		WIRE_SIGNAL = 1
-//		WIRE_RECEIVE = 2
-//		WIRE_TRANSMIT = 4
+// WIRE_SIGNAL = 1
+// WIRE_RECEIVE = 2
+// WIRE_TRANSMIT = 4
 
 /obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	pai = personality
 	emotion_icon = "null"
-	update_icon()
+	update_appearance()
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
