@@ -211,6 +211,7 @@
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/britevidence/foxglove/attack(mob/living/carbon/M, mob/user)
+	. = ..()
 	if(isliving(M))
 		to_chat(M, "<span class='danger'>You are stunned by the powerful poison of [src]!</span>")
 		log_combat(user, M, "attacked", src)
