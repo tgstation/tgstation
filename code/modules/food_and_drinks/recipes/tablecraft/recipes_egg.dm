@@ -55,11 +55,7 @@
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
 	reqs = list(
-<<<<<<< HEAD
 	    /datum/reagent/water = 5,
-=======
-		/datum/reagent/water = 5,
->>>>>>> 50cb158e41b09ccf69fa41d0787f9f60b9e43bb5
         /datum/reagent/consumable/soysauce = 5,
         /obj/item/food/boiledegg = 2,
         /obj/item/food/grown/mushroom/chanterelle = 1
