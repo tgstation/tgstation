@@ -84,9 +84,9 @@
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
-			blood_volume -= 5*amount
+			blood_volume = max(blood_volume - (5*amount), 0)
 		else
-			blood_volume -= amount
+			blood_volume = max(blood_volume - amount, 0)
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
 	return ..()
