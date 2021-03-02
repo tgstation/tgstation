@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - refactor: "Glowshrooms now spread and decay different from before, hopefully preventing the issues they were causing with performance"

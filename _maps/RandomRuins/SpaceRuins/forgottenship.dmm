@@ -468,7 +468,7 @@
 /obj/item/clothing/under/chameleon,
 /obj/item/pda/chameleon,
 /obj/item/clothing/mask/chameleon,
-/obj/item/card/id/syndicate/anyone,
+/obj/item/card/id/advanced/chameleon,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (

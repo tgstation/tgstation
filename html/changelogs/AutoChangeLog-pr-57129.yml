@@ -1,4 +1,0 @@
-author: "Gurkenglas"
-delete-after: True
-changes: 
-  - rscadd: "Spiders on web now ignore an absence of gravity."
