@@ -18,6 +18,12 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
+	family_heirlooms = list(/obj/item/toy/plush/pkplush)
+
+/datum/job/roboticist/New()
+	. = ..()
+	family_heirlooms += subtypesof(/obj/item/toy/prize)
+
 /datum/outfit/job/roboticist
 	name = "Roboticist"
 	jobtype = /datum/job/roboticist

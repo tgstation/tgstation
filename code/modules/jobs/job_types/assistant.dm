@@ -18,6 +18,8 @@ Assistant
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 
+	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
+
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
