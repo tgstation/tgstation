@@ -54,7 +54,7 @@
 		else
 			M = Shapeshift(M)
 		// Are we currently ventcrawling?
-		if(!M.movement_type & (VENTCRAWLING))
+		if(!(M.movement_type & VENTCRAWLING))
 			return
 
 		// Can our new form support ventcrawling?

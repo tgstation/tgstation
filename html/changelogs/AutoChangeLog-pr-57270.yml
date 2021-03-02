@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - qol: "Supermatter Monitor now shows total moles. It glows red if your SM is going to singulo."
+  - code_imp: "Supermatter's defines have been moved into it's own file in the __DEFINES folder."
