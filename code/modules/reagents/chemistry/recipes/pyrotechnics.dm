@@ -477,8 +477,9 @@
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	if(!cryostylane)
 		return ..()
-	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	holder.my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	var/turf/local_turf = get_turf(holder.my_atom)
+	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	local_turf.visible_message("The reaction frosts over, releasing it's chilly contents!")
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS)
 	clear_reactants(holder, 15)
 	holder.chem_temp += 100
@@ -486,10 +487,11 @@
 //Makes a snowman if you're too impure!
 /datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
-	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	holder.my_atom.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
+	var/turf/local_turf = get_turf(holder.my_atom)
+	playsoundlocal_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS)
-	new /obj/structure/statue/snow/snowman(get_turf(holder.my_atom))
+	new /obj/structure/statue/snow/snowman(local_turf)
 	clear_reactants(holder)
 	clear_products(holder)
 
