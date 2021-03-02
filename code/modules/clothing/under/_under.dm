@@ -119,26 +119,26 @@
 /mob/living/carbon/human/dummy/update_sensor_list()
 	return
 
-/obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
+/obj/item/clothing/under/proc/attach_accessory(obj/item/tool, mob/user, notifyAttach = 1)
 	. = FALSE
-	if(!istype(I, /obj/item/clothing/accessory))
+	if(!istype(tool, /obj/item/clothing/accessory))
 		return
-	var/obj/item/clothing/accessory/A = I
+	var/obj/item/clothing/accessory/accessory = tool
 	if(attached_accessory)
 		if(user)
 			to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 		return
 
-	if(!A.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
+	if(!accessory.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
 		return
-	if(user && !user.temporarilyRemoveItemFromInventory(I))
+	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
 		return
-	if(!A.attach(src, user))
+	if(!accessory.attach(src, user))
 		return
 
 	. = TRUE
 	if(user && notifyAttach)
-		to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
+		to_chat(user, "<span class='notice'>You attach [accessory] to [src].</span>")
 
 	var/accessory_color = attached_accessory.icon_state
 	accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
@@ -149,10 +149,10 @@
 	if(!ishuman(loc))
 		return
 
-	var/mob/living/carbon/human/H = loc
-	H.update_inv_w_uniform()
-	H.update_inv_wear_suit()
-	H.fan_hud_set_fandom()
+	var/mob/living/carbon/human/holder = loc
+	holder.update_inv_w_uniform()
+	holder.update_inv_wear_suit()
+	holder.fan_hud_set_fandom()
 
 /obj/item/clothing/under/proc/remove_accessory(mob/user)
 	. = FALSE
@@ -165,21 +165,21 @@
 		return
 
 	. = TRUE
-	var/obj/item/clothing/accessory/A = attached_accessory
+	var/obj/item/clothing/accessory/accessory = attached_accessory
 	attached_accessory.detach(src, user)
-	if(user.put_in_hands(A))
-		to_chat(user, "<span class='notice'>You detach [A] from [src].</span>")
+	if(user.put_in_hands(accessory))
+		to_chat(user, "<span class='notice'>You detach [accessory] from [src].</span>")
 	else
-		to_chat(user, "<span class='notice'>You detach [A] from [src] and it falls on the floor.</span>")
+		to_chat(user, "<span class='notice'>You detach [accessory] from [src] and it falls on the floor.</span>")
 
 	update_appearance()
 	if(!ishuman(loc))
 		return
 
-	var/mob/living/carbon/human/H = loc
-	H.update_inv_w_uniform()
-	H.update_inv_wear_suit()
-	H.fan_hud_set_fandom()
+	var/mob/living/carbon/human/holder = loc
+	holder.update_inv_w_uniform()
+	holder.update_inv_wear_suit()
+	holder.fan_hud_set_fandom()
 
 
 /obj/item/clothing/under/examine(mob/user)
