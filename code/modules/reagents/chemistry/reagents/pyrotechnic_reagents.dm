@@ -214,7 +214,7 @@
 
 /datum/reagent/cryostylane
 	name = "Cryostylane"
-	description = "Induces a cryostasis like state in a patient's organs, preventing them from decaying while dead. Slows down surgery while in a patient however. When reacted with oxygen, it will slowly consume it and reduce a container's temperature to 0K."
+	description = "Induces a cryostasis like state in a patient's organs, preventing them from decaying while dead. Slows down surgery while in a patient however. When reacted with oxygen, it will slowly consume it and reduce a container's temperature to 0K. Also damages slime simplemobs when 5u is sprayed."
 	color = "#0000DC"
 	ph = 8.6
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
