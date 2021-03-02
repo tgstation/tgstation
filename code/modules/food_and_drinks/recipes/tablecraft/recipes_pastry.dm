@@ -432,16 +432,6 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/chawanmushi
-	name = "Chawanmushi"
-	reqs = list(
-		/datum/reagent/water = 5,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/boiledegg = 2,
-		/obj/item/food/grown/mushroom/chanterelle = 1
-	)
-	result = /obj/item/food/chawanmushi
-	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
