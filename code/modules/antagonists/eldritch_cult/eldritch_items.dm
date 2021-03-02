@@ -377,6 +377,7 @@
 	LAZYADD(current_runes, eldritch)
 	RegisterSignal(eldritch, COMSIG_PARENT_QDELETING, .proc/on_rune_del)
 
+///Called when a rune is deleted and needs to get it's reference cleared
 /obj/item/melee/rune_carver/proc/on_rune_del(datum/source)
 	SIGNAL_HANDLER
 	LAZYREMOVE(current_runes, source)
