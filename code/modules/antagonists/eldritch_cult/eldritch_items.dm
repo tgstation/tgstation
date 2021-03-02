@@ -308,8 +308,8 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava))
 	///A check to see if you are in process of drawing a rune
 	var/drawing = FALSE
-	///A list of current runes
-	var/list/current_runes = list()
+	///A lazylist of current runes
+	var/list/current_runes
 	///Max amount of runes
 	var/max_rune_amt = 3
 	///Linked action
@@ -349,12 +349,7 @@
 		to_chat(user,"<span class='notice'>You can't draw runes that close to each other!</span>")
 		return
 
-	for(var/_rune_ref in current_runes)
-		var/datum/weakref/rune_ref = _rune_ref
-		if(!rune_ref.resolve())
-			current_runes -= rune_ref
-
-	if(current_runes.len >= max_rune_amt)
+	if(LAZYLEN(current_runes) >= max_rune_amt)
 		to_chat(user,"<span class='notice'>The blade cannot support more runes!</span>")
 		return
 
@@ -379,7 +374,12 @@
 	drawing = FALSE
 	var/obj/structure/trap/eldritch/eldritch = new type(target)
 	eldritch.set_owner(user)
-	current_runes += WEAKREF(eldritch)
+	LAZYADD(current_runes, eldritch)
+	RegisterSignal(eldritch, COMSIG_PARENT_QDELETING, .proc/on_rune_del)
+
+/obj/item/melee/rune_carver/proc/on_rune_del(datum/source)
+	SIGNAL_HANDLER
+	LAZYREMOVE(current_runes, source)
 
 /datum/action/innate/rune_shatter
 	name = "Rune break"
@@ -396,10 +396,8 @@
 	return ..()
 
 /datum/action/innate/rune_shatter/Activate()
-	for(var/_rune_ref in sword.current_runes)
-		var/datum/weakref/rune_ref = _rune_ref
-		qdel(rune_ref.resolve())
-	sword.current_runes.Cut()
+	QDEL_LIST(sword.current_runes)
+	UNSETEMPTY(sword.current_runes)
 
 /obj/item/eldritch_potion
 	name = "Brew of Day and Night"
