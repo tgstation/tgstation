@@ -62,3 +62,4 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
 	subcategory = CAT_EGG
+	
