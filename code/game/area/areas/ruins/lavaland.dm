@@ -99,3 +99,7 @@
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
 	icon_state = "red"
+
+/area/ruin/unpowered/ratvar
+	icon_state = "dk_yellow"
+	outdoors = TRUE
