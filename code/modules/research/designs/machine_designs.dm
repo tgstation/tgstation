@@ -249,7 +249,7 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/circuit_imprinter/away
+/datum/design/board/circuit_imprinter/offstation
 	name = "Machine Design (Ancient Circuit Imprinter Board)"
 	desc = "The circuit board for an ancient circuit imprinter."
 	id = "circuit_imprinter_offstation"
