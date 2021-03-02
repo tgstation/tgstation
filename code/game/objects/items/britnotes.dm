@@ -177,3 +177,46 @@
 	name = "potted foxglove"
 	desc = "The bell-like petals are poisonous to anything that hasn't evolved to interact with them. They remind you of someone you used to know."
 	icon_state = "flower"
+	damtype = BURN
+	force = 15
+	throwforce = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	throw_speed = 1
+	throw_range = 3
+	attack_verb_continuous = list("stings")
+	attack_verb_simple = list("sting")
+
+/obj/item/britevidence/foxglove/pickup(mob/living/carbon/user)
+	..()
+	if(!iscarbon(user))
+		return FALSE
+	var/mob/living/carbon/C = user
+	if(C.gloves)
+		return FALSE
+	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
+		return FALSE
+	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
+	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
+	if(affecting)
+		if(affecting.receive_damage(0, force))
+			C.update_damage_overlays()
+	to_chat(C, "<span class='userdanger'>The foxglove burns your bare hand!</span>")
+	if(prob(50))
+		user.Paralyze(50)
+		to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
+	return TRUE
+
+/obj/item/britevidence/foxglove/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS|TOXLOSS)
+
+/obj/item/britevidence/foxglove/attack(mob/living/carbon/M, mob/user)
+	if(isliving(M))
+		to_chat(M, "<span class='danger'>You are stunned by the powerful poison of [src]!</span>")
+		log_combat(user, M, "attacked", src)
+
+		M.adjust_blurriness(force/7)
+		if(prob(20))
+			M.Unconscious(force / 0.3)
+			M.Paralyze(force / 0.75)
+		M.drop_all_held_items()
