@@ -1,3 +1,4 @@
+import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -29,7 +30,7 @@ const ShoppingTab = (props, context) => {
     <Stack fill vertical>
       <Section mb={-0.9}>
         <Stack.Item>
-          <Stack>
+          <Stack textAlign="center">
             <Stack.Item grow>
               <Button
                 fluid
@@ -77,7 +78,7 @@ const ShoppingTab = (props, context) => {
                       value={item.amt && item.amt || 0}
                       width="41px"
                       minValue={0}
-                      maxValue={50}
+                      maxValue={20}
                       onChange={(e, value) => act('cart_set', {
                         target: item.ref,
                         amt: value,
@@ -159,20 +160,32 @@ const CheckoutTab = (props, context) => {
       <Stack.Item>
         <Section>
           <Stack>
-            <Stack.Item mt={0.5}>
+            <Stack.Item grow mt={0.5}>
               Total Cost: {total_cost}
             </Stack.Item>
             <Stack.Item grow textAlign="center">
               <Button
                 fluid
+                icon="plane-departure"
                 content="Purchase"
+                tooltip={multiline`
+                Your groceries will arrive at cargo,
+                and hopefully get delivered by them.
+                `}
+                tooltipPosition="top"
                 onClick={() => act('purchase')} />
             </Stack.Item>
-            <Stack.Item textAlign="center">
+            <Stack.Item grow textAlign="center">
               <Button
                 fluid
+                icon="parachute-box"
                 color="yellow"
                 content="Express"
+                tooltip={multiline`
+                Sends the ingredients instantly,
+                and doesn't lock the console. 25% upcharge!
+                `}
+                tooltipPosition="top-left"
                 onClick={() => act('express')} />
             </Stack.Item>
           </Stack>
@@ -189,12 +202,13 @@ const OrderSent = (props, context) => {
       <Stack vertical>
         <Stack.Item>
           <Icon
+            ml="30%"
             color="green"
             name="plane-arrival"
             size={10}
           />
         </Stack.Item>
-        <Stack.Item mt={40} fontSize="15px" color="green">
+        <Stack.Item fontSize="15px" color="green">
           Order sent! Locked until the cargo shuttle arrives...
         </Stack.Item>
       </Stack>
@@ -215,7 +229,7 @@ export const ProduceConsole = (props, context) => {
   return (
     <Window
       title="Produce Orders"
-      width={400}
+      width={500}
       height={400}>
       <Window.Content>
         {!!already_ordered && (

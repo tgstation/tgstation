@@ -17,6 +17,7 @@
 /obj/machinery/computer/chef_order/Initialize()
 	. = ..()
 	radio = new(src)
+	radio.frequency = FREQ_SUPPLY
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
@@ -89,7 +90,7 @@
 				say("Sorry, but you do not have enough money.")
 				return
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
-			var/message = "The chef has ordered groceries! Please make sure it gets to them pronto!"
+			var/message = "The chef has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
 			radio.talk_into(src, message, radio_channel)
 			SSshuttle.chef_groceries = grocery_list.Copy()
 			grocery_list.Cut()
