@@ -11,9 +11,8 @@
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 
-	/// The singularity component itself.
-	/// A weak ref in case an admin removes the component to preserve the functionality.
-	var/datum/weakref/singularity_component
+	///Gravpull amount to set for the singularity component we attach in Initialize()
+	var/gravpull_amount = 4
 
 	var/current_size = 1
 	var/allowed_size = 1
@@ -42,19 +41,19 @@
 	AddElement(/datum/element/point_of_interest)
 	GLOB.singularities |= src
 
-	var/datum/component/singularity/new_component = AddComponent(
-		/datum/component/singularity, \
-		consume_callback = CALLBACK(src, .proc/consume), \
-	)
-
-	singularity_component = WEAKREF(new_component)
-
-	expand(current_size)
-
+	var/obj/machinery/power/singularity_beacon/beacon
 	for (var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
 		if (singubeacon.active)
-			new_component.target = singubeacon
+			beacon = singubeacon
 			break
+
+	AddComponent(/datum/component/singularity, \
+		consume_callback = CALLBACK(src, .proc/consume), \
+		grav_pull = gravpull_amount, \
+		immediate_target = beacon, \
+	)
+
+	expand(current_size)
 
 	if (!mapload)
 		notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
@@ -229,13 +228,7 @@
 			new_consume_range = 5
 			dissipate = FALSE
 
-	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
-	if (!isnull(resolved_singularity))
-		resolved_singularity.consume_range = new_consume_range
-		resolved_singularity.grav_pull = new_grav_pull
-		resolved_singularity.disregard_failed_movements = current_size >= STAGE_FIVE
-		resolved_singularity.roaming = move_self && current_size >= STAGE_TWO
-		resolved_singularity.singularity_size = current_size
+	SEND_SIGNAL(src, COMSIG_SINGULO_SIZE_CHANGE, new_consume_range, new_grav_pull, current_size >= STAGE_FIVE, move_self && current_size >= STAGE_TWO, current_size)
 
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)

@@ -49,6 +49,7 @@
 	notify_admins = TRUE,
 	singularity_size = STAGE_ONE,
 	roaming = TRUE,
+	immediate_target = null
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -61,6 +62,8 @@
 	src.notify_admins = notify_admins
 	src.roaming = roaming
 	src.singularity_size = singularity_size
+	if(immediate_target)
+		target = immediate_target
 
 /datum/component/singularity/RegisterWithParent()
 	START_PROCESSING(SSdcs, src)
@@ -84,6 +87,7 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_BUMPED, COMSIG_MOVABLE_CROSSED), .proc/consume)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
+	RegisterSignal(parent, COMSIG_SINGULO_SIZE_CHANGE, .proc/on_singulo_size_change)
 
 	if (notify_admins)
 		admin_investigate_setup()
@@ -283,12 +287,27 @@
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
+	SIGNAL_HANDLER
 	if (!bsa_targetable)
 		return
 
 	var/atom/atom_parent = parent
 	atom_parent.investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
 	qdel(parent)
+
+///Registers for any changes that might take place that affect the status of the singulo to then update the component
+/datum/component/singularity/proc/on_singulo_size_change(datum/source, new_consume_range, new_grav_pull, new_disregard_failed_movements, new_roaming, new_singularity_size)
+	SIGNAL_HANDLER
+	if(!isnull(new_consume_range))
+		consume_range = new_consume_range
+	if(!isnull(new_grav_pull))
+		grav_pull = new_grav_pull
+	if(!isnull(new_disregard_failed_movements))
+		disregard_failed_movements = new_disregard_failed_movements
+	if(!isnull(new_roaming))
+		roaming = new_roaming
+	if(!isnull(new_singularity_size))
+		singularity_size = new_singularity_size
 
 #undef CHANCE_TO_MOVE_TO_TARGET
 #undef FIELD_CONTAINMENT_DISTANCE

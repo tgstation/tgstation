@@ -197,9 +197,9 @@
 	flick("narsie_spawn_anim", src)
 	addtimer(CALLBACK(src, .proc/narsie_spawn_animation_end), 3.5 SECONDS)
 
+///Called after the flick for narsies spawn animation is done and sets her to start roaming
 /obj/narsie/proc/narsie_spawn_animation_end()
-	var/datum/component/singularity/singularity_component = singularity.resolve()
-	singularity_component?.roaming = TRUE
+	SEND_SIGNAL(src, COMSIG_SINGULO_SIZE_CHANGE, null, null, null, TRUE)
 
 /proc/begin_the_end()
 	sleep(50)
