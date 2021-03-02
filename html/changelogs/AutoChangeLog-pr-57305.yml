@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Japanese Tourists have been added!"
+  - rscadd: "And they brought Beef Stroganoff!"
