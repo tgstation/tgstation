@@ -550,7 +550,7 @@
 	if(slot != ITEM_SLOT_EYES)
 		return
 	var/mob/living/carbon/human/H = user
-	if(user.gender == FEMALE)
+	if(ishuman(user) && user.gender == FEMALE)
 		old_hair = H.hairstyle
 		old_beard = H.facial_hairstyle
 		old_hair_color = H.hair_color
@@ -562,6 +562,7 @@
 		H.hair_color = sanitize_hexcolor("#1E1D27")
 		H.facial_hair_color = sanitize_hexcolor("#1E1D27")
 		user.update_hair()
+		user.set_species(/datum/species/ethereal)
 		icon_state = "red_glasses"
 		inhand_icon_state = "red_glasses"
 		name = "red glasses"
@@ -573,7 +574,8 @@
 	if(handled)
 		var/mob/living/carbon/human/H = user
 		var/turf/T = get_turf(user)
-		if(user.gender == MALE)
+		if(isethereal(user))
+			H.set_species(/datum/species/human)
 			user.gender = FEMALE
 			handled = FALSE
 			user.visible_message("<span class='boldnotice'>In a flash of light, the façade is broken!</span>", "<span class='boldwarning'>Your disguise has been revealed!</span>")
@@ -582,8 +584,8 @@
 			H.hair_color = old_hair_color
 			H.facial_hair_color = old_beard_color
 			H.update_hair()
-			playsound(T, 'sound/effects/phasein.ogg', 40, TRUE)
 
+			playsound(T, 'sound/effects/phasein.ogg', 40, TRUE)
 			for(var/mob/living/carbon/C in viewers(T, null))
 				C.flash_act()
 			icon_state = "fox"
