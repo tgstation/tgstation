@@ -26,6 +26,8 @@
 	return ..()
 
 /obj/projectile/curse_hand/fire(setAngle)
+	if(QDELETED(src)) //I'm going to try returning nothing because if it's being deleted, surely we don't want anything to happen?
+		return
 	if(starting)
 		arm = starting.Beam(src, icon_state = "curse[handedness]", beam_type=/obj/effect/ebeam/curse_arm)
 	..()
@@ -44,6 +46,8 @@
 	leftover.icon_state = icon_state
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
 		qdel(G)
+	if(!T) //T can be in nullspace when src is set to QDEL
+		return
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
 	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, beam_type=/obj/effect/ebeam/curse_arm)
 	animate(D.visuals, alpha = 0, time = 32)

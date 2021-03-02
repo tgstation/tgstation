@@ -523,6 +523,8 @@
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+///from end of fully_heal(): (admin_revive)
+#define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 
 ///From /datum/component/creamed/Initialize()
 #define COMSIG_MOB_CREAMED "mob_creamed"

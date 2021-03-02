@@ -147,6 +147,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Whether or not a random event has been hijacked this midround cycle
 	var/random_event_hijacked = HIJACKED_NOTHING
 
+	/// The timer ID for the cancellable midround rule injection
+	var/midround_injection_timer_id
+
+	/// The last drafted midround rulesets (without the current one included).
+	/// Used for choosing different midround injections.
+	var/list/current_midround_rulesets
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
@@ -230,6 +237,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
 		message_admins("[key_name(usr)] executed the [added_rule] ruleset.")
 		picking_specific_rule(added_rule, TRUE)
+	else if(href_list["cancelmidround"])
+		admin_cancel_midround(usr, href_list["cancelmidround"])
+		return
+	else if (href_list["differentmidround"])
+		admin_different_midround(usr, href_list["differentmidround"])
+		return
 
 	admin_panel() // Refreshes the window
 
@@ -535,40 +548,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
-/// Picks a random midround OR latejoin rule from the list given as an argument and executes it.
-/// Also this could be named better.
-/datum/game_mode/dynamic/proc/picking_midround_latejoin_rule(list/drafted_rules = list(), forced = FALSE)
-	var/datum/dynamic_ruleset/rule = pickweight(drafted_rules)
-	if(!rule)
-		return FALSE
-
-	if(!forced)
-		if(only_ruleset_executed)
-			return FALSE
-		// Check if a blocking ruleset has been executed.
-		else if(check_blocking(rule.blocking_rules, executed_rules))
-			drafted_rules -= rule
-			if(drafted_rules.len <= 0)
-				return FALSE
-			rule = pickweight(drafted_rules)
-		// Check if the ruleset is high impact and if a high impact ruleset has been executed
-		else if(rule.flags & HIGH_IMPACT_RULESET)
-			if(threat_level < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-				if(high_impact_ruleset_executed)
-					drafted_rules -= rule
-					if(drafted_rules.len <= 0)
-						return FALSE
-					rule = pickweight(drafted_rules)
-
-	if(!rule.repeatable)
-		if(rule.ruletype == "Latejoin")
-			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
-		else if(rule.ruletype == "Midround")
-			midround_rules = remove_from_list(midround_rules, rule.type)
-
-	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
-	return TRUE
-
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
 /datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
 	var/datum/dynamic_ruleset/midround/new_rule
@@ -616,32 +595,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
-/// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
-/datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
-	var/datum/dynamic_ruleset/rule = sent_rule
-	spend_midround_budget(rule.cost)
-	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
-	rule.pre_execute(current_players[CURRENT_LIVING_PLAYERS].len)
-	if (rule.execute())
-		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		if(rule.flags & HIGH_IMPACT_RULESET)
-			high_impact_ruleset_executed = TRUE
-		else if(rule.flags & ONLY_RULESET)
-			only_ruleset_executed = TRUE
-		if(rule.ruletype == "Latejoin")
-			var/mob/M = pick(rule.candidates)
-			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-		executed_rules += rule
-		rule.candidates.Cut()
-		if (rule.persistent)
-			current_rules += rule
-		new_snapshot(rule)
-		return TRUE
-	rule.clean_up()
-	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
-	return FALSE
-
 /datum/game_mode/dynamic/process()
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
@@ -678,7 +631,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					if (rule.ready())
 						drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
-				picking_midround_latejoin_rule(drafted_rules)
+				pick_midround_rule(drafted_rules)
 		else if (random_event_hijacked == HIJACKED_TOO_SOON)
 			log_game("DYNAMIC: Midround injection failed when random event was hijacked. Spawning another random event in its place.")
 
@@ -692,7 +645,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.
 /datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
 	if(forced_injection)
-		forced_injection = !dry_run
+		forced_injection = dry_run
 		return 100
 	var/chance = 0
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/5))
@@ -759,7 +712,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_latejoin_rule.trim_candidates()
 		log_game("DYNAMIC: Forcing ruleset [forced_latejoin_rule]")
 		if (forced_latejoin_rule.ready(TRUE))
-			picking_midround_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
+			if (!forced_latejoin_rule.repeatable)
+				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
+			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
@@ -778,7 +733,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (rule.ready())
 					drafted_rules[rule] = rule.get_weight()
 
-		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
+		if (drafted_rules.len > 0 && pick_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
 			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 

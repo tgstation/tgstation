@@ -198,8 +198,8 @@
 		SStgui.close_uis(src)
 		return
 
-	// Enable picking paper up by clicking on it with the clipboard
-	if(istype(P, /obj/item/clipboard))
+	// Enable picking paper up by clicking on it with the clipboard or folder
+	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder))
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))

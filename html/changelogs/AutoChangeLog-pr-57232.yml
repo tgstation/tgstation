@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - code_imp: "Should be less likely to get inedible food now"
-  - bugfix: "Slicing penguin meat slabs into raw cutlets should work again"
