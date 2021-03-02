@@ -75,12 +75,11 @@
 /mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)
 	. = ..()
 	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	playsound(get_turf(src), customer_info.speech_sound, TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 5)
+	playsound(src, customer_info.speech_sound, TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 5)
 
 /mob/living/simple_animal/robot_customer/examine(mob/user)
 	. = ..()
 	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 		. += "<span class='notice'>Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"</span>"
-
 
