@@ -605,7 +605,7 @@
 						var/mobhealth = H.health
 						H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), 0)
 						if(HAS_TRAIT(H, TRAIT_TOXINLOVER))
-							H.adjustToxLoss(-(mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0)
+							H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0, TRUE) // force tox heal for toxin lovers
 						else
 							H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0)
 						H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
