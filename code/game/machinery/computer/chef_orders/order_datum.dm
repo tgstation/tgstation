@@ -6,7 +6,8 @@
 ///A datum for chef ordering options from the chef's computer.
 /datum/orderable_item
 	var/name = "Orderable Item Name"
-	var/desc = "Description Gets Set By The Item Itself"
+	//description set automatically unless it's hard set by the subtype
+	var/desc
 	var/category_index = CATEGORY_FRUITS_VEGGIES
 	var/obj/item/item_instance
 	var/cost_per_order = 10
@@ -18,7 +19,8 @@
 	if(!item_instance)
 		CRASH("[type] orderable item datum has NO ITEM PATH!")
 	item_instance = new item_instance
-	desc = item_instance.desc
+	if(!desc)
+		desc = item_instance.desc
 
 /datum/orderable_item/Destroy(force, ...)
 	. = ..()
@@ -48,6 +50,7 @@
 
 /datum/orderable_item/mushroom
 	name = "Plump Helmet"
+	desc = "Plumus Hellmus: Plump, soft and s-so inviting~"
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/food/grown/mushroom/plumphelmet
 
@@ -66,10 +69,35 @@
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance =/obj/item/food/grown/apple
 
+/datum/orderable_item/pumpkin
+	name = "Pumpkin"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance =/obj/item/food/grown/pumpkin
+
+/datum/orderable_item/watermelon
+	name = "Watermelon"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance =/obj/item/food/grown/watermelon
+
+/datum/orderable_item/corn
+	name = "Corn"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/corn
+
+/datum/orderable_item/soybean
+	name = "Soybeans"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/soybeans
+
 /datum/orderable_item/garlic
 	name = "Garlic"
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/food/grown/garlic
+
+/datum/orderable_item/cherries
+	name = "Cherries"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/cherries
 
 //Milk and Eggs
 
@@ -96,6 +124,11 @@
 	category_index = CATEGORY_MILK_EGGS
 	item_instance = /obj/item/food/fishmeat
 	cost_per_order = 12
+
+/datum/orderable_item/spider_eggs
+	name = "Spider Eggs"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/spidereggs
 
 //Reagents
 

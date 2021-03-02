@@ -5,14 +5,14 @@
 	icon_screen = "request"
 	icon_keyboard = "generic_key"
 	circuit = /obj/item/circuitboard/computer/chef_order
+	light_color = LIGHT_COLOR_ORANGE
 
+	COOLDOWN_DECLARE(order_cooldown)
 	var/list/order_datums = list()
 	var/list/grocery_list = list()
 
 	var/obj/item/radio/radio
 	var/radio_channel = RADIO_CHANNEL_SUPPLY
-
-	light_color = LIGHT_COLOR_ORANGE
 
 /obj/machinery/computer/chef_order/Initialize()
 	. = ..()
@@ -47,7 +47,7 @@
 
 /obj/machinery/computer/chef_order/ui_data(mob/user)
 	. = ..()
-	.["already_ordered"] = SSshuttle.chef_groceries.len
+	.["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 /obj/machinery/computer/chef_order/ui_static_data(mob/user)
 	. = ..()
@@ -79,7 +79,7 @@
 				grocery_list -= wanted_item
 			update_static_data(chef)
 		if("purchase")
-			if(SSshuttle.chef_groceries.len || !grocery_list.len)
+			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
 			if(!chef_card || !chef_card.registered_account)
@@ -90,23 +90,30 @@
 				say("Sorry, but you do not have enough money.")
 				return
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
-			var/message = "The chef has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
+			var/message = "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
 			radio.talk_into(src, message, radio_channel)
-			SSshuttle.chef_groceries = grocery_list.Copy()
+			COOLDOWN_START(src, order_cooldown, 60 SECONDS)
+			for(var/datum/orderable_item/ordered_item in grocery_list)
+				if(ordered_item in SSshuttle.chef_groceries)
+					SSshuttle.chef_groceries[ordered_item] += grocery_list[ordered_item]
+				else
+					SSshuttle.chef_groceries[ordered_item] = grocery_list[ordered_item]
 			grocery_list.Cut()
 			update_static_data(chef)
 		if("express")
-			if(SSshuttle.chef_groceries.len || !grocery_list.len)
+			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
 			if(!chef_card || !chef_card.registered_account)
 				say("No bank account detected!")
 				return
 			var/final_cost = get_total_cost()
-			final_cost *= 1.25
+			final_cost *= 2
 			if(!chef_card.registered_account.adjust_money(-final_cost))
 				say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
 				return
+			say("Thank you for your purchase! Please note: The charge of this purchase and machine cooldown has been doubled!")
+			COOLDOWN_START(src, order_cooldown, 120 SECONDS)
 			var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 			pod.explosionSize = list(0,0,0,0)
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order

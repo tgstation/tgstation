@@ -183,7 +183,7 @@ const CheckoutTab = (props, context) => {
                 content="Express"
                 tooltip={multiline`
                 Sends the ingredients instantly,
-                and doesn't lock the console. 25% upcharge!
+                and locks the console longer. Doubles the price!
                 `}
                 tooltipPosition="top-left"
                 onClick={() => act('express')} />
@@ -202,14 +202,14 @@ const OrderSent = (props, context) => {
       <Stack vertical>
         <Stack.Item>
           <Icon
-            ml="30%"
+            ml="28%"
             color="green"
             name="plane-arrival"
             size={10}
           />
         </Stack.Item>
-        <Stack.Item fontSize="15px" color="green">
-          Order sent! Locked until the cargo shuttle arrives...
+        <Stack.Item fontSize="18px" color="green">
+          Order sent! Machine on cooldown...
         </Stack.Item>
       </Stack>
     </Dimmer>
@@ -219,7 +219,7 @@ const OrderSent = (props, context) => {
 export const ProduceConsole = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    already_ordered,
+    off_cooldown,
   } = data;
   const [
     tabIndex,
@@ -232,7 +232,7 @@ export const ProduceConsole = (props, context) => {
       width={500}
       height={400}>
       <Window.Content>
-        {!!already_ordered && (
+        {!off_cooldown && (
           <OrderSent />
         )}
         <Stack vertical fill>
