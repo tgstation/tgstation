@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Announced Extended shifts now send a command report listing station traits."
+  - spellcheck: "Fixed some punctuation in station trait reports."
+  - code_imp: "Reduced some copy+paste in gamemode intercepts"
