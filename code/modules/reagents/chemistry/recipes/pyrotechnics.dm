@@ -489,7 +489,7 @@
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	holder.my_atom.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS)
-	new /obj/structure/statue/snow/snowman(holder.my_atom.loc)
+	new /obj/structure/statue/snow/snowman(get_turf(holder.my_atom))
 	clear_reactants(holder)
 	clear_products(holder)
 
