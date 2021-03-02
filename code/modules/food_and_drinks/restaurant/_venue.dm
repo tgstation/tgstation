@@ -5,7 +5,7 @@
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
-	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 1, /datum/customer_data/japanese/salaryman = 1)
+	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2)
 	///Is the venue open at the moment?
 	var/open
 	///Portal linked to this venue at the moment

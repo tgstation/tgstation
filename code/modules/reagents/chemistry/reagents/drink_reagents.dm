@@ -757,7 +757,7 @@
 	glass_name = "cherry shake"
 	glass_desc = "A cherry flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	glass_price = DRINK_PRICE_EASY
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/bluecherryshake
 	name = "Blue Cherry Shake"
