@@ -137,6 +137,12 @@
 		if(A.buffed || (A.type in banned_mobs) || A.stat)
 			to_chat(user, "<span class='warning'>Something's interfering with [src]'s effects. It's no use.</span>")
 			return
+		if(A.mob_biotypes & MOB_ROBOTIC)
+			to_chat(user, "<span class='warning'>[src] doesn't work on robotic lifeforms! That makes no sense!</span>")
+			return
+		if(A.mob_biotypes & MOB_SPIRIT)
+			to_chat(user, "<span class='warning'>You can't apply [src] to [A], they're a spirit!</span>")
+			return
 		A.buffed++
 		A.maxHealth *= 1.5
 		A.health = min(A.maxHealth,A.health*1.5)
