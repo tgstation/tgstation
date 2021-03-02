@@ -88,4 +88,4 @@
 
 /mob/living/simple_animal/robot_customer/Login()
 	. = ..()
-	status_flags |= GODMODE //owned admin
+	status_flags &= ~GODMODE //owned admin
