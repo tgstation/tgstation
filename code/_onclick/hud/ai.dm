@@ -191,7 +191,7 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
-	using.screen_loc = ui_borg_language_menu
+	using.screen_loc = ui_ai_language_menu
 	using.hud = src
 	static_inventory += using
 
