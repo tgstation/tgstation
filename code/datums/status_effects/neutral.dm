@@ -130,11 +130,11 @@
 	icon_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
-	owner.apply_status_effect(STATUS_EFFECT_SURRENDER)
+	owner.apply_status_effect(STATUS_EFFECT_SURRENDER, src)
 	return ..()
 
 /datum/status_effect/grouped/heldup/on_remove()
-	owner.remove_status_effect(STATUS_EFFECT_SURRENDER)
+	owner.remove_status_effect(STATUS_EFFECT_SURRENDER, src)
 	return ..()
 
 // holdup is for the person aiming
