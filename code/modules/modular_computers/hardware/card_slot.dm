@@ -6,11 +6,21 @@
 	w_class = WEIGHT_CLASS_TINY
 	device_type = MC_CARD
 
-	var/obj/item/card/id/stored_card = null
+	var/obj/item/card/id/stored_card
 
-/obj/item/computer_hardware/card_slot/handle_atom_del(atom/A)
+///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
+/obj/item/computer_hardware/card_slot/Exited(atom/A)
 	if(A == stored_card)
-		try_eject(null, TRUE)
+		stored_card = null
+		if(holder)
+			if(holder.active_program)
+				holder.active_program.event_idremoved(0)
+			for(var/p in holder.idle_threads)
+				var/datum/computer_file/program/computer_program = p
+				computer_program.event_idremoved(1)
+			if(ishuman(holder.loc))
+				var/mob/living/carbon/human/H = holder.loc
+				H.sec_hud_set_ID()
 	. = ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
@@ -77,18 +87,6 @@
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(drop_location())
-	stored_card = null
-
-	if(holder)
-		if(holder.active_program)
-			holder.active_program.event_idremoved(0)
-
-		for(var/p in holder.idle_threads)
-			var/datum/computer_file/program/computer_program = p
-			computer_program.event_idremoved(1)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.sec_hud_set_ID()
 	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	return TRUE
