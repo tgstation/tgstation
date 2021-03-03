@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "The Plexagon Access Management app has been upgraded and allows Heads of Staff to demote any ID card that has a trim they'd ordinarily be able to apply as a template. This means the HoS can now demote departmental sec officers like Security Officer (Science)."
