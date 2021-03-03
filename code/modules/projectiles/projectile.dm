@@ -850,7 +850,7 @@
 
 //Spread is FORCED!
 /obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, modifiers, spread = 0)
-	if(modifiers && !islist(modifiers))
+	if(!isnull(modifiers) && !islist(modifiers))
 		stack_trace("WARNING: Projectile [type] fired with non-list modifiers, likely was passed click params.")
 
 	var/turf/curloc = get_turf(source)

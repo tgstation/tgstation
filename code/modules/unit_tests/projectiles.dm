@@ -23,7 +23,7 @@
 	loaded_bullet.def_zone = BODY_ZONE_CHEST
 	var/did_we_shoot = test_gun.afterattack(victim, gunner)
 	TEST_ASSERT(did_we_shoot, "Gun does not appeared to have successfully fired.")
-	TEST_ASSERT(victim.getBruteLoss() == expected_damage, "Victim took incorrect amount of damage, expected [expected_damage], got [victim.getBruteLoss()].")
+	TEST_ASSERT_EQUAL(victim.getBruteLoss(), expected_damage, "Victim took incorrect amount of damage, expected [expected_damage], got [victim.getBruteLoss()].")
 
 	var/obj/item/bodypart/expected_part = victim.get_bodypart(BODY_ZONE_CHEST)
-	TEST_ASSERT(expected_part.brute_dam == expected_damage, "Intended bodypart took incorrect amount of damage, either it hit another bodypart or armor was incorrectly applied. Expected [expected_damage], got [expected_part.brute_dam].")
+	TEST_ASSERT_EQUAL(expected_part.brute_dam, expected_damage, "Intended bodypart took incorrect amount of damage, either it hit another bodypart or armor was incorrectly applied. Expected [expected_damage], got [expected_part.brute_dam].")
