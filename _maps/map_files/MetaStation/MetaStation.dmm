@@ -37974,7 +37974,7 @@
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
 	},
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
-/obj/item/card/id/silver/reaper,
+/obj/item/card/id/advanced/silver/reaper,
 /obj/item/lazarus_injector,
 /obj/item/gun/energy/disabler,
 /obj/item/gun/ballistic/revolver/russian,
@@ -39560,9 +39560,6 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "gOe" = (
-/obj/item/radio/intercom{
-	pixel_y = 29
-	},
 /obj/machinery/modular_computer/console/preset/engineering,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -41435,6 +41432,9 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = -27
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -52889,6 +52889,7 @@
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "mpE" = (
@@ -54501,6 +54502,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_y = 35
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)

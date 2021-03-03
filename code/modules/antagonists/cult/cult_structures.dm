@@ -128,11 +128,11 @@
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar'Sie."
-	cultist_examine_message = "A blood cultist can use it to create shielded robes, flagellant's robes, and mirror shields."
+	cultist_examine_message = "A blood cultist can use it to create Nar'Sien hardened armor, flagellant's robes, and eldritch longswords."
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
-	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
+	break_message = "<span class='warning'>The forge breaks apart into shards with a howling scream!</span>"
 
 /obj/structure/destructible/cult/forge/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -148,14 +148,14 @@
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/list/items = list(
-		"Nar'sien Hardened Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
+		"Nar'Sien Hardened Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
 		"Flagellant's Robe" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes"),
 		"Eldritch Longsword" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cultblade")
 		)
 	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	var/list/pickedtype = list()
 	switch(choice)
-		if("Nar'sien Hardened Armor")
+		if("Nar'Sien Hardened Armor")
 			pickedtype += /obj/item/clothing/suit/space/hardsuit/cult/real
 		if("Flagellant's Robe")
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker

@@ -28,7 +28,7 @@
 	var/colour = "black" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
-	embedding = list()
+	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)

@@ -160,6 +160,12 @@
 	database_id = MEDAL_CHEM_TUT
 	icon = "chem_tut"
 
+/datum/award/achievement/misc/hot_damn
+	name = "Hot Damn!"
+	desc = "Sometimes you need to make some noise to make a point."
+	database_id = MEDAL_HOT_DAMN
+	icon = "hotdamn"
+
 /datum/award/achievement/misc/tram_surfer
 	name = "Tram Surfer"
 	desc = "Lights out, guerilla radio!"
