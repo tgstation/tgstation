@@ -148,3 +148,13 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	energy_release = 29000
 	requirements = list(/datum/gas/antinoblium = 5, /datum/gas/zauker = 20, /datum/gas/bz = 7.5)
 	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)
+
+/datum/gas_recipe/crystallizer/crystallized_nitryum
+	id = "crystallized_nitryum"
+	name = "Nitryum crystal"
+	min_temp = 10
+	max_temp = 25
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 45000
+	requirements = list(/datum/gas/nitryum = 150, /datum/gas/oxygen = 70, /datum/gas/bz = 50)
+	products = list(/obj/item/nitryum_crystal = 1)

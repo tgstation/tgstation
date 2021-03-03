@@ -124,7 +124,7 @@
 	if(temperature > 40000) //Past this temperature the fire will gradually turn a bright purple
 		var/purple_amt = temperature < LERP(40000,200000,0.5) ? gauss_lerp(temperature, 40000, 200000) : 1
 		heat_r = LERP(heat_r,255,purple_amt)
-	if(temperature > 200000 && temperature < 500000) //Somewhere at this temperature nitryl happens.
+	if(temperature > 200000 && temperature < 500000)
 		var/sparkle_amt = gauss_lerp(temperature, 200000, 500000)
 		var/mutable_appearance/sparkle_overlay = mutable_appearance('icons/effects/effects.dmi', "shieldsparkles")
 		sparkle_overlay.blend_mode = BLEND_ADD

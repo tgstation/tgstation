@@ -83,8 +83,9 @@
 /obj/machinery/atmospherics/components/unary/tank/miasma
 	gas_type = /datum/gas/miasma
 
-/obj/machinery/atmospherics/components/unary/tank/nitryl
-	gas_type = /datum/gas/nitryl
+/obj/machinery/atmospherics/components/unary/tank/nitryum
+	icon_state = "red"
+	gas_type = /datum/gas/nitryum
 
 /obj/machinery/atmospherics/components/unary/tank/pluoxium
 	icon_state = "blue"
@@ -93,10 +94,6 @@
 /obj/machinery/atmospherics/components/unary/tank/proto_nitrate
 	icon_state = "red"
 	gas_type = /datum/gas/proto_nitrate
-
-/obj/machinery/atmospherics/components/unary/tank/stimulum
-	icon_state = "red"
-	gas_type = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/components/unary/tank/tritium
 	gas_type = /datum/gas/tritium

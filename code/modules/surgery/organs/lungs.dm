@@ -36,7 +36,7 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
-	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
+	var/gas_stimulation_min = 0.002 //nitryum and Freon
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
@@ -113,9 +113,8 @@
 						/datum/gas/bz,
 						/datum/gas/nitrogen,
 						/datum/gas/tritium,
-						/datum/gas/nitryl,
+						/datum/gas/nitryum,
 						/datum/gas/pluoxium,
-						/datum/gas/stimulum,
 						/datum/gas/freon,
 						/datum/gas/hypernoblium,
 						/datum/gas/healium,
@@ -294,18 +293,20 @@
 		else
 			H.radiation += trit_pp/10
 
-	// Nitryl
-		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
-		if (prob(nitryl_pp))
-			H.emote("burp")
-		if (prob(nitryl_pp) && nitryl_pp>10)
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
+	// Nitryum
+		var/nitryum_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryum][MOLES])
+		if (prob(nitryum_pp) && nitryum_pp > 5)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryum_pp * 0.5)
 			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
-		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
+		gas_breathed = breath_gases[/datum/gas/nitryum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			H.reagents.add_reagent(/datum/reagent/nitryl,1)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitryum_low_metabolization)
+			H.reagents.add_reagent(/datum/reagent/nitryum_low_metabolization, max(0, 1 - existing))
+		if (gas_breathed > 2)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitryum_high_metabolization)
+			H.reagents.add_reagent(/datum/reagent/nitryum_high_metabolization, max(0, 1 - existing))
 
-		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
+		breath_gases[/datum/gas/nitryum][MOLES] -= gas_breathed
 
 	// Freon
 		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
@@ -363,13 +364,6 @@
 			H.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
-
-	// Stimulum
-		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
-		if (gas_breathed > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount(/datum/reagent/stimulum)
-			H.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
-		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
 	// Hyper-Nob
 		gas_breathed = breath_gases[/datum/gas/hypernoblium][MOLES]

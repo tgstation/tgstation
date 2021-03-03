@@ -195,7 +195,7 @@
 									/datum/gas/carbon_dioxide,
 									/datum/gas/water_vapor,
 									/datum/gas/nitrous_oxide,
-									/datum/gas/nitryl,
+									/datum/gas/nitryum,
 									/datum/gas/freon,
 									/datum/gas/bz,
 									/datum/gas/proto_nitrate,
@@ -217,7 +217,7 @@
 	m_co2 = moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES]
 	m_h2o = moderator_internal.gases[/datum/gas/water_vapor][MOLES]
 	m_n2o = moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES]
-	m_no2 = moderator_internal.gases[/datum/gas/nitryl][MOLES]
+	m_nitryum = moderator_internal.gases[/datum/gas/nitryum][MOLES]
 	m_freon = moderator_internal.gases[/datum/gas/freon][MOLES]
 	m_bz = moderator_internal.gases[/datum/gas/bz][MOLES]
 	m_proto_nitrate = moderator_internal.gases[/datum/gas/proto_nitrate][MOLES]
@@ -240,7 +240,7 @@
 	var/scaled_m_co2 = max((m_co2 - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_m_h2o = max((m_h2o - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_m_n2o = max((m_n2o - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_m_no2 = max((m_no2 - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_nitryum = max((m_nitryum - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_m_freon = max((m_freon - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_m_bz = max((m_bz - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_m_proto_nitrate = max((m_proto_nitrate - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
@@ -285,7 +285,7 @@
 	///Those are the scaled gases that gets produced and consumes energy or help decrease that energy
 	var/negative_modifiers = scaled_helium + \
 								scaled_m_h2o * 0.75 + \
-								scaled_m_no2 * 0.15 + \
+								scaled_m_nitryum * 0.15 + \
 								scaled_m_healium * 0.45 + \
 								scaled_m_freon * 1.15 - \
 								scaled_m_antinoblium * 10
@@ -293,7 +293,7 @@
 	var/power_modifier = clamp( scaled_tritium * 1.05 + \
 								scaled_m_oxygen * 0.55 + \
 								scaled_m_co2 * 0.95 + \
-								scaled_m_no2 * 1.45 + \
+								scaled_m_nitryum * 1.45 + \
 								scaled_m_zauker * 5.55 + \
 								scaled_m_plasma * 0.05 - \
 								scaled_helium * 0.55 - \
@@ -382,8 +382,8 @@
 					if(m_proto_nitrate > 20)
 						radiation *= 1.55
 						heat_output *= 1.025
-						internal_output.assert_gases(/datum/gas/stimulum)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
+						internal_output.assert_gases(/datum/gas/nitryum)
+						internal_output.gases[/datum/gas/nitryum][MOLES] += scaled_production * 1.05
 						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 1.65
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 					if(m_n2o > 50)
@@ -401,16 +401,16 @@
 						moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production * 1.25
 					if(m_plasma > 10)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.1
-						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
+						internal_output.assert_gases(/datum/gas/freon, /datum/gas/nitryum)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
+						internal_output.gases[/datum/gas/nitryum][MOLES] += scaled_production * 1.05
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
 					if(m_freon > 50)
 						heat_output *= 0.9
 						radiation *= 0.8
 					if(m_proto_nitrate> 15)
-						internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/halon)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.25
+						internal_output.assert_gases(/datum/gas/nitryum, /datum/gas/halon)
+						internal_output.gases[/datum/gas/nitryum][MOLES] += scaled_production * 1.25
 						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
 						radiation *= 1.95
@@ -426,7 +426,6 @@
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
 					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[/datum/gas/nitryl][MOLES] += scaled_production * 1.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma > 15)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.35
@@ -437,8 +436,8 @@
 						heat_output *= 0.5
 						radiation *= 0.2
 					if(m_proto_nitrate > 50)
-						internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.95
+						internal_output.assert_gases(/datum/gas/nitryum, /datum/gas/pluoxium)
+						internal_output.gases[/datum/gas/nitryum][MOLES] += scaled_production * 1.95
 						internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 						radiation *= 1.95
@@ -466,9 +465,9 @@
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
 					if(m_proto_nitrate)
-						internal_output.assert_gases(/datum/gas/zauker, /datum/gas/stimulum)
+						internal_output.assert_gases(/datum/gas/zauker, /datum/gas/nitryum)
 						internal_output.gases[/datum/gas/zauker][MOLES] += scaled_production * 5.35
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 2.15
+						internal_output.gases[/datum/gas/nitryum][MOLES] += scaled_production * 2.15
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35)
 						radiation *= 2
 						heat_output *= 2.25

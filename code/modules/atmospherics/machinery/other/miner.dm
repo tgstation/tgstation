@@ -210,10 +210,10 @@
 	overlay_color = "#395806"
 	spawn_id = /datum/gas/miasma
 
-/obj/machinery/atmospherics/miner/nitryl
-	name = "\improper Nitryl Gas Miner"
+/obj/machinery/atmospherics/miner/nitryum
+	name = "\improper Nitryum Gas Miner"
 	overlay_color = "#752b00"
-	spawn_id = /datum/gas/nitryl
+	spawn_id = /datum/gas/nitryum
 
 /obj/machinery/atmospherics/miner/pluoxium
 	name = "\improper Pluoxium Gas Miner"
@@ -224,11 +224,6 @@
 	name = "\improper Proto-Nitrate Gas Miner"
 	overlay_color = "#00571d"
 	spawn_id = /datum/gas/proto_nitrate
-
-/obj/machinery/atmospherics/miner/stimulum
-	name = "\improper Stimulum Gas Miner"
-	overlay_color = "#d577dd"
-	spawn_id = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/miner/tritium
 	name = "\improper Tritium Gas Miner"

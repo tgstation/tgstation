@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
 //Now this is what I call history
-GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
+GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium))) //unable to react amongst themselves
 
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
@@ -106,15 +106,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	rarity = 600
 
-/datum/gas/nitryl
-	id = "no2"
-	specific_heat = 20
-	name = "Nitryl"
-	gas_overlay = "nitryl"
-	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
-	rarity = 100
-
 /datum/gas/tritium
 	id = "tritium"
 	specific_heat = 10
@@ -133,11 +124,13 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = 8
 	rarity = 400
 
-/datum/gas/stimulum
-	id = "stim"
-	specific_heat = 5
-	name = "Stimulum"
+/datum/gas/nitryum
+	id = "nitryum"
+	specific_heat = 10
+	name = "Nitryum"
 	fusion_power = 7
+	moles_visible = MOLES_GAS_VISIBLE
+	dangerous = TRUE
 	rarity = 1
 
 /datum/gas/pluoxium

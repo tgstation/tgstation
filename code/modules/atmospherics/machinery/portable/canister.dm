@@ -63,13 +63,12 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
+		"nitryum" = /obj/machinery/portable_atmospherics/canister/nitryum,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
 		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
-		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
@@ -169,19 +168,12 @@
 	base_icon_state = "nob"
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/portable_atmospherics/canister/nitryl
-	name = "Nitryl canister"
-	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
+/obj/machinery/portable_atmospherics/canister/nitryum
+	name = "Nitryum canister"
+	desc = "Nitryum gas. Feels great 'til the acid eats your lungs."
 	icon_state = "brown"
 	base_icon_state = "brown"
-	gas_type = /datum/gas/nitryl
-
-/obj/machinery/portable_atmospherics/canister/stimulum
-	name = "Stimulum canister"
-	desc = "Stimulum. High energy gas, high energy people."
-	icon_state = "darkpurple"
-	base_icon_state = "darkpurple"
-	gas_type = /datum/gas/stimulum
+	gas_type = /datum/gas/nitryum
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"

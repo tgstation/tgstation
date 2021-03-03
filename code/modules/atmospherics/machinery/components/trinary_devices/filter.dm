@@ -249,18 +249,15 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/miasma
 	name = "miasma filter"
 	filter_type = "miasma"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/no2
-	name = "nitryl filter"
-	filter_type = "no2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/nitryum
+	name = "nitryum filter"
+	filter_type = "nitryum"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/pluoxium
 	name = "pluoxium filter"
 	filter_type = "pluox"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/proto_nitrate
 	name = "proto-nitrate filter"
 	filter_type = "proto_nitrate"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/stimulum
-	name = "stimulum filter"
-	filter_type = "stim"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/tritium
 	name = "tritium filter"
 	filter_type = "tritium"
@@ -318,18 +315,15 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/miasma
 	name = "miasma filter"
 	filter_type = "miasma"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/no2
-	name = "nitryl filter"
-	filter_type = "no2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/nitryum
+	name = "nitryum filter"
+	filter_type = "nitryum"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/pluoxium
 	name = "pluoxium filter"
 	filter_type = "pluox"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/proto_nitrate
 	name = "proto-nitrate filter"
 	filter_type = "proto_nitrate"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/stimulum
-	name = "stimulum filter"
-	filter_type = "stim"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/tritium
 	name = "tritium filter"
 	filter_type = "tritium"

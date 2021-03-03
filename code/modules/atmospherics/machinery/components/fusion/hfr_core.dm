@@ -92,7 +92,7 @@
 	var/m_co2 = 0
 	var/m_h2o = 0
 	var/m_n2o = 0
-	var/m_no2 = 0
+	var/m_nitryum = 0
 	var/m_freon = 0
 	var/m_bz = 0
 	var/m_proto_nitrate = 0

@@ -104,9 +104,9 @@
 	name = "Miasma Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/miasma_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/nitryl_tank
-	name = "Nitryl Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/nitryl_tank
+/obj/item/circuitboard/computer/atmos_control/tank/nitryum_tank
+	name = "Nitryum Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitryum_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
 	name = "Pluoxium Supply Control (Computer Board)"
@@ -115,10 +115,6 @@
 /obj/item/circuitboard/computer/atmos_control/tank/proto_nitrate_tank
 	name = "Proto-Nitrate Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/proto_nitrate_tank
-
-/obj/item/circuitboard/computer/atmos_control/tank/stimulum_tank
-	name = "Stimulum Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/stimulum_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/tritium_tank
 	name = "Tritium Supply Control (Computer Board)"

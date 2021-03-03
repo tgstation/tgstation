@@ -112,7 +112,7 @@
 	var/worth = 10
 	var/canister_mix = C.air_contents.gases
 	var/list/gases_to_check = list(/datum/gas/bz,
-								/datum/gas/stimulum,
+								/datum/gas/nitryum,
 								/datum/gas/hypernoblium,
 								/datum/gas/miasma,
 								/datum/gas/tritium,
@@ -128,7 +128,7 @@
 								)
 
 	var/list/gas_prices = list(/datum/gas/bz = 2,
-								/datum/gas/stimulum = 100,
+								/datum/gas/nitryum = 100,
 								/datum/gas/hypernoblium = 5,
 								/datum/gas/miasma = 2,
 								/datum/gas/tritium = 5,
