@@ -30,7 +30,7 @@
 	icon_state = "hack_o_lantern"
 
 /obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
+	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	inhand_icon_state = "card-id"
@@ -40,6 +40,9 @@
 /obj/item/card/emagfake/afterattack()
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+
+/obj/item/card/emagfake/examine_more(mob/user)
+	. = list("<span class='notice'>You notice a Donk Co. logo stamped on the back. This is a toy replica!</span>")
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
