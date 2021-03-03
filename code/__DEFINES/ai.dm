@@ -101,7 +101,7 @@
 #define DOG_COMMAND_ATTACK 2
 
 //enumerators for parsing dog command speech
-#define COMMAND_HEEL 1
-#define COMMAND_FETCH 2
-#define COMMAND_ATTACK 3
-#define COMMAND_DIE 4
+#define COMMAND_HEEL "Heel"
+#define COMMAND_FETCH "Fetch"
+#define COMMAND_ATTACK "Attack"
+#define COMMAND_DIE "Play Dead"
