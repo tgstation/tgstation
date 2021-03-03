@@ -480,6 +480,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/commons
 	name = "Crew Quarters"
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/commons/dorms
 	name = "Dormitories"
