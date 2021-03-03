@@ -19,6 +19,7 @@
 #define KIT_BEES "bee"
 #define KIT_MR_FREEZE "mr_freeze"
 #define KIT_TRAITOR_2006 "ancient"
+#define KIT_RED_IS_SUS "sus"
 
 /obj/item/storage/box/syndicate
 
@@ -160,6 +161,7 @@
 		KIT_BEES = 1, 
 		KIT_MR_FREEZE = 2, 
 		KIT_TRAITOR_2006 = 1
+		KIT_RED_IS_SUS = 2
 		)))
 		if(KIT_JAMES_BOND)
 			new /obj/item/gun/ballistic/automatic/pistol(src)
@@ -235,6 +237,13 @@
 			
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			/obj/item/storage/toolbox/emergency/old/ancientbundle //Items fit neatly into a classic toolbox just to remind you what the theme is.
+			
+		if(KIT_RED_IS_SUS)
+			new /obj/item/clothing/head/helmet/space/syndicate(src)
+			new /obj/item/clothing/suit/space/syndicate(src)
+			new /obj/item/dnainjector/ventcrawler(src)
+			new /obj/item/kitchen/knife/combat(src)
+			new /obj/item/gun/ballistic/automatic/pistol/m1911(src)
 		
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 		
@@ -648,3 +657,4 @@
 #undef KIT_BEES
 #undef KIT_MR_FREEZE
 #undef KIT_TRAITOR_2006
+#undef KIT_RED_IS_SUS
