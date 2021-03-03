@@ -295,14 +295,14 @@
 
 	// Nitryum
 		var/nitryum_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryum][MOLES])
-		if (prob(nitryum_pp) && nitryum_pp > 10)
+		if (prob(nitryum_pp) && nitryum_pp > 15)
 			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryum_pp * 0.1)
 			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
 		gas_breathed = breath_gases[/datum/gas/nitryum][MOLES]
-		if (gas_breathed > gas_stimulation_min)
+		if (nitryum_pp > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitryum_low_metabolization)
-			H.reagents.add_reagent(/datum/reagent/nitryum_low_metabolization, max(0, 1 - existing))
-		if (gas_breathed > 2)
+			H.reagents.add_reagent(/datum/reagent/nitryum_low_metabolization, max(0, 2 - existing))
+		if (nitryum_pp > 5)
 			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitryum_high_metabolization)
 			H.reagents.add_reagent(/datum/reagent/nitryum_high_metabolization, max(0, 1 - existing))
 

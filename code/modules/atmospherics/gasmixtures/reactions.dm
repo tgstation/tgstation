@@ -427,7 +427,7 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/nitryum_decomposition/init_reqs()
 	min_requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		/datum/gas/nitryum = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitryum = 5,
 		"MAX_TEMP" = 600
 	)
 

@@ -246,8 +246,13 @@
 	if(!air_contents)
 		return 0
 
+	var/list/cached_gases = air_contents.gases
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
+	var/scale_multiplier = 1
+	if(cached_gases[/datum/gas/nitryum])
+		if(cached_gases[/datum/gas/nitryum][MOLES] >= 0.5 && cached_gases[/datum/gas/nitryum][MOLES] <= 2)
+			scale_multiplier = cached_gases[/datum/gas/nitryum][MOLES]
 
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/transfer_valve))
@@ -255,7 +260,7 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
-		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+		var/range = (pressure - TANK_FRAGMENT_PRESSURE) / (TANK_FRAGMENT_SCALE * scale_multiplier)
 		var/turf/epicenter = get_turf(loc)
 
 

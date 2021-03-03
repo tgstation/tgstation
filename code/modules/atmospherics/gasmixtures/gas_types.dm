@@ -129,6 +129,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	specific_heat = 10
 	name = "Nitryum"
 	fusion_power = 7
+	gas_overlay = "nitryum"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	rarity = 1
