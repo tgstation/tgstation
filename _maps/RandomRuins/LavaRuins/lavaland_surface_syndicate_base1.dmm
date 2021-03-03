@@ -3559,7 +3559,7 @@
 	dir = 10
 	},
 /obj/machinery/shower{
-	desc = "The HS-452. Installed recently by the DonkCo Hygiene Division.";
+	desc = "The HS-452. Installed recently by the Donk Co. Hygiene Division.";
 	dir = 4;
 	name = "emergency shower"
 	},
