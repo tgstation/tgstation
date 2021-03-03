@@ -550,3 +550,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SKILLCHIP_CATEGORY_JOB "job"
 #define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"
 #define SKILLCHIP_CATEGORY_SYNDICATE "syndicate"
+
+/// where the mass driver sends people
+#define HELL "byond://terry.tgstation13.org:3336"
+/// if we're already in hell, go to the void instead
+#define THE_ABYSS "byond://campbell.tgstation13.org:6337"

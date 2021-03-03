@@ -48,6 +48,10 @@
 				audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")
 				break
 			use_power(500)
+			if(isliving(O))
+				var/mob/living/possible_exhilee = O
+				if(possible_exhilee.client)
+					possible_exhilee.AddComponent(/datum/component/exhile, dir)
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 
