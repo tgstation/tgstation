@@ -60,6 +60,9 @@
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
+
 	if(prob(0.666) && mapload)
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
@@ -538,8 +541,8 @@
 
 /mob/living/simple_animal/bot/mulebot/Moved() //make sure we always use power after moving.
 	. = ..()
-	if(!cell?.use(cell_move_power_usage))
-		return
+
+	cell?.use(cell_move_power_usage)
 
 	for(var/potential_target in loc.contents)
 		if(potential_target == load)
