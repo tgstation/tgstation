@@ -327,3 +327,12 @@
 		return
 
 	return ..()
+
+/obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA
+	if(pai)
+		to_chat(user, "<span class='notice'>You override [pai]'s master string, clearing it.</span>")
+		to_chat(pai, "<span class='danger'>Warning: System override detected, check directive sub-system for any changes.'</span>")
+		log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA.")
+		pai.master = null
+		pai.master_dna = null
+	return
