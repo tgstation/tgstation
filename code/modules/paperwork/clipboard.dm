@@ -16,14 +16,13 @@
 	/// The stored pen
 	var/obj/item/pen/pen
 	/**
-	 * The topmost piece of paper
+	 * Weakref of the topmost piece of paper
 	 *
-	 * Additionaly, all are in contents. This is used for the paper
-	 * displayed on the clipboard's icon and it is the one attacked,
-	 * when attacking the clipboard.
+	 * This is used for the paper displayed on the clipboard's icon
+	 * and it is the one attacked, when attacking the clipboard.
 	 * (As you can't organise contents directly in BYOND)
 	 */
-	var/obj/item/paper/toppaper // TODO: weakref https://github.com/tgstation/tgstation/pull/55711/files
+	var/datum/weakref/toppaper_ref
 
 /obj/item/clipboard/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -35,15 +34,15 @@
 
 /obj/item/clipboard/Destroy()
 	QDEL_NULL(pen)
-	QDEL_NULL(toppaper) //let movable/Destroy handle the rest
 	return ..()
 
 /obj/item/clipboard/examine()
 	. = ..()
 	if(pen)
 		. += "<span class='notice'>Alt-click to remove [pen].</span>"
+	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
 	if(toppaper)
-		. += "<span class='notice'>Right-click to remove [toppaper].</span>" // TODO: debug this
+		. += "<span class='notice'>Right-click to remove [toppaper].</span>"
 
 /// Take out the topmost paper
 /obj/item/clipboard/proc/remove_paper(obj/item/paper/paper, mob/user)
@@ -52,13 +51,14 @@
 	paper.forceMove(user.loc)
 	user.put_in_hands(paper)
 	to_chat(user, "<span class='notice'>You remove [paper] from [src].</span>")
+	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
 	if(paper == toppaper)
-		toppaper = null
+		toppaper_ref = null
 		var/obj/item/paper/newtop = locate(/obj/item/paper) in src
 		if(newtop && (newtop != paper))
-			toppaper = newtop
+			toppaper_ref = WEAKREF(newtop)
 		else
-			toppaper = null
+			toppaper_ref = null
 	update_icon()
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
@@ -70,11 +70,12 @@
 
 /obj/item/clipboard/AltClick(mob/user)
 	..()
-	if(toppaper)
+	if(pen)
 		remove_pen(user)
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
+	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
 	if(toppaper)
 		. += toppaper.icon_state
 		. += toppaper.overlays
@@ -84,16 +85,18 @@
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
 		remove_paper(toppaper, user)
 		return TRUE
 	. = ..()
 
 /obj/item/clipboard/attackby(obj/item/weapon, mob/user, params)
+	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
 	if(istype(weapon, /obj/item/paper))
 		//Add paper into the clipboard
 		if(!user.transferItemToLoc(weapon, src))
 			return
-		toppaper = weapon
+		toppaper_ref = WEAKREF(weapon)
 		to_chat(user, "<span class='notice'>You clip [weapon] onto [src].</span>")
 	else if(istype(weapon, /obj/item/pen) && !pen)
 		//Add a pen into the clipboard, attack (write) if there is already one
@@ -121,13 +124,13 @@
 	var/list/data = list()
 	data["pen"] = "[pen]"
 
-	var/obj/item/paper/paper = toppaper
-	data["top_paper"] = "[paper]"
-	data["top_paper_ref"] = "[REF(paper)]"
+	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+	data["top_paper"] = "[toppaper]"
+	data["top_paper_ref"] = "[REF(toppaper)]"
 
 	data["paper"] = list()
 	data["paper_ref"] = list()
-	for(paper in src)
+	for(var/obj/item/paper/paper in src)
 		if(paper == toppaper)
 			continue
 		data["paper"] += "[paper]"
@@ -166,7 +169,7 @@
 		if("move_top_paper")
 			var/obj/item/paper/paper = locate(params["ref"]) in src
 			if(istype(paper))
-				toppaper = paper
+				toppaper_ref = WEAKREF(paper)
 				to_chat(usr, "<span class='notice'>You move [paper] to the top.</span>")
 				update_icon()
 				. = TRUE
