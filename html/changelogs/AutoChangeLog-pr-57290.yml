@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "removed fire alarm from inside tcomms room due to triggering on roundstart"
