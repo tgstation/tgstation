@@ -27,6 +27,8 @@
 	var/prefix_file = "strings/names/american_prefix.txt"
 	///Base icon for the customer
 	var/base_icon = "amerifat"
+	///Sound to use when this robot type speaks
+	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
 
 /datum/customer_data/New()
 	. = ..()
@@ -75,6 +77,7 @@
 	leave_mad_lines = list("Sacre bleu!", "Merde! This place is shittier than the Rhine!")
 	leave_happy_lines = list("Hon hon hon.", "A good effort.")
 	wait_for_food_lines = list("Hon hon hon")
+	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 15, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 10))
@@ -84,3 +87,41 @@
 		var/mutable_appearance/flag = mutable_appearance(customer.icon, "french_flag")
 		flag.appearance_flags = RESET_COLOR
 		return flag
+
+
+
+/datum/customer_data/japanese
+	nationality = "Space-Japanese"
+	prefix_file = "strings/names/japanese_prefix.txt"
+	base_icon = "japanese"
+	clothing_sets = list("japanese_animes")
+
+	found_seat_lines = list("Konnichiwa!", "Arigato gozaimasuuu~", "I hope there's some beef stroganoff...")
+	cant_find_seat_lines = list("I want to sit under the cherry tree already, senpai!", "Give me a seat before my Tsundere becomes Yandere!", "This place has less seating than a capsule hotel!", "No place to sit? This Shokunin is so cold...")
+	leave_mad_lines = list("I can't believe you did this! WAAAAAAAAAAAAAH!!", "I-It's not like I ever wanted your food! B-baka...", "I was gonna give you my tip!")
+	leave_happy_lines = list("Oh NOURISHMENT PROVIDER! This is the happiest day of my life. I love you!", "I take a potato chip.... AND EAT IT!", "Itadakimasuuu~", "Gochisousama desu!")
+	wait_for_food_lines = list("No food yet? I guess it can't be helped.", "I can't wait to finally meet you burger-sama...", "Give me my food, you meanie!")
+	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/breadslice/plain = 5, /obj/item/food/soup/milo = 10, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/muffin/berry = 2, /obj/item/food/beef_stroganoff = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/sake = 8, /datum/reagent/consumable/cafe_latte = 6, /datum/reagent/consumable/ethanol/aloe = 6, /datum/reagent/consumable/chocolatepudding = 4, /datum/reagent/consumable/tea = 4, /datum/reagent/consumable/cherryshake = 1, /datum/reagent/consumable/ethanol/bastion_bourbon = 1))
+
+/datum/customer_data/japanese/get_overlays(mob/living/simple_animal/robot_customer/customer)
+	//leaving and eaten
+	if(type == /datum/customer_data/japanese && customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.ai_controller.blackboard[BB_CUSTOMER_EATING])
+		var/mutable_appearance/you_won_my_heart = mutable_appearance('icons/effects/effects.dmi', "love_hearts")
+		you_won_my_heart.appearance_flags = RESET_COLOR
+		return you_won_my_heart
+
+/datum/customer_data/japanese/salaryman
+	clothing_sets = list("japanese_salary")
+
+	found_seat_lines = list("I wonder if giant monsters attack here too...", "Hajimemashite.", "Konbanwa.", "Where's the conveyor belt...")
+	cant_find_seat_lines = list("Please, a seat. I just want a seat.", "I'm on a schedule here. Where is my seat?", "...I see why this place is suffering. They won't even seat you.")
+	leave_mad_lines = list("This place is just downright shameful, and I'm telling my coworkers.", "What a waste of my time.", "I hope you don't take pride in the operation you run here.")
+	leave_happy_lines = list("Thank you for the hospitality.", "Otsukaresama deshita.", "Business calls.")
+	wait_for_food_lines = list("Zzzzzzzzzz...", "Dame da ne~", "Dame yo dame na no yo~")
+	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/soup/milo = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/meatbun = 4, /obj/item/food/beef_stroganoff = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/beer = 14, /datum/reagent/consumable/ethanol/sake = 9, /datum/reagent/consumable/cafe_latte = 3, /datum/reagent/consumable/coffee = 3, /datum/reagent/consumable/soy_latte = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1))

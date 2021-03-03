@@ -41,10 +41,12 @@
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_appearance()
-	var/datum/job/engineer/J = new/datum/job/engineer
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
+	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 
 	create_extinguisher()
 

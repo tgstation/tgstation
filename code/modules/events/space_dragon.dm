@@ -4,6 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 20
+	dynamic_should_hijack = TRUE
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1

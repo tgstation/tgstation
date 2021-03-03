@@ -207,7 +207,7 @@
 	audible_message("<span class='notice'>The result is: [result]</span>")
 
 	playing = FALSE
-	update_icon(potential_payout, color, rolled_number, is_winner)
+	update_icon(ALL, potential_payout, color, rolled_number, is_winner)
 	handle_color_light(color)
 
 	if(!is_winner)
