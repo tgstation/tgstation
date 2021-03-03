@@ -152,7 +152,7 @@
 			if(!computer || !authenticated_user)
 				return TRUE
 			if(minor)
-				if(!(target_id_card.trim?.type in job_templates) && target_id_card.trim?.assignment != "Assistant")
+				if(!(target_id_card.trim?.type in job_templates))
 					to_chat(usr, "<span class='notice'>Software error: You do not have the necessary permissions to demote this card.</span>")
 					return TRUE
 
