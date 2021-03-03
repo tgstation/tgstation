@@ -515,3 +515,22 @@
 
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH
+
+/datum/mutation/human/ventcrawl
+	name = "Stretchy"
+	desc = "A mutation that lets you crawl through tight spaces."
+	text_gain_indication = "You feel very stretchy."
+	text_lose_indication = "You feel more rigid."
+	quality = POSITIVE
+	locked = TRUE
+
+/datum/mutation/human/ventcrawl/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_VENTCRAWLER_ALWAYS, GENETIC_MUTATION)
+
+/datum/mutation/human/ventcrawl/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_VENTCRAWLER_ALWAYS, GENETIC_MUTATION)
+	
