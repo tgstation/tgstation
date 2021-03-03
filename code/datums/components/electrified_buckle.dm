@@ -4,9 +4,10 @@
 #define ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH 10
 
 
-/*	electrified_buckle component:
-	attach it to any atom/movable that can be buckled to in order to have it shock mobs buckled to it. by default it shocks mobs buckled to parent every shock_loop_time.
-	the parent is supposed to define its behavior with arguments in AddComponent
+/**
+ * # electrified_buckle component:
+ * attach it to any atom/movable that can be buckled to in order to have it shock mobs buckled to it. by default it shocks mobs buckled to parent every shock_loop_time.
+ * the parent is supposed to define its behavior with arguments in AddComponent
 */
 /datum/component/electrified_buckle
 	///if usage_flags has SHOCK_REQUIREMENT_ITEM, this is the item required to be inside parent in order for it to shock buckled mobs
@@ -26,19 +27,15 @@
 	///this signal was given as an argument to register for parent to emit, if its emitted to parent then shock_on_demand is called. var is so it can be unregistered
 	var/requested_signal_parent_emits = null
 
-/*	Initialize() args:
-
-	input_requirements - bitflag that defines how the component is supposed to act, see __DEFINES/electrified_buckle.dm for the options. sets usage_flags
-
-	input_item - if set to an item and input_requirements has SHOCK_REQUIREMENT_ITEM, moves that item inside parent and the component will delete itself if input_item no longer exists/moves out of parent. sets required_object
-
-	overlays_to_add - pass in a list of images and the component will add them to parent as well as remove them in UnregisterFromParent(). sets requested_overlays
-
-	override_buckle - if TRUE, sets parent.can_buckle = TRUE and resets it on UnregisterFromParent(), usually objects that have need to be overridden will look janky on buckle
-
-	damage_on_shock - if SHOCK_REQUIREMENT_LIVE_CABLE is not set in input_requirements, then this is how much damage each shock does. sets shock_damage
-
-	signal_to_register_from_parent - if set, the component registers to listen for this signal targeting parent to manually shock. sets requested_signal_parent_emits
+/**
+ * Initialize args:
+ *
+ * * input_requirements - bitflag that defines how the component is supposed to act, see __DEFINES/electrified_buckle.dm for the options. sets usage_flags
+ * * input_item - if set to an item and input_requirements has SHOCK_REQUIREMENT_ITEM, moves that item inside parent and the component will delete itself if input_item no longer exists/moves out of parent. sets required_object
+ * * overlays_to_add - pass in a list of images and the component will add them to parent as well as remove them in UnregisterFromParent(). sets requested_overlays
+ * * override_buckle - if TRUE, sets parent.can_buckle = TRUE and resets it on UnregisterFromParent(), usually objects that have need to be overridden will look janky on buckle
+ * * damage_on_shock - if SHOCK_REQUIREMENT_LIVE_CABLE is not set in input_requirements, then this is how much damage each shock does. sets shock_damage
+ * * signal_to_register_from_parent - if set, the component registers to listen for this signal targeting parent to manually shock. sets requested_signal_parent_emits
 */
 /datum/component/electrified_buckle/Initialize(input_requirements, obj/item/input_item, list/overlays_to_add, override_buckle, damage_on_shock = 50, signal_to_register_from_parent, loop_length)
 	var/atom/movable/parent_as_movable = parent
@@ -202,6 +199,5 @@
 		START_PROCESSING(SSprocessing, src)
 		parent_as_movable.visible_message("<span class='notice'>You hear the sound of an electric circuit closing coming from the electric chair!</span>")
 
-#undef shock_loop_time
 #undef ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR
 #undef ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH
