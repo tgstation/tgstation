@@ -77157,23 +77157,6 @@
 /obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/commons/dorms)
-"kxh" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/tcommsat/server)
 "kxv" = (
 /obj/structure/chair/stool,
 /obj/structure/cable,
@@ -152127,7 +152110,7 @@ qOr
 lRN
 rXu
 bWW
-kxh
+bUF
 bUF
 ccD
 cet
