@@ -23,6 +23,8 @@
 	bounty_types = CIV_JOB_SEC
 	departments = DEPARTMENT_SECURITY
 
+	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
+
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
 /datum/job/security_officer/after_spawn(mob/living/carbon/human/H, mob/M)

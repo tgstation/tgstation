@@ -20,6 +20,8 @@
 	bounty_types = CIV_JOB_ENG
 	departments = DEPARTMENT_ENGINEERING
 
+	family_heirlooms = list(/obj/item/lighter, /obj/item/lighter/greyscale, /obj/item/storage/box/matches)
+
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"
 	jobtype = /datum/job/atmospheric_technician

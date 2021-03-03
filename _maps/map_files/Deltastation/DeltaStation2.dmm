@@ -76247,6 +76247,10 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/chef,
 /obj/effect/turf_decal/bot,
+/obj/item/food/mint,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "khj" = (
@@ -93125,12 +93129,10 @@
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "qhn" = (
-/obj/structure/table/reinforced,
-/obj/item/food/mint,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/chef_order{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "qhE" = (

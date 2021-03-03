@@ -15,6 +15,8 @@
 	bounty_types = CIV_JOB_RANDOM
 	departments = DEPARTMENT_CARGO
 
+	family_heirlooms = list(/obj/item/clipboard)
+
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_technician

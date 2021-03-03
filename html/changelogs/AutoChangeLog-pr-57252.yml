@@ -1,5 +1,0 @@
-author: "SparkezelPL"
-delete-after: True
-changes: 
-  - imageadd: "Adds new radiation collector array sprites. If an array is turned on but has no tanks, it now displays an error animation."
-  - spellcheck: "Removes \"Hawking Radiation\" in arrays with just radiation. It was nice to know you singulo..."

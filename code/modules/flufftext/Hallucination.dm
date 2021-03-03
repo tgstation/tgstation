@@ -293,11 +293,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				to_chat(target, "<span class='notice'>[xeno.name] begins climbing into the ventilation system...</span>")
 				stage = XENO_ATTACK_STAGE_FINISH
 			if (XENO_ATTACK_STAGE_LEAP_AT_PUMP to XENO_ATTACK_STAGE_CLIMB)
-				xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi', -32, -32)
+				xeno.update_icon(ALL, "alienh_leap", 'icons/mob/alienleap.dmi', -32, -32)
 				xeno.throw_at(pump_location, 7, 1, spin = FALSE, diagonals_first = TRUE)
 				stage = XENO_ATTACK_STAGE_CLIMB
 			if (XENO_ATTACK_STAGE_LEAP_AT_TARGET to XENO_ATTACK_STAGE_LEAP_AT_PUMP)
-				xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi', -32, -32)
+				xeno.update_icon(ALL, "alienh_leap", 'icons/mob/alienleap.dmi', -32, -32)
 				xeno.throw_at(target, 7, 1, spin = FALSE, diagonals_first = TRUE)
 				stage = XENO_ATTACK_STAGE_LEAP_AT_PUMP
 

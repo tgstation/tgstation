@@ -25,6 +25,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
+
 /datum/job/head_of_personnel/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
 	if(announce_captaincy)
@@ -51,7 +53,6 @@
 	..()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
-
 
 /obj/item/paper/fluff/ids_for_dummies
 	name = "Memo: New IDs and You"
