@@ -324,9 +324,9 @@
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
 /datum/quirk/unholy
-	name = "Borrowed Time"
-	desc = "You feel your heart squeezing onto its last fibres of life."
-	value = 0
+	name = "Dead Man Walking"
+	desc = "You have an extremely adverse reaction to holy figures."
+	value = -1
 	mob_trait = TRAIT_UNHOLY
 
 /datum/quirk/unholy/on_spawn()
