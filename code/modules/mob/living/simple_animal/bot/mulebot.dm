@@ -118,13 +118,6 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/bot/mulebot/Cross(atom/movable/AM)
-	. = ..()
-	if(ishuman(AM))
-		RunOver(AM)
-
-
-
 /// returns true if the bot is fully powered.
 /mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
 	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
@@ -545,11 +538,19 @@
 
 /mob/living/simple_animal/bot/mulebot/Moved() //make sure we always use power after moving.
 	. = ..()
-	if(!cell)
+	if(!cell?.use(cell_move_power_usage))
 		return
-	cell.use(cell_move_power_usage)
+
+	for(var/potential_target in loc.contents)
+		if(potential_target == load)
+			continue
+
+		if(ishuman(potential_target))
+			RunOver(potential_target)
+
 	if(cell.charge < cell_move_power_usage) //make sure we have enough power to move again, otherwise turn off.
 		turn_off()
+
 	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
