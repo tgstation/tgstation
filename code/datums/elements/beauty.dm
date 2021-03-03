@@ -50,6 +50,8 @@
 	old_area.update_beauty()
 
 /datum/element/beauty/Detach(datum/source, force)
+	if(!beauty_counter[source])
+		return ..()
 	var/area/current_area = get_area(source)
 	if(QDELETED(source))
 		. = ..()
