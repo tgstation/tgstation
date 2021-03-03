@@ -65525,6 +65525,10 @@
 /obj/item/food/dough,
 /obj/item/kitchen/rollingpin,
 /obj/item/kitchen/rollingpin,
+/obj/item/paper/crumpled{
+	info = "Hey whoever designed this shithole didn't give us space to install the produce computer so it's in maintenance near the theatre.";
+	name = "hastily written note"
+	},
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
 "jAY" = (
@@ -90726,6 +90730,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/cargo/qm)
+"xwt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/chef_order{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/central)
 "xww" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/newscaster{
@@ -124428,7 +124441,7 @@ aox
 aox
 buB
 ajq
-akM
+xwt
 uuQ
 sox
 ref
