@@ -57,6 +57,7 @@
 #define MARTYRDOM /datum/mutation/human/martyrdom
 #define HARS /datum/mutation/human/headless
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
+#define VENTCRAWLMUT /datum/mutation/human/ventcrawl
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
