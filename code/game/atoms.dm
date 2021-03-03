@@ -580,6 +580,16 @@
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
 	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
+/**
+ * Returns an extended list of examine strings for any contained ID cards.
+ *
+ * Arguments:
+ * * user - The user who is doing the examining.
+ */
+/atom/proc/get_id_examine_strings(mob/user)
+	. = list()
+	return
+
 ///Used to insert text after the name but before the description in examine()
 /atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
 	return name_chaser

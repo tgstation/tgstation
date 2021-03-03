@@ -13,6 +13,8 @@
 	GLOB.chemical_reagents_list = list()
 
 	for(var/path in paths)
+		if(path in GLOB.fake_reagent_blacklist)
+			continue
 		var/datum/reagent/D = new path()
 		GLOB.chemical_reagents_list[path] = D
 
@@ -32,9 +34,9 @@
 
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
-	GLOB.chemical_reactions_list = list()
-	GLOB.chemical_reactions_results_lookup_list = list()
-	GLOB.chemical_reactions_list_product_index = list()
+	GLOB.chemical_reactions_list = list() //reagents to reaction list
+	GLOB.chemical_reactions_results_lookup_list = list() //UI glob
+	GLOB.chemical_reactions_list_product_index = list() //product to reaction list
 
 	for(var/path in paths)
 		var/datum/chemical_reaction/D = new path()
@@ -529,7 +531,6 @@
 		return
 	if(amount < 0)
 		return
-
 	var/cached_amount = amount
 	if(get_reagent_amount(reagent) < amount)
 		amount = get_reagent_amount(reagent)
@@ -880,7 +881,6 @@
 				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
-
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, delta_time)
 
@@ -998,7 +998,6 @@
 	target.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	target.is_reacting = is_reacting
 
-
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 ///Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change
 /datum/reagents/proc/has_changed_state()
@@ -1102,7 +1101,6 @@
 	if (R.purity == 1)
 		return
 	if(R.chemical_flags & REAGENT_DONOTSPLIT)
-		R.purity = 1
 		return
 	if(R.purity < 0)
 		stack_trace("Purity below 0 for chem: [type]!")
@@ -1121,7 +1119,7 @@
 		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
 			remove_reagent(R.type, impureVol, FALSE)
 		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-	R.purity = 1 //prevent this process from repeating (this is why creation_purity exists)
+	R.chemical_flags |= REAGENT_DONOTSPLIT
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()

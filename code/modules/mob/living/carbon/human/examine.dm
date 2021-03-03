@@ -56,8 +56,6 @@
 			. += "<span class='warning'>[t_He] [t_has] [num_hands > 1 ? "" : "a"] blood-stained hand[num_hands > 1 ? "s" : ""]!</span>"
 
 	//handcuffed?
-
-	//handcuffed?
 	if(handcuffed)
 		if(istype(handcuffed, /obj/item/restraints/handcuffs/cable))
 			. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] restrained with cable!</span>"
@@ -94,6 +92,12 @@
 	if(wear_id && !(wear_id.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
+		. += wear_id.get_id_examine_strings(user)
+		//var/list/extended_id_examine = wear_id.get_id_examine_strings(user)
+
+		//for(var/examine_string in extended_id_examine)
+		//	. += examine_string
+
 	//Status effects
 	var/list/status_examines = status_effect_examines()
 	if (length(status_examines))
@@ -128,8 +132,6 @@
 
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
-
-	var/temp = getBruteLoss() //no need to calculate each of these twice
 
 	var/list/msg = list()
 
@@ -183,6 +185,11 @@
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
+		var/temp
+		if(user == src && src.hal_screwyhud == SCREWYHUD_CRIT)//fake damage
+			temp = 50
+		else
+			temp = getBruteLoss()
 		if(temp)
 			if(temp < 25)
 				msg += "[t_He] [t_has] minor bruising.\n"

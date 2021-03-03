@@ -86,13 +86,13 @@
 		holder.remove_reagent(/datum/reagent/bluespace, 1)
 		reaction.delta_t *= 5
 
-/datum/chemical_reaction/prefactor_b/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/prefactor_b/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	explode_shockwave(holder, equilibrium)
 	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
 	clear_reagents(holder, vol)//Lest we explode forever
 
-/datum/chemical_reaction/prefactor_b/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/prefactor_b/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	explode_fire(holder, equilibrium)
 	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
 	clear_reagents(holder, vol)

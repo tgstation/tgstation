@@ -55,6 +55,9 @@
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 
+///The default purity of all non reacted reagents
+#define REAGENT_STANDARD_PUIRTY 0.75
+
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
 #define REAGENT_DEAD_PROCESS (1<<0)
@@ -82,6 +85,10 @@
 #define REACTION_HEAT_ARBITARY (1<<4)
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
 #define REACTION_COMPETITIVE (1<<5)
+///Used to force pH changes to be constant regardless of volume
+#define REACTION_PH_VOL_CONSTANT (1<<6)
+///If a reaction will generate it's impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
+#define REACTION_REAL_TIME_SPLIT (1<<7)
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
 #define NO_OVERHEAT 99999
@@ -144,3 +151,8 @@
 #define REACTION_TAG_PLANT (1<<20)
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_COMPETITIVE (1<<21)
+
+/// Below are defines used for reagent associated machines only
+/// For the pH meter flashing method
+#define ENABLE_FLASHING -1
+#define DISABLE_FLASHING 14

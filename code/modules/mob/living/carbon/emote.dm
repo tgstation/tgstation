@@ -112,6 +112,7 @@
 	key = "slap"
 	key_third_person = "slaps"
 	hands_use_check = TRUE
+	cooldown = 3 SECONDS // to prevent endless table slamming
 
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

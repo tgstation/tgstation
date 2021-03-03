@@ -662,6 +662,23 @@
 	category = list("Cybernetics", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_eyes
+	name = "Basic Cybernetic Eyes"
+	desc = "A basic pair of cybernetic eyes."
+	id = "cybernetic_eyes"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 30
+	materials = list(/datum/material/iron = 250, /datum/material/glass = 400)
+	build_path = /obj/item/organ/eyes/robotic/basic
+	category = list("Cybernetics", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_eyes/improved
+	name = "Cybernetic Eyes"
+	desc = "A pair of cybernetic eyes."
+	id = "cybernetic_eyes_improved"
+	build_path = /obj/item/organ/eyes/robotic
+
 /////////////////////
 ///Surgery Designs///
 /////////////////////
