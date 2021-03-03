@@ -125,9 +125,11 @@
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
 	GLOB.drones_list += src
-	access_card = new /obj/item/card/id(src)
-	var/datum/job/captain/C = new /datum/job/captain
-	access_card.access = C.get_access()
+	access_card = new /obj/item/card/id/advanced/simple_bot(src)
+
+	// Doing this hurts my soul, but simple_animal access reworks are for another day.
+	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
+	access_card.add_access(cap_trim.access + cap_trim.wildcard_access)
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
@@ -302,7 +304,7 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
-/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
 

@@ -50,7 +50,7 @@
 
 /area/ruin/unpowered/cultaltar
 	name = "Cult Altar"
-	flags_1 = CULT_PERMITTED_1
+	area_flags = CULT_PERMITTED
 	ambience_index = AMBIENCE_SPOOKY
 
 //Syndicate lavaland base
@@ -99,3 +99,7 @@
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
 	icon_state = "red"
+
+/area/ruin/unpowered/ratvar
+	icon_state = "dk_yellow"
+	outdoors = TRUE

@@ -270,3 +270,18 @@
 	)
 	result = /obj/item/food/fried_chicken
 	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/beef_stroganoff
+	name = "Beef Stroganoff"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/salt = 5,
+		/datum/reagent/consumable/blackpepper = 5,
+		/obj/item/food/grown/mushroom = 2,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/meat/steak = 1,
+	)
+	result = /obj/item/food/beef_stroganoff
+	subcategory = CAT_MEAT

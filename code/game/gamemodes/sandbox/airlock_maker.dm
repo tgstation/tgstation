@@ -45,8 +45,9 @@
 	var/list/leftcolumn = list()
 	var/list/rightcolumn = list()
 	leftcolumn += "<u><b>Required Access</b></u>"
-	for(var/access in get_all_accesses())
-		leftcolumn += linkpretty("access=[access]",get_access_desc(access),access in access_used)
+	var/list/all_station_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
+	for(var/access in all_station_access)
+		leftcolumn += linkpretty("access=[access]",SSid_access.get_access_desc(access),access in access_used)
 	leftcolumn += "Require all listed accesses: [linkpretty("reqall",null,require_all)]"
 
 	rightcolumn += "<u><b>Paintjob</b></u>"
