@@ -1,0 +1,5 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Fixes several lavaland ruins failing to generate the correct turfs"
+  - bugfix: "Fixes xeno hive ruin using space as it's baseturf"
