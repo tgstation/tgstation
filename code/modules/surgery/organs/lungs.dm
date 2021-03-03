@@ -295,8 +295,8 @@
 
 	// Nitryum
 		var/nitryum_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryum][MOLES])
-		if (prob(nitryum_pp) && nitryum_pp > 5)
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryum_pp * 0.5)
+		if (prob(nitryum_pp) && nitryum_pp > 10)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryum_pp * 0.1)
 			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
 		gas_breathed = breath_gases[/datum/gas/nitryum][MOLES]
 		if (gas_breathed > gas_stimulation_min)

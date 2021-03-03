@@ -255,9 +255,9 @@
 	if(breath_gases[/datum/gas/nitryum])
 		var/nitryum_partialpressure = (breath_gases[/datum/gas/nitryum][MOLES]/breath.total_moles())*breath_pressure
 		if(nitryum_partialpressure > 0.5)
-			adjustFireLoss(nitryum_partialpressure * 0.25)
-		if(nitryum_partialpressure > 3)
-			adjustToxLoss(nitryum_partialpressure * 0.25)
+			adjustFireLoss(nitryum_partialpressure * 0.15)
+		if(nitryum_partialpressure > 5)
+			adjustToxLoss(nitryum_partialpressure * 0.05)
 
 	//FREON
 	if(breath_gases[/datum/gas/freon])
