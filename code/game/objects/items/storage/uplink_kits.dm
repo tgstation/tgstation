@@ -632,3 +632,25 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
+	
+#undef KIT_RECON
+#undef KIT_BLOODY_SPAI
+#undef KIT_STEALTHY
+#undef KIT_SCREWED
+#undef KIT_SABOTAGE
+#undef KIT_GUN
+#undef KIT_MURDER
+#undef KIT_IMPLANTS
+#undef KIT_HACKER
+#undef KIT_SNIPER
+#undef KIT_NUKEOPS_METAGAME
+#undef KIT_LORD_SINGULOTH
+
+#undef KIT_JAMES_BOND
+#undef KIT_NINJA
+#undef KIT_DARK_LORD
+#undef KIT_WHITE_WHALE_HOLY_GRAIL
+#undef KIT_MAD_SCIENTIST
+#undef KIT_BEES
+#undef KIT_MR_FREEZE
+#undef KIT_TRAITOR_2006
