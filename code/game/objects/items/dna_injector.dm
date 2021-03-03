@@ -432,6 +432,15 @@
 /obj/item/dnainjector/removeantiglow
 	name = "\improper DNA injector (Anti-Antiglowy)"
 	remove_mutations = list(ANTIGLOWY)
+	
+/obj/item/dnainjector/ventcrawler
+	name = "\improper DNA injector (Stretchy)"
+	desc = "Makes you able to crawl through tight spaces."
+	add_mutations = list(VENTCRAWLMUT)
+	
+/obj/item/dnainjector/removeventcrawler
+	name = "\improper DNA injector (Un-Stretchy)"
+	remove_mutations = list(VENTCRAWLMUT)
 
 /obj/item/dnainjector/timed
 	var/duration = 600
