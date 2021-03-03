@@ -136,18 +136,18 @@
 			//After 60 seconds we begin to feel the effects
 		if(1 * LIVER_FAILURE_STAGE_SECONDS to 2 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.2 * delta_time,forced = TRUE)
-			owner.adjust_disgust(0.5 * delta_time)
+			owner.adjust_disgust(0.1 * delta_time)
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.4 * delta_time,forced = TRUE)
-			owner.drowsyness += 1 * delta_time
-			owner.adjust_disgust(1 * delta_time)
+			owner.drowsyness += 0.25 * delta_time
+			owner.adjust_disgust(0.3 * delta_time)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.6 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-			owner.drowsyness += 2 * delta_time
-			owner.adjust_disgust(1.5 * delta_time)
+			owner.drowsyness += 0.5 * delta_time
+			owner.adjust_disgust(0.6 * delta_time)
 
 			if(DT_PROB(1.5, delta_time))
 				owner.emote("drool")
@@ -155,18 +155,18 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.drowsyness += 3 * delta_time
-			owner.adjust_disgust(2 * delta_time)
+			owner.drowsyness += 0.8 delta_time
+			owner.adjust_disgust(1.2 * delta_time)
 
 			if(DT_PROB(3, delta_time))
 				owner.emote("drool")
 
 /obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
-	if(!ishuman(user) || !(organ_flags & ORGAN_FAILING))
+	if(!ishuman(owner) || !(organ_flags & ORGAN_FAILING))
 		return
 
-	var/mob/living/carbon/human/humie_user = user
-	if(!humie_user.getorganslot(ORGAN_SLOT_EYES) || humie_user.is_eyes_covered())
+	var/mob/living/carbon/human/humie_owner = owner
+	if(!humie_owner.getorganslot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
