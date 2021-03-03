@@ -155,7 +155,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.drowsyness += 0.8 delta_time
+			owner.drowsyness += 0.8 * delta_time
 			owner.adjust_disgust(1.2 * delta_time)
 
 			if(DT_PROB(3, delta_time))
