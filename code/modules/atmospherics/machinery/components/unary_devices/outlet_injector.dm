@@ -259,9 +259,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/miasma_input
 	name = "miasma tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitryum_input
-	name = "nitryum tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_NITRYUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrium_input
+	name = "nitrium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_NITRIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/pluoxium_input
 	name = "pluoxium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_PLUOXIUM

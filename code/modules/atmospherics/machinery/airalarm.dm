@@ -96,7 +96,7 @@
 		/datum/gas/hypernoblium = new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor = new/datum/tlv/dangerous,
 		/datum/gas/tritium = new/datum/tlv/dangerous,
-		/datum/gas/nitryum = new/datum/tlv/dangerous,
+		/datum/gas/nitrium = new/datum/tlv/dangerous,
 		/datum/gas/pluoxium = new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon = new/datum/tlv/dangerous,
 		/datum/gas/hydrogen = new/datum/tlv/dangerous,
@@ -122,7 +122,7 @@
 		/datum/gas/hypernoblium = new/datum/tlv/no_checks,
 		/datum/gas/water_vapor = new/datum/tlv/no_checks,
 		/datum/gas/tritium = new/datum/tlv/no_checks,
-		/datum/gas/nitryum = new/datum/tlv/no_checks,
+		/datum/gas/nitrium = new/datum/tlv/no_checks,
 		/datum/gas/pluoxium = new/datum/tlv/no_checks,
 		/datum/gas/freon = new/datum/tlv/no_checks,
 		/datum/gas/hydrogen = new/datum/tlv/no_checks,
@@ -148,7 +148,7 @@
 		/datum/gas/hypernoblium = new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor = new/datum/tlv/dangerous,
 		/datum/gas/tritium = new/datum/tlv/dangerous,
-		/datum/gas/nitryum = new/datum/tlv/dangerous,
+		/datum/gas/nitrium = new/datum/tlv/dangerous,
 		/datum/gas/pluoxium = new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon = new/datum/tlv/dangerous,
 		/datum/gas/hydrogen = new/datum/tlv/dangerous,
@@ -541,7 +541,7 @@
 						/datum/gas/water_vapor,
 						/datum/gas/hypernoblium,
 						/datum/gas/nitrous_oxide,
-						/datum/gas/nitryum,
+						/datum/gas/nitrium,
 						/datum/gas/tritium,
 						/datum/gas/bz,
 						/datum/gas/pluoxium,

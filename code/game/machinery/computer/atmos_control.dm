@@ -58,9 +58,9 @@
 /obj/machinery/air_sensor/atmos/miasma_tank
 	name = "miasma tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIASMA
-/obj/machinery/air_sensor/atmos/nitryum_tank
-	name = "nitryum tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_NITRYUM
+/obj/machinery/air_sensor/atmos/nitrium_tank
+	name = "nitrium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_NITRIUM
 /obj/machinery/air_sensor/atmos/pluoxium_tank
 	name = "pluoxium tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM
@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_H2 = "Hydrogen Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM = "Hypernoblium Tank",
 		ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank",
-		ATMOS_GAS_MONITOR_SENSOR_NITRYUM = "Nitryum Tank",
+		ATMOS_GAS_MONITOR_SENSOR_NITRIUM = "Nitrium Tank",
 		ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM = "Pluoxium Tank",
 		ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE = "Proto-Nitrate Tank",
 		ATMOS_GAS_MONITOR_SENSOR_TRITIUM = "Tritium Tank",
@@ -341,12 +341,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/miasma_tank
 
-/obj/machinery/computer/atmos_control/tank/nitryum_tank
-	name = "Nitryum Supply Control"
-	input_tag = ATMOS_GAS_MONITOR_INPUT_NITRYUM
-	output_tag = ATMOS_GAS_MONITOR_OUTPUT_NITRYUM
-	sensors = list(ATMOS_GAS_MONITOR_SENSOR_NITRYUM = "Nitryum Tank")
-	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitryum_tank
+/obj/machinery/computer/atmos_control/tank/nitrium_tank
+	name = "Nitrium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_NITRIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_NITRIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_NITRIUM = "Nitrium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitrium_tank
 
 /obj/machinery/computer/atmos_control/tank/pluoxium_tank
 	name = "Pluoxium Supply Control"

@@ -36,7 +36,7 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
-	var/gas_stimulation_min = 0.002 //nitryum and Freon
+	var/gas_stimulation_min = 0.002 //nitrium and Freon
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
@@ -113,7 +113,7 @@
 						/datum/gas/bz,
 						/datum/gas/nitrogen,
 						/datum/gas/tritium,
-						/datum/gas/nitryum,
+						/datum/gas/nitrium,
 						/datum/gas/pluoxium,
 						/datum/gas/freon,
 						/datum/gas/hypernoblium,
@@ -294,19 +294,19 @@
 			H.radiation += trit_pp/10
 
 	// Nitryum
-		var/nitryum_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryum][MOLES])
-		if (prob(nitryum_pp) && nitryum_pp > 15)
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryum_pp * 0.1)
+		var/nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
+		if (prob(nitrium_pp) && nitrium_pp > 15)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
 			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
-		gas_breathed = breath_gases[/datum/gas/nitryum][MOLES]
-		if (nitryum_pp > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitryum_low_metabolization)
-			H.reagents.add_reagent(/datum/reagent/nitryum_low_metabolization, max(0, 2 - existing))
-		if (nitryum_pp > 5)
-			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitryum_high_metabolization)
-			H.reagents.add_reagent(/datum/reagent/nitryum_high_metabolization, max(0, 1 - existing))
+		gas_breathed = breath_gases[/datum/gas/nitrium][MOLES]
+		if (nitrium_pp > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
+			H.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
+		if (nitrium_pp > 5)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
+			H.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
 
-		breath_gases[/datum/gas/nitryum][MOLES] -= gas_breathed
+		breath_gases[/datum/gas/nitrium][MOLES] -= gas_breathed
 
 	// Freon
 		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])

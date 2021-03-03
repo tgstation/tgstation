@@ -249,9 +249,9 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/miasma
 	name = "miasma filter"
 	filter_type = "miasma"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/nitryum
-	name = "nitryum filter"
-	filter_type = "nitryum"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/nitrium
+	name = "nitrium filter"
+	filter_type = "nitrium"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/pluoxium
 	name = "pluoxium filter"
 	filter_type = "pluox"
@@ -315,9 +315,9 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/miasma
 	name = "miasma filter"
 	filter_type = "miasma"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/nitryum
-	name = "nitryum filter"
-	filter_type = "nitryum"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/nitrium
+	name = "nitrium filter"
+	filter_type = "nitrium"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/pluoxium
 	name = "pluoxium filter"
 	filter_type = "pluox"

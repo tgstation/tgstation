@@ -104,9 +104,9 @@
 	name = "Miasma Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/miasma_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/nitryum_tank
-	name = "Nitryum Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/nitryum_tank
+/obj/item/circuitboard/computer/atmos_control/tank/nitrium_tank
+	name = "nitrium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitrium_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
 	name = "Pluoxium Supply Control (Computer Board)"

@@ -171,7 +171,7 @@ const GASES = [
     'color': 'red',
   },
   {
-    'id': 'nitryum',
+    'id': 'nitrium',
     'name': 'Nitryum',
     'label': 'Nitryum',
     'color': 'brown',

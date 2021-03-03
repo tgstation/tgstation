@@ -251,13 +251,13 @@
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 
-	//NITRYUM
-	if(breath_gases[/datum/gas/nitryum])
-		var/nitryum_partialpressure = (breath_gases[/datum/gas/nitryum][MOLES]/breath.total_moles())*breath_pressure
-		if(nitryum_partialpressure > 0.5)
-			adjustFireLoss(nitryum_partialpressure * 0.15)
-		if(nitryum_partialpressure > 5)
-			adjustToxLoss(nitryum_partialpressure * 0.05)
+	//NITRIUM
+	if(breath_gases[/datum/gas/nitrium])
+		var/nitrium_partialpressure = (breath_gases[/datum/gas/nitrium][MOLES]/breath.total_moles())*breath_pressure
+		if(nitrium_partialpressure > 0.5)
+			adjustFireLoss(nitrium_partialpressure * 0.15)
+		if(nitrium_partialpressure > 5)
+			adjustToxLoss(nitrium_partialpressure * 0.05)
 
 	//FREON
 	if(breath_gases[/datum/gas/freon])

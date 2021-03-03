@@ -250,9 +250,9 @@
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	var/scale_multiplier = 1
-	if(cached_gases[/datum/gas/nitryum])
-		if(cached_gases[/datum/gas/nitryum][MOLES] >= 0.5 && cached_gases[/datum/gas/nitryum][MOLES] <= 2)
-			scale_multiplier = cached_gases[/datum/gas/nitryum][MOLES]
+	if(cached_gases[/datum/gas/nitrium])
+		if(cached_gases[/datum/gas/nitrium][MOLES] >= 0.5 && cached_gases[/datum/gas/nitrium][MOLES] <= 2)
+			scale_multiplier = cached_gases[/datum/gas/nitrium][MOLES]
 
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/transfer_valve))

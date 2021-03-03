@@ -63,7 +63,7 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"nitryum" = /obj/machinery/portable_atmospherics/canister/nitryum,
+		"nitrium" = /obj/machinery/portable_atmospherics/canister/nitrium,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
@@ -168,12 +168,12 @@
 	base_icon_state = "nob"
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/portable_atmospherics/canister/nitryum
-	name = "Nitryum canister"
-	desc = "Nitryum gas. Feels great 'til the acid eats your lungs."
+/obj/machinery/portable_atmospherics/canister/nitrium
+	name = "Nitrium canister"
+	desc = "Nitrium gas. Feels great 'til the acid eats your lungs."
 	icon_state = "brown"
 	base_icon_state = "brown"
-	gas_type = /datum/gas/nitryum
+	gas_type = /datum/gas/nitrium
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"

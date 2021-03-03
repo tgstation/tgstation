@@ -83,9 +83,9 @@
 /obj/machinery/atmospherics/components/unary/tank/miasma
 	gas_type = /datum/gas/miasma
 
-/obj/machinery/atmospherics/components/unary/tank/nitryum
+/obj/machinery/atmospherics/components/unary/tank/nitrium
 	icon_state = "red"
-	gas_type = /datum/gas/nitryum
+	gas_type = /datum/gas/nitrium
 
 /obj/machinery/atmospherics/components/unary/tank/pluoxium
 	icon_state = "blue"

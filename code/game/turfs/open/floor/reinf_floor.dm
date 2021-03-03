@@ -149,9 +149,9 @@
 	name = "\improper Miasma floor"
 	initial_gas_mix = ATMOS_TANK_MIASMA
 
-/turf/open/floor/engine/nitryum
-	name = "\improper Nitryum floor"
-	initial_gas_mix = ATMOS_TANK_NITRYUM
+/turf/open/floor/engine/nitrium
+	name = "\improper nitrium floor"
+	initial_gas_mix = ATMOS_TANK_NITRIUM
 
 /turf/open/floor/engine/pluoxium
 	name = "\improper Pluoxium floor"

@@ -400,9 +400,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/miasma_output
 	name = "miasma tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitryum_output
-	name = "nitryum tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NITRYUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrium_output
+	name = "nitrium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NITRIUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/pluoxium_output
 	name = "pluoxium tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM
