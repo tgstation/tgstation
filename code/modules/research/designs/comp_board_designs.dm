@@ -231,7 +231,6 @@
 	name = "Computer Design (Telecommunications Monitoring Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
 	id = "comm_monitor"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/comm_monitor
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -240,7 +239,6 @@
 	name = "Computer Design (Telecommunications Server Monitoring Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
 	id = "comm_server"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/comm_server
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
