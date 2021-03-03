@@ -8,7 +8,7 @@
 	light_color = LIGHT_COLOR_ORANGE
 
 	COOLDOWN_DECLARE(order_cooldown)
-	var/list/order_datums = list()
+	var/static/list/order_datums = list()
 	var/list/grocery_list = list()
 
 	var/obj/item/radio/radio
@@ -22,12 +22,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-	for(var/path in subtypesof(/datum/orderable_item))
-		order_datums += new path
+	if(!order_datums.len)
+		for(var/path in subtypesof(/datum/orderable_item))
+			order_datums += new path
 
 /obj/machinery/computer/chef_order/Destroy()
 	QDEL_NULL(radio)
-	QDEL_LIST(order_datums)
 	. = ..()
 
 /obj/machinery/computer/chef_order/proc/get_total_cost()
@@ -35,9 +35,6 @@
 	for(var/datum/orderable_item/item as anything in grocery_list)
 		for(var/i in 1 to grocery_list[item]) //for how many times we bought it
 			. += item.cost_per_order //add its price
-
-/obj/machinery/computer/chef_order/ui_state(mob/user)
-	return GLOB.not_incapacitated_state
 
 /obj/machinery/computer/chef_order/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -119,8 +116,8 @@
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				for(var/amt in 1 to grocery_list[item])//every order amount
 					new item.item_instance.type(pod)
-			var/turf/T = get_turf(chef)
-			new /obj/effect/pod_landingzone(T, pod)
+			var/turf/landing_location = get_turf(chef)
+			new /obj/effect/pod_landingzone(landing_location, pod)
 			grocery_list.Cut()
 			update_static_data(chef)
 	. = TRUE
