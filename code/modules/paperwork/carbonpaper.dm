@@ -17,6 +17,12 @@
 		icon_state = "[icon_state]_words"
 	return ..()
 
+/obj/item/paper/carbon/examine()
+	. = ..()
+	if(copied || iscopy)
+		return
+	. += "<span class='notice'>Right-click to tear off the carbon-copy (you must use both hands).</span>"
+
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
 	if(copied || iscopy)
 		to_chat(user, "<span class='notice'>There are no more carbon copies attached to this paper!</span>")
@@ -39,7 +45,7 @@
 		user.put_in_hands(Copy)
 
 /obj/item/paper/carbon/attack_hand(mob/living/user, list/modifiers)
-	if(loc == user && user.is_holding(src))
+	if(loc == user && user.is_holding(src) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		removecopy(user)
 		return
 	return ..()
