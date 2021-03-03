@@ -43,9 +43,9 @@
 
 /obj/item/card/emagfake/examine_more(mob/user)
 	if(in_range(src, user) || isobserver(user))
-		. = list("<span class='notice'>You examine [src] closer. It looks like a Syndicate-stamped ID card with its guts hanging out. But the entire thing is moulded plastic, and there's a Donk Co. logo stamped on the back.</span>")
+		. = list("<span class='notice'>You examine [src] closer. It looks like a Syndicate-stamped Nanotrasen ID card with its guts hanging out. But the entire thing is moulded plastic, and there's a Donk Co. logo on the back.</span>")
 	else
-		. = list("<span class='warning'>You try to examine [src] closer, but you're too far away!</span>")
+		. = list("<span class='warning'>You try to examine [src] closer, but you're too far away.</span>")
 
 /obj/item/card/emagfake/examine(mob/user)
 	. = ..()
@@ -53,9 +53,9 @@
 
 /obj/item/card/emag/examine_more(mob/user)
 	if(in_range(src, user) || isobserver(user))
-		. = list("<span class='notice'>You examine [src] closer. It looks like a Syndicate-stamped ID card, but its guts are hanging out. The wiring is being routed through a suspicious-looking circuit board.</span>")
+		. = list("<span class='notice'>You examine [src] closer. It looks like a Syndicate-stamped Nanotrasen ID card, but its guts are hanging out. The wiring is being routed through a suspicious-looking circuit board.</span>")
 	else
-		. = list("<span class='warning'>You try to examine [src] closer, but you're too far away!</span>")
+		. = list("<span class='warning'>You try to examine [src] closer, but you're too far away.</span>")
 
 /obj/item/card/emag/examine(mob/user)
 	. = ..()
