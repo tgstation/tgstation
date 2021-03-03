@@ -52,6 +52,8 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/Initialize(mapload)
 	.= ..()
 
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT) //at least they'll have SOMEONE to talk to
+
 	disease_instances = list()
 	hosts = list()
 
@@ -109,6 +111,16 @@ the new instance inside the host to be updated to the template's stats.
 			. += "<span class='notice'>[ability.name]</span>"
 
 /mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!message)
+		return
+	src.log_talk(message, LOG_SAY)
+	var/rendered = "<span class='sentientdisease'><b>[src]</b> says, \"[message]\"</span>"
+	for(var/mob/M in GLOB.mob_list)
+		if(issentientdisease(M))
+			to_chat(M, rendered)
+		else if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			to_chat(M, "[link] [rendered]")
 	return
 
 /mob/camera/disease/Move(NewLoc, Dir = 0)

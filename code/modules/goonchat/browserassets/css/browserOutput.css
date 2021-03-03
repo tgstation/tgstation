@@ -346,6 +346,8 @@ em						{font-style: normal;	font-weight: bold;}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 185%;}
 
+.sentientdisease		{color: #bfff80}
+
 .deconversion_message	{color: #a947ff;	font-size: 185%;	font-style: italic;}
 
 .ghostalert				{color: #6600ff;	font-style: italic;	font-weight: bold;}
