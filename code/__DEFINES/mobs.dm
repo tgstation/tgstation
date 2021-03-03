@@ -135,6 +135,14 @@
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
 
+//Health doll screws for human mobs
+#define SCREWYDOLL_HEAD /obj/item/bodypart/head
+#define SCREWYDOLL_CHEST /obj/item/bodypart/chest
+#define SCREWYDOLL_L_ARM /obj/item/bodypart/l_arm
+#define SCREWYDOLL_R_ARM /obj/item/bodypart/r_arm
+#define SCREWYDOLL_L_LEG /obj/item/bodypart/l_leg
+#define SCREWYDOLL_R_LEG /obj/item/bodypart/r_leg
+
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
 #define BEAUTY_LEVEL_BAD -33
@@ -190,6 +198,18 @@
 #define ETHEREAL_CHARGE_FULL 2000
 #define ETHEREAL_CHARGE_OVERLOAD 2500
 #define ETHEREAL_CHARGE_DANGEROUS 3000
+
+
+#define CRYSTALIZE_COOLDOWN_LENGTH 120 SECONDS
+#define CRYSTALIZE_PRE_WAIT_TIME 40 SECONDS
+#define CRYSTALIZE_DISARM_WAIT_TIME 120 SECONDS
+#define CRYSTALIZE_HEAL_TIME 60 SECONDS
+
+#define BRUTE_DAMAGE_REQUIRED_TO_STOP_CRYSTALIZATION 30
+
+#define CRYSTALIZE_STAGE_ENGULFING 100 //Cant use second defines
+#define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
+#define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10

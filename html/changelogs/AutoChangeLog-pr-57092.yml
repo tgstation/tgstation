@@ -1,5 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "you can no longer use holodeck items to get stuck in custom vendors and do nothing else"
-  - bugfix: "custom vendors will no longer tell you an item cant be accepted twice in a row"

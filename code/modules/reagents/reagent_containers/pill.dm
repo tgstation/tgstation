@@ -275,7 +275,7 @@
 	if(prob(30))
 		desc = pick(descs)
 
-/obj/item/reagent_containers/pill/maintenance/on_consumption(mob/M, mob/user)
+/obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
 	. = ..()
 
 	M.client?.give_award(/datum/award/score/maintenance_pill, M)

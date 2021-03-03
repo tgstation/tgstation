@@ -283,7 +283,7 @@
 									makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, A, user, FALSE, T.loc)
 					if("Wraith")
 						if(iscultist(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, A, user, FALSE, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, FALSE, T.loc)
 						else
 							switch(theme)
 								if(THEME_WIZARD)
