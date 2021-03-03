@@ -9,7 +9,7 @@
 	var/obj/item/card/id/stored_card
 
 ///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
-/obj/item/computer_hardware/card_slot/Exited(atom/A)
+/obj/item/computer_hardware/card_slot/Exited(atom/A, atom/newloc)
 	if(A == stored_card)
 		stored_card = null
 		if(holder)
@@ -21,7 +21,7 @@
 			if(ishuman(holder.loc))
 				var/mob/living/carbon/human/H = holder.loc
 				H.sec_hud_set_ID()
-	. = ..()
+	return ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
 	try_eject(forced = TRUE)

@@ -10,18 +10,18 @@
 /obj/item/computer_hardware/battery/get_cell()
 	return battery
 
-/obj/item/computer_hardware/battery/Initialize(battery_type)
+/obj/item/computer_hardware/battery/Initialize(mapload, battery_type)
+	. = ..()
 	if(battery_type)
 		battery = new battery_type(src)
-	..()
 
 ///What happens when the battery is removed (or deleted) from the module, through try_eject() or not.
-/obj/item/computer_hardware/battery/Exited(atom/A)
+/obj/item/computer_hardware/battery/Exited(atom/A, atom/newloc)
 	if(A == battery)
 		battery = null
 		if(holder?.enabled && !holder.use_power())
 			holder.shutdown_computer()
-	. = ..()
+	return ..()
 
 /obj/item/computer_hardware/battery/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
