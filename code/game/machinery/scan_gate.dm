@@ -100,9 +100,8 @@
 		else
 			to_chat(user, "<span class='warning'>You try to lock [src] with [W], but nothing happens.</span>")
 	else
-		if(!locked)
-			if(default_deconstruction_screwdriver(user, "scangate_open", "scangate", W))
-				return
+		if(!locked && default_deconstruction_screwdriver(user, "scangate_open", "scangate", W))
+			return
 		if(panel_open && is_wire_tool(W))
 			wires.interact(user)
 	return ..()
