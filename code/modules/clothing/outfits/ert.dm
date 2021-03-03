@@ -194,6 +194,7 @@
 	name = "Inquisition Commander"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 	l_hand = /obj/item/nullrod/scythe/talking/chainsword
 
 /datum/outfit/centcom/ert/security/inquisitor
@@ -317,6 +318,7 @@
 	id_trim = /datum/id_trim/centcom/intern
 	uniform = /obj/item/clothing/under/rank/centcom/intern
 	back = /obj/item/storage/backpack/satchel
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 	belt = /obj/item/melee/classic_baton
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
