@@ -98,7 +98,7 @@
 	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
-/datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
+/datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 
 	if(!source.combat_mode)
@@ -109,7 +109,7 @@
 	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
-	LE.preparePixelProjectile(target, source, mouseparams)
+	LE.preparePixelProjectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, /obj/projectile.proc/fire)
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 

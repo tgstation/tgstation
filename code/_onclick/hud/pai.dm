@@ -223,7 +223,7 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
-	using.screen_loc = ui_borg_language_menu
+	using.screen_loc = ui_pai_language_menu
 	static_inventory += using
 
 // Host Monitor
@@ -268,7 +268,7 @@
 
 // Radio
 	using = new /atom/movable/screen/pai/radio()
-	using.screen_loc = ui_borg_radio
+	using.screen_loc = ui_pai_radio
 	static_inventory += using
 
 	update_software_buttons()

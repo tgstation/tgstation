@@ -363,15 +363,11 @@
 	if(!target)
 		return
 
-	if(!user.combat_mode)
-		if(cap_on && reagents.total_volume && istype(target))
-			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
-			return
+	if(cap_on && reagents.total_volume && istype(target))
+		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		return
 
-		return ..()
-
-	if(!cap_on)
-		SplashReagents(target)
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))

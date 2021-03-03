@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 1500000
 	dangerous = TRUE
-	requirements = list(/datum/gas/hypernoblium = 1500, /datum/gas/antinoblium = 1500, /datum/gas/bz = 2000, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
+	requirements = list(/datum/gas/hypernoblium = 250, /datum/gas/antinoblium = 250, /datum/gas/bz = 200, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
 	products = list(/obj/machinery/power/supermatter_crystal/shard = 1)
 
 /datum/gas_recipe/crystallizer/n2o_crystal
@@ -146,5 +146,5 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 20
 	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 29000
-	requirements = list(/datum/gas/antinoblium = 100, /datum/gas/zauker = 500, /datum/gas/bz = 75)
+	requirements = list(/datum/gas/antinoblium = 5, /datum/gas/zauker = 20, /datum/gas/bz = 7.5)
 	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)
