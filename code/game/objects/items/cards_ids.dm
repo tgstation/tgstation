@@ -359,6 +359,9 @@
  * This proc directly modifies the lists passed in as args. It expects these lists to be instantiated.
  * There is no return value.
  * Arguments:
+ * * accesses - List of accesses you want to stort into basic_access_list and wildcard_access_list. Should not be null.
+ * * basic_access_list - Mandatory argument. The proc modifies the list passed in this argument and adds accesses the trim supports to it.
+ * * wildcard_access_list - Mandatory argument. The proc modifies the list passed in this argument and adds accesses the trim does not support to it.
  */
 /obj/item/card/id/proc/build_access_lists(list/accesses, list/basic_access_list, list/wildcard_access_list)
 	if(!length(accesses) || isnull(basic_access_list) || isnull(wildcard_access_list))
