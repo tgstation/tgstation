@@ -438,8 +438,8 @@
 				else
 					M.forceMove(src)
 				SEND_SIGNAL(M, COMSIG_ATOM_USED_IN_CRAFT, src)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHECKPARTS, parts_list, R)
 		parts_list.Cut()
-	SEND_SIGNAL(src, COMSIG_ATOM_CHECKPARTS, parts_list, R)
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
