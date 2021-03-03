@@ -420,6 +420,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 #define IMPLANT_TRAIT "implant" // inherited from implants
 #define GLASSES_TRAIT "glasses"
+#define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery" // inherited by experimental surgeries
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
 #define CRIT_HEALTH_TRAIT "crit_health"
