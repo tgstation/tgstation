@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - qol: "Plexus Access Management app has had the Basic tab renamed to Trim to indicate that these accesses are available because of the card's trim. It also has an access counter so players can see they're able to change it."
-  - qol: "Plexus Access Management app has had the logic for displaying the used/available accesses for any given wildcard inverted. It now shows Used/Max instead of Available/Max."

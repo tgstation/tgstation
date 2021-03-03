@@ -1,8 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Ghost language button will now properly show next to a mafia button, instead of being half a mile away in widescreen mode."
-  - bugfix: "Fixed Alien HUD having a language button inside a combat toggle button."
-  - bugfix: "Fixed AI HUD having a language button hidden behind a multicamera button in widescreen mode."
-  - qol: "Adjusted pAI HUD radio and language buttons to better fit their surroundings."
-  - qol: "Shifted borg language button a few pixels to better fit it's surroundings."

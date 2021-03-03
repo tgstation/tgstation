@@ -1,4 +1,0 @@
-author: "Hadza"
-delete-after: True
-changes: 
-  - bugfix: "Fixes TRAIT_NOBREATH crit damage being applied after death"

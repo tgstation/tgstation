@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "Moved heirloom lists to species and job datums."
