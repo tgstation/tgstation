@@ -338,53 +338,6 @@ All the important duct code:
 	connect_network(D, direction, TRUE)
 	update_appearance()
 
-///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect.
-/obj/machinery/duct/multilayered
-	name = "duct layer-manifold"
-	icon = 'icons/obj/2x2.dmi'
-	icon_state = "multiduct"
-	pixel_x = -15
-	pixel_y = -15
-
-	color_to_color_support = FALSE
-	duct_layer = FIRST_DUCT_LAYER | SECOND_DUCT_LAYER | THIRD_DUCT_LAYER | FOURTH_DUCT_LAYER | FIFTH_DUCT_LAYER
-	drop_on_wrench = null
-
-	lock_connects = TRUE
-	lock_layers = TRUE
-	ignore_colors = TRUE
-	dumb = TRUE
-
-	active = FALSE
-	anchored = FALSE
-
-/obj/machinery/duct/multilayered/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
-	. = ..()
-	update_connects()
-
-/obj/machinery/duct/multilayered/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
-/obj/machinery/duct/multilayered/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	update_connects()
-
-/obj/machinery/duct/multilayered/proc/update_connects()
-	if(dir & NORTH || dir & SOUTH)
-		connects = NORTH | SOUTH
-	else
-		connects = EAST | WEST
-
-///don't connect to other multilayered stuff because honestly it shouldn't be done and I dont wanna deal with it
-/obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
-	if(istype(D, /obj/machinery/duct/multilayered))
-		return
-	return ..()
-
-/obj/machinery/duct/multilayered/handle_layer()
-	return
-
 /obj/item/stack/ducts
 	name = "stack of duct"
 	desc = "A stack of fluid ducts."
