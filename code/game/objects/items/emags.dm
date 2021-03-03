@@ -42,7 +42,24 @@
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/emagfake/examine_more(mob/user)
-	. = list("<span class='notice'>You notice a Donk Co. logo stamped on the back. This is a toy replica!</span>")
+	if(in_range(src, user) || isobserver(user))
+		. = list("<span class='notice'>You examine [src] closer. It looks like a Syndicate-stamped ID card with its guts hanging out. But the entire thing is moulded plastic, and there's a Donk Co. logo stamped on the back.</span>")
+	else
+		. = list("<span class='warning'>You try to examine [src] closer, but you're too far away!</span>")
+
+/obj/item/card/emagfake/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>You should quickly examine this again.</span>"
+
+/obj/item/card/emag/examine_more(mob/user)
+	if(in_range(src, user) || isobserver(user))
+		. = list("<span class='notice'>You examine [src] closer. It looks like a Syndicate-stamped ID card, but its guts are hanging out. The wiring is being routed through a suspicious-looking circuit board.</span>")
+	else
+		. = list("<span class='warning'>You try to examine [src] closer, but you're too far away!</span>")
+
+/obj/item/card/emag/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>You should quickly examine this again.</span>"
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
