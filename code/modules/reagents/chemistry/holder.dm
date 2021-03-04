@@ -753,7 +753,7 @@
 /datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, delta_time, times_fired)
 	var/need_mob_update = FALSE
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		if(!reagent.chemical_flags & REAGENT_IGNORE_STASIS)
+		if(!(reagent.chemical_flags & REAGENT_IGNORE_STASIS))
 			continue
 		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose = TRUE)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
