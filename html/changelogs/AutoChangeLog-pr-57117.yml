@@ -1,6 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - refactor: "electrified chair behavior is now a component instead of a type"
-  - imageadd: "added a dir to the electrified chair overlay
-feature: make any chair into an electrified chair by attaching a shock kit to them over a live cable"
