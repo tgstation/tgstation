@@ -75,7 +75,7 @@
 				to_chat(usr, "<span class='danger'>ERROR: Insufficient admin rights.</span>", confidential = TRUE)
 				return TRUE
 
-			var/client/owner_client = locate(owner) in GLOB.clients
+			var/client/owner_client = (locate(owner) in GLOB.clients)
 
 			if(!owner_client)
 				to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>", confidential = TRUE)
