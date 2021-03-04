@@ -1283,5 +1283,19 @@
 			)
 	category = CAT_CHEMISTRY
 
+/datum/crafting_recipe/paper_bundle
+	name = "Improvised paper bin"
+	result = /obj/item/paper_bin/bundlenatural/crafted
+	reqs = list(/obj/item/stack/cable_coil = 2,
+				/obj/item/paper = 1)
+	time = 4 SECONDS
+	category = CAT_MISC
+
+/datum/crafting_recipe/paper_bundle/thirty
+	name = "Natural paper bundle"
+	result = /obj/item/paper_bin/bundlenatural
+	reqs = list(/obj/item/stack/cable_coil = 2,
+				/obj/item/paper/natural = 30)
+
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

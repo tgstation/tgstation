@@ -12,12 +12,10 @@
 	throw_range = 7
 	pressure_resistance = 8
 	var/papertype = /obj/item/paper
-	var/total_paper = 30
+	var/starting_sheets = 30
 	var/list/papers = list()
 	var/obj/item/pen/bin_pen
-	/// Paper visible on top.
-	var/obj/item/paper/top_paper
-	/// This goes over the top of the top paper to give it the appearance of being inside the object.
+	/// This goes over the top to give the paper the appearance of being inside the object.
 	var/paper_bin_overlay = "paper_bin_overlay"
 
 /obj/item/paper_bin/Initialize(mapload)
@@ -28,7 +26,7 @@
 		if(P && !bin_pen)
 			P.forceMove(src)
 			bin_pen = P
-	for(var/i in 1 to total_paper)
+	for(var/i in 1 to starting_sheets)
 		papers.Add(generate_paper())
 	update_appearance()
 
@@ -44,12 +42,19 @@
 	if(papers)
 		for(var/i in papers)
 			qdel(i)
-		papers = null
+		papers.Cut()
 	. = ..()
 
+/obj/item/paper_bin/dump_contents()
+	var/atom/droppoint = drop_location()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(droppoint)
+	papers.Cut()
+	update_appearance()
+
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(total_paper)
-		total_paper = 0
+	if(LAZYLEN(papers))
+		papers.Cut()
 		update_appearance()
 	..()
 
@@ -86,8 +91,8 @@
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
 		update_appearance()
-	else if(total_paper)
-		total_paper--
+	else if(LAZYLEN(papers))
+		var/obj/item/paper/top_paper = papers[LAZYLEN(papers)]
 		papers.Remove(top_paper)
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
@@ -106,7 +111,6 @@
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
-		total_paper++
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/P = I
@@ -120,10 +124,8 @@
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
-	if(total_paper)
-		. += "It contains [total_paper > 1 ? "[total_paper] papers" : "one paper"]."
-	else
-		. += "It doesn't contain anything."
+	if(LAZYLEN(papers))
+		. += "It contains [LAZYLEN(papers) > 1 ? "[LAZYLEN(papers)] papers" : "one paper"]."
 
 /obj/item/paper_bin/update_overlays()
 	. = ..()
@@ -146,11 +148,7 @@
 			. += paper_overlay
 			. += current_paper.overlays
 			paper_number++
-		top_paper = papers[papers.len] //last in first out
-	else
-		top_paper = null
-
-	if(top_paper)
+	if(LAZYLEN(papers))
 		. += mutable_appearance(icon, paper_bin_overlay)
 	if(bin_pen)
 		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
@@ -167,11 +165,21 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 	paper_bin_overlay = "paper_bundle_overlay"
+	///Color of the cable this bundle is held together with.
+	var/cable_color = "#a9734f"
 
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	..()
-	if(total_paper < 1)
-		qdel(src)
+	if(!LAZYLEN(papers))
+		deconstruct(FALSE)
+
+/obj/item/paper_bin/bundlenatural/deconstruct(disassembled = TRUE)
+	var/obj/item/stack/cable_coil/dropped_cable = new /obj/item/stack/cable_coil(drop_location(), 2)
+	dropped_cable.color = cable_color
+	dropped_cable.cable_color = "brown"
+	dropped_cable.desc += " Non-natural."
+	dump_contents()
+	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
 	qdel(src)
@@ -181,21 +189,25 @@
 		to_chat(user, "<span class='warning'>[W] won't fit into [src].</span>")
 		return
 	if(W.get_sharpness())
-		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
-		var/turf/T = get_turf(src.loc)
-		while(total_paper > 0)
-			total_paper--
-			var/obj/item/paper/P
-			if(papers.len > 0)
-				P = papers[papers.len]
-				papers -= P
-			else
-				P = new papertype()
-				P.forceMove(T)
-			CHECK_TICK
-		qdel(src)
+		to_chat(user, "<span class='notice'>You slice the cable from [src].</span>")
+		deconstruct(TRUE)
 	else
 		..()
+
+/obj/item/paper_bin/bundlenatural/wirecutter_act(mob/user, obj/item/tool)
+	. = ..()
+	if(tool.use_tool(src, user, 1 SECONDS))
+		to_chat(user, "<span class='notice'>You snip the cable from [src].</span>")
+		deconstruct(TRUE)
+		return TRUE
+
+/obj/item/paper_bin/bundlenatural/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] is held together with cable. It could be <b>cut</b>.</span>"
+
+/obj/item/paper_bin/bundlenatural/crafted
+	name = "handcrafted paper bundle"
+	starting_sheets = 1
 
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"

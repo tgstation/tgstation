@@ -358,6 +358,9 @@
 /**
  * Natural paper
  */
+/obj/item/paper/natural
+	 name = "natural paper"
+
 /obj/item/paper/natural/Initialize()
 	. = ..()
 	color = "#FFF5ED"
