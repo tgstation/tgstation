@@ -2,10 +2,10 @@
 #define SUGAR_PER_SCOOP 10
 #define EXTRA_MAX_VOLUME_PER_SCOOP 20
 
-/**
-  * Don't make subtypes off of this instead of [/datum/ice_cream_flavour]. It supports both cones and scoop flavours
-  * so you have no excuses (unless you know what you are doing; be my guest if you plan to add whipped cream, wafers or jimmies).
-  */
+/*
+ * Don't make subtypes off of this instead of [/datum/ice_cream_flavour]. It supports both cones and scoop flavours
+ * so you have no excuses (unless you know what you are doing; be my guest if you plan to add whipped cream, wafers or jimmies).
+ */
 /obj/item/food/icecream
 	name = "ice cream cone"
 	desc = "Placeholder text for an ice cream cone filled with the dimwittedness of those who dared to code but couldn't."
@@ -90,19 +90,19 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 		else
 			.[flavour.name] = flavour
 
-/**
-  * The ice cream datums. What makes these digital frozen snacks so yummy.
-  * They are singletons, so please bear with me if they feel a little tortous to use at time.
-  */
+/*
+ * The ice cream datums. What makes these digital frozen snacks so yummy.
+ * They are singletons, so please bear with me if they feel a little tortous to use at time.
+ */
 /datum/ice_cream_flavour
 	/// Make sure the same name is not found on other types; These are singletons keyed by their name.
 	var/name = "Coderlicious Gourmet Double Deluxe Undefined"
 	/// The icon state of the flavour, overlay or not.
 	var/icon_state = "icecream_vanilla"
-	/**
-	  * The description of the food when it contains only one flavour of ice cream. Make sure your new subtypes have one.
-	  * $CONE_NAME and $CUSTOM_NAME are both placeholder names for the cone and the custom ice cream respectively.
-	  */
+	/*
+	 * The description of the food when it contains only one flavour of ice cream. Make sure your new subtypes have one.
+	 * $CONE_NAME and $CUSTOM_NAME are both placeholder names for the cone and the custom ice cream respectively.
+	 */
 	var/desc = ""
 	/// The ingredients required to produce a unit, these are multiplied by 3.
 	var/list/ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
