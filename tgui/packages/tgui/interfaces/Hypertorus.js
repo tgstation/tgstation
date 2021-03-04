@@ -1,11 +1,11 @@
-import { sortBy, map, filter } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput } from '../components';
+import { Button, LabeledList, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
+import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
-import { formatSiUnit, formatSiBaseTenUnit } from '../format';
 
 export const Hypertorus = (props, context) => {
   const { act, data } = useBackend(context);
@@ -47,15 +47,13 @@ export const Hypertorus = (props, context) => {
   const moderatorMax = Math.max(1, ...moderator_gases.map(gas => gas.amount));
   return (
     <Window
+      title="Fusion Reactor"
       width={500}
-      height={600}
-      scrollable
-      resizable
-      title="Fusion Reactor">
-      <Window.Content>
+      height={600}>
+      <Window.Content scrollable>
         <Section title="Switches">
-          <Flex m={-0.5}>
-            <Flex.Item m={0.5} color="label">
+          <Stack>
+            <Stack.Item color="label">
               {'Start power: '}
               <Button
                 disabled={data.power_level > 0}
@@ -63,29 +61,29 @@ export const Hypertorus = (props, context) => {
                 content={data.start_power ? 'On' : 'Off'}
                 selected={data.start_power}
                 onClick={() => act('start_power')} />
-            </Flex.Item>
-            <Flex.Item m={0.5} color="label">
+            </Stack.Item>
+            <Stack.Item color="label">
               {'Start cooling: '}
               <Button
                 disabled={start_fuel === 1
-                    || start_power === 0
-                    || (start_cooling && data.power_level > 0)}
+                  || start_power === 0
+                  || (start_cooling && data.power_level > 0)}
                 icon={data.start_cooling ? 'power-off' : 'times'}
                 content={data.start_cooling ? 'On' : 'Off'}
                 selected={data.start_cooling}
                 onClick={() => act('start_cooling')} />
-            </Flex.Item>
-            <Flex.Item m={0.5} color="label">
+            </Stack.Item>
+            <Stack.Item color="label">
               {'Start fuel injection: '}
               <Button
                 disabled={start_power === 0
-                    || start_cooling === 0}
+                  || start_cooling === 0}
                 icon={data.start_fuel ? 'power-off' : 'times'}
                 content={data.start_fuel ? 'On' : 'Off'}
                 selected={data.start_fuel}
                 onClick={() => act('start_fuel')} />
-            </Flex.Item>
-          </Flex>
+            </Stack.Item>
+          </Stack>
         </Section>
         <Section title="Internal Fusion Gases">
           <LabeledList>

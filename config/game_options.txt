@@ -20,8 +20,8 @@ OOC_DURING_ROUND
 EMOJIS
 
 ## HEART COMMENDATIONS ###
-## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% default)
-## COMMENDATIONS 0.05
+## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% suggested)
+COMMENDATION_PERCENT_POLL 0.05
 
 ## MOB MOVEMENT ###
 

@@ -178,6 +178,20 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggleendofroundsounds)()
 /datum/verbs/menu/settings/sound/toggleendofroundsounds/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_ENDOFROUND
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglecombatmodesound)()
+	set name = "Hear/Silence Combat Mode Toggle Sound"
+	set category = "Preferences"
+	set desc = "Hear Combat Mode Toggle Sound"
+	usr.client.prefs.toggles ^= SOUND_COMBATMODE
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_COMBATMODE)
+		to_chat(usr, "You will now hear a sound when combat mode is turned on.")
+	else
+		to_chat(usr, "You will no longer hear a sound when combat mode is turned on.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Combat Mode Toggle Sounds", "[usr.client.prefs.toggles & SOUND_COMBATMODE ? "Enabled" : "Disabled"]"))
+
+/datum/verbs/menu/settings/sound/togglecombatmodesound/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_COMBATMODE
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglemidis)()
 	set name = "Hear/Silence Midis"
@@ -224,6 +238,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, Toggle_Soundscape)()
 		to_chat(usr, "You will no longer hear ambient sounds.")
 		usr.stop_sound_channel(CHANNEL_AMBIENCE)
 		usr.stop_sound_channel(CHANNEL_BUZZ)
+	usr.client.update_ambience_pref()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ambience", "[usr.client.prefs.toggles & SOUND_AMBIENCE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/settings/sound/Toggle_Soundscape/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_AMBIENCE
@@ -240,7 +255,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggle_ship_ambience)()
 	else
 		to_chat(usr, "You will no longer hear ship ambience.")
 		usr.stop_sound_channel(CHANNEL_BUZZ)
-		usr.client.ambience_playing = 0
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ship Ambience", "[usr.client.prefs.toggles & SOUND_SHIP_AMBIENCE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 /datum/verbs/menu/settings/sound/toggle_ship_ambience/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_SHIP_AMBIENCE
@@ -306,7 +320,7 @@ GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","ske
 		prefs.save_preferences()
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
-			O.update_icon(new_form)
+			O.update_icon(ALL, new_form)
 
 GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
 
@@ -335,7 +349,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		prefs.save_preferences()
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
-			O.update_icon()
+			O.update_appearance()
 
 /client/verb/pick_ghost_customization()
 	set name = "Ghost Customization"

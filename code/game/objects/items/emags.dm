@@ -1,6 +1,6 @@
 /* Emags
  * Contains:
- *		EMAGS AND DOORMAGS
+ * EMAGS AND DOORMAGS
  */
 
 

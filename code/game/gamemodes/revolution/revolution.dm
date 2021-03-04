@@ -63,7 +63,7 @@
 	var/list/sec = SSjob.get_living_sec()
 	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
 
-	for(var/datum/mind/rev_mind in headrev_candidates)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
+	for(var/datum/mind/rev_mind in headrev_candidates) //People with return to lobby may still be in the lobby. Let's pick someone else in that case.
 		if(isnewplayer(rev_mind.current))
 			headrev_candidates -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
@@ -77,8 +77,8 @@
 					continue
 				else
 					var/mob/Nm = lenin.current
-					if(Nm.job in restricted_jobs)	//Don't make the HOS a replacement revhead
-						antag_candidates += lenin	//Let's let them keep antag chance for other antags
+					if(Nm.job in restricted_jobs) //Don't make the HOS a replacement revhead
+						antag_candidates += lenin //Let's let them keep antag chance for other antags
 						continue
 
 					headrev_candidates += lenin

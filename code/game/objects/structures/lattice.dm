@@ -115,8 +115,8 @@
 
 /obj/structure/lattice/lava/attackby(obj/item/C, mob/user, params)
 	. = ..()
-	if(istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/P = C
+	if(istype(C, /obj/item/stack/tile/iron))
+		var/obj/item/stack/tile/iron/P = C
 		if(P.use(1))
 			to_chat(user, "<span class='notice'>You construct a floor plating, as lava settles around the rods.</span>")
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)

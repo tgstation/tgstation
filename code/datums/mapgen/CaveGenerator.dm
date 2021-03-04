@@ -1,22 +1,19 @@
 /datum/map_generator/cave_generator
 	var/name = "Cave Generator"
 	///Weighted list of the types that spawns if the turf is open
-	var/open_turf_types = list(/turf/open/floor/plating/asteroid = 1)
+	var/open_turf_types = list(/turf/open/floor/plating/asteroid/airless = 1)
 	///Weighted list of the types that spawns if the turf is closed
-	var/closed_turf_types =  list(/turf/closed/mineral/random/volcanic = 1)
+	var/closed_turf_types =  list(/turf/closed/mineral/random = 1)
 
 
-	///Weighted list of extra features that can spawn in the area, such as geysers.
-	var/list/feature_spawn_list = list(/obj/structure/geyser/random = 1)
 	///Weighted list of mobs that can spawn in the area.
-	var/list/mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /obj/structure/spawner/lavaland = 2, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /obj/structure/spawner/lavaland/legion = 3, \
-		SPAWN_MEGAFAUNA = 4, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
-	///Weighted list of flora that can spawn in the area.
-	var/list/flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
+	var/list/mob_spawn_list
 	// Weighted list of Megafauna that can spawn in the caves
 	var/list/megafauna_spawn_list
+	///Weighted list of flora that can spawn in the area.
+	var/list/flora_spawn_list
+	///Weighted list of extra features that can spawn in the area, such as geysers.
+	var/list/feature_spawn_list
 
 
 	///Base chance of spawning a mob
@@ -39,8 +36,14 @@
 
 /datum/map_generator/cave_generator/New()
 	. = ..()
+	if(!mob_spawn_list)
+		mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
 	if(!megafauna_spawn_list)
-		megafauna_spawn_list  = GLOB.megafauna_spawn_list
+		megafauna_spawn_list = GLOB.megafauna_spawn_list
+	if(!flora_spawn_list)
+		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
+	if(!feature_spawn_list)
+		feature_spawn_list = list(/obj/structure/geyser/random = 1)
 
 /datum/map_generator/cave_generator/generate_terrain(list/turfs)
 	. = ..()
@@ -57,8 +60,8 @@
 		var/closed = text2num(string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x])
 
 		var/stored_flags
-		if(gen_turf.flags_1 & NO_RUINS_1)
-			stored_flags |= NO_RUINS_1
+		if(gen_turf.turf_flags & NO_RUINS)
+			stored_flags |= NO_RUINS
 
 		var/turf/new_turf = pickweight(closed ? closed_turf_types : open_turf_types)
 

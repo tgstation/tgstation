@@ -26,9 +26,9 @@
 	maptext_width = 32
 	maptext_y = -1
 
-	var/message1 = ""	// message line 1
-	var/message2 = ""	// message line 2
-	var/index1			// display index for scrolling messages or 0 if non-scrolling
+	var/message1 = "" // message line 1
+	var/message2 = "" // message line 2
+	var/index1 // display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
 /// Immediately blank the display.

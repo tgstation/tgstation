@@ -90,18 +90,23 @@
 /obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
-	else if(dirty_anim_playing)
+		return ..()
+	if(dirty_anim_playing)
 		icon_state = "mwbloody1"
-	else if(dirty == 100)
+		return ..()
+	if(dirty == 100)
 		icon_state = "mwbloody"
-	else if(operating)
+		return ..()
+	if(operating)
 		icon_state = "mw1"
-	else if(panel_open)
+		return ..()
+	if(panel_open)
 		icon_state = "mw-o"
-	else
-		icon_state = "mw"
+		return ..()
+	icon_state = "mw"
+	return ..()
 
-/obj/machinery/microwave/attackby(obj/item/O, mob/user, params)
+/obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
 		return
 	if(default_deconstruction_crowbar(O))
@@ -109,7 +114,7 @@
 
 	if(dirty < 100)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O) || default_unfasten_wrench(user, O))
-			update_icon()
+			update_appearance()
 			return
 
 	if(panel_open && is_wire_tool(O))
@@ -127,7 +132,7 @@
 			if(O.use_tool(src, user, 20))
 				user.visible_message("<span class='notice'>[user] fixes \the [src].</span>", "<span class='notice'>You fix \the [src].</span>")
 				broken = 0
-				update_icon()
+				update_appearance()
 				return FALSE //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -141,7 +146,7 @@
 			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
 			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
 		return TRUE
@@ -155,7 +160,7 @@
 		if(do_after(user, cleanspeed, target = src))
 			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
-			update_icon()
+			update_appearance()
 		return TRUE
 
 	if(dirty == 100) // The microwave is all dirty so can't be used!
@@ -178,7 +183,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into \the [src].</span>")
 		return
 
-	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
+	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.combat_mode)
 		if(ingredients.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 			return TRUE
@@ -263,7 +268,7 @@
 
 	set_light(1.5)
 	soundloop.start()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/microwave/proc/spark()
 	visible_message("<span class='warning'>Sparks fly around [src]!</span>")
@@ -287,7 +292,7 @@
 	wzhzhzh()
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
-	update_icon()
+	update_appearance()
 	loop(MICROWAVE_MUCK, 4)
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
@@ -358,7 +363,7 @@
 /obj/machinery/microwave/proc/after_finish_loop()
 	set_light(0)
 	soundloop.stop()
-	update_icon()
+	update_appearance()
 
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK

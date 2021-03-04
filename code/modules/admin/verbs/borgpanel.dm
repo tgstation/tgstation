@@ -175,7 +175,7 @@
 						borg.radio.keyslot.independent = FALSE
 				message_admins("[key_name_admin(user)] removed the [channel] radio channel from [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] removed the [channel] radio channel from [key_name(borg)].")
-			else	// We're adding a channel
+			else // We're adding a channel
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
 					borg.radio.keyslot = new (borg.radio)
 				borg.radio.keyslot.channels[channel] = 1

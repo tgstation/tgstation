@@ -1,10 +1,10 @@
-GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "mob"))		//Requires DEBUG
+GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "mob")) //Requires DEBUG
 GLOBAL_PROTECT(VVlocked)
-GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays"))		//Requires DEBUG or FUN
+GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays")) //Requires DEBUG or FUN
 GLOBAL_PROTECT(VVicon_edit_lock)
-GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))	//Requires DEBUG or SPAWN
+GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey")) //Requires DEBUG or SPAWN
 GLOBAL_PROTECT(VVckey_edit)
-GLOBAL_LIST_INIT(VVpixelmovement, list("bound_x", "bound_y", "step_x", "step_y", "step_size", "bound_height", "bound_width", "bounds"))		//No editing ever.
+GLOBAL_LIST_INIT(VVpixelmovement, list("bound_x", "bound_y", "step_x", "step_y", "step_size", "bound_height", "bound_width", "bounds")) //No editing ever.
 GLOBAL_PROTECT(VVpixelmovement)
 
 /client/proc/vv_parse_text(O, new_var)
@@ -50,9 +50,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 		var/datum/D = thing
 		i++
 		//try one of 3 methods to shorten the type text:
-		//	fancy type,
-		//	fancy type with the base type removed from the begaining,
-		//	the type with the base type removed from the begaining
+		// fancy type,
+		// fancy type with the base type removed from the begaining,
+		// the type with the base type removed from the begaining
 		var/fancytype = types[D.type]
 		if (findtext(fancytype, types[type]))
 			fancytype = copytext(fancytype, length(types[type]) + 1)
@@ -186,7 +186,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		assoc_key = L[index]
 	var/default
 	var/variable
-	var/old_assoc_value		//EXPERIMENTAL - Keep old associated value while modifying key, if any
+	var/old_assoc_value //EXPERIMENTAL - Keep old associated value while modifying key, if any
 	if(is_normal_list)
 		if (assoc)
 			variable = L[assoc_key]

@@ -9,6 +9,7 @@
 		            /obj/item/toy/cards/deck/cas/black = 3,
 					/obj/item/toy/cards/deck/kotahi = 3,
 					/obj/item/toy/cards/deck/tarot = 3,
+					/obj/item/toy/cards/deck/wizoff = 3,
 					/obj/item/hourglass = 2,
 					/obj/item/instrument/piano_synth/headphones = 4,
 					/obj/item/camera = 3,
@@ -26,7 +27,8 @@
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 					/obj/item/melee/skateboard/hoverboard = 1,
-					/obj/item/storage/box/tail_pin = 1)
+					/obj/item/storage/box/tail_pin = 1,
+					/obj/item/toy/intento = 3)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = PAYCHECK_ASSISTANT
 	extra_price = PAYCHECK_HARD * 1.25

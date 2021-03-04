@@ -29,11 +29,11 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS) // deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
-	var/delslasttick = 0			// number of del()'s we've done this tick
-	var/gcedlasttick = 0			// number of things that gc'ed last tick
+	var/delslasttick = 0 // number of del()'s we've done this tick
+	var/gcedlasttick = 0 // number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
 
@@ -43,11 +43,11 @@ SUBSYSTEM_DEF(garbage)
 	var/list/pass_counts
 	var/list/fail_counts
 
-	var/list/items = list()			// Holds our qdel_item statistics datums
+	var/list/items = list() // Holds our qdel_item statistics datums
 
 	//Queue
 	var/list/queues
-	#ifdef LEGACY_REFERENCE_TRACKING
+	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
 	#endif
 
@@ -161,8 +161,8 @@ SUBSYSTEM_DEF(garbage)
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
-			#ifdef LEGACY_REFERENCE_TRACKING
-			reference_find_on_fail -= refID	//It's deleted we don't care anymore.
+			#ifdef REFERENCE_TRACKING
+			reference_find_on_fail -= refID //It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
 				return
@@ -173,13 +173,11 @@ SUBSYSTEM_DEF(garbage)
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
-				D.find_references()
-				#elif defined(LEGACY_REFERENCE_TRACKING)
 				if(reference_find_on_fail[refID])
-					D.find_references_legacy()
+					D.find_references()
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references_legacy()
+					D.find_references()
 				#endif
 				reference_find_on_fail -= refID
 				#endif
@@ -193,10 +191,6 @@ SUBSYSTEM_DEF(garbage)
 						continue
 					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
 				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
-				#endif
-				#ifdef REFERENCE_TRACKING
-				GLOB.deletion_failures += D //It should no longer be bothered by the GC, manual deletion only.
-				continue
 				#endif
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
@@ -267,14 +261,14 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/qdel_item
 	var/name = ""
-	var/qdels = 0			//Total number of times it's passed thru qdel.
-	var/destroy_time = 0	//Total amount of milliseconds spent processing this type's Destroy()
-	var/failures = 0		//Times it was queued for soft deletion but failed to soft delete.
-	var/hard_deletes = 0 	//Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/qdels = 0 //Total number of times it's passed thru qdel.
+	var/destroy_time = 0 //Total amount of milliseconds spent processing this type's Destroy()
+	var/failures = 0 //Times it was queued for soft deletion but failed to soft delete.
+	var/hard_deletes = 0 //Different from failures because it also includes QDEL_HINT_HARDDEL deletions
 	var/hard_delete_time = 0//Total amount of milliseconds spent hard deleting this type.
 	var/no_respect_force = 0//Number of times it's not respected force=TRUE
-	var/no_hint = 0			//Number of times it's not even bother to give a qdel hint
-	var/slept_destroy = 0	//Number of times it's slept in its destroy
+	var/no_hint = 0 //Number of times it's not even bother to give a qdel hint
+	var/slept_destroy = 0 //Number of times it's slept in its destroy
 
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
@@ -308,12 +302,12 @@ SUBSYSTEM_DEF(garbage)
 		if(!D)
 			return
 		switch(hint)
-			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
+			if (QDEL_HINT_QUEUE) //qdel should queue the object for deletion.
 				SSgarbage.Queue(D)
 			if (QDEL_HINT_IWILLGC)
 				D.gc_destroyed = world.time
 				return
-			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
+			if (QDEL_HINT_LETMELIVE) //qdel should let the object live after calling destory.
 				if(!force)
 					D.gc_destroyed = null //clear the gc variable (important!)
 					return
@@ -330,14 +324,14 @@ SUBSYSTEM_DEF(garbage)
 				I.no_respect_force++
 
 				SSgarbage.Queue(D)
-			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete
+			if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
-			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
+			if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
 				SSgarbage.HardDelete(D)
-			#ifdef LEGACY_REFERENCE_TRACKING
-			if (QDEL_HINT_FINDREFERENCE) //qdel will, if LEGACY_REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
+			#ifdef REFERENCE_TRACKING
+			if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.Queue(D)
-				D.find_references_legacy()
+				D.find_references()
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 				SSgarbage.Queue(D)
 				SSgarbage.reference_find_on_fail[REF(D)] = TRUE

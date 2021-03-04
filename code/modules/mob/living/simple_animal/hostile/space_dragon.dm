@@ -1,11 +1,11 @@
 /// The carp rift is currently charging.
-#define CHARGE_ONGOING			0
+#define CHARGE_ONGOING 0
 /// The carp rift is currently charging and has output a final warning.
-#define CHARGE_FINALWARNING		1
+#define CHARGE_FINALWARNING 1
 /// The carp rift is now fully charged.
-#define CHARGE_COMPLETED		2
+#define CHARGE_COMPLETED 2
 /// The darkness threshold for space dragon when choosing a color
-#define DARKNESS_THRESHOLD		50
+#define DARKNESS_THRESHOLD 50
 
 /**
  * # Space Dragon
@@ -30,7 +30,7 @@
 	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
 	maxHealth = 400
 	health = 400
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	speed = 0
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
@@ -98,9 +98,9 @@
 		color_selection()
 
 
-/mob/living/simple_animal/hostile/space_dragon/Life(mapload)
+/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
-	tiredness = max(tiredness - 1, 0)
+	tiredness = max(tiredness - (0.5 * delta_time), 0)
 	for(var/mob/living/consumed_mob in src)
 		if(consumed_mob.stat == DEAD)
 			continue
@@ -627,7 +627,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Spatial Corps", 'sound/ai/spanomalies.ogg')
+		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Spatial Corps", ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.

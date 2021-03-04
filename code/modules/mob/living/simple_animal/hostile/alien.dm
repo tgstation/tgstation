@@ -20,7 +20,7 @@
 	attack_verb_simple = "slash"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list(ROLE_ALIEN)
@@ -33,10 +33,7 @@
 	gold_core_spawnable = NO_SPAWN
 	deathsound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
-
-/mob/living/simple_animal/hostile/alien/Initialize()
-	. = ..()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -151,7 +148,7 @@
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	a_intent = INTENT_HELP
+	combat_mode = FALSE
 	friendly_verb_continuous = "caresses"
 	friendly_verb_simple = "caress"
 	obj_damage = 0

@@ -16,13 +16,13 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			displayed = I
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/wallframe/picture/attack_hand(mob/user)
+/obj/item/wallframe/picture/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -31,7 +31,7 @@
 		user.put_in_hands(I)
 		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 		displayed = null
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/item/wallframe/picture/attack_self(mob/user)
@@ -107,7 +107,7 @@
 		else
 			qdel(framed)
 		framed = P
-		update_icon()
+		update_appearance()
 
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
@@ -136,13 +136,13 @@
 			if(!user.transferItemToLoc(P, src))
 				return
 			framed = P
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 
 	..()
 
-/obj/structure/sign/picture_frame/attack_hand(mob/user)
+/obj/structure/sign/picture_frame/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -163,7 +163,7 @@
 		if(contents.len)
 			var/obj/item/I = pick(contents)
 			I.forceMove(F)
-		F.update_icon()
+		F.update_appearance()
 	qdel(src)
 
 

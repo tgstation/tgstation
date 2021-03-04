@@ -55,6 +55,10 @@
 	name = "Pirate Shuttle"
 	requires_power = TRUE
 
+/area/shuttle/pirate/flying_dutchman
+	name = "Flying Dutchman"
+	requires_power = FALSE
+
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
 /area/shuttle/hunter
@@ -136,7 +140,8 @@
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
 	area_limited_icon_smoothing = /area/shuttle/escape
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
+	flags_1 = CAN_BE_DIRTY_1
+	area_flags = NO_ALERTS | CULT_PERMITTED
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"

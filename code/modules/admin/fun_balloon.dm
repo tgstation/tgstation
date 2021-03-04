@@ -141,6 +141,8 @@
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
 		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
+		var/obj/item/skeleton_key/key = new(L)
+		L.put_in_hands(key)
 	else
 		to_chat(L, "<span class='warning'>You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.</span>", confidential = TRUE)
 
@@ -170,11 +172,7 @@
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
-	INVOKE_ASYNC(src, .proc/do_bloodbath, M)
-
-/obj/effect/forcefield/arena_shuttle_entrance/proc/do_bloodbath(mob/living/L)
-	var/obj/effect/mine/pickup/bloodbath/B = new (L)
-	B.mineEffect(L)
+	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
 
 /area/shuttle_arena
 	name = "arena"

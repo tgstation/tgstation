@@ -4,7 +4,6 @@
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
-#define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
 /obj/item/ctf
@@ -64,7 +63,7 @@
 	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
-/obj/item/ctf/attack_hand(mob/living/user)
+/obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
 	//pre normal check item stuff, this is for our special flag checks
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
@@ -184,8 +183,7 @@
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
 	var/list/ctf_gear = list("white" = /datum/outfit/ctf)
 	var/instagib_gear = /datum/outfit/ctf/instagib
-	var/ammo_type = /obj/effect/ctf/ammo
-
+	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
 	var/player_traits = list(TRAIT_NEVER_WOUNDED)
 
@@ -296,6 +294,7 @@
 	SIGNAL_HANDLER
 
 	recently_dead_ckeys += body.ckey
+	spawned_mobs -= body
 	addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 
 /obj/machinery/capture_the_flag/proc/clear_cooldown(ckey)
@@ -465,7 +464,7 @@
 /obj/projectile/bullet/ctf/prehit_pierce(atom/target)
 	if(is_ctf_target(target))
 		damage = 60
-		return PROJECTILE_PIERCE_NONE	/// hey uhh don't hit anyone behind them
+		return PROJECTILE_PIERCE_NONE /// hey uhh don't hit anyone behind them
 	. = ..()
 
 /obj/item/gun/ballistic/automatic/laser/ctf
@@ -502,7 +501,7 @@
 /obj/projectile/beam/ctf/prehit_pierce(atom/target)
 	if(is_ctf_target(target))
 		damage = 150
-		return PROJECTILE_PIERCE_NONE		/// hey uhhh don't hit anyone behind them
+		return PROJECTILE_PIERCE_NONE /// hey uhhh don't hit anyone behind them
 	. = ..()
 
 /proc/is_ctf_target(atom/target)
@@ -568,6 +567,7 @@
 	no_drops += W
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
@@ -587,7 +587,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	id = /obj/item/card/id/syndicate_command //it's red
+	id = /obj/item/card/id/advanced/black/syndicate_command //it's red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
@@ -598,7 +598,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
-	id = /obj/item/card/id/centcom //it's blue
+	id = /obj/item/card/id/advanced/centcom //it's blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
@@ -670,45 +670,6 @@
 	alpha = 100
 	resistance_flags = INDESTRUCTIBLE
 
-/obj/effect/ctf/ammo
-	name = "ammo pickup"
-	desc = "You like revenge, right? Everybody likes revenge! Well, \
-		let's go get some!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "at_shield1"
-	layer = ABOVE_MOB_LAYER
-	alpha = 255
-	invisibility = 0
-
-/obj/effect/ctf/ammo/Initialize(mapload)
-	..()
-	QDEL_IN(src, AMMO_DROP_LIFETIME)
-
-/obj/effect/ctf/ammo/Crossed(atom/movable/AM)
-	. = ..()
-	reload(AM)
-
-/obj/effect/ctf/ammo/Bump(atom/A)
-	reload(A)
-
-/obj/effect/ctf/ammo/Bumped(atom/movable/AM)
-	reload(AM)
-
-/obj/effect/ctf/ammo/proc/reload(mob/living/M)
-	if(!ishuman(M))
-		return
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
-		if(M in CTF.spawned_mobs)
-			var/outfit = CTF.spawned_mobs[M]
-			var/datum/outfit/O = new outfit
-			for(var/obj/item/gun/G in M)
-				qdel(G)
-			O.equip(M)
-			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
-			playsound(get_turf(M), 'sound/weapons/gun/shotgun/rack.ogg', 50, TRUE, -1)
-			qdel(src)
-			break
-
 /obj/effect/ctf/dead_barricade
 	name = "dead barrier"
 	desc = "It provided cover in fire fights. And now it's gone."
@@ -750,7 +711,7 @@
 /obj/machinery/control_point/attackby(mob/user, params)
 	capture(user)
 
-/obj/machinery/control_point/attack_hand(mob/user)
+/obj/machinery/control_point/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -774,5 +735,4 @@
 #undef FLAG_RETURN_TIME
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN
-#undef AMMO_DROP_LIFETIME
 #undef CTF_REQUIRED_PLAYERS

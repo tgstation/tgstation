@@ -29,7 +29,7 @@
 	return (FIRELOSS)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/electropack/attack_hand(mob/user)
+/obj/item/electropack/attack_hand(mob/user, list/modifiers)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
@@ -46,11 +46,11 @@
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>")
 			return
 		W.master = A
-		A.part1 = W
+		A.helmet_part = W
 
 		user.transferItemToLoc(src, A, TRUE)
 		master = A
-		A.part2 = src
+		A.electropack_part = src
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
@@ -60,7 +60,6 @@
 /obj/item/electropack/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
-
 	if(isliving(loc) && on)
 		if(shock_cooldown)
 			return
@@ -77,6 +76,9 @@
 		L.Paralyze(100)
 
 	if(master)
+		if(isassembly(master))
+			var/obj/item/assembly/master_as_assembly = master
+			master_as_assembly.pulsed()
 		master.receive_signal()
 
 /obj/item/electropack/proc/set_frequency(new_frequency)

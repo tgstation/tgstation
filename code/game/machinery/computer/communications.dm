@@ -75,7 +75,7 @@
 		return
 	obj_flags |= EMAGGED
 	if (authenticated)
-		authorize_access = get_all_accesses()
+		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
@@ -226,7 +226,7 @@
 			nuke_request(reason, usr)
 			to_chat(usr, "<span class='notice'>Request sent.</span>")
 			usr.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
-			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", 'sound/ai/commandreport.ogg')
+			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("restoreBackupRoutingData")
@@ -302,7 +302,7 @@
 
 			if (obj_flags & EMAGGED)
 				authenticated = TRUE
-				authorize_access = get_all_accesses()
+				authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 				authorize_name = "Unknown"
 				to_chat(usr, "<span class='warning'>[src] lets out a quiet alarm as its login is overridden.</span>")
 				playsound(src, 'sound/machines/terminal_alert.ogg', 25, FALSE)
@@ -311,7 +311,7 @@
 				var/obj/item/card/id/id_card = L.get_idcard(hand_first = TRUE)
 				if (check_access(id_card))
 					authenticated = TRUE
-					authorize_access = id_card.access
+					authorize_access = id_card.access.Copy()
 					authorize_name = "[id_card.registered_name] - [id_card.assignment]"
 
 			state = STATE_MAIN

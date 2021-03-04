@@ -53,7 +53,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/image/showing = list()
 	var/client/viewing
-	var/legend = FALSE	//Viewing the wire legend
+	var/legend = FALSE //Viewing the wire legend
 
 
 /obj/item/areaeditor/blueprints/Destroy()
@@ -174,11 +174,11 @@
 /obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
 	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
 	for(var/device in GLOB.wire_color_directory)
-		if("[device]" == wireset)	//I know... don't change it...
+		if("[device]" == wireset) //I know... don't change it...
 			var/message = "<p><b>[GLOB.wire_name_directory[device]]:</b>"
 			for(var/Col in GLOB.wire_color_directory[device])
 				var/wire_name = GLOB.wire_color_directory[device][Col]
-				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
+				if(!findtext(wire_name, WIRE_DUD_PREFIX)) //don't show duds
 					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 			message += "</p>"
 			return message

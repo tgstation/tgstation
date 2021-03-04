@@ -1,7 +1,7 @@
 /// How often the sensor data is updated
-#define SENSORS_UPDATE_PERIOD	10 SECONDS //How often the sensor data updates.
+#define SENSORS_UPDATE_PERIOD 10 SECONDS //How often the sensor data updates.
 /// The job sorting ID associated with otherwise unknown jobs
-#define UNKNOWN_JOB_ID			81
+#define UNKNOWN_JOB_ID 81
 
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
@@ -38,7 +38,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		"Head of Security" = 10,
 		"Warden" = 11,
 		"Security Officer" = 12,
-		"Detective" = 13,
+		"Security Officer (Medical)" = 13,
+		"Security Officer (Engineering)" = 14,
+		"Security Officer (Science)" = 15,
+		"Security Officer (Cargo)" = 16,
+		"Detective" = 17,
 		// 20-29: Medbay
 		"Chief Medical Officer" = 20,
 		"Chemist" = 21,
@@ -128,7 +132,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_living_mob] ([tracked_living_mob.type])")
 			continue
 
-		if (pos.z != z)
+		// Machinery and the target should be on the same level or different levels of the same station
+		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)))
 			continue
 
 		var/sensor_mode

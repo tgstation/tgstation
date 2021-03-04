@@ -31,22 +31,25 @@
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = ""
 
-	#define HULL_BREACH		1
-	#define LINE_SPACE_MODE		2
-	#define FIX_TILE		3
-	#define AUTO_TILE		4
-	#define PLACE_TILE		5
-	#define REPLACE_TILE		6
-	#define TILE_EMAG		7
+	#define HULL_BREACH 1
+	#define LINE_SPACE_MODE 2
+	#define FIX_TILE 3
+	#define AUTO_TILE 4
+	#define PLACE_TILE 5
+	#define REPLACE_TILE 6
+	#define TILE_EMAG 7
 
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	toolbox_color = new_toolbox_color
-	update_icon()
-	var/datum/job/engineer/J = new/datum/job/engineer
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
+	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
+
 	if(toolbox_color == "s")
 		health = 100
 		maxHealth = 100
@@ -64,11 +67,11 @@
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/floorbot/bot_reset()
 	..()
@@ -113,7 +116,7 @@
 	return dat
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
-	if(istype(W, /obj/item/stack/tile/plasteel))
+	if(istype(W, /obj/item/stack/tile/iron))
 		to_chat(user, "<span class='notice'>The floorbot can produce normal tiles itself.</span>")
 		return
 	if(istype(W, /obj/item/stack/tile))
@@ -242,9 +245,9 @@
 
 	if(target)
 		if(loc == target || loc == get_turf(target))
-			if(check_bot(target))	//Target is not defined at the parent
+			if(check_bot(target)) //Target is not defined at the parent
 				shuffle = TRUE
-				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
+				if(prob(50)) //50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
 					return
@@ -265,9 +268,9 @@
 		if(path.len == 0)
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, 30, id=access_card,simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, 30, id=access_card,simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -317,7 +320,7 @@
 			F = scan_target
 			if(isfloorturf(F) && !isplatingturf(F)) //The floor must already have a tile.
 				result = F
-		if(FIX_TILE)	//Selects only damaged floors.
+		if(FIX_TILE) //Selects only damaged floors.
 			F = scan_target
 			if(istype(F) && (F.broken || F.burnt))
 				result = F
@@ -353,7 +356,7 @@
 					if(!tilestack)
 						speak("Requesting refill of custom floor tiles to continue replacing.")
 				else
-					target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+					target_turf.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 			else //Build a hull plating without a floor tile.
 				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
@@ -383,12 +386,13 @@
 				if(!tilestack)
 					speak("Requesting refill of custom floor tiles to continue replacing.")
 			else
-				F.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+				F.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 
 	if(!QDELETED(src))
 		go_idle()
 
-/mob/living/simple_animal/bot/floorbot/update_icon()
+/mob/living/simple_animal/bot/floorbot/update_icon_state()
+	. = ..()
 	icon_state = "[toolbox_color]floorbot[on]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
@@ -407,7 +411,7 @@
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 
-	new /obj/item/stack/tile/plasteel(Tsec, 1)
+	new /obj/item/stack/tile/iron(Tsec, 1)
 
 	do_sparks(3, TRUE, src)
 	..()
@@ -415,7 +419,7 @@
 /obj/machinery/bot_core/floorbot
 	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
-/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A))

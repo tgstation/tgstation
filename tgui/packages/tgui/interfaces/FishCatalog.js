@@ -22,8 +22,7 @@ export const FishCatalog = (props, context) => {
   return (
     <Window
       width={500}
-      height={300}
-      resizable>
+      height={300}>
       <Window.Content>
         <Stack fill>
           <Stack.Item width="120px">

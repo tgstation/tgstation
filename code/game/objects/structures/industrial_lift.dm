@@ -246,7 +246,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		return FALSE
 	return TRUE
 
-/obj/structure/industrial_lift/attack_hand(mob/user)
+/obj/structure/industrial_lift/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isAdminGhostAI(user))
 		use(user)
 
-/obj/structure/industrial_lift/attack_paw(mob/user)
+/obj/structure/industrial_lift/attack_paw(mob/user, list/modifiers)
 	return use(user)
 
 /obj/structure/industrial_lift/attackby(obj/item/W, mob/user, params)

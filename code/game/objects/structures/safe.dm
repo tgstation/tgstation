@@ -57,10 +57,8 @@ FLOOR SAFES
 			I.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
-	if(open)
-		icon_state = "[initial(icon_state)]-open"
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[initial(icon_state)][open ? "-open" : null]"
+	return ..()
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
@@ -147,7 +145,7 @@ FLOOR SAFES
 				return
 			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 			open = !open
-			update_icon()
+			update_appearance()
 			return TRUE
 		if("turnright")
 			if(open)

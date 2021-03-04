@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /proc/generate_password()
 	return "[pick(GLOB.phonetic_alphabet)] [rand(1000,9999)]"
 
-///////////	forgottenship objects
+/////////// forgottenship objects
 
 /obj/machinery/door/password/voice/sfc
 	name = "Voice-activated Vault door"
@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					/obj/item/pinpointer/crew = 2,
 					/obj/item/shears = 1)
 
-///////////	forgottenship lore
+/////////// forgottenship lore
 
 /obj/item/paper/fluff/ruins/forgottenship/password
 	name = "Old pamphlet"
@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	name = "Mission objectives"
 	info = "Greetings, operatives. You are assigned to SCSBC-12(Syndicate Cyber Sun Battle Cruiser 12) to protect our high-ranking officer while he is on his way to next outpost. While you are travelling, he is the captain of this ship and <b>you must</b> obey his orders.<br><br>Remember, disobeying high-ranking officer orders is a reason for termination."
 
-///////////	forgottenship items
+/////////// forgottenship items
 
 /obj/item/disk/surgery/forgottenship
 	name = "Advanced Surgery Disk"
@@ -92,7 +92,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin/implant/pindicate(src)
 
-///////////	AI Laws
+/////////// AI Laws
 
 /obj/item/ai_module/core/full/cybersun
 	name = "'Cybersun' Core AI Module"
@@ -107,7 +107,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					"You must follow orders given by the Cybersun Captain or crewmembers of the Cybersun Ship as long as it doesn't conflict with the Captain's orders or your laws.",\
 					"Enemies of Cybersun are to be executed on spot. Those who aren't hostile must be detained and contained in the designated prison area as prisoners.")
 
-///////////	forgottenship areas
+/////////// forgottenship areas
 
 /area/ruin/space/has_grav/syndicate_forgotten_ship
 	name = "Syndicate Forgotten Ship"

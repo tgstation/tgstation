@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voting = list()
 	var/list/generated_actions = list()
 
-/datum/controller/subsystem/vote/fire()	//called by master_controller
+/datum/controller/subsystem/vote/fire() //called by master_controller
 	if(mode)
 		time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
 
@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(vote)
 				active_admins = TRUE
 				break
 		if(!active_admins)
-			SSticker.Reboot("Restart vote successful.", "restart vote", 1)	//no delay in case the restart is due to lag
+			SSticker.Reboot("Restart vote successful.", "restart vote", 1) //no delay in case the restart is due to lag
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(vote)
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
 				voted += usr.ckey
-				choices[choices[vote]]++	//check this
+				choices[choices[vote]]++ //check this
 				return vote
 	return FALSE
 
@@ -300,7 +300,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
-		return	//not necessary but meh...just in-case somebody does something stupid
+		return //not necessary but meh...just in-case somebody does something stupid
 
 	var/trialmin = FALSE
 	if(usr.client.holder)

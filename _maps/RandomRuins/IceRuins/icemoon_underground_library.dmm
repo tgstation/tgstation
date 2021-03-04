@@ -6,7 +6,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/documents/syndicate/mining,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "ac" = (
 /turf/closed/wall/mineral/wood,
@@ -41,7 +41,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/paper/crumpled/fluff/stations/lavaland/library/diary2,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "aj" = (
 /obj/item/paper/fluff/ruins/oldstation/protosing,
@@ -56,7 +56,7 @@
 "am" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/book_of_babel,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "an" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -82,7 +82,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "ar" = (
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "at" = (
 /obj/structure/fluff/paper,
@@ -103,7 +103,7 @@
 /area/ruin/unpowered/buried_library)
 "ay" = (
 /obj/machinery/door/keycard/library,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "az" = (
 /obj/item/paper/crumpled/fluff/stations/lavaland/library/diary,
@@ -154,16 +154,16 @@
 "aI" = (
 /obj/effect/mob_spawn/human/skeleton,
 /obj/item/clothing/head/rice_hat,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "aJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "aK" = (
 /obj/item/feather,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "aL" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -213,7 +213,7 @@
 /obj/item/flashlight/lantern/jade{
 	on = 1
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "aT" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -235,7 +235,7 @@
 /area/ruin/unpowered/buried_library)
 "aW" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/ruin/unpowered/buried_library)
 "aX" = (
 /obj/structure/table/bronze,

@@ -14,7 +14,7 @@
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
 
-/obj/effect/eldritch/attack_hand(mob/living/user)
+/obj/effect/eldritch/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -26,9 +26,11 @@
 	if(!is_in_use)
 		INVOKE_ASYNC(src, .proc/activate , user)
 
-/obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
+/obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
 	. = ..()
 	if(istype(I,/obj/item/nullrod))
+		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
@@ -154,6 +156,7 @@
 
 	for(var/i in 0 to number)
 		var/turf/chosen_location = get_safe_random_station_turf()
+
 		//we also dont want them close to each other, at least 1 tile of seperation
 		var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
@@ -206,7 +209,7 @@
 /obj/effect/broken_illusion/proc/show_presence()
 	animate(src,alpha = 255,time = 15 SECONDS)
 
-/obj/effect/broken_illusion/attack_hand(mob/living/user)
+/obj/effect/broken_illusion/attack_hand(mob/living/user, list/modifiers)
 	if(!ishuman(user))
 		return ..()
 	var/mob/living/carbon/human/human_user = user

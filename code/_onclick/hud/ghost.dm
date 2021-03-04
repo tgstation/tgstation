@@ -87,6 +87,7 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/language_menu
+	using.screen_loc = 	ui_ghost_language_menu
 	using.icon = ui_style
 	using.hud = src
 	static_inventory += using

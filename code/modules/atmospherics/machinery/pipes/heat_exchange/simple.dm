@@ -24,9 +24,9 @@
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon()
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon_state()
 	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
-	update_layer()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2
 	piping_layer = 2

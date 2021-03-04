@@ -1,4 +1,0 @@
-author: "Low3"
-delete-after: True
-changes: 
-  - bugfix: "Admin Log and Show Admins in Secrets panel now render unicode characters."

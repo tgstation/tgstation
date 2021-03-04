@@ -1,19 +1,20 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-#define MEDBOT_PANIC_NONE	0
-#define MEDBOT_PANIC_LOW	15
-#define MEDBOT_PANIC_MED	35
-#define MEDBOT_PANIC_HIGH	55
-#define MEDBOT_PANIC_FUCK	70
-#define MEDBOT_PANIC_ENDING	90
-#define MEDBOT_PANIC_END	100
+#define MEDBOT_PANIC_NONE 0
+#define MEDBOT_PANIC_LOW 15
+#define MEDBOT_PANIC_MED 35
+#define MEDBOT_PANIC_HIGH 55
+#define MEDBOT_PANIC_FUCK 70
+#define MEDBOT_PANIC_ENDING 90
+#define MEDBOT_PANIC_END 100
 
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "medibot0"
+	base_icon_state = "medibot"
 	density = FALSE
 	anchored = FALSE
 	health = 20
@@ -86,32 +87,34 @@
 	declare_crit = 0
 	heal_amount = 5
 
-/mob/living/simple_animal/bot/medbot/update_icon()
-	cut_overlays()
-	if(skin)
-		add_overlay("medskin_[skin]")
+/mob/living/simple_animal/bot/medbot/update_icon_state()
+	. = ..()
 	if(!on)
-		icon_state = "medibot0"
+		icon_state = "[base_icon_state]0"
 		return
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		icon_state = "medibota"
+		icon_state = "[base_icon_state]a"
 		return
 	if(mode == BOT_HEALING)
-		icon_state = "medibots[stationary_mode]"
+		icon_state = "[base_icon_state]s[stationary_mode]"
 		return
-	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
-		icon_state = "medibot2"
-	else
-		icon_state = "medibot1"
+	icon_state = "[base_icon_state][stationary_mode ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+
+/mob/living/simple_animal/bot/medbot/update_overlays()
+	. = ..()
+	if(skin)
+		. += "medskin_[skin]"
 
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
-	var/datum/job/paramedic/J = new /datum/job/paramedic
-	access_card.access += J.get_access()
-	prev_access = access_card.access
-	qdel(J)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
+	access_card.add_access(para_trim.access + para_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
+
 	skin = new_skin
-	update_icon()
+	update_appearance()
 	linked_techweb = SSresearch.science_tech
 	if(damagetype_healer == "all")
 		return
@@ -124,14 +127,14 @@
 	oldloc = null
 	last_found = world.time
 	declare_cooldown = 0
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
 	path = list()
 	patient = null
 	mode = BOT_IDLE
 	last_found = world.time
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/medbot/set_custom_texts()
 
@@ -139,8 +142,8 @@
 	text_dehack = "You reset [name]'s healing processor circuits."
 	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
-/mob/living/simple_animal/bot/medbot/attack_paw(mob/user)
-	return attack_hand(user)
+/mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /mob/living/simple_animal/bot/medbot/get_controls(mob/user)
 	var/dat
@@ -187,7 +190,7 @@
 	else if(href_list["stationary"])
 		stationary_mode = !stationary_mode
 		path = list()
-		update_icon()
+		update_appearance()
 
 	else if(href_list["hptech"])
 		var/oldheal_amount = heal_amount
@@ -358,7 +361,7 @@
 	if(patient && (get_dist(src,patient) <= 1) && !tending) //Patient is next to us, begin treatment!
 		if(mode != BOT_HEALING)
 			mode = BOT_HEALING
-			update_icon()
+			update_appearance()
 			frustration = 0
 			medicate_patient(patient)
 		return
@@ -374,10 +377,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+		path = get_path_to(src, patient, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, patient, 30,1,id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 
@@ -405,7 +408,7 @@
 	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
 		return FALSE
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
-		return FALSE	//welp too late for them!
+		return FALSE //welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
@@ -449,13 +452,13 @@
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
-	if(DOING_INTERACTION_WITH_TARGET(H, src))
-		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		to_chat(user, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
-	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
-		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && mode != BOT_TIPPED)
+		user.visible_message("<span class='danger'>[user] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)
 			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
@@ -464,26 +467,26 @@
 			speak(message)
 			playsound(src, messagevoice[message], 70, FALSE)
 
-		if(do_after(H, 3 SECONDS, target=src))
-			tip_over(H)
+		if(do_after(user, 3 SECONDS, target=src))
+			tip_over(user)
 
-	else if(H.a_intent == INTENT_HELP && mode == BOT_TIPPED)
-		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
-		if(do_after(H, 3 SECONDS, target=src))
-			set_right(H)
+	else if(!user.combat_mode && mode == BOT_TIPPED)
+		user.visible_message("<span class='notice'>[user] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		if(do_after(user, 3 SECONDS, target=src))
+			set_right(user)
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A) && !tending)
 		var/mob/living/carbon/C = A
 		patient = C
 		mode = BOT_HEALING
-		update_icon()
+		update_appearance()
 		medicate_patient(C)
-		update_icon()
+		update_appearance()
 	else
 		..()
 
@@ -571,7 +574,7 @@
 			else
 				tending = FALSE
 
-			update_icon()
+			update_appearance()
 			if(!tending)
 				visible_message("[src] places its tools back into itself.")
 				soft_reset()

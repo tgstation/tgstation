@@ -72,7 +72,7 @@
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
-	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
+	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
 
 /obj/item/clothing/shoes/galoshes/dry/Initialize()
@@ -346,7 +346,7 @@
 	else
 		worn_icon_state = "[initial(icon_state)]"
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(wheels)

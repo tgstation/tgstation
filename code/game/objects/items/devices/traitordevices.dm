@@ -34,7 +34,7 @@ effective or pretty fucking useless.
 
 
 /obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user) 	return
+	if(!user) return
 	if(times_used >= max_uses)
 		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
 		return
@@ -262,7 +262,7 @@ effective or pretty fucking useless.
 		GLOB.active_jammers |= src
 	else
 		GLOB.active_jammers -= src
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
@@ -276,7 +276,7 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
+	if(I.tool_behaviour == TOOL_WRENCH && user.combat_mode)
 		user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
 			"<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
 		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)

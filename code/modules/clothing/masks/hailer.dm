@@ -2,21 +2,21 @@
 // **** Security gas mask ****
 
 // Cooldown times
-#define PHRASE_COOLDOWN 	30
-#define OVERUSE_COOLDOWN 	180
+#define PHRASE_COOLDOWN 30
+#define OVERUSE_COOLDOWN 180
 
 // Aggression levels
-#define AGGR_GOOD_COP 	1
-#define AGGR_BAD_COP 	2
-#define AGGR_SHIT_COP 	3
-#define AGGR_BROKEN 	4
+#define AGGR_GOOD_COP 1
+#define AGGR_BAD_COP 2
+#define AGGR_SHIT_COP 3
+#define AGGR_BROKEN 4
 
 // Phrase list index markers
-#define EMAG_PHRASE 		1	// index of emagged phrase
-#define GOOD_COP_PHRASES 	6 	// final index of good cop phrases
-#define BAD_COP_PHRASES 	12 	// final index of bad cop phrases
-#define BROKE_PHRASES 		13 	// starting index of broken phrases
-#define ALL_PHRASES 		19 	// total phrases
+#define EMAG_PHRASE 1 // index of emagged phrase
+#define GOOD_COP_PHRASES 6 // final index of good cop phrases
+#define BAD_COP_PHRASES 12 // final index of bad cop phrases
+#define BROKE_PHRASES 13 // starting index of broken phrases
+#define ALL_PHRASES 19 // total phrases
 
 // All possible hailer phrases
 // Remember to modify above index markers if changing contents

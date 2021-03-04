@@ -3,19 +3,34 @@
 	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
 
 	school = "transmutation"
-	charge_max = 300
+	charge_max = 30 SECONDS
 	clothes_req = TRUE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	cooldown_min = 100 //50 deciseconds reduction per rank
+	cooldown_min = 10 SECONDS
 	include_user = TRUE
 	nonabstract_req = TRUE
-	var/jaunt_duration = 50 //in deciseconds
-	var/jaunt_in_time = 5
-	var/jaunt_in_type = /obj/effect/temp_visual/wizard
-	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
+	/// For how long are we jaunting?
+	var/jaunt_duration = 5 SECONDS
+	/// For how long we become immobilized after exiting the jaunt.
+	var/jaunt_in_time = 0.5 SECONDS
+	/// For how long we become immobilized when using this spell.
+	var/jaunt_out_time = 0 SECONDS
+	/// Visual for jaunting
+	var/jaunt_in_type = /obj/effect/temp_visual/wizard
+	/// Visual for exiting the jaunt
+	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast_check(skipcharge = 0,mob/user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/area/noteleport_check = get_area(user)
+	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+		to_chat(user, "<span class='danger'>Some dull, universal force is stopping you from jaunting here.</span>")
+		return FALSE
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	play_sound("enter",user)
@@ -32,7 +47,10 @@
 	target.reset_perspective(holder)
 	target.notransform=0 //mob is safely inside holder now, no need for protection.
 	jaunt_steam(mobloc)
-
+	if(jaunt_out_time)
+		ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
+		sleep(jaunt_out_time)
+		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	sleep(jaunt_duration)
 
 	if(target.loc != holder) //mob warped out of the warp

@@ -347,6 +347,7 @@
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/muffin/booberry
 	name = "booberry muffin"
@@ -356,13 +357,7 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 
-/obj/item/food/chawanmushi
-	name = "chawanmushi"
-	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
-	icon_state = "chawanmushi"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("custard" = 1)
-	foodtypes = GRAIN | MEAT | VEGETABLES
+
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -612,6 +607,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/hotdog/debug
 	eat_time = 0
@@ -624,6 +620,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/khachapuri
 	name = "khachapuri"
@@ -711,6 +708,7 @@
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/pancakes/raw
 	name = "goopy pancake"
@@ -770,15 +768,22 @@
 
 /obj/item/food/pancakes/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
-/obj/item/food/pancakes/update_icon()
-	if(contents.len)
-		name = "stack of pancakes"
-	else
-		name = initial(name)
+/obj/item/food/pancakes/update_name()
+	name = contents.len ? "stack of pancakes" : initial(name)
+	return ..()
+
+/obj/item/food/pancakes/update_icon(updates=ALL)
+	if(!(updates & UPDATE_OVERLAYS))
+		return ..()
+
+	updates &= ~UPDATE_OVERLAYS
+	. = ..() // Don't update overlays. We're doing that here
+
 	if(contents.len < LAZYLEN(overlays))
-		overlays-=overlays[overlays.len]
+		overlays -= overlays[overlays.len]
+	. |= UPDATE_OVERLAYS
 
 /obj/item/food/pancakes/examine(mob/user)
 	var/ingredients_listed = ""
@@ -831,14 +836,14 @@
 	pancake_visual.pixel_x = rand(-1,1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
 	add_overlay(pancake_visual)
-	update_icon()
+	update_appearance()
 
-/obj/item/food/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
-	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
+/obj/item/food/pancakes/attack(mob/M, mob/living/user, params, stacked = TRUE)
+	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
 	var/obj/item/O = contents[contents.len]
-	. = O.attack(M, user, def_zone, FALSE)
-	update_icon()
+	. = O.attack(M, user, params, FALSE)
+	update_appearance()
 
 #undef PANCAKE_MAX_STACK
 

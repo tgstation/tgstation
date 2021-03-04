@@ -56,6 +56,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/braintoy = 2,
 		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 1,
+		/obj/item/toy/foamfinger = 2,
 		/obj/item/clothing/glasses/trickblindfold = 2))
 
 /obj/machinery/computer/arcade
@@ -76,6 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
+	SEND_SIGNAL(user, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
 		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
@@ -131,7 +133,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			return
 		prizevend(user)
 		T.pay_tickets()
-		T.update_icon()
+		T.update_appearance()
 		O = T
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
@@ -627,26 +629,26 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 // *** THE ORION TRAIL ** //
 
-#define ORION_TRAIL_WINTURN		9
+#define ORION_TRAIL_WINTURN 9
 
 //Orion Trail Events
-#define ORION_TRAIL_RAIDERS		"Raiders"
-#define ORION_TRAIL_FLUX		"Interstellar Flux"
-#define ORION_TRAIL_ILLNESS		"Illness"
-#define ORION_TRAIL_BREAKDOWN	"Breakdown"
-#define ORION_TRAIL_LING		"Changelings?"
+#define ORION_TRAIL_RAIDERS "Raiders"
+#define ORION_TRAIL_FLUX "Interstellar Flux"
+#define ORION_TRAIL_ILLNESS "Illness"
+#define ORION_TRAIL_BREAKDOWN "Breakdown"
+#define ORION_TRAIL_LING "Changelings?"
 #define ORION_TRAIL_LING_ATTACK "Changeling Ambush"
-#define ORION_TRAIL_MALFUNCTION	"Malfunction"
-#define ORION_TRAIL_COLLISION	"Collision"
-#define ORION_TRAIL_SPACEPORT	"Spaceport"
-#define ORION_TRAIL_BLACKHOLE	"BlackHole"
-#define ORION_TRAIL_OLDSHIP		"Old Ship"
-#define ORION_TRAIL_SEARCH		"Old Ship Search"
+#define ORION_TRAIL_MALFUNCTION "Malfunction"
+#define ORION_TRAIL_COLLISION "Collision"
+#define ORION_TRAIL_SPACEPORT "Spaceport"
+#define ORION_TRAIL_BLACKHOLE "BlackHole"
+#define ORION_TRAIL_OLDSHIP "Old Ship"
+#define ORION_TRAIL_SEARCH "Old Ship Search"
 
-#define ORION_STATUS_START		1
-#define ORION_STATUS_NORMAL		2
-#define ORION_STATUS_GAMEOVER	3
-#define ORION_STATUS_MARKET		4
+#define ORION_STATUS_START 1
+#define ORION_STATUS_NORMAL 2
+#define ORION_STATUS_GAMEOVER 3
+#define ORION_STATUS_MARKET 4
 
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
@@ -664,15 +666,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/eventdat = null
 	var/event = null
 	var/list/settlers = list("Harry","Larry","Bob")
-	var/list/events = list(ORION_TRAIL_RAIDERS		= 3,
-						   ORION_TRAIL_FLUX			= 1,
-						   ORION_TRAIL_ILLNESS		= 3,
-						   ORION_TRAIL_BREAKDOWN	= 2,
-						   ORION_TRAIL_LING			= 3,
-						   ORION_TRAIL_MALFUNCTION	= 2,
-						   ORION_TRAIL_COLLISION	= 1,
-						   ORION_TRAIL_SPACEPORT	= 2,
-						   ORION_TRAIL_OLDSHIP		= 2
+	var/list/events = list(ORION_TRAIL_RAIDERS = 3,
+						   ORION_TRAIL_FLUX = 1,
+						   ORION_TRAIL_ILLNESS = 3,
+						   ORION_TRAIL_BREAKDOWN = 2,
+						   ORION_TRAIL_LING = 3,
+						   ORION_TRAIL_MALFUNCTION = 2,
+						   ORION_TRAIL_COLLISION = 1,
+						   ORION_TRAIL_SPACEPORT = 2,
+						   ORION_TRAIL_OLDSHIP = 2
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
@@ -1539,7 +1541,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
-/obj/machinery/computer/arcade/amputation/attack_hand(mob/user)
+/obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user

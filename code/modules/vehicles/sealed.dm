@@ -90,7 +90,7 @@
 	if(key_type && !is_key(inserted_key) && is_key(I))
 		if(user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-			if(inserted_key)	//just in case there's an invalid key
+			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
 		else

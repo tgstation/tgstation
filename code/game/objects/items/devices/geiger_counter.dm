@@ -53,7 +53,7 @@
 
 	current_tick_amount = 0
 
-	update_icon()
+	update_appearance()
 	update_sound()
 
 /obj/item/geiger_counter/examine(mob/user)
@@ -83,22 +83,25 @@
 /obj/item/geiger_counter/update_icon_state()
 	if(!scanning)
 		icon_state = "geiger_off"
-	else if(obj_flags & EMAGGED)
+		return ..()
+	if(obj_flags & EMAGGED)
 		icon_state = "geiger_on_emag"
-	else
-		switch(radiation_count)
-			if(-INFINITY to RAD_LEVEL_NORMAL)
-				icon_state = "geiger_on_1"
-			if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
-				icon_state = "geiger_on_2"
-			if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
-				icon_state = "geiger_on_3"
-			if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
-				icon_state = "geiger_on_4"
-			if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
-				icon_state = "geiger_on_4"
-			if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
-				icon_state = "geiger_on_5"
+		return ..()
+
+	switch(radiation_count)
+		if(-INFINITY to RAD_LEVEL_NORMAL)
+			icon_state = "geiger_on_1"
+		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
+			icon_state = "geiger_on_2"
+		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
+			icon_state = "geiger_on_3"
+		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
+			icon_state = "geiger_on_4"
+		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
+			icon_state = "geiger_on_4"
+		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
+			icon_state = "geiger_on_5"
+	return ..()
 
 /obj/item/geiger_counter/proc/update_sound()
 	var/datum/looping_sound/geiger/loop = soundloop
@@ -116,16 +119,16 @@
 	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
 		return
 	current_tick_amount += amount
-	update_icon()
+	update_appearance()
 
 /obj/item/geiger_counter/attack_self(mob/user)
 	scanning = !scanning
-	update_icon()
+	update_appearance()
 	to_chat(user, "<span class='notice'>[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src].</span>")
 
-/obj/item/geiger_counter/afterattack(atom/target, mob/user)
+/obj/item/geiger_counter/afterattack(atom/target, mob/living/user, params)
 	. = ..()
-	if(user.a_intent == INTENT_HELP)
+	if(!user.combat_mode)
 		if(!(obj_flags & EMAGGED))
 			user.visible_message("<span class='notice'>[user] scans [target] with [src].</span>", "<span class='notice'>You scan [target]'s radiation levels with [src]...</span>")
 			addtimer(CALLBACK(src, .proc/scan, target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
@@ -161,7 +164,7 @@
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
 		obj_flags &= ~EMAGGED
 		radiation_count = 0
-		update_icon()
+		update_appearance()
 		return TRUE
 	else
 		return ..()
@@ -174,7 +177,7 @@
 		return
 	radiation_count = 0
 	to_chat(usr, "<span class='notice'>You flush [src]'s radiation counts, resetting it to normal.</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/geiger_counter/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -194,7 +197,7 @@
 	if(!scanning)
 		return
 	scanning = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/item/geiger_counter/cyborg/equipped(mob/user)
 	. = ..()

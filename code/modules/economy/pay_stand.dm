@@ -15,13 +15,18 @@
 /obj/machinery/paystand/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id))
 		if(W == my_card)
-			if(user.a_intent == INTENT_DISARM)
+			var/list/items = list(
+			"Rename" = image(icon = 'icons/obj/economy.dmi', icon_state = "name"),
+			"Set the fee" = image(icon = 'icons/obj/economy.dmi', icon_state = "fee")
+			)
+			var/choice = show_radial_menu(user, src, items, null, require_near = TRUE, tooltips = TRUE)
+			if(choice == "Rename")
 				var/rename_msg = stripped_input(user, "Rename the Paystand:", "Paystand Naming", name)
 				if(!rename_msg || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				name = rename_msg
 				return
-			else if(user.a_intent == INTENT_GRAB)
+			else if(choice == "Set the fee")
 				var/force_fee_input = input(user,"Set the fee!","Set a fee!",0) as num|null
 				if(isnull(force_fee_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
@@ -136,4 +141,4 @@
 	if(force_fee)
 		. += "<span class='warning'>This paystand forces a payment of <b>[force_fee]</b> credit\s per swipe instead of a variable amount.</span>"
 	if(user.get_active_held_item() == my_card)
-		. += "<span class='notice'>Paystands can be edited through swiping your card with different intents. <b>Disarm</b> allows editing the name while <b>Grab</b> changes payment functionality.</span>"
+		. += "<span class='notice'>Paystands can be edited through swiping your card.</span>"

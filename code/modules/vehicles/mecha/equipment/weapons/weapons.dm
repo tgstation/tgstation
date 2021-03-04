@@ -8,7 +8,7 @@
 	var/variance = 0
 	var/randomspread = FALSE //use random spread for machineguns, instead of shotgun scatter
 	var/projectile_delay = 0
-	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
+	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 	mech_flags = EXOSUIT_MODULE_COMBAT
 
@@ -37,7 +37,8 @@
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
 		var/obj/projectile/A = new projectile(get_turf(src))
-		A.preparePixelProjectile(target, source, params, spread)
+		var/modifiers = params2list(params)
+		A.preparePixelProjectile(target, source, modifiers, spread)
 
 		A.fire()
 		if(!A.suppressed && firing_effect_type)

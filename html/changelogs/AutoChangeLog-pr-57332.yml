@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Departmental Sec officers now appear as Sec members on the Crew Monitor."

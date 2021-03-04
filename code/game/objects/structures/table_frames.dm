@@ -1,7 +1,7 @@
 /* Table Frames
  * Contains:
- *		Frames
- *		Wooden Frames
+ * Frames
+ * Wooden Frames
  */
 
 
