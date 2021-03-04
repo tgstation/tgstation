@@ -44,10 +44,10 @@
 /obj/machinery/atmospherics/pipe/multiz/pipeline_expansion()
 	var/turf/T = get_turf(src)
 	for(var/obj/machinery/atmospherics/pipe/multiz/above in SSmapping.get_turf_above(T))
-		if(above && above.piping_layer == piping_layer)
+		if(above.piping_layer == piping_layer)
 			nodes += above
 			above.nodes += src //Two way travel :)
 	for(var/obj/machinery/atmospherics/pipe/multiz/below in SSmapping.get_turf_below(T))
-		if(below && below.piping_layer == piping_layer)
+		if(below.piping_layer == piping_layer)
 			below.pipeline_expansion() //If we've got one below us, force it to add us on facebook
 	return ..()
