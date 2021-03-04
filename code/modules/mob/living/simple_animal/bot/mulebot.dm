@@ -829,6 +829,9 @@
 		visible_message("<span class='notice'>[src]'s safeties are locked on.</span>")
 
 /mob/living/simple_animal/bot/mulebot/bot_step(dest)
+	if(!on)
+		return FALSE
+
 	if(!(cell?.use(cell_move_power_usage)))
 		turn_off()
 		return FALSE
