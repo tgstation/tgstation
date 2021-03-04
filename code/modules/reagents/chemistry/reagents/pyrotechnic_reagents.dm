@@ -221,7 +221,7 @@
 	taste_description = "icey bitterness"
 	purity = REAGENT_STANDARD_PUIRTY
 	self_consuming = TRUE
-	impure_chem = null
+	impure_chem = /datum/reagent/consumable/ice
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/cryostylane
 	failed_chem = null
