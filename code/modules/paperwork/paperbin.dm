@@ -17,7 +17,7 @@
 	var/obj/item/pen/bin_pen
 	/// Paper visible on top.
 	var/obj/item/paper/top_paper
-	/// This goes over the top of the top paper to give it the appearance of being inside this object.
+	/// This goes over the top of the top paper to give it the appearance of being inside the object.
 	var/paper_bin_overlay = "paper_bin_overlay"
 
 /obj/item/paper_bin/Initialize(mapload)
@@ -162,8 +162,9 @@
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/paper/carbon) && (W.icon_state == "paper_stack" || W.icon_state == "paper_stack_carbon"))
+	if(istype(W, /obj/item/paper/carbon) && (W.icon_state == "paper_stack" || W.icon_state == "paper_stack_words"))
 		to_chat(user, "<span class='warning'>[W] won't fit into [src].</span>")
+		return
 	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
