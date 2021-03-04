@@ -1,0 +1,14 @@
+"a" = (/turf/closed/wall,/area/testroom)
+"m" = (/turf/open/floor/iron,/area/testroom)
+"r" = (/obj/effect/landmark/unit_test_top_right,/turf/open/floor/iron,/area/testroom)
+"L" = (/obj/effect/landmark/unit_test_bottom_left,/turf/open/floor/iron,/area/testroom)
+
+(1,1,1) = {"
+aaaaaaa
+ammmmra
+ammmmma
+ammmmma
+ammmmma
+aLmmmma
+aaaaaaa
+"}
