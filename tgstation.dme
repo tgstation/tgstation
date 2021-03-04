@@ -395,6 +395,7 @@
 #include "code\datums\progressbar.dm"
 #include "code\datums\radiation_wave.dm"
 #include "code\datums\recipe.dm"
+#include "code\datums\refugee.dm"
 #include "code\datums\ruins.dm"
 #include "code\datums\saymode.dm"
 #include "code\datums\shuttles.dm"

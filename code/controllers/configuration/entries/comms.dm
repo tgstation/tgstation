@@ -24,3 +24,9 @@
 
 /datum/config_entry/string/cross_comms_network
 	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/string/hell
+	protection = CONFIG_ENTRY_LOCKED // no trying to hotswap the config to shoot people to citadel, that's too cruel even for us
+
+/datum/config_entry/string/the_abyss
+	protection = CONFIG_ENTRY_LOCKED

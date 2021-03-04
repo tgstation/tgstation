@@ -37,6 +37,13 @@
 			register_for_interview()
 			return
 
+	if(SSticker.current_state >= GAME_STATE_PLAYING && SSticker.current_state < GAME_STATE_FINISHED)
+		for(var/datum/refugee/possible_match as anything in GLOB.refugees)
+			if(possible_match.expected_ckey == ckey)
+				possible_match.execute_introduction(src)
+				GLOB.refugees -= possible_match
+				return
+
 	new_player_panel()
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
 		var/tl = SSticker.GetTimeLeft()

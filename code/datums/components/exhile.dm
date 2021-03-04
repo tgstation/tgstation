@@ -23,14 +23,23 @@
 	if(!istype(exhilee) || !exhilee.client)
 		qdel(src)
 		return
-	var/youre_on_your_way_to = HELL
-	if(world.url == HELL)
-		youre_on_your_way_to = THE_ABYSS
+	var/youre_on_your_way_to = CONFIG_GET(string/hell)
+	if(world.url == CONFIG_GET(string/hell))
+		youre_on_your_way_to = CONFIG_GET(string/the_abyss)
+	if(!youre_on_your_way_to)
+		qdel(src)
+		return
 
 	to_chat(exhilee, "<span class='userdanger'>Oh no! You've been shot into space and are flying towards another station!</span>")
+	var/list/exhile_info = list()
+	exhile_info["expected_ckey"] = exhilee.ckey
+	exhile_info["name"] = exhilee.real_name
+	exhile_info["dir"] = launch_dir
 	var/client/exhilee_client = exhilee.client
+	send2otherserver(station_name(), null, "incoming_exhile", youre_on_your_way_to, exhile_info)
 	exhilee_client << link(youre_on_your_way_to)
 	exhilee.dust()
+	qdel(src)
 
 /// If the exhilee breaks their course before hitting the z-level, they saved themselves
 /datum/component/exhile/proc/check_move(datum/source, OldLoc, Dir, Forced)

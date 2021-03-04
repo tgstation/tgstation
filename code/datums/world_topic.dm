@@ -190,3 +190,19 @@
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
 
+/datum/world_topic/incoming_exhile
+	keyword = "incoming_exhile"
+	require_comms_key = TRUE
+
+/datum/world_topic/incoming_exhile/Run(list/input)
+	var/exp_ckey = input["expected_ckey"]
+	var/force_name = input["name"]
+	var/launching_dir = input["dir"]
+	for(var/client/iter_client in GLOB.joined_player_list)
+		if(iter_client.ckey == exp_ckey) // they're already here in hell
+			return
+	for(var/datum/refugee/iter_refugee in GLOB.refugees)
+		if(iter_refugee.expected_ckey == exp_ckey) // they're already on their way here to hell
+			return
+	var/datum/refugee/new_refugee = new(exp_ckey, force_name, launching_dir)
+	GLOB.refugees += new_refugee
