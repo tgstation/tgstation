@@ -14,7 +14,6 @@
 	var/list/product_types = list()
 	var/selected_flavour = ICE_CREAM_VANILLA
 	var/obj/item/reagent_containers/beaker
-	var/prefilled = TRUE
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 6,
 		/datum/reagent/consumable/flour = 6,
@@ -30,17 +29,16 @@
 
 	create_reagents(100, NO_REACT | OPENCONTAINER)
 	reagents.chem_temp = T0C //So ice doesn't melt
-	if(prefilled)
-		for(var/flavour in GLOB.ice_cream_flavours)
-			if(GLOB.ice_cream_flavours[flavour].hidden)
-				continue
-			product_types[flavour] = PREFILL_AMOUNT
-		for(var/cone in GLOB.ice_cream_cones)
-			if(GLOB.ice_cream_cones[cone].hidden)
-				continue
-			product_types[cone] = PREFILL_AMOUNT
-		for(var/reagent in icecream_vat_reagents)
-			reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
+	for(var/flavour in GLOB.ice_cream_flavours)
+		if(GLOB.ice_cream_flavours[flavour].hidden)
+			continue
+		product_types[flavour] = PREFILL_AMOUNT
+	for(var/cone in GLOB.ice_cream_cones)
+		if(GLOB.ice_cream_cones[cone].hidden)
+			continue
+		product_types[cone] = PREFILL_AMOUNT
+	for(var/reagent in icecream_vat_reagents)
+		reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
 
 /obj/machinery/icecream_vat/ui_interact(mob/user)
 	. = ..()
@@ -53,7 +51,7 @@
 		dat += "<b>[capitalize(flavour)] ice cream:</b> <a href='?src=[REF(src)];select=[flavour]'><b>Select</b></a> <a href='?src=[REF(src)];make=[flavour];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[flavour];amount=5'><b>x5</b></a> [product_types[flavour]] scoops left[GLOB.ice_cream_flavours[flavour].ingredients_text].<br>"
 	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
 	for(var/cone in GLOB.ice_cream_cones)
-		if(GLOB.ice_cream_flavours[cone].hidden)
+		if(GLOB.ice_cream_cones[cone].hidden)
 			continue
 		dat += "<b>[capitalize(cone)]s:</b> <a href='?src=[REF(src)];cone=[cone]'><b>Dispense</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=5'><b>x5</b></a> [product_types[cone]] cones left[GLOB.ice_cream_cones[cone].ingredients_text].<br>"
 	dat += "<br>"
@@ -138,12 +136,13 @@
 		if(!flavour || flavour.hidden) //Nice try, tex.
 			return
 		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [href_list["select"]] flavoured ice cream.</span>")
+		selected_flavour = flavour.name
 
 	if(href_list["cone"])
 		var/href_cone = href_list["cone"]
 		if(product_types[href_cone] >= 1)
 			product_types[href_cone] -= 1
-			var/obj/item/food/icecream/cone = new(loc, GLOB.ice_cream_cones[href_cone])
+			var/obj/item/food/icecream/cone = new(loc, href_cone)
 			visible_message("<span class='info'>[usr] dispenses a crunchy [cone] from [src].</span>")
 		else
 			to_chat(usr, "<span class='warning'>There are no [href_cone]s left!</span>")

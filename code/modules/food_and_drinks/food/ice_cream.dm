@@ -30,26 +30,33 @@
 	if(renamedByPlayer)
 		return
 	. = ..()
-	switch(length(scoops))
-		if(0)
-			var/datum/ice_cream_flavour/cone = GLOB.ice_cream_cones[cone_name]
-			if(cone)
-				desc = replacetext(cone.desc, "$CONE_NAME", cone_name)
-		if(1)
-			var/key = scoops[1]
-			var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
-			if(!flavour?.desc) //I scream.
-				desc = initial(desc)
-			else
-				desc = replacetext(replacetext(flavour.desc, "$CONE_NAME", cone_name), "$CUSTOM_NAME", key)
+	var/scoops_len = length(scoops)
+	if(!scoops_len)
+		var/datum/ice_cream_flavour/cone = GLOB.ice_cream_cones[cone_name]
+		if(cone)
+			desc = replacetext(cone.desc, "$CONE_NAME", cone_name)
+	else if(scoops_len == 1 || length(uniqueList(scoops)) == 1)
+		var/key = scoops[1]
+		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
+		if(!flavour?.desc) //I scream.
+			desc = initial(desc)
 		else
-			desc = "A delicious [cone_name] filled with scoops of [english_list(flatten_list(scoops))] icecream. That's as many as [length(scoops)] scoops!"
+			desc = replacetext(replacetext(flavour.desc, "$CONE_NAME", cone_name), "$CUSTOM_NAME", key)
+	else
+		desc = "A delicious [cone_name] filled with scoops of [english_list(scoops)] icecream. That's as many as [length(scoops)] scoops!"
 
 /obj/item/food/icecream/update_name(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
-	name = length(scoops) ? "[english_list(scoops, "broken ice cream", "-", "-")] ice cream" : cone_name
+	var/scoops_len = length(scoops)
+	if(!scoops_len)
+		name = cone_name
+	else
+		if(scoops_len > 1 && length(uniqueList(scoops)) == 1) // multiple flavours, and all of the same type
+			name = "[make_tuple(scoops_len)] [scoops[1]] ice cream" // "double vanilla" sounds cooler than "vanilla and vanilla"
+		else
+			name = "[english_list(scoops)] ice cream"
 
 /obj/item/food/icecream/update_icon_state()
 	. = ..()
@@ -60,11 +67,11 @@
 /obj/item/food/icecream/update_overlays()
 	. = ..()
 	var/offset = 0
-	for(var/i in 0 to length(scoops))
-		var/scoop = scoops[1]
+	for(var/i in 1 to length(scoops))
+		var/scoop = scoops[i]
 		var/mutable_appearance/scoop_overlay = scoops[scoop]
-		if(istext(scoop))
-			scoop_overlay = mutable_appearance('icons/obj/kitchen.dmi', scoop)
+		if(!istype(scoop_overlay))
+			scoop_overlay = mutable_appearance('icons/obj/kitchen.dmi', scoop_overlay)
 		scoop_overlay.pixel_y = offset
 		. += scoop_overlay
 		offset += SCOOP_OFFSET
@@ -90,6 +97,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour
 	/// Make sure the same name is not found on other types; These are singletons keyed by their name.
 	var/name = "Coderlicious Gourmet Double Deluxe Undefined"
+	/// The icon state of the flavour, overlay or not.
 	var/icon_state = "icecream_vanilla"
 	/**
 	  * The description of the food when it contains exactly one scoop of ice cream. Make sure your new subtypes have one.
@@ -99,14 +107,12 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	var/desc = ""
 	/// The ingredients required to make one scoop
 	var/list/ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
-	/// The same as above, but cached in a readable text generated on spawn.
+	/// The same as above, but in a readable text generated on spawn that can also contain extra ingredients such as "lot of love" or "optional flavorings".
 	var/ingredients_text = ""
 	/// reagent added in 'add_flavour'
 	var/reagent_type
 	/// the amount of reagent added in 'add_flavour'
 	var/reagent_amount = 3
-	/// Will this flavour ever be requested by any ice cream parlor robot customer in their right robotic mind?
-	var/on_the_menu = TRUE
 	/// Is this shown on the ice cream vat menu or not?
 	var/hidden = FALSE
 	/// Is it actually an ice cream cone? Makes it possible for cone flavours to be a subtype without overriding too many procs.
@@ -117,16 +123,17 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 		var/list/temp_names = list()
 		for(var/datum/reagent/R as anything in ingredients)
 			temp_names |= initial(R.name)
-		if(ingredients_text) // if the text includes ingredients that aren't specific reagents (eg. "optional flavorings", "lot of love"), add them now.
+		if(ingredients_text)
 			temp_names += ingredients_text
-		ingredients_text = " (Ingredients: [jointext(temp_names, ", ")])"
+		ingredients_text = " (Ingredients: [jointext(temp_names, null, ", ", ", ")])"
 
 ///Adds a new flavour to the ice cream cone.
 /datum/ice_cream_flavour/proc/add_flavour(obj/item/food/icecream/target, datum/reagents/R, custom_name)
 	if(reagent_type)
 		target.reagents.add_reagent(reagent_type, reagent_amount, reagtemp = T0C)
 	if(icon_state && !is_a_cone)
-		LAZYADDASSOC(target.scoops, custom_name || name, icon_state)
+		LAZYADD(target.scoops, custom_name || name)
+		target.scoops[custom_name || name] = icon_state
 	if(custom_name)
 		LAZYSET(target.special_scoops, custom_name, name)
 	if(!is_a_cone) // Add some sugar to make it a more substantial snack.
@@ -170,16 +177,14 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	name = ICE_CREAM_MOB
 	desc = "A suspicious $CONE_NAME filled with bright red ice cream. That's probably not strawberry..."
 	reagent_type = /datum/reagent/liquidgibs
-	on_the_menu = FALSE
 	hidden = TRUE
 
 /datum/ice_cream_flavour/custom
 	name = ICE_CREAM_CUSTOM
-	icon_state = "icecream_custom"
+	icon_state = "" //has its own mutable appearance overlay.
 	desc = "A delicious $CONE_NAME cone filled with artisanal icecream. Made with real $CUSTOM_NAME. Ain't that something."
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
-	on_the_menu = FALSE
 
 /datum/ice_cream_flavour/custom/add_flavour(obj/item/food/icecream/target, datum/reagents/R, custom_name)
 	if(!R || R.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
@@ -195,7 +200,6 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	name = ICE_CREAM_BLAND
 	icon_state = "icecream_custom"
 	desc = "A delicious $CONE_NAME filled with anemic, flavorless icecream. You wonder why this was ever scooped..."
-	on_the_menu = FALSE
 	hidden = TRUE
 
 /// These are actually cones stored in a different list, but they share many lines of code with scoop flavours, hence the subtype.
