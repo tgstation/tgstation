@@ -28,6 +28,8 @@
 		if(P && !bin_pen)
 			P.forceMove(src)
 			bin_pen = P
+	for(var/i in 1 to total_paper)
+		papers.Add(generate_paper())
 	update_appearance()
 
 /obj/item/paper_bin/proc/generate_paper()
@@ -126,16 +128,29 @@
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 	if(LAZYLEN(papers))
+		var/paper_number = 1
+		for(var/obj/item/paper/current_paper in papers)
+			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
+			paper_overlay.color = current_paper.color
+			switch(paper_number)
+				if(1 to 8)
+					paper_overlay.pixel_y -= 2
+				if(9 to 16)
+					paper_overlay.pixel_y -= 1
+				if(17 to 24)
+					paper_overlay.pixel_y += 0
+				if(25 to 32)
+					paper_overlay.pixel_y += 1
+				if(33 to INFINITY)
+					paper_overlay.pixel_y += 2
+			. += paper_overlay
+			. += current_paper.overlays
+			paper_number++
 		top_paper = papers[papers.len] //last in first out
-	else if(total_paper)
-		papers.Add(generate_paper())
-		top_paper = papers[papers.len]
 	else
 		top_paper = null
 
 	if(top_paper)
-		. += mutable_appearance(top_paper.icon, top_paper.icon_state)
-		. += top_paper.overlays
 		. += mutable_appearance(icon, paper_bin_overlay)
 	if(bin_pen)
 		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
@@ -148,7 +163,7 @@
 /obj/item/paper_bin/bundlenatural
 	name = "natural paper bundle"
 	desc = "A bundle of paper created using traditional methods."
-	icon_state = "paper_bundle"
+	icon_state = null
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 	paper_bin_overlay = "paper_bundle_overlay"
