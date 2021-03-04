@@ -38504,16 +38504,6 @@
 "ldi" = (
 /turf/closed/wall,
 /area/commons/storage/emergency/port)
-"ldK" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1;
-	pixel_x = -2
-	},
-/turf/open/floor/iron/white,
-/area/medical/medbay/lobby)
 "len" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -92713,7 +92703,7 @@ oOF
 bet
 bfH
 bhf
-ldK
+fYd
 fYd
 hWN
 bmJ
