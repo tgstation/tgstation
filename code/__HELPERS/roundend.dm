@@ -492,7 +492,7 @@
 ///Generate a report for how much money is on station, as well as the richest crewmember on the station.
 /datum/controller/subsystem/ticker/proc/market_report()
 	var/list/parts = list()
-	parts += "<span class='header'>Station Economic Summary:</span>"
+
 	///total service income
 	var/tourist_income = GLOB.total_service_revenue
 	///restaurant customers served
@@ -513,28 +513,27 @@
 		station_vault += current_acc.account_balance
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
-
-	parts += "<span class='big servradio'>SERVICE DEPARTMENT STATISTICS:</span></div>"
-	parts += "The bar earned [bar_served] customers.<br>"
-	parts += "The restaurant earned [restaurant_served] customers.<br>"
-	parts += "In total, they earned [tourist_income] credits!<br>"
+	parts += "<div class='panel stationborder'><span class='header'>Station Economic Summary:</span>"
+	parts += "<span class='service'>Service Statistics:</span><br>"
+	parts += "The bar served [bar_served] customers.<br>"
+	parts += "The restaurant served [restaurant_served] customers.<br>"
+	parts += "In total, they earned [tourist_income] credits[tourist_income ? "!" : "..."]<br>"
 	log_econ("Roundend service income: [tourist_income] credits.")
 	switch(tourist_income)
 		if(0)
-			parts += "<span class='redtext'>Service did not earn any credits...</span></div>"
+			parts += "<span class='redtext'>Service did not earn any credits...</span><br>"
 		if(1 to 1000)
-			parts += "<span class='redtext'>Come on service, surely you can do better than that.</span></div>"
+			parts += "<span class='redtext'>Centcom is displeased. Come on service, surely you can do better than that.</span><br>"
 			award_service(/datum/award/achievement/jobs/service_bad)
 		if(1001 to 2000)
-			parts += "<span class='greentext'>Centcom is satisfied with service's job today.</span></div>"
+			parts += "<span class='greentext'>Centcom is satisfied with service's job today.</span><br>"
 			award_service(/datum/award/achievement/jobs/service_okay)
 		else
-			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span></div>"
+			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span><br>"
 			award_service(/datum/award/achievement/jobs/service_good)
 
-
-
-	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
+	parts += "<b>General Statistics:</b><br>"
+	parts += "There were [station_vault] credits collected by crew this shift.<br>"
 	if(total_players > 0)
 		parts += "An average of [station_vault/total_players] credits were collected.<br>"
 		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
