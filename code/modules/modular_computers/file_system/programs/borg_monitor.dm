@@ -55,7 +55,7 @@
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(DL_source)
 	if(!here.Adjacent(there))//If someone walked away, cancel the download
-		to_chat(DL_source, "<span class='warn'>Log upload failed: general connection error.</span>")//Let the borg know the upload stopped
+		to_chat(DL_source, "<span class='danger'>Log upload failed: general connection error.</span>")//Let the borg know the upload stopped
 		DL_source = null
 		DL_progress = -1
 		return
