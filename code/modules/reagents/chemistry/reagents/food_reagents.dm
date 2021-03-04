@@ -918,6 +918,7 @@
 	glass_name = "chocolate pudding"
 	glass_desc = "Tasty."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/vanillapudding
 	name = "Vanilla Pudding"

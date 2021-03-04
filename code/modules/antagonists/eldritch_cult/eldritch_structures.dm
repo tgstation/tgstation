@@ -109,14 +109,14 @@
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
 	icon = 'icons/obj/eldritch.dmi'
 	charges = 1
-	/// Weakref containing the owner of the trap
-	var/datum/weakref/owner
+	/// Reference to trap owner mob
+	var/mob/owner
 
 /obj/structure/trap/eldritch/Crossed(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
 	var/mob/living/living_mob = AM
-	if(living_mob == owner?.resolve() || IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+	if(living_mob == owner || IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
 		return
 	return ..()
 
@@ -126,8 +126,14 @@
 		qdel(src)
 
 ///Proc that sets the owner
-/obj/structure/trap/eldritch/proc/set_owner(mob/owner)
-	src.owner = WEAKREF(owner)
+/obj/structure/trap/eldritch/proc/set_owner(mob/new_owner)
+	owner = new_owner
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/unset_owner)
+
+///Unsets the owner in case of deletion
+/obj/structure/trap/eldritch/proc/unset_owner()
+	SIGNAL_HANDLER
+	owner = null
 
 /obj/structure/trap/eldritch/alert
 	name = "alert carving"
