@@ -1,0 +1,4 @@
+author: "ArcaneMusic Ft. Ghost"
+delete-after: True
+changes: 
+  - rscadd: "Scanner gates now have a set of wires that interact with assembly components. Experiment!"

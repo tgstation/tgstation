@@ -663,6 +663,23 @@
 	menu_description = "Fast ice spider variant specializing in catching running prey, but has less health. Immune to temperature damage. Frost oil injection of 10u per bite."
 
 /**
+ * # Scrawny Hunter Spider
+ *
+ * A hunter spider that trades damage for health, unable to smash enviroments.
+ *
+ * Mainly used as a minor threat in abandoned places, such as areas in maintenance or a ruin.
+ */
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny
+	name = "scrawny spider"
+	environment_smash = 0
+	health = 60
+	maxHealth = 60
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
+	menu_description = "Fast spider variant specializing in catching running prey, but has less damage than a normal hunter spider at the cost of more health. Toxin injection of 10u per bite."
+
+/**
  * # Flesh Spider
  *
  * A giant spider subtype specifically created by changelings.  Built to be self-sufficient, unlike other spider types.
