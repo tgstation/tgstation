@@ -59,50 +59,7 @@ export const Clipboard = (props, context) => {
                 />
               </Flex.Item>
             </Flex>
-            {paper.length > 0 && (
-              <>
-                <Divider />
-                {paper.map((paper_item, index) => (
-                  <Flex
-                    key={paper_ref[index]}
-                    color="black"
-                    backgroundColor="white"
-                    style={{ padding: "2px 2px 0 2px" }}
-                    mb={0.5}
-                  >
-                    <Flex.Item>
-                      <Button
-                        icon="chevron-up"
-                        color="transparent"
-                        iconColor="black"
-                        onClick={() =>
-                          act("move_top_paper", { ref: paper_ref[index] })}
-                      />
-                    </Flex.Item>
-                    <Flex.Item align="center" grow={1}>
-                      <Box align="center">{paper_item}</Box>
-                    </Flex.Item>
-                    <Flex.Item>
-                      <Button
-                        icon={pen ? "pen" : "eye"}
-                        onClick={() =>
-                          act("edit_paper", { ref: paper_ref[index] })}
-                      />
-                      <Button
-                        icon="tag"
-                        onClick={() =>
-                          act("rename_paper", { ref: paper_ref[index] })}
-                      />
-                      <Button
-                        icon="eject"
-                        onClick={() =>
-                          act("remove_paper", { ref: paper_ref[index] })}
-                      />
-                    </Flex.Item>
-                  </Flex>
-                ))}
-              </>
-            )}
+            {paper.length > 0 && <Divider />}
           </>
         ) : (
           <Section>
@@ -111,6 +68,41 @@ export const Clipboard = (props, context) => {
             </Box>
           </Section>
         )}
+        {paper.map((paper_item, index) => (
+          <Flex
+            key={paper_ref[index]}
+            color="black"
+            backgroundColor="white"
+            style={{ padding: "2px 2px 0 2px" }}
+            mb={0.5}
+          >
+            <Flex.Item>
+              <Button
+                icon="chevron-up"
+                color="transparent"
+                iconColor="black"
+                onClick={() => act("move_top_paper", { ref: paper_ref[index] })}
+              />
+            </Flex.Item>
+            <Flex.Item align="center" grow={1}>
+              <Box align="center">{paper_item}</Box>
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                icon={pen ? "pen" : "eye"}
+                onClick={() => act("edit_paper", { ref: paper_ref[index] })}
+              />
+              <Button
+                icon="tag"
+                onClick={() => act("rename_paper", { ref: paper_ref[index] })}
+              />
+              <Button
+                icon="eject"
+                onClick={() => act("remove_paper", { ref: paper_ref[index] })}
+              />
+            </Flex.Item>
+          </Flex>
+        ))}
       </Window.Content>
     </Window>
   );
