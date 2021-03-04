@@ -35,32 +35,29 @@ export const Clipboard = (props, context) => {
         </Section>
         <Divider />
         {top_paper ? (
-          <>
-            <Flex
-              color="black"
-              backgroundColor="white"
-              style={{ padding: "2px 2px 0 2px" }}
-            >
-              <Flex.Item align="center" grow={1}>
-                <Box align="center">{top_paper}</Box>
-              </Flex.Item>
-              <Flex.Item>
-                <Button
-                  icon={pen ? "pen" : "eye"}
-                  onClick={() => act("edit_paper", { ref: top_paper_ref })}
-                />
-                <Button
-                  icon="tag"
-                  onClick={() => act("rename_paper", { ref: top_paper_ref })}
-                />
-                <Button
-                  icon="eject"
-                  onClick={() => act("remove_paper", { ref: top_paper_ref })}
-                />
-              </Flex.Item>
-            </Flex>
-            {paper.length > 0 && <Divider />}
-          </>
+          <Flex
+            color="black"
+            backgroundColor="white"
+            style={{ padding: "2px 2px 0 2px" }}
+          >
+            <Flex.Item align="center" grow={1}>
+              <Box align="center">{top_paper}</Box>
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                icon={pen ? "pen" : "eye"}
+                onClick={() => act("edit_paper", { ref: top_paper_ref })}
+              />
+              <Button
+                icon="tag"
+                onClick={() => act("rename_paper", { ref: top_paper_ref })}
+              />
+              <Button
+                icon="eject"
+                onClick={() => act("remove_paper", { ref: top_paper_ref })}
+              />
+            </Flex.Item>
+          </Flex>
         ) : (
           <Section>
             <Box color="white" align="center">
@@ -68,6 +65,7 @@ export const Clipboard = (props, context) => {
             </Box>
           </Section>
         )}
+        {paper.length > 0 && <Divider />}
         {paper.map((paper_item, index) => (
           <Flex
             key={paper_ref[index]}
