@@ -48,8 +48,11 @@ GLOBAL_VAR(test_log)
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
 	// clear the test area
-	for(var/atom/movable/AM in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
-		qdel(AM)
+	for (var/turf/turf in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
+		for (var/content in turf.contents)
+			if (iseffect(content))
+				continue
+			qdel(content)
 	return ..()
 
 /datum/unit_test/proc/Run()
