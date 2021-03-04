@@ -156,7 +156,7 @@
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = null, added_ph, no_react = 0, override_base_ph = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp, added_purity = null, added_ph, no_react = 0, override_base_ph = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -174,6 +174,9 @@
 
 	if(!added_ph)
 		added_ph = D.ph
+
+	if(isnull(reagtemp))
+		reagtemp = D.default_temp
 
 	update_total()
 	var/cached_total = total_volume

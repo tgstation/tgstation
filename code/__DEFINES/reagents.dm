@@ -156,3 +156,6 @@
 /// For the pH meter flashing method
 #define ENABLE_FLASHING -1
 #define DISABLE_FLASHING 14
+
+/// Default reagent temperature when dispensed.
+#define REAGENT_DEFAULT_TEMP 300

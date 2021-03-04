@@ -670,6 +670,7 @@
 	glass_icon_state = "iceglass"
 	glass_name = "glass of ice"
 	glass_desc = "Generally, you're supposed to put something else in there too..."
+	default_temp = T0C - 5 //So it doesn't melt right away.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)

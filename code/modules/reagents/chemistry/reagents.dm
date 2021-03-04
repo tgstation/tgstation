@@ -92,6 +92,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/burning_temperature = null
 	///How much is consumed when it is burnt per second
 	var/burning_volume = 0.5
+	/// The temperature of the dispensed reagent used in place of the 'reagtemp' arg of [/datum/reagents/add_reagent] if the latter is null.
+	var/default_temp = REAGENT_DEFAULT_TEMP
 	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
 	var/list/addiction_types = null
 
