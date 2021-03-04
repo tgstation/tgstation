@@ -54,6 +54,8 @@
 #define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
+///The maximum temperature a reagent holder can attain
+#define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
 ///The default purity of all non reacted reagents
 #define REAGENT_STANDARD_PUIRTY 0.75
