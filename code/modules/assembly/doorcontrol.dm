@@ -13,6 +13,12 @@
 	if(id)
 		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
+/obj/item/assembly/control/multitool_act(mob/living/user)
+	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
+	if(change_id)
+		id = clamp(round(change_id, 1), 1, 100)
+		to_chat(user, "<span class='notice'>You change the ID to [id].</span>")
+
 /obj/item/assembly/control/activate()
 	var/openclose
 	if(cooldown)
@@ -25,6 +31,27 @@
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
+/obj/item/assembly/control/curtain
+	name = "curtain controller"
+	desc = "A small electronic device able to control a mechanical curtain remotely."
+
+/obj/item/assembly/control/curtain/examine(mob/user)
+	. = ..()
+	if(id)
+		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+
+/obj/item/assembly/control/curtain/activate()
+	var/openclose
+	if(cooldown)
+		return
+	cooldown = TRUE
+	for(var/obj/structure/curtain/cloth/fancy/mechanical/M in GLOB.curtains)
+		if(M.id == src.id)
+			if(openclose == null || !sync_doors)
+				openclose = M.density
+			INVOKE_ASYNC(M, openclose ? /obj/structure/curtain/cloth/fancy/mechanical.proc/open : /obj/structure/curtain/cloth/fancy/mechanical.proc/close)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5)
+
 
 /obj/item/assembly/control/airlock
 	name = "airlock controller"
@@ -32,7 +59,7 @@
 	id = "badmin" // Set it to null for MEGAFUN.
 	var/specialfunctions = OPEN
 	/*
-	Bitflag, 	1= open (OPEN)
+	Bitflag, 1= open (OPEN)
 				2= idscan (IDSCAN)
 				4= bolts (BOLTS)
 				8= shock (SHOCK)
@@ -56,7 +83,7 @@
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
 					D.locked = !D.locked
-					D.update_icon()
+					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
 					D.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
@@ -169,8 +196,13 @@
 		return
 	lift.visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
 	lift.lift_master_datum.set_controls(LOCKED)
-	var/difference = abs(z - lift.z)
-	var/direction = lift.z > z ? UP : DOWN
+	///The z level to which the elevator should travel
+	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
+	///The amount of z levels between the our and targetZ
+	var/difference = abs(targetZ - lift.z)
+	///Direction (up/down) needed to go to reach targetZ
+	var/direction = lift.z < targetZ ? UP : DOWN
+	///How long it will/should take us to reach the target Z level
 	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
 	for(var/i in 1 to difference)

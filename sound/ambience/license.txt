@@ -9,4 +9,6 @@ title1.ogg is Flip-Flap created by Jakub "AceMan" Szeląg and taken from http://
 title2.ogg is Robocop Theme (gameboy) remixed by Eric Schumacker
 title3.ogg is Tintin On The Moon remixed by Cuboos https://tgstation13.org/phpBB/viewtopic.php?f=10&t=2157 (assumed CC under allowing it to be submitted to the github, see thread)
 
+VoidsEmbrace.ogg is Chopin - Waltz in C Sharp Minor (Op. 64 No. 2). It is in public domain.
+
 CC-BY 3.0: http://creativecommons.org/licenses/by/3.0/

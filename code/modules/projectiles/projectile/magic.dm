@@ -11,25 +11,24 @@
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/projectile/magic/death/on_hit(target)
+/obj/projectile/magic/death/on_hit(mob/living/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-		if(isliving(M))
-			var/mob/living/L = M
-			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
-					L.grab_ghost(force = TRUE) // even suicides
-					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
-				else if(L.stat != DEAD)
-					to_chat(L, "<span class='notice'>You feel great!</span>")
-			else
-				L.death(0)
-		else
-			M.death(0)
+	if(!istype(target))
+		return
+
+	if(target.anti_magic_check())
+		target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+		return BULLET_ACT_BLOCK
+
+	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+			target.grab_ghost(force = TRUE) // even suicides
+			to_chat(target, "<span class='notice'>You rise with a start, you're undead!!!</span>")
+		else if(target.stat != DEAD)
+			to_chat(target, "<span class='notice'>You feel great!</span>")
+		return
+
+	target.death()
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -155,11 +154,19 @@
 	qdel(src)
 
 /proc/wabbajack(mob/living/M, randomize)
+	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
+	// We then want to restore this original body through the shapeshift holder itself.
+	var/obj/shapeshift_holder/shapeshift = locate() in M
+	if(shapeshift)
+		M = shapeshift.stored
+		shapeshift.restore()
+
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
 	M.notransform = TRUE
-	M.mobility_flags = NONE
+	ADD_TRAIT(M, TRAIT_IMMOBILIZED, MAGIC_TRAIT)
+	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -185,13 +192,13 @@
 		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
 	switch(randomize)
 		if("monkey")
-			new_mob = new /mob/living/carbon/monkey(M.loc)
+			new_mob = new /mob/living/carbon/human/species/monkey(M.loc)
 
 		if("robot")
 			var/robot = pick(200;/mob/living/silicon/robot,
-							/mob/living/silicon/robot/modules/syndicate,
-							/mob/living/silicon/robot/modules/syndicate/medical,
-							/mob/living/silicon/robot/modules/syndicate/saboteur,
+							/mob/living/silicon/robot/model/syndicate,
+							/mob/living/silicon/robot/model/syndicate/medical,
+							/mob/living/silicon/robot/model/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -201,7 +208,7 @@
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.lawupdate = FALSE
 				Robot.connected_ai = null
-				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.mmi.transfer_identity(M) //Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0)
 
@@ -265,7 +272,7 @@
 				if(chooseable_races.len)
 					new_mob.set_species(pick(chooseable_races))
 
-			var/datum/preferences/A = new()	//Randomize appearance for the human
+			var/datum/preferences/A = new() //Randomize appearance for the human
 			A.copy_to(new_mob, icon_updates=0)
 
 			var/mob/living/carbon/human/H = new_mob
@@ -283,7 +290,7 @@
 
 	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_combat_mode(TRUE)
 
 	M.wabbajack_act(new_mob)
 
@@ -389,24 +396,23 @@
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
-	var/obj/structure/closet/locker_temp_instance = /obj/structure/closet/decay
+	var/obj/structure/closet/decay/locker_temp_instance
 
 /obj/projectile/magic/locker/Initialize()
 	. = ..()
 	locker_temp_instance = new(src)
 
-/obj/projectile/magic/locker/prehit(atom/A)
+/obj/projectile/magic/locker/prehit_pierce(atom/A)
+	. = ..()
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
-		if(M.anti_magic_check())
+		if(M.anti_magic_check()) // no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
-			qdel(src)
-			return
+			return PROJECTILE_DELETE_WITHOUT_HITTING
 		if(!locker_temp_instance.insertion_allowed(M))
-			return ..()
+			return
 		M.forceMove(src)
-		return FALSE
-	return ..()
+		return PROJECTILE_PIERCE_PHASE
 
 /obj/projectile/magic/locker/on_hit(target)
 	if(created)
@@ -415,7 +421,7 @@
 		for(var/atom/movable/AM in contents)
 			locker_temp_instance.insert(AM)
 		locker_temp_instance.welded = weld
-		locker_temp_instance.update_icon()
+		locker_temp_instance.update_appearance()
 	created = TRUE
 	return ..()
 
@@ -428,7 +434,7 @@
 /obj/structure/closet/decay
 	breakout_time = 600
 	icon_welded = null
-	var/magic_icon = "cursed"
+	icon_state = "cursed"
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
@@ -436,18 +442,12 @@
 	. = ..()
 	if(auto_destroy)
 		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
-	addtimer(CALLBACK(src, .proc/magicly_lock), 5)
-
-/obj/structure/closet/decay/proc/magicly_lock()
-	if(!welded)
-		return
-	icon_state = magic_icon
-	update_icon()
 
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
 		unmagify()
 
+///Fade away into nothing
 /obj/structure/closet/decay/proc/decay()
 	animate(src, alpha = 0, time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
@@ -455,16 +455,14 @@
 /obj/structure/closet/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
-		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
-			unmagify()
-		else
-			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+		unmagify()
 
+///Give it the lesser magic icon and tell it to delete itself
 /obj/structure/closet/decay/proc/unmagify()
 	icon_state = weakened_icon
-	update_icon()
+	update_appearance()
+
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
-	icon_welded = "welded"
 
 /obj/projectile/magic/flying
 	name = "bolt of flying"
@@ -553,7 +551,7 @@
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
-			spell.update_icon()
+			spell.update_appearance()
 
 /obj/projectile/magic/wipe
 	name = "bolt of possession"
@@ -618,7 +616,7 @@
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
-	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
+	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
 	nodamage = FALSE
@@ -633,7 +631,7 @@
 
 /obj/projectile/magic/aoe/lightning/fire(setAngle)
 	if(caster)
-		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]")
 	..()
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)

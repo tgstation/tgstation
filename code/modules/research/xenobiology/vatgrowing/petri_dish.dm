@@ -40,7 +40,7 @@
 	var/mutable_appearance/overlay2 = mutable_appearance(icon, "petri_dish_overlay2")
 	. += overlay2
 
-/obj/item/petri_dish/proc/deposit_sample(user, var/datum/biological_sample/deposited_sample)
+/obj/item/petri_dish/proc/deposit_sample(user, datum/biological_sample/deposited_sample)
 	sample = deposited_sample
 	to_chat(user, "<span class='notice'>You deposit a sample into [src].</span>")
-	update_icon()
+	update_appearance()

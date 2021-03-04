@@ -31,19 +31,19 @@
 				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname in list(NAMEOF(src, open), NAMEOF(src, showpiece), NAMEOF(src, custom_glass_overlay)))
-		update_icon()
+		update_appearance()
 
 /obj/structure/displaycase/handle_atom_del(atom/A)
 	if(A == electronics)
 		electronics = null
 	if(A == showpiece)
 		showpiece = null
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/structure/displaycase/Destroy()
@@ -65,7 +65,7 @@
 		return
 	showpiece.forceMove(drop_location())
 	showpiece = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -88,7 +88,7 @@
 		broken = TRUE
 		new /obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, TRUE)
-		update_icon()
+		update_appearance()
 		trigger_alarm()
 
 ///Anti-theft alarm triggered when broken.
@@ -110,17 +110,19 @@
 		return
 	if(broken)
 		. += "[initial(icon_state)]_broken"
-	else if(!open)
+		return
+	if(!open)
 		. += "[initial(icon_state)]_closed"
+		return
 
-/obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
+/obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID() && !broken && openable)
 		if(allowed(user))
 			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='alert'>Access denied.</span>")
-	else if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
+	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
@@ -128,7 +130,7 @@
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 			if(W.use_tool(src, user, 40, amount=5, volume=50))
 				obj_integrity = max_integrity
-				update_icon()
+				update_appearance()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
@@ -146,13 +148,7 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
-		if(showpiece_type && !istype(W, showpiece_type))
-			to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
-			return TRUE
-		if(user.transferItemToLoc(W, src))
-			showpiece = W
-			to_chat(user, "<span class='notice'>You put [W] on display.</span>")
-			update_icon()
+		insert_showpiece(W, user)
 	else if(glass_fix && broken && istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() < 2)
@@ -163,18 +159,27 @@
 			G.use(2)
 			broken = FALSE
 			obj_integrity = max_integrity
-			update_icon()
+			update_appearance()
 	else
 		return ..()
 
+/obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
+	if(showpiece_type && !istype(wack, showpiece_type))
+		to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
+		return TRUE
+	if(user.transferItemToLoc(wack, src))
+		showpiece = wack
+		to_chat(user, "<span class='notice'>You put [wack] on display.</span>")
+		update_appearance()
+
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
-	update_icon()
+	update_appearance()
 
-/obj/structure/displaycase/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/displaycase/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/displaycase/attack_hand(mob/user)
+/obj/structure/displaycase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -189,7 +194,7 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		if (user.a_intent == INTENT_HELP)
+		if (!user.combat_mode)
 			if(!user.is_blind())
 				user.examinate(src)
 			return
@@ -290,11 +295,11 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
@@ -331,7 +336,7 @@
 		to_chat(user, "<span class='notice'>You insert [W] into the case.</span>")
 		showpiece = W
 		added_roundstart = FALSE
-		update_icon()
+		update_appearance()
 
 		placer_key = user.ckey
 
@@ -384,9 +389,9 @@
 	density = FALSE
 	max_integrity = 100
 	req_access = null
-	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
+	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
@@ -396,6 +401,7 @@
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
+	return ..()
 
 /obj/structure/displaycase/forsale/update_overlays()
 	. = ..()
@@ -429,7 +435,10 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/item/card/id/potential_acc = usr.get_idcard(hand_first = TRUE)
+	var/obj/item/card/id/potential_acc
+	if(isliving(usr))
+		var/mob/living/L = usr
+		potential_acc = L.get_idcard(hand_first = TRUE)
 	switch(action)
 		if("Buy")
 			if(!showpiece)
@@ -462,7 +471,7 @@
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
-				update_icon()
+				update_appearance()
 				SStgui.update_uis(src)
 				return TRUE
 		if("Open")
@@ -528,12 +537,12 @@
 		if(do_after(user, 20, target = src))
 			broken = FALSE
 			obj_integrity = max_integrity
-			update_icon()
+			update_appearance()
 		return TRUE
 
 /obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(open && user.a_intent == INTENT_HELP )
+	if(open && !user.combat_mode)
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
 		else
@@ -547,7 +556,7 @@
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
 			set_anchored(!anchored)
 			return
-	else if(!open && user.a_intent == INTENT_HELP)
+	else if(!open && !user.combat_mode)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
 
@@ -568,9 +577,10 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)
-		update_icon()
+		update_appearance()
 		trigger_alarm() //In case it's given an alarm anyway.
 
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
+

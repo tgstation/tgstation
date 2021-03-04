@@ -1,56 +1,54 @@
 GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
 
 /atom/movable/openspace_backdrop
-	name			= "openspace_backdrop"
+	name = "openspace_backdrop"
 
-	anchored		= TRUE
+	anchored = TRUE
 
 	icon            = 'icons/turf/floors.dmi'
 	icon_state      = "grey"
 	plane           = OPENSPACE_BACKDROP_PLANE
-	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer           = SPLASHSCREEN_LAYER
 	//I don't know why the others are aligned but I shall do the same.
-	vis_flags		= VIS_INHERIT_ID
+	vis_flags = VIS_INHERIT_ID
 
-/turf/open/transparent/openspace
+/turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
 	icon_state = "transparent"
-	baseturfs = /turf/open/transparent/openspace
+	baseturfs = /turf/open/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	baseturfs = /turf/open/openspace
+	intact = FALSE //this means wires go on top
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
-/turf/open/transparent/openspace/airless
+/turf/open/openspace/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/transparent/openspace/debug/update_multiz()
-	..()
-	return TRUE
-
-///No bottom level for openspace.
-/turf/open/transparent/openspace/show_bottom_level()
-	return FALSE
-
-/turf/open/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+/turf/open/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-
 	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/transparent/openspace/can_have_cabling()
+/turf/open/openspace/LateInitialize()
+	. = ..()
+	AddElement(/datum/element/turf_z_transparency, FALSE)
+
+/turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return TRUE
 	return FALSE
 
-/turf/open/transparent/openspace/zAirIn()
+/turf/open/openspace/zAirIn()
 	return TRUE
 
-/turf/open/transparent/openspace/zAirOut()
+/turf/open/openspace/zAirOut()
 	return TRUE
 
-/turf/open/transparent/openspace/zPassIn(atom/movable/A, direction, turf/source)
+/turf/open/openspace/zPassIn(atom/movable/A, direction, turf/source)
 	if(direction == DOWN)
 		for(var/obj/O in contents)
 			if(O.obj_flags & BLOCK_Z_IN_DOWN)
@@ -63,7 +61,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		return TRUE
 	return FALSE
 
-/turf/open/transparent/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
 	if(A.anchored)
 		return FALSE
 	if(direction == DOWN)
@@ -78,13 +76,13 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		return TRUE
 	return FALSE
 
-/turf/open/transparent/openspace/proc/CanCoverUp()
+/turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/transparent/openspace/proc/CanBuildHere()
+/turf/open/openspace/proc/CanBuildHere()
 	return can_build_on
 
-/turf/open/transparent/openspace/attackby(obj/item/C, mob/user, params)
+/turf/open/openspace/attackby(obj/item/C, mob/user, params)
 	..()
 	if(!CanBuildHere())
 		return
@@ -111,12 +109,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		else
 			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
 		return
-	if(istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/iron))
 		if(!CanCoverUp())
 			return
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
+			var/obj/item/stack/tile/iron/S = C
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
@@ -125,9 +123,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+			to_chat(user, "<span class='warning'>The plating is going to need some support! Place iron rods first.</span>")
 
-/turf/open/transparent/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+/turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
 		return FALSE
 
@@ -140,7 +138,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/transparent/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+/turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
@@ -148,22 +146,33 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			return TRUE
 	return FALSE
 
-/turf/open/transparent/openspace/icemoon
+/turf/open/openspace/icemoon
 	name = "ice chasm"
-	baseturfs = /turf/open/transparent/openspace/icemoon
+	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	planetary_atmos = TRUE
 	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+	/// Replaces itself with replacement_turf if the turf below this one is in a no ruins allowed area (usually ruins themselves)
+	var/protect_ruin = TRUE
+	/// If true mineral turfs below this openspace turf will be mined automatically
+	var/drill_below = TRUE
 
-/turf/open/transparent/openspace/icemoon/Initialize()
+/turf/open/openspace/icemoon/Initialize()
 	. = ..()
 	var/turf/T = below()
-	if(T.flags_1 & NO_RUINS_1)
+	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return
-	if(!ismineralturf(T))
+	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
 	M.mineralAmt = 0
 	M.gets_drilled()
-	baseturfs = /turf/open/transparent/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
+	baseturfs = /turf/open/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
 
+/turf/open/openspace/icemoon/keep_below
+	drill_below = FALSE
+
+/turf/open/openspace/icemoon/ruins
+	protect_ruin = FALSE
+	drill_below = FALSE

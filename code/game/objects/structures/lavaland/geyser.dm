@@ -59,15 +59,32 @@
 	desc = "It's a plunger for plunging."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
+	worn_icon_state = "plunger"
 
 	slot_flags = ITEM_SLOT_MASK
+	flags_inv = HIDESNOUT
 
-	var/plunge_mod = 1 //time*plunge_mod = total time we take to plunge an object
-	var/reinforced = FALSE //whether we do heavy duty stuff like geysers
+	///time*plunge_mod = total time we take to plunge an object
+	var/plunge_mod = 1
+	///whether we do heavy duty stuff like geysers
+	var/reinforced = FALSE
+	///alt sprite for the toggleable layer change mode
+	var/layer_mode_sprite = "plunger_layer"
+	///Wheter we're in layer mode
+	var/layer_mode = FALSE
+	///What layer we set it to
+	var/target_layer = DUCT_LAYER_DEFAULT
 
-/obj/item/plunger/attack_obj(obj/O, mob/living/user)
-	if(!O.plunger_act(src, user, reinforced))
+	///Assoc list for possible layers
+	var/list/layers = list("Alternate Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT)
+
+/obj/item/plunger/attack_obj(obj/O, mob/living/user, params)
+	if(layer_mode)
+		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
 		return ..()
+	else
+		if(!O.plunger_act(src, user, reinforced))
+			return ..()
 
 /obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
 	. = ..()
@@ -79,12 +96,35 @@
 			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
 			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
 
+/obj/item/plunger/attack_self(mob/user)
+	. = ..()
+
+	layer_mode = !layer_mode
+
+	if(!layer_mode)
+		icon_state = initial(icon_state)
+		to_chat(user, "<span class='notice'>You set the plunger to 'Plunger Mode'.</span>")
+	else
+		icon_state = layer_mode_sprite
+		to_chat(user, "<span class='notice'>You set the plunger to 'Layer Mode'.</span>")
+
+	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
+
+/obj/item/plunger/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+
+	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
+	if(new_layer)
+		target_layer = layers[new_layer]
+
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
-
+	worn_icon_state = "reinforced_plunger"
 	reinforced = TRUE
 	plunge_mod = 0.8
+	layer_mode_sprite = "reinforced_plunger_layer"
 
-	custom_premium_price = 1200
+	custom_premium_price = PAYCHECK_MEDIUM * 8

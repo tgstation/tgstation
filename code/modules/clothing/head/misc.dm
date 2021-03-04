@@ -21,6 +21,8 @@
 	icon_state = "pwig"
 	inhand_icon_state = "pwig"
 
+#define RABBIT_CD_TIME 30 SECONDS
+
 /obj/item/clothing/head/that
 	name = "top-hat"
 	desc = "It's an amish looking hat."
@@ -28,6 +30,37 @@
 	inhand_icon_state = "that"
 	dog_fashion = /datum/dog_fashion/head
 	throwforce = 1
+	/// Cooldown for how often we can pull rabbits out of here
+	COOLDOWN_DECLARE(rabbit_cooldown)
+
+/obj/item/clothing/head/that/attackby(obj/item/hitby_item, mob/user, params)
+	. = ..()
+	if(istype(hitby_item, /obj/item/gun/magic/wand))
+		abracadabra(hitby_item, user)
+
+/obj/item/clothing/head/that/proc/abracadabra(obj/item/hitby_wand, mob/magician)
+	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
+		to_chat("<span class='warning'>You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet...</span>")
+		return
+
+	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
+	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
+	do_smoke(range=1, location=src, smoke_type=/obj/effect/particle_effect/smoke/quick)
+
+	if(prob(10))
+		magician.visible_message("<span class='danger'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!</span>", "<span class='danger'>You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b></span>")
+		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
+		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
+			var/mob/living/simple_animal/hostile/poison/bees/barry = new(get_turf(magician))
+			barry.target = magician
+			if(prob(20))
+				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
+	else
+		magician.visible_message("<span class='notice'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!</span>", "<span class='notice'>You tap [src] with your [hitby_wand.name] and pull out a cute bunny!</span>")
+		var/mob/living/simple_animal/chicken/rabbit/bunbun = new(get_turf(magician))
+		bunbun.mob_try_pickup(magician, instant=TRUE)
+
+#undef RABBIT_CD_TIME
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
@@ -72,7 +105,7 @@
 	inhand_icon_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
@@ -81,7 +114,7 @@
 	inhand_icon_state="cueball"
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/snowman
 	name = "Snowman Head"
@@ -90,7 +123,7 @@
 	inhand_icon_state = "snowman_h"
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
@@ -98,7 +131,7 @@
 	icon_state = "justicered"
 	inhand_icon_state = "justicered"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/justice/blue
@@ -152,6 +185,11 @@
 		user.remove_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
+/obj/item/clothing/head/pirate/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
+
 /obj/item/clothing/head/pirate/captain
 	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
@@ -163,6 +201,11 @@
 	icon_state = "bandana"
 	inhand_icon_state = "bandana"
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/bandana/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
@@ -184,7 +227,7 @@
 	icon_state = "chickenhead"
 	inhand_icon_state = "chickensuit"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
@@ -192,7 +235,7 @@
 	icon_state = "griffinhat"
 	inhand_icon_state = "griffinhat"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -206,7 +249,7 @@
 	inhand_icon_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/fedora
@@ -327,13 +370,12 @@
 	name = "paper sack hat"
 	desc = "A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness."
 	icon_state = "papersack"
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
 
 /obj/item/clothing/head/papersack/smiley
 	name = "paper sack hat"
 	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
 	icon_state = "papersack_smile"
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/head/crown
 	name = "crown"
@@ -358,7 +400,7 @@
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"
@@ -454,6 +496,7 @@
 	inhand_icon_state = "shrine_wig"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/intern
@@ -480,3 +523,12 @@
 	desc = "A gauzy white veil."
 	icon_state = "weddingveil"
 	inhand_icon_state = "weddingveil"
+
+/obj/item/clothing/head/centom_cap
+	name = "\improper CentCom Commander Cap"
+	icon_state = "centcom_cap"
+	desc = "Worn by the finest of CentCom Commanders. Inside the lining of the cap, lies two faint initials."
+	inhand_icon_state = "that"
+	flags_inv = 0
+	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	strip_delay = (8 SECONDS)

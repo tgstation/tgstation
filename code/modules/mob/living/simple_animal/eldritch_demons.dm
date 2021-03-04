@@ -14,7 +14,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/eldritch_mobs.dmi'
 	speed = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = 1
 	AIStatus = AI_OFF
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -39,10 +39,10 @@
 	add_spells()
 
 /**
-  * Add_spells
-  *
-  * Goes through spells_to_add and adds each spell to the mind.
-  */
+ * Add_spells
+ *
+ * Goes through spells_to_add and adds each spell to the mind.
+ */
 /mob/living/simple_animal/hostile/eldritch/proc/add_spells()
 	for(var/spell in spells_to_add)
 		AddSpell(new spell())
@@ -85,7 +85,7 @@
 	var/datum/action/innate/mansus_speech/action = new(src)
 	linked_mobs[mob_linked] = action
 	action.Grant(mob_linked)
-	RegisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/unlink_mob)
+	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/unlink_mob)
 	return TRUE
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
@@ -93,12 +93,12 @@
 
 	if(!linked_mobs[mob_linked])
 		return
-	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]
 	action.Remove(mob_linked)
 	qdel(action)
 	to_chat(mob_linked, "<span class='notice'>Your mind shatters as the [src]'s Mansus Link leaves your mind.</span>")
-	mob_linked.emote("Scream")
+	INVOKE_ASYNC(mob_linked, /mob.proc/emote, "scream")
 	//micro stun
 	mob_linked.AdjustParalyzed(0.5 SECONDS)
 	linked_mobs -= mob_linked
@@ -153,35 +153,20 @@
 	///sets the hp of the head to be exactly the length times hp, so the head is de facto the hardest to destroy.
 	maxHealth = len * maxHealth
 	health = maxHealth
-	///next link
-	var/mob/living/simple_animal/hostile/eldritch/armsy/next
 	///previous link
-	var/mob/living/simple_animal/hostile/eldritch/armsy/prev
+	var/mob/living/simple_animal/hostile/eldritch/armsy/prev = src
 	///current link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/current
-	for(var/i in 0 to len)
+	for(var/i in 1 to len)
+		current = new type(drop_location(),FALSE)
+		current.icon_state = "armsy_mid"
+		current.icon_living = "armsy_mid"
+		current.AIStatus = AI_OFF
+		current.front = prev
+		prev.back = current
 		prev = current
-		//i tried using switch, but byond is really fucky and it didnt work as intended. Im sorry
-		if(i == 0)
-			current = new type(drop_location(),FALSE)
-			current.icon_state = "armsy_mid"
-			current.icon_living = "armsy_mid"
-			current.front = src
-			current.AIStatus = AI_OFF
-			back = current
-		else if(i < len)
-			current = new type(drop_location(),FALSE)
-			prev.back = current
-			prev.icon_state = "armsy_mid"
-			prev.icon_living = "armsy_mid"
-			prev.front = next
-			prev.AIStatus = AI_OFF
-		else
-			prev.icon_state = "armsy_end"
-			prev.icon_living = "armsy_end"
-			prev.front = next
-			prev.AIStatus = AI_OFF
-		next = prev
+	prev.icon_state = "armsy_end"
+	prev.icon_living = "armsy_end"
 
 /mob/living/simple_animal/hostile/eldritch/armsy/adjustBruteLoss(amount, updating_health, forced)
 	if(back)
@@ -331,24 +316,24 @@
 	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
-    . = ..()
-    if(newdir == NORTH)
-        icon_state = "rust_walker_n"
-    else if(newdir == SOUTH)
-        icon_state = "rust_walker_s"
-    update_icon()
+	. = ..()
+	if(newdir == NORTH)
+		icon_state = "rust_walker_n"
+	else if(newdir == SOUTH)
+		icon_state = "rust_walker_s"
+	update_appearance()
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
-		adjustBruteLoss(-3, FALSE)
-		adjustFireLoss(-3, FALSE)
+		adjustBruteLoss(-1.5 * delta_time, FALSE)
+		adjustFireLoss(-1.5 * delta_time, FALSE)
 	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit

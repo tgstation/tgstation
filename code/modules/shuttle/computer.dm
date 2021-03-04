@@ -20,6 +20,11 @@
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 
+/obj/machinery/computer/shuttle/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -54,7 +59,7 @@
 			else
 				data["status"] = "In Transit"
 	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-		if(!options.Find(S.id))
+		if(!options.Find(S.port_destinations))
 			continue
 		if(!M.check_dock(S, silent = TRUE))
 			continue
@@ -73,11 +78,11 @@
 	return data
 
 /**
-  * Checks if we are allowed to launch the shuttle, for special cases
-  *
-  * Arguments:
-  * * user - The mob trying to initiate the launch
-  */
+ * Checks if we are allowed to launch the shuttle, for special cases
+ *
+ * Arguments:
+ * * user - The mob trying to initiate the launch
+ */
 /obj/machinery/computer/shuttle/proc/launch_check(mob/user)
 	return TRUE
 
@@ -105,7 +110,8 @@
 					to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 					return
 			var/list/options = params2list(possible_destinations)
-			if(!(params["shuttle_id"] in options))
+			var/obj/docking_port/stationary/S = SSshuttle.getDock(params["shuttle_id"])
+			if(!(S.port_destinations in options))
 				log_admin("[usr] attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				return
@@ -139,6 +145,11 @@
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 
-/obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	if(port && (shuttleId == initial(shuttleId) || override))
+/obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(port)
+		//Remove old custom port id and ";;"
+		var/find_old = findtextEx(possible_destinations, "[shuttleId]_custom")
+		if(find_old)
+			possible_destinations = replacetext(replacetextEx(possible_destinations, "[shuttleId]_custom", ""), ";;", ";")
 		shuttleId = port.id
+		possible_destinations += ";[port.id]_custom"

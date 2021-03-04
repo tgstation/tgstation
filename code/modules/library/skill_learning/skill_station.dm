@@ -20,7 +20,7 @@
 
 /obj/machinery/skill_station/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 //Only usable by the person inside
 /obj/machinery/skill_station/ui_state(mob/user)
@@ -38,6 +38,7 @@
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+	return ..()
 
 /obj/machinery/skill_station/update_overlays()
 	. = ..()
@@ -72,7 +73,7 @@
 	if(work_timer)
 		deltimer(work_timer)
 		work_timer = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/skill_station/interact(mob/user)
 	. = ..()
@@ -115,7 +116,7 @@
 
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
-	update_icon()
+	update_appearance()
 
 /// Finish implanting.
 /obj/machinery/skill_station/proc/implant()
@@ -124,12 +125,12 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
-		to_chat(occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
 	else
-		to_chat(occupant,"<span class='notice'>Operation complete!</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 		inserted_skillchip = null
 
-	update_icon()
+	update_appearance()
 
 /// Start removal.
 /obj/machinery/skill_station/proc/start_removal(obj/item/skillchip/to_be_removed)
@@ -142,13 +143,13 @@
 
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/remove_skillchip,to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
-	update_icon()
+	update_appearance()
 
 /// Finish removal.
 /obj/machinery/skill_station/proc/remove_skillchip(obj/item/skillchip/to_be_removed)
 	working = FALSE
 	work_timer = null
-	update_icon()
+	update_appearance()
 
 	var/mob/living/carbon/carbon_occupant = occupant
 

@@ -12,6 +12,8 @@
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SILICON
 	display_order = JOB_DISPLAY_ORDER_AI
+	allow_bureaucratic_error = FALSE
+	departments = DEPARTMENT_SILICON
 	var/do_special_check = TRUE
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, datum/outfit/outfit_override, client/preference_source = null)
@@ -34,9 +36,9 @@
 			qdel(lateJoinCore)
 	var/mob/living/silicon/ai/AI = H
 	if(SSticker.anonymousnames)
-		AI.fully_replace_character_name(AI.real_name, anonymous_ai_name(is_ai = TRUE))
+		AI.fully_replace_character_name(AI.real_name, SSticker.anonymousnames.anonymous_ai_name(TRUE))
 	else
-		AI.apply_pref_name("ai", M.client)			//If this runtimes oh well jobcode is fucked. //what is this no energy attitude man
+		AI.apply_pref_name("ai", M.client) //If this runtimes oh well jobcode is fucked. //what is this no energy attitude man
 	AI.set_core_display_icon(null, M.client)
 
 	//we may have been created after our borg

@@ -1,12 +1,17 @@
+/// The time since the last job opening was created
+GLOBAL_VAR_INIT(time_last_changed_position, 0)
+
 /datum/computer_file/program/job_management
 	filename = "plexagoncore"
 	filedesc = "Plexagon HR Core"
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and changing job slot avalibility."
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosJobManager"
+	program_icon = "address-book"
 
 	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for

@@ -13,7 +13,7 @@
 
 /obj/item/electroadaptive_pseudocircuit/Initialize()
 	. = ..()
-	maptext = "[circuits]"
+	maptext = MAPTEXT(circuits)
 
 /obj/item/electroadaptive_pseudocircuit/examine(mob/user)
 	. = ..()
@@ -40,7 +40,7 @@
 	playsound(R, 'sound/items/rped.ogg', 50, TRUE)
 	recharging = TRUE
 	circuits--
-	maptext = "[circuits]"
+	maptext = MAPTEXT(circuits)
 	icon_state = "[initial(icon_state)]_recharging"
 	var/recharge_time = min(600, circuit_cost * 5)  //40W of cost for one fabrication = 20 seconds of recharge time; this is to prevent spamming
 	addtimer(CALLBACK(src, .proc/recharge), recharge_time)
@@ -53,7 +53,7 @@
 	if(!is_type_in_typecache(target, recycleable_circuits))
 		return
 	circuits++
-	maptext = "[circuits]"
+	maptext = MAPTEXT(circuits)
 	user.visible_message("<span class='notice'>User breaks down [target] with [src].</span>", \
 	"<span class='notice'>You recycle [target] into [src]. It now has material for <b>[circuits]</b> circuits.</span>")
 	playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)

@@ -33,6 +33,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
@@ -50,7 +51,15 @@
 
 	GLOB.emote_list = init_emote_list()
 
-	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
+	init_crafting_recipes(GLOB.crafting_recipes)
+
+/// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
+/proc/init_crafting_recipes(list/crafting_recipes)
+	for(var/path in subtypesof(/datum/crafting_recipe))
+		var/datum/crafting_recipe/recipe = new path()
+		recipe.reqs = sortList(recipe.reqs, /proc/cmp_crafting_req_priority)
+		crafting_recipes += recipe
+	return crafting_recipes
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.

@@ -82,7 +82,6 @@
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
 	dir = 9;
-	name = "security camera";
 	network = list("fsci");
 	screen_loc = ""
 	},
@@ -265,7 +264,7 @@
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aR" = (
 /obj/machinery/power/terminal{
@@ -332,9 +331,9 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 50
@@ -362,9 +361,9 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/circuitboard/machine/protolathe,
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation,
+/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -469,7 +468,7 @@
 /obj/item/clothing/under/chameleon,
 /obj/item/pda/chameleon,
 /obj/item/clothing/mask/chameleon,
-/obj/item/card/id/syndicate/anyone,
+/obj/item/card/id/advanced/chameleon,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (
@@ -576,16 +575,16 @@
 /obj/structure/mirror{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bH" = (
 /obj/structure/sink{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bI" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bJ" = (
 /obj/machinery/suit_storage_unit/syndicate{
@@ -716,7 +715,7 @@
 "cd" = (
 /obj/machinery/light,
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ce" = (
 /obj/structure/closet/syndicate{
@@ -1092,7 +1091,6 @@
 /obj/machinery/camera/xray{
 	c_tag = "Conference room";
 	dir = 8;
-	name = "security camera";
 	network = list("fsc");
 	screen_loc = ""
 	},
@@ -1108,7 +1106,7 @@
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
 	},
-/turf/open/floor/plasteel/dark/side{
+/turf/open/floor/iron/dark/side{
 	dir = 1
 	},
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1122,14 +1120,14 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dc" = (
 /obj/machinery/shower{
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dd" = (
 /obj/structure/closet/crate/secure/gear{
@@ -1181,7 +1179,6 @@
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
 	dir = 6;
-	name = "security camera";
 	network = list("fsci");
 	screen_loc = ""
 	},

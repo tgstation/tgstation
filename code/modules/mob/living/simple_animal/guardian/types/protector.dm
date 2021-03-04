@@ -9,7 +9,7 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Protector modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! Wait, no... it caught you! The fisher has become the fishy.</span>"
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Uranium, a very resistant guardian.</span>"
-	toggle_button_type = /obj/screen/guardian/toggle_mode
+	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)

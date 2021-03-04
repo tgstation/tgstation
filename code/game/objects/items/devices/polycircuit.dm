@@ -5,13 +5,14 @@
 	inhand_icon_state = "rods"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 8
+	merge_type = /obj/item/stack/circuit_stack
 	var/circuit_type = /obj/item/electronics/airlock
 	var/chosen_circuit = "airlock"
 
 /obj/item/stack/circuit_stack/attack_self(mob/user)// Prevents the crafting menu, and tells you how to use it.
 	to_chat(user, "<span class='warning'>You can't use [src] by itself, you'll have to try and remove one of these circuits by hand... carefully.</span>")
 
-/obj/item/stack/circuit_stack/attack_hand(mob/user)
+/obj/item/stack/circuit_stack/attack_hand(mob/user, list/modifiers)
 	var/mob/living/carbon/human/H = user
 	if(user.get_inactive_held_item() != src)
 		return ..()

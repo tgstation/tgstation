@@ -3,10 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/wall{
-	icon = 'icons/turf/shuttleold.dmi';
-	icon_state = "block"
-	},
+/turf/closed/wall/bathhouse,
 /area/ruin/powered/bathhouse)
 "c" = (
 /obj/structure/table/greyscale,
@@ -17,11 +14,8 @@
 	name = "white slippers"
 	},
 /obj/item/clothing/under/misc/pj/blue,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
-"d" = (
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/underground/unexplored)
 "e" = (
 /obj/structure/mirror{
 	pixel_y = 28
@@ -29,7 +23,7 @@
 /obj/structure/sink{
 	pixel_y = 20
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "f" = (
 /obj/machinery/shower{
@@ -37,15 +31,14 @@
 	reagent_id = /datum/reagent/water/holywater
 	},
 /obj/structure/curtain,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "g" = (
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "h" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 1
 	},
 /obj/item/food/spaghetti/pastatomato{
@@ -60,7 +53,7 @@
 /obj/machinery/door/airlock/freezer{
 	name = "bath house airlock"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "j" = (
 /turf/closed/wall/mineral/wood,
@@ -71,7 +64,7 @@
 "l" = (
 /obj/item/bikehorn/rubberducky,
 /obj/item/soap,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "m" = (
 /obj/structure/bookcase/random,
@@ -87,13 +80,13 @@
 /area/ruin/powered/bathhouse)
 "p" = (
 /obj/machinery/light/dim,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "q" = (
 /obj/item/bikehorn/rubberducky{
 	desc = "An old but clean looking rubber ducky. Something about it is very familiar..."
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 
 (1,1,1) = {"
@@ -102,7 +95,7 @@ b
 b
 b
 b
-d
+a
 a
 a
 "}
@@ -164,7 +157,7 @@ q
 b
 n
 n
-d
+a
 "}
 (8,1,1) = {"
 b
@@ -174,7 +167,7 @@ g
 b
 n
 n
-d
+a
 "}
 (9,1,1) = {"
 b
@@ -184,7 +177,7 @@ g
 i
 n
 n
-d
+a
 "}
 (10,1,1) = {"
 b
@@ -193,7 +186,7 @@ g
 g
 b
 n
-d
+a
 a
 "}
 (11,1,1) = {"
@@ -202,7 +195,7 @@ b
 b
 b
 b
-d
+a
 a
 a
 "}

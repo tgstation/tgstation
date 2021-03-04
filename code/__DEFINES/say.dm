@@ -42,14 +42,12 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
-#define MODE_CHANGELING "changeling"
-#define MODE_KEY_CHANGELING "g"
-#define MODE_TOKEN_CHANGELING ":g"
-
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
 #define MODE_MONKEY "monkeyhive"
+
+#define MODE_MAFIA "mafia"
 
 #define MODE_SING "sing"
 
@@ -63,11 +61,12 @@
 #define SPAN_COMMAND "command_headset"
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
+#define SPAN_TAPE_RECORDER "tape_recorder"
 
 //bitflag #defines for return value of the radio() proc.
-#define ITALICS			(1<<0)
-#define REDUCE_RANGE	(1<<1)
-#define NOPASS			(1<<2)
+#define ITALICS (1<<0)
+#define REDUCE_RANGE (1<<1)
+#define NOPASS (1<<2)
 
 //Eavesdropping
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
@@ -80,16 +79,11 @@
 #define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
 #define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 
-#define LINGHIVE_NONE 0
-#define LINGHIVE_OUTSIDER 1
-#define LINGHIVE_LING 2
-#define LINGHIVE_LINK 3
-
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-#define MAX_MESSAGE_LEN			1024
-#define MAX_NAME_LEN			42
-#define MAX_BROADCAST_LEN		512
-#define MAX_CHARTER_LEN			80
+#define MAX_MESSAGE_LEN 1024
+#define MAX_NAME_LEN 42
+#define MAX_BROADCAST_LEN 512
+#define MAX_CHARTER_LEN 80
 
 // Is something in the IC chat filter? This is config dependent.
 #define CHAT_FILTER_CHECK(T) (config.ic_filter_regex && findtext(T, config.ic_filter_regex))

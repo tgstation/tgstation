@@ -1,92 +1,93 @@
-/obj/screen/ghost
-	icon = 'icons/mob/screen_ghost.dmi'
+/atom/movable/screen/ghost
+	icon = 'icons/hud/screen_ghost.dmi'
 
-/obj/screen/ghost/MouseEntered()
+/atom/movable/screen/ghost/MouseEntered()
 	flick(icon_state + "_anim", src)
 
-/obj/screen/ghost/jumptomob
+/atom/movable/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
 
-/obj/screen/ghost/jumptomob/Click()
+/atom/movable/screen/ghost/jumptomob/Click()
 	var/mob/dead/observer/G = usr
 	G.jumptomob()
 
-/obj/screen/ghost/orbit
+/atom/movable/screen/ghost/orbit
 	name = "Orbit"
 	icon_state = "orbit"
 
-/obj/screen/ghost/orbit/Click()
+/atom/movable/screen/ghost/orbit/Click()
 	var/mob/dead/observer/G = usr
 	G.follow()
 
-/obj/screen/ghost/reenter_corpse
+/atom/movable/screen/ghost/reenter_corpse
 	name = "Reenter corpse"
 	icon_state = "reenter_corpse"
 
-/obj/screen/ghost/reenter_corpse/Click()
+/atom/movable/screen/ghost/reenter_corpse/Click()
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/ghost/teleport
+/atom/movable/screen/ghost/teleport
 	name = "Teleport"
 	icon_state = "teleport"
 
-/obj/screen/ghost/teleport/Click()
+/atom/movable/screen/ghost/teleport/Click()
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/obj/screen/ghost/pai
+/atom/movable/screen/ghost/pai
 	name = "pAI Candidate"
 	icon_state = "pai"
 
-/obj/screen/ghost/pai/Click()
+/atom/movable/screen/ghost/pai/Click()
 	var/mob/dead/observer/G = usr
 	G.register_pai()
 
-/obj/screen/ghost/mafia
+/atom/movable/screen/ghost/mafia
 	name = "Mafia Signup"
 	icon_state = "mafia"
 
-/obj/screen/ghost/mafia/Click()
+/atom/movable/screen/ghost/mafia/Click()
 	var/mob/dead/observer/G = usr
 	G.mafia_signup()
 
 /datum/hud/ghost/New(mob/owner)
 	..()
-	var/obj/screen/using
+	var/atom/movable/screen/using
 
-	using = new /obj/screen/ghost/jumptomob()
+	using = new /atom/movable/screen/ghost/jumptomob()
 	using.screen_loc = ui_ghost_jumptomob
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/ghost/orbit()
+	using = new /atom/movable/screen/ghost/orbit()
 	using.screen_loc = ui_ghost_orbit
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/ghost/reenter_corpse()
+	using = new /atom/movable/screen/ghost/reenter_corpse()
 	using.screen_loc = ui_ghost_reenter_corpse
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/ghost/teleport()
+	using = new /atom/movable/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/ghost/pai()
+	using = new /atom/movable/screen/ghost/pai()
 	using.screen_loc = ui_ghost_pai
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/ghost/mafia()
+	using = new /atom/movable/screen/ghost/mafia()
 	using.screen_loc = ui_ghost_mafia
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/language_menu
+	using = new /atom/movable/screen/language_menu
+	using.screen_loc = 	ui_ghost_language_menu
 	using.icon = ui_style
 	using.hud = src
 	static_inventory += using

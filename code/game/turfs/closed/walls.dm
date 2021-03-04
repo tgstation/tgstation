@@ -2,7 +2,7 @@
 
 /turf/closed/wall
 	name = "wall"
-	desc = "A huge chunk of metal used to separate rooms."
+	desc = "A huge chunk of iron used to separate rooms."
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
@@ -22,7 +22,7 @@
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
-	var/sheet_type = /obj/item/stack/sheet/metal
+	var/sheet_type = /obj/item/stack/sheet/iron
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 
@@ -85,7 +85,7 @@
 /turf/closed/wall/proc/devastate_wall()
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
-		new /obj/item/stack/sheet/metal(src)
+		new /obj/item/stack/sheet/iron(src)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -115,15 +115,15 @@
 	else
 		add_dent(WALL_DENT_HIT)
 
-/turf/closed/wall/attack_paw(mob/living/user)
+/turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return attack_hand(user)
+	return attack_hand(user, modifiers)
 
 
-/turf/closed/wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if((M.environment_smash & ENVIRONMENT_SMASH_WALLS) || (M.environment_smash & ENVIRONMENT_SMASH_RWALLS))
+/turf/closed/wall/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		dismantle_wall(1)
 		return
@@ -150,15 +150,15 @@
 	return TRUE
 
 /**
-  *Deals damage back to the hulk's arm.
-  *
-  *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
-  *This is in its own proc just to be easily overridden by other wall types. Default allows for three
-  *smashed walls per arm. Also, we use CANT_WOUND here because wounds are random. Wounds are applied
-  *by hulk code based on arm damage and checked when we call break_an_arm().
-  *Arguments:
-  **arg1 is the arm to deal damage to.
-  **arg2 is the hulk
+ *Deals damage back to the hulk's arm.
+ *
+ *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
+ *This is in its own proc just to be easily overridden by other wall types. Default allows for three
+ *smashed walls per arm. Also, we use CANT_WOUND here because wounds are random. Wounds are applied
+ *by hulk code based on arm damage and checked when we call break_an_arm().
+ *Arguments:
+ **arg1 is the arm to deal damage to.
+ **arg2 is the hulk
  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
 	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
@@ -167,7 +167,7 @@
 		return
 	smasher.break_an_arm(arm)
 
-/turf/closed/wall/attack_hand(mob/user)
+/turf/closed/wall/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -178,17 +178,17 @@
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
 	if(!isturf(user.loc))
-		return	//can't do this stuff whilst inside objects and such
+		return //can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
 
-	var/turf/T = user.loc	//get user's location for delay checks
+	var/turf/T = user.loc //get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
@@ -196,8 +196,8 @@
 
 	return ..()
 
-/turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
+	if((user.combat_mode) || !LAZYLEN(dent_decals))
 		return FALSE
 
 	if(W.tool_behaviour == TOOL_WELDER)

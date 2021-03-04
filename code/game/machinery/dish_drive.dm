@@ -26,6 +26,7 @@
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
+	var/list/dish_drive_contents
 
 /obj/machinery/dish_drive/Initialize()
 	. = ..()
@@ -36,20 +37,22 @@
 	if(user.Adjacent(src))
 		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
 
-/obj/machinery/dish_drive/attack_hand(mob/living/user)
-	if(!contents.len)
+/obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
+	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, "<span class='warning'>There's nothing in [src]!</span>")
 		return
-	var/obj/item/I = contents[contents.len] //the most recently-added item
+	var/obj/item/I = LAZYACCESS(dish_drive_contents, LAZYLEN(dish_drive_contents)) //the most recently-added item
+	LAZYREMOVE(dish_drive_contents, I)
 	user.put_in_hands(I)
 	to_chat(user, "<span class='notice'>You take out [I] from [src].</span>")
 	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
-	if(is_type_in_list(I, collectable_items) && user.a_intent != INTENT_HARM)
+	if(is_type_in_list(I, collectable_items) && !user.combat_mode)
 		if(!user.transferItemToLoc(I, src))
 			return
+		LAZYADD(dish_drive_contents, I)
 		to_chat(user, "<span class='notice'>You put [I] in [src], and it's beamed into energy!</span>")
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		flick("synthesizer_beam", src)
@@ -88,6 +91,7 @@
 	for(var/obj/item/I in view(4, src))
 		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
 			if(I.Adjacent(src))
+				LAZYADD(dish_drive_contents, I)
 				visible_message("<span class='notice'>[src] beams up [I]!</span>")
 				I.forceMove(src)
 				playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
@@ -106,7 +110,9 @@
 		do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
-	if(!contents.len)
+	if(!LAZYLEN(dish_drive_contents))
+		if(manual)
+			visible_message("<span class='notice'>[src] is empty!</span>")
 		return
 	var/obj/machinery/disposal/bin/bin = locate() in view(7, src)
 	if(!bin)
@@ -115,8 +121,9 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/disposed = 0
-	for(var/obj/item/I in contents)
+	for(var/obj/item/I in dish_drive_contents)
 		if(is_type_in_list(I, disposable_items))
+			LAZYREMOVE(dish_drive_contents, I)
 			I.forceMove(bin)
 			use_power(active_power_usage)
 			disposed++
@@ -125,6 +132,8 @@
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
-		bin.update_icon()
+		bin.update_appearance()
 		flick("synthesizer_beam", src)
+	else
+		visible_message("<span class='notice'>There are no disposable items in [src]!</span>")
 	time_since_dishes = world.time + 600

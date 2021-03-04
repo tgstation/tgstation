@@ -71,19 +71,42 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon_icon = 'icons/mob/actions/actions_elites.dmi'
 	button_icon_state = ""
 	background_icon_state = "bg_default"
-	var/mob/living/simple_animal/hostile/asteroid/elite/M
+	///The lavaland elite who owns this action
+	var/mob/living/simple_animal/hostile/asteroid/elite/elite_owner
+	///The displayed message into chat when this attack is selected
 	var/chosen_message
+	///The internal attack ID for the elite's OpenFire() proc to use
 	var/chosen_attack_num = 0
+
+/datum/action/innate/elite_attack/New()
+	..()
+	button.maptext = ""
+	button.maptext_x = 8
+	button.maptext_y = 0
+	button.maptext_width = 24
+	button.maptext_height = 12
+
+/datum/action/innate/elite_attack/process()
+	if(elite_owner == null)
+		STOP_PROCESSING(SSfastprocess, src)
+		qdel(src)
+	var/timeleft = max(elite_owner.ranged_cooldown - world.time, 0)
+	if(timeleft == 0)
+		button.maptext = ""
+		UpdateButtonIcon()
+	else
+		button.maptext = "<b class='maptext'>[round(timeleft/10, 0.1)]</b>"
 
 /datum/action/innate/elite_attack/Grant(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/asteroid/elite))
-		M = L
+		elite_owner = L
+		START_PROCESSING(SSfastprocess, src)
 		return ..()
 	return FALSE
 
 /datum/action/innate/elite_attack/Activate()
-	M.chosen_attack = chosen_attack_num
-	to_chat(M, chosen_message)
+	elite_owner.chosen_attack = chosen_attack_num
+	to_chat(elite_owner, chosen_message)
 
 //The Pulsing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 
@@ -95,6 +118,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon = 'icons/obj/lavaland/tumor.dmi'
 	icon_state = "tumor"
 	pixel_x = -16
+	base_pixel_x = -16
 	light_color = COLOR_SOFT_RED
 	light_range = 3
 	anchored = TRUE
@@ -109,7 +133,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 								/mob/living/simple_animal/hostile/asteroid/elite/herald)
 
-/obj/structure/elite_tumor/attack_hand(mob/user)
+/obj/structure/elite_tumor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(ishuman(user))
 		switch(activity)
@@ -191,7 +215,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		visible_message("<span class='boldwarning'>As [user] drops the core into [src], [src] appears to swell.</span>")
 		icon_state = "advanced_tumor"
 		boosted = TRUE
-		light_range = 6
+		set_light_range(6)
 		desc = "[desc]  This one seems to glow with a strong intensity."
 		qdel(core)
 		return TRUE

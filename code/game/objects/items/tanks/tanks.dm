@@ -20,6 +20,8 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	var/tank_holder_icon_state = "holder_generic"
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -74,6 +76,11 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+/obj/item/tank/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	. = ..()
@@ -120,7 +127,7 @@
 		var/turf/T = get_turf(src)
 		if(T)
 			T.assume_air(air_contents)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 		playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	qdel(src)
 
@@ -152,24 +159,26 @@
 		ui = new(user, src, "Tank", name)
 		ui.open()
 
+/obj/item/tank/ui_static_data(mob/user)
+	. = list (
+		"defaultReleasePressure" = round(TANK_DEFAULT_RELEASE_PRESSURE),
+		"minReleasePressure" = round(TANK_MIN_RELEASE_PRESSURE),
+		"maxReleasePressure" = round(TANK_MAX_RELEASE_PRESSURE),
+		"leakPressure" = round(TANK_LEAK_PRESSURE),
+		"fragmentPressure" = round(TANK_FRAGMENT_PRESSURE)
+	)
+
 /obj/item/tank/ui_data(mob/user)
-	var/list/data = list()
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
-	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
-	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
-	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	. = list(
+		"tankPressure" = round(air_contents.return_pressure()),
+		"releasePressure" = round(distribute_pressure)
+	)
 
 	var/mob/living/carbon/C = user
 	if(!istype(C))
 		C = loc.loc
-	if(!istype(C))
-		return data
-
-	if(C.internal == src)
-		data["connected"] = TRUE
-
-	return data
+	if(istype(C) && C.internal == src)
+		.["connected"] = TRUE
 
 /obj/item/tank/ui_act(action, params)
 	. = ..()
@@ -215,6 +224,13 @@
 	var/tank_pressure = air_contents.return_pressure()
 	var/actual_distribute_pressure = clamp(tank_pressure, 0, distribute_pressure)
 
+	// Lets do some algebra to understand why this works, yeah?
+	// R_IDEAL_GAS_EQUATION is (kPa * L) / (K * mol) by the by, so the units in this equation look something like this
+	// kpa * L / (R_IDEAL_GAS_EQUATION * K)
+	// Or restated (kpa * L / K) * 1/R_IDEAL_GAS_EQUATION
+	// (kpa * L * K * mol) / (kpa * L * K)
+	// If we cancel it all out, we get moles, which is the expected unit
+	// This sort of thing comes up often in atmos, keep the tool in mind for other bits of code
 	var/moles_needed = actual_distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	return remove_air(moles_needed)
@@ -272,3 +288,27 @@
 
 	else if(integrity < 3)
 		integrity++
+
+/obj/item/tank/rad_act(strength)
+	. = ..()
+	var/gas_change = FALSE
+	var/list/cached_gases = air_contents.gases
+	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide])
+		gas_change = TRUE
+		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
+		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
+		ASSERT_GAS(/datum/gas/pluoxium, air_contents)
+		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
+		strength -= pulse_strength
+
+	if(cached_gases[/datum/gas/hydrogen])
+		gas_change = TRUE
+		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
+		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
+		ASSERT_GAS(/datum/gas/tritium, air_contents)
+		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
+		strength -= pulse_strength
+
+	if(gas_change)
+		air_contents.garbage_collect()

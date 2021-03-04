@@ -25,7 +25,7 @@
 	if(P && !bin_pen)
 		P.forceMove(src)
 		bin_pen = P
-		update_icon()
+		update_appearance()
 
 /obj/item/paper_bin/Destroy()
 	if(papers)
@@ -37,7 +37,7 @@
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(total_paper)
 		total_paper = 0
-		update_icon()
+		update_appearance()
 	..()
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
@@ -49,17 +49,17 @@
 	if(over_object == M)
 		M.put_in_hands(src)
 
-	else if(istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	else if(istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 	add_fingerprint(M)
 
-/obj/item/paper_bin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/paper_bin/attack_hand(mob/user)
+/obj/item/paper_bin/attack_hand(mob/user, list/modifiers)
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -72,10 +72,10 @@
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
-		update_icon()
+		update_appearance()
 	else if(total_paper >= 1)
 		total_paper--
-		update_icon()
+		update_appearance()
 		// If there's any custom paper on the stack, use that instead of creating a new paper.
 		var/obj/item/paper/P
 		if(papers.len > 0)
@@ -105,14 +105,14 @@
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
 		total_paper++
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		bin_pen = P
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -129,6 +129,7 @@
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
+	return ..()
 
 /obj/item/paper_bin/update_overlays()
 	. = ..()
@@ -148,7 +149,7 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 
-/obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
+/obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	..()
 	if(total_paper < 1)
 		qdel(src)

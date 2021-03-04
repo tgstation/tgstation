@@ -14,6 +14,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
 	var/build_path = null
+	///determines if the circuit board originated from a vendor off station or not.
+	var/onstation = TRUE
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
 	if(LAZYLEN(M.component_parts))
@@ -38,6 +40,15 @@
 		qdel(M.circuit)
 		M.circuit = src
 
+	return
+
+/**
+ * Used to allow the circuitboard to configure a machine in some way, shape or form.
+ *
+ * Arguments:
+ * * machine - The machine to attempt to configure.
+ */
+/obj/item/circuitboard/proc/configure_machine(obj/machinery/machine)
 	return
 
 // Circuitboard/machine

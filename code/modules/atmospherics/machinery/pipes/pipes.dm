@@ -12,7 +12,7 @@
 	//Buckling
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
-	buckle_lying = -1
+	buckle_lying = NO_BUCKLE_LYING
 
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
@@ -44,7 +44,7 @@
 	if(air_temporary)
 		var/turf/T = loc
 		T.assume_air(air_temporary)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
@@ -82,6 +82,10 @@
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
 	. = ..()
+
+/obj/machinery/atmospherics/pipe/update_icon()
+	. = ..()
+	update_layer()
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(var/i in 1 to device_type)

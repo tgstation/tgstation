@@ -69,7 +69,7 @@
 	name = "The Most Annoying Organization Ever";
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "ak" = (
 /obj/structure/table/wood,
@@ -121,7 +121,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "at" = (
 /obj/structure/sink{
@@ -132,7 +132,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "au" = (
 /obj/structure/dresser,
@@ -182,7 +182,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "aC" = (
 /obj/structure/toilet{
@@ -194,7 +194,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "aD" = (
 /obj/structure/cable,
@@ -234,7 +234,7 @@
 	dir = 1
 	},
 /obj/structure/curtain,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "aI" = (
 /obj/machinery/light{
@@ -251,14 +251,14 @@
 /obj/item/surgical_drapes,
 /obj/item/scalpel,
 /obj/item/hemostat,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "aK" = (
 /obj/structure/table/optable,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "aL" = (
 /turf/open/floor/plating,
@@ -426,21 +426,18 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bk" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bl" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bm" = (
@@ -505,16 +502,16 @@
 /area/awaymission/cabin)
 "bw" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bx" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "by" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
 /obj/structure/sink/kitchen{
@@ -522,29 +519,29 @@
 	name = "sink";
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bA" = (
 /obj/machinery/chem_master/condimaster,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bB" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bC" = (
 /obj/machinery/gibber,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bD" = (
 /obj/machinery/computer/operating,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bE" = (
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bF" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (
 /obj/structure/sink{
@@ -552,7 +549,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bH" = (
 /obj/machinery/shower{
@@ -563,7 +560,7 @@
 	pixel_x = -1;
 	pixel_y = -3
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bI" = (
 /turf/open/lava,
@@ -573,7 +570,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bK" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -594,25 +591,23 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bN" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bO" = (
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bP" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bQ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bS" = (
 /turf/open/floor/wood/cold,
@@ -645,18 +640,18 @@
 	},
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bX" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bY" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/processor,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "ce" = (
 /obj/structure/chair/wood{
@@ -719,23 +714,23 @@
 	name = "service winter coat";
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "ck" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cl" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "cm" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "co" = (
 /turf/open/chasm{
@@ -777,13 +772,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cv" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cx" = (
 /turf/closed/indestructible/riveted,
@@ -841,7 +836,7 @@
 "cF" = (
 /obj/structure/table,
 /obj/structure/cable,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
@@ -849,7 +844,7 @@
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "cH" = (
 /obj/effect/landmark/awaystart,
@@ -859,7 +854,7 @@
 "cI" = (
 /obj/structure/cable,
 /obj/structure/chair/office/light,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cJ" = (
 /obj/structure/table,
@@ -878,7 +873,7 @@
 	pixel_x = -8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cK" = (
 /obj/structure/table/wood/fancy,
@@ -913,7 +908,7 @@
 /area/awaymission/cabin)
 "cP" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cQ" = (
 /obj/effect/landmark/awaystart,
@@ -1089,7 +1084,7 @@
 "dt" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/condiment/mayonnaise,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "du" = (
 /obj/structure/cable,
@@ -1103,7 +1098,6 @@
 	anchored = 1;
 	density = 1;
 	desc = "Generates power from lava!";
-	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
@@ -1120,8 +1114,7 @@
 	melee_damage_lower = 10;
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
-	speed = 3;
-	wander = 1
+	speed = 3
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -1284,14 +1277,13 @@
 	melee_damage_lower = 10;
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
-	speed = 3;
-	wander = 1
+	speed = 3
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ea" = (
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "eb" = (
@@ -1485,7 +1477,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "eC" = (
 /obj/structure/fence,
@@ -1588,7 +1580,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "eQ" = (
 /obj/structure/table/wood,
@@ -1725,10 +1717,7 @@
 /area/awaymission/cabin/lumbermill)
 "ff" = (
 /obj/structure/table/wood,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "fg" = (
@@ -1742,7 +1731,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fh" = (
 /obj/machinery/computer/prisoner{
@@ -1755,7 +1744,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fi" = (
 /obj/item/trash/can,
@@ -1771,7 +1760,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fl" = (
 /obj/structure/filingcabinet/security,
@@ -1782,7 +1771,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fm" = (
 /obj/structure/reagent_dispensers/peppertank{
@@ -1797,7 +1786,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fn" = (
 /obj/machinery/vending/sustenance{
@@ -1813,7 +1802,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fo" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1830,7 +1819,7 @@
 	start_showpiece_type = /obj/item/dice/d6/space;
 	trophy_message = "Stolen from dice collector before he could enjoy his day."
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fp" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1842,7 +1831,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fq" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1851,22 +1840,22 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fr" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "ft" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fu" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1876,7 +1865,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fv" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1889,7 +1878,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fw" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1922,7 +1911,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fA" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1959,13 +1948,12 @@
 /obj/structure/ladder/unbreakable{
 	desc = "Who left the grate open?";
 	height = 1;
-	icon = 'icons/obj/structures.dmi';
 	icon_state = "ladder01";
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Grate";
 	pixel_y = -10
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fF" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1979,7 +1967,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2000,7 +1988,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fK" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2012,7 +2000,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2029,14 +2017,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fN" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fO" = (
 /obj/effect/turf_decal/tile/blue,
@@ -2046,7 +2034,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fP" = (
 /turf/closed/indestructible/fakeglass,
@@ -2084,7 +2072,7 @@
 	name = "Jail Cell 7213"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fV" = (
 /turf/closed/indestructible/fakedoor{
@@ -2339,8 +2327,7 @@
 /area/awaymission/cabin/caves/mountain)
 "gp" = (
 /obj/structure/sign/poster/contraband/pwr_game{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
@@ -2359,7 +2346,7 @@
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gr" = (
 /turf/open/indestructible{
@@ -2385,7 +2372,6 @@
 "gv" = (
 /obj/structure/ladder/unbreakable{
 	desc = "Finally.";
-	height = 0;
 	icon_state = "ladder10";
 	id = "whyisitcalledladder10andnotladder1";
 	name = "Freedom"
@@ -2416,7 +2402,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder/unbreakable{
 	desc = "Yeah, I'll just go back to jail instead of this. It's not like there is an escape out of here, right?";
-	height = 0;
 	icon_state = "ladder10";
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Sewer Ladder"
@@ -2482,7 +2467,7 @@
 	pixel_y = 32;
 	question = "We have a case of fun happening. Get out there and do your job."
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gG" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2503,7 +2488,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2525,7 +2510,7 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gK" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2539,12 +2524,11 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/item/food/egg/rainbow{
-	anchored = 0;
 	desc = "Was an egg really worth this much effort?";
 	name = "easter egg"
 	},
 /obj/structure/table,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2554,30 +2538,12 @@
 "gM" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gN" = (
@@ -2612,7 +2578,7 @@
 	name = "fun baton"
 	},
 /obj/structure/table,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gR" = (
 /obj/structure/flora{
@@ -2647,7 +2613,7 @@
 	armor = list("melee" = 2, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10);
 	desc = "Anyone enjoying their time while working in a megacorporation, planetary government, or band of pirates is under the jurisdiction of the fun police."
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "gT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2722,7 +2688,6 @@
 /obj/structure/cable,
 /obj/item/reagent_containers/food/drinks/mug/coco{
 	desc = "Still hot!";
-	pixel_x = 0;
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/drinks/mug/coco{
@@ -2757,7 +2722,7 @@
 /area/awaymission/cabin)
 "hi" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "hj" = (
 /obj/machinery/light{
@@ -2794,16 +2759,16 @@
 /area/awaymission/cabin)
 "ho" = (
 /obj/item/wrench/medical,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "hp" = (
 /obj/machinery/stasis,
 /obj/item/bedsheet/medical,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "hq" = (
 /obj/machinery/vending/medical,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "hr" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2869,14 +2834,14 @@
 /area/awaymission/cabin)
 "hz" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "hA" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "hB" = (
 /obj/structure/cable,
@@ -2896,7 +2861,7 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "hE" = (
 /obj/structure/cable,
@@ -2907,7 +2872,6 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/mug/coco{
 	desc = "Still hot!";
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
@@ -3149,8 +3113,7 @@
 /area/awaymission/cabin)
 "io" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -3184,7 +3147,7 @@
 "is" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/food/condiment/enzyme,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "it" = (
 /turf/open/floor/plating/asteroid/snow,
@@ -3531,7 +3494,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/medical{
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "jr" = (
 /obj/machinery/light{
@@ -3555,7 +3518,7 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/fire,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "jt" = (
 /obj/machinery/light{
@@ -3758,7 +3721,6 @@
 	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
 	force = 4;
 	name = "weak hatchet";
-	pixel_x = 0;
 	throwforce = 4
 	},
 /obj/item/hatchet{
@@ -3796,7 +3758,6 @@
 	pixel_y = 4
 	},
 /obj/item/radio/off{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/item/radio/off{
@@ -4075,7 +4036,6 @@
 	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
 	force = 4;
 	name = "weak hatchet";
-	pixel_x = 0;
 	throwforce = 4
 	},
 /obj/item/hatchet{
@@ -4512,7 +4472,7 @@
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "lA" = (
 /obj/effect/decal/cleanable/glitter/blue{
@@ -4943,7 +4903,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plasteel/dark/snowdin,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mG" = (
 /obj/effect/turf_decal/weather/snow,
@@ -4951,7 +4911,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plasteel/dark/snowdin,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mH" = (
 /mob/living/simple_animal/hostile/skeleton/ice{
@@ -4974,7 +4934,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "mJ" = (
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plasteel/dark/snowdin,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mK" = (
 /turf/closed/indestructible/fakedoor{
@@ -5053,7 +5013,7 @@
 "mV" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/flashlight/flare,
-/turf/open/floor/plasteel/dark/snowdin,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mW" = (
 /obj/effect/turf_decal/weather/snow,
@@ -5069,10 +5029,7 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/caves)
 "mZ" = (
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
@@ -5096,7 +5053,7 @@
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
-/turf/open/floor/plasteel/dark/snowdin,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "nc" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -5267,12 +5224,10 @@
 	name = "Medical Bay"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "nN" = (
-/obj/machinery/light/small{
-	dir = 2
-	},
+/obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nO" = (
@@ -5309,7 +5264,7 @@
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "nV" = (
 /obj/structure/cable,

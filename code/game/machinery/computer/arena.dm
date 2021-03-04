@@ -78,9 +78,9 @@
 			team_hud_index[team] = length(GLOB.huds)
 
 /**
-  * Loads the arenas from config directory.
-  * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
-  */
+ * Loads the arenas from config directory.
+ * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
+ */
 /obj/machinery/computer/arena/proc/LoadDefaultArenas()
 	if(default_arenas_loaded)
 		return
@@ -205,7 +205,7 @@
 	ready_to_spawn = !ready_to_spawn
 	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
 	log_admin("[key_name(user)] toggled event arena spawning for [arena_id] arena.")
-	// Could use update_icon on spawnpoints here to show they're on
+	// Could use update_appearance on spawnpoints here to show they're on
 	if(ready_to_spawn)
 		for(var/mob/M in all_contestants())
 			to_chat(M,"<span class='userdanger'>Arena you're signed up for is ready!</span>")

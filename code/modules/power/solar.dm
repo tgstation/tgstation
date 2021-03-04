@@ -67,7 +67,7 @@
 	else
 		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
-		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
+		max_integrity *= 2  //this need to be placed here, because panels already on the map don't have an assembly linked to
 		obj_integrity = max_integrity
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
@@ -114,10 +114,7 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	if(machine_stat & BROKEN)
-		panel.icon_state = "solar_panel-b"
-	else
-		panel.icon_state = "solar_panel"
+	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -133,7 +130,7 @@
 	if(azimuth_current != azimuth_target)
 		azimuth_current = azimuth_target
 		occlusion_setup()
-		update_icon()
+		update_appearance()
 		needs_to_update_solar_exposure = TRUE
 
 ///trace towards sun to see if we're in shadow
@@ -222,8 +219,8 @@
 		randomise_offset(random_offset)
 
 /obj/item/solar_assembly/proc/randomise_offset(amount)
-	pixel_x = rand(-amount,amount)
-	pixel_y = rand(-amount,amount)
+	pixel_x = base_pixel_x + rand(-amount, amount)
+	pixel_y = base_pixel_y + rand(-amount, amount)
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
@@ -346,11 +343,12 @@
 	if(machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[icon_keyboard]_off")
 		return
+
 	. += mutable_appearance(icon, icon_keyboard)
 	if(machine_stat & BROKEN)
 		. += mutable_appearance(icon, "[icon_state]_broken")
-	else
-		. += mutable_appearance(icon, icon_screen)
+		return
+	. += mutable_appearance(icon, icon_screen)
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -406,7 +404,7 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
+/obj/machinery/power/solar_control/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(I.use_tool(src, user, 20, volume=50))
 			if (src.machine_stat & BROKEN)
@@ -432,7 +430,7 @@
 				A.icon_state = "4"
 				A.set_anchored(TRUE)
 				qdel(src)
-	else if(user.a_intent != INTENT_HARM && !(I.item_flags & NOBLUDGEON))
+	else if(!user.combat_mode && !(I.item_flags & NOBLUDGEON))
 		attack_hand(user)
 	else
 		return ..()

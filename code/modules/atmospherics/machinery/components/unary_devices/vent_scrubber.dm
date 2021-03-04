@@ -1,5 +1,5 @@
-#define SIPHONING	0
-#define SCRUBBING	1
+#define SIPHONING 0
+#define SCRUBBING 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map-3"
@@ -15,7 +15,6 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
-	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
@@ -31,10 +30,9 @@
 	pipe_state = "scrubber"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
-	..()
 	if(!id_tag)
-		id_tag = assign_uid_vents()
-
+		id_tag = SSnetworks.assign_random_name()
+	. = ..()
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
@@ -120,7 +118,7 @@
 	var/area/scrub_area = get_area(src)
 	if(!GLOB.air_scrub_names[id_tag])
 		// If we do not have a name, assign one
-		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
+		name = "\proper [scrub_area.name] air scrubber [id_tag]"
 		GLOB.air_scrub_names[id_tag] = name
 
 	scrub_area.air_scrub_info[id_tag] = signal.data
@@ -189,7 +187,7 @@
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
-			tile.air_update_turf()
+			tile.air_update_turf(FALSE, FALSE)
 
 	else //Just siphoning all air
 
@@ -198,20 +196,20 @@
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 
 		air_contents.merge(removed)
-		tile.air_update_turf()
+		tile.air_update_turf(FALSE, FALSE)
 
 	update_parents()
 
 	return TRUE
 
 //There is no easy way for an object to be notified of changes to atmos can pass flags
-//	So we check every machinery process (2 seconds)
+// So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
 	if(widenet)
 		check_turfs()
 
 //we populate a list of turfs with nonatmos-blocked cardinal turfs AND
-//	diagonal turfs that can share atmos with *both* of the cardinal turfs
+// diagonal turfs that can share atmos with *both* of the cardinal turfs
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
 	adjacent_turfs.Cut()
@@ -257,10 +255,10 @@
 
 	if("status" in signal.data)
 		broadcast_status()
-		return //do not update_icon
+		return //do not update_appearance
 
 	broadcast_status()
-	update_icon()
+	update_appearance()
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
@@ -279,7 +277,7 @@
 		else
 			user.visible_message("<span class='notice'>[user] unwelds the scrubber.</span>", "<span class='notice'>You unweld the scrubber.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = FALSE
-		update_icon()
+		update_appearance()
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -300,12 +298,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user, list/modifiers)
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
 	user.visible_message("<span class='warning'>[user] furiously claws at [src]!</span>", "<span class='notice'>You manage to clear away the stuff blocking the scrubber.</span>", "<span class='hear'>You hear loud scraping noises.</span>")
 	welded = FALSE
-	update_icon()
+	update_appearance()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)

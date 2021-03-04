@@ -26,51 +26,51 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
 		/obj/item/small_delivery, /obj/projectile,
-		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
+		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_model)
 
 /datum/h_sandbox/proc/update()
 	var/static/list/hrefs = list(
 			"Space Gear",
-			"Suit Up (Space Travel Gear)"		= "hsbsuit",
-			"Spawn Gas Mask"					= "hsbspawn&path=[/obj/item/clothing/mask/gas]",
-			"Spawn Emergency Air Tank"			= "hsbspawn&path=[/obj/item/tank/internals/emergency_oxygen/double]",
+			"Suit Up (Space Travel Gear)" = "hsbsuit",
+			"Spawn Gas Mask" = "hsbspawn&path=[/obj/item/clothing/mask/gas]",
+			"Spawn Emergency Air Tank" = "hsbspawn&path=[/obj/item/tank/internals/emergency_oxygen/double]",
 
 			"Standard Tools",
-			"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/flashlight]",
-			"Spawn Toolbox"						= "hsbspawn&path=[/obj/item/storage/toolbox/mechanical]",
-			"Spawn Experimental Welding tool"	= "hsbspawn&path=[/obj/item/weldingtool/experimental]",
-			"Spawn Light Replacer"				= "hsbspawn&path=[/obj/item/lightreplacer]",
-			"Spawn Medical Kit"					= "hsbspawn&path=[/obj/item/storage/firstaid/regular]",
-			"Spawn All-Access ID"				= "hsbaaid",
+			"Spawn Flashlight" = "hsbspawn&path=[/obj/item/flashlight]",
+			"Spawn Toolbox" = "hsbspawn&path=[/obj/item/storage/toolbox/mechanical]",
+			"Spawn Experimental Welding tool" = "hsbspawn&path=[/obj/item/weldingtool/experimental]",
+			"Spawn Light Replacer" = "hsbspawn&path=[/obj/item/lightreplacer]",
+			"Spawn Medical Kit" = "hsbspawn&path=[/obj/item/storage/firstaid/regular]",
+			"Spawn All-Access ID" = "hsbaaid",
 
 			"Building Supplies",
 			"Spawn 50 Wood"                     = "hsbwood",
-			"Spawn 50 Metal"					= "hsbmetal",
-			"Spawn 50 Plasteel"					= "hsbplasteel",
+			"Spawn 50 Metal" = "hsbmetal",
+			"Spawn 50 Plasteel" = "hsbplasteel",
 			"Spawn 50 Reinforced Glass"         = "hsbrglass",
-			"Spawn 50 Glass"					= "hsbglass",
-			"Spawn Box of Materials"			= "hsbspawn&path=[/obj/item/storage/box/material]",
-			"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil]",
-			"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
-			"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
-			"Spawn Rapid Construction Device"	= "hsbrcd",
-			"Spawn RCD Ammo"					= "hsb_safespawn&path=[/obj/item/rcd_ammo]",
-			"Spawn Airlock"						= "hsbairlock",
+			"Spawn 50 Glass" = "hsbglass",
+			"Spawn Box of Materials" = "hsbspawn&path=[/obj/item/storage/box/material]",
+			"Spawn Full Cable Coil" = "hsbspawn&path=[/obj/item/stack/cable_coil]",
+			"Spawn Hyper Capacity Power Cell" = "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
+			"Spawn Inf. Capacity Power Cell" = "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
+			"Spawn Rapid Construction Device" = "hsbrcd",
+			"Spawn RCD Ammo" = "hsb_safespawn&path=[/obj/item/rcd_ammo]",
+			"Spawn Airlock" = "hsbairlock",
 
 			"Miscellaneous",
-			"Spawn Air Scrubber"				= "hsbscrubber",
-			"Spawn CentCom Technology Disk"		= "hsbspawn&path=[/obj/item/disk/tech_disk/debug]",
-			"Spawn Adminordrazine"				= "hsbspawn&path=[/obj/item/reagent_containers/pill/adminordrazine]",
-			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
+			"Spawn Air Scrubber" = "hsbscrubber",
+			"Spawn CentCom Technology Disk" = "hsbspawn&path=[/obj/item/disk/tech_disk/debug]",
+			"Spawn Adminordrazine" = "hsbspawn&path=[/obj/item/reagent_containers/pill/adminordrazine]",
+			"Spawn Water Tank" = "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
-			"Spawn Cleanbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
-			"Spawn Floorbot"					= "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
-			"Spawn Medbot"						= "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
+			"Spawn Cleanbot" = "hsbspawn&path=[/mob/living/simple_animal/bot/cleanbot]",
+			"Spawn Floorbot" = "hsbspawn&path=[/mob/living/simple_animal/bot/floorbot]",
+			"Spawn Medbot" = "hsbspawn&path=[/mob/living/simple_animal/bot/medbot]",
 
 			"Canisters",
-			"Spawn O2 Canister" 				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
-			"Spawn Air Canister"				= "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/air]")
+			"Spawn O2 Canister" = "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/oxygen]",
+			"Spawn Air Canister" = "hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/air]")
 
 
 	if(!hsbinfo)
@@ -180,7 +180,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			if("hsbscrubber") // This is beyond its normal capability but this is sandbox and you spawned one, I assume you need it
 				var/obj/hsb = new/obj/machinery/portable_atmospherics/scrubber{volume_rate=50*ONE_ATMOSPHERE;on=1}(usr.loc)
-				hsb.update_icon() // hackish but it wasn't meant to be spawned I guess?
+				hsb.update_appearance() // hackish but it wasn't meant to be spawned I guess?
 
 			//
 			// Stacked Materials
@@ -190,7 +190,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				new/obj/item/stack/sheet/rglass{amount=50}(usr.loc)
 
 			if("hsbmetal")
-				new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
+				new/obj/item/stack/sheet/iron/fifty(usr.loc)
 
 			if("hsbplasteel")
 				new/obj/item/stack/sheet/plasteel{amount=50}(usr.loc)
@@ -205,11 +205,10 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// All access ID
 			//
 			if("hsbaaid")
-				var/obj/item/card/id/gold/ID = new(usr.loc)
+				var/obj/item/card/id/advanced/debug/ID = new(usr.loc)
 				ID.registered_name = usr.real_name
-				ID.assignment = "Sandbox"
-				ID.access = get_all_accesses()
 				ID.update_label()
+				ID.update_icon()
 
 			//
 			// RCD - starts with full clip
@@ -301,3 +300,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")
+
+/// Simple helper trim for sandbox mode's ID cards. Comes with station AA.
+/datum/id_trim/sandbox
+	assignment = "Sandbox"
+	trim_state = "trim_captain"
+
+/datum/id_trim/sandbox/New()
+	. = ..()
+	access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))

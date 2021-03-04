@@ -1,8 +1,8 @@
 
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
-//	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
-//	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
+// leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
+// to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/reagent_containers/food/condiment
@@ -25,14 +25,16 @@
 
 /obj/item/reagent_containers/food/condiment/update_icon_state()
 	. = ..()
-	if (reagents.reagent_list.len)
-		if (icon_preempty)
+	if(reagents.reagent_list.len)
+		if(icon_preempty)
 			icon_state = icon_preempty
 			icon_preempty = null
-	else
-		if (icon_empty && !icon_preempty)
-			icon_preempty = icon_state
-			icon_state = icon_empty
+		return ..()
+
+	if(icon_empty && !icon_preempty)
+		icon_preempty = icon_state
+		icon_state = icon_empty
+	return ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
@@ -82,7 +84,7 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
-	else if(target.is_drainable() || istype(target, /obj/item/reagent_containers/food/snacks))
+	else if(target.is_drainable() || IS_EDIBLE(target))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
@@ -109,8 +111,8 @@
 	list_reagents = list(/datum/reagent/consumable/sugar = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/food/condiment/saltshaker		//Separate from above since it's a small shaker rather then
-	name = "salt shaker"											//	a large one.
+/obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
+	name = "salt shaker" // a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	icon_empty = "emptyshaker"
@@ -118,7 +120,7 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 20)
+	list_reagents = list(/datum/reagent/consumable/salt = 20)
 	fill_icon_thresholds = null
 
 /obj/item/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
@@ -135,11 +137,11 @@
 	if(!proximity)
 		return
 	if(isturf(target))
-		if(!reagents.has_reagent(/datum/reagent/consumable/sodiumchloride, 2))
+		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
-		reagents.remove_reagent(/datum/reagent/consumable/sodiumchloride, 2)
+		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
 		new/obj/effect/decal/cleanable/food/salt(target)
 		return
 
@@ -227,7 +229,7 @@
 		/datum/reagent/consumable/capsaicin = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"),
 		/datum/reagent/consumable/soysauce = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"),
 		/datum/reagent/consumable/frostoil = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in its passage"),
-		/datum/reagent/consumable/sodiumchloride = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"),
+		/datum/reagent/consumable/salt = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"),
 		/datum/reagent/consumable/blackpepper = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"),
 		/datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"),
 		/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),
@@ -237,19 +239,24 @@
 	/// Can't use initial(name) for this. This stores the name set by condimasters.
 	var/originalname = "condiment"
 
+/obj/item/reagent_containers/food/condiment/pack/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_add, TRUE)
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del, TRUE)
+
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
-	. = ..()
 	if(!proximity)
 		return
 
 	//You can tear the bag open above food to put the condiments on it, obviously.
-	if(istype(target, /obj/item/reagent_containers/food/snacks))
+	if(IS_EDIBLE(target))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>You tear open [src], but there's nothing in it.</span>")
 			qdel(src)
@@ -262,20 +269,26 @@
 			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
 			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
+			return
+	. = ..()
 
-/obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
-	if(reagents.reagent_list.len > 0)
-		var/main_reagent = reagents.get_master_reagent_id()
-		if(main_reagent in possible_states)
-			var/list/temp_list = possible_states[main_reagent]
-			icon_state = temp_list[1]
-			desc = temp_list[3]
-		else
-			icon_state = "condi_mixed"
-			desc = "A small condiment pack. The label says it contains [originalname]"
+/// Handles reagents getting added to the condiment pack.
+/obj/item/reagent_containers/food/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	var/main_reagent = reagents.get_master_reagent_id()
+	if(main_reagent in possible_states)
+		var/list/temp_list = possible_states[main_reagent]
+		icon_state = temp_list[1]
+		desc = temp_list[3]
 	else
-		icon_state = "condi_empty"
-		desc = "A small condiment pack. It is empty."
+		icon_state = "condi_mixed"
+		desc = "A small condiment pack. The label says it contains [originalname]"
+
+/// Handles reagents getting removed from the condiment pack.
+/obj/item/reagent_containers/food/condiment/pack/proc/on_reagent_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	icon_state = "condi_empty"
+	desc = "A small condiment pack. It is empty."
 
 //Ketchup
 /obj/item/reagent_containers/food/condiment/pack/ketchup

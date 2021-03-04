@@ -14,28 +14,25 @@
 /obj/item/implant/proc/trigger(emote, mob/living/carbon/source)
 	return
 
-/obj/item/implant/proc/on_death(emote, mob/living/carbon/source)
-	return
-
 /obj/item/implant/proc/activate()
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
 
 /obj/item/implant/ui_action_click()
 	activate("action_button")
 
-/obj/item/implant/proc/can_be_implanted_in(mob/living/target) // for human-only and other special requirements
+/obj/item/implant/proc/can_be_implanted_in(mob/living/target)
+	if(issilicon(target))
+		return FALSE
+
+	if(isslime(target))
+		return TRUE
+
+	if(isanimal(target))
+		var/mob/living/simple_animal/animal = target
+		// Robots and most non-organics aren't healable.
+		return animal.healable
+
 	return TRUE
-
-/mob/living/proc/can_be_implanted()
-	return TRUE
-
-/mob/living/silicon/can_be_implanted()
-	return FALSE
-
-/mob/living/simple_animal/can_be_implanted()
-	return healable //Applies to robots and most non-organics, exceptions can override.
-
-
 
 //What does the implant do upon injection?
 //return 1 if the implant injects
@@ -44,7 +41,7 @@
 	if(SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTING, args) & COMPONENT_STOP_IMPLANTING)
 		return
 	LAZYINITLIST(target.implants)
-	if(!force && (!target.can_be_implanted() || !can_be_implanted_in(target)))
+	if(!force && !can_be_implanted_in(target))
 		return FALSE
 	for(var/X in target.implants)
 		var/obj/item/implant/imp_e = X
@@ -86,6 +83,7 @@
 	if(user)
 		log_combat(user, target, "implanted", "\a [name]")
 
+	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, target, user, silent, force)
 	return TRUE
 
 /obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
@@ -99,7 +97,8 @@
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
 
-	return 1
+	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, source, silent, special)
+	return TRUE
 
 /obj/item/implant/Destroy()
 	if(imp_in)

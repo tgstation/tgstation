@@ -4,28 +4,28 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 
-	w_class = WEIGHT_CLASS_TINY	// w_class limits which devices can contain this component.
+	w_class = WEIGHT_CLASS_TINY // w_class limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
 	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
-	var/power_usage = 0 			// If the hardware uses extra power, change this.
-	var/enabled = TRUE				// If the hardware is turned off set this to 0.
-	var/critical = FALSE			// Prevent disabling for important component, like the CPU.
-	var/can_install = TRUE			// Prevents direct installation of removable media.
-	var/expansion_hw = FALSE		// Hardware that fits into expansion bays.
-	var/removable = TRUE			// Whether the hardware is removable or not.
-	var/damage = 0					// Current damage level
-	var/max_damage = 100			// Maximal damage level.
-	var/damage_malfunction = 20		// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
-	var/damage_failure = 50			// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
+	var/power_usage = 0 // If the hardware uses extra power, change this.
+	var/enabled = TRUE // If the hardware is turned off set this to 0.
+	var/critical = FALSE // Prevent disabling for important component, like the CPU.
+	var/can_install = TRUE // Prevents direct installation of removable media.
+	var/expansion_hw = FALSE // Hardware that fits into expansion bays.
+	var/removable = TRUE // Whether the hardware is removable or not.
+	var/damage = 0 // Current damage level
+	var/max_damage = 100 // Maximal damage level.
+	var/damage_malfunction = 20 // "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
+	var/damage_failure = 50 // "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
 	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
 	var/device_type
 
 /obj/item/computer_hardware/New(obj/L)
 	..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	pixel_x = base_pixel_x + rand(-8, 8)
+	pixel_y = base_pixel_y + rand(-8, 8)
 
 /obj/item/computer_hardware/Destroy()
 	if(holder)
@@ -94,12 +94,20 @@
 
 // Called when component is removed from PC.
 /obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user = null)
-	try_eject(forced = 1)
+	try_eject(forced = TRUE)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
 /obj/item/computer_hardware/proc/try_insert(obj/item/I, mob/living/user = null)
 	return FALSE
 
-// Called when someone tries to eject something from it - card from card reader, etc.
-/obj/item/computer_hardware/proc/try_eject(slot=0, mob/living/user = null, forced = 0)
+/**
+ * Implement this when your hardware contains an object that the user can eject.
+ *
+ * Examples include ejecting cells from battery modules, ejecting an ID card from a card reader
+ * or ejecting an Intellicard from an AI card slot.
+ * Arguments:
+ * * user - The mob requesting the eject.
+ * * forced - Whether this action should be forced in some way.
+ */
+/obj/item/computer_hardware/proc/try_eject(mob/living/user = null, forced = FALSE)
 	return FALSE

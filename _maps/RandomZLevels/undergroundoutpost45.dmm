@@ -7,7 +7,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "ac" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2"
@@ -35,7 +35,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1"
@@ -66,7 +66,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/central)
 "ao" = (
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -74,7 +74,7 @@
 /obj/machinery/light/small/broken{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -102,14 +102,14 @@
 	pixel_x = -6;
 	pixel_y = -34
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ar" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3"
@@ -120,7 +120,7 @@
 	id = "UO45_Elevator"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -128,20 +128,20 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "au" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ax" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -150,7 +150,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -166,7 +166,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -177,7 +177,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -189,7 +189,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "aF" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -208,7 +208,7 @@
 	pixel_x = 6;
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -216,20 +216,20 @@
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aJ" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -239,13 +239,13 @@
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aM" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -254,14 +254,14 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aO" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -276,7 +276,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -285,18 +285,18 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aS" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aT" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -314,14 +314,14 @@
 "aV" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aW" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -330,7 +330,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -341,7 +341,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -360,14 +360,14 @@
 /area/awaymission/undergroundoutpost45/central)
 "ba" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bb" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/ripley_build_and_repair,
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -375,7 +375,7 @@
 /obj/structure/chair/comfy/beige{
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -404,7 +404,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -426,12 +426,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bg" = (
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -443,7 +443,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -451,7 +451,7 @@
 /obj/structure/sink{
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -460,7 +460,7 @@
 	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -469,7 +469,7 @@
 	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -479,7 +479,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -487,7 +487,7 @@
 /obj/structure/chair/comfy/beige{
 	dir = 1
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -497,7 +497,7 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -510,7 +510,7 @@
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/iron/grimy{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -522,7 +522,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -539,7 +539,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bs" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -549,12 +549,12 @@
 	dir = 1;
 	pixel_y = -23
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bu" = (
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -562,7 +562,7 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -577,7 +577,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -586,7 +586,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -594,7 +594,7 @@
 /obj/machinery/door/airlock{
 	name = "Unit 2"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -602,7 +602,7 @@
 /obj/machinery/door/airlock{
 	name = "Unit 1"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -610,7 +610,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -621,7 +621,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -635,7 +635,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -649,7 +649,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -663,7 +663,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -677,7 +677,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -688,7 +688,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -696,7 +696,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -707,7 +707,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -719,7 +719,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -727,19 +727,19 @@
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -748,7 +748,7 @@
 /obj/structure/sign/poster/official/nanotrasen_logo{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -778,7 +778,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -787,7 +787,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -894,13 +894,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ci" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -973,7 +973,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1043,7 +1043,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1064,7 +1064,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1304,7 +1304,7 @@
 	id_tag = "awaydorm2";
 	name = "Dorm 2"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1313,7 +1313,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1323,7 +1323,7 @@
 	id_tag = "awaydorm1";
 	name = "Dorm 1"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1405,7 +1405,7 @@
 "dl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1413,7 +1413,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1421,7 +1421,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1431,7 +1431,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1451,7 +1451,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1469,7 +1469,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1491,7 +1491,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1508,7 +1508,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1524,7 +1524,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1540,7 +1540,7 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -1551,7 +1551,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1559,7 +1559,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1567,7 +1567,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1575,7 +1575,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1584,7 +1584,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1600,7 +1600,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1618,7 +1618,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1638,7 +1638,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1653,7 +1653,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1667,7 +1667,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1681,7 +1681,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1697,7 +1697,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1717,7 +1717,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1735,7 +1735,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1747,7 +1747,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1761,7 +1761,7 @@
 	name = "meat fridge";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -1784,7 +1784,7 @@
 	name = "refrigerator";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -1803,7 +1803,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1818,7 +1818,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1827,7 +1827,7 @@
 	name = "Security Checkpoint";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1836,7 +1836,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1845,7 +1845,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1855,7 +1855,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1866,7 +1866,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1874,7 +1874,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1886,7 +1886,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1899,7 +1899,7 @@
 	name = "Hydroponics";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1907,7 +1907,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1915,13 +1915,13 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eb" = (
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1930,7 +1930,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1941,7 +1941,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -1975,7 +1975,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1985,7 +1985,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -1994,7 +1994,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2002,7 +2002,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2011,7 +2011,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2029,13 +2029,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "en" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2045,7 +2045,7 @@
 	name = "Hydroponics";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2053,7 +2053,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2062,7 +2062,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2079,7 +2079,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2099,11 +2099,11 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ev" = (
-/obj/item/clothing/under/misc/pj,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
 	req_access_txt = "201"
 	},
+/obj/item/clothing/under/misc/pj/red,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -2114,7 +2114,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2133,7 +2133,7 @@
 	name = "Security Checkpoint";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2144,7 +2144,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2156,7 +2156,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2182,14 +2182,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eD" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2208,7 +2208,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2268,7 +2268,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2280,7 +2280,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2293,7 +2293,7 @@
 	name = "Security Checkpoint";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2306,7 +2306,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2320,7 +2320,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2332,20 +2332,20 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eR" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2355,7 +2355,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2383,7 +2383,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2408,7 +2408,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2426,7 +2426,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2442,7 +2442,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2450,7 +2450,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2460,13 +2460,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fb" = (
 /obj/effect/turf_decal/tile/green,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2479,7 +2479,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2493,7 +2493,7 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2503,7 +2503,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2512,7 +2512,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2533,7 +2533,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2546,7 +2546,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2557,7 +2557,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2567,7 +2567,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2578,7 +2578,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2591,7 +2591,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2619,7 +2619,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2630,7 +2630,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2639,7 +2639,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2655,7 +2655,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2665,13 +2665,13 @@
 /obj/item/wrench,
 /obj/item/screwdriver,
 /obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fu" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2689,7 +2689,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2698,7 +2698,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2776,7 +2776,7 @@
 	id_tag = "awaydorm3";
 	name = "Dorm 3"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2784,7 +2784,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2792,7 +2792,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2800,7 +2800,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2808,7 +2808,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2823,7 +2823,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2853,7 +2853,7 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -2908,7 +2908,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2922,7 +2922,7 @@
 	dir = 1;
 	network = list("uo45")
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2931,19 +2931,19 @@
 	pixel_y = -28
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fW" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fX" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -2957,12 +2957,12 @@
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fZ" = (
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -2970,7 +2970,7 @@
 /obj/structure/sink/kitchen{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3000,7 +3000,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -3020,7 +3020,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3045,7 +3045,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "gl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3057,7 +3057,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/clothing/under/suit/waiter,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3066,7 +3066,7 @@
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3104,7 +3104,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gs" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3112,7 +3112,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3121,7 +3121,7 @@
 	name = "Kitchen Cold Room";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3142,7 +3142,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "gA" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3157,14 +3157,14 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gC" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gD" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3173,7 +3173,7 @@
 /obj/structure/sink/kitchen{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3188,7 +3188,7 @@
 	pixel_x = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3196,7 +3196,7 @@
 "gG" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3212,12 +3212,12 @@
 /area/awaymission/undergroundoutpost45/central)
 "gI" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "gJ" = (
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3234,22 +3234,22 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 23
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "gN" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "gO" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3260,7 +3260,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3285,7 +3285,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3298,7 +3298,7 @@
 "gV" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3309,13 +3309,13 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "gX" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3330,7 +3330,7 @@
 	c_tag = "Research Lab";
 	network = list("uo45","uo45r")
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3338,12 +3338,12 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ha" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3361,7 +3361,7 @@
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/dropper,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3399,7 +3399,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3408,7 +3408,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3429,7 +3429,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3440,7 +3440,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3450,7 +3450,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3460,7 +3460,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3471,7 +3471,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3483,7 +3483,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3493,7 +3493,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3502,7 +3502,7 @@
 	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3513,14 +3513,14 @@
 /obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hr" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3540,7 +3540,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3550,7 +3550,7 @@
 	calibrated = 0
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3559,7 +3559,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3568,7 +3568,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3600,7 +3600,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3609,7 +3609,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3618,7 +3618,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3626,13 +3626,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "hF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3645,7 +3645,7 @@
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/micro_laser,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3666,7 +3666,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3678,7 +3678,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3687,7 +3687,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3697,7 +3697,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3708,7 +3708,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3721,7 +3721,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3733,7 +3733,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3750,7 +3750,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3758,7 +3758,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3771,15 +3771,15 @@
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hS" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
-/turf/open/floor/plasteel/cafeteria{
+/obj/item/food/mint,
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3788,7 +3788,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3799,7 +3799,7 @@
 	},
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3842,7 +3842,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3850,7 +3850,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3863,7 +3863,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3890,24 +3890,24 @@
 	dir = 4;
 	req_access = null
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ih" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ii" = (
-/obj/machinery/rnd/production/circuit_imprinter,
-/turf/open/floor/plasteel{
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ij" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3918,7 +3918,7 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/matter_bin,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3930,7 +3930,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3943,7 +3943,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3954,7 +3954,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3966,7 +3966,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3976,7 +3976,7 @@
 	pixel_x = -24
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3984,7 +3984,7 @@
 "iq" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -3994,7 +3994,7 @@
 	dir = 4
 	},
 /obj/machinery/processor,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4004,13 +4004,13 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "it" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4020,14 +4020,14 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iv" = (
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4040,7 +4040,7 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4073,7 +4073,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4087,7 +4087,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4101,7 +4101,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4115,7 +4115,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4126,7 +4126,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4135,14 +4135,14 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "iE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4153,7 +4153,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4164,7 +4164,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4174,7 +4174,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4185,7 +4185,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4193,7 +4193,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4203,7 +4203,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4214,7 +4214,7 @@
 	},
 /obj/item/clothing/gloves/color/latex,
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4234,7 +4234,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4242,7 +4242,7 @@
 /obj/structure/table,
 /obj/item/radio/off,
 /obj/item/radio/off,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -4250,14 +4250,14 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "iP" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iQ" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4268,7 +4268,7 @@
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4289,7 +4289,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4298,7 +4298,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4313,7 +4313,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4321,7 +4321,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4340,20 +4340,20 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "iZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ja" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4369,7 +4369,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4384,7 +4384,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4398,7 +4398,7 @@
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4406,7 +4406,7 @@
 "je" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/junction,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4421,7 +4421,7 @@
 /obj/item/reagent_containers/food/condiment/flour,
 /obj/item/reagent_containers/food/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4437,7 +4437,7 @@
 	network = list("uo45","uo45r")
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4446,7 +4446,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4455,7 +4455,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4463,7 +4463,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4472,7 +4472,7 @@
 	dir = 4
 	},
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4487,7 +4487,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "jm" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4495,7 +4495,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4507,7 +4507,7 @@
 	name = "Gateway Observation";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4515,7 +4515,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4525,7 +4525,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4535,14 +4535,14 @@
 /obj/item/folder/white,
 /obj/item/disk/tech_disk,
 /obj/item/disk/design_disk,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "js" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4552,7 +4552,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4561,7 +4561,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4574,7 +4574,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4584,7 +4584,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4595,7 +4595,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4609,7 +4609,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4624,7 +4624,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4642,7 +4642,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4681,7 +4681,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4690,13 +4690,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "jI" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4705,7 +4705,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4717,7 +4717,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4745,7 +4745,7 @@
 	name = "Research Lab";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4770,7 +4770,7 @@
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -4784,7 +4784,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4795,7 +4795,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4805,7 +4805,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4822,7 +4822,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4839,7 +4839,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4856,7 +4856,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -4934,7 +4934,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4951,19 +4951,19 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -4972,7 +4972,7 @@
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4981,7 +4981,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -4994,7 +4994,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5003,7 +5003,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5017,7 +5017,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5037,7 +5037,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5045,7 +5045,7 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5054,7 +5054,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5064,7 +5064,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5076,7 +5076,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5088,7 +5088,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5101,7 +5101,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5120,7 +5120,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5162,7 +5162,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5171,7 +5171,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5181,7 +5181,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5192,7 +5192,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5206,7 +5206,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5221,13 +5221,13 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5240,7 +5240,7 @@
 	name = "Research Division Access";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5252,7 +5252,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5263,7 +5263,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5275,7 +5275,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5292,7 +5292,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5303,7 +5303,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5319,7 +5319,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5327,13 +5327,13 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "kN" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5343,7 +5343,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5351,7 +5351,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5363,7 +5363,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5374,7 +5374,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5385,7 +5385,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5402,7 +5402,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5414,7 +5414,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5423,7 +5423,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5434,7 +5434,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5443,7 +5443,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5454,7 +5454,7 @@
 	name = "biohazard containment door"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5469,7 +5469,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/space/nearstation)
@@ -5480,7 +5480,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5491,7 +5491,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5505,7 +5505,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5513,7 +5513,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5521,7 +5521,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5530,13 +5530,13 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lg" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5551,7 +5551,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5563,7 +5563,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5579,7 +5579,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5598,7 +5598,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5613,7 +5613,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5625,7 +5625,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5648,7 +5648,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5657,7 +5657,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5673,7 +5673,7 @@
 	network = list("uo45","uo45r")
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5683,7 +5683,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5704,14 +5704,14 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lv" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5720,7 +5720,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5734,7 +5734,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5744,7 +5744,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5752,7 +5752,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5771,7 +5771,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5784,7 +5784,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5795,7 +5795,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5810,7 +5810,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -5821,7 +5821,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5835,7 +5835,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5851,7 +5851,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5870,7 +5870,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5883,7 +5883,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5894,7 +5894,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5904,7 +5904,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5913,13 +5913,13 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lM" = (
 /obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5934,7 +5934,7 @@
 	network = list("uo45","uo45r")
 	},
 /obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5943,7 +5943,7 @@
 	name = "Research Division Access";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -5955,13 +5955,13 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5970,7 +5970,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5983,7 +5983,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -5999,7 +5999,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6017,7 +6017,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6027,7 +6027,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6039,7 +6039,7 @@
 	name = "Diner"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6096,24 +6096,24 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mb" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mc" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "md" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6122,7 +6122,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6133,7 +6133,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6141,7 +6141,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6152,7 +6152,7 @@
 	name = "Research Director's Office";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6182,7 +6182,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6191,7 +6191,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6203,7 +6203,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6212,7 +6212,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6224,7 +6224,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6233,7 +6233,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6244,7 +6244,7 @@
 	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6319,7 +6319,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -6329,7 +6329,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6337,13 +6337,13 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mz" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /turf/open/floor/plating{
@@ -6365,7 +6365,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6373,7 +6373,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6386,7 +6386,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6404,7 +6404,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6418,7 +6418,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6427,7 +6427,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6436,7 +6436,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
@@ -6469,7 +6469,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mL" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -6477,7 +6477,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6487,20 +6487,20 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mP" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6510,7 +6510,7 @@
 /obj/item/kirbyplants{
 	layer = 5
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6534,7 +6534,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6547,7 +6547,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6563,7 +6563,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6571,7 +6571,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6582,7 +6582,7 @@
 	name = "Dormitories"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6592,7 +6592,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6624,7 +6624,7 @@
 	dir = 8;
 	name = "Air to Distro"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -6660,7 +6660,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6674,7 +6674,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6686,7 +6686,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6702,14 +6702,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ng" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6742,14 +6742,14 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nl" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6758,7 +6758,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6766,7 +6766,7 @@
 "nn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/chair,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6782,7 +6782,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6790,7 +6790,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6807,7 +6807,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6818,7 +6818,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -6889,7 +6889,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6907,13 +6907,13 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ny" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6922,7 +6922,7 @@
 /obj/structure/sign/poster/contraband/smoke{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6936,7 +6936,7 @@
 	id_tag = "awaydorm5";
 	name = "Dorm 5"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6946,7 +6946,7 @@
 	id_tag = "awaydorm7";
 	name = "Dorm 7"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6957,7 +6957,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6965,7 +6965,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6977,7 +6977,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6989,7 +6989,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -6998,7 +6998,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7008,21 +7008,21 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nJ" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "nK" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7031,7 +7031,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7058,7 +7058,7 @@
 /obj/structure/table,
 /obj/item/radio/off,
 /obj/item/laser_pointer,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7076,7 +7076,7 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7089,7 +7089,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7104,7 +7104,7 @@
 	name = "research monitor";
 	network = list("uo45r")
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7123,7 +7123,7 @@
 /obj/item/paicard{
 	pixel_x = 4
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7146,13 +7146,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -7161,7 +7161,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -7201,7 +7201,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7214,7 +7214,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7233,7 +7233,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7251,7 +7251,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7270,7 +7270,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7287,7 +7287,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7300,7 +7300,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7319,7 +7319,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7341,7 +7341,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7354,7 +7354,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7370,7 +7370,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7391,7 +7391,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7406,7 +7406,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7420,7 +7420,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7432,7 +7432,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7448,7 +7448,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7464,7 +7464,7 @@
 	name = "Dormitories"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7476,7 +7476,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7487,7 +7487,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7496,7 +7496,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7529,7 +7529,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7544,7 +7544,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "ox" = (
 /obj/structure/filingcabinet/chestdrawer,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7568,7 +7568,7 @@
 	pixel_y = -2;
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7579,14 +7579,14 @@
 	pixel_y = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "oA" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7595,7 +7595,7 @@
 /obj/machinery/computer/aifixer{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7611,13 +7611,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "oD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -7626,7 +7626,7 @@
 	name = "Security Office";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -7640,7 +7640,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7649,7 +7649,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7661,7 +7661,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7669,7 +7669,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7677,7 +7677,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7693,7 +7693,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7711,14 +7711,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7730,7 +7730,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7741,7 +7741,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7750,7 +7750,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7763,7 +7763,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7779,7 +7779,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7788,7 +7788,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7806,7 +7806,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -7819,7 +7819,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7854,7 +7854,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7900,7 +7900,7 @@
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7910,7 +7910,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7919,7 +7919,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7929,7 +7929,7 @@
 	pixel_x = 5;
 	pixel_y = -27
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7943,7 +7943,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -7961,7 +7961,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -7969,7 +7969,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -7995,7 +7995,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8003,7 +8003,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8019,7 +8019,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8029,7 +8029,7 @@
 	id_tag = "awaydorm4";
 	name = "Dorm 4"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8043,7 +8043,7 @@
 	id_tag = "awaydorm6";
 	name = "Dorm 6"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8051,7 +8051,7 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8069,7 +8069,7 @@
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8128,7 +8128,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8140,7 +8140,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8152,7 +8152,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8161,7 +8161,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8170,20 +8170,16 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
-	icon_state = "in";
 	id_tag = "UO45_air_out";
 	name = "air out"
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "n2=10580;o2=2644";
-	name = "air floor"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
@@ -8209,7 +8205,7 @@
 	name = "Server Room";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8217,7 +8213,7 @@
 /obj/machinery/door/airlock{
 	name = "Private Restroom"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8234,7 +8230,7 @@
 	name = "Research Storage";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8248,7 +8244,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8259,7 +8255,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8272,7 +8268,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8336,7 +8332,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8344,12 +8340,12 @@
 /obj/machinery/door/airlock{
 	name = "Unit 1"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "pX" = (
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8362,7 +8358,7 @@
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8396,7 +8392,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8447,10 +8443,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "n2=500,TEMP=80";
-	name = "Server Walkway"
-	},
+/turf/open/floor/iron/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "qj" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -8465,13 +8458,13 @@
 /area/awaymission/undergroundoutpost45/research)
 "qk" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ql" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8484,7 +8477,7 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8493,7 +8486,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8503,7 +8496,7 @@
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/clothing/glasses/hud/health,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8515,7 +8508,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/hand_labeler,
 /obj/item/clothing/neck/stethoscope,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8523,14 +8516,14 @@
 /obj/machinery/vending/medical{
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qr" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8579,7 +8572,7 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8589,7 +8582,7 @@
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8635,13 +8628,13 @@
 /area/awaymission/undergroundoutpost45/caves)
 "qC" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qD" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8659,7 +8652,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8672,7 +8665,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8681,7 +8674,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8691,7 +8684,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8714,7 +8707,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8741,7 +8734,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8759,7 +8752,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -8771,7 +8764,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/iron/cafeteria{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8781,14 +8774,14 @@
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qN" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -8817,10 +8810,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "n2=500,TEMP=80";
-	name = "Server Walkway"
-	},
+/turf/open/floor/iron/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "qR" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -8830,7 +8820,7 @@
 	name = "Server Room";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8838,7 +8828,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8851,7 +8841,7 @@
 	},
 /obj/structure/chair/office/light,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8863,7 +8853,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -8874,7 +8864,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8883,7 +8873,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8922,7 +8912,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8931,7 +8921,7 @@
 	name = "Unit 2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8943,7 +8933,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8958,7 +8948,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -25
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8970,7 +8960,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -8989,7 +8979,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -8999,12 +8989,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rj" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9019,7 +9009,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9039,7 +9029,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9070,7 +9060,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9091,7 +9081,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9113,7 +9103,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9123,7 +9113,7 @@
 	id_tag = "UO45_distro_meter";
 	name = "Distribution Loop"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9153,7 +9143,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9162,7 +9152,7 @@
 	locked = 0;
 	req_access_txt = "201"
 	},
-/obj/item/clothing/under/misc/pj,
+/obj/item/clothing/under/misc/pj/blue,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -9171,7 +9161,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9183,7 +9173,7 @@
 	dir = 1;
 	name = "Mix to Exterior"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9192,14 +9182,14 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rw" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9207,7 +9197,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9224,10 +9214,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "n2=500,TEMP=80";
-	name = "Server Walkway"
-	},
+/turf/open/floor/iron/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "rA" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -9244,7 +9231,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/pen,
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -9252,7 +9239,7 @@
 /obj/machinery/computer/rdservercontrol{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark{
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -9299,7 +9286,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -9308,7 +9295,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -9317,14 +9304,14 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "rJ" = (
 /obj/structure/table,
 /obj/item/storage/box/gloves,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -9343,7 +9330,7 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Showers"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9363,7 +9350,7 @@
 	dir = 4;
 	network = list("uo45")
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9376,7 +9363,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9389,7 +9376,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9404,7 +9391,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9419,7 +9406,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9435,7 +9422,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9453,7 +9440,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9469,7 +9456,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9488,7 +9475,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9507,7 +9494,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9524,7 +9511,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9536,7 +9523,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9546,7 +9533,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9558,7 +9545,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9571,7 +9558,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9595,7 +9582,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9609,7 +9596,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9617,7 +9604,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9632,7 +9619,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9655,7 +9642,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9693,7 +9680,7 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/effect/turf_decal/tile/brown,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -9702,7 +9689,7 @@
 	dir = 8;
 	name = "Mix to Distro"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9710,13 +9697,13 @@
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sm" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9724,7 +9711,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9733,7 +9720,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9749,7 +9736,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9803,7 +9790,7 @@
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -9811,7 +9798,7 @@
 "sw" = (
 /obj/structure/closet/l3closet,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -9819,7 +9806,7 @@
 "sx" = (
 /obj/structure/closet/l3closet,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -9835,7 +9822,7 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -9846,7 +9833,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -9856,7 +9843,7 @@
 	dir = 4
 	},
 /obj/item/soap/nanotrasen,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9865,7 +9852,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9873,7 +9860,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9882,7 +9869,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9891,7 +9878,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9902,7 +9889,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9916,7 +9903,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9932,7 +9919,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9941,7 +9928,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9954,7 +9941,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9970,7 +9957,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -9982,7 +9969,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Reception"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -9990,7 +9977,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10000,7 +9987,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10012,7 +9999,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10034,7 +10021,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/folder/red,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10055,7 +10042,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10064,7 +10051,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10078,7 +10065,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10101,7 +10088,7 @@
 	name = "Waste In"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10110,7 +10097,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10119,7 +10106,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10127,7 +10114,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10135,7 +10122,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Mix to Filter"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10143,7 +10130,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10151,13 +10138,13 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tb" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10180,7 +10167,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10320,7 +10307,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10329,7 +10316,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10341,7 +10328,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10351,7 +10338,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -10367,7 +10354,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -10380,7 +10367,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10398,7 +10385,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10421,13 +10408,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10443,7 +10430,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10454,7 +10441,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10463,13 +10450,13 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10481,7 +10468,7 @@
 	id_tag = "UO45_waste_meter";
 	name = "Waste Loop"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10490,7 +10477,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10499,7 +10486,7 @@
 	dir = 1;
 	name = "N2 Outlet Pump"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10509,7 +10496,7 @@
 	name = "O2 Outlet Pump"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10522,7 +10509,7 @@
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10670,7 +10657,7 @@
 /obj/machinery/shower{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10679,7 +10666,7 @@
 	dir = 1
 	},
 /obj/item/bikehorn/rubberducky,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10689,7 +10676,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10699,7 +10686,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -10733,7 +10720,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10747,7 +10734,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10757,7 +10744,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10767,7 +10754,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10777,7 +10764,7 @@
 	name = "External to Filter"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10785,7 +10772,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Air to External"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10799,7 +10786,7 @@
 	pixel_y = -23
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10814,7 +10801,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10837,7 +10824,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10849,7 +10836,7 @@
 	pixel_y = -30
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10864,7 +10851,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10887,7 +10874,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10895,7 +10882,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -10975,14 +10962,14 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/corner{
+/turf/open/floor/iron/dark/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10992,7 +10979,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11002,7 +10989,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11015,7 +11002,7 @@
 	req_access_txt = "201"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11026,7 +11013,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11140,7 +11127,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -11154,7 +11141,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/corner{
+/turf/open/floor/iron/dark/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -11166,7 +11153,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11178,7 +11165,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11193,7 +11180,7 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11212,7 +11199,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11232,7 +11219,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11247,7 +11234,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11262,7 +11249,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11391,7 +11378,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -11405,7 +11392,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -11417,7 +11404,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/corner{
+/turf/open/floor/iron/dark/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -11428,7 +11415,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11440,7 +11427,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11452,7 +11439,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11461,7 +11448,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11471,7 +11458,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11481,7 +11468,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11491,7 +11478,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11501,7 +11488,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11566,7 +11553,7 @@
 	name = "Mining Foyer";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11578,7 +11565,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11592,7 +11579,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/checker{
+/turf/open/floor/iron/checker{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11605,7 +11592,7 @@
 	pixel_y = -27
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11615,7 +11602,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11623,7 +11610,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11635,7 +11622,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11653,7 +11640,7 @@
 	network = list("uo45")
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11665,7 +11652,7 @@
 /obj/structure/sign/poster/official/build{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -11688,7 +11675,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11705,7 +11692,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11715,7 +11702,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11725,7 +11712,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11766,7 +11753,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -11784,7 +11771,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11794,7 +11781,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11803,7 +11790,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11851,7 +11838,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11889,7 +11876,7 @@
 	id_tag = "awaydorm8";
 	name = "Mining Dorm 1"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11898,7 +11885,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11906,7 +11893,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11914,14 +11901,14 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -11952,7 +11939,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11974,7 +11961,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11992,7 +11979,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12012,7 +11999,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12021,7 +12008,7 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12031,21 +12018,21 @@
 	pixel_x = -23
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12053,7 +12040,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12069,7 +12056,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12086,7 +12073,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12101,7 +12088,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12118,7 +12105,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12126,7 +12113,7 @@
 /obj/machinery/door/airlock{
 	name = "Private Restroom"
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12139,7 +12126,7 @@
 /obj/structure/mirror{
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/freezer{
+/turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12172,7 +12159,7 @@
 	id_tag = "awaydorm9";
 	name = "Mining Dorm 2"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12181,7 +12168,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12202,7 +12189,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12219,7 +12206,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12241,7 +12228,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12265,7 +12252,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12290,7 +12277,7 @@
 	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12303,7 +12290,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12317,7 +12304,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12339,7 +12326,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12358,7 +12345,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12374,7 +12361,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12397,7 +12384,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12413,7 +12400,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12424,7 +12411,7 @@
 	name = "Processing Area";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12437,7 +12424,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12455,7 +12442,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12490,7 +12477,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12510,7 +12497,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -12543,13 +12530,13 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12561,7 +12548,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12590,14 +12577,14 @@
 	id = "UO45_mining";
 	name = "mining conveyor"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xu" = (
 /obj/machinery/suit_storage_unit/mining,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12606,7 +12593,7 @@
 /obj/item/pickaxe,
 /obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12640,7 +12627,7 @@
 	network = list("uo45")
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12649,7 +12636,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12668,12 +12655,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xC" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12686,7 +12673,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -12708,7 +12695,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xF" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12716,7 +12703,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12726,7 +12713,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12739,7 +12726,7 @@
 	req_access_txt = "201"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12749,7 +12736,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12757,14 +12744,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xL" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12778,7 +12765,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12787,14 +12774,14 @@
 	dir = 4
 	},
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 26
 	},
 /obj/item/stack/sheet/glass{
 	amount = 19
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12803,7 +12790,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12835,14 +12822,14 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12856,7 +12843,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 6
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -12870,7 +12857,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12888,7 +12875,7 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12897,7 +12884,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12905,7 +12892,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -12914,14 +12901,14 @@
 "yc" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "yd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12934,7 +12921,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
@@ -12944,7 +12931,7 @@
 	req_access_txt = "201"
 	},
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/mining)
 "yg" = (
 /obj/machinery/light/small{
@@ -13159,7 +13146,11 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
 /area/awaymission/undergroundoutpost45/caves)
 "KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -13170,14 +13161,22 @@
 "OF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
 /area/awaymission/undergroundoutpost45/caves)
 "UM" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
 /area/awaymission/undergroundoutpost45/caves)
 
 (1,1,1) = {"

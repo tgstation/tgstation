@@ -124,8 +124,10 @@
 	inhand_icon_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 
-/obj/item/nuke_core/supermatter_sliver/attack_tk() // no TK dusting memes
-	return FALSE
+
+/obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes
+	return
+
 
 /obj/item/nuke_core/supermatter_sliver/can_be_pulled(user) // no drag memes
 	return FALSE
@@ -138,7 +140,7 @@
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
-		tongs.update_icon()
+		tongs.update_appearance()
 		to_chat(user, "<span class='notice'>You carefully pick up [src] with [tongs].</span>")
 	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
 		return
@@ -175,13 +177,12 @@
 	..()
 	if(!isliving(user) || user.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
-	var/mob/ded = user
-	user.visible_message("<span class='danger'>[ded] reaches out and tries to pick up [src]. [ded.p_their()] body starts to glow and bursts into flames before flashing into dust!</span>",\
+	user.visible_message("<span class='danger'>[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!</span>",\
 			"<span class='userdanger'>You reach for [src] with your hands. That was dumb.</span>",\
 			"<span class='hear'>Everything suddenly goes silent.</span>")
 	radiation_pulse(user, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-	ded.dust()
+	user.dust()
 
 /obj/item/nuke_core_container/supermatter
 	name = "supermatter bin"
@@ -252,6 +253,7 @@
 /obj/item/hemostat/supermatter/update_icon_state()
 	icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 	inhand_icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
+	return ..()
 
 /obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	. = ..()
@@ -265,10 +267,10 @@
 		sliver.forceMove(loc)
 		visible_message("<span class='notice'>\The [sliver] falls out of \the [src] as it hits the ground.</span>")
 		sliver = null
-		update_icon()
+		update_appearance()
 	return ..()
 
-/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
+/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/living/user)
 	if(ismob(AM))
 		if(!isliving(AM))
 			return
@@ -292,4 +294,4 @@
 	radiation_pulse(src, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
-	update_icon()
+	update_appearance()

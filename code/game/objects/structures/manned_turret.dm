@@ -9,7 +9,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 100
-	buckle_lying = FALSE
+	buckle_lying = 0
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 2.5
 	var/cooldown = 0
@@ -35,15 +35,15 @@
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
 	if(istype(buckled_mob))
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = buckled_mob.base_pixel_x
+		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+/obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(user.incapacitated() || !istype(user))
 		return
 	M.forceMove(get_turf(src))
@@ -56,7 +56,7 @@
 			if(M.dropItemToGround(I))
 				var/obj/item/gun_control/TC = new(src)
 				M.put_in_hands(TC)
-		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 			var/obj/item/gun_control/TC = new(src)
 			M.put_in_hands(TC)
 	M.pixel_y = 14
@@ -82,7 +82,7 @@
 	if(C)
 		var/atom/A = C.mouseObject
 		var/turf/T = get_turf(A)
-		if(istype(T))	//They're hovering over something in the map.
+		if(istype(T)) //They're hovering over something in the map.
 			direction_track(controller, T)
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
@@ -147,7 +147,7 @@
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
 	if(user.incapacitated() || !(user in buckled_mobs))
 		return
-	update_positioning()						//REFRESH MOUSE TRACKING!!
+	update_positioning() //REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
@@ -198,7 +198,7 @@
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE
 
-/obj/item/gun_control/attack_obj(obj/O, mob/living/user)
+/obj/item/gun_control/attack_obj(obj/O, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	O.attacked_by(src, user)
 

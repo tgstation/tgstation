@@ -49,22 +49,21 @@
 		switch(status)
 			if(SHELTER_DEPLOY_BAD_AREA)
 				src.loc.visible_message("<span class='warning'>\The [src] will not function in this area.</span>")
-			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
+			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP)
 				var/width = template.width
 				var/height = template.height
 				src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
-
 		if(status != SHELTER_DEPLOY_ALLOWED)
 			used = FALSE
 			return
 
-		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
-
+		template.load(deploy_location, centered = TRUE)
 		var/turf/T = deploy_location
 		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
 			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
-		template.load(deploy_location, centered = TRUE)
+
+		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
@@ -143,6 +142,7 @@
 /obj/machinery/sleeper/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "sleeper"
+	base_icon_state = "sleeper"
 
 /obj/machinery/sleeper/survival_pod/update_overlays()
 	. = ..()
@@ -175,7 +175,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -207,7 +207,7 @@
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 5)
-		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
+		var/obj/item/food/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
@@ -227,7 +227,7 @@
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
 	density = TRUE
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
 
@@ -258,8 +258,11 @@
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 
+/obj/structure/fans/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 //Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"
@@ -277,7 +280,7 @@
 
 /obj/item/fakeartefact
 	name = "expensive forgery"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,

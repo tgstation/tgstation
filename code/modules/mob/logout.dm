@@ -4,7 +4,10 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	remove_from_player_list()
-
+	if(client?.movingmob) //In the case the client was transferred to another mob and not deleted.
+		client.movingmob.client_mobs_in_contents -= src
+		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
+		client.movingmob = null
 	..()
 
 	if(loc)

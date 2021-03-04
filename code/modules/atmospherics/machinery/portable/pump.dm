@@ -1,22 +1,28 @@
+///The machine pumps from the internal source to the turf
 #define PUMP_OUT "out"
+///The machine pumps from the turf to the internal tank
 #define PUMP_IN "in"
+///Maximum settable pressure
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
+///Minimum settable pressure
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
+///Defaul pressure, used in the UI to reset the settings
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
 
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "psiphon:0"
 	density = TRUE
-
 	max_integrity = 250
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 5000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
 	var/pressure_limit = 50000
-
+	///Is the machine on?
 	var/on = FALSE
+	///What direction is the machine pumping (in or out)?
 	var/direction = PUMP_OUT
+	///Player configurable, sets what's the release pressure
 	var/target_pressure = ONE_ATMOSPHERE
 
 	volume = 1000
@@ -24,11 +30,12 @@
 /obj/machinery/portable_atmospherics/pump/Destroy()
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
 	icon_state = "psiphon:[on]"
+	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_overlays()
 	. = ..()
@@ -38,8 +45,7 @@
 		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos(delta_time)
-	..()
-
+	. = ..()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
@@ -62,29 +68,31 @@
 
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
-		air_update_turf() // Update the environment if needed.
+		air_update_turf(FALSE, FALSE) // Update the environment if needed.
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(is_operational)
-		if(prob(50 / severity))
-			on = !on
-		if(prob(100 / severity))
-			direction = PUMP_OUT
-		target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
-		update_icon()
+	if(!is_operational)
+		return
+	if(prob(50 / severity))
+		on = !on
+	if(prob(100 / severity))
+		direction = PUMP_OUT
+	target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
+	update_appearance()
 
 /obj/machinery/portable_atmospherics/pump/replace_tank(mob/living/user, close_valve)
 	. = ..()
-	if(.)
-		if(close_valve)
-			if(on)
-				on = FALSE
-				update_icon()
-		else if(on && holding && direction == PUMP_OUT)
-			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+	if(!.)
+		return
+	if(close_valve)
+		if(on)
+			on = FALSE
+			update_appearance()
+	else if(on && holding && direction == PUMP_OUT)
+		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -156,4 +164,4 @@
 			if(holding)
 				replace_tank(usr, FALSE)
 				. = TRUE
-	update_icon()
+	update_appearance()

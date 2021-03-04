@@ -3,11 +3,12 @@
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dropper0"
+	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
 	reagent_flags = TRANSPARENT
-	custom_price = 75
+	custom_price = PAYCHECK_MEDIUM
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -44,7 +45,7 @@
 											"<span class='userdanger'>[user] tries to squirt something into your eyes, but fails!</span>")
 
 					to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
-					update_icon()
+					update_appearance()
 					return
 			else if(isalien(target)) //hiss-hiss has no eyes!
 				to_chat(target, "<span class='danger'>[target] does not seem to have any eyes!</span>")
@@ -64,7 +65,7 @@
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
-		update_icon()
+		update_appearance()
 
 	else
 
@@ -80,11 +81,12 @@
 
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the solution.</span>")
 
-		update_icon()
+		update_appearance()
 
 /obj/item/reagent_containers/dropper/update_overlays()
 	. = ..()
-	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling
+	if(!reagents.total_volume)
+		return
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling

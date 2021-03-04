@@ -1,8 +1,8 @@
 /*
  * Contains:
- *		Security
- *		Detective
- *		Navy uniforms
+ * Security
+ * Detective
+ * Navy uniforms
  */
 
 /*
@@ -36,7 +36,6 @@
 	icon_state = "secskirt"
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -60,7 +59,7 @@
 	icon_state = "constable"
 	inhand_icon_state = "constable"
 	can_adjust = FALSE
-	custom_price = 200
+	custom_price = PAYCHECK_HARD
 
 /obj/item/clothing/under/rank/security/warden
 	name = "security suit"
@@ -85,7 +84,6 @@
 	icon_state = "rwarden_skirt"
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -116,7 +114,6 @@
 	icon_state = "detective_skirt"
 	inhand_icon_state = "det"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -133,7 +130,6 @@
 	icon_state = "greydet_skirt"
 	inhand_icon_state = "greydet"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -157,7 +153,6 @@
 	icon_state = "rhos_skirt"
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -179,7 +174,6 @@
 	icon_state = "hosalt_skirt"
 	inhand_icon_state = "bl_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -233,7 +227,6 @@
 	icon_state = "prisoner_skirt"
 	inhand_icon_state = "o_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 

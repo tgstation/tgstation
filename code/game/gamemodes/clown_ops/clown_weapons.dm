@@ -69,17 +69,24 @@
 	hitsound = null
 	attack_verb_on = list("slips")
 	clumsy_check = FALSE
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	sword_color = "yellow"
 	heat = 0
 	light_color = COLOR_YELLOW
 	var/next_trombone_allowed = 0
 
-/obj/item/melee/transforming/energy/sword/bananium/ComponentInitialize()
+/obj/item/melee/transforming/energy/sword/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.signal_enabled = active
+	adjust_slipperiness()
+
+/* Adds or removes a slippery component, depending on whether the sword
+ * is active or not.
+ */
+/obj/item/melee/transforming/energy/sword/proc/adjust_slipperiness()
+	if(active)
+		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
+	else
+		qdel(GetComponent(/datum/component/slippery))
 
 /obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	..()
@@ -102,9 +109,8 @@
 	return ..()
 
 /obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
-	..()
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.signal_enabled = active
+	. = ..()
+	adjust_slipperiness()
 
 /obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
 	return ""
@@ -132,16 +138,22 @@
 	on_throwforce = 0
 	on_throw_speed = 1
 
-/obj/item/shield/energy/bananium/ComponentInitialize()
+/obj/item/shield/energy/bananium/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.signal_enabled = active
+	adjust_slipperiness()
+
+/* Adds or removes a slippery component, depending on whether the shield
+ * is active or not.
+ */
+/obj/item/shield/energy/bananium/proc/adjust_slipperiness()
+	if(active)
+		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
+	else
+		qdel(GetComponent(/datum/component/slippery))
 
 /obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
-	..()
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.signal_enabled = active
+	. = ..()
+	adjust_slipperiness()
 
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(active)
@@ -157,25 +169,28 @@
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 			slipper.Slip(src, hit_atom)
 		if(thrownby && !caught)
-			sleep(1)
-			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
 
 
 //BOMBANANA
 
-/obj/item/reagent_containers/food/snacks/grown/banana/bombanana
-	trash = /obj/item/grown/bananapeel/bombanana
-	bitesize = 1
-	customfoodfilling = FALSE
-	seed = null
+/obj/item/seeds/banana/bombanana
+	name = "pack of bombanana seeds"
+	desc = "They're seeds that grow into bombanana trees. When grown, give to the clown."
+	plantname = "Bombanana Tree"
+	product = /obj/item/food/grown/banana/bombanana
+
+/obj/item/food/grown/banana/bombanana
+	trash_type = /obj/item/grown/bananapeel/bombanana
+	seed = /obj/item/seeds/banana/bombanana
 	tastes = list("explosives" = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
 /obj/item/grown/bananapeel/bombanana
 	desc = "A peel from a banana. Why is it beeping?"
-	seed = null
+	seed = /obj/item/seeds/banana/bombanana
 	var/det_time = 50
 	var/obj/item/grenade/syndieminibomb/bomb
 
@@ -187,7 +202,7 @@
 		to_chat(loc, "<span class='danger'>[src] begins to beep.</span>")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
-	bomb.preprime(loc, null, FALSE)
+	bomb.arm_grenade(loc, null, FALSE)
 
 /obj/item/grown/bananapeel/bombanana/ComponentInitialize()
 	. = ..()
@@ -200,7 +215,7 @@
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
-	bomb.preprime(user, 0, FALSE)
+	bomb.arm_grenade(user, 0, FALSE)
 	return (BRUTELOSS)
 
 //TEARSTACHE GRENADE
@@ -211,7 +226,7 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/obj/item/grenade/chem_grenade/teargas/moustache/prime(mob/living/lanced_by)
+/obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
 	for(var/mob/living/carbon/M in view(6, myloc))

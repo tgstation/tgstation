@@ -16,7 +16,7 @@
 	///What type of wall does this sheet spawn
 	var/walltype
 
-/obj/item/stack/sheet/Initialize(mapload, new_amount, merge)
+/obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
@@ -36,7 +36,7 @@
 		if(mat.shard_type)
 			var/obj/item/new_shard = new mat.shard_type(user.loc)
 			new_shard.add_fingerprint(user)
-			shards += "[new_shard.name]"
+			shards += "\a [new_shard.name]"
 	if(!shards.len)
 		return FALSE
 	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)

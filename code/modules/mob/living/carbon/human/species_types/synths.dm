@@ -4,7 +4,7 @@
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
-	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"
@@ -42,13 +42,12 @@
 	. = ..()
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 
-/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/medicine/c2/synthflesh)
-		chem.expose_mob(H, TOUCH, 2 ,0) //heal a little
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
-	else
-		return ..()
+		chem.expose_mob(H, TOUCH, 2 * REAGENTS_EFFECT_MULTIPLIER * delta_time,0) //heal a little
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		return TRUE
+	return ..()
 
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
@@ -66,7 +65,6 @@
 		meat = S.meat
 		mutant_bodyparts = S.mutant_bodyparts.Copy()
 		mutant_organs = S.mutant_organs.Copy()
-		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
 		limbs_id = S.limbs_id
@@ -83,7 +81,6 @@
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
 		mutant_bodyparts = list()
-		default_features = list()
 		nojumpsuit = initial(nojumpsuit)
 		no_equip = list()
 		qdel(fake_species)

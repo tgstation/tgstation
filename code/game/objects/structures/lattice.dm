@@ -77,8 +77,8 @@
 	base_icon_state = "catwalk"
 	number_of_mats = 2
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_LATTICE)
+	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_CATWALK, SMOOTH_GROUP_OPEN_FLOOR)
+	canSmoothWith = list(SMOOTH_GROUP_CATWALK)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
@@ -115,8 +115,8 @@
 
 /obj/structure/lattice/lava/attackby(obj/item/C, mob/user, params)
 	. = ..()
-	if(istype(C, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/P = C
+	if(istype(C, /obj/item/stack/tile/iron))
+		var/obj/item/stack/tile/iron/P = C
 		if(P.use(1))
 			to_chat(user, "<span class='notice'>You construct a floor plating, as lava settles around the rods.</span>")
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)

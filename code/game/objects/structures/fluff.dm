@@ -17,7 +17,7 @@
 		if(I.use_tool(src, user, 50))
 			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
 			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
-			new/obj/item/stack/sheet/metal(drop_location())
+			new/obj/item/stack/sheet/iron(drop_location())
 			qdel(src)
 		return
 	..()
@@ -103,7 +103,7 @@
 	desc = "Space Jesus is my copilot."
 	icon_state = "driverseat"
 
-/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
+/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user, list/modifiers)
 	playsound(src, 'sound/items/carhorn.ogg', 50, TRUE)
 	. = ..()
 
@@ -260,6 +260,16 @@
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
+	max_integrity = 80
+
+/obj/structure/fluff/hedge/attacked_by(obj/item/I, mob/living/user)
+	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
+		to_chat(user,"<span class='notice'>You start trimming \the [src].</span>")
+		if(do_after(user, 3 SECONDS,target=src))
+			to_chat(user,"<span class='notice'>You finish trimming \the [src].</span>")
+			opacity = FALSE
+	else
+		return ..()
 
 /obj/structure/fluff/hedge/opaque //useful for mazes and such
 	opacity = TRUE

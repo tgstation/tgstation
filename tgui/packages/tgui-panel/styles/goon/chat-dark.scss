@@ -255,7 +255,7 @@ a.popt {
 /* ADD HERE FOR ITALIC */
 
 
-.italic, .italics, .emote {
+.italic, .italics {
   font-style: italic;
 }
 
@@ -311,7 +311,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain {
 }
 
 .deadsay {
@@ -390,10 +390,6 @@ em {
   color: #d82020;
 }
 
-.emote {
-  font-style: italic;
-}
-
 .userdanger {
   color: #c51e1e;
   font-weight: bold;
@@ -428,6 +424,11 @@ em {
 .boldannounce {
   color: #c51e1e;
   font-weight: bold;
+}
+
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .greenannounce {
@@ -665,6 +666,11 @@ em {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #FF0000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
   font-size: 160%;
@@ -766,6 +772,10 @@ em {
 .icon {
   height: 1em;
   width: auto;
+}
+
+.bigicon {
+  font-size: 5em;
 }
 
 .memo {

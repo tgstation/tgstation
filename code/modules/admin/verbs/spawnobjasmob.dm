@@ -16,10 +16,10 @@
 	var/obj/chosen_obj = text2path(chosen)
 
 	var/list/settings = list(
-    "mainsettings" = list(
-      "name" = list("desc" = "Name", "type" = "string", "value" = "Bob"),
+	"mainsettings" = list(
+	"name" = list("desc" = "Name", "type" = "string", "value" = "Bob"),
 			"maxhealth" = list("desc" = "Max. health", "type" = "number", "value" = 100),
-      "access" = list("desc" = "Access ID", "type" = "datum", "path" = "/obj/item/card/id", "value" = "Default"),
+	"access" = list("desc" = "Access ID", "type" = "datum", "path" = "/obj/item/card/id", "value" = "Default"),
 			"objtype" = list("desc" = "Base obj type", "type" = "datum", "path" = "/obj", "value" = "[chosen]"),
 			"googlyeyes" = list("desc" = "Googly eyes", "type" = "boolean", "value" = "No"),
 			"disableai" = list("desc" = "Disable AI", "type" = "boolean", "value" = "Yes"),
@@ -27,8 +27,7 @@
 			"dropitem" = list("desc" = "Drop obj on death", "type" = "boolean", "value" = "Yes"),
 			"mobtype" = list("desc" = "Base mob type", "type" = "datum", "path" = "/mob/living/simple_animal/hostile/mimic/copy", "value" = "/mob/living/simple_animal/hostile/mimic/copy"),
 			"ckey" = list("desc" = "ckey", "type" = "ckey", "value" = "none"),
-    )
-	)
+	))
 
 	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", width = 450, StealFocus = 1,Timeout = 0, settings=settings)
 	if (prefreturn["button"] == 1)

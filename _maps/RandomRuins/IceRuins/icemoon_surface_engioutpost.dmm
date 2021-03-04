@@ -34,7 +34,7 @@
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "aj" = (
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ak" = (
 /turf/closed/wall/ice,
@@ -46,7 +46,6 @@
 /obj/machinery/power/emitter,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
@@ -60,7 +59,6 @@
 /area/icemoon/surface/outdoors)
 "ap" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
@@ -68,7 +66,6 @@
 "aq" = (
 /obj/machinery/field/generator,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
@@ -76,7 +73,6 @@
 "ar" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 5
 	},
 /turf/open/floor/plating/icemoon,
@@ -88,7 +84,6 @@
 "at" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
@@ -100,11 +95,11 @@
 /area/icemoon/surface/outdoors)
 "av" = (
 /obj/item/clothing/under/rank/engineering/chief_engineer,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aw" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ax" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
@@ -127,10 +122,9 @@
 /area/icemoon/surface/outdoors)
 "aC" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aD" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -150,7 +144,6 @@
 /area/icemoon/surface/outdoors)
 "aH" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
@@ -167,25 +160,21 @@
 /area/icemoon/surface/outdoors)
 "aK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 8
 	},
 /obj/machinery/light/small/broken{
-	icon_state = "bulb-broken";
 	dir = 8
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 4
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aM" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -202,138 +191,125 @@
 /area/icemoon/surface/outdoors)
 "aP" = (
 /obj/effect/turf_decal/tile/yellow{
-	icon_state = "tile_corner";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
-	icon_state = "tile_corner";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 8
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aQ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aR" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 8
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aV" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aX" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 1
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 1
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aY" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	icon_state = "mixer_off_f";
-	dir = 8
+	dir = 8;
+	icon_state = "mixer_off_f"
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aZ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ba" = (
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 1
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bb" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bc" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
@@ -343,14 +319,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "be" = (
-/obj/item/card/id{
-	access = list(200,204,11,12,10);
-	assignment = "Senior Station Engineer";
-	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew.";
-	name = "George 'Plastic' Miller's ID Card (Senior Station Engineer)";
-	registered_age = 47;
-	registered_name = "George 'Plastic' Miller"
-	},
+/obj/item/card/id/advanced/engioutpost,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bf" = (
@@ -362,20 +331,20 @@
 "bg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "bh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
@@ -385,40 +354,37 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "bj" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
-	icon_state = "tile_corner";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
-	icon_state = "tile_corner";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bl" = (
 /obj/machinery/door/airlock/engineering{
@@ -429,109 +395,106 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bm" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	icon_state = "trimline_warn_fill";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	icon_state = "vent_map_on-2";
-	dir = 4
+	dir = 4;
+	icon_state = "vent_map_on-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bp" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bq" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "br" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	icon_state = "trimline_warn_fill";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bs" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	icon_state = "trimline_warn_fill";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bw" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "connector_map-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 4;
 	pixel_x = 26
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "by" = (
 /obj/item/stack/rods{
@@ -551,7 +514,6 @@
 "bB" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
@@ -563,118 +525,112 @@
 "bD" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/tile/yellow{
-	icon_state = "tile_corner";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
-	icon_state = "tile_corner";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 8
 	},
 /obj/item/book/manual/wiki/engineering_singulo_tesla,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bE" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bG" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	icon_state = "trimline_warn_fill";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bH" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	icon_state = "trimline_warn_fill";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bI" = (
 /obj/item/pda/clear{
 	note = "Chief's asked me to check on the machinery inside PDA. He's also worried about Build, but i'm sure Harry'll handle the construction. I just need to work on Internals. Fuck i'm hungry"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bL" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bN" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
-	dir = 8
+	dir = 8;
+	icon_state = "filter_off_f"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bO" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bP" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
-	icon_state = "pipe11-2";
-	dir = 10
+	dir = 10;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bQ" = (
 /obj/machinery/atmospherics/components/binary/pump,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bR" = (
 /obj/effect/spawner/structure/window/plasma,
@@ -693,89 +649,87 @@
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bV" = (
 /obj/effect/mob_spawn/human/corpse/assistant,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 4
+	dir = 4;
+	icon_state = "scrub_map_on-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	icon_state = "manifold-2";
-	dir = 1
+	dir = 1;
+	icon_state = "manifold-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bZ" = (
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ca" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "pump_map-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cb" = (
 /obj/item/flashlight,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cc" = (
 /obj/item/book/manual/wiki/atmospherics,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "connector_map-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ce" = (
 /obj/machinery/atmospherics/pipe/manifold/dark/visible{
-	icon_state = "manifold-2";
-	dir = 4
+	dir = 4;
+	icon_state = "manifold-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cf" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/airalarm/directional/east,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cg" = (
 /obj/item/wallframe/apc,
@@ -783,87 +737,82 @@
 /area/icemoon/surface/outdoors)
 "ch" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ci" = (
 /obj/machinery/light/broken,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cj" = (
 /obj/structure/sign/poster/official/pda_ad{
-	pixel_x = 0;
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ck" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cl" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 4
 	},
 /obj/machinery/light/dim{
-	icon_state = "tube";
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /obj/structure/sign/poster/contraband/atmosia_independence{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cn" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "co" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 8
+	dir = 8;
+	icon_state = "connector_map-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cp" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cr" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
-	dir = 8
+	dir = 8;
+	icon_state = "pump_map-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/light/dim{
-	icon_state = "tube";
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ct" = (
 /obj/machinery/door/airlock/engineering/glass{
@@ -871,12 +820,11 @@
 	req_access_txt = "204"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cu" = (
 /obj/structure/girder,
@@ -886,50 +834,49 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cw" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	icon_state = "manifold-2";
-	dir = 4
+	dir = 4;
+	icon_state = "manifold-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cx" = (
 /obj/machinery/atmospherics/pipe/manifold/green/visible,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cy" = (
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cz" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cA" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cB" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cC" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 10
 	},
 /turf/open/floor/plating/icemoon,
@@ -952,22 +899,20 @@
 /obj/structure/cable,
 /obj/machinery/field/generator,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 6
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "cH" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cI" = (
 /obj/machinery/modular_computer/console/preset/civilian,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cJ" = (
 /obj/item/construction/rcd,
@@ -975,80 +920,76 @@
 /obj/item/rcd_ammo,
 /obj/item/rcd_ammo,
 /obj/item/rcd_upgrade/frames,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cK" = (
 /obj/machinery/airalarm/directional/west,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cL" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	icon_state = "manifold-2";
-	dir = 8
+	dir = 8;
+	icon_state = "manifold-2"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	icon_state = "vent_map_on-2";
-	dir = 8
+	dir = 8;
+	icon_state = "vent_map_on-2"
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	icon_state = "trimline_fill";
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cN" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/space_heater,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cO" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "pump_map-2"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cP" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cQ" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 8
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cR" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
-	icon_state = "pipe11-2";
-	dir = 6
+	dir = 6;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cS" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
-	icon_state = "pipe11-2";
-	dir = 9
+	dir = 9;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 8
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cT" = (
 /obj/machinery/power/emitter{
-	icon_state = "emitter";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -1063,26 +1004,25 @@
 "cV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/space_heater,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cW" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 4
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cZ" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -1109,17 +1049,17 @@
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "de" = (
-/obj/machinery/rnd/production/circuit_imprinter,
-/turf/open/floor/plasteel/icemoon,
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "df" = (
 /obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/machinery/light/small/broken,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dg" = (
 /obj/machinery/autolathe,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dh" = (
 /obj/structure/sign/poster/contraband/grey_tide,
@@ -1130,7 +1070,7 @@
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dj" = (
 /turf/closed/wall/rust,
@@ -1176,95 +1116,91 @@
 /area/icemoon/surface/outdoors)
 "dt" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "du" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dv" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	icon_state = "scrub_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "scrub_map-2"
 	},
 /turf/open/floor/engine/air,
 /area/icemoon/surface/outdoors)
 "dx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	icon_state = "vent_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "vent_map-2"
 	},
 /turf/open/floor/engine/air,
 /area/icemoon/surface/outdoors)
 "dy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	icon_state = "scrub_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "scrub_map-2"
 	},
 /turf/open/floor/engine/vacuum,
 /area/icemoon/surface/outdoors)
 "dz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	icon_state = "vent_map-2";
-	dir = 1
+	dir = 1;
+	icon_state = "vent_map-2"
 	},
 /turf/open/floor/engine/vacuum,
 /area/icemoon/surface/outdoors)
 "dA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	icon_state = "scrub_map_on-2";
-	dir = 1
+	dir = 1;
+	icon_state = "scrub_map_on-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/weather/snow/corner{
-	icon_state = "snow_corner";
 	dir = 10
 	},
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "pipe11-2";
-	dir = 5
+	dir = 5;
+	icon_state = "pipe11-2"
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	icon_state = "vent_map_on-2";
-	dir = 8
+	dir = 8;
+	icon_state = "vent_map_on-2"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dD" = (
 /obj/structure/girder,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dE" = (
 /obj/structure/door_assembly/door_assembly_eng,
-/turf/open/floor/plasteel/icemoon,
+/turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 
 (1,1,1) = {"

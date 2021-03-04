@@ -22,10 +22,10 @@
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
-	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
-	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-	var/list/protected_jobs = list()	// Jobs that can't be traitors because
-	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
+	var/list/datum/mind/antag_candidates = list() // List of possible starting antags goes here
+	var/list/restricted_jobs = list() // Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
+	var/list/protected_jobs = list() // Jobs that can't be traitors because
+	var/list/required_jobs = list() // alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
 	var/required_players = 0
 	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
@@ -34,8 +34,8 @@
 	var/mob/living/living_antag_player = null
 	var/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
-	var/reroll_friendly 	//During mode conversion only these are in the running
-	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
+	var/reroll_friendly //During mode conversion only these are in the running
+	var/continuous_sanity_checked //Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
 	var/announce_span = "warning" //The gamemode's name will be in this span during announcement.
@@ -49,7 +49,7 @@
 	var/allow_persistence_save = TRUE
 
 	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
-	var/setup_error		//What stopepd setting up the mode.
+	var/setup_error //What stopepd setting up the mode.
 
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS = list(), CURRENT_LIVING_ANTAGS = list(), CURRENT_DEAD_PLAYERS = list(), CURRENT_OBSERVERS = list())
@@ -196,7 +196,7 @@
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
 		round_converted = 0
 		return
-	 //somewhere between 1 and 3 minutes from now
+	//somewhere between 1 and 3 minutes from now
 	if(!CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
 		round_converted = 0
 		return TRUE
@@ -293,17 +293,42 @@
 		intercepttext += "<hr>"
 		intercepttext += report
 
-	if(station_goals.len)
-		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
-		for(var/datum/station_goal/G in station_goals)
-			G.on_report()
-			intercepttext += G.get_report()
+	intercepttext += generate_station_goal_report()
+	intercepttext += generate_station_trait_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/ai/intercept.ogg')
+	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", ANNOUNCER_INTERCEPT)
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
+/*
+ * Generate a list of station goals available to purchase to report to the crew.
+ *
+ * Returns a formatted string all station goals that are available to the station.
+ */
+/datum/game_mode/proc/generate_station_goal_report()
+	if(!station_goals.len)
+		return
+	. = "<hr><b>Special Orders for [station_name()]:</b><BR>"
+	for(var/datum/station_goal/station_goal in station_goals)
+		station_goal.on_report()
+		. += station_goal.get_report()
+	return
+
+/*
+ * Generate a list of active station traits to report to the crew.
+ *
+ * Returns a formatted string of all station traits (that are shown) affecting the station.
+ */
+/datum/game_mode/proc/generate_station_trait_report()
+	if(!SSstation.station_traits.len)
+		return
+	. = "<hr><b>Identified shift divergencies:</b><BR>"
+	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
+		if(!station_trait.show_in_report)
+			continue
+		. += "[station_trait.get_report()]<BR>"
+	return
 
 // This is a frequency selection system. You may imagine it like a raffle where each player can have some number of tickets. The more tickets you have the more likely you are to
 // "win". The default is 100 tickets. If no players use any extra tickets (earned with the antagonist rep system) calling this function should be equivalent to calling the normal
@@ -353,7 +378,7 @@
 		if(antag_select >= previous && antag_select <= (current-1))
 			SSpersistence.antag_rep_change[p_ckey] = -(spend - DEFAULT_ANTAG_TICKETS)
 
-//			WARNING("AR_DEBUG: Player [mind.key] won spending [spend] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
+// WARNING("AR_DEBUG: Player [mind.key] won spending [spend] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
 
 			return mind
 
@@ -381,11 +406,11 @@
 			if(role in player.client.prefs.be_special)
 				if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
 					if(age_check(player.client)) //Must be older than the minimum age
-						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
+						candidates += player.mind // Get a list of all the people who want to be the antagonist for this round
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in candidates)
-			for(var/job in restricted_jobs)					// Remove people who want to be antagonist but have a job already that precludes it
+			for(var/job in restricted_jobs) // Remove people who want to be antagonist but have a job already that precludes it
 				if(player.assigned_role == job)
 					candidates -= player
 
@@ -397,26 +422,26 @@
 						drafted += player.mind
 
 	if(restricted_jobs)
-		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
+		for(var/datum/mind/player in drafted) // Remove people who can't be an antagonist
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					drafted -= player
 
 	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+	while(candidates.len < recommended_enemies) // Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)
 			applicant = pick(drafted)
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
 
-		else												// Not enough scrubs, ABORT ABORT ABORT
+		else // Not enough scrubs, ABORT ABORT ABORT
 			break
 
-	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
-							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
-							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
+	return candidates // Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
+							// recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
+							// Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 
 
@@ -478,7 +503,7 @@
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/list/msg = list("<span class='boldnotice'>Roundstart logout report\n\n</span>")
+	var/list/msg = list("<span class='boldnotice'>Roundstart logout report</span>\n\n")
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/mob/living/carbon/C = L
@@ -491,11 +516,11 @@
 
 		if(L.ckey && L.client)
 			var/failed = FALSE
-			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
+			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2)) //Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				failed = TRUE //AFK client
 			if(!failed && L.stat)
-				if(L.suiciding)	//Suicider
+				if(L.suiciding) //Suicider
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
 					failed = TRUE //Disconnected client
 				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
@@ -506,19 +531,19 @@
 					failed = TRUE //Dead
 
 			var/p_ckey = L.client.ckey
-//			WARNING("AR_DEBUG: [p_ckey]: failed - [failed], antag_rep_change: [SSpersistence.antag_rep_change[p_ckey]]")
+// WARNING("AR_DEBUG: [p_ckey]: failed - [failed], antag_rep_change: [SSpersistence.antag_rep_change[p_ckey]]")
 
 			// people who died or left should not gain any reputation
 			// people who rolled antagonist still lose it
 			if(failed && SSpersistence.antag_rep_change[p_ckey] > 0)
-//				WARNING("AR_DEBUG: Zeroed [p_ckey]'s antag_rep_change")
+// WARNING("AR_DEBUG: Zeroed [p_ckey]'s antag_rep_change")
 				SSpersistence.antag_rep_change[p_ckey] = 0
 
 			continue //Happy connected client
 		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
-					if(L.suiciding)	//Suicider
+					if(L.suiciding) //Suicider
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
 						continue //Disconnected client
 					else
@@ -538,7 +563,7 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
 	if(get_remaining_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
+		return 1 //Available in 0 days = available right now = player is old enough to play.
 	return 0
 
 

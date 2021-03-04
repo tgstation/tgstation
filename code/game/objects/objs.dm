@@ -14,7 +14,7 @@
 	var/bare_wound_bonus = 0
 
 	var/datum/armor/armor
-	var/obj_integrity	//defaults to max_integrity
+	var/obj_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
@@ -39,13 +39,20 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 
+	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
+	/// Next pr after the network fix will have me refactor door interactions, so help me god.
+	var/id_tag = null
+	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
+	/// broadcasted to as long as the other guys network is on the same branch or above.
+	var/network_id = null
+
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
 		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
 			return FALSE
 	return ..()
 
-/obj/Initialize()
+/obj/Initialize(mapload)
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
@@ -70,6 +77,20 @@
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
 
+	if(network_id)
+		var/area/A = get_area(src)
+		if(A)
+			if(!A.network_root_id)
+				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+				SSnetworks.lookup_area_root_id(A)
+			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
+		else
+			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
+
+
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
@@ -78,7 +99,7 @@
 
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	..()
+	. = ..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
@@ -104,8 +125,8 @@
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
-	//		null if object handles breathing logic for lifeform
-	//		datum/air_group to tell lifeform to process using that breath return
+	// null if object handles breathing logic for lifeform
+	// datum/air_group to tell lifeform to process using that breath return
 	//DEFAULT: Take air from turf to give to have mob process
 
 	if(breath_request>0)
@@ -165,6 +186,7 @@
 	. = ..()
 	if(.)
 		return
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
 /mob/proc/unset_machine()
@@ -198,7 +220,20 @@
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
-/obj/proc/CanAStarPass()
+/**
+ * This proc is used for telling whether something can pass by this object in a given direction, for use by the pathfinding system.
+ *
+ * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
+ * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
+ *
+ * Arguments:
+ * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
+ * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * caller- The movable we're checking pass flags for, if we're making any such checks
+ **/
+/obj/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if(istype(caller) && (caller.pass_flags & pass_flags_self))
+		return TRUE
 	. = !density
 
 /obj/proc/check_uplink_validity()
@@ -292,11 +327,11 @@
 		reskin_obj(user)
 
 /**
-  * Reskins object based on a user's choice
-  *
-  * Arguments:
-  * * M The mob choosing a reskin option
-  */
+ * Reskins object based on a user's choice
+ *
+ * Arguments:
+ * * M The mob choosing a reskin option
+ */
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
@@ -317,11 +352,11 @@
 	to_chat(M, "[src] is now skinned as '[pick].'")
 
 /**
-  * Checks if we are allowed to interact with a radial menu for reskins
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu for reskins
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ */
 /obj/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
@@ -361,6 +396,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_OBJ, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])

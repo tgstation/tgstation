@@ -12,7 +12,7 @@ const requireInterface = require.context('./interfaces', false, /\.js$/);
 
 const routingError = (type, name) => () => {
   return (
-    <Window resizable>
+    <Window>
       <Window.Content scrollable>
         {type === 'notFound' && (
           <div>Interface <b>{name}</b> was not found.</div>
@@ -27,7 +27,7 @@ const routingError = (type, name) => () => {
 
 const SuspendedWindow = () => {
   return (
-    <Window resizable>
+    <Window>
       <Window.Content scrollable />
     </Window>
   );

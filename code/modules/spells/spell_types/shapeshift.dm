@@ -21,13 +21,12 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
-		/mob/living/simple_animal/hostile/construct/juggernaut)
+		/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard,\
+		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
 		LAZYREMOVE(user.mob_spell_list, src)
-		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
 	if(user.buckled)
 		user.buckled.unbuckle_mob(src,force=TRUE)
@@ -54,35 +53,43 @@
 			M = Restore(M)
 		else
 			M = Shapeshift(M)
-		if(M.movement_type & (VENTCRAWLING))
-			if(!M.ventcrawler) //you're shapeshifting into something that can't fit into a vent
-				var/obj/machinery/atmospherics/pipeyoudiein = M.loc
-				var/datum/pipeline/ourpipeline
-				var/pipenets = pipeyoudiein.returnPipenets()
-				if(islist(pipenets))
-					ourpipeline = pipenets[1]
-				else
-					ourpipeline = pipenets
+		// Are we currently ventcrawling?
+		if(!(M.movement_type & VENTCRAWLING))
+			return
 
-				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
-				var/gibtype = /obj/effect/gibspawner/generic
-				if(isalien(M))
-					gibtype = /obj/effect/gibspawner/xeno
-				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
-					if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
-						new gibtype(get_turf(possiblevent))
-						playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
-				priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
-				M.death()
-				qdel(M)
-				return
+		// Can our new form support ventcrawling?
+		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+		if(ventcrawler)
+			return
+
+		//you're shapeshifting into something that can't fit into a vent
+
+		var/obj/machinery/atmospherics/pipeyoudiein = M.loc
+		var/datum/pipeline/ourpipeline
+		var/pipenets = pipeyoudiein.returnPipenets()
+		if(islist(pipenets))
+			ourpipeline = pipenets[1]
+		else
+			ourpipeline = pipenets
+
+		to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
+		var/gibtype = /obj/effect/gibspawner/generic
+		if(isalien(M))
+			gibtype = /obj/effect/gibspawner/xeno
+		for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
+			if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
+				new gibtype(get_turf(possiblevent))
+				playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
+		priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
+		M.death()
+		qdel(M)
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -150,11 +157,12 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
-	stored.RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/shape_death)
-	stored.RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
-	shape.RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
+	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
+	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
 
 /obj/shapeshift_holder/Destroy()
+	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
+	// because restore() qdel'd src.
 	if(!restoring)
 		restore()
 	stored = null
@@ -192,6 +200,10 @@
 		restore()
 
 /obj/shapeshift_holder/proc/restore(death=FALSE)
+	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
+	// when caster and shape both die at the same time.
+	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	restoring = TRUE
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
@@ -208,5 +220,10 @@
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
-	QDEL_NULL(shape)
+
+	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
+	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
+	if(!QDELETED(shape))
+		QDEL_NULL(shape)
+
 	qdel(src)

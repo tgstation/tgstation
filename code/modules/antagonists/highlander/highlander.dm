@@ -3,20 +3,24 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
-	can_hijack = HIJACK_HIJACKER
+	can_elimination_hijack = ELIMINATION_ENABLED
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
-	ADD_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
-	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, "highlander")
+	ADD_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
+	ADD_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
 	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
-	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
-	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NOGUNS, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_NOFIRE, HIGHLANDER_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_NOBREATH, HIGHLANDER_TRAIT)
 	if(L.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
@@ -25,17 +29,13 @@
 	steal_objective.owner = owner
 	steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
 	objectives += steal_objective
-
-	var/datum/objective/hijack/highlander/hijack_objective = new
-	hijack_objective.owner = owner
-	objectives += hijack_objective
+	var/datum/objective/elimination/highlander/elimination_objective = new
+	elimination_objective.owner = owner
+	objectives += elimination_objective
 
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"
-	var/mob/living/carbon/human/humanlander = owner.current
-	if(ishuman(humanlander) && humanlander.dna.species.outfit_important_for_life) //things that cannot live with the scottish kilt will be owned
-		humanlander.set_species(/datum/species/human)
 	give_equipment()
 	. = ..()
 
@@ -62,13 +62,11 @@
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
-	var/obj/item/card/id/centcom/W = new(H)
-	W.access = get_all_accesses()
-	W.access += get_all_centcom_access()
-	W.assignment = "Highlander"
+	var/obj/item/card/id/advanced/highlander/W = new(H)
 	W.registered_name = H.real_name
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label()
+	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
 
 	sword = new(H)
@@ -100,5 +98,5 @@
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
 	robotlander.laws.show_laws(robotlander)
-	robotlander.module.transform_to(/obj/item/robot_module/syndicate/kiltborg)
-	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.module.basic_modules
+	robotlander.model.transform_to(/obj/item/robot_model/syndicate/kiltborg)
+	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.model.basic_modules

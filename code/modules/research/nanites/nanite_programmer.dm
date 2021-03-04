@@ -11,6 +11,13 @@
 	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
 
+/obj/machinery/nanite_programmer/update_overlays()
+	. = ..()
+	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+		return
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", layer, plane)
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", EMISSIVE_LAYER, EMISSIVE_PLANE)
+
 /obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
@@ -96,6 +103,7 @@
 		if("toggle_active")
 			playsound(src, "terminal_type", 25, FALSE)
 			program.activated = !program.activated //we don't use the activation procs since we aren't in a mob
+			investigate_log("[key_name(usr)] edited [program.name]'s initial activation status into [program.activated ? "Activated" : "Deactivated"]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_code")
 			var/new_code = text2num(params["code"])
@@ -104,15 +112,20 @@
 			switch(target_code)
 				if("activation")
 					program.activation_code = clamp(round(new_code, 1),0,9999)
+					investigate_log("[key_name(usr)] edited [program.name]'s activation code into [program.activation_code]", INVESTIGATE_NANITES)
 				if("deactivation")
 					program.deactivation_code = clamp(round(new_code, 1),0,9999)
+					investigate_log("[key_name(usr)] edited [program.name]'s deactivation code into [program.deactivation_code]", INVESTIGATE_NANITES)
 				if("kill")
 					program.kill_code = clamp(round(new_code, 1),0,9999)
+					investigate_log("[key_name(usr)] edited [program.name]'s kill code into [program.kill_code]", INVESTIGATE_NANITES)
 				if("trigger")
 					program.trigger_code = clamp(round(new_code, 1),0,9999)
+					investigate_log("[key_name(usr)] edited [program.name]'s trigger code into [program.trigger_code]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_extra_setting")
 			program.set_extra_setting(params["target_setting"], params["value"])
+			investigate_log("[key_name(usr)] edited [program.name]'s extra setting '[params["target_setting"]]' into [params["value"]]", INVESTIGATE_NANITES)
 			playsound(src, "terminal_type", 25, FALSE)
 			. = TRUE
 		if("set_restart_timer")
@@ -122,6 +135,7 @@
 				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_restart = timer
+				investigate_log("[key_name(usr)] edited [program.name]'s restart timer into [timer/10] s", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_shutdown_timer")
 			var/timer = text2num(params["delay"])
@@ -130,6 +144,7 @@
 				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_shutdown = timer
+				investigate_log("[key_name(usr)] edited [program.name]'s shutdown timer into [timer/10] s", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_trigger_timer")
 			var/timer = text2num(params["delay"])
@@ -138,6 +153,7 @@
 				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger = timer
+				investigate_log("[key_name(usr)] edited [program.name]'s trigger timer into [timer/10] s", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_timer_trigger_delay")
 			var/timer = text2num(params["delay"])
@@ -146,6 +162,7 @@
 				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger_delay = timer
+				investigate_log("[key_name(usr)] edited [program.name]'s trigger delay timer into [timer/10] s", INVESTIGATE_NANITES)
 			. = TRUE
 
 /obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())

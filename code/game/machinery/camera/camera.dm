@@ -16,7 +16,7 @@
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 50)
 	max_integrity = 100
 	integrity_failure = 0.5
-	var/default_camera_icon = "camera" //the camera's base icon used by update_icon - icon_state is primarily used for mapping display purposes.
+	var/default_camera_icon = "camera" //the camera's base icon used by update_appearance - icon_state is primarily used for mapping display purposes.
 	var/list/network = list("ss13")
 	var/c_tag = null
 	var/status = TRUE
@@ -38,7 +38,6 @@
 
 	// Upgrades bitflag
 	var/upgrades = 0
-	var/datum/component/empprotection/emp_component
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
@@ -83,12 +82,12 @@
 	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
 	else //this is handled by toggle_camera, so no need to update it twice.
-		update_icon()
+		update_appearance()
 
-/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[idnum][i]"
+		network += "[port.id]_[i]"
 
 /obj/machinery/proc/create_prox_monitor()
 	if(!proximity_monitor)
@@ -143,13 +142,13 @@
 		return
 	if(!(. & EMP_PROTECT_SELF))
 		if(prob(150/severity))
-			update_icon()
+			update_appearance()
 			network = list()
 			GLOB.cameranet.removeCamera(src)
 			set_machine_stat(machine_stat | EMPED)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
-			update_icon()
+			update_appearance()
 			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
@@ -166,7 +165,7 @@
 		return
 	network = previous_network
 	set_machine_stat(machine_stat & ~EMPED)
-	update_icon()
+	update_appearance()
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
@@ -198,7 +197,7 @@
 	panel_open = !panel_open
 	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 	I.play_tool_sound(src)
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/camera/crowbar_act(mob/living/user, obj/item/I)
@@ -381,12 +380,15 @@
 	var/xray_module
 	if(isXRay(TRUE))
 		xray_module = "xray"
+
 	if(!status)
 		icon_state = "[xray_module][default_camera_icon]_off"
-	else if (machine_stat & EMPED)
+		return ..()
+	if(machine_stat & EMPED)
 		icon_state = "[xray_module][default_camera_icon]_emp"
-	else
-		icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
+		return ..()
+	icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
+	return ..()
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
@@ -417,7 +419,7 @@
 			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")
 
 		playsound(src, 'sound/items/wirecutter.ogg', 100, TRUE)
-	update_icon() //update Initialize() if you remove this.
+	update_appearance() //update Initialize() if you remove this.
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -466,7 +468,7 @@
 
 /obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 /obj/machinery/camera/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras

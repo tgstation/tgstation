@@ -34,16 +34,16 @@
 		if(lock_override & CAMERA_LOCK_CENTCOM)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
 
-/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)
 		networks -= i
-		networks += "[idnum][i]"
+		networks += "[port.id]_[i]"
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
 	circuit = /obj/item/circuitboard/computer/advanced_camera
 
-/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return //For syndie nuke shuttle, to spy for station.
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
@@ -120,7 +120,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -132,7 +132,8 @@
 	var/mob/living/L = user
 	if(!eyeobj)
 		CreateEye()
-
+	if(!eyeobj) //Eye creation failed
+		return
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
@@ -297,7 +298,7 @@
 	if(final)
 		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))
-		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+		C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)

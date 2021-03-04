@@ -1,30 +1,48 @@
 //The Medical Kiosk is designed to act as a low access alernative to  a medical analyzer, and doesn't require breaking into medical. Self Diagnose at your heart's content!
 //For a fee that is. Comes in 4 flavors of medical scan.
 
+/// Shows if the machine is being used for a general scan.
+#define KIOSK_SCANNING_GENERAL (1<<0)
+/// Shows if the machine is being used for a disease scan.
+#define KIOSK_SCANNING_SYMPTOMS (1<<1)
+/// Shows if the machine is being used for a radiation/brain trauma scan.
+#define KIOSK_SCANNING_NEURORAD (1<<2)
+/// Shows if the machine is being used for a reagent scan.
+#define KIOSK_SCANNING_REAGENTS (1<<3)
+
+
 
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
+	base_icon_state = "kiosk"
 	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
+	/// How much it costs to use the kiosk by default.
 	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
+	/// How much it currently costs to use the kiosk.
 	var/active_price = 15           //Change by using a multitool on the board.
-	var/pandemonium = FALSE			//AKA: Emag mode.
+	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
+	var/pandemonium = FALSE //AKA: Emag mode.
 
-	var/scan_active_1 = FALSE       //Shows if the machine is being used for a general scan.
-	var/scan_active_2 = FALSE 		//as above, symptom scan
-	var/scan_active_3 = FALSE    	//as above, radiological scan
-	var/scan_active_4 = FALSE		//as above, chemical/hallucinations.
-	var/paying_customer = FALSE		//Ticked yes if passing inuse()
+	/// Shows whether the kiosk is being used to scan someone and what it's being used for.
+	var/scan_active = NONE
 
+	/// Do we have someone paying to use this?
+	var/paying_customer = FALSE //Ticked yes if passing inuse()
+
+	/// Who's pockets are we sifting through when we're used?
 	var/datum/bank_account/account  //payer's account.
+	/// Who's paying?
 	var/mob/living/carbon/human/H   //The person using the console in each instance. Used for paying for the kiosk.
+	/// Who's getting scanned?
 	var/mob/living/carbon/human/altPatient   //If scanning someone else, this will be the target.
+	/// Used to find the money.
 	var/obj/item/card/id/C          //the account of the person using the console.
 
 /obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
@@ -46,23 +64,25 @@
 		return
 	use_power(20)
 	paying_customer = TRUE
-	icon_state = "kiosk_active"
+	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
 	RefreshParts()
 	return
 
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
-	scan_active_1 = FALSE
-	scan_active_2 = FALSE
-	scan_active_3 = FALSE
-	scan_active_4 = FALSE
+	scan_active = NONE
+	update_appearance()
 	return
 
 /obj/machinery/medical_kiosk/update_icon_state()
-	if(is_operational)
-		icon_state = "kiosk_off"
-	else
-		icon_state = "kiosk"
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
+		return ..()
+	if(!is_operational)
+		icon_state = "[base_icon_state]_off"
+		return ..()
+	icon_state = "[base_icon_state][scan_active ? "active" : null]"
+	return ..()
 
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.
 	..()
@@ -76,7 +96,7 @@
 	return
 
 /obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "kiosk_open", "kiosk", O))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
 		return
 	else if(default_deconstruction_crowbar(O))
 		return
@@ -91,7 +111,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] snaps [O] onto [src]!</span>", \
 		"<span class='notice'>You press [O] into the side of [src], clicking into place.</span>")
-		 //This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
+		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
 			if(!(altPatient == W.return_patient()))
 				clearScans()
@@ -161,7 +181,7 @@
 	if(!ui)
 		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
-		icon_state = "kiosk_off"
+		icon_state = "[base_icon_state]_active"
 		RefreshParts()
 		H = user
 		C = H.get_idcard(TRUE)
@@ -211,18 +231,19 @@
 	var/clone_loss = altPatient.getCloneLoss()
 	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
-	if(LAZYLEN(user.get_traumas()))
+	if(LAZYLEN(altPatient.get_traumas()))
 		var/list/trauma_text = list()
-		for(var/datum/brain_trauma/B in altPatient.get_traumas())
+		for(var/t in altPatient.get_traumas())
+			var/datum/brain_trauma/trauma = t
 			var/trauma_desc = ""
-			switch(B.resilience)
+			switch(trauma.resilience)
 				if(TRAUMA_RESILIENCE_SURGERY)
 					trauma_desc += "severe "
 				if(TRAUMA_RESILIENCE_LOBOTOMY)
 					trauma_desc += "deep-rooted "
 				if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
 					trauma_desc += "permanent "
-			trauma_desc += B.scan_desc
+			trauma_desc += trauma.scan_desc
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
@@ -231,22 +252,29 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
-		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
-			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
-			if(R.overdosed)
-				overdose_list += list(list("name" = R.name))
+	if(altPatient.reagents.reagent_list.len) //Chemical Analysis details.
+		for(var/r in altPatient.reagents.reagent_list)
+			var/datum/reagent/reagent = r
+			if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+				continue
+			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
+			if(reagent.overdosed)
+				overdose_list += list(list("name" = reagent.name))
 	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
-			chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
-			if(bit.overdosed)
-				overdose_list += list(list("name" = bit.name))
-	var/list/addictions = altPatient.get_addiction_list()
-	if(addictions.len)
-		for(var/datum/reagent/R in addictions)
-			addict_list += list(list("name" = R.name))
+			if(bit.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+				continue
+			if(!belly.food_reagents[bit.type])
+				chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
+			else
+				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
+				if(bit_vol > 0)
+					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
+	for(var/datum/addiction/addiction_type as anything in altPatient.mind.active_addictions)
+		addict_list += list(list("name" = initial(addiction_type.name)))
+
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
@@ -293,10 +321,10 @@
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
-	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001)		//To break this down for easy reading, all health values are rounded to the .001 place
-	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001)		//then a random number is added, which is multiplied by chaos modifier.
-	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001)		//That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
-	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001)	//It's not the cleanest but it does make for a colorful window.
+	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001) //To break this down for easy reading, all health values are rounded to the .001 place
+	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001) //then a random number is added, which is multiplied by chaos modifier.
+	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001) //That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
+	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001) //It's not the cleanest but it does make for a colorful window.
 	data["clone_health"] = round(clone_loss+(chaos_modifier * (rand(1,30))),0.001)
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
@@ -316,10 +344,10 @@
 	data["addict_list"] = addict_list
 	data["hallucinating_status"] = hallucination_status
 
-	data["active_status_1"] = scan_active_1 // General Scan Check
-	data["active_status_2"] = scan_active_2	// Symptom Scan Check
-	data["active_status_3"] = scan_active_3	// Radio-Neuro Scan Check
-	data["active_status_4"] = scan_active_4	// Radio-Neuro Scan Check
+	data["active_status_1"] = scan_active & KIOSK_SCANNING_GENERAL // General Scan Check
+	data["active_status_2"] = scan_active & KIOSK_SCANNING_SYMPTOMS // Symptom Scan Check
+	data["active_status_3"] = scan_active & KIOSK_SCANNING_NEURORAD // Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active & KIOSK_SCANNING_REAGENTS // Reagents/hallucination Scan Check
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
@@ -329,28 +357,28 @@
 
 	switch(action)
 		if("beginScan_1")
-			if(!scan_active_1)
+			if(!(scan_active & KIOSK_SCANNING_GENERAL))
 				inuse()
 			if(paying_customer == TRUE)
-				scan_active_1 = TRUE
+				scan_active |= KIOSK_SCANNING_GENERAL
 				paying_customer = FALSE
 		if("beginScan_2")
-			if(!scan_active_2)
+			if(!(scan_active & KIOSK_SCANNING_SYMPTOMS))
 				inuse()
 			if(paying_customer == TRUE)
-				scan_active_2 = TRUE
+				scan_active |= KIOSK_SCANNING_SYMPTOMS
 				paying_customer = FALSE
 		if("beginScan_3")
-			if(!scan_active_3)
+			if(!(scan_active & KIOSK_SCANNING_NEURORAD))
 				inuse()
 			if(paying_customer == TRUE)
-				scan_active_3 = TRUE
+				scan_active |= KIOSK_SCANNING_NEURORAD
 				paying_customer = FALSE
 		if("beginScan_4")
-			if(!scan_active_4)
+			if(!(scan_active & KIOSK_SCANNING_REAGENTS))
 				inuse()
 			if(paying_customer == TRUE)
-				scan_active_4 = TRUE
+				scan_active |= KIOSK_SCANNING_REAGENTS
 				paying_customer = FALSE
 		if("clearTarget")
 			altPatient = null

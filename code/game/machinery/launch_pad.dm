@@ -224,12 +224,12 @@
 	var/closed = TRUE
 	var/obj/item/storage/briefcase/launchpad/briefcase
 
-/obj/machinery/launchpad/briefcase/Initialize(mapload, briefcase)
-    . = ..()
-    if(!briefcase)
-        log_game("[src] has been spawned without a briefcase.")
-        return INITIALIZE_HINT_QDEL
-    src.briefcase = briefcase
+/obj/machinery/launchpad/briefcase/Initialize(mapload, _briefcase)
+	. = ..()
+	if(!_briefcase)
+		log_game("[src] has been spawned without a briefcase.")
+		return INITIALIZE_HINT_QDEL
+	briefcase = _briefcase
 
 /obj/machinery/launchpad/briefcase/Destroy()
 	QDEL_NULL(briefcase)
@@ -243,9 +243,7 @@
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr)
-		if(!briefcase || !usr.can_hold_items())
-			return
-		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+		if(!briefcase || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
 		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
 		if(do_after(usr, 30, target = usr))

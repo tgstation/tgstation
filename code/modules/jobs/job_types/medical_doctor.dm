@@ -9,13 +9,16 @@
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_PHARMACY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_PHARMACY)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
 	bounty_types = CIV_JOB_MED
+	departments = DEPARTMENT_MEDICAL
+
+	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -34,4 +37,8 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 	box = /obj/item/storage/box/survival/medical
 
+	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
+
 	chameleon_extras = /obj/item/gun/syringe
+
+	id_trim = /datum/id_trim/job/medical_doctor

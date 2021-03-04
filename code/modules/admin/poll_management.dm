@@ -1,9 +1,9 @@
 /**
-  * Datum which holds details of a running poll loaded from the database and supplementary info.
-  *
-  * Used to minimize the need for querying this data every time it's needed.
-  *
-  */
+ * Datum which holds details of a running poll loaded from the database and supplementary info.
+ *
+ * Used to minimize the need for querying this data every time it's needed.
+ *
+ */
 /datum/poll_question
 	///Reference list of the options for this poll, not used by text response polls.
 	var/list/options = list()
@@ -41,11 +41,11 @@
 	var/future_poll
 
 /**
-  * Datum which holds details of a poll option loaded from the database.
-  *
-  * Used to minimize the need for querying this data every time it's needed.
-  *
-  */
+ * Datum which holds details of a poll option loaded from the database.
+ *
+ * Used to minimize the need for querying this data every time it's needed.
+ *
+ */
 /datum/poll_option
 	///Reference to the poll this option belongs to
 	var/datum/poll_question/parent_poll
@@ -67,9 +67,9 @@
 	var/default_percentage_calc
 
 /**
-  * Shows a list of all current and future polls and buttons to edit or delete them or create a new poll.
-  *
-  */
+ * Shows a list of all current and future polls and buttons to edit or delete them or create a new poll.
+ *
+ */
 /datum/admins/proc/poll_list_panel()
 	var/list/output = list("Current and future polls<br>Note when editing polls or their options changes are not saved until you press Submit Poll.<br><a href='?_src_=holder;[HrefToken()];newpoll=1'>New Poll</a><a href='?_src_=holder;[HrefToken()];reloadpolls=1'>Reload Polls</a><hr>")
 	for(var/p in GLOB.polls)
@@ -91,9 +91,9 @@
 	panel.open()
 
 /**
-  * Show the options for creating a poll or editing its parameters along with its linked options.
-  *
-  */
+ * Show the options for creating a poll or editing its parameters along with its linked options.
+ *
+ */
 /datum/admins/proc/poll_management_panel(datum/poll_question/poll)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>Poll type
@@ -235,12 +235,12 @@
 	panel.open()
 
 /**
-  * Processes topic data from poll management panel.
-  *
-  * Reads through returned form data and assigns data to the poll datum, creating a new one if required, before passing it to be saved.
-  * Also does some simple error checking to ensure the poll will be valid before creation.
-  *
-  */
+ * Processes topic data from poll management panel.
+ *
+ * Reads through returned form data and assigns data to the poll datum, creating a new one if required, before passing it to be saved.
+ * Also does some simple error checking to ensure the poll will be valid before creation.
+ *
+ */
 /datum/admins/proc/poll_parse_href(list/href_list, datum/poll_question/poll)
 	if(!check_rights(R_POLL))
 		return
@@ -344,12 +344,12 @@
 	return ..()
 
 /**
-  * Sets a poll and its associated data as deleted in the database.
-  *
-  * Calls the procedure set_poll_deleted to set the deleted column to 1 for each row in the poll_ tables matching the poll id used.
-  * Then deletes each option datum and finally the poll itself.
-  *
-  */
+ * Sets a poll and its associated data as deleted in the database.
+ *
+ * Calls the procedure set_poll_deleted to set the deleted column to 1 for each row in the poll_ tables matching the poll id used.
+ * Then deletes each option datum and finally the poll itself.
+ *
+ */
 /datum/poll_question/proc/delete_poll()
 	if(!check_rights(R_POLL))
 		return
@@ -371,14 +371,14 @@
 	qdel(src)
 
 /**
-  * Inserts or updates a poll question to the database.
-  *
-  * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
-  * The start and end datetimes and poll id for new polls is then retrieved for the poll datum.
-  * Arguments:
-  * * clear_votes - When true will call clear_poll_votes() to delete all votes matching this poll id.
-  *
-  */
+ * Inserts or updates a poll question to the database.
+ *
+ * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
+ * The start and end datetimes and poll id for new polls is then retrieved for the poll datum.
+ * Arguments:
+ * * clear_votes - When true will call clear_poll_votes() to delete all votes matching this poll id.
+ *
+ */
 /datum/poll_question/proc/save_poll_data(clear_votes)
 	if(!check_rights(R_POLL))
 		return
@@ -437,13 +437,13 @@
 	message_admins("[kna] [msg]")
 
 /**
-  * Saves all options of a poll to the database.
-  *
-  * Saves all the created options for a poll when it's submitted to the DB for the first time and associated an id with the options.
-  * Insertion and id querying for each option is done separately to ensure data integrity; this is less performant, but not significantly.
-  * Using MassInsert() would mean having to query a list of rows by poll_id or matching by fields afterwards, which doesn't guarantee accuracy.
-  *
-  */
+ * Saves all options of a poll to the database.
+ *
+ * Saves all the created options for a poll when it's submitted to the DB for the first time and associated an id with the options.
+ * Insertion and id querying for each option is done separately to ensure data integrity; this is less performant, but not significantly.
+ * Using MassInsert() would mean having to query a list of rows by poll_id or matching by fields afterwards, which doesn't guarantee accuracy.
+ *
+ */
 /datum/poll_question/proc/save_all_options()
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
@@ -453,9 +453,9 @@
 		option.save_option()
 
 /**
-  * Deletes all votes or text replies for this poll, depending on its type.
-  *
-  */
+ * Deletes all votes or text replies for this poll, depending on its type.
+ *
+ */
 /datum/poll_question/proc/clear_poll_votes()
 	if(!check_rights(R_POLL))
 		return
@@ -477,12 +477,12 @@
 	to_chat(usr, "<span class='danger'>Poll [poll_type == POLLTYPE_TEXT ? "responses" : "votes"] cleared.</span>", confidential = TRUE)
 
 /**
-  * Show the options for creating a poll option or editing its parameters.
-  *
-  */
+ * Show the options for creating a poll option or editing its parameters.
+ *
+ */
 /datum/admins/proc/poll_option_panel(datum/poll_question/poll, datum/poll_option/option)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
-	output += {"<input type='hidden' name='src' value='[REF(src)]'>	Option for poll [poll.question]
+	output += {"<input type='hidden' name='src' value='[REF(src)]'> Option for poll [poll.question]
 	<br>
 	<textarea class='textbox' name='optiontext'>[option?.text]</textarea>
 	<br>
@@ -493,7 +493,7 @@
 		Maximum Value
 		<input type='text' name='maxval' size='3' value='[option?.max_val]'>
 		<div class='row'>
-  			<div class='column left'>
+			<div class='column left'>
 				<label class='inputlabel checkbox'>Minimum description
 				<input type='checkbox' id='descmincheck' name='descmincheck' value='1'[option?.desc_min ? " checked": ""]>
 				<div class='inputbox'></div></label>
@@ -533,12 +533,12 @@
 	panel.open()
 
 /**
-  * Processes topic data from poll option panel.
-  *
-  * Reads through returned form data and assigns data to the option datum, creating a new one if required, before passing it to be saved.
-  * Also does some simple error checking to ensure the option will be valid before creation.
-  *
-  */
+ * Processes topic data from poll option panel.
+ *
+ * Reads through returned form data and assigns data to the option datum, creating a new one if required, before passing it to be saved.
+ * Also does some simple error checking to ensure the option will be valid before creation.
+ *
+ */
 /datum/admins/proc/poll_option_parse_href(list/href_list, datum/poll_question/poll, datum/poll_option/option)
 	if(!check_rights(R_POLL))
 		return
@@ -631,12 +631,12 @@
 	return ..()
 
 /**
-  * Inserts or updates a poll option to the database.
-  *
-  * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
-  * The list of columns and values is built dynamically to avoid excess data being sent when not a rating type poll.
-  *
-  */
+ * Inserts or updates a poll option to the database.
+ *
+ * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
+ * The list of columns and values is built dynamically to avoid excess data being sent when not a rating type poll.
+ *
+ */
 /datum/poll_option/proc/save_option()
 	if(!check_rights(R_POLL))
 		return
@@ -668,9 +668,9 @@
 	qdel(query_update_poll_option)
 
 /**
-  * Sets a poll option and its votes as deleted in the database then deletes its datum.
-  *
-  */
+ * Sets a poll option and its votes as deleted in the database then deletes its datum.
+ *
+ */
 /datum/poll_option/proc/delete_option()
 	if(!check_rights(R_POLL))
 		return
@@ -690,9 +690,9 @@
 	qdel(src)
 
 /**
-  * Loads all current and future server polls and their options to store both as datums.
-  *
-  */
+ * Loads all current and future server polls and their options to store both as datums.
+ *
+ */
 /proc/load_poll_data()
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)

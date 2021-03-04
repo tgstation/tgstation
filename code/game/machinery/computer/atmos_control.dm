@@ -10,7 +10,6 @@
 
 	var/on = TRUE
 
-	var/id_tag
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
@@ -50,9 +49,6 @@
 /obj/machinery/air_sensor/atmos/healium_tank
 	name = "healium tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEALIUM
-/obj/machinery/air_sensor/atmos/hexane_tank
-	name = "hexane tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEXANE
 /obj/machinery/air_sensor/atmos/hydrogen_tank
 	name = "hydrogen tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2
@@ -83,12 +79,19 @@
 /obj/machinery/air_sensor/atmos/zauker_tank
 	name = "zauker tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_ZAUKER
+/obj/machinery/air_sensor/atmos/helium_tank
+	name = "helium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HELIUM
+/obj/machinery/air_sensor/atmos/antinoblium_tank
+	name = "antinoblium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_ANTINOBLIUM
 /obj/machinery/air_sensor/atmos/incinerator_tank
 	name = "incinerator chamber gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
 
 /obj/machinery/air_sensor/update_icon_state()
 	icon_state = "gsensor[on]"
+	return ..()
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
@@ -152,7 +155,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_FREON = "Freon Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HALON = "Halon Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank",
-		ATMOS_GAS_MONITOR_SENSOR_HEXANE = "Hexane Tank",
 		ATMOS_GAS_MONITOR_SENSOR_H2 = "Hydrogen Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM = "Hypernoblium Tank",
 		ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank",
@@ -198,11 +200,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if(!info)
 			continue
 		data["sensors"] += list(list(
-			"id_tag"		= id_tag,
-			"long_name" 	= sanitize(long_name),
-			"pressure"		= info["pressure"],
-			"temperature"	= info["temperature"],
-			"gases"			= info["gases"]
+			"id_tag" = id_tag,
+			"long_name" = sanitize(long_name),
+			"pressure" = info["pressure"],
+			"temperature" = info["temperature"],
+			"gases" = info["gases"]
 		))
 	return data
 
@@ -322,13 +324,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/healium_tank
 
-/obj/machinery/computer/atmos_control/tank/hexane_tank
-	name = "Hexane Supply Control"
-	input_tag = ATMOS_GAS_MONITOR_INPUT_HEXANE
-	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HEXANE
-	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HEXANE = "Hexane Tank")
-	circuit = /obj/item/circuitboard/computer/atmos_control/tank/hexane_tank
-
 /obj/machinery/computer/atmos_control/tank/hydrogen_tank
 	name = "Hydrogen Supply Control"
 	input_tag = ATMOS_GAS_MONITOR_INPUT_H2
@@ -398,6 +393,20 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_ZAUKER
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_ZAUKER = "Zauker Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/zauker_tank
+
+/obj/machinery/computer/atmos_control/tank/helium_tank
+	name = "Helium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_HELIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HELIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HELIUM = "Helium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/helium_tank
+
+/obj/machinery/computer/atmos_control/tank/antinoblium_tank
+	name = "Antinoblium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_ANTINOBLIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_ANTINOBLIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_ANTINOBLIUM = "Antinoblium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/antinoblium_tank
 
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)

@@ -1,5 +1,5 @@
 /obj/item/computer_hardware/card_slot
-	name = "primary RFID card module"	// \improper breaks the find_hardware_by_name proc
+	name = "primary RFID card module" // \improper breaks the find_hardware_by_name proc
 	desc = "A module allowing this computer to read or write data on ID cards. Necessary for some programs to run properly."
 	power_usage = 10 //W
 	icon_state = "card_mini"
@@ -14,7 +14,7 @@
 	. = ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
-	try_eject()
+	try_eject(forced = TRUE)
 	return ..()
 
 /obj/item/computer_hardware/card_slot/GetAccess()
@@ -47,6 +47,11 @@
 
 	if(stored_card)
 		return FALSE
+
+	// item instead of player is checked so telekinesis will still work if the item itself is close
+	if(!in_range(src, I))
+		return FALSE
+
 	if(user)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
@@ -56,9 +61,13 @@
 	stored_card = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.sec_hud_set_ID()
+
+	var/holder_loc = holder.loc
+	if(ishuman(holder_loc))
+		var/mob/living/carbon/human/human_wearer = holder_loc
+		if(human_wearer.wear_id == holder)
+			human_wearer.sec_hud_set_ID()
+	holder.update_slot_icon()
 
 	return TRUE
 
@@ -68,7 +77,7 @@
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE
 
-	if(user)
+	if(user && !issilicon(user) && in_range(src, user))
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(drop_location())
@@ -81,11 +90,18 @@
 		for(var/p in holder.idle_threads)
 			var/datum/computer_file/program/computer_program = p
 			computer_program.event_idremoved(1)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.sec_hud_set_ID()
+
+		holder.update_slot_icon()
+
+	var/holder_loc = holder.loc
+	if(ishuman(holder_loc))
+		var/mob/living/carbon/human/human_wearer = holder_loc
+		if(human_wearer.wear_id == holder)
+			human_wearer.sec_hud_set_ID()
+
 	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
 	return TRUE
 
 /obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
@@ -100,7 +116,7 @@
 		to_chat(user, "<span class='notice'>You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"].</span>")
 
 /**
-  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
+ *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
 */
 /obj/item/computer_hardware/card_slot/proc/swap_slot()
 	expansion_hw = !expansion_hw

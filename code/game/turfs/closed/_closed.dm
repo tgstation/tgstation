@@ -5,6 +5,7 @@
 	blocks_air = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
+	pass_flags_self = PASSCLOSEDTURF
 
 /turf/closed/AfterChange()
 	. = ..()
@@ -13,13 +14,9 @@
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
 
-/turf/closed/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
-		return TRUE
-
 /turf/closed/indestructible
 	name = "wall"
+	desc = "Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
@@ -77,6 +74,18 @@
 			if(NAMEOF(src, icon))
 				SStitle.icon = icon
 
+
+/turf/closed/indestructible/reinforced
+	name = "reinforced wall"
+	desc = "A huge chunk of reinforced metal used to separate rooms. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
+	icon_state = "reinforced_wall-0"
+	base_icon_state = "reinforced_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WALLS)
+
+
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted-0"
@@ -89,7 +98,7 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
@@ -115,6 +124,29 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
+
+/turf/closed/indestructible/alien
+	name = "alien wall"
+	desc = "A wall with alien alloy plating."
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor_wall-0"
+	base_icon_state = "abductor_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
+
+
+/turf/closed/indestructible/cult
+	name = "runed metal wall"
+	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/cult_wall.dmi'
+	icon_state = "cult_wall-0"
+	base_icon_state = "cult_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WALLS)
+
+
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
 
@@ -136,7 +168,6 @@
 	. = ..()
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
-
 
 /turf/closed/indestructible/opsglass
 	name = "window"
@@ -208,6 +239,17 @@
 	underlay_appearance.icon_state = "necro1"
 	return TRUE
 
+/turf/closed/indestructible/iron
+	name = "impervious iron wall"
+	desc = "A wall with tough iron plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron_wall-0"
+	base_icon_state = "iron_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
+	opacity = FALSE
+
 /turf/closed/indestructible/riveted/boss
 	name = "necropolis wall"
 	desc = "A thick, seemingly indestructible stone wall."
@@ -234,3 +276,5 @@
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
 	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
+	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)

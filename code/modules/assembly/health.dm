@@ -27,7 +27,7 @@
 	else
 		scanning = FALSE
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/health/AltClick(mob/living/user)
@@ -43,7 +43,7 @@
 		return
 
 	var/atom/A = src
-	if(connected && connected.holder)
+	if(connected?.holder)
 		A = connected.holder
 	for(A, A && !ismob(A), A=A.loc);
 	// like get_turf(), but for mobs.

@@ -5,12 +5,11 @@
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
 #define MAX_PAPER_LENGTH 5000
-#define MAX_PAPER_STAMPS 30		// Too low?
+#define MAX_PAPER_STAMPS 30 // Too low?
 #define MAX_PAPER_STAMPS_OVERLAYS 4
 #define MODE_READING 0
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
-
 
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
@@ -44,8 +43,8 @@
 	var/show_written_words = TRUE
 
 	/// The (text for the) stamps on the paper.
-	var/list/stamps			/// Positioning for the stamp in tgui
-	var/list/stamped		/// Overlay info
+	var/list/stamps /// Positioning for the stamp in tgui
+	var/list/stamped /// Overlay info
 
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
@@ -101,13 +100,14 @@
 
 /obj/item/paper/Initialize()
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
-	update_icon()
+	pixel_x = base_pixel_x + rand(-9, 9)
+	pixel_y = base_pixel_y + rand(-8, 8)
+	update_appearance()
 
 /obj/item/paper/update_icon_state()
 	if(info && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
+	return ..()
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -124,7 +124,7 @@
 			H.update_damage_hud()
 			return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
-	if((loc == usr && usr.stat == CONSCIOUS))
+	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
@@ -153,7 +153,7 @@
 		// Are we on fire?  Hard ot read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
-	if(!in_range(user,src))
+	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
 	if(user.incapacitated(TRUE, TRUE) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
@@ -161,7 +161,7 @@
 	// .. or if you cannot read
 	if(!user.can_read(src))
 		return UI_CLOSE
-	if(in_contents_of(/obj/machinery/door/airlock))
+	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard))
 		return UI_INTERACTIVE
 	return ..()
 
@@ -198,7 +198,11 @@
 		SStgui.close_uis(src)
 		return
 
-	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+	// Enable picking paper up by clicking on it with the clipboard or folder
+	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder))
+		P.attackby(src, user)
+		return
+	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
@@ -210,7 +214,7 @@
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
 		// cut paper?  the sky is the limit!
-		ui_interact(user)	// The other ui will be created with just read mode outside of this
+		ui_interact(user) // The other ui will be created with just read mode outside of this
 
 	return ..()
 
@@ -237,8 +241,8 @@
 	. = list()
 	.["text"] = info
 	.["max_length"] = MAX_PAPER_LENGTH
-	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
-	.["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
+	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
+	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = stamps
 
 
@@ -247,27 +251,32 @@
 	var/list/data = list()
 	data["edit_usr"] = "[user]"
 
-	var/obj/O = user.get_active_held_item()
-	if(istype(O, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/PEN = O
+	var/obj/holding = user.get_active_held_item()
+	// Use a clipboard's pen, if applicable
+	if(istype(loc, /obj/item/clipboard))
+		var/obj/item/clipboard/clipboard = loc
+		if(clipboard.pen)
+			holding = clipboard.pen
+	if(istype(holding, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/PEN = holding
 		data["pen_font"] = CRAYON_FONT
 		data["pen_color"] = PEN.paint_color
 		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = TRUE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
-	else if(istype(O, /obj/item/pen))
-		var/obj/item/pen/PEN = O
+	else if(istype(holding, /obj/item/pen))
+		var/obj/item/pen/PEN = holding
 		data["pen_font"] = PEN.font
 		data["pen_color"] = PEN.colour
 		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
-	else if(istype(O, /obj/item/stamp))
+	else if(istype(holding, /obj/item/stamp))
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		data["stamp_icon_state"] = O.icon_state
-		data["stamp_class"] = sheet.icon_class_name(O.icon_state)
+		data["stamp_icon_state"] = holding.icon_state
+		data["stamp_class"] = sheet.icon_class_name(holding.icon_state)
 		data["edit_mode"] = MODE_STAMPING
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
@@ -292,14 +301,14 @@
 		if("stamp")
 			var/stamp_x = text2num(params["x"])
 			var/stamp_y = text2num(params["y"])
-			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/stamp_r = text2num(params["r"]) // rotation in degrees
 			var/stamp_icon_state = params["stamp_icon_state"]
 			var/stamp_class = params["stamp_class"]
 			if (isnull(stamps))
 				stamps = list()
 			if(stamps.len < MAX_PAPER_STAMPS)
 				// I hate byond when dealing with freaking lists
-				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r)	/// WHHHHY
+				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r) /// WHHHHY
 
 				/// This does the overlay stuff
 				if (isnull(stamped))
@@ -312,7 +321,8 @@
 					LAZYADD(stamped, stamp_icon_state)
 
 				update_static_data(usr,ui)
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
+				var/obj/O = ui.user.get_active_held_item()
+				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with \the [O.name]!</span>", "<span class='notice'>You stamp [src] with \the [O.name]!</span>")
 			else
 				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 			. = TRUE
@@ -338,7 +348,7 @@
 					update_static_data(usr,ui)
 
 
-			update_icon()
+			update_appearance()
 			. = TRUE
 
 /**
@@ -362,9 +372,6 @@
 	icon_state = "scrap"
 	slot_flags = null
 	show_written_words = FALSE
-
-/obj/item/paper/crumpled/update_icon_state()
-	return
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

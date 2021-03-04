@@ -30,14 +30,14 @@
 #define VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD 150
 
 //#define IS_VALID_ASSOC_KEY(V) (istext(V) || ispath(V) || isdatum(V) || islist(V))
-#define IS_VALID_ASSOC_KEY(V) (!isnum(V))		//hhmmm..
+#define IS_VALID_ASSOC_KEY(V) (!isnum(V)) //hhmmm..
 
 //General helpers
 #define VV_HREF_TARGET_INTERNAL(target, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
 #define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
 #define VV_HREF_TARGET(target, href_key, text) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)]'>[text]</a>"
 #define VV_HREF_TARGETREF(targetref, href_key, text) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)]'>[text]</a>"
-#define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>"		//for stuff like basic varedits, one variable
+#define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>" //for stuff like basic varedits, one variable
 #define VV_HREF_TARGETREF_1V(targetref, href_key, text, varname) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>"
 
 #define GET_VV_TARGET locate(href_list[VV_HK_TARGET])
@@ -51,7 +51,7 @@
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
-#define VV_HK_VARNAME "targetvar"		//name or index of var for 1 variable targetting hrefs.
+#define VV_HK_VARNAME "targetvar" //name or index of var for 1 variable targetting hrefs.
 
 // vv_do_list() keys
 #define VV_HK_LIST_ADD "listadd"
@@ -75,7 +75,6 @@
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
-#define VV_HK_VIEW_REFERENCES "viewreferences"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
@@ -84,6 +83,11 @@
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_RADIATE "radiate"
+#define VV_HK_EDIT_FILTERS "edit_filters"
+#define VV_HK_ADD_AI "add_ai"
+
+// /atom/movable
+#define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
 
 // /obj
 #define VV_HK_OSAY "osay"

@@ -1,10 +1,12 @@
 /datum/computer_file/program/atmosscan
 	filename = "atmosscan"
 	filedesc = "AtmoZphere"
+	category = PROGRAM_CATEGORY_ENGI
 	program_icon_state = "air"
 	extended_desc = "A small built-in sensor reads out the atmospheric conditions around the device."
 	size = 4
 	tgui_id = "NtosAtmos"
+	program_icon = "thermometer-half"
 
 /datum/computer_file/program/atmosscan/run_program(mob/living/user)
 	. = ..()

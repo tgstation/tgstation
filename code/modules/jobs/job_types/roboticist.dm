@@ -11,15 +11,18 @@
 	bounty_types = CIV_JOB_ROBO
 
 	outfit = /datum/outfit/job/roboticist
+	departments = DEPARTMENT_SCIENCE
 
-	access = list(ACCESS_ROBOTICS, ACCESS_RND, ACCESS_TOXINS, ACCESS_TOXINS_STORAGE, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_MECH_SCIENCE,
-					ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM, ACCESS_XENOBIOLOGY, ACCESS_GENETICS, ACCESS_AUX_BASE)
-	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM,
-						ACCESS_RND, ACCESS_AUX_BASE)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
+
+	family_heirlooms = list(/obj/item/toy/plush/pkplush)
+
+/datum/job/roboticist/New()
+	. = ..()
+	family_heirlooms += subtypesof(/obj/item/toy/prize)
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"
@@ -29,11 +32,14 @@
 	l_pocket = /obj/item/pda/roboticist
 	ears = /obj/item/radio/headset/headset_sci
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
-	suit = /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
+	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
 
 	pda_slot = ITEM_SLOT_LPOCKET
 
-	skillchip_path = /obj/item/skillchip/job/roboticist
+	skillchips = list(/obj/item/skillchip/job/roboticist)
+
+	id_trim = /datum/id_trim/job/roboticist

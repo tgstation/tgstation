@@ -18,7 +18,7 @@
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
@@ -26,7 +26,7 @@
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
@@ -39,22 +39,14 @@
 	SSradio.remove_object(src,frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/components/trinary/filter/update_overlays()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue
+
 		var/obj/machinery/atmospherics/node = findConnecting(direction)
-
-		var/image/cap
-		if(node)
-			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer, trinary = TRUE)
-		else
-			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer, trinary = TRUE)
-
-		add_overlay(cap)
-
-	return ..()
+		. += getpipeimage(icon, "cap", direction, node?.pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
@@ -165,10 +157,10 @@
 			var/gas = gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
-				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
+				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
 	. = ..()
@@ -248,9 +240,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/healium
 	name = "healium filter"
 	filter_type = "healium"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/hexane
-	name = "hexane filter"
-	filter_type = "hexane"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/h2
 	name = "hydrogen filter"
 	filter_type = "hydrogen"
@@ -282,6 +271,14 @@
 	name = "zauker filter"
 	filter_type = "zauker"
 
+/obj/machinery/atmospherics/components/trinary/filter/atmos/helium
+	name = "helium filter"
+	filter_type = "helium"
+
+/obj/machinery/atmospherics/components/trinary/filter/atmos/antinoblium
+	name = "antinoblium filter"
+	filter_type = "antinoblium"
+
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
 	icon_state = "filter_on-0_f"
 	flipped = TRUE
@@ -312,9 +309,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/healium
 	name = "healium filter"
 	filter_type = "healium"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/hexane
-	name = "hexane filter"
-	filter_type = "hexane"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/h2
 	name = "hydrogen filter"
 	filter_type = "hydrogen"
@@ -345,6 +339,12 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/zauker
 	name = "zauker filter"
 	filter_type = "zauker"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/helium
+	name = "helium filter"
+	filter_type = "helium"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/antinoblium
+	name = "antinoblium filter"
+	filter_type = "antinoblium"
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 

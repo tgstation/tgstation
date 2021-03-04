@@ -33,14 +33,14 @@
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/pause)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/pause)
 
 /datum/component/manual_blinking/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
 	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
-	UnregisterSignal(parent, COMSIG_MOB_DEATH)
+	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 
 /datum/component/manual_blinking/proc/restart()
 	SIGNAL_HANDLER

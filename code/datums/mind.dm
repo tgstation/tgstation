@@ -1,24 +1,24 @@
-/*	Note from Carnie:
+/* Note from Carnie:
 		The way datum/mind stuff works has been changed a lot.
 		Minds now represent IC characters rather than following a client around constantly.
 
 	Guidelines for using minds properly:
 
-	-	Never mind.transfer_to(ghost). The var/current and var/original of a mind must always be of type mob/living!
+	- Never mind.transfer_to(ghost). The var/current and var/original of a mind must always be of type mob/living!
 		ghost.mind is however used as a reference to the ghost's corpse
 
-	-	When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
+	- When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
 		the existing mind of the old mob should be transfered to the new mob like so:
 
 			mind.transfer_to(new_mob)
 
-	-	You must not assign key= or ckey= after transfer_to() since the transfer_to transfers the client for you.
+	- You must not assign key= or ckey= after transfer_to() since the transfer_to transfers the client for you.
 		By setting key or ckey explicitly after transferring the mind with transfer_to you will cause bugs like DCing
 		the player.
 
-	-	IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
+	- IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
 
-	-	When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
+	- When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
 		a ghost to become a xeno during an event). Simply assign the key or ckey like you've always done.
 
 			new_mob.key = key
@@ -31,8 +31,8 @@
 
 /datum/mind
 	var/key
-	var/name				//replaces mob/var/original_name
-	var/ghostname			//replaces name for observers name if set
+	var/name //replaces mob/var/original_name
+	var/ghostname //replaces name for observers name if set
 	var/mob/living/current
 	var/active = FALSE
 
@@ -44,7 +44,6 @@
 
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
-	var/linglink
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
 	var/miming = FALSE // Mime's vow of silence
@@ -69,14 +68,25 @@
 	var/list/skills_rewarded
 	///Assoc list of skills. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
 	var/list/known_skills = list()
-	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	///What character we joined in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
-	/// What scar slot we have loaded, so we don't have to constantly check the savefile
-	var/current_scar_slot
+	/// The index for what character slot, if any, we were loaded from, so we can track persistent scars on a per-character basis. Each character slot gets PERSISTENT_SCAR_SLOTS scar slots
+	var/original_character_slot_index
+	/// The index for our current scar slot, so we don't have to constantly check the savefile (unlike the slots themselves, this index is independent of selected char slot, and increments whenever a valid char is joined with)
+	var/current_scar_slot_index
+
 	///Skill multiplier, adjusts how much xp you get/loose from adjust_xp. Dont override it directly, add your reason to experience_multiplier_reasons and use that as a key to put your value in there.
 	var/experience_multiplier = 1
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
+
+	/// A lazy list of statuses to add next to this mind in the traitor panel
+	var/list/special_statuses
+
+	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
+	var/list/addiction_points
+	///Assoc list of key active addictions and value amount of cycles that it has been active.
+	var/list/active_addictions
 
 /datum/mind/New(_key)
 	key = _key
@@ -97,38 +107,38 @@
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	original_character = null
-	if(current)	// remove ourself from our old body's mind variable
+	if(current) // remove ourself from our old body's mind variable
 		current.mind = null
-		UnregisterSignal(current, COMSIG_MOB_DEATH)
+		UnregisterSignal(current, COMSIG_LIVING_DEATH)
 		SStgui.on_transfer(current, new_character)
 
 	if(key)
-		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
-			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
+		if(new_character.key != key) //if we're transferring into a body with a key associated which is not ours
+			new_character.ghostize(1) //we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
 
-	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
+	if(new_character.mind) //disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
 	var/mob/living/old_current = current
 	if(current)
-		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
-	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself
-	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
+		current.transfer_observers_to(new_character) //transfer anyone observing the old character to the new one
+	current = new_character //associate ourself with our new body
+	new_character.mind = src //and associate our new body with ourself
+	for(var/a in antag_datums) //Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
-	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
+	transfer_antag_huds(hud_to_transfer) //inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
-	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
+	RegisterSignal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
-		new_character.key = key		//now transfer the key to link the client to our new body
+		new_character.key = key //now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
@@ -275,7 +285,6 @@
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
 		return
-	. = FALSE
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
 		if(check_subtypes && istype(A, datum_type))
@@ -357,6 +366,7 @@
 		P = locate() in all_contents
 
 	var/obj/item/uplink_loc
+	var/implant = FALSE
 
 	if(traitor_mob.client && traitor_mob.client.prefs)
 		switch(traitor_mob.client.prefs.uplink_spawn_loc)
@@ -374,20 +384,13 @@
 					uplink_loc = P
 			if(UPLINK_PEN)
 				uplink_loc = P
+			if(UPLINK_IMPLANT)
+				implant = TRUE
 
-	if(!uplink_loc) // We've looked everywhere, let's just give you a pen
-		if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
-			P = new /obj/item/pen(traitor_mob.back)
-		else
-			P = new /obj/item/pen(traitor_mob.loc)
-			traitor_mob.put_in_hands(P) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
-		uplink_loc = P
+	if(!uplink_loc) // We've looked everywhere, let's just implant you
+		implant = TRUE
 
-	if (!uplink_loc)
-		if(!silent)
-			to_chat(traitor_mob, "<span class='boldwarning'>Unfortunately, [employer] wasn't able to get you an Uplink.</span>")
-		. = 0
-	else
+	if (!implant)
 		. = uplink_loc
 		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		if(!U)
@@ -405,6 +408,13 @@
 			uplink_owner.antag_memory += U.unlock_note + "<br>"
 		else
 			traitor_mob.mind.store_memory(U.unlock_note)
+	else
+		var/obj/item/implant/uplink/starting/I = new(traitor_mob)
+		I.implant(traitor_mob, null, silent = TRUE)
+		if(!silent)
+			to_chat(traitor_mob, "<span class='boldnotice'>[employer] has cunningly implanted you with a Syndicate Uplink (although uplink implants cost valuable TC, so you will have slightly less). Simply trigger the uplink to access it.</span>")
+		return I
+
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -479,7 +489,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(get_all_jobs())
+		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(SSjob.station_jobs)
 		if (!new_role)
 			return
 		assigned_role = new_role
@@ -610,7 +620,7 @@
 		switch(href_list["common"])
 			if("undress")
 				for(var/obj/item/W in current)
-					current.dropItemToGround(W, TRUE) //The 1 forces all items to drop, since this is an admin undress.
+					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
 				memory = null//Remove any memory they may have had.
@@ -730,7 +740,7 @@
 			martial_art.teach(new_character)
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
-	if(current && current.actions)
+	if(current?.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
@@ -763,6 +773,11 @@
 	if(G)
 		G.reenter_corpse()
 
+/// Sets our can_hijack to the fastest speed our antag datums allow.
+/datum/mind/proc/get_hijack_speed()
+	. = 0
+	for(var/datum/antagonist/A in antag_datums)
+		. = max(., A.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)
@@ -771,13 +786,25 @@
 				return TRUE
 
 /mob/proc/sync_mind()
-	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = TRUE	//indicates that the mind is currently synced with a client
+	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = TRUE //indicates that the mind is currently synced with a client
 
 /datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE
+
+///Adds addiction points to the specified addiction
+/datum/mind/proc/add_addiction_points(type, amount)
+	LAZYSET(addiction_points, type, min(LAZYACCESS(addiction_points, type) + amount, MAX_ADDICTION_POINTS))
+	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
+	return affected_addiction.on_gain_addiction_points(src)
+
+///Adds addiction points to the specified addiction
+/datum/mind/proc/remove_addiction_points(type, amount)
+	LAZYSET(addiction_points, type, max(LAZYACCESS(addiction_points, type) - amount, 0))
+	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
+	return affected_addiction.on_lose_addiction_points(src)
 
 /mob/dead/new_player/sync_mind()
 	return

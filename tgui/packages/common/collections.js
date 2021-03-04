@@ -73,7 +73,7 @@ export const toKeyedArray = (obj, keyProp = 'key') => {
  * @returns {any[]}
  */
 export const filter = iterateeFn => collection => {
-  if (collection === null && collection === undefined) {
+  if (collection === null || collection === undefined) {
     return collection;
   }
   if (Array.isArray(collection)) {
@@ -100,7 +100,7 @@ export const filter = iterateeFn => collection => {
  * @returns {any[]}
  */
 export const map = iterateeFn => collection => {
-  if (collection === null && collection === undefined) {
+  if (collection === null || collection === undefined) {
     return collection;
   }
   if (Array.isArray(collection)) {

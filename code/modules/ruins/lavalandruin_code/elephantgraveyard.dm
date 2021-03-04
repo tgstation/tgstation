@@ -33,17 +33,20 @@
 	name = "cracked earth"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "wasteland"
-	environment_type = "wasteland"
+	base_icon_state = "wasteland"
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	digResult = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0.5
 	floor_variance = 30
 
+/turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
+	return list("wasteland")
+
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
 	if(prob(floor_variance))
-		icon_state = "[environment_type][rand(0,6)]"
+		icon_state = "[base_icon_state][rand(0,6)]"
 
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
@@ -64,9 +67,9 @@
 		new /obj/item/stack/sheet/bone(src, 1)
 
 //***Oil well puddles.
-/obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
+/obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
-	desc = "A bubbling pool of oil.This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
+	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
@@ -76,12 +79,12 @@
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 
-/obj/structure/sink/oil_well/attack_hand(mob/M)
+/obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
-	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
-	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
+	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
+	to_chat(user, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
+/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
 	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1&NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
@@ -97,7 +100,7 @@
 				return TRUE
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
 		return 1
 	else
@@ -119,6 +122,8 @@
 	anchored = TRUE
 	locked = TRUE
 	breakout_time = 900
+	open_sound = 'sound/effects/shovel_dig.ogg'
+	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
@@ -139,7 +144,7 @@
 			new /obj/item/storage/book/bible/booze(src)
 		if(5)
 			new /obj/item/clothing/neck/stethoscope(src)
-			new	/obj/item/scalpel(src)
+			new /obj/item/scalpel(src)
 			new /obj/item/hemostat(src)
 
 		if(6)
@@ -156,7 +161,7 @@
 		to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	if(user.a_intent == INTENT_HELP) //checks to attempt to dig the grave, must be done on help intent only.
+	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]...</span>")
@@ -164,7 +169,7 @@
 					opened = TRUE
 					locked = TRUE
 					dump_contents()
-					update_icon()
+					update_appearance()
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -179,7 +184,7 @@
 			to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 			return 1
 
-	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
+	else if((user.combat_mode) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, "<span class='notice'>You start to remove \the [src]  with \the [S].</span>")
 			if (do_after(user,15, target = src))
@@ -192,7 +197,7 @@
 /obj/structure/closet/crate/grave/bust_open()
 	..()
 	opened = TRUE
-	update_icon()
+	update_appearance()
 	dump_contents()
 	return
 
@@ -214,7 +219,7 @@
 
 /obj/item/book/granter/crafting_recipe/boneyard_notes
 	name = "The Complete Works of Lavaland Bone Architecture"
-	desc = "Pried from the lead  Archaeologist's cold, dead hands, this seems to explain how ancient bone architecture was erected long ago."
+	desc = "Pried from the lead Archaeologist's cold, dead hands, this seems to explain how ancient bone architecture was erected long ago."
 	crafting_recipe_types = list(/datum/crafting_recipe/rib, /datum/crafting_recipe/boneshovel, /datum/crafting_recipe/halfskull, /datum/crafting_recipe/skull)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "boneworking_learing"
@@ -245,6 +250,6 @@
 	info = "<b>Day 9: Tenative Conclusions</b><BR><BR>While the area appears to be of significant cultural importance to the lizard race, outside of some sparce contact with native wildlife, we're yet to find any exact reasoning for the nature of this phenomenon. It seems that organic life is communally drawn to this planet as though it functions as a final resting place for intelligent life. As per company guidelines, this site shall be given the following classification: 'LZ-0271 - Elephant Graveyard' <BR><BR><u>Compiled list of Artifact findings (Currently Sent Offsite)</u><BR>Cultist Blade Fragments: x8<BR>Brass Multiplicative Ore Sample: x105<BR>Syndicate Revolutionary Leader Implant (Broken) x1<BR>Extinct Cortical Borer Tissue Sample x1<BR>Space Carp Fossil x3"
 
 /obj/item/paper/fluff/ruins/elephant_graveyard/final_message
-	name = "important looking Note"
+	name = "important-looking note"
 	desc = "This note is well written, and seems to have been put here so you'd find it."
 	info = "If you find this... you don't need to know who I am.<BR><BR>You need to leave this place. I dunno what shit they did to me out here, but I don't think I'm going to be making it out of here.<BR><BR>This place... it wears down your psyche. The other researchers out here laughed it off but... They were the first to go.<BR><BR>One by one they started turning on each other. The more they found out, the more they started fighting and arguing...<BR>As I speak now, I had to... I wound up having to put most of my men down. I know what I had to do, and I know there's no way left for me to live with myself.<BR> If anyone ever finds this, just don't touch the graves.<BR><BR>DO NOT. TOUCH. THE GRAVES. Don't be a dumbass, like we all were."

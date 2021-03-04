@@ -1,6 +1,7 @@
 /obj/item/melee/transforming
 	sharpness = SHARP_EDGED
 	bare_wound_bonus = 20
+	stealthy_audio = TRUE //Most of these are antag weps so we dont want them to be /too/ overt.
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -14,6 +15,8 @@
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/clumsy_check = TRUE
+	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
+	var/sharpened_bonus
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -27,6 +30,7 @@
 			updateEmbedding()
 	if(sharpness)
 		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
+	RegisterSignal(src, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
@@ -48,8 +52,8 @@
 /obj/item/melee/transforming/proc/transform_weapon(mob/living/user, supress_message_text)
 	active = !active
 	if(active)
-		force = force_on
-		throwforce = throwforce_on
+		force = force_on + sharpened_bonus
+		throwforce = throwforce_on + sharpened_bonus
 		hitsound = hitsound_on
 		throw_speed = 4
 		if(attack_verb_on.len)
@@ -59,8 +63,8 @@
 		if(embedding)
 			updateEmbedding()
 	else
-		force = initial(force)
-		throwforce = initial(throwforce)
+		force = initial(force) + (get_sharpness() ? sharpened_bonus : 0)
+		throwforce = initial(throwforce) + (get_sharpness() ? sharpened_bonus : 0)
 		hitsound = initial(hitsound)
 		throw_speed = initial(throw_speed)
 		if(attack_verb_off.len)
@@ -86,3 +90,12 @@
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)
+
+/obj/item/melee/transforming/proc/on_sharpen(datum/source, increment, max)
+	SIGNAL_HANDLER
+
+	if(sharpened_bonus)
+		return COMPONENT_BLOCK_SHARPEN_ALREADY
+	if(force_on + increment > max)
+		return COMPONENT_BLOCK_SHARPEN_MAXED
+	sharpened_bonus = increment

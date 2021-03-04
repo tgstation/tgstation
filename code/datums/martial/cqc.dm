@@ -7,17 +7,18 @@
 /datum/martial_art/cqc
 	name = "CQC"
 	id = MARTIALART_CQC
-	help_verb = /mob/living/carbon/human/proc/CQC_help
+	help_verb = /mob/living/proc/CQC_help
 	block_chance = 75
 	smashes_tables = TRUE
 	var/old_grab_state = null
 	var/restraining = FALSE
+	display_combos = TRUE
 
-/datum/martial_art/cqc/reset_streak(mob/living/carbon/human/new_target)
+/datum/martial_art/cqc/reset_streak(mob/living/new_target)
 	. = ..()
 	restraining = FALSE
 
-/datum/martial_art/cqc/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/proc/check_streak(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	if(findtext(streak,SLAM_COMBO))
@@ -41,10 +42,10 @@
 		Consecutive(A,D)
 	return FALSE
 
-/datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/proc/Slam(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
-	if(D.mobility_flags & MOBILITY_STAND)
+	if(D.body_position == STANDING_UP)
 		D.visible_message("<span class='danger'>[A] slams [D] into the ground!</span>", \
 						"<span class='userdanger'>You're slammed into the ground by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You slam [D] into the ground!</span>")
@@ -54,7 +55,7 @@
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
 
-/datum/martial_art/cqc/proc/Kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/proc/Kick(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	if(!D.stat || !D.IsParalyzed())
@@ -64,7 +65,7 @@
 		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(D, A.dir)
 		D.throw_at(throw_target, 1, 14, A)
-		D.apply_damage(10, A.dna.species.attack_type)
+		D.apply_damage(10, A.get_attack_type())
 		log_combat(A, D, "kicked (CQC)")
 	if(D.IsParalyzed() && !D.stat)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
@@ -76,7 +77,7 @@
 		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	return TRUE
 
-/datum/martial_art/cqc/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/proc/Pressure(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	log_combat(A, D, "pressured (CQC)")
@@ -87,7 +88,7 @@
 	playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
-/datum/martial_art/cqc/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/proc/Restrain(mob/living/A, mob/living/D)
 	if(restraining)
 		return
 	if(!can_use(A))
@@ -103,7 +104,7 @@
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
 	return TRUE
 
-/datum/martial_art/cqc/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/proc/Consecutive(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	if(!D.stat)
@@ -116,11 +117,11 @@
 		if(I && D.temporarilyRemoveItemFromInventory(I))
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
-		D.apply_damage(25, A.dna.species.attack_type)
+		D.apply_damage(25, A.get_attack_type())
 	return TRUE
 
-/datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(A.a_intent == INTENT_GRAB && A!=D && can_use(A)) // A!=D prevents grabbing yourself
+/datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
+	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
@@ -137,7 +138,7 @@
 	else
 		return FALSE
 
-/datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/harm_act(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	add_to_streak("H",D)
@@ -147,7 +148,7 @@
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC", "Big Boss")
 	var/bonus_damage = 13
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
 	D.apply_damage(bonus_damage, BRUTE)
@@ -169,7 +170,7 @@
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
 
-/datum/martial_art/cqc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/disarm_act(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	add_to_streak("D",D)
@@ -186,7 +187,7 @@
 			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 			D.Jitter(2)
-			D.apply_damage(5, A.dna.species.attack_type)
+			D.apply_damage(5, A.get_attack_type())
 	else
 		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
 						"<span class='userdanger'>You're nearly disarmed by [A]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
@@ -207,7 +208,7 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/CQC_help()
+/mob/living/proc/CQC_help()
 	set name = "Remember The Basics"
 	set desc = "You try to remember some of the basics of CQC."
 	set category = "CQC"
@@ -224,10 +225,10 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-	var/list/valid_areas = list(/area/crew_quarters/kitchen)
+	var/list/valid_areas = list(/area/service/kitchen)
 
 ///Prevents use if the cook is not in the kitchen.
-/datum/martial_art/cqc/under_siege/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work in kitchen
-	if(!is_type_in_list(get_area(H), valid_areas))
+/datum/martial_art/cqc/under_siege/can_use(mob/living/owner) //this is used to make chef CQC only work in kitchen
+	if(!is_type_in_list(get_area(owner), valid_areas))
 		return FALSE
 	return ..()

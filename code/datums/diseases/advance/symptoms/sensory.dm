@@ -18,17 +18,19 @@
 	)
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["resistance"] >= 6) //heal brain damage
+	if(A.totalResistance() >= 6) //heal brain damage
 		trauma_heal_mild = TRUE
-	if(A.properties["resistance"] >= 9) //heal severe traumas
+	if(A.totalResistance() >= 9) //heal severe traumas
 		trauma_heal_severe = TRUE
-	if(A.properties["transmittable"] >= 8) //purge alcohol
+	if(A.totalTransmittable() >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
 /datum/symptom/mind_restoration/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 
@@ -46,10 +48,10 @@
 
 	if(A.stage >= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
-		if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
-			M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
-		if(M.has_reagent(/datum/reagent/toxin/histamine))
-			M.remove_reagent(/datum/reagent/toxin/histamine, 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
+			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
 	if(A.stage >= 5)
@@ -77,7 +79,8 @@
 	symptom_delay_max = 1
 
 /datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)

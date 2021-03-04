@@ -1,6 +1,7 @@
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
 	filedesc = "NT FRK"
+	category = PROGRAM_CATEGORY_ROBO
 	program_icon_state = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
@@ -9,6 +10,7 @@
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = TRUE
 	tgui_id = "NtosAiRestorer"
+	program_icon = "laptop-code"
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
@@ -19,7 +21,7 @@
 	if(computer)
 		ai_slot = computer.all_components[MC_AI]
 
-	if(computer && ai_slot && ai_slot.check_functionality())
+	if(computer && ai_slot?.check_functionality())
 		if(cardcheck == 1)
 			return ai_slot
 		if(ai_slot.enabled && ai_slot.stored_card)
@@ -48,13 +50,13 @@
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
 				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
-				if(ai_slot && ai_slot.stored_card)
+				if(ai_slot?.stored_card)
 					ai_slot.try_eject(usr)
 					return TRUE
 
 /datum/computer_file/program/aidiag/process_tick()
 	. = ..()
-	if(!restoring)	//Put the check here so we don't check for an ai all the time
+	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
 	var/obj/item/aicard/cardhold = get_ai(2)
 
@@ -63,7 +65,7 @@
 
 	var/mob/living/silicon/ai/A = get_ai()
 	if(!A || !cardhold)
-		restoring = FALSE	// If the AI was removed, stop the restoration sequence.
+		restoring = FALSE // If the AI was removed, stop the restoration sequence.
 		if(ai_slot)
 			ai_slot.locked = FALSE
 		return
@@ -82,7 +84,7 @@
 
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
-		cardhold.update_icon()
+		cardhold.update_appearance()
 
 	// Finished restoring
 	if(A.health >= 100)

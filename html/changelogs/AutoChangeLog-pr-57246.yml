@@ -1,0 +1,5 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new system for handling organ failure, the old system is still there for organs that havent been ported yet."
+  - rscadd: "Liver is now using the new system for organ failure, which means that once it reaches 100 damage (liver is dead) it will give you a 1 minute warning period for you to get to medbay, after that 1 minute the effects of liver failure will slowly ramp up to comparably old levels of deadliness."

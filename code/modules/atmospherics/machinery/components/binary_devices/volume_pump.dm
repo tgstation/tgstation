@@ -14,25 +14,26 @@
 	icon_state = "volpump_map-3"
 	name = "volumetric gas pump"
 	desc = "A pump that moves gas by volume."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
-	var/transfer_rate = MAX_TRANSFER_RATE
-	var/overclocked = FALSE
-
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
-
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
+	///Transfer rate of the component in L/s
+	var/transfer_rate = MAX_TRANSFER_RATE
+	///Check if the component has been overclocked
+	var/overclocked = FALSE
+	///Frequency for radio signaling
+	var/frequency = 0
+	///ID for radio signaling
+	var/id = null
+	///Connection to the radio processing
+	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
@@ -40,7 +41,7 @@
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
@@ -51,7 +52,6 @@
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos(delta_time)
-//	..()
 	if(!on || !is_operational)
 		return
 
@@ -79,7 +79,7 @@
 		if(istype(T))
 			var/datum/gas_mixture/leaked = removed.remove_ratio(DT_PROB_RATE(VOLUME_PUMP_LEAK_AMOUNT, delta_time))
 			T.assume_air(leaked)
-			T.air_update_turf()
+			T.air_update_turf(FALSE, FALSE)
 
 	air2.merge(removed)
 
@@ -90,12 +90,20 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
@@ -123,7 +131,7 @@
 	return data
 
 /obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
-	..()
+	. = ..()
 
 	set_frequency(frequency)
 
@@ -147,7 +155,7 @@
 			if(.)
 				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
@@ -170,10 +178,10 @@
 
 	if("status" in signal.data)
 		broadcast_status()
-		return //do not update_icon
+		return //do not update_appearance
 
 	broadcast_status()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()

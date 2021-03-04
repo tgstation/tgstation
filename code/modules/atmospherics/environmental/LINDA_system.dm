@@ -31,17 +31,17 @@
 		var/turf/other = (O.loc == src ? T : src)
 		if(!(vertical? (CANVERTICALATMOSPASS(O, other)) : (CANATMOSPASS(O, other))))
 			R = TRUE
-			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
+			if(O.BlockSuperconductivity()) //the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
 				atmos_supeconductivity |= dir
 				T.atmos_supeconductivity |= opp
-				return FALSE						//no need to keep going, we got all we asked
+				return FALSE //no need to keep going, we got all we asked
 
 	atmos_supeconductivity &= ~dir
 	T.atmos_supeconductivity &= ~opp
 
 	return !R
 
-/atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
+/atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
@@ -67,7 +67,7 @@
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
-//	air with both of the related adjacent cardinal tiles
+// air with both of the related adjacent cardinal tiles
 /turf/proc/GetAtmosAdjacentTurfs(alldir = 0)
 	var/adjacent_turfs
 	if (atmos_adjacent_turfs)
@@ -100,21 +100,31 @@
 
 	return adjacent_turfs
 
-/atom/proc/air_update_turf(command = 0)
-	if(!isturf(loc) && command)
-		return
+/atom/proc/air_update_turf(update = FALSE, remove = FALSE)
 	var/turf/T = get_turf(loc)
-	T.air_update_turf(command)
+	T.air_update_turf(update, remove)
 
-/turf/air_update_turf(command = 0)
-	if(command)
+/**
+ * A helper proc for dealing with atmos changes
+ *
+ * Ok so this thing is pretty much used as a catch all for all the situations someone might wanna change something
+ * About a turfs atmos. It's real clunky, and someone needs to clean it up, but not today.
+ * Arguments:
+ * * update - Has the state of the structures in the world changed? If so, update our adjacent atmos turf list, if not, don't.
+ * * remove - Are you removing an active turf (Read wall), or adding one
+*/
+/turf/air_update_turf(update = FALSE, remove = FALSE)
+	if(update)
 		ImmediateCalculateAdjacentTurfs()
-	SSair.add_to_active(src,command)
+	if(remove)
+		SSair.remove_from_active(src)
+	else
+		SSair.add_to_active(src)
 
 /atom/movable/proc/move_update_air(turf/T)
-    if(isturf(T))
-        T.air_update_turf(1)
-    air_update_turf(1)
+	if(isturf(T))
+		T.air_update_turf(TRUE, FALSE) //You're empty now
+	air_update_turf(TRUE, TRUE) //You aren't
 
 /atom/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make an easy proc to spawn your plasma fires
 	var/turf/open/T = get_turf(src)
@@ -131,4 +141,4 @@
 
 	air.merge(G)
 	archive()
-	SSair.add_to_active(src, 0)
+	SSair.add_to_active(src)

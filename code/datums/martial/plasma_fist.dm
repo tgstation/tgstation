@@ -5,13 +5,14 @@
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
 	id = MARTIALART_PLASMAFIST
-	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
+	help_verb = /mob/living/proc/plasma_fist_help
 	var/nobomb = FALSE
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 	var/plasma_increment = 1 //how much explosion power gets added per kill (1 = 1, 2, 4. 2 = 2, 4, 8 and so on)
 	var/plasma_cap = 12 //max size explosion level
+	display_combos = TRUE
 
-/datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,TORNADO_COMBO))
 		if(A == D)//helps using apotheosis
 			return FALSE
@@ -33,7 +34,7 @@
 		return TRUE
 	return FALSE
 
-/datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/Tornado(mob/living/A, mob/living/D)
 	A.say("TORNADO SWEEP!", forced="plasma fist")
 	dance_rotate(A, CALLBACK(GLOBAL_PROC, .proc/playsound, A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
@@ -44,7 +45,7 @@
 	log_combat(A, D, "tornado sweeped(Plasma Fist)")
 	return
 
-/datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/Throwback(mob/living/A, mob/living/D)
 	D.visible_message("<span class='danger'>[A] hits [D] with Plasma Punch!</span>", \
 					"<span class='userdanger'>You're hit with a Plasma Punch by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 	to_chat(A, "<span class='danger'>You hit [D] with Plasma Punch!</span>")
@@ -55,7 +56,7 @@
 	log_combat(A, D, "threw back (Plasma Fist)")
 	return
 
-/datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/Plasma(mob/living/A, mob/living/D)
 	var/hasclient = D.client ? TRUE : FALSE
 
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -84,17 +85,19 @@
 		A.color = "#9C00FF"
 		flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
 		animate(A, color = oldcolor, time = 3 SECONDS)
-	
 
-/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/carbon/human/A, mob/living/carbon/human/D)
+
+/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/A, mob/living/D)
 	A.say("APOTHEOSIS!!", forced="plasma fist")
-	A.set_species(/datum/species/plasmaman)
-	A.dna.species.species_traits += TRAIT_BOMBIMMUNE
-	A.unequip_everything()
-	A.underwear = "Nude"
-	A.undershirt = "Nude"
-	A.socks = "Nude"
-	A.update_body()
+	if (ishuman(A))
+		var/mob/living/carbon/human/human_attacker = A
+		human_attacker.set_species(/datum/species/plasmaman)
+		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
+		human_attacker.unequip_everything()
+		human_attacker.underwear = "Nude"
+		human_attacker.undershirt = "Nude"
+		human_attacker.socks = "Nude"
+		human_attacker.update_body()
 	var/turf/boomspot = get_turf(A)
 
 	//before ghosting to prevent issues
@@ -111,19 +114,21 @@
 	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
-/datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/carbon/human/dying)
-	dying.dna.species.species_traits -= TRAIT_BOMBIMMUNE
+/datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
+	var/datum/dna/dna = dying.has_dna()
+	if (dna?.species)
+		dna.species.species_traits -= TRAIT_BOMBIMMUNE
 	if(dying.stat == DEAD)
 		return
 	dying.death()
 
-/datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/harm_act(mob/living/A, mob/living/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return TRUE
 	return FALSE
 
-/datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/disarm_act(mob/living/A, mob/living/D)
 	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return TRUE
@@ -131,19 +136,18 @@
 		to_chat(A, "<span class='notice'>You have added a disarm to your streak.</span>")
 	return FALSE
 
-/datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/grab_act(mob/living/A, mob/living/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/plasma_fist_help()
+/mob/living/proc/plasma_fist_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
 
-	var/mob/living/carbon/human/H = usr
-	var/datum/martial_art/plasma_fist/martial = H.mind.martial_art
+	var/datum/martial_art/plasma_fist/martial = usr.mind.martial_art
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
 	to_chat(usr, "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses opponent and everyone back.")
 	to_chat(usr, "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the opponent and an item at them.")
@@ -164,7 +168,7 @@
 	. = ..()
 	beam_target = _beam_target
 	if(beam_target)
-		var/datum/beam/beam = Beam(beam_target, "plasmabeam", time= 3 SECONDS, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/plasma_fist)
+		var/datum/beam/beam = Beam(beam_target, "plasmabeam", beam_type=/obj/effect/ebeam/plasma_fist, time = 3 SECONDS)
 		animate(beam.visuals, alpha = 0, time = 3 SECONDS)
 	animate(src, alpha = 0, transform = matrix()*0.5, time = 3 SECONDS)
 

@@ -4,6 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 20
+	dynamic_should_hijack = TRUE
 	gamemode_blacklist = list("nuclear","wizard","revolution")
 
 /datum/round_event/ghost_role/abductor

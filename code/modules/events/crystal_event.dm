@@ -373,7 +373,7 @@ This section is for the destabilized SM
 	removed.gases[/datum/gas/bz][MOLES] += 15.5
 	removed.gases[/datum/gas/miasma][MOLES] += 5.5
 	env.merge(removed)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
@@ -477,6 +477,7 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 	singular_name = "otherworld crystal"
 	icon = 'icons/obj/stack_objects.dmi'
 	material_type = /datum/material/otherworld_crystal
+	merge_type = /obj/item/stack/sheet/otherworld_crystal
 
 /*
 This section is for the signaler part of the crystal portals
@@ -563,8 +564,8 @@ This section is for the crystal portals variations
 	. = ..()
 	. += "<span class='notice'>The [src] seems to be releasing some sort or high frequency wavelength, maybe it could be closed if another signal is sent back or if an equivalent device is used on it.</span>"
 
-/obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/M)
-	if(faction_check(faction, M.faction, FALSE) && !M.client)
+/obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(faction_check(faction, user.faction, FALSE) && !user.client)
 		return ..()
 
 /obj/structure/crystal_portal/attackby(obj/item/W, mob/living/user, params)
@@ -643,7 +644,7 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster
 	name = "crystal monster"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/crystal_mobs.dmi'
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
@@ -652,7 +653,7 @@ This section is for the crystal monsters variations
 	turns_per_move = 1
 	speak_emote = list("resonates")
 	emote_see = list("resonates")
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	minbodytemp = 0
 	maxbodytemp = 1500
 	healable = 0 //they're crystals how would bruise packs help them??
@@ -660,7 +661,7 @@ This section is for the crystal monsters variations
 	attack_verb_simple = "smash"
 	attack_sound = 'sound/effects/supermatter.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 10
+	unsuitable_atmos_damage = 5
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	faction = list("crystal")
@@ -680,7 +681,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/minion
 	name = "crystal minion"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
@@ -708,7 +708,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/thug
 	name = "crystal thug"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_thug"
 	icon_living = "crystal_thug"
 	icon_dead = "crystal_thug"
@@ -740,7 +739,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/recruit
 	name = "crystal recruit"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_recruit"
 	icon_living = "crystal_recruit"
 	icon_dead = "crystal_recruit"
@@ -766,7 +764,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/killer
 	name = "crystal killer"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_killer"
 	icon_living = "crystal_killer"
 	icon_dead = "crystal_killer"
@@ -808,7 +805,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/boss
 	name = "crystal boss"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_boss"
 	icon_living = "crystal_boss"
 	icon_dead = "crystal_boss"

@@ -7,7 +7,7 @@
 	armour_penetration = 100
 
 /mob/living/simple_animal/hostile/guardian/ranged
-	a_intent = INTENT_HELP
+	combat_mode = FALSE
 	friendly_verb_continuous = "quietly assesses"
 	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10
@@ -25,7 +25,7 @@
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Diamond, a powerful projectile thrower.</span>"
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 8
-	toggle_button_type = /obj/screen/guardian/toggle_mode
+	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
 	var/list/snares = list()
 	var/toggle = FALSE
 

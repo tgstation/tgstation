@@ -14,7 +14,7 @@
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
 	. = ..()
 
-/obj/structure/spirit_board/attack_hand(mob/user)
+/obj/structure/spirit_board/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

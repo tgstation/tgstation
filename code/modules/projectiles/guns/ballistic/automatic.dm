@@ -32,10 +32,12 @@
 	. = ..()
 	if(!selector_switch_icon)
 		return
-	if(!select)
-		. += "[initial(icon_state)]_semi"
-	if(select == 1)
-		. += "[initial(icon_state)]_burst"
+
+	switch(select)
+		if(0)
+			. += "[initial(icon_state)]_semi"
+		if(1)
+			. += "[initial(icon_state)]_burst"
 
 /obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
@@ -56,7 +58,7 @@
 		to_chat(user, "<span class='notice'>You switch to [burst_size]-round burst.</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -88,12 +90,13 @@
 
 /obj/item/gun/ballistic/automatic/c20r/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/gun/ballistic/automatic/wt550
 	name = "security auto rifle"
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
@@ -134,8 +137,9 @@
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
-	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
+	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be fired using right click."
 	icon_state = "m90"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
 	selector_switch_icon = TRUE
 	mag_type = /obj/item/ammo_box/magazine/m556
@@ -152,7 +156,7 @@
 /obj/item/gun/ballistic/automatic/m90/Initialize()
 	. = ..()
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/gun/ballistic/automatic/m90/unrestricted
 	pin = /obj/item/firing_pin
@@ -160,13 +164,11 @@
 /obj/item/gun/ballistic/automatic/m90/unrestricted/Initialize()
 	. = ..()
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
-	update_icon()
+	update_appearance()
 
-/obj/item/gun/ballistic/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
-	if(select == 2)
-		underbarrel.afterattack(target, user, flag, params)
-	else
-		return ..()
+/obj/item/gun/ballistic/automatic/m90/afterattack_secondary(atom/target, mob/living/user, flag, params)
+	underbarrel.afterattack(target, user, flag, params)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
@@ -183,8 +185,6 @@
 			. += "[initial(icon_state)]_semi"
 		if(1)
 			. += "[initial(icon_state)]_burst"
-		if(2)
-			. += "[initial(icon_state)]_gren"
 
 /obj/item/gun/ballistic/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
@@ -195,15 +195,12 @@
 			fire_delay = initial(fire_delay)
 			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 		if(1)
-			select = 2
-			to_chat(user, "<span class='notice'>You switch to grenades.</span>")
-		if(2)
 			select = 0
 			burst_size = 1
 			fire_delay = 0
 			to_chat(user, "<span class='notice'>You switch to semi-auto.</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
-	update_icon()
+	update_appearance()
 	return
 
 /obj/item/gun/ballistic/automatic/tommygun
@@ -212,7 +209,7 @@
 	icon_state = "tommygun"
 	inhand_icon_state = "shotgun"
 	selector_switch_icon = TRUE
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	can_suppress = FALSE
@@ -241,6 +238,7 @@
 	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6"
 	inhand_icon_state = "l6"
+	base_icon_state = "l6"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
@@ -281,10 +279,11 @@
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_icon_state()
-	inhand_icon_state = "[initial(icon_state)][cover_open ? "open" : "closed"][magazine ? "mag":"nomag"]"
+	. = ..()
+	inhand_icon_state = "[base_icon_state][cover_open ? "open" : "closed"][magazine ? "mag":"nomag"]"
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_overlays()
 	. = ..()
@@ -297,10 +296,10 @@
 		return
 	else
 		. = ..()
-		update_icon()
+		update_appearance()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
+/obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user, list/modifiers)
 	if (loc != user)
 		..()
 		return
@@ -323,6 +322,7 @@
 	name = "sniper rifle"
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -343,6 +343,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 	mag_display = TRUE
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
@@ -376,6 +378,7 @@
 	name = "laser rifle"
 	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargeable ammunition has given Nanotrasen a decisive edge over many a foe."
 	icon_state = "oldrifle"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	mag_display_ammo = TRUE

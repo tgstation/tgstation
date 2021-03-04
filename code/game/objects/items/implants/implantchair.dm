@@ -24,7 +24,7 @@
 /obj/machinery/implantchair/Initialize()
 	. = ..()
 	open_machine()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/implantchair/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -37,12 +37,13 @@
 
 /obj/machinery/implantchair/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	var/mob/living/mob_occupant = occupant
+
+	data["occupied"] = mob_occupant ? 1 : 0
 	data["open"] = state_open
 
 	data["occupant"] = list()
-	if(occupant)
-		var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat
 
@@ -65,7 +66,7 @@
 				open_machine()
 			. = TRUE
 		if("implant")
-			implant(occupant,usr)
+			implant(occupant, usr)
 			. = TRUE
 
 /obj/machinery/implantchair/proc/implant(mob/living/M,mob/user)
@@ -83,7 +84,7 @@
 			addtimer(CALLBACK(src,.proc/set_ready),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/I = new implant_type
@@ -104,6 +105,7 @@
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+	return ..()
 
 /obj/machinery/implantchair/update_overlays()
 	. = ..()
@@ -120,7 +122,7 @@
 
 /obj/machinery/implantchair/proc/set_ready()
 	ready = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/implantchair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -140,14 +142,16 @@
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
+
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	close_machine(target)
+
 
 /obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
@@ -196,5 +200,7 @@
 		return FALSE
 	brainwash(C, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
+	C.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using \the [src]", LOG_ATTACK)
+	user.log_message("has brainwashed [key_name(C)] with the objective '[objective]' using \the [src]", LOG_ATTACK, log_globally = FALSE)
 	log_game("[key_name(user)] brainwashed [key_name(C)] with objective '[objective]'.")
 	return TRUE

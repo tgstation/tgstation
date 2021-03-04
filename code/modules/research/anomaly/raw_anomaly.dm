@@ -1,11 +1,11 @@
 /**
-  * # Raw Anomaly Cores
-  *
-  * The current precursor to anomaly cores, these are manufactured into 'finished' anomaly cores for use in research, items, and more.
-  *
-  * The current amounts created is stored in `SSresearch.created_anomaly_types[ANOMALY_CORE_TYPE_DEFINE] = amount`.
-  * The hard limits are in `code/__DEFINES/anomalies.dm`.
-  */
+ * # Raw Anomaly Cores
+ *
+ * The current precursor to anomaly cores, these are manufactured into 'finished' anomaly cores for use in research, items, and more.
+ *
+ * The current amounts created is stored in `SSresearch.created_anomaly_types[ANOMALY_CORE_TYPE_DEFINE] = amount`.
+ * The hard limits are in `code/__DEFINES/anomalies.dm`.
+ */
 /obj/item/raw_anomaly_core
 	name = "raw anomaly core"
 	desc = "You shouldn't be seeing this. Someone screwed up."
@@ -57,13 +57,13 @@
 	return INITIALIZE_HINT_QDEL
 
 /**
-  * Created the resulting core after being "made" into it.
-  *
-  * Arguments:
-  * * newloc - Where the new core will be created
-  * * del_self - should we qdel(src)
-  * * count_towards_limit - should we increment the amount of created cores on SSresearch
-  */
+ * Created the resulting core after being "made" into it.
+ *
+ * Arguments:
+ * * newloc - Where the new core will be created
+ * * del_self - should we qdel(src)
+ * * count_towards_limit - should we increment the amount of created cores on SSresearch
+ */
 /obj/item/raw_anomaly_core/proc/create_core(newloc, del_self = FALSE, count_towards_limit = FALSE)
 	. = new anomaly_type(newloc)
 	if(count_towards_limit)

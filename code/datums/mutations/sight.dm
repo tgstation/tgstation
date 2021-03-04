@@ -98,10 +98,10 @@
 	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
-/datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
-	SIGNAL_HANDLER_DOES_SLEEP
+/datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
+	SIGNAL_HANDLER
 
-	if(source.a_intent != INTENT_HARM)
+	if(!source.combat_mode)
 		return
 	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
 	source.changeNext_move(CLICK_CD_RANGE)
@@ -109,8 +109,8 @@
 	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
-	LE.preparePixelProjectile(target, source, mouseparams)
-	LE.fire()
+	LE.preparePixelProjectile(target, source, modifiers)
+	INVOKE_ASYNC(LE, /obj/projectile.proc/fire)
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes

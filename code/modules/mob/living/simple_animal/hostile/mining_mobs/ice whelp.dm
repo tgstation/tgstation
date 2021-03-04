@@ -10,12 +10,12 @@
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
-	speed = 30
-	move_to_delay = 30
+	speed = 12
+	move_to_delay = 12
 	ranged = TRUE
-	ranged_cooldown_time = 50
-	maxHealth = 350
-	health = 350
+	ranged_cooldown_time = 5 SECONDS
+	maxHealth = 300
+	health = 300
 	obj_damage = 40
 	armour_penetration = 20
 	melee_damage_lower = 20
@@ -23,6 +23,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	ranged_message = "breathes fire at"
 	vision_range = 9
 	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -39,16 +40,16 @@
 	/// How far the whelps fire can go
 	var/fire_range = 4
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/OpenFire()
-	var/turf/T = get_ranged_target_turf_direct(src, target, fire_range)
-	var/list/burn_turfs = getline(src, T) - get_turf(src)
-	dragon_fire_line(src, burn_turfs)
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/Shoot()
+	var/turf/target_fire_turf = get_ranged_target_turf_direct(src, target, fire_range)
+	var/list/burn_turfs = getline(src, target_fire_turf) - get_turf(src)
+	dragon_fire_line(src, burn_turfs, frozen = TRUE)
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-maxHealth*0.025)
+	adjustHealth(-0.0125 * maxHealth * delta_time)
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

@@ -14,6 +14,6 @@
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 	..()
 
-	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE | TR_KEEPSTAMINADAMAGE)
+	user.monkeyize()
 
 	return TRUE

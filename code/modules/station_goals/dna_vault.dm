@@ -33,14 +33,14 @@
 
 /datum/station_goal/dna_vault/get_report()
 	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
-	 We need you to construct a DNA Vault aboard your station.
+		We need you to construct a DNA Vault aboard your station.
 
-	 The DNA Vault needs to contain samples of:
-	 [animal_count] unique animal data
-	 [plant_count] unique non-standard plant data
-	 [human_count] unique sapient humanoid DNA data
+		The DNA Vault needs to contain samples of:
+		[animal_count] unique animal data
+		[plant_count] unique non-standard plant data
+		[human_count] unique sapient humanoid DNA data
 
-	 Base vault parts are available for shipping via cargo."}
+		Base vault parts are available for shipping via cargo."}
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -96,8 +96,8 @@
 		to_chat(user, "<span class='notice'>Plant data added to local storage.</span>")
 
 	//animals
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
-	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
+	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
+	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
@@ -203,7 +203,7 @@
 	data["choiceB"] = ""
 	if(user && completed)
 		var/list/L = power_lottery[user]
-		if(L && L.len)
+		if(L?.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
 			data["choiceB"] = L[2]

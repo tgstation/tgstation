@@ -2,18 +2,18 @@
 	name = "Flyperson"
 	id = "fly"
 	say_mod = "buzzes"
-	species_traits = list(NOEYESPRITES)
+	species_traits = list(NOEYESPRITES,HAS_FLESH,HAS_BONE,TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutanttongue = /obj/item/organ/tongue/fly
-	mutantliver = /obj/item/organ/liver/fly
-	mutantstomach = /obj/item/organ/stomach/fly
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
+	mutanteyes = /obj/item/organ/eyes/fly
+	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
 	payday_modifier = 0.75
 
+	mutanttongue = /obj/item/organ/tongue/fly
 	mutantheart = /obj/item/organ/heart/fly
 	mutantlungs = /obj/item/organ/lungs/fly
 	mutantliver = /obj/item/organ/liver/fly
@@ -21,10 +21,10 @@
 	mutantappendix = /obj/item/organ/appendix/fly
 	mutant_organs = list(/obj/item/organ/fly, /obj/item/organ/fly/groin)
 
-/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/pestkiller)
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
 	..()
 
@@ -42,6 +42,7 @@
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/heart/fly/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return //don't set icon thank you
 
 /obj/item/organ/lungs/fly
@@ -69,17 +70,12 @@
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
-/obj/item/organ/stomach/fly/on_life()
-	for(var/bile in reagents.reagent_list)
-		if(!istype(bile, /datum/reagent/consumable))
-			continue
-		var/datum/reagent/consumable/chunk = bile
-		if(chunk.nutriment_factor <= 0)
-			continue
+/obj/item/organ/stomach/fly/on_life(delta_time, times_fired)
+	if(locate(/datum/reagent/consumable) in reagents.reagent_list)
 		var/mob/living/carbon/body = owner
-		var/turf/pos = get_turf(owner)
-		body.vomit(reagents.total_volume, FALSE, FALSE, 2, TRUE)
-		playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
+		// we do not loss any nutrition as a fly when vomiting out food
+		body.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge_ratio = 0.67)
+		playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 		body.visible_message("<span class='danger'>[body] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
 	return ..()
@@ -92,8 +88,8 @@
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
-/obj/item/organ/appendix/fly/update_icon()
-	return //don't set name or icon thank you
+/obj/item/organ/appendix/fly/update_appearance(updates=ALL)
+	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
 
 //useless organs we throw in just to fuck with surgeons a bit more
 /obj/item/organ/fly

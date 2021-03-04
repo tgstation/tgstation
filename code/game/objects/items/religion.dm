@@ -305,6 +305,7 @@
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, RAD = 50, FIRE = 60, ACID = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
@@ -329,7 +330,7 @@
 	if(staffcooldown + staffwait > world.time)
 		return
 	user.visible_message("<span class='notice'>[user] chants deeply and waves [user.p_their()] staff!</span>")
-	if(do_after(user, 20,1,src))
+	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
 

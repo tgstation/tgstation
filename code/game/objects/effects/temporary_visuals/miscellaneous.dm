@@ -98,18 +98,24 @@
 
 /obj/effect/temp_visual/dir_setting/wraith
 	name = "shadow"
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "phase_shift2"
-	duration = 6
+	icon = 'icons/mob/cult.dmi'
+	icon_state = "phase_shift2_cult"
+	duration = 0.6 SECONDS
 
 /obj/effect/temp_visual/dir_setting/wraith/angelic
-	icon_state = "phase_shift2_angelic"
+	icon_state = "phase_shift2_holy"
+
+/obj/effect/temp_visual/dir_setting/wraith/mystic
+	icon_state = "phase_shift2_wizard"
 
 /obj/effect/temp_visual/dir_setting/wraith/out
-	icon_state = "phase_shift"
+	icon_state = "phase_shift_cult"
 
 /obj/effect/temp_visual/dir_setting/wraith/out/angelic
-	icon_state = "phase_shift_angelic"
+	icon_state = "phase_shift_holy"
+
+/obj/effect/temp_visual/dir_setting/wraith/out/mystic
+	icon_state = "phase_shift_wizard"
 
 /obj/effect/temp_visual/dir_setting/tailsweep
 	icon_state = "tailsweep"
@@ -306,7 +312,7 @@
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 4
@@ -391,28 +397,17 @@
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
-/obj/effect/temp_visual/love_heart
-	name = "love heart"
+/obj/effect/temp_visual/annoyed
+	name = "annoyed"
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "heart"
+	icon_state = "annoyed"
 	duration = 25
 
-/obj/effect/temp_visual/love_heart/Initialize(mapload)
+/obj/effect/temp_visual/annoyed/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
-	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
-
-/obj/effect/temp_visual/love_heart/invisible
-	icon_state = null
-
-/obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
-	. = ..()
-	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "heart", I, seer)
-	I.alpha = 255
-	I.appearance_flags = RESET_ALPHA
-	animate(I, alpha = 0, time = duration)
+	pixel_x = rand(-4,0)
+	pixel_y = rand(8,12)
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/bleed
 	name = "bleed"
@@ -469,6 +464,14 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/temp_visual/cart_space
+	icon_state = "launchpad_launch"
+	duration = 2 SECONDS
+
+/obj/effect/temp_visual/cart_space/bad
+	icon_state = "launchpad_pull"
+	duration = 2 SECONDS
+
 /obj/effect/constructing_effect
 	icon = 'icons/effects/effects_rcd.dmi'
 	icon_state = ""
@@ -483,22 +486,26 @@
 	status = rcd_status
 	delay = rcd_delay
 	if (status == RCD_DECONSTRUCT)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 11)
+		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1.1 SECONDS)
 		delay -= 11
 		icon_state = "rcd_end_reverse"
 	else
-		update_icon()
+		update_appearance()
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
-	if (delay < 10)
+	if(delay < 10)
 		icon_state += "_shortest"
-	else if (delay < 20)
+		return ..()
+	if (delay < 20)
 		icon_state += "_shorter"
-	else if (delay < 37)
+		return ..()
+	if (delay < 37)
 		icon_state += "_short"
-	if (status == RCD_DECONSTRUCT)
+		return ..()
+	if(status == RCD_DECONSTRUCT)
 		icon_state += "_reverse"
+	return ..()
 
 /obj/effect/constructing_effect/proc/end_animation()
 	if (status == RCD_DECONSTRUCT)

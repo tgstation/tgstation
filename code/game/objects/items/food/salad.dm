@@ -9,6 +9,7 @@
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
 	eatverbs = list("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"
@@ -107,6 +108,22 @@
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
 
+/obj/item/food/salad/edensalad
+	name = "\improper Salad of Eden"
+	desc = "A salad brimming with untapped potential."
+	icon_state = "edensalad"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	tastes = list("extreme bitterness" = 3, "hope" = 1)
+	foodtypes = VEGETABLES
+
+/obj/item/food/salad/gumbo
+	name = "black eyed gumbo"
+	desc = "A spicy and savory meat and rice dish."
+	icon_state = "gumbo"
+	food_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment = 5)
+	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+
 
 /obj/item/reagent_containers/glass/bowl
 	name = "bowl"
@@ -116,3 +133,16 @@
 	reagent_flags = OPENCONTAINER
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_price = PAYCHECK_ASSISTANT * 0.6
+
+/obj/item/reagent_containers/glass/bowl/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+// empty salad for custom salads
+/obj/item/food/salad/empty
+	name = "salad"
+	foodtypes = NONE
+	tastes = list()
+	icon_state = "bowl"
+	desc = "A delicious customized salad."

@@ -12,3 +12,4 @@ rules:
     selfClosing: after-props,
     nonEmpty: after-props,
   }]
+  react/display-name: error

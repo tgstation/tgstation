@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /// The actual ranged proc holder.
 /obj/effect/proc_holder/ranged_ai
- 	/// Appears when the user activates the ability
+	/// Appears when the user activates the ability
 	var/enable_text = "<span class='notice'>Hello World!</span>"
 	/// Appears when the user deactivates the ability
 	var/disable_text = "<span class='danger'>Goodbye Cruel World!</span>"
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	/// Sound played when an ability is unlocked
 	var/unlock_sound
 
- /// Applies upgrades
+/// Applies upgrades
 /datum/ai_module/proc/upgrade(mob/living/silicon/ai/AI)
 	return
 
@@ -176,74 +176,88 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if (owner_AI.shunted)
 		return //prevent AI from activating doomsday while shunted, fucking abusers
 	active = TRUE
-	set_us_up_the_bomb(owner)
+	set_up_us_the_bomb(owner)
 
-/datum/action/innate/ai/nuke_station/proc/set_us_up_the_bomb(mob/living/owner)
-	var/pass = prob(10) ? "******" : "hunter2"
+/datum/action/innate/ai/nuke_station/proc/set_up_us_the_bomb(mob/living/owner)
 	set waitfor = FALSE
+	message_admins("[key_name_admin(owner)][ADMIN_FLW(owner)] has activated AI Doomsday.")
+	var/pass = prob(10) ? "******" : "hunter2"
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
 	sleep(5)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
 	sleep(rand(10, 30))
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
-	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0, use_reverb = FALSE)
 	to_chat(owner, "<span class='userdanger'>!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!</span>")
 	to_chat(owner, "<span class='boldannounce'>This is a class-3 security violation. This incident will be reported to Central Command.</span>")
 	for(var/i in 1 to 3)
 		sleep(20)
-		if(!owner || QDELETED(owner))
+		if(QDELETED(owner) || owner_AI.shunted)
+			active = FALSE
 			return
 		to_chat(owner, "<span class='boldannounce'>Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%</span>")
 	sleep(3)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
-	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
 	sleep(30)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Welcome, akjv9c88asdf12nb.</span>")
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(5)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='boldnotice'>Arm self-destruct device? (Y/N)</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
 	sleep(20)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(15)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='boldnotice'>Confirm arming of self-destruct device? (Y/N)</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(10)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(rand(15, 25))
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='boldnotice'>Please repeat password to confirm.</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(14)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
 	sleep(40)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Transmitting arming signal...</span>")
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
+	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(30)
-	if(!owner || QDELETED(owner))
+	if(QDELETED(owner) || owner_AI.shunted)
+		active = FALSE
 		return
 	if (owner_AI.stat != DEAD)
-		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
+		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", ANNOUNCER_AIMALF)
 		set_security_level("delta")
 		var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
 		owner_AI.nuking = TRUE
@@ -264,20 +278,32 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/obj/effect/countdown/doomsday/countdown
 	var/detonation_timer
 	var/next_announce
+	var/mob/living/silicon/ai/owner
 
 /obj/machinery/doomsday_device/Initialize()
 	. = ..()
+	owner = loc
+	if(!istype(owner))
+		stack_trace("Doomsday created outside an AI somehow, shit's fucking broke. Anyway, we're just gonna qdel now. Go make a github issue report.")
+		qdel(src)
 	countdown = new(src)
 
 /obj/machinery/doomsday_device/Destroy()
+	timing = FALSE
 	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
-	for(var/A in GLOB.ai_list)
-		var/mob/living/silicon/ai/AI = A
-		if(AI.doomsday_device == src)
-			AI.doomsday_device = null
+	set_security_level("red")
+	for(var/mob/living/silicon/robot/borg in owner.connected_robots)
+		borg.lamp_doom = FALSE
+		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
+	owner?.doomsday_device = null
+	owner?.nuking = null
+	owner = null
+	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
+		P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
+		P.alert = FALSE
 	return ..()
 
 /obj/machinery/doomsday_device/proc/start()
@@ -288,6 +314,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	START_PROCESSING(SSfastprocess, src)
 	SSshuttle.registerHostileEnvironment(src)
 	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
+	for(var/mob/living/silicon/robot/borg in owner.connected_robots)
+		borg.lamp_doom = TRUE
+		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
+
 
 /obj/machinery/doomsday_device/proc/seconds_remaining()
 	. = max(0, (round((detonation_timer - world.time) / 10)))
@@ -296,8 +326,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/turf/T = get_turf(src)
 	if(!T || !is_station_level(T.z))
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
-		SSshuttle.clearHostileEnvironment(src)
-		qdel(src)
+		owner.ShutOffDoomsdayDevice()
 		return
 	if(!timing)
 		STOP_PROCESSING(SSfastprocess, src)
@@ -402,9 +431,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(!target.can_be_overridden() || is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
 		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overridden!</span>")
 		return
-	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)
+	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0, use_reverb = FALSE)
 	attached_action.adjust_uses(-1)
-	if(attached_action && attached_action.uses)
+	if(attached_action?.uses)
 		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
 		attached_action.UpdateButtonIcon()
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
@@ -487,7 +516,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50, 0)
 	attached_action.adjust_uses(-1)
-	if(attached_action && attached_action.uses)
+	if(attached_action?.uses)
 		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
 		attached_action.UpdateButtonIcon()
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
@@ -649,7 +678,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
-		F.update_icon()
+		F.update_appearance()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 

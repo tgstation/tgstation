@@ -8,7 +8,7 @@
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
@@ -21,7 +21,7 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
-	a_intent = "harm"
+	combat_mode = TRUE
 
 	var/baton_type = /obj/item/melee/baton
 	var/obj/item/weapon
@@ -67,7 +67,6 @@
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
 	S.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
-	S.on_reagent_change(ADD_REAGENT)
 	..()
 
 /mob/living/simple_animal/bot/secbot/pingsky
@@ -78,10 +77,12 @@
 /mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
 	weapon = new baton_type()
-	update_icon()
-	var/datum/job/detective/J = new/datum/job/detective
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/det_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/detective]
+	access_card.add_access(det_trim.access + det_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
@@ -91,11 +92,11 @@
 	QDEL_NULL(weapon)
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/update_icon()
+/mob/living/simple_animal/bot/secbot/update_icon_state()
 	if(mode == BOT_HUNT)
 		icon_state = "[initial(icon_state)]-c"
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/turn_off()
 	..()
@@ -149,7 +150,7 @@ Auto Patrol: []"},
 "<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	return	dat
+	return dat
 
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
@@ -197,17 +198,26 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
 	return
 
-/mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
-	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
-		retaliate(H)
-		if(special_retaliate_after_attack(H))
+/mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(user.combat_mode)
+		retaliate(user)
+		if(special_retaliate_after_attack(user))
+			return
+
+		// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			user.visible_message("<span class='notice'>[user] taunts [src], daring [p_them()] to give chase!</span>", \
+				"<span class='notice'>You taunt [src], daring [p_them()] to chase you!</span>", "<span class='hear'>You hear someone shout a daring taunt!</span>", DEFAULT_MESSAGE_RANGE, user)
+			speak("Taunted by pacifist scumbag <b>[user]</b> in [get_area(src)].", radio_channel)
+
+			// Interrupt the attack chain. We've already handled this scenario for pacifists.
 			return
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/user, params)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/living/user, params)
 	..()
-	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
+	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
 		return
 	if(W.tool_behaviour != TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
@@ -222,7 +232,7 @@ Auto Patrol: []"},
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = FALSE
-		update_icon()
+		update_appearance()
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
 	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
@@ -231,8 +241,10 @@ Auto Patrol: []"},
 				retaliate(Proj.firer)
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!on)
+		return
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
@@ -274,7 +286,7 @@ Auto Patrol: []"},
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
+	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 0.2 SECONDS)
 	var/threat = 5
 
 	if(harm)
@@ -302,14 +314,14 @@ Auto Patrol: []"},
 
 	switch(mode)
 
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 
 			walk_to(src,0)
-			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
+			look_for_perp() // see if any criminals are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
 
-		if(BOT_HUNT)		// hunting for perp
+		if(BOT_HUNT) // hunting for perp
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
@@ -317,8 +329,8 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if(target)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+			if(target) // make sure target exists
+				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
 					if(!check_nap_violations())
 						stun_attack(target, TRUE)
 					else
@@ -329,7 +341,7 @@ Auto Patrol: []"},
 					target_lastloc = target.loc
 					return
 
-				else								// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))
@@ -339,7 +351,7 @@ Auto Patrol: []"},
 			else
 				back_to_idle()
 
-		if(BOT_PREP_ARREST)		// preparing to arrest target
+		if(BOT_PREP_ARREST) // preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
 			if( !Adjacent(target) || !isturf(target.loc) ||  target.AmountParalyzed() < 40)
@@ -453,7 +465,7 @@ Auto Patrol: []"},
 		new /obj/item/assembly/prox_sensor(Tsec)
 		var/obj/item/gun/energy/disabler/G = new (Tsec)
 		G.cell.charge = 0
-		G.update_icon()
+		G.update_appearance()
 		if(prob(50))
 			new /obj/item/bodypart/l_leg/robot(Tsec)
 			if(prob(25))
@@ -479,7 +491,7 @@ Auto Patrol: []"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	..()
 	if(!isalien(target))
 		target = user

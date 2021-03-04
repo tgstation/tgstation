@@ -9,7 +9,7 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = "+generic"
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
 	light_on = FALSE
@@ -34,10 +34,11 @@
 		turn_on(user)
 	else
 		turn_off(user)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/head/hardhat/update_icon_state()
 	icon_state = inhand_icon_state = "hardhat[on]_[hat_type]"
+	return ..()
 
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
 	set_light_on(TRUE)
@@ -98,7 +99,7 @@
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -113,15 +114,15 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
-	flags_inv = HIDEEYES | HIDEFACE
+	flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
-	visor_flags_inv = HIDEEYES | HIDEFACE
+	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
 /obj/item/clothing/head/hardhat/weldhat/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/head/hardhat/weldhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
@@ -133,7 +134,7 @@
 /obj/item/clothing/head/hardhat/weldhat/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands)
 	. = ..()

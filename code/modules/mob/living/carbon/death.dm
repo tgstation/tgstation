@@ -6,8 +6,8 @@
 	losebreath = 0
 
 	if(!gibbed)
-		emote("deathgasp")
-	end_metabolization()
+		INVOKE_ASYNC(src, .proc/emote, "deathgasp")
+	reagents.end_metabolization(src)
 
 	. = ..()
 

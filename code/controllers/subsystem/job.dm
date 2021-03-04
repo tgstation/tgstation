@@ -3,21 +3,50 @@ SUBSYSTEM_DEF(job)
 	init_order = INIT_ORDER_JOBS
 	flags = SS_NO_FIRE
 
-	var/list/occupations = list()		//List of all jobs
-	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
-	var/list/type_occupations = list()	//Dict of all jobs, keys are types
-	var/list/unassigned = list()		//Players who need jobs
-	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/list/occupations = list() //List of all jobs
+	var/list/datum/job/name_occupations = list() //Dict of all jobs, keys are titles
+	var/list/type_occupations = list() //Dict of all jobs, keys are types
+	var/list/unassigned = list() //Players who need jobs
+	var/initial_players_to_assign = 0 //used for checking against population caps
 
 	var/list/prioritized_jobs = list()
-	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
+	var/list/latejoin_trackers = list() //Don't read this list, use GetLateJoinTurfs() instead
 
 	var/overflow_role = "Assistant"
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
+	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
+	var/list/station_jobs
+	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
+	var/list/additional_jobs_with_icons
+	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
+	var/list/centcom_jobs
+
+	/**
+	 * Keys should be assigned job roles. Values should be >= 1.
+	 * Represents the chain of command on the station. Lower numbers mean higher priority.
+	 * Used to give the Cap's Spare safe code to a an appropriate player.
+	 * Assumed Captain is always the highest in the chain of command.
+	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
+	 */
+	var/list/chain_of_command = list(
+		"Captain" = 1,
+		"Head of Personnel" = 2,
+		"Research Director" = 3,
+		"Chief Engineer" = 4,
+		"Chief Medical Officer" = 5,
+		"Head of Security" = 6,
+		"Quartermaster" = 7)
+
+	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
+	var/assigned_captain = FALSE
+	/// If TRUE, the "Captain" job will always be given the code to the spare ID safe and always have a "Captain on deck!" announcement.
+	var/always_promote_captain_job = TRUE
+
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.HACK_LoadMapConfig()
+	setup_job_lists()
 	if(!occupations.len)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
@@ -30,11 +59,13 @@ SUBSYSTEM_DEF(job)
 	var/datum/job/new_overflow = GetJob(new_overflow_role)
 	var/cap = CONFIG_GET(number/overflow_cap)
 
+	new_overflow.allow_bureaucratic_error = FALSE
 	new_overflow.spawn_positions = cap
 	new_overflow.total_positions = cap
 
 	if(new_overflow_role != overflow_role)
 		var/datum/job/old_overflow = GetJob(overflow_role)
+		old_overflow.allow_bureaucratic_error = initial(old_overflow.allow_bureaucratic_error)
 		old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
 		old_overflow.total_positions = initial(old_overflow.total_positions)
 		overflow_role = new_overflow_role
@@ -55,7 +86,7 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(!job.config_check())
 			continue
-		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
+		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
 			testing("Removed [job.type] due to map config")
 			continue
 		occupations += job
@@ -77,7 +108,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin = FALSE)
 	JobDebug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
-	if(player && player.mind && rank)
+	if(player?.mind && rank)
 		var/datum/job/job = GetJob(rank)
 		if(!job)
 			return FALSE
@@ -401,9 +432,8 @@ SUBSYSTEM_DEF(job)
 		message_admins(message)
 		RejectPlayer(player)
 
-
 //Gives the player the stuff he should have with his rank
-/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE)
+/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE, is_captain = FALSE)
 	var/mob/dead/new_player/newplayer
 	var/mob/living/living_mob
 	if(!joined_late)
@@ -420,8 +450,15 @@ SUBSYSTEM_DEF(job)
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
+		var/spawning_handled = FALSE
 		var/obj/S = null
-		if(length(GLOB.jobspawn_overrides[rank]))
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
+			SendToLateJoin(living_mob)
+			spawning_handled = TRUE
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
+			DropLandAtRandomHallwayPoint(living_mob)
+			spawning_handled = TRUE
+		else if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
 		else
 			for(var/_sloc in GLOB.start_landmarks_list)
@@ -435,7 +472,7 @@ SUBSYSTEM_DEF(job)
 				break
 		if(S)
 			S.JoinPlayerHere(living_mob, FALSE)
-		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+		if(!S && !spawning_handled) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
 			if(!SendToLateJoin(living_mob))
 				living_mob.move_to_error_room()
@@ -446,7 +483,7 @@ SUBSYSTEM_DEF(job)
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
-		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client)//silicons override this proc to return a mob
+		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client, is_captain)//silicons override this proc to return a mob
 		if(ismob(new_mob))
 			living_mob = new_mob
 			if(!joined_late)
@@ -476,7 +513,7 @@ SUBSYSTEM_DEF(job)
 		var/mob/living/carbon/human/wageslave = living_mob
 		living_mob.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && living_mob)
-		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
+		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, living_mob might not.
 
 	return living_mob
 
@@ -663,6 +700,13 @@ SUBSYSTEM_DEF(job)
 		message_admins(msg)
 		CRASH(msg)
 
+///Lands specified mob at a random spot in the hallways
+/datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
+	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
+
+	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+	living_mob.forceMove(toLaunch)
+	new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
 ///////////////////////////////////
 //Keeps track of all living heads//
@@ -707,3 +751,56 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
+
+/// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
+/datum/controller/subsystem/job/proc/setup_job_lists()
+	station_jobs = list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician", \
+		"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer", \
+		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
+		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
+
+	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
+		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \
+		"Security Officer (Cargo)", "Security Officer (Medical)", "Security Officer (Science)")
+
+	centcom_jobs = list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer", \
+		"Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
+
+/obj/item/paper/fluff/spare_id_safe_code
+	name = "Nanotrasen-Approved Spare ID Safe Code"
+	desc = "Proof that you have been approved for Captaincy, with all its glory and all its horror."
+
+/obj/item/paper/fluff/spare_id_safe_code/Initialize()
+	. = ..()
+	var/safe_code = SSid_access.spare_id_safe_code
+
+	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
+
+/datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
+	var/id_safe_code = SSid_access.spare_id_safe_code
+
+	if(!id_safe_code)
+		CRASH("Cannot promote [new_captain.real_name] to Captain, there is no id_safe_code.")
+
+	var/paper = new /obj/item/paper/fluff/spare_id_safe_code()
+	var/list/slots = list(
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
+	)
+	var/where = new_captain.equip_in_one_of_slots(paper, slots, FALSE) || "at your feet"
+
+	if(acting_captain)
+		to_chat(new_captain, "<span class='notice'>Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where].</span>")
+	else
+		to_chat(new_captain, "<span class='notice'>You can find the code to obtain your spare ID from the secure safe on the Bridge [where].</span>")
+
+	// Force-give their ID card bridge access.
+	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)
+	if(id_slot)
+		var/obj/item/card/id/id_card = id_slot.GetID()
+		if(!(ACCESS_HEADS in id_card.access))
+			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
+
+	assigned_captain = TRUE

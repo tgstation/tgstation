@@ -19,9 +19,14 @@ GLOBAL_VAR(test_log)
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
 
-	//usable vars
+	/// The bottom left turf of the testing zone
 	var/turf/run_loc_bottom_left
+
+	/// The top right turf of the testing zone
 	var/turf/run_loc_top_right
+
+	/// The type of turf to allocate for the testing zone
+	var/test_turf_type = /turf/open/floor/iron
 
 	//internal shit
 	var/focus = FALSE
@@ -29,10 +34,18 @@ GLOBAL_VAR(test_log)
 	var/list/allocated
 	var/list/fail_reasons
 
+	var/static/datum/turf_reservation/turf_reservation
+
 /datum/unit_test/New()
+	if (isnull(turf_reservation))
+		turf_reservation = SSmapping.RequestBlockReservation(5, 5)
+
+	for (var/turf/reserved_turf in turf_reservation.reserved_turfs)
+		reserved_turf.ChangeTurf(test_turf_type)
+
 	allocated = new
-	run_loc_bottom_left = locate(1, 1, 1)
-	run_loc_top_right = locate(5, 5, 1)
+	run_loc_bottom_left = locate(turf_reservation.bottom_left_coords[1], turf_reservation.bottom_left_coords[2], turf_reservation.bottom_left_coords[3])
+	run_loc_top_right = locate(turf_reservation.top_right_coords[1], turf_reservation.top_right_coords[2], turf_reservation.top_right_coords[3])
 
 /datum/unit_test/Destroy()
 	//clear the test area
@@ -74,6 +87,8 @@ GLOBAL_VAR(test_log)
 			tests_to_run = list(test_to_run)
 			break
 
+	var/list/test_results = list()
+
 	for(var/I in tests_to_run)
 		var/datum/unit_test/test = new I
 
@@ -89,12 +104,19 @@ GLOBAL_VAR(test_log)
 		var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [I] [duration / 10]s")
 		var/list/fail_reasons = test.fail_reasons
 
-		qdel(test)
-
 		for(var/J in 1 to LAZYLEN(fail_reasons))
 			log_entry += "\tREASON #[J]: [fail_reasons[J]]"
-		log_test(log_entry.Join("\n"))
+		var/message = log_entry.Join("\n")
+		log_test(message)
+
+		test_results[I] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = I)
+
+		qdel(test)
 
 		CHECK_TICK
+
+	var/file_name = "data/unit_tests.json"
+	fdel(file_name)
+	file(file_name) << json_encode(test_results)
 
 	SSticker.force_ending = TRUE

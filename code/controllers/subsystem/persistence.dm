@@ -168,14 +168,14 @@ SUBSYSTEM_DEF(persistence)
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
 		T.trophy_message = chosen_trophy["message"]
 		T.placer_key = chosen_trophy["placer_key"]
-		T.update_icon()
+		T.update_appearance()
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectTrophies()
 	CollectRoundtype()
 	CollectMaps()
-	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
+	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
 	SaveRandomizedRecipes()
@@ -322,10 +322,10 @@ SUBSYSTEM_DEF(persistence)
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
 
 	for(var/p_ckey in antag_rep_change)
-//		var/start = antag_rep[p_ckey]
+// var/start = antag_rep[p_ckey]
 		antag_rep[p_ckey] = max(0, min(antag_rep[p_ckey]+antag_rep_change[p_ckey], ANTAG_REP_MAXIMUM))
 
-//		WARNING("AR_DEBUG: [p_ckey]: Committed [antag_rep_change[p_ckey]] reputation, going from [start] to [antag_rep[p_ckey]]")
+// WARNING("AR_DEBUG: [p_ckey]: Committed [antag_rep_change[p_ckey]] reputation, going from [start] to [antag_rep[p_ckey]]")
 
 	antag_rep_change = list()
 
@@ -364,7 +364,7 @@ SUBSYSTEM_DEF(persistence)
 	//asert globchems done
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
 		var/datum/chemical_reaction/randomized/R = get_chemical_reaction(randomized_type) //ew, would be nice to add some simple tracking
-		if(R && R.persistent)
+		if(R?.persistent)
 			var/recipe_data = list()
 			recipe_data["timestamp"] = R.created
 			recipe_data["required_reagents"] = R.required_reagents
@@ -397,7 +397,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/SaveScars()
 	for(var/i in GLOB.joined_player_list)
 		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
-		if(!istype(ending_human) || !ending_human.mind || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
+		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
 			continue
 
 		var/mob/living/carbon/human/original_human = ending_human.mind.original_character

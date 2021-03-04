@@ -1,6 +1,6 @@
 /* Emags
  * Contains:
- *		EMAGS AND DOORMAGS
+ * EMAGS AND DOORMAGS
  */
 
 
@@ -43,7 +43,7 @@
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/attack()
 	return
@@ -80,7 +80,7 @@
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
-	type_whitelist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
+	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
@@ -89,7 +89,7 @@
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
 	charges = min(charges+1, max_charges)
-	playsound(src,'sound/machines/twobeep.ogg',10,TRUE)
+	playsound(src,'sound/machines/twobeep.ogg',10,TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	charge_timers.Remove(charge_timers[1])
 
 /obj/item/card/emag/doorjack/examine(mob/user)
@@ -111,4 +111,3 @@
 			return TRUE
 	to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
 	return FALSE
-

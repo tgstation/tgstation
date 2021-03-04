@@ -4,71 +4,71 @@
 
 //Damage defines //TODO: merge these down to reduce on defines
 /// Physical fracturing and warping of the material.
-#define BRUTE		"brute"
+#define BRUTE "brute"
 /// Scorching and charring of the material.
-#define BURN		"burn"
+#define BURN "burn"
 /// Poisoning. Mostly caused by reagents.
-#define TOX			"toxin"
+#define TOX "toxin"
 /// Suffocation.
-#define OXY			"oxygen"
+#define OXY "oxygen"
 /// Cellular degredation. Rare and difficult to treat.
-#define CLONE		"clone"
+#define CLONE "clone"
 /// Exhaustion and nonlethal damage.
-#define STAMINA 	"stamina"
+#define STAMINA "stamina"
 /// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
-#define BRAIN		"brain"
+#define BRAIN "brain"
 
 //Damage flag defines //
 /// Involves a melee attack or a thrown object.
-#define MELEE		"melee"
+#define MELEE "melee"
 /// Involves a solid projectile.
-#define BULLET		"bullet"
+#define BULLET "bullet"
 /// Involves a laser.
-#define LASER		"laser"
+#define LASER "laser"
 /// Involves an EMP or energy-based projectile.
-#define ENERGY		"energy"
+#define ENERGY "energy"
 /// Involves a shockwave, usually from an explosion.
-#define BOMB		"bomb"
+#define BOMB "bomb"
 /// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
-#define BIO			"bio"
+#define BIO "bio"
 /// Involves ionizing radiation.
-#define RAD			"rad"
+#define RAD "rad"
 /// Involves fire or temperature extremes.
-#define FIRE		"fire"
+#define FIRE "fire"
 /// Involves corrosive substances.
-#define ACID		"acid"
+#define ACID "acid"
 /// Involves magic.
-#define MAGIC		"magic"
+#define MAGIC "magic"
 /// Involved in checking the likelyhood of applying a wound to a mob.
-#define WOUND		"wound"
+#define WOUND "wound"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 	            	(1<<0)
-#define FIRELOSS 	            	(1<<1)
-#define TOXLOSS 	            	(1<<2)
-#define OXYLOSS 	            	(1<<3)
-#define SHAME 			            (1<<4)
-#define MANUAL_SUICIDE          	(1<<5)	//suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL	(1<<6)  //when the suicide is conditionally lethal
+#define BRUTELOSS (1<<0)
+#define FIRELOSS (1<<1)
+#define TOXLOSS (1<<2)
+#define OXYLOSS (1<<3)
+#define SHAME             (1<<4)
+#define MANUAL_SUICIDE (1<<5) //suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL (1<<6)  //when the suicide is conditionally lethal
 
-#define EFFECT_STUN			"stun"
-#define EFFECT_KNOCKDOWN	"knockdown"
-#define EFFECT_UNCONSCIOUS	"unconscious"
-#define EFFECT_PARALYZE		"paralyze"
-#define EFFECT_IMMOBILIZE	"immobilize"
-#define EFFECT_IRRADIATE	"irradiate"
-#define EFFECT_STUTTER		"stutter"
-#define EFFECT_SLUR 		"slur"
-#define EFFECT_EYE_BLUR		"eye_blur"
-#define EFFECT_DROWSY		"drowsy"
-#define EFFECT_JITTER		"jitter"
+#define EFFECT_STUN "stun"
+#define EFFECT_KNOCKDOWN "knockdown"
+#define EFFECT_UNCONSCIOUS "unconscious"
+#define EFFECT_PARALYZE "paralyze"
+#define EFFECT_IMMOBILIZE "immobilize"
+#define EFFECT_IRRADIATE "irradiate"
+#define EFFECT_STUTTER "stutter"
+#define EFFECT_SLUR "slur"
+#define EFFECT_EYE_BLUR "eye_blur"
+#define EFFECT_DROWSY "drowsy"
+#define EFFECT_JITTER "jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN			(1<<0)
-#define CANKNOCKDOWN	(1<<1)
-#define CANUNCONSCIOUS	(1<<2)
-#define CANPUSH			(1<<3)
-#define GODMODE			(1<<4)
+#define CANSTUN (1<<0)
+#define CANKNOCKDOWN (1<<1)
+#define CANUNCONSCIOUS (1<<2)
+#define CANPUSH (1<<3)
+#define GODMODE (1<<4)
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -81,6 +81,7 @@
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_MELEE 8
+#define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
@@ -95,13 +96,13 @@
 #define INSTANT_CUFFBREAK 2
 
 //Grab levels
-#define GRAB_PASSIVE				0
-#define GRAB_AGGRESSIVE				1
-#define GRAB_NECK					2
-#define GRAB_KILL					3
+#define GRAB_PASSIVE 0
+#define GRAB_AGGRESSIVE 1
+#define GRAB_NECK 2
+#define GRAB_KILL 3
 
 //Grab breakout odds
-#define BASE_GRAB_RESIST_CHANCE 	60 //base chance for whether or not you can escape from a grab
+#define BASE_GRAB_RESIST_CHANCE 60 //base chance for whether or not you can escape from a grab
 
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 2
@@ -116,37 +117,27 @@
 #define LEAP_ATTACK 5
 
 //attack visual effects
-#define ATTACK_EFFECT_PUNCH		"punch"
-#define ATTACK_EFFECT_KICK		"kick"
-#define ATTACK_EFFECT_SMASH		"smash"
-#define ATTACK_EFFECT_CLAW		"claw"
-#define ATTACK_EFFECT_SLASH		"slash"
-#define ATTACK_EFFECT_DISARM	"disarm"
-#define ATTACK_EFFECT_BITE		"bite"
-#define ATTACK_EFFECT_MECHFIRE	"mech_fire"
-#define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
-#define ATTACK_EFFECT_BOOP		"boop" //Honk
-
-//intent defines
-#define INTENT_HELP   "help"
-#define INTENT_GRAB   "grab"
-#define INTENT_DISARM "disarm"
-#define INTENT_HARM   "harm"
-//NOTE: INTENT_HOTKEY_* defines are not actual intents!
-//they are here to support hotkeys
-#define INTENT_HOTKEY_LEFT  "left"
-#define INTENT_HOTKEY_RIGHT "right"
+#define ATTACK_EFFECT_PUNCH "punch"
+#define ATTACK_EFFECT_KICK "kick"
+#define ATTACK_EFFECT_SMASH "smash"
+#define ATTACK_EFFECT_CLAW "claw"
+#define ATTACK_EFFECT_SLASH "slash"
+#define ATTACK_EFFECT_DISARM "disarm"
+#define ATTACK_EFFECT_BITE "bite"
+#define ATTACK_EFFECT_MECHFIRE "mech_fire"
+#define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
+#define ATTACK_EFFECT_BOOP "boop" //Honk
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-#define SHOVE_CHAIN_PARALYZE 40
+#define SHOVE_KNOCKDOWN_SOLID 20
+#define SHOVE_KNOCKDOWN_HUMAN 20
+#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_COLLATERAL 1
+#define SHOVE_CHAIN_PARALYZE 30
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
@@ -159,27 +150,29 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //Embedded objects
 ///Chance for embedded objects to cause pain (damage user)
-#define EMBEDDED_PAIN_CHANCE 					15
+#define EMBEDDED_PAIN_CHANCE 15
 ///Chance for embedded object to fall out (causing pain but removing the object)
-#define EMBEDDED_ITEM_FALLOUT 					5
+#define EMBEDDED_ITEM_FALLOUT 5
 ///Chance for an object to embed into somebody when thrown
-#define EMBED_CHANCE							45
+#define EMBED_CHANCE 45
 ///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
-#define EMBEDDED_PAIN_MULTIPLIER				2
+#define EMBEDDED_PAIN_MULTIPLIER 2
 ///Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
-#define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4
+#define EMBEDDED_IMPACT_PAIN_MULTIPLIER 4
 ///The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
-#define EMBED_THROWSPEED_THRESHOLD				4
+#define EMBED_THROWSPEED_THRESHOLD 4
 ///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 6
 ///A Time in ticks, total removal time = (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			30
+#define EMBEDDED_UNSAFE_REMOVAL_TIME 30
 ///Chance for embedded objects to cause pain every time they move (jostle)
-#define EMBEDDED_JOSTLE_CHANCE					5
+#define EMBEDDED_JOSTLE_CHANCE 5
 ///Coefficient of multiplication for the damage the item does while
-#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER			1
+#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER 1
 ///This percentage of all pain will be dealt as stam damage rather than brute (0-1)
-#define EMBEDDED_PAIN_STAM_PCT					0.0
+#define EMBEDDED_PAIN_STAM_PCT 0.0
+///For thrown weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
+#define EMBED_CHANCE_SPEED_BONUS 10
 
 #define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
 #define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
@@ -226,13 +219,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SUPPRESSED_VERY 2 /// no message
 
 //Projectile Reflect
-#define REFLECT_NORMAL 				(1<<0)
-#define REFLECT_FAKEPROJECTILE		(1<<1)
-
-//Object/Item sharpness
-#define SHARP_NONE			0
-#define SHARP_EDGED			1
-#define SHARP_POINTY		2
+#define REFLECT_NORMAL (1<<0)
+#define REFLECT_FAKEPROJECTILE (1<<1)
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
@@ -245,11 +233,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
 
-#define EXPLODE_NONE 0				//Don't even ask me why we need this.
+#define EXPLODE_NONE 0 //Don't even ask me why we need this.
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
-#define EXPLODE_GIB_THRESHOLD 50	//ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
+#define EXPLODE_GIB_THRESHOLD 50 //ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
@@ -258,28 +246,41 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define GRENADE_NONCLUMSY_FUMBLE 2
 #define GRENADE_NO_FUMBLE 3
 
-#define BODY_ZONE_HEAD		"head"
-#define BODY_ZONE_CHEST		"chest"
-#define BODY_ZONE_L_ARM		"l_arm"
-#define BODY_ZONE_R_ARM		"r_arm"
-#define BODY_ZONE_L_LEG		"l_leg"
-#define BODY_ZONE_R_LEG		"r_leg"
+#define BODY_ZONE_HEAD "head"
+#define BODY_ZONE_CHEST "chest"
+#define BODY_ZONE_L_ARM "l_arm"
+#define BODY_ZONE_R_ARM "r_arm"
+#define BODY_ZONE_L_LEG "l_leg"
+#define BODY_ZONE_R_LEG "r_leg"
 
-#define BODY_ZONE_PRECISE_EYES		"eyes"
-#define BODY_ZONE_PRECISE_MOUTH		"mouth"
-#define BODY_ZONE_PRECISE_GROIN		"groin"
-#define BODY_ZONE_PRECISE_L_HAND	"l_hand"
-#define BODY_ZONE_PRECISE_R_HAND	"r_hand"
-#define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
-#define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
+#define BODY_ZONE_PRECISE_EYES "eyes"
+#define BODY_ZONE_PRECISE_MOUTH "mouth"
+#define BODY_ZONE_PRECISE_GROIN "groin"
+#define BODY_ZONE_PRECISE_L_HAND "l_hand"
+#define BODY_ZONE_PRECISE_R_HAND "r_hand"
+#define BODY_ZONE_PRECISE_L_FOOT "l_foot"
+#define BODY_ZONE_PRECISE_R_FOOT "r_foot"
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
 
 //bullet_act() return values
-#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
+#define BULLET_ACT_HIT "HIT" //It's a successful hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_BLOCK "BLOCK" //It's a blocked hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_FORCE_PIERCE "PIERCE" //It pierces through the object regardless of the bullet being piercing by default.
 
-#define NICE_SHOT_RICOCHET_BONUS	10			//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+#define NICE_SHOT_RICOCHET_BONUS 10 //if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+
+/// If a carbon is thrown at a speed faster than normal and impacts something solid, they take extra damage for every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
+#define CARBON_MAX_IMPACT_SPEED_BONUS 5
+
+/// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
+/// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
+/// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
+#define SECONDARY_ATTACK_CALL_NORMAL 1
+
+/// Cancels the attack chain entirely.
+#define SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN 2
+
+/// Proceed with the attack chain, but don't call the normal methods.
+#define SECONDARY_ATTACK_CONTINUE_CHAIN 3

@@ -17,21 +17,21 @@
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
 	song = new(src, allowed_instrument_ids, instrument_range)
-	allowed_instrument_ids = null			//We don't need this clogging memory after it's used.
+	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
 	return ..()
 
 /obj/item/instrument/proc/should_stop_playing(mob/user)
-	return user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))		// sorry, no more TK playing.
+	return user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user))) // sorry, no more TK playing.
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/instrument/attack_self(mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return TRUE
 	interact(user)
@@ -83,7 +83,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 125
+	custom_price = PAYCHECK_ASSISTANT * 2.5
 	instrument_range = 1
 
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
@@ -93,18 +93,18 @@
 	RegisterSignal(src, COMSIG_SONG_END, .proc/stop_playing)
 
 /**
-  * Called by a component signal when our song starts playing.
-  */
+ * Called by a component signal when our song starts playing.
+ */
 /obj/item/instrument/piano_synth/headphones/proc/start_playing()
 	icon_state = "[initial(icon_state)]_on"
-	update_icon()
+	update_appearance()
 
 /**
-  * Called by a component signal when our song stops playing.
-  */
+ * Called by a component signal when our song stops playing.
+ */
 /obj/item/instrument/piano_synth/headphones/proc/stop_playing()
 	icon_state = "[initial(icon_state)]"
-	update_icon()
+	update_appearance()
 
 /obj/item/instrument/piano_synth/headphones/spacepods
 	name = "\improper Nanotrasen space pods"
@@ -114,7 +114,7 @@
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = 1800
+	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/instrument/banjo
 	name = "banjo"
@@ -319,5 +319,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
-	custom_price = 237
-	custom_premium_price = 237
+	custom_price = PAYCHECK_HARD * 2.37
+	custom_premium_price = PAYCHECK_HARD * 2.37

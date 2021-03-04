@@ -1,9 +1,9 @@
 /* Alien shit!
  * Contains:
- *		structure/alien
- *		Resin
- *		Weeds
- *		Egg
+ * structure/alien
+ * Resin
+ * Weeds
+ * Egg
  */
 
 
@@ -68,7 +68,11 @@
 
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/alien/resin/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -88,6 +92,11 @@
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
 
+/obj/structure/alien/resin/wall/creature
+	name = "gelatinous wall"
+	desc = "Thick material shaped into a wall. Eugh."
+	color = "#8EC127"
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
@@ -100,8 +109,14 @@
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
-/obj/structure/alien/resin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
+///Used in the big derelict ruin exclusively.
+/obj/structure/alien/resin/membrane/creature
+	name = "gelatinous membrane"
+	desc = "A strange combination of thin, gelatinous material."
+	color = "#4BAE56"
 
 /*
  * Weeds
@@ -140,7 +155,8 @@
 		blacklisted_turfs = typecacheof(list(
 			/turf/open/space,
 			/turf/open/chasm,
-			/turf/open/lava))
+			/turf/open/lava,
+			/turf/open/openspace))
 
 	set_base_icon()
 
@@ -163,6 +179,10 @@
 	set_smoothed_icon_state(smoothing_junction)
 
 
+/obj/structure/alien/weeds/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/structure/alien/weeds/proc/expand()
 	var/turf/U = get_turf(src)
 	if(is_type_in_typecache(U, blacklisted_turfs))
@@ -179,9 +199,11 @@
 		new /obj/structure/alien/weeds(T)
 	return TRUE
 
-/obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/alien/weeds/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/alien/weeds/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
 
 //Weed nodes
 /obj/structure/alien/weeds/node
@@ -220,6 +242,11 @@
 /obj/structure/alien/weeds/node/set_base_icon()
 	return //No icon randomization at init. The node's icon is already well defined.
 
+/obj/structure/alien/weeds/creature
+	name = "gelatinous floor"
+	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."
+	color = "#4BAE56"
+
 
 #undef NODERANGE
 
@@ -232,7 +259,7 @@
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
-#define MIN_GROWTH_TIME 900	//time it takes to grow a hugger
+#define MIN_GROWTH_TIME 900 //time it takes to grow a hugger
 #define MAX_GROWTH_TIME 1500
 
 /obj/structure/alien/egg
@@ -244,13 +271,13 @@
 	anchored = TRUE
 	max_integrity = 100
 	integrity_failure = 0.05
-	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 	var/obj/item/clothing/mask/facehugger/child
 
 /obj/structure/alien/egg/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 	if(status == GROWING || status == GROWN)
 		child = new(src)
 	if(status == GROWING)
@@ -258,6 +285,10 @@
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
 		obj_integrity = integrity_failure * max_integrity
+
+/obj/structure/alien/egg/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
@@ -267,14 +298,15 @@
 			icon_state = "[base_icon]"
 		if(BURST)
 			icon_state = "[base_icon]_hatched"
+	return ..()
 
-/obj/structure/alien/egg/attack_paw(mob/living/user)
-	return attack_hand(user)
+/obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
-	return attack_hand(user)
+/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_hand(mob/living/user)
+/obj/structure/alien/egg/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -299,7 +331,7 @@
 
 /obj/structure/alien/egg/proc/Grow()
 	status = GROWN
-	update_icon()
+	update_appearance()
 	proximity_monitor.SetRange(1)
 
 //drops and kills the hugger if any is remaining
@@ -307,7 +339,7 @@
 	if(status == GROWN || status == GROWING)
 		proximity_monitor.SetRange(0)
 		status = BURST
-		update_icon()
+		update_appearance()
 		flick("egg_opening", src)
 		addtimer(CALLBACK(src, .proc/finish_bursting, kill), 15)
 
@@ -324,15 +356,16 @@
 						child.Leap(M)
 						break
 
+/obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 500
+
+/obj/structure/alien/egg/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
+
 /obj/structure/alien/egg/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)
-
-/obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 500)
-		take_damage(5, BURN, 0, 0)
-
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
 	if(status == GROWN)

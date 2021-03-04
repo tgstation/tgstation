@@ -1,11 +1,11 @@
 /*
  * Holds procs designed to help with filtering text
  * Contains groups:
- *			SQL sanitization/formating
- *			Text sanitization
- *			Text searches
- *			Text modification
- *			Misc
+ * SQL sanitization/formating
+ * Text sanitization
+ * Text searches
+ * Text modification
+ * Misc
  */
 
 
@@ -69,15 +69,15 @@
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
 /**
-  * Perform a whitespace cleanup on the text, similar to what HTML renderers do
-  *
-  * This is useful if you want to better predict how text is going to look like when displaying it to a user.
-  * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
-  * HTML5 defines whitespace pretty much exactly like regex defines the `\s` group, `[ \t\r\n\f]`.
-  *
-  * Arguments:
-  * * t - The text to "render"
-  */
+ * Perform a whitespace cleanup on the text, similar to what HTML renderers do
+ *
+ * This is useful if you want to better predict how text is going to look like when displaying it to a user.
+ * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
+ * HTML5 defines whitespace pretty much exactly like regex defines the `\s` group, `[ \t\r\n\f]`.
+ *
+ * Arguments:
+ * * t - The text to "render"
+ */
 /proc/htmlrendertext(t)
 	// Trim "whitespace" by lazily capturing word characters in the middle
 	var/static/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
@@ -115,7 +115,7 @@
 			else
 				non_whitespace = TRUE
 	if(non_whitespace)
-		return text		//only accepts the text if it has some non-spaces
+		return text //only accepts the text if it has some non-spaces
 
 /// Used to get a properly sanitized input, of max_length
 /// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
@@ -142,11 +142,11 @@
 #define LETTERS_DETECTED 4
 
 /**
-  * Filters out undesirable characters from names.
-  *
-  * * strict - return null immidiately instead of filtering out
-  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
-  */
+ * Filters out undesirable characters from names.
+ *
+ * * strict - return null immidiately instead of filtering out
+ * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
+ */
 /proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE)
 	if(!t_in)
 		return //Rejects the input if it is null
@@ -168,19 +168,19 @@
 		switch(text2ascii(char))
 
 			// A  .. Z
-			if(65 to 90)			//Uppercase Letters
+			if(65 to 90) //Uppercase Letters
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
 			// a  .. z
-			if(97 to 122)			//Lowercase Letters
+			if(97 to 122) //Lowercase Letters
 				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || last_char_group == SYMBOLS_DETECTED) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
 			// 0  .. 9
-			if(48 to 57)			//Numbers
+			if(48 to 57) //Numbers
 				if(last_char_group == NO_CHARS_DETECTED || !allow_numbers) //suppress at start of string
 					if(strict)
 						return
@@ -189,7 +189,7 @@
 				last_char_group = NUMBERS_DETECTED
 
 			// '  -  .
-			if(39,45,46)			//Common name punctuation
+			if(39,45,46) //Common name punctuation
 				if(last_char_group == NO_CHARS_DETECTED)
 					if(strict)
 						return
@@ -197,7 +197,7 @@
 				last_char_group = SYMBOLS_DETECTED
 
 			// ~   |   @  :  #  $  %  &  *  +
-			if(126,124,64,58,35,36,37,38,42,43)			//Other symbols that we'll allow (mainly for AI)
+			if(126,124,64,58,35,36,37,38,42,43) //Other symbols that we'll allow (mainly for AI)
 				if(last_char_group == NO_CHARS_DETECTED || !allow_numbers) //suppress at start of string
 					if(strict)
 						return
@@ -227,14 +227,18 @@
 			break
 
 	if(number_of_alphanumeric < 2)
-		return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
+		return //protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
 	if(last_char_group == SPACES_DETECTED)
 		t_out = copytext_char(t_out, 1, -1) //removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai"))	//prevents these common metagamey names
+	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai")) //prevents these common metagamey names
 		if(cmptext(t_out,bad_name))
-			return	//(not case sensitive)
+			return //(not case sensitive)
+
+	// Protects against names containing IC chat prohibited words.
+	if(CHAT_FILTER_CHECK(t_out))
+		return
 
 	return t_out
 
@@ -297,16 +301,16 @@
 	return ""
 
 /**
-  * Truncate a string to the given length
-  *
-  * Will only truncate if the string is larger than the length and *ignores unicode concerns*
-  *
-  * This exists soley because trim does other stuff too.
-  *
-  * Arguments:
-  * * text - String
-  * * max_length - integer length to truncate at
-  */
+ * Truncate a string to the given length
+ *
+ * Will only truncate if the string is larger than the length and *ignores unicode concerns*
+ *
+ * This exists soley because trim does other stuff too.
+ *
+ * Arguments:
+ * * text - String
+ * * max_length - integer length to truncate at
+ */
 /proc/truncate(text, max_length)
 	if(length(text) > max_length)
 		return copytext(text, 1, max_length)
@@ -378,6 +382,9 @@
 GLOBAL_LIST_INIT(zero_character_only, list("0"))
 GLOBAL_LIST_INIT(hex_characters, list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"))
 GLOBAL_LIST_INIT(alphabet, list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+GLOBAL_LIST_INIT(alphabet_upper, list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"))
+GLOBAL_LIST_INIT(numerals, list("1","2","3","4","5","6","7","8","9","0"))
+GLOBAL_LIST_INIT(space, list(" "))
 GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
@@ -741,7 +748,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(!next_space)
 		next_space = leng - next_backslash
 
-	if(!next_space)	//trailing bs
+	if(!next_space) //trailing bs
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
@@ -883,18 +890,20 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return "\[[loadstring]\]"
 
 /**
-  * Formats a number to human readable form with the appropriate SI unit.
-  *
-  * Supports SI exponents between 1e-15 to 1e15, but properly handles numbers outside that range as well.
-  * Examples:
-  * * `siunit(1234, "Pa", 1)` -> `"1.2 kPa"`
-  * * `siunit(0.5345, "A", 0)` -> `"535 mA"`
-  * * `siunit(1000, "Pa", 4)` -> `"1 kPa"`
-  * Arguments:
-  * * value - The number to convert to text. Can be positive or negative.
-  * * unit - The base unit of the number, such as "Pa" or "W".
-  * * maxdecimals - Maximum amount of decimals to display for the final number. Defaults to 1.
-  */
+ * Formats a number to human readable form with the appropriate SI unit.
+ *
+ * Supports SI exponents between 1e-15 to 1e15, but properly handles numbers outside that range as well.
+ * Examples:
+ * * `siunit(1234, "Pa", 1)` -> `"1.2 kPa"`
+ * * `siunit(0.5345, "A", 0)` -> `"535 mA"`
+ * * `siunit(1000, "Pa", 4)` -> `"1 kPa"`
+ * Arguments:
+ * * value - The number to convert to text. Can be positive or negative.
+ * * unit - The base unit of the number, such as "Pa" or "W".
+ * * maxdecimals - Maximum amount of decimals to display for the final number. Defaults to 1.
+ * *
+ * * For pressure conversion, use proc/siunit_pressure() below
+ */
 /proc/siunit(value, unit, maxdecimals=1)
 	var/static/list/prefixes = list("f","p","n","μ","m","","k","M","G","T","P")
 
@@ -917,3 +926,29 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/prefix = prefixes[prefix_index]
 	return "[coefficient] [prefix][unit]"
+
+
+/** The game code never uses Pa, but kPa, since 1 Pa is too small to reasonably handle
+ * Thus, to ensure correct conversion from any kPa in game code, this value needs to be multiplied by 10e3 to get Pa, which the siunit() proc expects
+ * Args:
+ * * value_in_kpa - Value that should be converted to readable text in kPa
+ * * maxdecimals - maximum number of decimals that are displayed, defaults to 1 in proc/siunit()
+ */
+/proc/siunit_pressure(value_in_kpa, maxdecimals)
+	var/pressure_adj = value_in_kpa * 1000 //to adjust for using kPa instead of Pa
+	return siunit(pressure_adj, "Pa", maxdecimals)
+
+/// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
+/proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)
+	var/list/out = list()
+	var/static/list/whitespace = list(" ", "\n", "\t")
+	for(var/i in 1 to length(original))
+		var/char = original[i]
+		if(!replace_whitespace && (char in whitespace))
+			out += char
+			continue
+		if(replace_letters_only && (!ISINRANGE(char, 65, 90) && !ISINRANGE(char, 97, 122)))
+			out += char
+			continue
+		out += prob(replaceprob)? pick(replacementchars) : char
+	return out.Join("")

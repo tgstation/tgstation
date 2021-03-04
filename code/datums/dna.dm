@@ -29,9 +29,9 @@
 
 	QDEL_NULL(species)
 
-	mutations.Cut()					//This only references mutations, just dereference.
-	temporary_mutations.Cut()		//^
-	previous.Cut()					//^
+	mutations.Cut() //This only references mutations, just dereference.
+	temporary_mutations.Cut() //^
+	previous.Cut() //^
 
 	return ..()
 
@@ -120,7 +120,7 @@
 
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
-	if(species && species.inert_mutation)
+	if(species?.inert_mutation)
 		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
 	if(!LAZYLEN(mutations_temp))
@@ -128,11 +128,7 @@
 	mutation_index.Cut()
 	default_mutation_genes.Cut()
 	shuffle_inplace(mutations_temp)
-	if(ismonkey(holder))
-		mutations |= new RACEMUT(MUT_NORMAL)
-		mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
-	else
-		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
 	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
@@ -218,9 +214,15 @@
 		update_instability(FALSE)
 		return
 
-/datum/dna/proc/is_same_as(datum/dna/D)
-	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
-		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
+/**
+ * Checks if two DNAs are practically the same by comparing their most defining features
+ *
+ * Arguments:
+ * * target_dna The DNA that we are comparing to
+ */
+/datum/dna/proc/is_same_as(datum/dna/target_dna)
+	if(uni_identity == target_dna.uni_identity && mutation_index == target_dna.mutation_index && real_name == target_dna.real_name)
+		if(species.type == target_dna.species.type && compare_list(features, target_dna.features) && blood_type == target_dna.blood_type)
 			return TRUE
 	return FALSE
 
@@ -417,8 +419,7 @@
 		return
 
 	for(var/mutation in dna.mutation_index)
-		if(ismob(dna.check_block(mutation)))
-			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
+		dna.check_block(mutation)
 
 	update_mutations_overlay()
 

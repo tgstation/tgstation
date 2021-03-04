@@ -1,9 +1,9 @@
 /**
-  * Machine that allows to identify and separate reagents in fitting container
-  * as well as to create new containers with separated reagents in it.
-  *
-  * Contains logic for both ChemMaster and CondiMaster, switched by "condi".
-  */
+ * Machine that allows to identify and separate reagents in fitting container
+ * as well as to create new containers with separated reagents in it.
+ *
+ * Contains logic for both ChemMaster and CondiMaster, switched by "condi".
+ */
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -11,6 +11,7 @@
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
+	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -91,15 +92,13 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		update_icon()
+		update_appearance()
 	else if(A == bottle)
 		bottle = null
 
 /obj/machinery/chem_master/update_icon_state()
-	if(beaker)
-		icon_state = "mixer1"
-	else
-		icon_state = "mixer0"
+	icon_state = "[base_icon_state][beaker ? 1 : 0]"
+	return ..()
 
 /obj/machinery/chem_master/update_overlays()
 	. = ..()
@@ -131,7 +130,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
+		update_appearance()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
@@ -151,16 +150,16 @@
 	replace_beaker(user)
 
 /**
-  * Handles process of moving input reagents containers in/from machine
-  *
-  * When called checks for previously inserted beaker and gives it to user.
-  * Then, if new_beaker provided, places it into src.beaker.
-  * Returns `boolean`. TRUE if user provided (ignoring whether threre was any beaker change) and FALSE if not.
-  *
-  * Arguments:
-  * * user - Mob that initialized replacement, gets previously inserted beaker if there's any
-  * * new_beaker - New beaker to insert. Optional
-  */
+ * Handles process of moving input reagents containers in/from machine
+ *
+ * When called checks for previously inserted beaker and gives it to user.
+ * Then, if new_beaker provided, places it into src.beaker.
+ * Returns `boolean`. TRUE if user provided (ignoring whether threre was any beaker change) and FALSE if not.
+ *
+ * Arguments:
+ * * user - Mob that initialized replacement, gets previously inserted beaker if there's any
+ * * new_beaker - New beaker to insert. Optional
+ */
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE
@@ -169,7 +168,7 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
@@ -195,7 +194,7 @@
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
+	data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["mode"] = mode
 	data["condi"] = condi
@@ -213,13 +212,13 @@
 	var/beaker_contents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beaker_contents
 
 	var/buffer_contents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			buffer_contents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
+			buffer_contents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = round(N.volume, 0.01)))) // ^
 	data["bufferContents"] = buffer_contents
 
 	//Calculated at init time as it never changes
@@ -261,9 +260,15 @@
 		if (!beaker)
 			return FALSE
 		if (to_container == "buffer")
+			var/datum/reagent/R = beaker.reagents.get_reagent(reagent)
+			if(!check_reactions(R, beaker.reagents))
+				return FALSE
 			beaker.reagents.trans_id_to(src, reagent, amount)
 			return TRUE
 		if (to_container == "beaker" && mode)
+			var/datum/reagent/R = reagents.get_reagent(reagent)
+			if(!check_reactions(R, reagents))
+				return FALSE
 			reagents.trans_id_to(beaker, reagent, amount)
 			return TRUE
 		return FALSE
@@ -324,7 +329,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = clamp(vol_each, 0, vol_each_max)
+		vol_each = round(clamp(vol_each, 0, vol_each_max), 0.01)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
@@ -355,6 +360,7 @@
 					/datum/component/storage)
 				if(STRB)
 					drop_threshold = STRB.max_items - bottle.contents.len
+					target_loc = bottle
 			for(var/i = 0; i < amount; i++)
 				if(i < drop_threshold)
 					P = new/obj/item/reagent_containers/pill(target_loc)
@@ -419,7 +425,7 @@
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
-			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "pH" = initial(R.ph))
 			screen = "analyze"
 			return TRUE
 
@@ -431,33 +437,33 @@
 
 /obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters
 	if (AM == beaker)
-		AM.pixel_x = -8
-		AM.pixel_y = 8
+		AM.pixel_x = AM.base_pixel_x - 8
+		AM.pixel_y = AM.base_pixel_y + 8
 		return null
 	else if (AM == bottle)
 		if (length(bottle.contents))
-			AM.pixel_x = -13
+			AM.pixel_x = AM.base_pixel_x - 13
 		else
-			AM.pixel_x = -7
-		AM.pixel_y = -8
+			AM.pixel_x = AM.base_pixel_x - 7
+		AM.pixel_y = AM.base_pixel_y - 8
 		return null
 	else
 		var/md5 = md5(AM.name)
 		for (var/i in 1 to 32)
 			. += hex2num(md5[i])
 		. = . % 9
-		AM.pixel_x = ((.%3)*6)
-		AM.pixel_y = -8 + (round( . / 3)*8)
+		AM.pixel_x = AM.base_pixel_x + ((.%3)*6)
+		AM.pixel_y = AM.base_pixel_y - 8 + (round( . / 3)*8)
 
 /**
-  * Translates styles data into UI compatible format
-  *
-  * Expects to receive list of availables condiment styles in its complete format, and transforms them in simplified form with enough data to get UI going.
-  * Returns list(list("id" = <key>, "className" = <icon class>, "title" = <name and desc>),..).
-  *
-  * Arguments:
-  * * styles - List of styles for condiment bottles in internal format: [/obj/machinery/chem_master/proc/get_condi_styles]
-  */
+ * Translates styles data into UI compatible format
+ *
+ * Expects to receive list of availables condiment styles in its complete format, and transforms them in simplified form with enough data to get UI going.
+ * Returns list(list("id" = <key>, "className" = <icon class>, "title" = <name and desc>),..).
+ *
+ * Arguments:
+ * * styles - List of styles for condiment bottles in internal format: [/obj/machinery/chem_master/proc/get_condi_styles]
+ */
 /obj/machinery/chem_master/proc/strip_condi_styles_to_icons(list/styles)
 	var/list/icons = list()
 	for (var/s in styles)
@@ -472,26 +478,26 @@
 	return icons
 
 /**
-  * Defines and provides list of available condiment bottle styles
-  *
-  * Uses typelist() for styles storage after initialization.
-  * For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
-  * Returns list(
-  * 	<key> = list(
-  * 		"icon_state" = <bottle icon_state>,
-  * 		"name" = <bottle name>,
-  * 		"desc" = <bottle desc>,
-  * 		?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
-  * 		?"icon_empty" = <icon_state when empty>,
-  * 		?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
-  * 		?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
-  * 		?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
-  * 		?"righthand_file" = <same as "lefthand_file" but for right hand>,
-  * 	),
-  * 	..
-  * )
-  *
-  */
+ * Defines and provides list of available condiment bottle styles
+ *
+ * Uses typelist() for styles storage after initialization.
+ * For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
+ * Returns list(
+ * <key> = list(
+ * "icon_state" = <bottle icon_state>,
+ * "name" = <bottle name>,
+ * "desc" = <bottle desc>,
+ * ?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
+ * ?"icon_empty" = <icon_state when empty>,
+ * ?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
+ * ?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
+ * ?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
+ * ?"righthand_file" = <same as "lefthand_file" but for right hand>,
+ * ),
+ * ..
+ * )
+ *
+ */
 /obj/machinery/chem_master/proc/get_condi_styles()
 	var/list/styles = typelist("condi_styles")
 	if (!styles.len)
@@ -528,12 +534,12 @@
 	return styles
 
 /**
-  * Provides condiment bottle style based on reagents.
-  *
-  * Gets style from available by key, using last part of main reagent type (eg. "rice" for /datum/reagent/consumable/rice) as key.
-  * If not available returns fallback style, or null if no such thing.
-  * Returns list that is one of condibottle styles from [/obj/machinery/chem_master/proc/get_condi_styles]
-  */
+ * Provides condiment bottle style based on reagents.
+ *
+ * Gets style from available by key, using last part of main reagent type (eg. "rice" for /datum/reagent/consumable/rice) as key.
+ * If not available returns fallback style, or null if no such thing.
+ * Returns list that is one of condibottle styles from [/obj/machinery/chem_master/proc/get_condi_styles]
+ */
 /obj/machinery/chem_master/proc/guess_condi_style(datum/reagents/reagents)
 	var/list/styles = get_condi_styles()
 	if (reagents.reagent_list.len > 0)
@@ -546,16 +552,16 @@
 	return styles[CONDIMASTER_STYLE_FALLBACK]
 
 /**
-  * Applies style to condiment bottle.
-  *
-  * Applies props provided in "style" assuming that "container" is freshly created with no styles applied before.
-  * User specified name for bottle applied after this method during bottle creation,
-  * so container.name overwritten here for consistency rather than with some purpose in mind.
-  *
-  * Arguments:
-  * * container - condiment bottle that gets style applied to it
-  * * style - assoc list, must probably one from [/obj/machinery/chem_master/proc/get_condi_styles]
-  */
+ * Applies style to condiment bottle.
+ *
+ * Applies props provided in "style" assuming that "container" is freshly created with no styles applied before.
+ * User specified name for bottle applied after this method during bottle creation,
+ * so container.name overwritten here for consistency rather than with some purpose in mind.
+ *
+ * Arguments:
+ * * container - condiment bottle that gets style applied to it
+ * * style - assoc list, must probably one from [/obj/machinery/chem_master/proc/get_condi_styles]
+ */
 /obj/machinery/chem_master/proc/apply_condi_style(obj/item/reagent_containers/food/condiment/container, list/style)
 	container.name = style["name"]
 	container.desc = style["desc"]
@@ -568,12 +574,31 @@
 			container.lefthand_file = style["lefthand_file"]
 			container.righthand_file = style["righthand_file"]
 
+
+//Checks to see if the target reagent is being created (reacting) and if so prevents transfer
+//Only prevents reactant from being moved so that people can still manlipulate input reagents
+/obj/machinery/chem_master/proc/check_reactions(datum/reagent/reagent, datum/reagents/holder)
+	if(!reagent)
+		return FALSE
+	var/canMove = TRUE
+	for(var/e in holder.reaction_list)
+		var/datum/equilibrium/E = e
+		if(E.reaction.reaction_flags & REACTION_COMPETITIVE)
+			continue
+		for(var/result in E.reaction.required_reagents)
+			var/datum/reagent/R = result
+			if(R == reagent.type)
+				canMove = FALSE
+	if(!canMove)
+		say("Cannot move arrested chemical reaction reagents!")
+	return canMove
+
 /**
-  * Machine that allows to identify and separate reagents in fitting container
-  * as well as to create new containers with separated reagents in it.
-  *
-  * All logic related to this is in [/obj/machinery/chem_master] and condimaster specific UI enabled by "condi = TRUE"
-  */
+ * Machine that allows to identify and separate reagents in fitting container
+ * as well as to create new containers with separated reagents in it.
+ *
+ * All logic related to this is in [/obj/machinery/chem_master] and condimaster specific UI enabled by "condi = TRUE"
+ */
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."

@@ -21,6 +21,13 @@
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
 		if(template.load(T, centered = TRUE))
+			var/affected = template.get_affected_turfs(T, centered=TRUE)
+			for(var/AT in affected)
+				for(var/obj/docking_port/mobile/P in AT)
+					if(istype(P, /obj/docking_port/mobile))
+						template.post_load(P)
+						break
+
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
 			to_chat(src, "Failed to place map", confidential = TRUE)

@@ -1,13 +1,11 @@
 /obj/machinery/atmospherics/components/binary/temperature_gate
 	icon_state = "tgate_map-3"
 	name = "temperature gate"
-	desc = "An activable gate that compares the input temperature with the interface set temperature to check if the gas can flow or not."
-
+	desc = "An activable gate that compares the input temperature with the interface set temperature to check if the gas can flow from the input side to the output side or not."
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tgate"
-
 	///If the temperature of the mix before the gate is lower than this, the gas will flow (if inverted, if the temperature of the mix before the gate is higher than this)
 	var/target_temperature = T0C
 	///Minimum allowed temperature
@@ -23,7 +21,7 @@
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/AltClick(mob/user)
@@ -31,7 +29,7 @@
 		target_temperature = max_temperature
 		investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You set the target temperature on [src] to [target_temperature] K.</span>")
-		update_icon()
+		update_appearance()
 	return ..()
 
 
@@ -110,7 +108,7 @@
 			if(.)
 				target_temperature = clamp(minimum_temperature, temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/can_unwrench(mob/user)
 	. = ..()

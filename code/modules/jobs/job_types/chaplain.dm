@@ -9,12 +9,13 @@
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
-	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
+	departments = DEPARTMENT_SERVICE
+
+	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
@@ -27,8 +28,11 @@
 			H.mind.holy_role = HOLY_ROLE_PRIEST
 		B.deity_name = GLOB.deity
 		B.name = GLOB.bible_name
-		B.icon_state = GLOB.bible_icon_state
-		B.inhand_icon_state = GLOB.bible_inhand_icon_state
+		// These checks are important as there's no guarantee the "HOLY_ROLE_HIGHPRIEST" chaplain has selected a bible skin.
+		if(GLOB.bible_icon_state)
+			B.icon_state = GLOB.bible_icon_state
+		if(GLOB.bible_inhand_icon_state)
+			B.inhand_icon_state = GLOB.bible_inhand_icon_state
 		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.</span>")
 		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
@@ -126,7 +130,11 @@
 		/obj/item/camera/spooky = 1
 		)
 
+	skillchips = list(/obj/item/skillchip/entrails_reader)
+
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
+
+	id_trim = /datum/id_trim/job/chaplain

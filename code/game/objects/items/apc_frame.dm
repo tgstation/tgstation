@@ -66,13 +66,13 @@
 		if(iswallturf(T))
 			T.attackby(src, user, params)
 
-	var/metal_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
-	var/glass_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
+	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
+	var/glass_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 
 	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
-			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)
+			new /obj/item/stack/sheet/iron(get_turf(src), metal_amt)
 		if(glass_amt)
 			new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
 		qdel(src)
@@ -121,3 +121,4 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
+	custom_price = PAYCHECK_EASY * 0.5

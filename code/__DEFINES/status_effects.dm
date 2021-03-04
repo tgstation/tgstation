@@ -33,6 +33,10 @@
 
 #define STATUS_EFFECT_DETERMINED /datum/status_effect/determined //currently in a combat high from being seriously wounded
 
+#define STATUS_EFFECT_LIGHTNINGORB /datum/status_effect/lightningorb //Speed from a lightning orb!
+
+#define STATUS_EFFECT_MAYHEM /datum/status_effect/mayhem //Total bloodbath. Activated by orb of mayhem pickup/bottle of mayhem item.
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -66,10 +70,10 @@
 #define STATUS_EFFECT_CONVULSING /datum/status_effect/convulsing
 
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
-#define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
-#define CURSE_SPAWNING	2 //spawns creatures that attack the target only
-#define CURSE_WASTING	4 //causes gradual damage
-#define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
+#define CURSE_BLINDING 1 //makes the edges of the target's screen obscured
+#define CURSE_SPAWNING 2 //spawns creatures that attack the target only
+#define CURSE_WASTING 4 //causes gradual damage
+#define CURSE_GRASPING 8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbola_pacify //Gives the user gondola traits while the gonbola is attached to them.
 
@@ -89,6 +93,17 @@
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
 
+///Raises click cooldowns for everything you do.
+#define STATUS_EFFECT_WOOZY /datum/status_effect/woozy
+
+///Makes you bleed harder
+#define STATUS_EFFECT_HIGHBLOODPRESSURE /datum/status_effect/high_blood_pressure
+
+
+/// makes you seize up. reminds me of this video https://www.youtube.com/watch?v=wvkHIZg_954
+#define STATUS_EFFECT_SEIZURE /datum/status_effect/seizure
+
+
 /// Makes the mob move randomly.
 /// Read the documentation for /datum/status_effect/confusion for more information.
 #define STATUS_EFFECT_CONFUSION /datum/status_effect/confusion
@@ -105,9 +120,13 @@
 
 #define STATUS_EFFECT_BOUNTY /datum/status_effect/bounty //rewards the person who added this to the target with refreshed spells and a fair heal
 
-#define STATUS_EFFECT_HELDUP /datum/status_effect/heldup // someone is currently pointing a gun at you
+#define STATUS_EFFECT_HELDUP /datum/status_effect/grouped/heldup // someone is currently pointing a gun at you
 
 #define STATUS_EFFECT_HOLDUP /datum/status_effect/holdup // you are currently pointing a gun at someone
+
+#define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
+
+#define STATUS_EFFECT_SURRENDER /datum/status_effect/grouped/surrender // gives an alert to quickly surrender
 /////////////
 //  SLIME  //
 /////////////
@@ -118,6 +137,8 @@
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
+
+#define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 
 #define STASIS_ASCENSION_EFFECT "heretic_ascension"
 

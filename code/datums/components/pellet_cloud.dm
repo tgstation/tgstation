@@ -1,7 +1,7 @@
 // the following defines are used for [/datum/component/pellet_cloud/var/list/wound_info_by_part] to store the damage, wound_bonus, and bw_bonus for each bodypart hit
-#define CLOUD_POSITION_DAMAGE	1
-#define CLOUD_POSITION_W_BONUS	2
-#define CLOUD_POSITION_BW_BONUS	3
+#define CLOUD_POSITION_DAMAGE 1
+#define CLOUD_POSITION_W_BONUS 2
+#define CLOUD_POSITION_BW_BONUS 3
 
 /*
 	* This component is used when you want to create a bunch of shrapnel or projectiles (say, shrapnel from a fragmentation grenade, or buckshot from a shotgun) from a central point,
@@ -9,11 +9,11 @@
 	* by signal.
 	*
 	* Pellet cloud currently works on two classes of sources: directed (ammo casings), and circular (grenades, landmines).
-	*	-Directed: This means you're shooting multiple pellets, like buckshot. If an ammo casing is defined as having multiple pellets, it will automatically create a pellet cloud
-	*		and call COMSIG_PELLET_CLOUD_INIT (see [/obj/item/ammo_casing/proc/fire_casing]). Thus, the only projectiles fired will be the ones fired here.
-	*		The magnitude var controls how many pellets are created.
-	*	-Circular: This results in a big spray of shrapnel flying all around the detonation point when the grenade fires COMSIG_GRENADE_PRIME or landmine triggers COMSIG_MINE_TRIGGERED.
-	*		The magnitude var controls how big the detonation radius is (the bigger the magnitude, the more shrapnel is created). Grenades can be covered with bodies to reduce shrapnel output.
+	* -Directed: This means you're shooting multiple pellets, like buckshot. If an ammo casing is defined as having multiple pellets, it will automatically create a pellet cloud
+	* and call COMSIG_PELLET_CLOUD_INIT (see [/obj/item/ammo_casing/proc/fire_casing]). Thus, the only projectiles fired will be the ones fired here.
+	* The magnitude var controls how many pellets are created.
+	* -Circular: This results in a big spray of shrapnel flying all around the detonation point when the grenade fires COMSIG_GRENADE_DETONATE or landmine triggers COMSIG_MINE_TRIGGERED.
+	* The magnitude var controls how big the detonation radius is (the bigger the magnitude, the more shrapnel is created). Grenades can be covered with bodies to reduce shrapnel output.
 	*
 	* Once all of the fired projectiles either hit a target or disappear due to ranging out/whatever else, we resolve the list of all the things we hit and print aggregate messages so we get
 	* one "You're hit by 6 buckshot pellets" vs 6x "You're hit by the buckshot blah blah" messages.
@@ -82,21 +82,21 @@
 		RegisterSignal(parent, COMSIG_PELLET_CLOUD_INIT, .proc/create_casing_pellets)
 	else if(isgrenade(parent))
 		RegisterSignal(parent, COMSIG_GRENADE_ARMED, .proc/grenade_armed)
-		RegisterSignal(parent, COMSIG_GRENADE_PRIME, .proc/create_blast_pellets)
+		RegisterSignal(parent, COMSIG_GRENADE_DETONATE, .proc/create_blast_pellets)
 	else if(islandmine(parent))
 		RegisterSignal(parent, COMSIG_MINE_TRIGGERED, .proc/create_blast_pellets)
 	else if(issupplypod(parent))
 		RegisterSignal(parent, COMSIG_SUPPLYPOD_LANDED, .proc/create_blast_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_DETONATE, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 /**
-  * create_casing_pellets() is for directed pellet clouds for ammo casings that have multiple pellets (buckshot and scatter lasers for instance)
-  *
-  * Honestly this is mostly just a rehash of [/obj/item/ammo_casing/proc/fire_casing] for pellet counts > 1, except this lets us tamper with the pellets and hook onto them for tracking purposes.
-  * The arguments really don't matter, this proc is triggered by COMSIG_PELLET_CLOUD_INIT which is only for this really, it's just a big mess of the state vars we need for doing the stuff over here.
-  */
+ * create_casing_pellets() is for directed pellet clouds for ammo casings that have multiple pellets (buckshot and scatter lasers for instance)
+ *
+ * Honestly this is mostly just a rehash of [/obj/item/ammo_casing/proc/fire_casing] for pellet counts > 1, except this lets us tamper with the pellets and hook onto them for tracking purposes.
+ * The arguments really don't matter, this proc is triggered by COMSIG_PELLET_CLOUD_INIT which is only for this really, it's just a big mess of the state vars we need for doing the stuff over here.
+ */
 /datum/component/pellet_cloud/proc/create_casing_pellets(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro)
 	SIGNAL_HANDLER_DOES_SLEEP
 
@@ -106,9 +106,9 @@
 		zone_override = shooter.zone_selected
 
 	// things like mouth executions and gunpoints can multiply the damage and wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
-	var/original_damage = shell.BB.damage
-	var/original_wb = shell.BB.wound_bonus
-	var/original_bwb = shell.BB.bare_wound_bonus
+	var/original_damage = shell.loaded_projectile.damage
+	var/original_wb = shell.loaded_projectile.wound_bonus
+	var/original_bwb = shell.loaded_projectile.bare_wound_bonus
 
 	for(var/i in 1 to num_pellets)
 		shell.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
@@ -118,40 +118,40 @@
 			else //Smart spread
 				spread = round((i / num_pellets - 0.5) * distro)
 
-		RegisterSignal(shell.BB, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-		RegisterSignal(shell.BB, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
-		shell.BB.damage = original_damage
-		shell.BB.wound_bonus = original_wb
-		shell.BB.bare_wound_bonus = original_bwb
-		pellets += shell.BB
+		RegisterSignal(shell.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+		RegisterSignal(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
+		shell.loaded_projectile.damage = original_damage
+		shell.loaded_projectile.wound_bonus = original_wb
+		shell.loaded_projectile.bare_wound_bonus = original_bwb
+		pellets += shell.loaded_projectile
 		if(!shell.throw_proj(target, targloc, shooter, params, spread))
 			return
 		if(i != num_pellets)
 			shell.newshot()
 
 /**
-  * create_blast_pellets() is for when we have a central point we want to shred the surroundings of with a ring of shrapnel, namely frag grenades and landmines.
-  *
-  * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, see [/datum/component/pellet_cloud/proc/handle_martyrs]
-  * Landmines just have a small check for [/obj/effect/mine/shrapnel/var/shred_triggerer], and spawn extra shrapnel for them if so
-  *
-  * Arguments:
-  * * O- Our parent, the thing making the shrapnel obviously (grenade or landmine)
-  * * punishable_triggerer- For grenade lances or people who step on the landmines (if we shred the triggerer), we spawn extra shrapnel for them in addition to the normal spread
-  */
-/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/punishable_triggerer)
-	SIGNAL_HANDLER_DOES_SLEEP
+ * create_blast_pellets() is for when we have a central point we want to shred the surroundings of with a ring of shrapnel, namely frag grenades and landmines.
+ *
+ * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, see [/datum/component/pellet_cloud/proc/handle_martyrs]
+ * Landmines just have a small check for [/obj/effect/mine/shrapnel/var/shred_triggerer], and spawn extra shrapnel for them if so
+ *
+ * Arguments:
+ * * O- Our parent, the thing making the shrapnel obviously (grenade or landmine)
+ * * punishable_triggerer- For grenade lances or people who step on the landmines (if we shred the triggerer), we spawn extra shrapnel for them in addition to the normal spread
+ */
+/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/triggerer)
+	SIGNAL_HANDLER
 
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
-		handle_martyrs(punishable_triggerer) // note that we can modify radius in this proc
+		INVOKE_ASYNC(src, .proc/handle_martyrs, triggerer) // note that we can modify radius in this proc
 	else if(islandmine(parent))
 		var/obj/effect/mine/shrapnel/triggered_mine = parent
-		if(triggered_mine.shred_triggerer && istype(punishable_triggerer)) // free shrapnel for the idiot who stepped on it if we're a mine that shreds the triggerer
+		if(triggered_mine.shred_triggerer && istype(triggerer)) // free shrapnel for the idiot who stepped on it if we're a mine that shreds the triggerer
 			pellet_delta += radius // so they don't count against the later total
 			for(var/i in 1 to radius)
-				pew(punishable_triggerer, TRUE)
+				INVOKE_ASYNC(src, .proc/pew, triggerer, TRUE)
 
 	if(radius < 1)
 		return
@@ -161,17 +161,17 @@
 
 	for(var/T in all_the_turfs_were_gonna_lacerate)
 		var/turf/shootat_turf = T
-		pew(shootat_turf)
+		INVOKE_ASYNC(src, .proc/pew, shootat_turf)
 
 /**
-  * handle_martyrs() is used for grenades that shoot shrapnel to check if anyone threw themselves/were thrown on top of the grenade, thus absorbing a good chunk of the shrapnel
-  *
-  * Between the time the grenade is armed and the actual detonation, we set var/list/bodies to the list of mobs currently on the new tile, as if the grenade landed on top of them, tracking if any of them move off the tile and removing them from the "under" list
-  * Once the grenade detonates, handle_martyrs() is called and gets all the new mobs on the tile, and add the ones not in var/list/bodies to var/list/martyrs
-  * We then iterate through the martyrs and reduce the shrapnel magnitude for each mob on top of it, shredding each of them with some of the shrapnel they helped absorb. This can snuff out all of the shrapnel if there's enough bodies
-  *
-  * Note we track anyone who's alive and client'd when they get shredded in var/list/purple_hearts, for achievement checking later
-  */
+ * handle_martyrs() is used for grenades that shoot shrapnel to check if anyone threw themselves/were thrown on top of the grenade, thus absorbing a good chunk of the shrapnel
+ *
+ * Between the time the grenade is armed and the actual detonation, we set var/list/bodies to the list of mobs currently on the new tile, as if the grenade landed on top of them, tracking if any of them move off the tile and removing them from the "under" list
+ * Once the grenade detonates, handle_martyrs() is called and gets all the new mobs on the tile, and add the ones not in var/list/bodies to var/list/martyrs
+ * We then iterate through the martyrs and reduce the shrapnel magnitude for each mob on top of it, shredding each of them with some of the shrapnel they helped absorb. This can snuff out all of the shrapnel if there's enough bodies
+ *
+ * Note we track anyone who's alive and client'd when they get shredded in var/list/purple_hearts, for achievement checking later
+ */
 /datum/component/pellet_cloud/proc/handle_martyrs(mob/living/punishable_triggerer)
 	var/magnitude_absorbed
 	var/list/martyrs = list()
@@ -266,7 +266,7 @@
 	P.original = target
 	P.fired_from = parent
 	P.firer = parent // don't hit ourself that would be really annoying
-	P.permutated += parent // don't hit the target we hit already with the flak
+	P.impacted = list(parent = TRUE) // don't hit the target we hit already with the flak
 	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
 	P.preparePixelProjectile(target, parent)
 	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
@@ -288,7 +288,7 @@
 		if(isbodypart(target))
 			hit_part = target
 			target = hit_part.owner
-			if(wound_info_by_part[hit_part])
+			if(wound_info_by_part[hit_part] && (initial(P.damage_type) == BRUTE || initial(P.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
 				var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
 				var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
 				var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]

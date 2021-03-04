@@ -1,4 +1,4 @@
-/datum/job/hop
+/datum/job/head_of_personnel
 	title = "Head of Personnel"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
@@ -15,31 +15,28 @@
 	exp_type_department = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/hop
+	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
 
-	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,
-						ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_ENGINE, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_EVA, ACCESS_HEADS,
-						ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_BAR, ACCESS_JANITOR, ACCESS_CONSTRUCTION, ACCESS_MORGUE,
-						ACCESS_CREMATORIUM, ACCESS_KITCHEN, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_QM, ACCESS_HYDROPONICS, ACCESS_LAWYER,
-						ACCESS_THEATRE, ACCESS_CHAPEL_OFFICE, ACCESS_LIBRARY, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_VAULT, ACCESS_MINING_STATION,
-						ACCESS_MECH_MINING, ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY, ACCESS_MECH_MEDICAL,
-						ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_AUX_BASE)
-	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,
-						ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_ENGINE, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_EVA, ACCESS_HEADS,
-						ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_BAR, ACCESS_JANITOR, ACCESS_CONSTRUCTION, ACCESS_MORGUE,
-						ACCESS_CREMATORIUM, ACCESS_KITCHEN, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_QM, ACCESS_HYDROPONICS, ACCESS_LAWYER,
-						ACCESS_MECH_MINING, ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY, ACCESS_MECH_MEDICAL,
-						ACCESS_THEATRE, ACCESS_CHAPEL_OFFICE, ACCESS_LIBRARY, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_VAULT, ACCESS_MINING_STATION,
-						ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_AUX_BASE)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SRV
+	bounty_types = CIV_JOB_RANDOM
+
+	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
+
+/datum/job/head_of_personnel/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
+	..()
+	if(announce_captaincy)
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
+
 /datum/outfit/job/hop
 	name = "Head of Personnel"
-	jobtype = /datum/job/hop
+	jobtype = /datum/job/head_of_personnel
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/advanced/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
@@ -50,8 +47,32 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
 
+	id_trim = /datum/id_trim/job/head_of_personnel
+
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
+/obj/item/paper/fluff/ids_for_dummies
+	name = "Memo: New IDs and You"
+	desc = "It looks like this was left by the last Head of Personnel to man this station. It explains some information about new IDs."
+	info = {"
+<h1>Dummy's Guide To New IDs</h1>
+<h2>The Basics</h2>
+<p>Card Trim - This is the job assigned to the card. The card's trim decides what Basic accesses the card can hold. Basic accesses cost nothing! Grey ID cards cannot hold Head of Staff or Captain trims. Silver ID cards can hold Head of Staff trims but not Captain trims and are in a box in the Head of Personnel's office and orderable from cargo. Gold ID cards can hold all access. The only guaranteed Gold ID card is the Captain's Spare, held in a golden safe on the bridge with access codes given to the station's highest ranking officer. All other gold ID cards are carried exclusively by Captains.</p>
+<p>Wildcards - These are any additional accesses a card has that are not part of the card's trim. Lower quality ID cards have fewer wildcards and the wildcards they do have are of lower rarity.</p>
+<p>Job Changes - To change a job, you need to go to the PDA & ID Painter that's in every Head of Personnel office. This can be used to apply a new trim to an ID card, but this will wipe all that card's accesses in the process. You then take this ID card to any modular computer with the Plexagon Access Management app and when logged in with the appropriate Head of Staff or ID Console access can then select from Templates to quick-fill accesses or apply them manually.</p>
+<p>Firing Staff - Terminating a staff member's employment will wipe any trim from their card, remove all access and instantly set them as demoted.</p>
+<h2>Changing Jobs - Step by Step</h2>
+<ol>
+<li>Grab an appropriate ID card. Head of Staff jobs require a silver ID card. Captain requires a gold ID card.</li>
+<li>Insert the ID card into the combined PDA Painter and ID Trimmer in the HoP office.</li>
+<li>Select to appropriate trim then hit the button to apply it to the card. This will wipe all the card's access.</li>
+<li>Remove the ID from the PDA/ID Painter and open up any modular computer with the Plexagon Access Management application downloaded.</li>
+<li>Login to the app using an ID card with any Head of Staff private office access for limited access or the ID Console access for unlimited access.</li>
+<li>Select a template from the drop-down. This will apply as many <b>basic</b> accesses as possible based on the trim of the ID card and may apply wildcard accesses for Head of Staff and Captain trims. For best results, match the template to the ID card's trim.</li>
+<li>Manually tweak any other accesses as necessary. Add wildcard accesses. Tweak basic accesses.</li>
+<li>Don't forget to set a custom occupation! SecHUDs now interface direct with the ID card's trim and display the trim's job icon even when a custom assignment is set.</li>
+</ol>
+	"}

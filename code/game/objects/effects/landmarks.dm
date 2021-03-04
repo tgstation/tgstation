@@ -10,10 +10,6 @@
 /obj/effect/landmark/singularity_act()
 	return
 
-// Please stop bombing the Observer-Start landmark.
-/obj/effect/landmark/ex_act()
-	return
-
 /obj/effect/landmark/singularity_pull()
 	return
 
@@ -45,7 +41,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
-		LAZYADDASSOC(GLOB.jobspawn_overrides, name, src)
+		LAZYADDASSOCLIST(GLOB.jobspawn_overrides, name, src)
 	if(name != "start")
 		tag = "start*[name]"
 
@@ -378,7 +374,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/thunderdome/one/Initialize(mapload)
 	..()
-	GLOB.tdome1	+= loc
+	GLOB.tdome1 += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/thunderdome/two

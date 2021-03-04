@@ -46,7 +46,7 @@
 	if(A == attached_light)
 		set_attached_light(null)
 		update_helmlight()
-		update_icon()
+		update_appearance()
 		QDEL_NULL(alight)
 		qdel(A)
 	return ..()
@@ -107,7 +107,7 @@
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -118,10 +118,10 @@
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, WOUND = 15)
-	flags_inv = HIDEEARS|HIDEFACE
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEFACE
+	visor_flags_inv = HIDEFACE|HIDESNOUT
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -207,7 +207,8 @@
 	inhand_icon_state = "constable"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	custom_price = 350
+	clothing_flags = LARGE_WORN_ICON
+	custom_price = PAYCHECK_HARD * 1.5
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -290,7 +291,7 @@
 	icon_state = "knight_green"
 	inhand_icon_state = "knight_green"
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80) // no wound armor cause getting domed in a bucket head sounds like concussion city
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
@@ -324,7 +325,7 @@
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES
 	armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	icon_state = "skull"
@@ -366,7 +367,7 @@
 	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flash_protect = FLASH_PROTECTION_WELDER
-	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	strip_delay = 80
 
@@ -377,7 +378,7 @@
 	inhand_icon_state = "knight_greyscale"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 //monkey sentience caps
@@ -389,14 +390,14 @@
 	icon_state = "monkeymind"
 	inhand_icon_state = "monkeymind"
 	strip_delay = 100
-	var/mob/living/carbon/monkey/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
+	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
 
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize()
 	. = ..()
 	light_colors = rand(1,3)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
@@ -408,7 +409,8 @@
 	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
-	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : ""]"
+	. = ..()
+	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : null]"
 
 /obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
 	. = ..()
@@ -422,6 +424,7 @@
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
+		return
 	magnification = user //this polls ghosts
 	visible_message("<span class='warning'>[src] powers up!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
@@ -456,7 +459,7 @@
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
-					magnification.aggressive = TRUE
+					magnification.ai_controller.blackboard[BB_MONKEY_AGRESSIVE] = TRUE
 				if(2) //brain death
 					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)
@@ -465,7 +468,7 @@
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
 	magnification = null
 	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
@@ -491,6 +494,7 @@
 			state += "-flight" //etc.
 
 	icon_state = state
+	return ..()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
 	if(istype(action, alight))
@@ -506,7 +510,7 @@
 				return
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			set_attached_light(S)
-			update_icon()
+			update_appearance()
 			update_helmlight()
 			alight = new(src)
 			if(loc == user)
@@ -526,7 +530,7 @@
 		var/obj/item/flashlight/removed_light = set_attached_light(null)
 		update_helmlight()
 		removed_light.update_brightness(user)
-		update_icon()
+		update_appearance()
 		user.update_inv_head()
 		QDEL_NULL(alight)
 		return TRUE
@@ -551,7 +555,7 @@
 
 /obj/item/clothing/head/helmet/proc/update_helmlight()
 	if(attached_light)
-		update_icon()
+		update_appearance()
 
 	for(var/X in actions)
 		var/datum/action/A = X

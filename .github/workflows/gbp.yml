@@ -1,0 +1,14 @@
+name: GBP
+on:
+  pull_request_target:
+    types: [closed, opened]
+jobs:
+  gbp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: GBP action
+      uses: tgstation/gbp-action@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}

@@ -5,12 +5,12 @@
 	var/datum/component/nanites/nanites
 	var/mob/living/host_mob
 
-	var/use_rate = 0 			//Amount of nanites used while active
-	var/unique = TRUE			//If there can be more than one copy in the same nanites
-	var/can_trigger = FALSE		//If the nanites have a trigger function (used for the programming UI)
-	var/trigger_cost = 0		//Amount of nanites required to trigger
-	var/trigger_cooldown = 50	//Deciseconds required between each trigger activation
-	var/next_trigger = 0		//World time required for the next trigger activation
+	var/use_rate = 0 //Amount of nanites used while active
+	var/unique = TRUE //If there can be more than one copy in the same nanites
+	var/can_trigger = FALSE //If the nanites have a trigger function (used for the programming UI)
+	var/trigger_cost = 0 //Amount of nanites required to trigger
+	var/trigger_cooldown = 50 //Deciseconds required between each trigger activation
+	var/next_trigger = 0 //World time required for the next trigger activation
 
 	var/program_flags = NONE
 	var/passive_enabled = FALSE //If the nanites have an on/off-style effect, it's tracked by this var
@@ -27,12 +27,12 @@
 
 
 	//The following vars are customizable
-	var/activated = TRUE 			//If FALSE, the program won't process, disables passive effects, can't trigger and doesn't consume nanites
+	var/activated = TRUE //If FALSE, the program won't process, disables passive effects, can't trigger and doesn't consume nanites
 
-	var/timer_restart = 0 			//When deactivated, the program will wait X deciseconds before self-reactivating. Also works if the program begins deactivated.
-	var/timer_shutdown = 0 			//When activated, the program will wait X deciseconds before self-deactivating. Also works if the program begins activated.
-	var/timer_trigger = 0			//[Trigger only] While active, the program will attempt to trigger once every x deciseconds.
-	var/timer_trigger_delay = 0				//[Trigger only] While active, the program will delay trigger signals by X deciseconds.
+	var/timer_restart = 0 //When deactivated, the program will wait X deciseconds before self-reactivating. Also works if the program begins deactivated.
+	var/timer_shutdown = 0 //When activated, the program will wait X deciseconds before self-deactivating. Also works if the program begins activated.
+	var/timer_trigger = 0 //[Trigger only] While active, the program will attempt to trigger once every x deciseconds.
+	var/timer_trigger_delay = 0 //[Trigger only] While active, the program will delay trigger signals by X deciseconds.
 
 	//Indicates the next world.time tick where these timers will act
 	var/timer_restart_next = 0
@@ -41,10 +41,10 @@
 	var/timer_trigger_delay_next = 0
 
 	//Signal codes, these handle remote input to the nanites. If set to 0 they'll ignore signals.
-	var/activation_code 	= 0 	//Code that activates the program [1-9999]
-	var/deactivation_code 	= 0 	//Code that deactivates the program [1-9999]
-	var/kill_code 			= 0		//Code that permanently removes the program [1-9999]
-	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
+	var/activation_code = 0 //Code that activates the program [1-9999]
+	var/deactivation_code = 0 //Code that deactivates the program [1-9999]
+	var/kill_code = 0 //Code that permanently removes the program [1-9999]
+	var/trigger_code = 0 //Code that triggers the program (if available) [1-9999]
 
 	//Extra settings
 	///Don't ever override this or I will come to your house and stand menacingly behind a bush
@@ -53,6 +53,7 @@
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
 	var/list/datum/nanite_rule/rules = list()
+	var/all_rules_required = TRUE //Whether all rules are required for positive condition or any of specified
 
 /datum/nanite_program/New()
 	. = ..()
@@ -92,6 +93,7 @@
 	for(var/R in rules)
 		var/datum/nanite_rule/rule = R
 		rule.copy_to(target)
+	target.all_rules_required = all_rules_required
 
 	if(istype(target,src))
 		copy_extra_settings_to(target)
@@ -191,14 +193,18 @@
 		if(passive_enabled)
 			disable_passive_effect()
 
-//If false, disables active and passive effects, but doesn't consume nanites
+//If false, disables active, passive effects, and triggers without consuming nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
+	if (!LAZYLEN(rules))
+		return TRUE
 	for(var/R in rules)
 		var/datum/nanite_rule/rule = R
-		if(!rule.check_rule())
+		if(!all_rules_required && rule.check_rule())
+			return TRUE
+		if(all_rules_required && !rule.check_rule())
 			return FALSE
-	return TRUE
+	return all_rules_required ? TRUE : FALSE
 
 //Constantly procs as long as the program is active
 /datum/nanite_program/proc/active_effect()
@@ -223,6 +229,8 @@
 		return
 	if(world.time < next_trigger)
 		return
+	if(!check_conditions())
+		return
 	if(!consume_nanites(trigger_cost))
 		return
 	next_trigger = world.time + trigger_cooldown
@@ -239,18 +247,22 @@
 	if(program_flags & NANITE_EMP_IMMUNE)
 		return
 	if(prob(80 / severity))
+		host_mob.investigate_log("[src] nanite program received a software error due to emp.", INVESTIGATE_NANITES)
 		software_error()
 
 /datum/nanite_program/proc/on_shock(shock_damage)
 	if(!program_flags & NANITE_SHOCK_IMMUNE)
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to shock.", INVESTIGATE_NANITES)
 			software_error()
 		else if(prob(33))
+			host_mob.investigate_log("[src] nanite program was deleted due to shock.", INVESTIGATE_NANITES)
 			qdel(src)
 
 /datum/nanite_program/proc/on_minor_shock()
 	if(!program_flags & NANITE_SHOCK_IMMUNE)
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to minor shock.", INVESTIGATE_NANITES)
 			software_error()
 
 /datum/nanite_program/proc/on_death()
@@ -261,21 +273,26 @@
 		type = rand(1,5)
 	switch(type)
 		if(1)
+			host_mob.investigate_log("[src] nanite program was deleted by software error.", INVESTIGATE_NANITES)
 			qdel(src) //kill switch
 			return
 		if(2) //deprogram codes
+			host_mob.investigate_log("[src] nanite program was de-programmed by software error.", INVESTIGATE_NANITES)
 			activation_code = 0
 			deactivation_code = 0
 			kill_code = 0
 			trigger_code = 0
 		if(3)
+			host_mob.investigate_log("[src] nanite program was toggled by software error.", INVESTIGATE_NANITES)
 			toggle() //enable/disable
 		if(4)
 			if(can_trigger)
+				host_mob.investigate_log("[src] nanite program was triggered by software error.", INVESTIGATE_NANITES)
 				trigger()
 		if(5) //Program is scrambled and does something different
 			var/rogue_type = pick(rogue_types)
 			var/datum/nanite_program/rogue = new rogue_type
+			host_mob.investigate_log("[src] nanite program was converted into [rogue.name] by software error.", INVESTIGATE_NANITES)
 			nanites.add_program(null, rogue, src)
 			qdel(src)
 

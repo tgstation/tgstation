@@ -5,6 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	base_icon_state = "mflash"
 	max_integrity = 250
 	integrity_failure = 0.4
 	light_color = COLOR_WHITE
@@ -15,15 +16,14 @@
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
-	var/base_state = "mflash"
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
+	base_icon_state = "pflash"
 	strength = 80
 	anchored = FALSE
-	base_state = "pflash"
 	density = TRUE
 	light_system = MOVABLE_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE
@@ -39,8 +39,8 @@
 		bulb = new(src)
 
 
-/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
@@ -52,13 +52,8 @@
 	return ..()
 
 /obj/machinery/flasher/update_icon_state()
-	if (powered())
-		if(bulb.burnt_out)
-			icon_state = "[base_state]1-p"
-		else
-			icon_state = "[base_state]1"
-	else
-		icon_state = "[base_state]1-p"
+	icon_state = "[base_icon_state]1[(bulb?.burnt_out || !powered()) ? "-p" : null]"
+	return ..()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
@@ -110,7 +105,7 @@
 		return
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick("[base_state]_flash", src)
+	flick("[base_icon_state]_flash", src)
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -123,6 +118,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
+			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
 			L.Paralyze(strength)
 			flashed = TRUE
 
@@ -161,7 +157,7 @@
 			F.id = id
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		else
-			new /obj/item/stack/sheet/metal (loc, 2)
+			new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
 /obj/machinery/flasher/portable/Initialize()
@@ -183,7 +179,7 @@
 
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
-			add_overlay("[base_state]-s")
+			add_overlay("[base_icon_state]-s")
 			set_anchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)

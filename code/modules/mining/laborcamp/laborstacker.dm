@@ -52,10 +52,12 @@ GLOBAL_LIST(labor_sheet_values)
 	if(obj_flags & EMAGGED)
 		data["emagged"] = TRUE
 		can_go_home = TRUE
-
-	var/obj/item/card/id/I = user.get_idcard(TRUE)
-	if(istype(I, /obj/item/card/id/prisoner))
-		var/obj/item/card/id/prisoner/P = I
+	var/obj/item/card/id/I
+	if(isliving(usr))
+		var/mob/living/L = usr
+		I = L.get_idcard(TRUE)
+	if(istype(I, /obj/item/card/id/advanced/prisoner))
+		var/obj/item/card/id/advanced/prisoner/P = I
 		data["id_points"] = P.points
 		if(P.points >= P.goal)
 			can_go_home = TRUE
@@ -80,9 +82,12 @@ GLOBAL_LIST(labor_sheet_values)
 	var/mob/M = usr
 	switch(action)
 		if("claim_points")
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if(istype(I, /obj/item/card/id/prisoner))
-				var/obj/item/card/id/prisoner/P = I
+			var/obj/item/card/id/I
+			if(isliving(M))
+				var/mob/living/L = M
+				I = L.get_idcard(TRUE)
+			if(istype(I, /obj/item/card/id/advanced/prisoner))
+				var/obj/item/card/id/advanced/prisoner/P = I
 				P.points += stacking_machine.points
 				stacking_machine.points = 0
 				to_chat(M, "<span class='notice'>Points transferred.</span>")
@@ -130,7 +135,7 @@ GLOBAL_LIST(labor_sheet_values)
 	..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/stack/sheet) && user.canUnEquip(I))
+	if(istype(I, /obj/item/stack/sheet) && user.canUnEquip(I) && !user.combat_mode)
 		var/obj/item/stack/sheet/inp = I
 		points += inp.point_value * inp.amount
 	return ..()
@@ -144,7 +149,7 @@ GLOBAL_LIST(labor_sheet_values)
 	icon_state = "console"
 	density = FALSE
 
-/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
+/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return
@@ -152,8 +157,8 @@ GLOBAL_LIST(labor_sheet_values)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		if(istype(I, /obj/item/card/id/prisoner))
-			var/obj/item/card/id/prisoner/prisoner_id = I
+		if(istype(I, /obj/item/card/id/advanced/prisoner))
+			var/obj/item/card/id/advanced/prisoner/prisoner_id = I
 			to_chat(user, "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>")
 			to_chat(user, "<span class='notice'>Points Collected:[prisoner_id.points]</span>")
 			to_chat(user, "<span class='notice'>Point Quota: [prisoner_id.goal]</span>")

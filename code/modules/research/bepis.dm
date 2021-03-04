@@ -4,15 +4,16 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 3000
-#define MINOR_THRESHOLD 2000
-#define STANDARD_DEVIATION 1000
+#define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
+#define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
+#define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
 	desc = "A high fidelity testing device which unlocks the secrets of the known universe using the two most powerful substances available to man: excessive amounts of electricity and capital."
 	icon = 'icons/obj/machines/bepis.dmi'
 	icon_state = "chamber"
+	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
 	use_power = IDLE_POWER_USE
@@ -20,9 +21,9 @@
 	circuit = /obj/item/circuitboard/machine/bepis
 
 	var/banking_amount = 100
-	var/banked_cash = 0					//stored player cash
-	var/datum/bank_account/account		//payer's account.
-	var/account_name					//name of the payer's account.
+	var/banked_cash = 0 //stored player cash
+	var/datum/bank_account/account //payer's account.
+	var/account_name //name of the payer's account.
 	var/error_cause = null
 	//Vars related to probability and chance of success for testing
 	var/major_threshold = MAJOR_THRESHOLD
@@ -44,7 +45,7 @@
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
-		update_icon()
+		update_appearance()
 		return
 	if(default_deconstruction_crowbar(O))
 		return
@@ -56,7 +57,7 @@
 		banked_cash += deposit_value
 		qdel(O)
 		say("Deposited [deposit_value] credits into storage.")
-		update_icon()
+		update_appearance()
 		return
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/Card = O
@@ -91,7 +92,7 @@
 	var/deposit_value = 0
 	deposit_value = banking_amount
 	if(deposit_value == 0)
-		update_icon()
+		update_appearance()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
 	deposit_value = clamp(round(deposit_value, 1), 1, 10000)
@@ -107,7 +108,7 @@
 	banked_cash += deposit_value
 	use_power(1000 * power_saver)
 	say("Cash deposit successful. There is [banked_cash] in the chamber.")
-	update_icon()
+	update_appearance()
 	return
 
 /obj/machinery/rnd/bepis/proc/withdrawcash()
@@ -119,7 +120,7 @@
 		banked_cash -= withdraw_value
 		new /obj/item/holochip(src.loc, withdraw_value)
 		say("Withdrawing [withdraw_value] credits from the chamber.")
-	update_icon()
+	update_appearance()
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
@@ -127,7 +128,7 @@
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
+	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
 		if(T.is_blocked_turf(TRUE))
@@ -137,12 +138,12 @@
 			break
 	if (!dropturf)
 		dropturf = drop_location()
-	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
-	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
-	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
+	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset) //This is the randomized profit value that this experiment has to surpass to unlock a tech.
+	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset) //And this is the threshold to instead get a minor prize.
+	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset) //this is the randomized profit value that your experiment expects to give.
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	flick("chamber_flash",src)
-	update_icon()
+	update_appearance()
 	banked_cash = 0
 	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
 		say("Experiment concluded with major success. New technology node discovered on technology disc.")
@@ -155,7 +156,7 @@
 		new reward(dropturf)
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
 		return
-	if(gauss_real <= -1)	//Critical Failure
+	if(gauss_real <= -1) //Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
 		new /mob/living/simple_animal/deer(dropturf, 1)
 		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
@@ -167,20 +168,21 @@
 
 /obj/machinery/rnd/bepis/update_icon_state()
 	if(panel_open == TRUE)
-		icon_state = "chamber_open"
-		return
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
-		icon_state = "chamber_active_loaded"
-		return
+		icon_state = "[base_icon_state]_active_loaded"
+		return ..()
 	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
-		icon_state = "chamber_loaded"
-		return
+		icon_state = "[base_icon_state]_loaded"
+		return ..()
 	if(use_power == ACTIVE_POWER_USE && is_operational)
-		icon_state = "chamber_active"
-		return
+		icon_state = "[base_icon_state]_active"
+		return ..()
 	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
-		icon_state = "chamber"
-		return
+		icon_state = base_icon_state
+		return ..()
+	return ..()
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -254,7 +256,7 @@
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
 			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
-			update_icon()
+			update_appearance()
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)
@@ -264,7 +266,7 @@
 				use_power = IDLE_POWER_USE
 			else
 				use_power = ACTIVE_POWER_USE
-			update_icon()
+			update_appearance()
 		if("account_reset")
 			if(use_power == IDLE_POWER_USE)
 				return

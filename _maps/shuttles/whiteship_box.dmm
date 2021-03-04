@@ -62,7 +62,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "aj" = (
 /obj/structure/sign/warning/vacuum/external{
@@ -88,7 +88,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "an" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -106,7 +106,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "ao" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -124,7 +124,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "ap" = (
 /obj/machinery/door/airlock/external,
@@ -140,7 +140,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -180,7 +180,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 9
 	},
 /area/shuttle/abandoned/medbay)
@@ -191,7 +191,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 5
 	},
 /area/shuttle/abandoned/medbay)
@@ -205,7 +205,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/crew)
 "ax" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -220,7 +220,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "ay" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -240,7 +240,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "az" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -253,7 +253,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aA" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -278,7 +278,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aB" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -295,7 +295,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aC" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -313,7 +313,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aD" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -324,7 +324,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aE" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -344,14 +344,14 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
-/obj/item/reagent_containers/food/snacks/muffin/berry{
+/obj/item/food/chocolatebar,
+/obj/item/food/muffin/berry{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/snacks/muffin/berry,
+/obj/item/food/muffin/berry,
 /obj/item/food/tofu,
-/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/food/burrito,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Crew Quarters APC";
@@ -362,7 +362,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aF" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -384,7 +384,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 9
 	},
 /area/shuttle/abandoned/medbay)
@@ -403,7 +403,7 @@
 	name = "Rotting Carcass";
 	zombiejob = "Assistant"
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -420,7 +420,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -443,7 +443,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aL" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -455,7 +455,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -469,7 +469,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -485,7 +485,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aO" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -493,7 +493,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aP" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -511,7 +511,7 @@
 	melee_damage_upper = 11;
 	name = "Rotting Carcass"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -522,7 +522,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aR" = (
 /obj/structure/closet/crate{
@@ -568,7 +568,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aS" = (
 /turf/closed/wall/mineral/titanium,
@@ -628,7 +628,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 10
 	},
 /area/shuttle/abandoned/medbay)
@@ -639,7 +639,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "ba" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -647,7 +647,7 @@
 /obj/structure/table/optable,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bb" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -671,7 +671,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bc" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -681,7 +681,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -701,7 +701,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "be" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -805,7 +805,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bs" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -815,7 +815,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bt" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -835,7 +835,7 @@
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bu" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -844,7 +844,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bw" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -854,7 +854,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bx" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -875,7 +875,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "by" = (
 /obj/machinery/door/airlock/external,
@@ -886,7 +886,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -902,7 +902,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 5
 	},
 /area/shuttle/abandoned/medbay)
@@ -916,7 +916,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bC" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -926,7 +926,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bD" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -934,7 +934,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bE" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -945,7 +945,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bF" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -954,7 +954,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 5
 	},
 /area/shuttle/abandoned/medbay)
@@ -970,7 +970,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/shuttle/abandoned/medbay)
@@ -984,7 +984,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bI" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -997,7 +997,7 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1008,7 +1008,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "bK" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1025,7 +1025,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "bM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1033,7 +1033,7 @@
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1042,14 +1042,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bO" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -1062,7 +1062,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Cryo Room"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1070,14 +1070,14 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bS" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1094,13 +1094,13 @@
 	melee_damage_upper = 11;
 	name = "Rotting Carcass"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bU" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1108,7 +1108,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -1119,12 +1119,12 @@
 	name = "Cryo Room"
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 8
 	},
 /area/shuttle/abandoned/medbay)
@@ -1138,7 +1138,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bY" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1150,7 +1150,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "bZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1160,7 +1160,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "ca" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1168,7 +1168,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "cb" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1181,7 +1181,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "cc" = (
 /obj/machinery/door/airlock/external,
@@ -1197,7 +1197,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "ce" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1215,7 +1215,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 6
 	},
 /area/shuttle/abandoned/medbay)
@@ -1229,14 +1229,14 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "ch" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1246,7 +1246,7 @@
 	name = "Connector Port (Air Supply)"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "ci" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1255,7 +1255,7 @@
 	name = "Connector Port (Air Supply)"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "cj" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1265,7 +1265,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 6
 	},
 /area/shuttle/abandoned/medbay)
@@ -1277,7 +1277,7 @@
 	dir = 8;
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -1291,7 +1291,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cm" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1321,7 +1321,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "cn" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1329,7 +1329,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "co" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1347,7 +1347,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "cp" = (
 /obj/machinery/light/small,
@@ -1397,7 +1397,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cw" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1408,7 +1408,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cx" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1428,7 +1428,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "cy" = (
 /obj/machinery/power/port_gen/pacman{
@@ -1477,7 +1477,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 9
 	},
 /area/shuttle/abandoned/medbay)
@@ -1492,7 +1492,7 @@
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/sneakers/white,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -1504,7 +1504,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -1529,7 +1529,7 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -1538,7 +1538,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
@@ -1556,7 +1556,7 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1567,7 +1567,7 @@
 /obj/item/soap,
 /obj/structure/curtain,
 /obj/machinery/light/small/built,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cK" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1585,7 +1585,7 @@
 /obj/machinery/door/window/eastleft{
 	name = "First-Aid Supplies"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cL" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1595,7 +1595,7 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1626,7 +1626,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 10
 	},
 /area/shuttle/abandoned/medbay)
@@ -1636,7 +1636,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/shuttle/abandoned/medbay)
@@ -1644,17 +1644,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cS" = (
 /obj/structure/sign/departments/restroom,
@@ -1665,7 +1665,7 @@
 /obj/machinery/door/airlock{
 	name = "Restroom"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cU" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1694,7 +1694,7 @@
 	pixel_x = 6;
 	pixel_y = -3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cV" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1704,14 +1704,14 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -1743,7 +1743,7 @@
 /obj/item/clothing/glasses/hud/health{
 	pixel_x = 3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cY" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -1756,7 +1756,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 10
 	},
 /area/shuttle/abandoned/medbay)
@@ -1764,7 +1764,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/shuttle/abandoned/medbay)
@@ -1784,7 +1784,7 @@
 	name = "Rotting Carcass";
 	zombiejob = "Assistant"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dc" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1793,7 +1793,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dd" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1801,7 +1801,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "de" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1809,7 +1809,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -1824,7 +1824,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dg" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1837,7 +1837,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dh" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1851,7 +1851,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "di" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1862,7 +1862,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dj" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1873,7 +1873,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -1882,7 +1882,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 10
 	},
 /area/shuttle/abandoned/medbay)
@@ -1906,11 +1906,11 @@
 	pixel_x = 6;
 	pixel_y = -1
 	},
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "dm" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/shuttle/abandoned/medbay)
@@ -1919,7 +1919,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/shuttle/abandoned/medbay)
@@ -1935,7 +1935,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1945,18 +1945,18 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/grown/harebell{
+/obj/item/food/grown/harebell{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "dr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/iron/white/side{
 	dir = 6
 	},
 /area/shuttle/abandoned/medbay)
@@ -1999,7 +1999,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "hV" = (
 /obj/structure/shuttle/engine/propulsion/right{

@@ -1,8 +1,8 @@
 //Acts like a normal vent, but has an input AND output.
-
-#define EXT_BOUND	1
-#define INPUT_MIN	2
-#define OUTPUT_MAX	4
+///pressure_checks defines for external_pressure_bound and input_pressure_min
+#define EXT_BOUND 1
+#define INPUT_MIN 2
+#define OUTPUT_MAX 4
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi' //We reuse the normal vent icons!
@@ -16,21 +16,22 @@
 
 	hide = TRUE
 
+	///Variable for radio frequency
 	var/frequency = 0
+	///Variable for radio id
 	var/id = null
+	///Stores the radio connection
 	var/datum/radio_frequency/radio_connection
-
-	var/pump_direction = 1 //0 = siphoning, 1 = releasing
-
+	///Indicates that the direction of the pump, if 0 is siphoning, if 1 is releasing
+	var/pump_direction = 1
+	///Set the maximum allowed external pressure
 	var/external_pressure_bound = ONE_ATMOSPHERE
+	///Set the maximum pressure at the input port
 	var/input_pressure_min = 0
+	///Set the maximum pressure at the output port
 	var/output_pressure_max = 0
-
+	///Set the flag for the pressure bound
 	var/pressure_checks = EXT_BOUND
-
-	//EXT_BOUND: Do not pass external_pressure_bound
-	//INPUT_MIN: Do not pass input_pressure_min
-	//OUTPUT_MAX: Do not pass output_pressure_max
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -48,8 +49,6 @@
 		icon_state = pump_direction ? "vent_out" : "vent_in"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/process_atmos()
-	..()
-
 	if(!on)
 		return
 	var/datum/gas_mixture/air1 = airs[1]
@@ -66,20 +65,22 @@
 		if(pressure_checks&INPUT_MIN)
 			pressure_delta = min(pressure_delta, (air1.return_pressure() - input_pressure_min))
 
-		if(pressure_delta > 0)
-			if(air1.temperature > 0)
-				var/transfer_moles = pressure_delta*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		if(pressure_delta <= 0)
+			return
+		if(air1.temperature <= 0)
+			return
+		var/transfer_moles = (pressure_delta*environment.volume)/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-				//Removed can be null if there is no atmosphere in air1
-				if(!removed)
-					return
+		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		//Removed can be null if there is no atmosphere in air1
+		if(!removed)
+			return
 
-				loc.assume_air(removed)
-				air_update_turf()
+		loc.assume_air(removed)
+		air_update_turf(FALSE, FALSE)
 
-				var/datum/pipeline/parent1 = parents[1]
-				parent1.update = 1
+		var/datum/pipeline/parent1 = parents[1]
+		parent1.update = TRUE
 
 	else //external -> output
 		var/pressure_delta = 10000
@@ -89,29 +90,39 @@
 		if(pressure_checks&INPUT_MIN)
 			pressure_delta = min(pressure_delta, (output_pressure_max - air2.return_pressure()))
 
-		if(pressure_delta > 0)
-			if(environment.temperature > 0)
-				var/transfer_moles = pressure_delta*air2.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
+		if(pressure_delta <= 0)
+			return
+		if(environment.temperature <= 0)
+			return
+		var/transfer_moles = (pressure_delta*air2.volume)/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
-				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-				//removed can be null if there is no air in the location
-				if(!removed)
-					return
+		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+		//removed can be null if there is no air in the location
+		if(!removed)
+			return
 
-				air2.merge(removed)
-				air_update_turf()
+		air2.merge(removed)
+		air_update_turf(FALSE, FALSE)
 
-				var/datum/pipeline/parent2 = parents[2]
-				parent2.update = 1
+		var/datum/pipeline/parent2 = parents[2]
+		parent2.update = TRUE
 
 	//Radio remote control
 
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
@@ -170,8 +181,8 @@
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
-	if(!("status" in signal.data)) //do not update_icon
-		update_icon()
+	if(!("status" in signal.data)) //do not update_appearance
+		update_appearance()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"

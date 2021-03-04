@@ -29,9 +29,11 @@
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	update_appearance()
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
+	return ..()
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -44,13 +46,16 @@
 			throwforce = 21
 			icon_prefix = "spearplasma"
 			AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
-		update_icon()
+		update_appearance()
 		parts_list -= tip
 		qdel(tip)
 	return ..()
 
 /obj/item/spear/explosive
 	name = "explosive lance"
+	icon_state = "spearbomb0"
+	base_icon_state = "spearbomb"
+	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
 	var/wielded = FALSE // track wielded status on item
 
@@ -62,7 +67,7 @@
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="spearbomb1")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
 
 /// triggered on wield of two handed item
 /obj/item/spear/explosive/proc/on_wield(obj/item/source, mob/user)
@@ -75,9 +80,6 @@
 	SIGNAL_HANDLER
 
 	wielded = FALSE
-
-/obj/item/spear/explosive/update_icon_state()
-	icon_state = "spearbomb0"
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -107,7 +109,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
-	explosive.prime()
+	explosive.detonate()
 	user.gib()
 	qdel(src)
 	return BRUTELOSS
@@ -131,7 +133,7 @@
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
-		explosive.prime(lanced_by=user)
+		explosive.detonate(lanced_by=user)
 		qdel(src)
 
 //GREY TIDE
@@ -164,17 +166,16 @@
 /*
  * Bone Spear
  */
-/obj/item/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
+	base_icon_state = "bone_spear0"
+	icon_prefix = "bone_spear"
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 12
 	throwforce = 22
-	armour_penetration = 15				//Enhanced armor piercing
+	armour_penetration = 15 //Enhanced armor piercing
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="bone_spear1")
-
-/obj/item/spear/bonespear/update_icon_state()
-	icon_state = "bone_spear0"
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="[icon_prefix]1")

@@ -3,6 +3,7 @@
 	name = "Thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	color = "#550000"
 	taste_description = "sweet tasting metal"
 
@@ -11,8 +12,8 @@
 	if(reac_volume >= 1)
 		exposed_turf.AddComponent(/datum/component/thermite, reac_volume)
 
-/datum/reagent/thermite/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(1, 0)
+/datum/reagent/thermite/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjustFireLoss(1 * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -21,6 +22,7 @@
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "oil"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
@@ -28,6 +30,7 @@
 	reagent_state = LIQUID
 	color = "#FFFF00"
 	taste_description = "metal"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
 /datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -40,14 +43,14 @@
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
 	color = "#FFC8C8"
-	metabolization_rate = 4
+	metabolization_rate = 10 * REAGENTS_METABOLISM
 	taste_description = "burning"
 	penetrates_skin = NONE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/clf3/on_mob_life(mob/living/carbon/M)
-	M.adjust_fire_stacks(2)
-	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg, 0)
+/datum/reagent/clf3/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_fire_stacks(2 * REM * delta_time)
+	M.adjustFireLoss(0.3 * max(M.fire_stacks, 1) * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -67,10 +70,6 @@
 			for(var/turf/nearby_turf in range(1, target_floor))
 				if(!locate(/obj/effect/hotspot) in nearby_turf)
 					new /obj/effect/hotspot(nearby_turf)
-	if(iswallturf(exposed_turf))
-		var/turf/closed/wall/target_wall = exposed_turf
-		if(prob(reac_volume))
-			target_wall.ScrapeAway()
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -85,6 +84,7 @@
 	reagent_state = LIQUID
 	color = "#5A64C8"
 	taste_description = "air and bitterness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -92,23 +92,25 @@
 	reagent_state = LIQUID
 	color = "#210021"
 	taste_description = "compressed bitterness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/gunpowder
 	name = "Gunpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
 	color = "#000000"
-	metabolization_rate = 0.05
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	taste_description = "salt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M)
+/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = TRUE
 	..()
 	if(!isplasmaman(M))
 		return
-	M.set_drugginess(15)
+	M.set_drugginess(15 * REM * delta_time)
 	if(M.hallucination < volume)
-		M.hallucination += 5
+		M.hallucination += 5 * REM * delta_time
 
 /datum/reagent/gunpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
@@ -123,6 +125,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF"
 	taste_description = "salt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/tatp
 	name = "TaTP"
@@ -130,6 +133,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF"
 	taste_description = "death"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
@@ -137,6 +141,7 @@
 	reagent_state = LIQUID
 	color = "#C8C8C8"
 	taste_description = "salt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
@@ -144,6 +149,7 @@
 	reagent_state = LIQUID
 	color = "#C8C8C8"
 	taste_description = "smoke"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
@@ -151,6 +157,7 @@
 	reagent_state = LIQUID
 	color = "#C8C8C8"
 	taste_description = "loud noises"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/phlogiston
 	name = "Phlogiston"
@@ -159,6 +166,7 @@
 	color = "#FA00AF"
 	taste_description = "burning"
 	self_consuming = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -167,10 +175,9 @@
 	exposed_mob.adjustFireLoss(burndmg, 0)
 	exposed_mob.IgniteMob()
 
-/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/exposed_mob)
-	exposed_mob.adjust_fire_stacks(1)
-	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
-	exposed_mob.adjustFireLoss(burndmg, 0)
+/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
+	metabolizer.adjust_fire_stacks(1 * REM * delta_time)
+	metabolizer.adjustFireLoss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -182,6 +189,7 @@
 	taste_description = "burning"
 	self_consuming = TRUE
 	penetrates_skin = NONE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -192,8 +200,8 @@
 			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
 		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
-/datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
-	M.adjust_fire_stacks(1)
+/datum/reagent/napalm/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_fire_stacks(1 * REM * delta_time)
 	..()
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -201,19 +209,54 @@
 	if(istype(exposed_mob) && (methods & (TOUCH|VAPOR|PATCH)))
 		exposed_mob.adjust_fire_stacks(min(reac_volume/4, 20))
 
+#define CRYO_SPEED_PREFACTOR 0.4
+#define CRYO_SPEED_CONSTANT 0.1
+
 /datum/reagent/cryostylane
 	name = "Cryostylane"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the container 0K."
+	description = "Induces a cryostasis like state in a patient's organs, preventing them from decaying while dead. Slows down surgery while in a patient however. When reacted with oxygen, it will slowly consume it and reduce a container's temperature to 0K. Also damages slime simplemobs when 5u is sprayed."
 	color = "#0000DC"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	taste_description = "bitterness"
+	ph = 8.6
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	taste_description = "icey bitterness"
+	purity = REAGENT_STANDARD_PUIRTY
 	self_consuming = TRUE
+	impure_chem = /datum/reagent/consumable/ice
+	inverse_chem_val = 0.5
+	inverse_chem = /datum/reagent/inverse/cryostylane
+	failed_chem = null
+	burning_volume = 0.05
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
 
+/datum/reagent/cryostylane/burn(datum/reagents/holder)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		burning_temperature = 0//king chilly
+		return
+	burning_temperature = null
 
-/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
-	if(M.has_reagent(/datum/reagent/oxygen))
-		M.remove_reagent(/datum/reagent/oxygen, 0.5)
-		M.adjust_bodytemperature(-15)
+/datum/reagent/cryostylane/on_mob_add(mob/living/consumer, amount)
+	. = ..()
+	consumer.mob_surgery_speed_mod = 1-((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT) //10% - 30% slower
+	consumer.color = COLOR_CYAN
+
+/datum/reagent/cryostylane/on_mob_delete(mob/living/consumer)
+	. = ..()
+	consumer.mob_surgery_speed_mod = 1
+	consumer.color = COLOR_WHITE
+
+//Pauses decay! Does do something, I promise.
+/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer)
+	. = ..()
+	metabolization_rate = 0.05 * REM //slower consumption when dead
+
+/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/consumer, delta_time, times_fired)
+	metabolization_rate = 0.25 * REM//faster consumption when alive
+	if(consumer.reagents.has_reagent(/datum/reagent/oxygen))
+		consumer.reagents.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * delta_time)
+		consumer.adjust_bodytemperature(-15 * REM * delta_time)
+		if(ishuman(consumer))
+			var/mob/living/carbon/human/humi = consumer
+			humi.adjust_coretemperature(-15 * REM * delta_time)
 	..()
 
 /datum/reagent/cryostylane/expose_turf(turf/exposed_turf, reac_volume)
@@ -223,6 +266,9 @@
 	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
+#undef CRYO_SPEED_PREFACTOR
+#undef CRYO_SPEED_CONSTANT
+
 /datum/reagent/pyrosium
 	name = "Pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
@@ -230,12 +276,24 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	self_consuming = TRUE
+	burning_temperature = null
+	burning_volume = 0.05
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
-	if(M.has_reagent(/datum/reagent/oxygen))
-		M.remove_reagent(/datum/reagent/oxygen, 0.5)
-		M.adjust_bodytemperature(15)
+/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * delta_time)
+		M.adjust_bodytemperature(15 * REM * delta_time)
+		if(ishuman(M))
+			var/mob/living/carbon/human/humi = M
+			humi.adjust_coretemperature(15 * REM * delta_time)
 	..()
+
+/datum/reagent/pyrosium/burn(datum/reagents/holder)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		burning_temperature = 3500
+		return
+	burning_temperature = null
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
@@ -246,13 +304,14 @@
 	taste_description = "charged metal"
 	self_consuming = TRUE
 	var/shock_timer = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/teslium/on_mob_life(mob/living/carbon/M)
+/datum/reagent/teslium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, TRUE)
+		M.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
+		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
@@ -273,16 +332,17 @@
 	reagent_state = LIQUID
 	color = "#CAFF43"
 	taste_description = "jelly"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M)
+/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isjellyperson(M))
 		shock_timer = 0 //immune to shocks
-		M.AdjustAllImmobility(-40, FALSE)
-		M.adjustStaminaLoss(-2, 0)
+		M.AdjustAllImmobility(-40  *REM * delta_time)
+		M.adjustStaminaLoss(-2 * REM * delta_time, 0)
 		if(isluminescent(M))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(0, L.extract_cooldown - 20)
+			L.extract_cooldown = max(L.extract_cooldown - (20 * REM * delta_time), 0)
 	..()
 
 /datum/reagent/firefighting_foam
@@ -291,6 +351,7 @@
 	reagent_state = LIQUID
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/firefighting_foam/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()

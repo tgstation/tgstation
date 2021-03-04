@@ -30,8 +30,8 @@
 		alarm()
 
 /**
-  * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
-  */
+ * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
+ */
 /obj/machinery/computer/pod/proc/alarm()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
@@ -142,6 +142,22 @@
 	icon_state = "airlock_control_standby"
 	icon_keyboard = "no_keyboard"
 	density = FALSE
+
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
+	id = MASSDRIVER_TOXINS
+
+//for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange
+	range = 6
+
+/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun
+	id = MASSDRIVER_CHAPEL
+
+/obj/machinery/computer/pod/old/mass_driver_controller/trash
+	id = MASSDRIVER_DISPOSALS
+
+/obj/machinery/computer/pod/old/mass_driver_controller/shack
+	id = MASSDRIVER_SHACK
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"

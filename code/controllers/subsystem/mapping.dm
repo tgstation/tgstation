@@ -23,13 +23,14 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
+	var/list/holodeck_templates = list()
 
 	var/list/areas_in_z = list()
 
 	var/loading_ruins = FALSE
-	var/list/turf/unused_turfs = list()				//Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
-	var/list/datum/turf_reservations		//list of turf reservations
-	var/list/used_turfs = list()				//list of turf = datum/turf_reservation
+	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
+	var/list/datum/turf_reservations //list of turf reservations
+	var/list/used_turfs = list() //list of turf = datum/turf_reservation
 
 	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
@@ -67,8 +68,9 @@ SUBSYSTEM_DEF(mapping)
 	initialize_biomes()
 	loadWorld()
 	repopulate_sorted_areas()
-	process_teleport_locs()			//Sets up the wizard teleport locations
+	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
+
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
@@ -102,7 +104,7 @@ SUBSYSTEM_DEF(mapping)
 		// needs to be whitelisted for underground too so place_below ruins work
 		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), ice_ruins_templates)
 		for (var/ice_z in ice_ruins)
-			spawn_rivers(ice_z, 4, /turf/open/transparent/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
@@ -116,6 +118,8 @@ SUBSYSTEM_DEF(mapping)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), space_ruins_templates)
 	loading_ruins = FALSE
 #endif
+	// Run map generation after ruin generation to prevent issues
+	run_map_generation()
 	// Add the transit level
 	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 	repopulate_sorted_areas()
@@ -126,7 +130,7 @@ SUBSYSTEM_DEF(mapping)
 	return ..()
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
-	if(clearing_reserved_turfs || !initialized)			//in either case this is just not needed.
+	if(clearing_reserved_turfs || !initialized) //in either case this is just not needed.
 		return
 	clearing_reserved_turfs = TRUE
 	SSshuttle.transit_requesters.Cut()
@@ -155,7 +159,7 @@ SUBSYSTEM_DEF(mapping)
 		qdel(T, TRUE)
 
 /* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self-destruct nuke.
+Used by the AI doomsday and the self-destruct nuke.
 */
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
@@ -173,7 +177,7 @@ SUBSYSTEM_DEF(mapping)
 
 	for(var/N in nuke_tiles)
 		var/turf/open/floor/circuit/C = N
-		C.update_icon()
+		C.update_appearance()
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
@@ -189,6 +193,7 @@ SUBSYSTEM_DEF(mapping)
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
+	holodeck_templates = SSmapping.holodeck_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -275,7 +280,7 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
 
-	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
+	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
 		if(FailedZs.len > 1)
 			for(var/I in 2 to FailedZs.len)
@@ -305,6 +310,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
+
+/datum/controller/subsystem/mapping/proc/run_map_generation()
+	for(var/area/A in world)
+		A.RunGeneration()
 
 /datum/controller/subsystem/mapping/proc/maprotate()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
@@ -388,6 +397,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadHolodeckTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -441,6 +451,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/preloadHolodeckTemplates()
+	for(var/item in subtypesof(/datum/map_template/holodeck))
+		var/datum/map_template/holodeck/holodeck_type = item
+		if(!(initial(holodeck_type.mappath)))
+			continue
+		var/datum/map_template/holodeck/holo_template = new holodeck_type()
+
+		holodeck_templates[holo_template.template_id] = holo_template
+		map_templates[holo_template.template_id] = holo_template
 
 //Manual loading of away missions.
 /client/proc/admin_away()
@@ -510,8 +530,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 //This is not for wiping reserved levels, use wipe_reservations() for that.
 /datum/controller/subsystem/mapping/proc/initialize_reserved_level(z)
-	UNTIL(!clearing_reserved_turfs)				//regardless, lets add a check just in case.
-	clearing_reserved_turfs = TRUE			//This operation will likely clear any existing reservations, so lets make sure nothing tries to make one while we're doing it.
+	UNTIL(!clearing_reserved_turfs) //regardless, lets add a check just in case.
+	clearing_reserved_turfs = TRUE //This operation will likely clear any existing reservations, so lets make sure nothing tries to make one while we're doing it.
 	if(!level_trait(z,ZTRAIT_RESERVED))
 		clearing_reserved_turfs = FALSE
 		CRASH("Invalid z level prepared for reservations.")
@@ -522,7 +542,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		// No need to empty() these, because it's world init and they're
 		// already /turf/open/space/basic.
 		var/turf/T = t
-		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		T.flags_1 |= UNUSED_RESERVATION_TURF
 	unused_turfs["[z]"] = block
 	reservation_ready["[z]"] = TRUE
 	clearing_reserved_turfs = FALSE
@@ -533,24 +553,24 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
-		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		T.flags_1 |= UNUSED_RESERVATION_TURF
 		GLOB.areas_by_type[world.area].contents += T
 		CHECK_TICK
 
 //DO NOT CALL THIS PROC DIRECTLY, CALL wipe_reservations().
 /datum/controller/subsystem/mapping/proc/do_wipe_turf_reservations()
 	PRIVATE_PROC(TRUE)
-	UNTIL(initialized)							//This proc is for AFTER init, before init turf reservations won't even exist and using this will likely break things.
+	UNTIL(initialized) //This proc is for AFTER init, before init turf reservations won't even exist and using this will likely break things.
 	for(var/i in turf_reservations)
 		var/datum/turf_reservation/TR = i
 		if(!QDELETED(TR))
 			qdel(TR, TRUE)
 	UNSETEMPTY(turf_reservations)
 	var/list/clearing = list()
-	for(var/l in unused_turfs)			//unused_turfs is an assoc list by z = list(turfs)
+	for(var/l in unused_turfs) //unused_turfs is an assoc list by z = list(turfs)
 		if(islist(unused_turfs[l]))
 			clearing |= unused_turfs[l]
-	clearing |= used_turfs		//used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.
+	clearing |= used_turfs //used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing)

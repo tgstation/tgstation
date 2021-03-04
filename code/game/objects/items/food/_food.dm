@@ -3,7 +3,7 @@
 	name = "food"
 	desc = "you eat this"
 	resistance_flags = FLAMMABLE
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -32,6 +32,10 @@
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
 	var/junkiness
+	///Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time
+	var/burns_on_grill = FALSE
+	///Price of this food if sold in a venue
+	var/venue_value
 
 /obj/item/food/Initialize()
 	. = ..()
@@ -41,9 +45,12 @@
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
 		eatverbs = string_list(eatverbs)
+	if(venue_value)
+		AddElement(/datum/element/venue_price, venue_value)
 	MakeEdible()
 	MakeProcessable()
 	MakeLeaveTrash()
+	MakeGrillable()
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
@@ -62,6 +69,12 @@
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/MakeProcessable()
+	return
+
+///This proc handles grillable components, overwrite if you want different grill results etc.
+/obj/item/food/proc/MakeGrillable()
+	if(burns_on_grill)
+		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash

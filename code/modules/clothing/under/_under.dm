@@ -42,6 +42,10 @@
 	if(!attach_accessory(I, user))
 		return ..()
 
+/obj/item/clothing/under/attack_hand_secondary(mob/user, params)
+	toggle()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/clothing/under/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
@@ -115,58 +119,67 @@
 /mob/living/carbon/human/dummy/update_sensor_list()
 	return
 
-/obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
+/obj/item/clothing/under/proc/attach_accessory(obj/item/tool, mob/user, notifyAttach = 1)
 	. = FALSE
-	if(istype(I, /obj/item/clothing/accessory))
-		var/obj/item/clothing/accessory/A = I
-		if(attached_accessory)
-			if(user)
-				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
-			return
-		else
+	if(!istype(tool, /obj/item/clothing/accessory))
+		return
+	var/obj/item/clothing/accessory/accessory = tool
+	if(attached_accessory)
+		if(user)
+			to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
+		return
 
-			if(!A.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
-				return
-			if(user && !user.temporarilyRemoveItemFromInventory(I))
-				return
-			if(!A.attach(src, user))
-				return
+	if(!accessory.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
+		return
+	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
+		return
+	if(!accessory.attach(src, user))
+		return
 
-			if(user && notifyAttach)
-				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
+	. = TRUE
+	if(user && notifyAttach)
+		to_chat(user, "<span class='notice'>You attach [accessory] to [src].</span>")
 
-			var/accessory_color = attached_accessory.icon_state
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
-			accessory_overlay.alpha = attached_accessory.alpha
-			accessory_overlay.color = attached_accessory.color
+	var/accessory_color = attached_accessory.icon_state
+	accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
+	accessory_overlay.alpha = attached_accessory.alpha
+	accessory_overlay.color = attached_accessory.color
 
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform()
-				H.update_inv_wear_suit()
-				H.fan_hud_set_fandom()
+	update_appearance()
+	if(!ishuman(loc))
+		return
 
-			return TRUE
+	var/mob/living/carbon/human/holder = loc
+	holder.update_inv_w_uniform()
+	holder.update_inv_wear_suit()
+	holder.fan_hud_set_fandom()
 
 /obj/item/clothing/under/proc/remove_accessory(mob/user)
+	. = FALSE
 	if(!isliving(user))
 		return
 	if(!can_use(user))
 		return
 
-	if(attached_accessory)
-		var/obj/item/clothing/accessory/A = attached_accessory
-		attached_accessory.detach(src, user)
-		if(user.put_in_hands(A))
-			to_chat(user, "<span class='notice'>You detach [A] from [src].</span>")
-		else
-			to_chat(user, "<span class='notice'>You detach [A] from [src] and it falls on the floor.</span>")
+	if(!attached_accessory)
+		return
 
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
-			H.fan_hud_set_fandom()
+	. = TRUE
+	var/obj/item/clothing/accessory/accessory = attached_accessory
+	attached_accessory.detach(src, user)
+	if(user.put_in_hands(accessory))
+		to_chat(user, "<span class='notice'>You detach [accessory] from [src].</span>")
+	else
+		to_chat(user, "<span class='notice'>You detach [accessory] from [src] and it falls on the floor.</span>")
+
+	update_appearance()
+	if(!ishuman(loc))
+		return
+
+	var/mob/living/carbon/human/holder = loc
+	holder.update_inv_w_uniform()
+	holder.update_inv_wear_suit()
+	holder.fan_hud_set_fandom()
 
 
 /obj/item/clothing/under/examine(mob/user)
@@ -239,13 +252,12 @@
 	if(.)
 		return
 
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
+	if(attached_accessory)
+		remove_accessory(user)
 	else
-		if(attached_accessory)
-			remove_accessory(user)
-		else
-			rolldown()
+		rolldown()
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"

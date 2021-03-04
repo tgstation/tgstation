@@ -4,157 +4,129 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "c" = (
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "d" = (
 /obj/structure/girder/bronze,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "e" = (
 /obj/item/stack/tile/bronze,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "f" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "g" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "h" = (
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "i" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "j" = (
 /turf/closed/wall/mineral/bronze,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "k" = (
 /obj/structure/fluff/clockwork/alloy_shards/small,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "l" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "m" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "n" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "o" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "p" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "q" = (
 /obj/structure/lattice,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "r" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "s" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "t" = (
 /obj/item/stack/tile/bronze,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "u" = (
 /obj/structure/grille,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "v" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "w" = (
 /obj/structure/grille/broken,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "x" = (
 /obj/structure/girder/bronze,
 /obj/item/stack/tile/bronze,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "y" = (
 /obj/structure/fluff/clockwork/fallen_armor,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "z" = (
 /obj/structure/girder/bronze,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "A" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "B" = (
 /obj/item/nullrod/spear,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "C" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "D" = (
 /obj/structure/grille,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "E" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 "F" = (
 /obj/structure/dead_ratvar,
-/turf/open/floor/bronze{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/lavaland/surface/outdoors/unexplored)
+/turf/open/floor/bronze/lavaland,
+/area/ruin/unpowered/ratvar)
 "G" = (
 /obj/item/stack/tile/bronze/thirty,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/unexplored)
+/area/ruin/unpowered/ratvar)
 
 (1,1,1) = {"
 a
@@ -783,7 +755,7 @@ a
 (25,1,1) = {"
 a
 a
-a
+b
 l
 l
 l
@@ -809,7 +781,7 @@ a
 (26,1,1) = {"
 a
 a
-a
+b
 c
 b
 l

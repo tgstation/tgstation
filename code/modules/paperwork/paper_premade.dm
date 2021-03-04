@@ -1,5 +1,5 @@
 /*
- *	Premade paper
+ * Premade paper
  */
 
 /obj/item/paper/fluff/sop
@@ -21,7 +21,7 @@
 	<br>-Love, <i>Your Dearest</i>"}
 
 
-////////////	Job guides n' fluff
+//////////// Job guides n' fluff
 
 /obj/item/paper/guides/jobs/hydroponics
 	name = "paper- 'Greetings from Billy Bob'"
@@ -42,10 +42,6 @@
 /obj/item/paper/guides/jobs/security/labor_camp
 	name = "Labor Camp Operating Guide"
 	info = "<b>Labor Camp Facility Operation Guide</b><br><br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.  <br><br>To press a long-term prisoner into the service of the station, replace his equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner his ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of his crime.  <br>A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.<br>Once you have prepared the prisoner, place him in the secure northern half of the labor shuttle, and send him to the station.  Once he meets his quota by feeding sheets to the stacker, he will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.<br><br>In the case of dangerous prisoners, surveillance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine."
-
-/obj/item/paper/guides/jobs/security/range
-	name = "paper- Firing Range Instructions"
-	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminium target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
 
 /obj/item/paper/fluff/jobs/jobs
 	name = "paper- 'Job Information'"
@@ -96,11 +92,11 @@
 	</i>"}
 
 	/*
-	*	Stations
+	* Stations
 	*/
 
 
-///////////	CentCom
+/////////// CentCom
 
 /obj/item/paper/fluff/stations/centcom/disk_memo
 	name = "memo"
@@ -114,7 +110,7 @@
 	info = "<BR>CentCom Security<BR>Port Division<BR>Official Bulletin<BR><BR>Inspector,<BR>There is an emergency shuttle arriving today.<BR><BR>Approval is restricted to Nanotrasen employees only. Deny all other entrants.<BR><BR>CentCom Port Commissioner"
 
 
-///////////	Lavaland
+/////////// Lavaland
 
 /obj/item/paper/fluff/stations/lavaland/orm_notice
 	name = "URGENT!"

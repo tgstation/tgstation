@@ -1,22 +1,22 @@
 /***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
 /**
-  * Mechs are now (finally) vehicles, this means you can make them multicrew
-  * They can also grant select ability buttons based on occupant bitflags
-  *
-  * Movement is handled through vehicle_move() which is called by relaymove
-  * Clicking is done by way of signals registering to the entering mob
-  * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
-  * AI also has special checks becaus it gets in and out of the mech differently
-  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
-  *
-  * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
-  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
-  *
-  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
-  * Or are used to call action() on equipped gear
-  * Cooldown for gear is on the mech because exploits
-  */
+ * Mechs are now (finally) vehicles, this means you can make them multicrew
+ * They can also grant select ability buttons based on occupant bitflags
+ *
+ * Movement is handled through vehicle_move() which is called by relaymove
+ * Clicking is done by way of signals registering to the entering mob
+ * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
+ * AI also has special checks becaus it gets in and out of the mech differently
+ * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
+ *
+ * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
+ *
+ * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
+ * Or are used to call action() on equipped gear
+ * Cooldown for gear is on the mech because exploits
+ */
 /obj/vehicle/sealed/mecha
 	name = "mecha"
 	desc = "Exosuit"
@@ -26,8 +26,8 @@
 	max_integrity = 300
 	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	movedelay = 1 SECONDS
-	anchored = TRUE
-	emulate_door_bumps = TRUE
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
@@ -101,13 +101,13 @@
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
 
-	var/list/equipment = new
+	var/list/equipment = list()
 	///Current active equipment
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	///Maximum amount of equipment we can have
 	var/max_equip = 3
 
-	///Whether our steps are silent, for example in zero-G
+	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
 	var/stepsound = 'sound/mecha/mechstep.ogg'
@@ -179,6 +179,7 @@
 		add_airtank()
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -187,7 +188,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
@@ -196,7 +197,11 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
-	update_icon()
+	update_appearance()
+
+/obj/mecha/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/M in occupants)
@@ -211,20 +216,15 @@
 			var/obj/item/mecha_parts/mecha_equipment/equip = E
 			equip.detach(loc)
 			qdel(equip)
-	if(cell)
-		QDEL_NULL(cell)
-	if(scanmod)
-		QDEL_NULL(scanmod)
-	if(capacitor)
-		QDEL_NULL(capacitor)
-	if(internal_tank)
-		QDEL_NULL(internal_tank)
+	QDEL_NULL(cell)
+	QDEL_NULL(scanmod)
+	QDEL_NULL(capacitor)
+	QDEL_NULL(internal_tank)
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list.Remove(src)
 	LAZYCLEARLIST(equipment)
 	if(loc)
 		loc.assume_air(cabin_air)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 	else
 		qdel(cabin_air)
 	cabin_air = null
@@ -237,10 +237,12 @@
 /obj/vehicle/sealed/mecha/update_icon_state()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		icon_state = silicon_icon_state
-	else if(LAZYLEN(occupants))
-		icon_state = initial(icon_state)
-	else
-		icon_state = initial(icon_state)+ "-open"
+		return ..()
+	if(LAZYLEN(occupants))
+		icon_state = base_icon_state
+		return ..()
+	icon_state = "[base_icon_state]-open"
+	return ..()
 
 
 /obj/vehicle/sealed/mecha/get_cell()
@@ -252,7 +254,7 @@
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
 	for(var/occupant in occupants)
-		var/mob/mob_occupant
+		var/mob/mob_occupant = occupant
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(mob_occupant, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
 		mob_occupant.update_mouse_pointer()
@@ -357,18 +359,20 @@
 		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			. += "[icon2html(ME, user)] \A [ME]."
-	if(!enclosed)
-		if(mecha_flags & SILICON_PILOT)
-			. += "[src] appears to be piloting itself..."
-		else
-			for(var/occupante in occupants)
-				. += "You can see [occupante] inside."
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				for(var/O in H.held_items)
-					if(istype(O, /obj/item/gun))
-						. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
-						break //in case user is holding two guns
+	if(enclosed)
+		return
+	if(mecha_flags & SILICON_PILOT)
+		. += "[src] appears to be piloting itself..."
+	else
+		for(var/occupante in occupants)
+			. += "You can see [occupante] inside."
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for(var/held_item in H.held_items)
+				if(!isgun(held_item))
+					continue
+				. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
+				break //in case user is holding two guns
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(delta_time)
@@ -398,7 +402,7 @@
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
 				if(loc)
 					loc.assume_air(leaked_gas)
-					air_update_turf()
+					air_update_turf(FALSE, FALSE)
 				else
 					qdel(leaked_gas)
 
@@ -438,7 +442,7 @@
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
 
-	if(occupants)
+	if(LAZYLEN(occupants))
 		for(var/i in occupants)
 			var/mob/living/occupant = i
 			if(cell)
@@ -447,22 +451,22 @@
 					if(0.75 to INFINITY)
 						occupant.clear_alert("charge")
 					if(0.5 to 0.75)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 1)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 1)
 					if(0.25 to 0.5)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 2)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 2)
 					if(0.01 to 0.25)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 3)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 3)
 					else
-						occupant.throw_alert("charge", /obj/screen/alert/emptycell)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/emptycell)
 
 			var/integrity = obj_integrity/max_integrity*100
 			switch(integrity)
 				if(30 to 45)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 1)
 				if(15 to 35)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 2)
 				if(-INFINITY to 15)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 3)
 				else
 					occupant.clear_alert("mech damage")
 			var/atom/checking = occupant.loc
@@ -481,13 +485,13 @@
 
 	if(mecha_flags & LIGHTS_ON)
 		var/lights_energy_drain = 2
-		use_power(lights_energy_drain)
+		use_power(lights_energy_drain*delta_time)
 
 	for(var/b in occupants)
 		var/mob/living/occupant = b
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
-			mob_exit(occupant)	//bye bye
+			mob_exit(occupant) //bye bye
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -523,8 +527,8 @@
 		return
 	if(is_currently_ejecting)
 		return
-	var/list/mouse_control = params2list(params)
-	if(isAI(user) && !mouse_control["middle"])//AIs use MMB
+	var/list/modifiers = params2list(params)
+	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
 		return
 	if(phasing)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to interact with objects while phasing.</span>")
@@ -551,13 +555,13 @@
 			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			selected.action(user, target, params)
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
 			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			selected.action(user, target, params)
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK) || !istype(target, /atom) || !Adjacent(target))
 		return
@@ -569,6 +573,9 @@
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
+/obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
+	if(isAI(user))
+		on_mouseclick(user, target, params)
 
 //////////////////////////////////
 ////////  Movement procs  ////////
@@ -577,8 +584,9 @@
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
-	if(stepsound)
-		playsound(src,stepsound,40,1)
+	if(mecha_flags & QUIET_STEPS)
+		return
+	playsound(src, stepsound, 40, TRUE)
 
 /obj/vehicle/sealed/mecha/proc/disconnect_air()
 	SIGNAL_HANDLER
@@ -600,11 +608,15 @@
 					to_chat(occupants, "[icon2html(src, occupants)]<span class='info'>The [src] push off [backup] to propel yourself.</span>")
 		return TRUE
 
-	if(movedelay <= world.time && active_thrusters && movement_dir && active_thrusters.thrust(movement_dir))
+	if(active_thrusters?.thrust(movement_dir))
 		step_silent = TRUE
 		return TRUE
-
 	return FALSE
+
+/obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
+	if(canmove)
+		vehicle_move(direction)
+	return TRUE
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
@@ -672,9 +684,9 @@
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
-		setDir(direction)
-		if(turnsound)
+		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
+		setDir(direction)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -689,7 +701,13 @@
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		if(phase_state)
 			flick(phase_state, src)
-		forceMove(get_step(src,dir))//This is jank I hate it thanks, this should be done thrugh move not this dumb shit
+		var/turf/destination = get_step(src,dir)
+		var/area/destination_area = destination.loc
+		if(destination_area.area_flags & NOTELEPORT)
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from phasing here!</span>")
+			spark_system.start()
+		else
+			forceMove(destination)//This is jank I hate it thanks, this should be done thrugh move not this dumb shit
 		use_power(phasing_energy_drain)
 		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		return
@@ -797,10 +815,21 @@
 			if(!construction_state) //Mech must be in maint mode to allow carding.
 				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
-			if(!locate(AI) in occupants) //Mech does not have an AI for a pilot
+			var/list/ai_pilots = list()
+			for(var/mob/living/silicon/ai/aipilot in occupants)
+				ai_pilots += aipilot
+			if(!ai_pilots.len) //Mech does not have an AI for a pilot
 				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
 				return
-			for(var/mob/living/silicon/ai in occupants)
+			if(ai_pilots.len > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
+				AI = input(user,"Which AI do you wish to card?", "AI Selection") as null|anything in sortList(ai_pilots)
+			else
+				AI = ai_pilots[1]
+			if(!AI)
+				return
+			if(!(AI in occupants) || !user.Adjacent(src))
+				return //User sat on the selection window and things changed.
+
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = TRUE
 			AI.radio_enabled = FALSE
@@ -850,7 +879,6 @@
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
-	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
@@ -858,13 +886,14 @@
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	if(pilot_mob && pilot_mob.Adjacent(src))
-		if(occupants)
-			return
-		LAZYADD(occupants, src)
-		pilot_mob.mecha = src
-		pilot_mob.forceMove(src)
-		update_icon()
+	if(!pilot_mob?.Adjacent(src))
+		return
+	if(LAZYLEN(occupants))
+		return
+	LAZYSET(occupants, pilot_mob, NONE)
+	pilot_mob.mecha = src
+	pilot_mob.forceMove(src)
+	update_appearance()
 
 ///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
@@ -872,7 +901,7 @@
 	if(pilot_mob.mecha == src)
 		pilot_mob.mecha = null
 	pilot_mob.forceMove(get_turf(src))
-	update_icon()
+	update_appearance()
 
 
 /////////////////////////////////////
@@ -1004,12 +1033,11 @@
 		to_chat(user, "<span class='warning'>\the [M] is stuck to your hand, you cannot put it in \the [src]!</span>")
 		return FALSE
 
-	M.mecha = src
+	M.set_mecha(src)
 	add_occupant(B)//Note this forcemoves the brain into the mech to allow relaymove
 	mecha_flags |= SILICON_PILOT
 	B.reset_perspective(src)
 	B.remote_control = src
-	B.update_mobility()
 	B.update_mouse_pointer()
 	setDir(dir_in)
 	log_message("[M] moved in as pilot.", LOG_MECHA)
@@ -1077,23 +1105,24 @@
 				L.forceMove(mmi)
 				L.reset_perspective()
 				remove_occupant(L)
-			mmi.mecha = null
-			mmi.update_icon()
-			L.mobility_flags = NONE
+			mmi.set_mecha(null)
+			mmi.update_appearance()
 		setDir(dir_in)
 	return ..()
 
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/mob_exit)
+	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
+	RegisterSignal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_middlemouseclick) //For AIs
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_MOB_DEATH)
+	UnregisterSignal(M, COMSIG_LIVING_DEATH)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
+	UnregisterSignal(M, COMSIG_MOB_MIDDLECLICKON)
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 	M.clear_alert("charge")
 	M.clear_alert("mech damage")
@@ -1102,7 +1131,7 @@
 		M.client.view_size.resetToDefault()
 		zoom_mode = 0
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /////////////////////////
 ////// Access stuff /////
@@ -1118,13 +1147,6 @@
 	req_access = list()
 	return allowed(M)
 
-////////////////////////////////
-/////// Messages and Log ///////
-////////////////////////////////
-
-GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
-GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
-//why is this in mecha
 
 ///////////////////////
 ///// Power stuff /////
@@ -1182,6 +1204,8 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
+					if(A.custom_materials)
+						A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
 					A.update_name()
 					return TRUE
 
@@ -1193,6 +1217,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = 0
+					A.set_custom_materials(list(/datum/material/iron=2000))
 					A.update_name()
 					return TRUE
 	if(!fail_chat_override)
@@ -1201,3 +1226,15 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		else
 			to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
 	return FALSE
+
+
+/// Special light eater handling
+/obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(mecha_flags & HAS_LIGHTS)
+		visible_message("<span class='danger'>[src]'s lights burn out!</span>")
+		mecha_flags &= ~HAS_LIGHTS
+	set_light_on(FALSE)
+	for(var/occupant in occupants)
+		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
+	return COMPONENT_BLOCK_LIGHT_EATER

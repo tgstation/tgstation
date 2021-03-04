@@ -38,7 +38,7 @@ All ShuttleMove procs go here
 
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+			if(istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
 				continue
 			if(!thing.anchored)
 				step(thing, shuttle_dir)
@@ -58,9 +58,9 @@ All ShuttleMove procs go here
 	newT.CopyOnTop(src, 1, depth, TRUE)
 	//Air stuff
 	newT.blocks_air = TRUE
-	newT.air_update_turf(TRUE)
+	newT.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
 	if(isopenturf(newT))
 		var/turf/open/new_open = newT
 		new_open.copy_air_with_tile(src)
@@ -84,9 +84,9 @@ All ShuttleMove procs go here
 
 /turf/proc/lateShuttleMove(turf/oldT)
 	blocks_air = initial(blocks_air)
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, blocks_air)
 	oldT.blocks_air = initial(oldT.blocks_air)
-	oldT.air_update_turf(TRUE)
+	oldT.air_update_turf(TRUE, oldT.blocks_air)
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -258,8 +258,8 @@ All ShuttleMove procs go here
 				A.addMember(src)
 		SSair.add_to_rebuild_queue(src)
 	else
-		// atmosinit() calls update_icon(), so we don't need to call it
-		update_icon()
+		// atmosinit() calls update_appearance(), so we don't need to call it
+		update_appearance()
 
 /obj/machinery/navbeacon/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

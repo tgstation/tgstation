@@ -20,6 +20,9 @@
 
 	power_change()
 
+/obj/machinery/computer/Destroy()
+	. = ..()
+
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
@@ -27,8 +30,6 @@
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
-
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(machine_stat & NOPOWER)
 		. += "[icon_keyboard]_off"
 		return
@@ -93,6 +94,7 @@
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.setDir(dir)
 			A.circuit = circuit
+			// Circuit removal code is handled in /obj/machinery/Exited()
 			circuit.forceMove(A)
 			A.set_anchored(TRUE)
 			if(machine_stat & BROKEN)
@@ -109,7 +111,6 @@
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
-			circuit = null
 		for(var/obj/C in src)
 			C.forceMove(loc)
 	qdel(src)

@@ -7,7 +7,7 @@ on:
 jobs:
   compile:
     name: "Compile changelogs"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: "Check for CHANGELOG_ENABLER secret and pass true to output if it exists to be checked by later steps"
         id: value_holder
@@ -15,7 +15,7 @@ jobs:
           CHANGELOG_ENABLER: ${{ secrets.CHANGELOG_ENABLER }}
         run: |
           unset SECRET_EXISTS
-          if [-n $CHANGELOG_ENABLER]; then SECRET_EXISTS='true' ; fi
+          if [ -n $CHANGELOG_ENABLER ]; then SECRET_EXISTS='true' ; fi
           echo ::set-output name=CL_ENABLED::${SECRET_EXISTS}
       - name: "Setup python"
         if: steps.value_holder.outputs.CL_ENABLED

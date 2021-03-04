@@ -11,12 +11,14 @@
 	desc = "Stylish dark wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
-	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+
+/turf/open/floor/wood/setup_broken_states()
+	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
 /turf/open/floor/wood/examine(mob/user)
 	. = ..()
@@ -71,7 +73,6 @@
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
 	icon_state = "grass0"
 	floor_tile = /obj/item/stack/tile/grass
-	broken_states = list("sand")
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
@@ -81,6 +82,9 @@
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 	tiled_dirt = FALSE
+
+/turf/open/floor/grass/setup_broken_states()
+	return list("sand")
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
@@ -116,7 +120,6 @@
 	icon = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
-	broken_states = list("snow_dug")
 	ore_type = /obj/item/stack/sheet/mineral/snow
 	planetary_atmos = TRUE
 	floor_tile = null
@@ -127,6 +130,9 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/grass/snow/setup_broken_states()
+	return list("snow_dug")
 
 /turf/open/floor/grass/snow/spawniconchange()
 	return
@@ -182,7 +188,6 @@
 	icon_state = "carpet-255"
 	base_icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
-	broken_states = list("damaged")
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET)
@@ -194,13 +199,16 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
+/turf/open/floor/carpet/setup_broken_states()
+	return list("damaged")
+
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /turf/open/floor/carpet/update_icon()
 	. = ..()
@@ -290,6 +298,33 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_ROYAL_BLUE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_ROYAL_BLUE)
 
+/turf/open/floor/carpet/executive
+	name = "executive carpet"
+	icon = 'icons/turf/floors/carpet_executive.dmi'
+	icon_state = "executive_carpet-255"
+	base_icon_state = "executive_carpet"
+	floor_tile = /obj/item/stack/tile/carpet/executive
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_EXECUTIVE)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_EXECUTIVE)
+
+/turf/open/floor/carpet/stellar
+	name = "stellar carpet"
+	icon = 'icons/turf/floors/carpet_stellar.dmi'
+	icon_state = "stellar_carpet-255"
+	base_icon_state = "stellar_carpet"
+	floor_tile = /obj/item/stack/tile/carpet/stellar
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_STELLAR)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_STELLAR)
+
+/turf/open/floor/carpet/donk
+	name = "Donk Co. carpet"
+	icon = 'icons/turf/floors/carpet_donk.dmi'
+	icon_state = "donk_carpet-255"
+	base_icon_state = "donk_carpet"
+	floor_tile = /obj/item/stack/tile/carpet/donk
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_DONK)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_DONK)
+
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -332,11 +367,11 @@
 
 /turf/open/floor/carpet/break_tile()
 	broken = TRUE
-	update_icon()
+	update_appearance()
 
 /turf/open/floor/carpet/burn_tile()
 	burnt = TRUE
-	update_icon()
+	update_appearance()
 
 /turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
@@ -361,9 +396,11 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
-	broken_states = list("damaged")
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
+
+/turf/open/floor/fakespace/setup_broken_states()
+	return list("damaged")
 
 /turf/open/floor/fakespace/Initialize()
 	. = ..()

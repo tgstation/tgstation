@@ -8,8 +8,8 @@
 	attack_verb_simple = list("dump")
 	var/dumped = FALSE
 
-/obj/item/suspiciousphone/attack_self(mob/user)
-	if(!ishuman(user))
+/obj/item/suspiciousphone/attack_self(mob/living/user)
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>This device is too advanced for you!</span>")
 		return
 	if(dumped)
@@ -21,13 +21,15 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
-		var/list/accounts_to_rob = SSeconomy.bank_accounts.Copy()
-		var/mob/living/carbon/human/H = user
-		accounts_to_rob -= H.get_bank_account()
+		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+		var/mob/living/L
+		if(isliving(user))
+			L = user
+			accounts_to_rob -= L.get_bank_account()
 		for(var/i in accounts_to_rob)
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
-		new /obj/effect/dumpeet_target(targetturf, user)
+		new /obj/effect/dumpeet_target(targetturf, L)
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
@@ -41,7 +43,7 @@
 	pixel_z = -8
 	max_integrity = 5000
 	var/list/accounts_to_rob
-	var/mob/living/carbon/human/bogdanoff
+	var/mob/living/bogdanoff
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
@@ -85,7 +87,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	QDEL_IN(WEAKREF(src), 8 MINUTES) //Self-destruct after 8 min
 	SSeconomy.market_crashing = TRUE
 
 
@@ -161,8 +163,8 @@
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = SSeconomy.bank_accounts.Copy()
-	accounts_to_rob -= bogdanoff.get_bank_account()
+	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+	accounts_to_rob -= bogdanoff?.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
 		B.dumpeet()
@@ -172,10 +174,11 @@
 	var/percentage_lost = (rand(5, 15) / 100)
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		if(!B.being_dumped)
+		if(!(B?.being_dumped))
+			accounts_to_rob -= B
 			continue
 		var/amount = B.account_balance * percentage_lost
-		var/datum/bank_account/account = bogdanoff.get_bank_account()
+		var/datum/bank_account/account = bogdanoff?.get_bank_account()
 		if (account) // get_bank_account() may return FALSE
 			account.transfer_money(B, amount)
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
@@ -189,7 +192,8 @@
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		B.being_dumped = FALSE
+		if(B)
+			B.being_dumped = FALSE
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
@@ -208,10 +212,7 @@
 	light_range = 2
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
-	var/mob/living/carbon/human/bogdanoff
-
-/obj/effect/ex_act()
-	return
+	var/mob/living/bogdanoff
 
 /obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()

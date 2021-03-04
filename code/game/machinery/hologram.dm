@@ -1,8 +1,8 @@
 /* Holograms!
  * Contains:
- *		Holopad
- *		Hologram
- *		Other stuff
+ * Holopad
+ * Hologram
+ * Other stuff
  */
 
 /*
@@ -31,6 +31,7 @@ Possible to do for anyone motivated enough:
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
+	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
@@ -106,20 +107,20 @@ Possible to do for anyone motivated enough:
 			new_disk.forceMove(src)
 			disk = new_disk
 
-/obj/machinery/holopad/tutorial/attack_hand(mob/user)
+/obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
 		return
 	if(user.incapacitated() || !is_operational)
 		return
 	if(replay_mode)
 		replay_stop()
-	else if(disk && disk.record)
+	else if(disk?.record)
 		replay_start()
 
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
 		return
-	if(!replay_mode && (disk && disk.record))
+	if(!replay_mode && (disk?.record))
 		replay_start()
 
 /obj/machinery/holopad/Initialize()
@@ -263,7 +264,7 @@ Possible to do for anyone motivated enough:
 					if(A)
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
-				var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
+				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sortNames(callnames))
 				if(QDELETED(usr) || !result || outgoing_call)
 					return
 				if(usr.loc == loc)
@@ -326,8 +327,8 @@ Possible to do for anyone motivated enough:
 				return TRUE
 
 /**
-  * hangup_all_calls: Disconnects all current holocalls from the holopad
-  */
+ * hangup_all_calls: Disconnects all current holocalls from the holopad
+ */
 /obj/machinery/holopad/proc/hangup_all_calls()
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
@@ -377,10 +378,10 @@ Possible to do for anyone motivated enough:
 			if(outgoing_call)
 				HC.Disconnect(src)//can't answer calls while calling
 			else
-				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
+				playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
 				ringing = TRUE
 
-	update_icon()
+	update_appearance()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -395,7 +396,7 @@ Possible to do for anyone motivated enough:
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
-		else	//make it like real life
+		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state
 			Hologram.copy_overlays(user, TRUE)
@@ -408,7 +409,7 @@ Possible to do for anyone motivated enough:
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
-		Hologram.set_light(2)	//hologram lighting
+		Hologram.set_light(2) //hologram lighting
 		move_hologram()
 
 		set_holo(user, Hologram)
@@ -446,16 +447,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(2)
 	else
 		set_light(0)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
-		icon_state = "holopad_ringing"
-	else if(total_users || replay_mode)
-		icon_state = "holopad1"
-	else
-		icon_state = "holopad0"
+		icon_state = "[base_icon_state]_ringing"
+		return ..()
+	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
+	return ..()
 
 /obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)
@@ -566,7 +566,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
-	Hologram.set_light(2)	//hologram lighting
+	Hologram.set_light(2) //hologram lighting
 	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
 	return Hologram
 
@@ -660,7 +660,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		record_user = null
 
 /obj/machinery/holopad/proc/record_clear()
-	if(disk && disk.record)
+	if(disk?.record)
 		QDEL_NULL(disk.record)
 
 /obj/effect/overlay/holo_pad_hologram

@@ -8,7 +8,7 @@
 	turns_per_move = 1
 	maxHealth = 10
 	health = 10
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/hugemushroomslice = 1)
+	butcher_results = list(/obj/item/food/hugemushroomslice = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -28,7 +28,6 @@
 	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speed = 1
-	ventcrawler = VENTCRAWLER_ALWAYS
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
@@ -48,10 +47,10 @@
 	else
 		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
-/mob/living/simple_animal/hostile/mushroom/Life()
+/mob/living/simple_animal/hostile/mushroom/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		adjustBruteLoss(-2)
+		adjustBruteLoss(-1 * delta_time)
 
 /mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
@@ -65,6 +64,8 @@
 	UpdateMushroomCap()
 	health = maxHealth
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
 	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object))
@@ -94,20 +95,20 @@
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
 	retreat_distance = null
 
-/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
-	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
-		var/mob/living/simple_animal/hostile/mushroom/M = L
+/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/user, list/modifiers)
+	if(istype(user, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
+		var/mob/living/simple_animal/hostile/mushroom/shroom = user
 		if(faint_ticker < 2)
-			M.visible_message("<span class='notice'>[M] chews a bit on [src].</span>")
+			shroom.visible_message("<span class='notice'>[shroom] chews a bit on [src].</span>")
 			faint_ticker++
 			return TRUE
-		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
-		var/level_gain = (powerlevel - M.powerlevel)
-		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
+		shroom.visible_message("<span class='warning'>[shroom] devours [src]!</span>")
+		var/level_gain = (powerlevel - shroom.powerlevel)
+		if(level_gain >= -1 && !bruised && !shroom.ckey)//Player shrooms can't level up to become robust gods.
 			if(level_gain < 1)//So we still gain a level if two mushrooms were the same level
 				level_gain = 1
-			M.LevelUp(level_gain)
-		M.adjustBruteLoss(-M.maxHealth)
+			shroom.LevelUp(level_gain)
+		shroom.adjustBruteLoss(-shroom.maxHealth)
 		qdel(src)
 		return TRUE
 	return ..()
@@ -158,7 +159,7 @@
 		bruised = 1
 
 /mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/mushroom))
+	if(istype(I, /obj/item/food/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
 			qdel(I)
@@ -169,9 +170,9 @@
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
-	if(M.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -189,7 +190,7 @@
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
-		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
+		var/obj/item/food/hugemushroomslice/S = new /obj/item/food/hugemushroomslice(src.loc)
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)

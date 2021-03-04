@@ -3,7 +3,7 @@
 /datum/design/board
 	name = "Computer Design ( NULL ENTRY )"
 	desc = "I promise this doesn't give you syndicate goodies!"
-	build_type = IMPRINTER
+	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 1000)
 
 /datum/design/board/arcade_battle
@@ -102,20 +102,13 @@
 	id = "comconsole"
 	build_path = /obj/item/circuitboard/computer/communications
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY				//Honestly should have a bridge techfab for this sometime.
-
-/datum/design/board/idcardconsole
-	name = "Computer Design (ID Console)"
-	desc = "Allows for the construction of circuit boards used to build an ID computer."
-	id = "idcardconsole"
-	build_path = /obj/item/circuitboard/computer/card
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY				//Honestly should have a bridge techfab for this sometime.
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/crewconsole
 	name = "Computer Design (Crew monitoring computer)"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
 	id = "crewconsole"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/crew
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
@@ -212,6 +205,7 @@
 	name = "Computer Design (Supply Console)"
 	desc = "Allows for the construction of circuit boards used to build a Supply Console."
 	id = "cargo"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
@@ -220,15 +214,8 @@
 	name = "Computer Design (Supply Request Console)"
 	desc = "Allows for the construction of circuit boards used to build a Supply Request Console."
 	id = "cargorequest"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo/request
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
-/datum/design/board/bounty
-	name = "Computer Design (Bounty Console)"
-	desc = "Allows for the construction of circuit boards used to build a Bounty Console."
-	id = "bounty"
-	build_path = /obj/item/circuitboard/computer/bounty
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 

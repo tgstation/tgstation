@@ -3,7 +3,7 @@
 /datum/asset/simple/tgui_common
 	keep_local_name = TRUE
 	assets = list(
-		"tgui-common.chunk.js" = 'tgui/public/tgui-common.chunk.js',
+		"tgui-common.bundle.js" = 'tgui/public/tgui-common.bundle.js',
 	)
 
 /datum/asset/simple/tgui
@@ -188,7 +188,7 @@
 	)
 
 /datum/asset/simple/namespaced/common
-	assets = list("padlock.png"	= 'html/padlock.png')
+	assets = list("padlock.png" = 'html/padlock.png')
 	parents = list("common.css" = 'html/browser/common.css')
 
 /datum/asset/simple/permissions
@@ -249,22 +249,11 @@
 		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
 		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
 		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
+		"voidascend" = 'icons/UI_Icons/Achievements/Misc/voidascend.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
-		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
-		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
-		"chaplain" = 'icons/UI_Icons/Achievements/Mafia/chaplain.png',
-		"clown" = 'icons/UI_Icons/Achievements/Mafia/clown.png',
-		"detective" = 'icons/UI_Icons/Achievements/Mafia/detective.png',
-		"fugitive" = 'icons/UI_Icons/Achievements/Mafia/fugitive.png',
-		"hated" = 'icons/UI_Icons/Achievements/Mafia/hated.png',
-		"hop" = 'icons/UI_Icons/Achievements/Mafia/hop.png',
-		"lawyer" = 'icons/UI_Icons/Achievements/Mafia/lawyer.png',
-		"md" = 'icons/UI_Icons/Achievements/Mafia/md.png',
-		"nightmare" = 'icons/UI_Icons/Achievements/Mafia/nightmare.png',
-		"obsessed" = 'icons/UI_Icons/Achievements/Mafia/obsessed.png',
-		"psychologist" = 'icons/UI_Icons/Achievements/Mafia/psychologist.png',
-		"thoughtfeeder" = 'icons/UI_Icons/Achievements/Mafia/thoughtfeeder.png',
-		"traitor" = 'icons/UI_Icons/Achievements/Mafia/traitor.png',
+		"changeling" = 'icons/UI_Icons/Achievements/Mafia/mafia.png',
+		"chaplain" = 'icons/UI_Icons/Achievements/Mafia/town.png',
+		"clown" = 'icons/UI_Icons/Achievements/Mafia/neutral.png',
 		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png',
 		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
 	)
@@ -463,7 +452,7 @@
 
 /datum/asset/simple/orbit
 	assets = list(
-		"ghost.png"	= 'html/ghost.png'
+		"ghost.png" = 'html/ghost.png'
 	)
 
 /datum/asset/simple/vv
@@ -487,3 +476,56 @@
 /datum/asset/spritesheet/mafia/register()
 	InsertAll("", 'icons/obj/mafia.dmi')
 	..()
+
+/datum/asset/simple/portraits
+	var/tab = "use subtypes of this please"
+	assets = list()
+
+/datum/asset/simple/portraits/New()
+	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
+		return
+	for(var/p in SSpersistence.paintings[tab])
+		var/list/portrait = p
+		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
+		if(fexists(png))
+			var/asset_name = "[tab]_[portrait["md5"]]"
+			assets[asset_name] = png
+	..() //this is where it registers all these assets we added to the list
+
+/datum/asset/simple/portraits/library
+	tab = "library"
+
+/datum/asset/simple/portraits/library_secure
+	tab = "library_secure"
+
+/datum/asset/simple/portraits/library_private
+	tab = "library_private"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)
+
+/datum/asset/spritesheet/fish
+	name = "fish"
+
+/datum/asset/spritesheet/fish/register()
+	for (var/path in subtypesof(/datum/aquarium_behaviour/fish))
+		var/datum/aquarium_behaviour/fish/fish_type = path
+		var/fish_icon = initial(fish_type.icon)
+		var/fish_icon_state = initial(fish_type.icon_state)
+		var/id = sanitize_css_class_name("[fish_icon][fish_icon_state]")
+		if(sprites[id]) //no dupes
+			continue
+		Insert(id, fish_icon, fish_icon_state)
+	..()
+
+/// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
+/proc/sanitize_css_class_name(name)
+	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
+	return replacetext(name, regex, "")
+
+/datum/asset/simple/tutorial_advisors
+	assets = list(
+		"chem_help_advisor.gif" = 'icons/UI_Icons/Advisors/chem_help_advisor.gif',
+	)

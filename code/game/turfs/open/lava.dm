@@ -148,10 +148,8 @@
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
-				continue	//YOU'RE FLYING OVER IT
-			var/buckle_check = L.buckling
-			if(!buckle_check)
-				buckle_check = L.buckled
+				continue //YOU'RE FLYING OVER IT
+			var/buckle_check = L.buckled
 			if(isobj(buckle_check))
 				var/obj/O = buckle_check
 				if(O.resistance_flags & LAVA_PROOF)
@@ -184,8 +182,9 @@
 	name = "lava"
 	baseturfs = /turf/open/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
-	icon_state = "unsmooth"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	icon_state = "lava-255"
+	base_icon_state = "lava"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_LAVA)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_LAVA)
 

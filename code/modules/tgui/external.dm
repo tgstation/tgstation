@@ -1,4 +1,4 @@
-/**
+/*!
  * External tgui definitions, such as src_object APIs.
  *
  * Copyright (c) 2020 Aleksej Komarov
@@ -75,6 +75,7 @@
  */
 /datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_UI_ACT, usr, action)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return TRUE
@@ -158,7 +159,7 @@
 	// Name the verb, and hide it from the user panel.
 	set name = "uiclose"
 	set hidden = TRUE
-	var/mob/user = src && src.mob
+	var/mob/user = src?.mob
 	if(!user)
 		return
 	// Close all tgui datums based on window_id.

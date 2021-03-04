@@ -12,16 +12,16 @@
 /obj/vehicle/proc/initialize_passenger_action_type(actiontype)
 	autogrant_actions_passenger += actiontype
 	for(var/i in occupants)
-		grant_passenger_actions(i)	//refresh
+		grant_passenger_actions(i) //refresh
 
 /obj/vehicle/proc/initialize_controller_action_type(actiontype, control_flag)
 	LAZYINITLIST(autogrant_actions_controller["[control_flag]"])
 	autogrant_actions_controller["[control_flag]"] += actiontype
 	for(var/i in occupants)
-		grant_controller_actions(i)	//refresh
+		grant_controller_actions(i) //refresh
 
 /obj/vehicle/proc/grant_action_type_to_mob(actiontype, mob/m)
-	if(isnull(occupants[m]) || !actiontype)
+	if(isnull(LAZYACCESS(occupants, m)) || !actiontype)
 		return FALSE
 	LAZYINITLIST(occupant_actions[m])
 	if(occupant_actions[m][actiontype])
@@ -32,7 +32,7 @@
 	return TRUE
 
 /obj/vehicle/proc/remove_action_type_from_mob(actiontype, mob/m)
-	if(isnull(occupants[m]) || !actiontype)
+	if(isnull(LAZYACCESS(occupants, m)) || !actiontype)
 		return FALSE
 	LAZYINITLIST(occupant_actions[m])
 	if(occupant_actions[m][actiontype])
@@ -50,7 +50,7 @@
 		remove_action_type_from_mob(v, M)
 
 /obj/vehicle/proc/grant_controller_actions(mob/M)
-	if(!istype(M) || isnull(occupants[M]))
+	if(!istype(M) || isnull(LAZYACCESS(occupants, M)))
 		return FALSE
 	for(var/i in GLOB.bitflags)
 		if(occupants[M] & i)
@@ -58,7 +58,7 @@
 	return TRUE
 
 /obj/vehicle/proc/remove_controller_actions(mob/M)
-	if(!istype(M) || isnull(occupants[M]))
+	if(!istype(M) || isnull(LAZYACCESS(occupants, M)))
 		return FALSE
 	for(var/i in GLOB.bitflags)
 		remove_controller_actions_by_flag(M, i)
@@ -98,6 +98,7 @@
 	var/obj/vehicle/vehicle_target
 
 /datum/action/vehicle/sealed
+	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/sealed/vehicle_entered_target
 
 /datum/action/vehicle/sealed/climb_out
@@ -152,7 +153,7 @@
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger()
 	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] starts dumping the people inside of it.</span>")
-	vehicle_entered_target.DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
+	vehicle_entered_target.dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 
 
 /datum/action/vehicle/sealed/roll_the_dice

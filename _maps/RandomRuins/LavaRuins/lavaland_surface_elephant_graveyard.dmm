@@ -54,7 +54,7 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "an" = (
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /obj/item/assembly/mousetrap,
 /turf/open/floor/plating/asteroid/basalt/wasteland{
 	icon_state = "wasteland_dug"
@@ -646,7 +646,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "cA" = (
 /obj/structure/cable,
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /obj/item/assembly/mousetrap,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)

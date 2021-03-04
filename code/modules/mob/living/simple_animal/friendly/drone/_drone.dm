@@ -9,13 +9,13 @@
 #define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
 
 /// Maintenance Drone icon_state (multiple colors)
-#define MAINTDRONE	"drone_maint"
+#define MAINTDRONE "drone_maint"
 /// Repair Drone icon_state
-#define REPAIRDRONE	"drone_repair"
+#define REPAIRDRONE "drone_repair"
 /// Scout Drone icon_state
-#define SCOUTDRONE	"drone_scout"
+#define SCOUTDRONE "drone_scout"
 /// Clockwork Drone icon_state
-#define CLOCKDRONE	"drone_clock"
+#define CLOCKDRONE "drone_clock"
 
 /// [MAINTDRONE] hacked icon_state
 #define MAINTDRONE_HACKED "drone_maint_red"
@@ -25,19 +25,19 @@
 #define SCOUTDRONE_HACKED "drone_scout_hacked"
 
 /**
-  * # Maintenance Drone
-  *
-  * Small player controlled fixer-upper
-  *
-  * The maintenace drone is a ghost role with the objective to repair and
-  * maintain the station.
-  *
-  * Featuring two dexterous hands, and a built in toolbox stocked with
-  * tools.
-  *
-  * They have laws to prevent them from doing anything else.
-  *
-  */
+ * # Maintenance Drone
+ *
+ * Small player controlled fixer-upper
+ *
+ * The maintenace drone is a ghost role with the objective to repair and
+ * maintain the station.
+ *
+ * Featuring two dexterous hands, and a built in toolbox stocked with
+ * tools.
+ *
+ * They have laws to prevent them from doing anything else.
+ *
+ */
 /mob/living/simple_animal/drone
 	name = "Drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
@@ -45,13 +45,13 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
-	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	health = 30
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
+	minbodytemp = 0
+	maxbodytemp = 0
 	wander = 0
 	speed = 0
-	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
@@ -125,9 +125,11 @@
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
 	GLOB.drones_list += src
-	access_card = new /obj/item/card/id(src)
-	var/datum/job/captain/C = new /datum/job/captain
-	access_card.access = C.get_access()
+	access_card = new /obj/item/card/id/advanced/simple_bot(src)
+
+	// Doing this hurts my soul, but simple_animal access reworks are for another day.
+	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
+	access_card.add_access(cap_trim.access + cap_trim.wildcard_access)
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
@@ -142,6 +144,8 @@
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -253,14 +257,14 @@
 
 
 /**
-  * Alerts drones about different priorities of alarms
-  *
-  * Arguments:
-  * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
-  * * A - [/area] the alarm occurs
-  * * O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]
-  * * alarmsource - [/atom] source of the alarm
-  */
+ * Alerts drones about different priorities of alarms
+ *
+ * Arguments:
+ * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
+ * * A - [/area] the alarm occurs
+ * * O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]
+ * * alarmsource - [/atom] source of the alarm
+ */
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
@@ -277,13 +281,13 @@
 		to_chat(src, "--- [class] alarm detected in [A.name]!")
 
 /**
-  * Clears alarm and alerts drones
-  *
-  * Arguments:
-  * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
-  * * A - [/area] the alarm occurs
-  * * alarmsource - [/atom] source of the alarm
-  */
+ * Clears alarm and alerts drones
+ *
+ * Arguments:
+ * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
+ * * A - [/area] the alarm occurs
+ * * alarmsource - [/atom] source of the alarm
+ */
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)
 		var/list/L = alarms[class]
@@ -300,10 +304,7 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
-/mob/living/simple_animal/drone/handle_temperature_damage()
-	return
-
-/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
 

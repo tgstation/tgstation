@@ -36,19 +36,19 @@
 
 /turf/closed/wall/r_wall/devastate_wall()
 	new sheet_type(src, sheet_amount)
-	new /obj/item/stack/sheet/metal(src, 2)
+	new /obj/item/stack/sheet/iron(src, 2)
 
-/turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(!M.environment_smash)
+/turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(!user.environment_smash)
 		return
-	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS)
+	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
+		to_chat(user, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
 /turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
@@ -60,7 +60,7 @@
 			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = SUPPORT_LINES
-				update_icon()
+				update_appearance()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return TRUE
 
@@ -71,14 +71,14 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_LINES)
 						return TRUE
 					d_state = COVER
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You unsecure the support lines.</span>")
 				return TRUE
 
 			else if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = INTACT
-				update_icon()
+				update_appearance()
 				to_chat(user, "<span class='notice'>You repair the outer grille.</span>")
 				return TRUE
 
@@ -91,7 +91,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
 						return TRUE
 					d_state = CUT_COVER
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return TRUE
 
@@ -101,7 +101,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
 						return TRUE
 					d_state = SUPPORT_LINES
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>The support lines have been secured.</span>")
 				return TRUE
 
@@ -112,7 +112,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return TRUE
 					d_state = ANCHOR_BOLTS
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return TRUE
 
@@ -124,7 +124,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return TRUE
 					d_state = COVER
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>The metal cover has been welded securely to the frame.</span>")
 				return TRUE
 
@@ -135,7 +135,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return TRUE
 					d_state = SUPPORT_RODS
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
 				return TRUE
 
@@ -145,7 +145,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return TRUE
 					d_state = CUT_COVER
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>The metal cover has been pried back into place.</span>")
 				return TRUE
 
@@ -158,7 +158,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return TRUE
 					d_state = SHEATH
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return TRUE
 
@@ -169,7 +169,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return TRUE
 					d_state = ANCHOR_BOLTS
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You tighten the bolts anchoring the support rods.</span>")
 				return TRUE
 
@@ -191,7 +191,7 @@
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
 						return TRUE
 					d_state = SUPPORT_RODS
-					update_icon()
+					update_appearance()
 					to_chat(user, "<span class='notice'>You weld the support rods back together.</span>")
 				return TRUE
 	return FALSE
@@ -200,16 +200,17 @@
 	. = ..()
 	if(d_state != INTACT)
 		smoothing_flags = NONE
-	else
-		smoothing_flags = SMOOTH_BITMASK
-		QUEUE_SMOOTH_NEIGHBORS(src)
-		QUEUE_SMOOTH(src)
+		return
+	smoothing_flags = SMOOTH_BITMASK
+	QUEUE_SMOOTH_NEIGHBORS(src)
+	QUEUE_SMOOTH(src)
 
 /turf/closed/wall/r_wall/update_icon_state()
 	if(d_state != INTACT)
 		icon_state = "r_wall-[d_state]"
 	else
 		icon_state = "[base_icon_state]-[smoothing_junction]"
+	return ..()
 
 /turf/closed/wall/r_wall/wall_singularity_pull(current_size)
 	if(current_size >= STAGE_FIVE)

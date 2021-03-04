@@ -3,7 +3,7 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	school = "transmutation"
 	charge_type = "recharge"
-	charge_max	= 150
+	charge_max = 150
 	charge_counter = 0
 	clothes_req = FALSE
 	stat_allowed = FALSE
@@ -16,7 +16,7 @@
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse..."
 	/// List of mobs which are allowed to be a target of the spell
-	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
+	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human))
 
 /obj/effect/proc_holder/spell/pointed/barnyardcurse/cast(list/targets, mob/user)
 	if(!targets.len)
@@ -32,8 +32,7 @@
 						"<span class='danger'>Your face starts burning up, but the flames are repulsed by your anti-magic protection!</span>")
 		return FALSE
 
-	var/list/masks = list(/obj/item/clothing/mask/pig/cursed, /obj/item/clothing/mask/cowmask/cursed, /obj/item/clothing/mask/horsehead/cursed)
-	var/choice = pick(masks)
+	var/choice = pick(GLOB.cursed_animal_masks)
 	var/obj/item/clothing/mask/magichead = new choice(get_turf(target))
 
 	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \

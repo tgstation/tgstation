@@ -15,17 +15,17 @@
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
 	fireaxe = new
-	update_icon()
+	update_appearance()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(fireaxe)
 		QDEL_NULL(fireaxe)
 	return ..()
 
-/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
+/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || I.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
-	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
+	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=2))
 				return
@@ -33,7 +33,7 @@
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
 			if(I.use_tool(src, user, 40, volume=50, amount=2))
 				obj_integrity = max_integrity
-				update_icon()
+				update_appearance()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
@@ -47,18 +47,18 @@
 		if(do_after(user, 20, target = src) && G.use(2))
 			broken = FALSE
 			obj_integrity = max_integrity
-			update_icon()
+			update_appearance()
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
 			var/obj/item/fireaxe/F = I
-			if(F && F.wielded)
+			if(F?.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
 			to_chat(user, "<span class='notice'>You place the [F.name] back in the [name].</span>")
-			update_icon()
+			update_appearance()
 			return
 		else if(!broken)
 			toggle_open()
@@ -80,11 +80,11 @@
 		return
 	. = ..()
 	if(.)
-		update_icon()
+		update_appearance()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		update_icon()
+		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		new /obj/item/shard(loc)
@@ -95,7 +95,7 @@
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
@@ -104,7 +104,7 @@
 		fireaxe = null
 	qdel(src)
 
-/obj/structure/fireaxecabinet/attack_hand(mob/user)
+/obj/structure/fireaxecabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -114,56 +114,55 @@
 			fireaxe = null
 			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
-			update_icon()
+			update_appearance()
 			return
 	if(locked)
 		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 		return
 
-/obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	return attack_hand(user)
+/obj/structure/fireaxecabinet/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
 
+
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
 		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
-	else
-		open = !open
-		update_icon()
-		return
+	open = !open
+	update_appearance()
+
 
 /obj/structure/fireaxecabinet/update_overlays()
 	. = ..()
 	if(fireaxe)
 		. += "axe"
-	if(!open)
-		var/hp_percent = obj_integrity/max_integrity * 100
-		if(broken)
-			. += "glass4"
-		else
-			switch(hp_percent)
-				if(-INFINITY to 40)
-					. += "glass3"
-				if(40 to 60)
-					. += "glass2"
-				if(60 to 80)
-					. += "glass1"
-				if(80 to INFINITY)
-					. += "glass"
-		if(locked)
-			. += "locked"
-		else
-			. += "unlocked"
-	else
+	if(open)
 		. += "glass_raised"
+		return
+	var/hp_percent = obj_integrity/max_integrity * 100
+	if(broken)
+		. += "glass4"
+	else
+		switch(hp_percent)
+			if(-INFINITY to 40)
+				. += "glass3"
+			if(40 to 60)
+				. += "glass2"
+			if(60 to 80)
+				. += "glass1"
+			if(80 to INFINITY)
+				. += "glass"
+
+	. += locked ? "locked" : "unlocked"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, "<span class='notice'>Resetting circuitry...</span>")
@@ -171,7 +170,7 @@
 	if(do_after(user, 20, target = src))
 		to_chat(user, "<span class='notice'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked
-		update_icon()
+		update_appearance()
 
 /obj/structure/fireaxecabinet/verb/toggle_open()
 	set name = "Open/Close"
@@ -183,5 +182,5 @@
 		return
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 		return

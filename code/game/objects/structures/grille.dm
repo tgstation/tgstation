@@ -1,10 +1,12 @@
 /obj/structure/grille
-	desc = "A flimsy framework of metal rods."
+	desc = "A flimsy framework of iron rods."
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
+	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
+	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
@@ -16,27 +18,29 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
+/obj/structure/grille/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
 	return ..()
 
 /obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	update_icon()
+	update_appearance()
 
-/obj/structure/grille/update_icon()
+/obj/structure/grille/update_appearance(updates)
 	if(QDELETED(src) || broken)
 		return
 
-	var/ratio = obj_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
-
+	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
-	if(ratio > 50)
-		return
-	icon_state = "grille50_[rand(0,3)]"
+/obj/structure/grille/update_icon_state()
+	icon_state = "[base_icon_state][((obj_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	return ..()
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
@@ -65,11 +69,13 @@
 			if(!isturf(loc))
 				return FALSE
 			var/turf/T = loc
-			var/window_dir = the_rcd.window_size == RCD_WINDOW_FULLTILE ? FULLTILE_WINDOW_DIR : user.dir
-			if(!valid_window_location(T, window_dir))
+			if(!ispath(the_rcd.window_type, /obj/structure/window))
+				CRASH("Invalid window path type in RCD: [the_rcd.window_type]")
+			var/obj/structure/window/window_path = the_rcd.window_type
+			if(!valid_window_location(T, user.dir, is_fulltile = initial(window_path.fulltile)))
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the window.</span>")
-			var/obj/structure/window/WD = new the_rcd.window_type(T, window_dir)
+			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
 	return FALSE
@@ -80,15 +86,15 @@
 	var/mob/M = AM
 	shock(M, 70)
 
-/obj/structure/grille/attack_animal(mob/user)
+/obj/structure/grille/attack_animal(mob/user, list/modifiers)
 	. = ..()
 	if(!.)
 		return
 	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
-/obj/structure/grille/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/grille/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/grille/hulk_damage()
 	return 60
@@ -98,7 +104,7 @@
 		return
 	. = ..()
 
-/obj/structure/grille/attack_hand(mob/living/user)
+/obj/structure/grille/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -109,7 +115,7 @@
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
-/obj/structure/grille/attack_alien(mob/living/user)
+/obj/structure/grille/attack_alien(mob/living/user, list/modifiers)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -118,16 +124,13 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(mover.pass_flags & PASSGRILLE)
-		return TRUE
-	else if(!. && istype(mover, /obj/projectile))
+	if(!. && istype(mover, /obj/projectile))
 		return prob(30)
 
-/obj/structure/grille/CanAStarPass(ID, dir, caller)
+/obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSGRILLE)
+	if(istype(caller))
+		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -141,20 +144,20 @@
 			W.play_tool_sound(src, 100)
 			set_anchored(!anchored)
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
-								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
+				"<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
 	else if(istype(W, /obj/item/stack/rods) && broken)
 		var/obj/item/stack/rods/R = W
 		if(!shock(user, 90))
 			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
-								 "<span class='notice'>You rebuild the broken grille.</span>")
+				"<span class='notice'>You rebuild the broken grille.</span>")
 			new grille_type(src.loc)
 			R.use(1)
 			qdel(src)
 			return
 
 //window placing begin
-	else if(is_glass_sheet(W))
+	else if(is_glass_sheet(W) || istype(W, /obj/item/stack/sheet/bronze))
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
@@ -184,10 +187,11 @@
 					WD = new/obj/structure/window/shuttle(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
 					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
+				else if(istype(W, /obj/item/stack/sheet/bronze))
+					WD = new/obj/structure/window/bronze/fulltile(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
-				WD.ini_dir = dir_to_set
 				WD.set_anchored(FALSE)
 				WD.state = 0
 				ST.use(2)
@@ -230,7 +234,7 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
-	if(!anchored || broken)		// anchored/broken grilles are never connected
+	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
 	if(!prob(prb))
 		return FALSE
@@ -248,11 +252,11 @@
 			return FALSE
 	return FALSE
 
-/obj/structure/grille/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(!broken)
-		if(exposed_temperature > T0C + 1500)
-			take_damage(1, BURN, 0, 0)
-	..()
+/obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > T0C + 1500 && !broken
+
+/obj/structure/grille/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(1, BURN, 0, 0)
 
 /obj/structure/grille/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isobj(AM))

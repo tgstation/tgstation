@@ -7,10 +7,10 @@
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
-			 We have a prototype shielding system you must deploy to reduce collision-related accidents.
+		We have a prototype shielding system you must deploy to reduce collision-related accidents.
 
-			 You can order the satellites and control systems at cargo.
-			 "}
+		You can order the satellites and control systems at cargo.
+		"}
 
 
 /datum/station_goal/station_shield/on_report()
@@ -89,6 +89,7 @@
 	desc = ""
 	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "sat_inactive"
+	base_icon_state = "sat"
 	anchored = FALSE
 	density = TRUE
 	use_power = FALSE
@@ -115,7 +116,7 @@
 	else
 		end_processing()
 		animate(src, pixel_y = 0, time = 10)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
@@ -128,7 +129,8 @@
 	return TRUE
 
 /obj/machinery/satellite/update_icon_state()
-	icon_state = active ? "sat_active" : "sat_inactive"
+	icon_state = "[base_icon_state]_[active ? "active" : "inactive"]"
+	return ..()
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)
 	..()
@@ -158,7 +160,7 @@
 		if(get_dist(M,src) > kill_range)
 			continue
 		if(!(obj_flags & EMAGGED) && space_los(M))
-			Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=kill_range)
+			Beam(get_turf(M),icon_state="sat_beam", time = 5)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)

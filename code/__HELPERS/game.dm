@@ -1,9 +1,9 @@
 //supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
 #define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
+	block( \
+	locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
+	locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
+	)
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
@@ -75,16 +75,12 @@
 		max(list_y))
 
 // Like view but bypasses luminosity check
-
 /proc/get_hear(range, atom/source)
-
 	var/lum = source.luminosity
 	source.luminosity = 6
 
-	var/list/heard = view(range, source)
+	. = view(range, source)
 	source.luminosity = lum
-
-	return heard
 
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area(the_area)
@@ -153,7 +149,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
+/proc/circleviewturfs(center=usr,radius=3) //Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -181,12 +177,12 @@
 		processing_list += A.contents
 
 /** recursive_organ_check
-  * inputs: O (object to start with)
-  * outputs:
-  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
-  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
-  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
-  */
+ * inputs: O (object to start with)
+ * outputs:
+ * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+ *  within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+ *  storage units, so that only the lowest level of container dictates whether we do or don't decompose
+ */
 /proc/recursive_organ_check(atom/O)
 
 	var/list/processing_list = list(O)
@@ -208,7 +204,7 @@
 				found_organ = organ
 				found_organ.organ_flags ^= ORGAN_FROZEN
 
-		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
+		for(var/atom/B in A) //objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
 			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
 				processing_list+= B
 
@@ -312,7 +308,7 @@
 	return null
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
-	if(M && M.current)
+	if(M?.current)
 		if(enforce_human)
 			var/mob/living/carbon/human/H
 			if(ishuman(M.current))
@@ -323,11 +319,11 @@
 	return FALSE
 
 /**
-  * Exiled check
-  *
-  * Checks if the current body of the mind has an exile implant and is currently in
-  * an away mission. Returns FALSE if any of those conditions aren't met.
-  */
+ * Exiled check
+ *
+ * Checks if the current body of the mind has an exile implant and is currently in
+ * an away mission. Returns FALSE if any of those conditions aren't met.
+ */
 /proc/considered_exiled(datum/mind/M)
 	if(!ishuman(M?.current))
 		return FALSE
@@ -340,8 +336,8 @@
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))
-		O = new /obj/screen/text()
-	O.maptext = maptext
+		O = new /atom/movable/screen/text()
+	O.maptext = MAPTEXT(maptext)
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
 	O.screen_loc = screen_loc
@@ -369,7 +365,7 @@
 	var/active_players = 0
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/M = GLOB.player_list[i]
-		if(M && M.client)
+		if(M?.client)
 			if(alive_check && M.stat)
 				continue
 			else if(afk_check && M.client.is_afk())
@@ -391,8 +387,9 @@
 	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
-		if(1)
+	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
+	switch(tgui_alert(M, Question, "A limited-time offer!", answers, timeout=poll_time))
+		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
@@ -400,10 +397,10 @@
 				candidates -= M
 			else
 				candidates += M
-		if(2)
+		if("No")
 			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
 			candidates -= M
-		if(3)
+		if("Never for this round")
 			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
 				GLOB.poll_ignore[ignore_category] = list()
@@ -517,7 +514,9 @@
 		return
 	var/area/A = get_area(character)
 	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[A.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if((!GLOB.announcement_systems.len) || (!character.mind))
+	if(!character.mind)
+		return
+	if(!GLOB.announcement_systems.len)
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
 		return

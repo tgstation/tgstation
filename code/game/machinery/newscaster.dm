@@ -4,24 +4,41 @@ GLOBAL_LIST_EMPTY(allCasters)
 /datum/newscaster
 
 /datum/newscaster/feed_comment
+	///The author of the comment, as seen on a newscaster feed.
 	var/author = ""
+	///Body of the aforementioned comment.
 	var/body = ""
+	///At what time was the feed comment sent? Time is in station time.
 	var/time_stamp = ""
 
 /datum/newscaster/feed_message
+	///Who is the author of the full-size article to the feed channel?
 	var/author =""
+	///Body of the full-size article to the feed channel.
 	var/body =""
+	///In station time, at what time was the author's messages censored and blocked from viewing.
 	var/list/authorCensorTime = list()
+	///In station time, at what time was this message censored and blocked from viewing.
 	var/list/bodyCensorTime = list()
+	///Did an admin send this message?
 	var/is_admin_message = FALSE
+	///Is there an image tied to the feed message?
 	var/icon/img = null
+	///At what time was the full-size article sent? Time is in station time.
 	var/time_stamp = ""
+	///List consisting of the articles feed comments for this full-size article.
 	var/list/datum/newscaster/feed_comment/comments = list()
+	///Can comments be placed on that feed message?
 	var/locked = FALSE
+	///If the message has an image, what is that image's caption?
 	var/caption = ""
+	///At what time was the feed message created?
 	var/creationTime
+	///Has the author been blocked from making new feed messages?
 	var/authorCensor
+	///Has the body of the message been censored?
 	var/bodyCensor
+	///Referece to the photo used in picture messages.
 	var/photo_file
 
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
@@ -150,7 +167,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(newMessage)
 		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
 			N.newsAlert()
-			N.update_icon()
+			N.update_appearance()
 
 /datum/newscaster/feed_network/proc/deleteWanted()
 	wanted_issue.active = FALSE
@@ -159,7 +176,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	wanted_issue.scannedUser = null
 	wanted_issue.img = null
 	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		NEWSCASTER.update_icon()
+		NEWSCASTER.update_appearance()
 
 /datum/newscaster/feed_network/proc/save_photo(icon/photo)
 	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
@@ -183,6 +200,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
+	base_icon_state = "newscaster"
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
@@ -216,7 +234,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 	GLOB.allCasters += src
 	unit_no = GLOB.allCasters.len
-	update_icon()
+	update_appearance()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src
@@ -226,12 +244,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/update_icon_state()
 	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "newscaster_off"
-	else
-		if(GLOB.news_network.wanted_issue.active)
-			icon_state = "newscaster_wanted"
-		else
-			icon_state = "newscaster_normal"
+		icon_state = "[base_icon_state]_off"
+		return ..()
+	icon_state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
+	return ..()
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
@@ -252,7 +268,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/newscaster/ui_interact(mob/user)
 	. = ..()
@@ -711,14 +727,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			if(machine_stat & BROKEN)
 				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
-				new /obj/item/stack/sheet/metal(loc, 5)
+				new /obj/item/stack/sheet/iron(loc, 5)
 				new /obj/item/shard(loc)
 				new /obj/item/shard(loc)
 			else
 				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
-	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(machine_stat & BROKEN)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -731,7 +747,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 				obj_integrity = max_integrity
 				set_machine_stat(machine_stat & ~BROKEN)
-				update_icon()
+				update_appearance()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
@@ -750,7 +766,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 	qdel(src)
@@ -761,8 +777,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 
 
-/obj/machinery/newscaster/attack_paw(mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
+	if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	else
 		take_damage(5, BRUTE, MELEE)
@@ -797,20 +813,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		if(human_user.wear_id)
-			if(istype(human_user.wear_id, /obj/item/pda))
-				var/obj/item/pda/P = human_user.wear_id
-				if(P.id)
-					scanned_user = "[P.id.registered_name] ([P.id.assignment])"
-				else
-					scanned_user = "Unknown"
-			else if(istype(human_user.wear_id, /obj/item/card/id) )
-				var/obj/item/card/id/ID = human_user.wear_id
-				scanned_user ="[ID.registered_name] ([ID.assignment])"
-			else
-				scanned_user ="Unknown"
-		else
+		var/obj/item/card/id/id_card = human_user.get_idcard()
+		if(!id_card)
 			scanned_user ="Unknown"
+			return
+		scanned_user = "[id_card.registered_name] ([id_card.assignment])"
 	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
@@ -835,7 +842,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/proc/remove_alert()
 	alert = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/newscaster/proc/newsAlert(channel, update_alert = TRUE)
 	if(channel)
@@ -843,7 +850,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			say("Breaking news from [channel]!")
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
-		update_icon()
+		update_appearance()
 		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)

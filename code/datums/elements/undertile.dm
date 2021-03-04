@@ -23,9 +23,9 @@
 
 	src.invisibility_trait = invisibility_trait
 	src.invisibility_level = invisibility_level
-	src.tile_overlay 		= tile_overlay
-	src.use_alpha			= use_alpha
-	src.use_anchor			= use_anchor
+	src.tile_overlay = tile_overlay
+	src.use_alpha = use_alpha
+	src.use_anchor = use_anchor
 
 ///called when a tile has been covered or uncovered
 /datum/element/undertile/proc/hide(atom/movable/source, covered)

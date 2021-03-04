@@ -50,8 +50,11 @@
 		return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
-		///hats in the borg's blacklist bounce off
-		if(is_type_in_typecache(src, GLOB.blacklisted_borg_hats))
+		var/obj/item/worn_hat = R.hat
+		if(worn_hat && HAS_TRAIT(worn_hat, TRAIT_NODROP))
+			R.visible_message("<span class='warning'>[src] bounces off [worn_hat], without an effect!</span>", "<span class='warning'>[src] bounces off your mighty [worn_hat.name], falling to the floor in defeat.</span>")
+			return
+		if(is_type_in_typecache(src, GLOB.blacklisted_borg_hats))//hats in the borg's blacklist bounce off
 			R.visible_message("<span class='warning'>[src] bounces off [R]!</span>", "<span class='warning'>[src] bounces off you, falling to the floor.</span>")
 			return
 		else
@@ -67,7 +70,10 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
 		if(HAS_BLOOD_DNA(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
+			if(clothing_flags & LARGE_WORN_ICON)
+				. += mutable_appearance('icons/effects/64x64.dmi', "helmetblood_large")
+			else
+				. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()

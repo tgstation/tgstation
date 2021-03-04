@@ -1,15 +1,15 @@
 //shuttle mode defines
-#define SHUTTLE_IDLE		"idle"
-#define SHUTTLE_IGNITING	"igniting"
-#define SHUTTLE_RECALL		"recalled"
-#define SHUTTLE_CALL		"called"
-#define SHUTTLE_DOCKED		"docked"
-#define SHUTTLE_STRANDED	"stranded"
-#define SHUTTLE_DISABLED	"disabled"
-#define SHUTTLE_ESCAPE		"escape"
-#define SHUTTLE_ENDGAME		"endgame: game over"
-#define SHUTTLE_RECHARGING		"recharging"
-#define SHUTTLE_PREARRIVAL		"landing"
+#define SHUTTLE_IDLE "idle"
+#define SHUTTLE_IGNITING "igniting"
+#define SHUTTLE_RECALL "recalled"
+#define SHUTTLE_CALL "called"
+#define SHUTTLE_DOCKED "docked"
+#define SHUTTLE_STRANDED "stranded"
+#define SHUTTLE_DISABLED "disabled"
+#define SHUTTLE_ESCAPE "escape"
+#define SHUTTLE_ENDGAME "endgame: game over"
+#define SHUTTLE_RECHARGING "recharging"
+#define SHUTTLE_PREARRIVAL "landing"
 
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
@@ -61,12 +61,12 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS				0
-#define DOCKING_BLOCKED				(1<<0)
-#define DOCKING_IMMOBILIZED			(1<<1)
-#define DOCKING_AREA_EMPTY			(1<<2)
-#define DOCKING_NULL_DESTINATION	(1<<3)
-#define DOCKING_NULL_SOURCE			(1<<4)
+#define DOCKING_SUCCESS 0
+#define DOCKING_BLOCKED (1<<0)
+#define DOCKING_IMMOBILIZED (1<<1)
+#define DOCKING_AREA_EMPTY (1<<2)
+#define DOCKING_NULL_DESTINATION (1<<3)
+#define DOCKING_NULL_SOURCE (1<<4)
 
 //Docking turf movements
 #define MOVE_TURF 1
@@ -74,9 +74,9 @@
 #define MOVE_CONTENTS 4
 
 //Rotation params
-#define ROTATE_DIR 		1
-#define ROTATE_SMOOTH 	2
-#define ROTATE_OFFSET	4
+#define ROTATE_DIR 1
+#define ROTATE_SMOOTH 2
+#define ROTATE_OFFSET 4
 
 #define SHUTTLE_DOCKER_LANDING_CLEAR 1
 #define SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT 2
@@ -87,5 +87,7 @@
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
 //Shuttle unlocks
-#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
+#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+#define SHUTTLE_UNLOCK_MEDISIM "holodeck"
+#define SHUTTLE_UNLOCK_NARNAR "narnar"

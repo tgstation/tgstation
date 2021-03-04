@@ -2,6 +2,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
+	base_icon_state = "valve"
 	inhand_icon_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
@@ -35,7 +36,7 @@
 			tank_two = item
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
-		update_icon()
+		update_appearance()
 //TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/assembly/A = item
@@ -50,7 +51,7 @@
 		attached_device = A
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
-		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
+		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
 		attacher = user
 	return
@@ -76,7 +77,7 @@
 		attached_device.Crossed(AM)
 
 //Triggers mousetraps
-/obj/item/transfer_valve/attack_hand()
+/obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -87,35 +88,39 @@
 	if(toggle)
 		toggle = FALSE
 		toggle_valve()
-		addtimer(CALLBACK(src, .proc/toggle_off), 5)	//To stop a signal being spammed from a proxy sensor constantly going off or whatever
+		addtimer(CALLBACK(src, .proc/toggle_off), 5) //To stop a signal being spammed from a proxy sensor constantly going off or whatever
 
 /obj/item/transfer_valve/proc/toggle_off()
 	toggle = TRUE
 
-/obj/item/transfer_valve/update_icon()
-	cut_overlays()
+/obj/item/transfer_valve/update_icon_state()
+	icon_state = "[base_icon_state][(!tank_one && !tank_two && !attached_device) ? "_1" : null]"
+	return ..()
 
-	if(!tank_one && !tank_two && !attached_device)
-		icon_state = "valve_1"
-		return
-	icon_state = "valve"
-
+/obj/item/transfer_valve/update_overlays()
+	. = ..()
 	if(tank_one)
-		add_overlay("[tank_one.icon_state]")
-	if(tank_two)
+		. += "[tank_one.icon_state]"
+
+	if(!tank_two)
+		underlays = null
+	else
 		var/mutable_appearance/J = mutable_appearance(icon, icon_state = "[tank_two.icon_state]")
 		var/matrix/T = matrix()
 		T.Translate(-13, 0)
 		J.transform = T
 		underlays = list(J)
-	else
-		underlays = null
-	if(attached_device)
-		add_overlay("device")
-		if(istype(attached_device, /obj/item/assembly/infra))
-			var/obj/item/assembly/infra/sensor = attached_device
-			if(sensor.on && sensor.visible)
-				add_overlay("proxy_beam")
+
+	if(!attached_device)
+		return
+
+	. += "device"
+	if(!istype(attached_device, /obj/item/assembly/infra))
+		return
+	var/obj/item/assembly/infra/sensor = attached_device
+	if(sensor.on && sensor.visible)
+		. += "proxy_beam"
+
 
 /obj/item/transfer_valve/proc/merge_gases(datum/gas_mixture/target, change_volume = TRUE)
 	var/target_self = FALSE
@@ -153,38 +158,41 @@
 		var/turf/bombturf = get_turf(src)
 
 		var/attachment
+		var/attachment_signal_log
 		if(attached_device)
 			if(istype(attached_device, /obj/item/assembly/signaler))
-				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_device]</A>"
+				var/obj/item/assembly/signaler/attached_signaller = attached_device
+				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
+				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
 			else
 				attachment = attached_device
 
 		var/admin_attachment_message
 		var/attachment_message
 		if(attachment)
-			admin_attachment_message = " with [attachment] attached by [attacher ? ADMIN_LOOKUPFLW(attacher) : "Unknown"]"
+			admin_attachment_message = "The bomb had [attachment], which was attached by [attacher ? ADMIN_LOOKUPFLW(attacher) : "Unknown"]"
 			attachment_message = " with [attachment] attached by [attacher ? key_name_admin(attacher) : "Unknown"]"
 
 		var/mob/bomber = get_mob_by_key(fingerprintslast)
 		var/admin_bomber_message
 		var/bomber_message
 		if(bomber)
-			admin_bomber_message = " - Last touched by: [ADMIN_LOOKUPFLW(bomber)]"
+			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
 
-		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)][admin_attachment_message][admin_bomber_message]"
+		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)]<br>[admin_attachment_message]<br>[admin_bomber_message]<br>[attachment_signal_log]"
 		GLOB.bombers += admin_bomb_message
 		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
 
 		merge_gases()
 		for(var/i in 1 to 6)
-			addtimer(CALLBACK(src, /atom/.proc/update_icon), 20 + (i - 1) * 10)
+			addtimer(CALLBACK(src, /atom/.proc/update_appearance), 20 + (i - 1) * 10)
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
 		valve_open = FALSE
-		update_icon()
+		update_appearance()
 /*
 	This doesn't do anything but the timer etc. expects it to be here
 	eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
@@ -242,10 +250,10 @@
 				attached_device = null
 				. = TRUE
 
-	update_icon()
+	update_appearance()
 
 /**
-  * Returns if this is ready to be detonated. Checks if both tanks are in place.
-  */
+ * Returns if this is ready to be detonated. Checks if both tanks are in place.
+ */
 /obj/item/transfer_valve/proc/ready()
 	return tank_one && tank_two

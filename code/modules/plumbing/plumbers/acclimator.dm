@@ -9,6 +9,7 @@
 	desc = "An efficient cooler and heater for the perfect showering temperature or illicit chemical factory."
 
 	icon_state = "acclimator"
+	base_icon_state = "acclimator"
 	buffer = 200
 
 	///towards wich temperature do we build?
@@ -34,33 +35,39 @@
 	if(machine_stat & NOPOWER || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)
 		if(acclimate_state != NEUTRAL)
 			acclimate_state = NEUTRAL
-			update_icon()
+			update_appearance()
 		if(!reagents.total_volume)
 			emptying = FALSE
 		return
 
 	if(reagents.chem_temp < target_temperature && acclimate_state != HEATING) //note that we check if the temperature is the same at the start
 		acclimate_state = HEATING
-		update_icon()
+		update_appearance()
 	else if(reagents.chem_temp > target_temperature && acclimate_state != COOLING)
 		acclimate_state = COOLING
-		update_icon()
+		update_appearance()
 	if(!emptying)
 		if(reagents.chem_temp >= target_temperature && target_temperature + allowed_temperature_difference >= reagents.chem_temp) //cooling here
 			emptying = TRUE
 		if(reagents.chem_temp <= target_temperature && target_temperature - allowed_temperature_difference <= reagents.chem_temp) //heating here
 			emptying = TRUE
 
-	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
-	reagents.handle_reactions()
+	if(!emptying) //suspend heating/cooling during emptying phase
+		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		reagents.handle_reactions()
+	else if(acclimate_state != NEUTRAL)
+		acclimate_state = NEUTRAL
+		update_appearance()
 
 /obj/machinery/plumbing/acclimator/update_icon_state()
-	icon_state = initial(icon_state)
 	switch(acclimate_state)
 		if(COOLING)
-			icon_state += "_cold"
+			icon_state = "[base_icon_state]_cold"
 		if(HEATING)
-			icon_state += "_hot"
+			icon_state = "[base_icon_state]_hot"
+		else
+			icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/plumbing/acclimator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

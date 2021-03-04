@@ -12,6 +12,10 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/beacons = list()
 	var/list/transit = list()
 
+	//Now it only for ID generation
+	var/list/assoc_mobile = list()
+	var/list/assoc_stationary = list()
+
 	var/list/transit_requesters = list()
 	var/list/transit_request_failures = list()
 
@@ -19,11 +23,11 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/arrivals/arrivals
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
-	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
-	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
-	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
+	var/emergencyCallTime = 6000 //time taken for emergency shuttle to reach the station when called (in deciseconds)
+	var/emergencyDockTime = 1800 //time taken for emergency shuttle to leave again once it has docked (in deciseconds)
+	var/emergencyEscapeTime = 1200 //time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
-	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
+	var/emergencyCallAmount = 0 //how many times the escape shuttle was called
 	var/emergencyNoEscape
 	var/emergencyNoRecall = FALSE
 	var/adminEmergencyNoRecall = FALSE
@@ -35,12 +39,13 @@ SUBSYSTEM_DEF(shuttle)
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
-	var/ordernum = 1					//order number given to next order
-	var/points = 5000					//number of trade-points we have
-	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
+	var/ordernum = 1 //order number given to next order
+	var/points = 5000 //number of trade-points we have
+	var/centcom_message = "" //Remarks from CentCom on how well you checked the last order.
+	var/list/discoveredPlants = list() //Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
 	var/list/supply_packs = list()
+	var/list/chef_groceries = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/orderhistory = list()
@@ -50,10 +55,12 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
+	///If the event happens where the crew can purchase shuttle insurance, catastrophe can't run.
+	var/shuttle_insurance = FALSE
 	var/shuttle_purchased = SHUTTLEPURCHASE_PURCHASABLE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
-	var/lockdown = FALSE	//disallow transit after nuke goes off
+	var/lockdown = FALSE //disallow transit after nuke goes off
 
 	var/datum/map_template/shuttle/selected
 
@@ -63,6 +70,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/datum/map_template/shuttle/preview_template
 
 	var/datum/turf_reservation/preview_reservation
+
+	var/shuttle_loading
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
@@ -181,31 +190,26 @@ SUBSYSTEM_DEF(shuttle)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
+/// Check if we can call the evac shuttle.
+/// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
 /datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
-		to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
-		return FALSE
+		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before attempting to call."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
-			return FALSE
+			return "The emergency shuttle may not be called while returning to CentCom."
 		if(SHUTTLE_CALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
-			return FALSE
+			return "The emergency shuttle is already on its way."
 		if(SHUTTLE_DOCKED)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
-			return FALSE
+			return "The emergency shuttle is already here."
 		if(SHUTTLE_IGNITING)
-			to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
-			return FALSE
+			return "The emergency shuttle is firing its engines to leave."
 		if(SHUTTLE_ESCAPE)
-			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
-			return FALSE
-		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
-			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
-			return FALSE
+			return "The emergency shuttle is moving away to a safe distance."
+		if(SHUTTLE_STRANDED)
+			return "The emergency shuttle has been disabled by CentCom."
 
 	return TRUE
 
@@ -223,7 +227,9 @@ SUBSYSTEM_DEF(shuttle)
 			Good luck.")
 		emergency = backup_shuttle
 
-	if(!canEvac(user))
+	var/can_evac_or_fail_reason = SSshuttle.canEvac(user)
+	if(can_evac_or_fail_reason != TRUE)
+		to_chat(user, "<span class='alert'>[can_evac_or_fail_reason]</span>")
 		return
 
 	call_reason = trim(html_encode(call_reason))
@@ -389,7 +395,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/ai/shuttledock.ogg', "Priority")
+			null, ANNOUNCER_SHUTTLEDOCK, "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -406,7 +412,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return 0 //dock successful
 
 
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
@@ -421,7 +427,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return 0 //dock successful
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
@@ -481,10 +487,10 @@ SUBSYSTEM_DEF(shuttle)
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
 	/*  0------2
-        |      |
-        |      |
-        |  x   |
-        3------1
+	*   |      |
+	*   |      |
+	*   |  x   |
+	*   3------1
 	*/
 
 	var/x0 = coords[1]
@@ -653,7 +659,7 @@ SUBSYSTEM_DEF(shuttle)
 	QDEL_LIST(remove_images)
 
 
-/datum/controller/subsystem/shuttle/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port)
+/datum/controller/subsystem/shuttle/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port, replace = FALSE)
 	// Check for an existing preview
 	if(preview_shuttle && (loading_template != preview_template))
 		preview_shuttle.jumpToNullSpace()
@@ -662,8 +668,7 @@ SUBSYSTEM_DEF(shuttle)
 		QDEL_NULL(preview_reservation)
 
 	if(!preview_shuttle)
-		if(load_template(loading_template))
-			preview_shuttle.linkup(loading_template, destination_port)
+		load_template(loading_template)
 		preview_template = loading_template
 
 	// get the existing shuttle information, if any
@@ -673,7 +678,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(istype(destination_port))
 		D = destination_port
-	else if(existing_shuttle)
+	else if(existing_shuttle && replace)
 		timer = existing_shuttle.timer
 		mode = existing_shuttle.mode
 		D = existing_shuttle.get_docked()
@@ -692,11 +697,12 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
 		return
 
-	if(existing_shuttle)
+	if(existing_shuttle && replace)
 		existing_shuttle.jumpToNullSpace()
 
 	var/list/force_memory = preview_shuttle.movement_force
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	preview_shuttle.mode = SHUTTLE_PREARRIVAL//No idle shuttle moving. Transit dock get removed if shuttle moves too long.
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
 
@@ -707,7 +713,7 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle.timer = timer
 	preview_shuttle.mode = mode
 
-	preview_shuttle.register()
+	preview_shuttle.register(replace)
 
 	// TODO indicate to the user that success happened, rather than just
 	// blanking the modification tab
@@ -880,22 +886,10 @@ SUBSYSTEM_DEF(shuttle)
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 					break
 
-		if("preview")
-			if(S)
-				. = TRUE
-				unload_preview()
-				load_template(S)
-				if(preview_shuttle)
-					preview_template = S
-					user.forceMove(get_turf(preview_shuttle))
 		if("load")
-			if(existing_shuttle == backup_shuttle)
-				// TODO make the load button disabled
-				WARNING("The shuttle that the selected shuttle will replace \
-					is the backup shuttle. Backup shuttle is required to be \
-					intact for round sanity.")
-			else if(S)
+			if(S && !shuttle_loading)
 				. = TRUE
+				shuttle_loading = TRUE
 				// If successful, returns the mobile docking port
 				var/obj/docking_port/mobile/mdp = action_load(S)
 				if(mdp)
@@ -903,3 +897,38 @@ SUBSYSTEM_DEF(shuttle)
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+				shuttle_loading = FALSE
+
+		if("preview")
+			//if(preview_shuttle && (loading_template != preview_template))
+			if(S && !shuttle_loading)
+				. = TRUE
+				shuttle_loading = TRUE
+				unload_preview()
+				load_template(S)
+				if(preview_shuttle)
+					preview_template = S
+					user.forceMove(get_turf(preview_shuttle))
+				shuttle_loading = FALSE
+
+		if("replace")
+			if(existing_shuttle == backup_shuttle)
+				// TODO make the load button disabled
+				WARNING("The shuttle that the selected shuttle will replace \
+					is the backup shuttle. Backup shuttle is required to be \
+					intact for round sanity.")
+			else if(S && !shuttle_loading)
+				. = TRUE
+				shuttle_loading = TRUE
+				// If successful, returns the mobile docking port
+				var/obj/docking_port/mobile/mdp = action_load(S, replace = TRUE)
+				if(mdp)
+					user.forceMove(get_turf(mdp))
+					message_admins("[key_name_admin(usr)] load/replaced [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.</span>")
+					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+				shuttle_loading = FALSE
+				if(emergency == mdp) //you just changed the emergency shuttle, there are events in game + captains that can change your snowflake choice.
+					var/set_purchase = alert(usr, "Do you want to also disable shuttle purchases/random events that would change the shuttle?", "Butthurt Admin Prevention", "Yes, disable purchases/events", "No, I want to possibly get owned")
+					if(set_purchase == "Yes, disable purchases/events")
+						SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED

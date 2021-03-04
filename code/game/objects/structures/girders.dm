@@ -1,7 +1,7 @@
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder"
-	desc = "A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall."
+	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
 	var/state = GIRDER_NORMAL
@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
 		if(W.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You slice apart the girder.</span>")
-			var/obj/item/stack/sheet/metal/M = new (loc, 2)
+			var/obj/item/stack/sheet/iron/M = new (loc, 2)
 			M.add_fingerprint(user)
 			qdel(src)
 
@@ -90,10 +90,10 @@
 			return
 
 		var/obj/item/stack/sheet/S = W
-		if(istype(S, /obj/item/stack/sheet/metal))
+		if(istype(S, /obj/item/stack/sheet/iron))
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need two sheets of metal to create a false wall!</span>")
+					to_chat(user, "<span class='warning'>You need two sheets of iron to create a false wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a false wall...</span>")
 				if(do_after(user, 20*platingmodifier, target = src))
@@ -105,11 +105,11 @@
 					transfer_fingerprints_to(F)
 					qdel(src)
 			else if(state == GIRDER_REINF)
-				to_chat(user, "<span class='warning'>You can't finish a reinforced girder with regular metal. You need a plasteel sheet for that.</span>")
+				to_chat(user, "<span class='warning'>You can't finish a reinforced girder with regular iron. You need a plasteel sheet for that.</span>")
 				return
 			else
 				if(S.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
+					to_chat(user, "<span class='warning'>You need two sheets of iron to finish a wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
 				if (do_after(user, 40*platingmodifier, target = src))
@@ -165,7 +165,7 @@
 					qdel(src)
 				return
 
-		if(S.sheettype != "runed")
+		if(!S.has_unique_girder)
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
@@ -200,7 +200,7 @@
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
 						if(S.material_type)
-							material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+							material_list[GET_MATERIAL_REF(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 						if(material_list)
 							newturf.set_custom_materials(material_list)
 
@@ -212,7 +212,7 @@
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
-		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return
 			to_chat(user, "<span class='notice'>You fit the pipe into \the [src].</span>")
@@ -227,14 +227,14 @@
 	. = FALSE
 	if(state == GIRDER_DISPLACED)
 		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",
-							 "<span class='notice'>You start to disassemble the girder...</span>",
-							 "<span class='hear'>You hear clanking and banging noises.</span>")
+			"<span class='notice'>You start to disassemble the girder...</span>",
+			"<span class='hear'>You hear clanking and banging noises.</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_DISPLACED)
 				return
 			state = GIRDER_DISASSEMBLED
 			to_chat(user, "<span class='notice'>You disassemble the girder.</span>")
-			var/obj/item/stack/sheet/metal/M = new (loc, 2)
+			var/obj/item/stack/sheet/iron/M = new (loc, 2)
 			M.add_fingerprint(user)
 			qdel(src)
 		return TRUE
@@ -297,15 +297,14 @@
 	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/projectile))
 		return prob(girderpasschance)
 
-/obj/structure/girder/CanAStarPass(ID, dir, caller)
+/obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSGRILLE)
+	if(istype(caller))
+		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
+		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
 		new remains(loc)
 	qdel(src)
 
@@ -424,8 +423,8 @@
 			transfer_fingerprints_to(B)
 			qdel(src)
 
-	else if(istype(W, /obj/item/stack/tile/bronze))
-		var/obj/item/stack/tile/bronze/B = W
+	else if(istype(W, /obj/item/stack/sheet/bronze))
+		var/obj/item/stack/sheet/bronze/B = W
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
 			return

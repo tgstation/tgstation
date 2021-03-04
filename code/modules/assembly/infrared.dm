@@ -42,7 +42,7 @@
 		return FALSE //Cooldown check
 	on = !on
 	refreshBeam()
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/assembly/infra/toggle_secure()
@@ -53,22 +53,23 @@
 	else
 		QDEL_LIST(beams)
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	return secured
 
-/obj/item/assembly/infra/update_icon()
-	cut_overlays()
-	attached_overlays = list()
-	if(on)
-		add_overlay("infrared_on")
-		attached_overlays += "infrared_on"
-		if(visible && secured)
-			add_overlay("infrared_visible")
-			attached_overlays += "infrared_visible"
+/obj/item/assembly/infra/update_appearance(updates=ALL)
+	. = ..()
+	holder?.update_appearance(updates)
 
-	if(holder)
-		holder.update_icon()
-	return
+/obj/item/assembly/infra/update_overlays()
+	. = ..()
+	attached_overlays = list()
+	if(!on)
+		return
+	. += "infrared_on"
+	attached_overlays += "infrared_on"
+	if(visible && secured)
+		. += "infrared_visible"
+		attached_overlays += "infrared_visible"
 
 /obj/item/assembly/infra/dropped()
 	. = ..()
@@ -125,7 +126,7 @@
 		return
 	refreshBeam()
 
-/obj/item/assembly/infra/attack_hand()
+/obj/item/assembly/infra/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	refreshBeam()
 
@@ -167,7 +168,7 @@
 	listeningTo = newloc
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
@@ -177,7 +178,7 @@
 		var/obj/item/I = offender
 		if (I.item_flags & ABSTRACT)
 			return
-	return refreshBeam()
+	INVOKE_ASYNC(src, .proc/refreshBeam)
 
 /obj/item/assembly/infra/setDir()
 	. = ..()
@@ -213,18 +214,19 @@
 			visible = !visible
 			. = TRUE
 
-	update_icon()
+	update_appearance()
 	refreshBeam()
 
 /***************************IBeam*********************************/
 
 /obj/effect/beam/i_beam
 	name = "infrared beam"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = TRUE
 	density = FALSE
-	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
+	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE
+	pass_flags_self = LETPASSTHROW
 	var/obj/item/assembly/infra/master
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)

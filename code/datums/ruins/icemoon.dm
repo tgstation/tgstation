@@ -99,7 +99,7 @@
 /datum/map_template/ruin/icemoon/underground/bathhouse
 	name = "Bath House"
 	id = "bathhouse"
-	description = "A taste of paradise, locked in the hell of the Ice Moon."
+	description = "A warm, safe place."
 	suffix = "icemoon_underground_bathhouse.dmm"
 
 /datum/map_template/ruin/icemoon/underground/wendigo_cave

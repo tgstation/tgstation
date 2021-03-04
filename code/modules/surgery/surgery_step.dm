@@ -1,11 +1,11 @@
 /datum/surgery_step
 	var/name
-	var/list/implements = list()	//format is path = probability of success. alternatively
-	var/implement_type = null		//the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
-	var/accept_hand = FALSE				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
-	var/accept_any_item = FALSE			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
-	var/time = 10					//how long does the step take?
-	var/repeatable = FALSE				//can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
+	var/list/implements = list() //format is path = probability of success. alternatively
+	var/implement_type = null //the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
+	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
+	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
+	var/time = 10 //how long does the step take?
+	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
@@ -43,7 +43,7 @@
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
-			return TRUE	//returns TRUE so we don't stab the guy in the dick or wherever.
+			return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
 
 	if(repeatable)
 		var/datum/surgery_step/next_step = surgery.get_surgery_next_step()
@@ -61,8 +61,6 @@
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
 	// Prevents people from performing multiple simultaneous surgeries unless they're holding a Rod of Asclepius.
-	if(LAZYLEN(user.do_afters) && !user.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH))
-		return
 
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
@@ -77,10 +75,10 @@
 		speed_mod = tool.toolspeed
 
 	var/implement_speed_mod = 1
-	if(implement_type)	//this means it isn't a require hand or any item step.
+	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
 
@@ -92,7 +90,7 @@
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
-	if(do_after(user, modded_time, target = target))
+	if(do_after(user, modded_time, target = target, interaction_key = user.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH) ? target : DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
 
 		var/chem_check_result = chem_check(target)
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
@@ -152,12 +150,12 @@
 	if(require_all_chems)
 		. = TRUE
 		for(var/R in chems_needed)
-			if(!target.has_reagent(R))
+			if(!target.reagents.has_reagent(R))
 				return FALSE
 	else
 		. = FALSE
 		for(var/R in chems_needed)
-			if(target.has_reagent(R))
+			if(target.reagents.has_reagent(R))
 				return TRUE
 
 /datum/surgery_step/proc/get_chem_list()
@@ -172,7 +170,7 @@
 	return english_list(chems, and_text = require_all_chems ? " and " : " or ")
 
 //Replaces visible_message during operations so only people looking over the surgeon can see them.
-/datum/surgery_step/proc/display_results(mob/user, mob/living/carbon/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
+/datum/surgery_step/proc/display_results(mob/user, mob/living/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(!target_detailed)
 		var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")

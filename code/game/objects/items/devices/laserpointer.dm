@@ -75,7 +75,7 @@
 	if (!diode)
 		to_chat(user, "<span class='notice'>You point [src] at [target], but nothing happens!</span>")
 		return
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
@@ -137,7 +137,7 @@
 	for(var/mob/living/carbon/human/H in view(1,targloc))
 		if(!isfelinid(H) || H.incapacitated() || H.is_blind())
 			continue
-		if(user.mobility_flags & MOBILITY_STAND)
+		if(user.body_position == STANDING_UP)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance * diode.rating))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
@@ -151,21 +151,23 @@
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
 		if(prob(effectchance * diode.rating))
+			if(C.resting)
+				C.set_resting(FALSE, instant = TRUE)
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
-			C.set_resting(TRUE, FALSE)
+			C.Immobilize(1 SECONDS)
 		else
 			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
-	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
-	var/list/click_params = params2list(params)
-	if(click_params)
-		if(click_params["icon-x"])
-			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
-		if(click_params["icon-y"])
-			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+	var/image/I = image('icons/obj/guns/projectiles.dmi',targloc,pointer_icon_state,10)
+	var/list/modifiers = params2list(params)
+	if(modifiers)
+		if(LAZYACCESS(modifiers, ICON_X))
+			I.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)
+		if(LAZYACCESS(modifiers, ICON_Y))
+			I.pixel_y = (text2num(LAZYACCESS(modifiers, ICON_Y)) - 16)
 	else
 		I.pixel_x = target.pixel_x + rand(-5,5)
 		I.pixel_y = target.pixel_y + rand(-5,5)

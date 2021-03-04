@@ -1,11 +1,13 @@
-GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
-						 			   /obj/item/stack/ore/iron = 100,
-						 			   /obj/item/stack/ore/plasma = 75,
-						 			   /obj/item/stack/ore/silver = 50,
-						 			   /obj/item/stack/ore/gold = 50,
-						 			   /obj/item/stack/ore/diamond = 25,
-						 			   /obj/item/stack/ore/bananium = 5,
-						 			   /obj/item/stack/ore/titanium = 75))
+GLOBAL_LIST_INIT(ore_probability, list(
+	/obj/item/stack/ore/uranium = 50,
+	/obj/item/stack/ore/iron = 100,
+	/obj/item/stack/ore/plasma = 75,
+	/obj/item/stack/ore/silver = 50,
+	/obj/item/stack/ore/gold = 50,
+	/obj/item/stack/ore/diamond = 25,
+	/obj/item/stack/ore/bananium = 5,
+	/obj/item/stack/ore/titanium = 75,
+	))
 
 /obj/structure/spawner/ice_moon
 	name = "cave entrance"
@@ -24,9 +26,9 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	clear_rock()
 
 /**
-  * Clears rocks around the spawner when it is created
-  *
-  */
+ * Clears rocks around the spawner when it is created
+ *
+ */
 /obj/structure/spawner/ice_moon/proc/clear_rock()
 	for(var/turf/F in RANGE_TURFS(2, src))
 		if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
@@ -41,17 +43,17 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	return ..()
 
 /**
-  * Effects and messages created when the spawner is destroyed
-  *
-  */
+ * Effects and messages created when the spawner is destroyed
+ *
+ */
 /obj/structure/spawner/ice_moon/proc/destroy_effect()
 	playsound(loc,'sound/effects/explosionfar.ogg', 200, TRUE)
 	visible_message("<span class='boldannounce'>[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!</span>")
 
 /**
-  * Drops items after the spawner is destroyed
-  *
-  */
+ * Drops items after the spawner is destroyed
+ *
+ */
 /obj/structure/spawner/ice_moon/proc/drop_loot()
 	for(var/type in GLOB.ore_probability)
 		var/chance = GLOB.ore_probability[type]
@@ -77,6 +79,10 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
 	light_range = 1
 	light_color = COLOR_SOFT_RED
+
+/obj/structure/spawner/ice_moon/demonic_portal/Initialize()
+	. = ..()
+	AddComponent(/datum/component/gps, "Netheric Signal")
 
 /obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
 	for(var/turf/F in RANGE_TURFS(3, src))
@@ -115,17 +121,17 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	addtimer(CALLBACK(src, .proc/collapse), 5 SECONDS)
 
 /**
-  * Handles portal deletion
-  *
-  */
+ * Handles portal deletion
+ *
+ */
 /obj/effect/collapsing_demonic_portal/proc/collapse()
 	drop_loot()
 	qdel(src)
 
 /**
-  * Drops loot from the portal
-  *
-  */
+ * Drops loot from the portal
+ *
+ */
 /obj/effect/collapsing_demonic_portal/proc/drop_loot()
 	visible_message("<span class='warning'>Something slips out of [src]!</span>")
 	var/loot = rand(1, 28)
@@ -167,7 +173,7 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 		if(17)
 			new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
 		if(18)
-			new /obj/item/assembly/signaler/anomaly/bluespace(loc)
+			new /obj/item/soulstone/anybody(loc)
 		if(19)
 			new /obj/item/disk/design_disk/modkit_disc/resonator_blast(loc)
 		if(20)

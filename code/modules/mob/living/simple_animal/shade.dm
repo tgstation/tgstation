@@ -4,8 +4,8 @@
 	desc = "A bound spirit."
 	gender = PLURAL
 	icon = 'icons/mob/cult.dmi'
-	icon_state = "shade"
-	icon_living = "shade"
+	icon_state = "shade_cult"
+	icon_living = "shade_cult"
 	mob_biotypes = MOB_SPIRIT
 	maxHealth = 40
 	health = 40
@@ -30,18 +30,19 @@
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
-	ventcrawler = VENTCRAWLER_ALWAYS
 
 /mob/living/simple_animal/shade/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/shade/death()
-	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
+	if(deathmessage == initial(deathmessage))
+		deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
 	..()
 
 /mob/living/simple_animal/shade/canSuicide()
@@ -49,19 +50,19 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
-	if(isconstruct(M))
-		var/mob/living/simple_animal/hostile/construct/C = M
-		if(!C.can_repair_constructs)
+/mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(isconstruct(user))
+		var/mob/living/simple_animal/hostile/construct/doll = user
+		if(!doll.can_repair_constructs)
 			return
 		if(health < maxHealth)
 			adjustHealth(-25)
-			Beam(M,icon_state="sendbeam",time=4)
-			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
+			Beam(user,icon_state="sendbeam", time = 4)
+			user.visible_message("<span class='danger'>[user] heals \the <b>[src]</b>.</span>", \
 					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else
-			to_chat(M, "<span class='cult'>You cannot heal <b>[src]</b>, as [p_theyre()] unharmed!</span>")
-	else if(src != M)
+			to_chat(user, "<span class='cult'>You cannot heal <b>[src]</b>, as [p_theyre()] unharmed!</span>")
+	else if(src != user)
 		return ..()
 
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri

@@ -7,7 +7,7 @@
 	vend_reply = "Come back for more!"
 	circuit = /obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
 	products = list(/obj/item/gun/ballistic/automatic/toy/unrestricted = 10,
-					/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
+					/obj/item/gun/ballistic/automatic/pistol/toy = 10,
 					/obj/item/gun/ballistic/shotgun/toy/unrestricted = 10,
 					/obj/item/toy/sword = 10,
 					/obj/item/ammo_box/foambox = 20,
@@ -25,7 +25,7 @@
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
-	default_price = 150
-	extra_price = 300
+	default_price = PAYCHECK_HARD
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "donksoft-light-mask"

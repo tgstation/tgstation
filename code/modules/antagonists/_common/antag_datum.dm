@@ -2,25 +2,29 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	var/name = "Antagonist"
-	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
-	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
-	var/prevent_roundtype_conversion = TRUE		//If false, the roundtype will still convert with this antag active
-	var/datum/mind/owner						//Mind that owns this datum
-	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
-	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
-	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
+	var/roundend_category = "other antagonists" //Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/show_in_roundend = TRUE //Set to false to hide the antagonists from roundend report
+	var/prevent_roundtype_conversion = TRUE //If false, the roundtype will still convert with this antag active
+	var/datum/mind/owner //Mind that owns this datum
+	var/silent = FALSE //Silent will prevent the gain/lose texts to show
+	var/can_coexist_with_others = TRUE //Whether or not the person will be able to have more than one datum
+	var/list/typecache_datum_blacklist = list() //List of datums this type can't coexist with
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	var/can_elimination_hijack = ELIMINATION_NEUTRAL //If these antags are alone when a shuttle elimination happens.
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	var/hijack_speed = 0
 	var/antag_hud_type
 	var/antag_hud_name
+	/// If set to true, the antag will not be added to the living antag list.
+	var/soft_antag = FALSE
 
 	//Antag panel properties
-	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
-	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
+	var/show_in_antagpanel = TRUE //This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
+	var/antagpanel_category = "Uncategorized" //Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 
@@ -56,10 +60,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
-	if(old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
+	if(!soft_antag && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
 	apply_innate_effects(new_body)
-	if(new_body.stat != DEAD)
+	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
@@ -113,7 +117,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(owner.current.stat != DEAD)
+	if(!soft_antag && owner.current.stat != DEAD)
 		owner.current.add_to_current_living_antags()
 
 /datum/antagonist/proc/is_banned(mob/M)
@@ -141,7 +145,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	clear_antag_moodies()
 	LAZYREMOVE(owner.antag_datums, src)
-	if(!LAZYLEN(owner.antag_datums))
+	if(!LAZYLEN(owner.antag_datums) && !soft_antag)
 		owner.current.remove_from_current_living_antags()
 	if(!silent && owner.current)
 		farewell()
@@ -196,7 +200,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //Displayed at the start of roundend_category section, default to roundend_category header
 /datum/antagonist/proc/roundend_report_header()
-	return 	"<span class='header'>The [roundend_category] were:</span><br>"
+	return "<span class='header'>The [roundend_category] were:</span><br>"
 
 //Displayed at the end of roundend_category section
 /datum/antagonist/proc/roundend_report_footer()
@@ -263,6 +267,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
+
+/// Gets how fast we can hijack the shuttle, return 0 for can not hijack. Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
+/datum/antagonist/proc/hijack_speed()
+	var/datum/objective/hijack/H = locate() in objectives
+	return H?.hijack_speed_override || hijack_speed
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

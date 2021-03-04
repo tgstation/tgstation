@@ -11,11 +11,13 @@
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
 	icon = 'icons/turf/walls/gold_wall.dmi'
-	icon_state = "gold"
+	icon_state = "gold_wall-0"
+	base_icon_state = "gold_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_GOLD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_GOLD_WALLS)
+	custom_materials = list(/datum/material/gold = 4000)
 
 /turf/closed/wall/mineral/silver
 	name = "silver wall"
@@ -27,6 +29,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
+	custom_materials = list(/datum/material/silver = 4000)
 
 /turf/closed/wall/mineral/diamond
 	name = "diamond wall"
@@ -40,6 +43,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_DIAMOND_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_DIAMOND_WALLS)
+	custom_materials = list(/datum/material/diamond = 4000)
 
 /turf/closed/wall/mineral/diamond/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
@@ -54,6 +58,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BANANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BANANIUM_WALLS)
+	custom_materials = list(/datum/material/bananium = 4000)
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -66,6 +71,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SANDSTONE_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SANDSTONE_WALLS)
+	custom_materials = list(/datum/material/sandstone = 4000)
 
 /turf/closed/wall/mineral/uranium
 	article = "a"
@@ -78,6 +84,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
+	custom_materials = list(/datum/material/uranium = 4000)
 
 /turf/closed/wall/mineral/uranium/proc/radiate()
 	if(!active)
@@ -91,7 +98,7 @@
 			return
 	return
 
-/turf/closed/wall/mineral/uranium/attack_hand(mob/user)
+/turf/closed/wall/mineral/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
 	. = ..()
 
@@ -117,6 +124,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
+	custom_materials = list(/datum/material/plasma = 4000)
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
@@ -132,7 +140,7 @@
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
-/turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
+/turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature)//Doesn't work because walls have superconduction turned off
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
@@ -159,6 +167,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
+	custom_materials = list(/datum/material/wood = 4000)
 
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
 	if(W.get_sharpness() && W.force)
@@ -179,8 +188,8 @@
 	hardness = 50
 
 /turf/closed/wall/mineral/iron
-	name = "rough metal wall"
-	desc = "A wall with rough metal plating."
+	name = "rough iron wall"
+	desc = "A wall with rough iron plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"
 	base_icon_state = "iron_wall"
@@ -188,6 +197,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
+	custom_materials = list(/datum/material/iron = 4000)
 
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"
@@ -204,6 +214,7 @@
 	girder_type = null
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
+	custom_materials = list(/datum/material/snow = 4000)
 
 /turf/closed/wall/mineral/snow/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 0)
 	return ..() //No recoil damage, snow is weak
@@ -220,6 +231,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
+	custom_materials = list(/datum/material/alloy/alien = 4000)
 
 /////////////////////Titanium walls/////////////////////
 
@@ -236,6 +248,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
+	custom_materials = list(/datum/material/titanium = 4000)
 
 /turf/closed/wall/mineral/titanium/rust_heretic_act()
 	return // titanium does not rust
@@ -311,6 +324,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
+	custom_materials = list(/datum/material/alloy/plastitanium = 4000)
 
 /turf/closed/wall/mineral/plastitanium/rust_heretic_act()
 	return // plastitanium does not rust
