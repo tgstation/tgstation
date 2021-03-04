@@ -57,6 +57,8 @@
 	ph = 14
 	//Compensates for delta_time lag by spawning multiple hands at the end
 	var/lag_compensate = 0
+	//Keeps track of the hand timer so we can cleanup on removal
+	var/timer_id
 
 //Warns you about the impenting hands
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
@@ -67,7 +69,8 @@
 //Sends hands after you for your hubris
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	spawn_hands(owner)
-	lag_compensate += 1 - max(delta_time, 1)
+	lag_compensate += max(delta_time, 1) - 1
+	timer_id = addtimer(CALLBACK(src, .proc/spawn_hands), 1 SECONDS, TIMER_STOPPABLE)
 	. = ..()
 
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
@@ -91,6 +94,8 @@
 	while(lag_compensate > hands)
 		spawn_hands(owner)
 		hands++
+	deltimer(timer_id)
+	timer_id = null
 	. = ..()
 
 //libital
