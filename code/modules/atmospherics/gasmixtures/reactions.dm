@@ -437,7 +437,7 @@ nobiliumsuppression = INFINITY
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitrium][MOLES])
 	var/energy_produced = heat_efficency * NITRIUM_DECOMPOSITION_ENERGY
-	ASSERT_GAS(/datum/gas/nitrogen, /datum/gas/hydrogen, air)
+	air.assert_gases(/datum/gas/nitrogen, /datum/gas/hydrogen)
 	if ((cached_gases[/datum/gas/nitrium][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/nitrium][MOLES] -= heat_efficency
