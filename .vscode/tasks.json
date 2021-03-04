@@ -7,8 +7,14 @@
 			"windows": {
 				"command": ".\\tools\\build\\build.bat"
 			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
 			"problemMatcher": [
 				"$dreammaker",
+				"$tsc",
 				"$eslint-stylish"
 			],
 			"group": {
@@ -33,6 +39,7 @@
 				"command": ".\\tgui\\bin\\tgui.bat"
 			},
 			"problemMatcher": [
+				"$tsc",
 				"$eslint-stylish"
 			],
 			"group": "build",

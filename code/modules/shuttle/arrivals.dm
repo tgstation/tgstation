@@ -194,6 +194,14 @@
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
+/**
+ * Queues an announcement arrival.
+ *
+ * Arguments:
+ * * mob - The arriving mob.
+ * * rank - The job of the arriving mob.
+ * * announce_acting_captain - Bool. If TRUE, the arriving mob is also an acting captain.
+ */
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
 	if(mode != SHUTTLE_CALL)
 		AnnounceArrival(mob, rank)

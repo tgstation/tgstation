@@ -381,23 +381,53 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
-	var/captainless=1
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/N = i
-		var/mob/living/carbon/human/player = N.new_character
-		if(istype(player) && player.mind && player.mind.assigned_role)
-			if(player.mind.assigned_role == "Captain")
-				captainless=0
-			if(player.mind.assigned_role != player.mind.special_role)
-				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
-					SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
+	var/captainless = TRUE
+
+	var/highest_rank = length(SSjob.chain_of_command) + 1
+	var/list/spare_id_candidates = list()
+	var/mob/dead/new_player/picked_spare_id_candidate
+
+	// Find a suitable player to hold captaincy.
+	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		if(is_banned_from(new_player_mob.ckey, list("Captain")))
+			CHECK_TICK
+			continue
+		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
+		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
+			// Keep a rolling tally of who'll get the cap's spare ID vault code.
+			// Check assigned_role's priority and curate the candidate list appropriately.
+			var/player_assigned_role = new_player_human.mind.assigned_role
+			var/spare_id_priority = SSjob.chain_of_command[player_assigned_role]
+			if(spare_id_priority)
+				if(spare_id_priority < highest_rank)
+					spare_id_candidates.Cut()
+					spare_id_candidates += new_player_mob
+					highest_rank = spare_id_priority
+				else if(spare_id_priority == highest_rank)
+					spare_id_candidates += new_player_mob
+			CHECK_TICK
+
+	if(length(spare_id_candidates))
+		picked_spare_id_candidate = pick(spare_id_candidates)
+
+	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
+		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
+			var/player_assigned_role = new_player_human.mind.assigned_role
+			var/player_is_captain = (picked_spare_id_candidate == new_player_mob) || (SSjob.always_promote_captain_job && (player_assigned_role == "Captain"))
+			if(player_is_captain)
+				captainless = FALSE
+			if(player_assigned_role != new_player_human.mind.special_role)
+				SSjob.EquipRank(new_player_mob, player_assigned_role, FALSE, player_is_captain)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(new_player_human))
+					SSquirks.AssignQuirks(new_player_human, new_player_mob.client, TRUE)
 		CHECK_TICK
+
 	if(captainless)
-		for(var/i in GLOB.new_player_list)
-			var/mob/dead/new_player/N = i
-			if(N.new_character)
-				to_chat(N, "<span class='notice'>Captainship not forced on anyone.</span>")
+		for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+			var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
+			if(new_player_human)
+				to_chat(new_player_mob, "<span class='notice'>Captainship not forced on anyone.</span>")
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
