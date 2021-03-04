@@ -402,6 +402,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
+/// Trait inherited by experimental surgeries
+#define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery"
 #define DISEASE_TRAIT "disease"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
@@ -418,9 +420,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HELMET_TRAIT "helmet"
 #define MASK_TRAIT "mask" //inherited from the mask
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
-#define IMPLANT_TRAIT "implant" // inherited from implants
+/// Trait inherited by implants
+#define IMPLANT_TRAIT "implant"
 #define GLASSES_TRAIT "glasses"
-#define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery" // inherited by experimental surgeries
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
 #define CRIT_HEALTH_TRAIT "crit_health"
@@ -515,7 +517,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BERSERK_TRAIT "berserk_trait"
 /// Trait granted by [/obj/item/rod_of_asclepius]
 #define HIPPOCRATIC_OATH_TRAIT "hippocratic_oath"
-//Trait granted by [/datum/status_effect/blooddrunk]
+/// Trait granted by [/datum/status_effect/blooddrunk]
 #define BLOODDRUNK_TRAIT "blooddrunk"
 /// Trait granted by lipstick
 #define LIPSTICK_TRAIT "lipstick_trait"
