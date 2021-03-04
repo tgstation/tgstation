@@ -749,8 +749,6 @@
 		var/datum/reagent/inverse_reagent = has_reagent(reagent.inverse_chem)
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
 			inverse_reagent.name = reagent.name//Negative effects are hidden
-			if(reagent.chemical_flags & REAGENT_INVISIBLE)
-				inverse_reagent.chemical_flags |= REAGENT_INVISIBLE
 		return FALSE //prevent addition
 	else if(reagent.impure_chem)
 		var/impure_vol = added_volume * (1 - added_purity) //turns impure ratio into impure chem
