@@ -372,7 +372,7 @@
 
 	if(!succesful)
 		REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
-		QDEL_NULL(ethereal_crystal)
+		QDEL_NULL(current_crystal)
 
 	if(crystalize_timer_id)
 		deltimer(crystalize_timer_id)
