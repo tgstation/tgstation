@@ -109,8 +109,7 @@
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
-	var/datum/gas_mixture/contents = airs[2]
-	if(contents.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && contents.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
+	if(internal.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && internal.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
 		return TRUE
 	return FALSE
 
@@ -133,8 +132,8 @@
 ///Calculation for the heat of the various gas mixes and controls the quality of the item
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
 	var/datum/gas_mixture/cooling_port = airs[1]
-	if(cooling_port.total_moles() * 0.25 > MINIMUM_MOLE_COUNT)
-		var/datum/gas_mixture/cooling_remove = cooling_port.remove_ratio(0.25)
+	if(cooling_port.total_moles() > MINIMUM_MOLE_COUNT)
+		var/datum/gas_mixture/cooling_remove = cooling_port.remove_ratio(1)
 
 		if(internal.total_moles() > 0)
 			var/coolant_temperature_delta = cooling_remove.temperature - internal.temperature
