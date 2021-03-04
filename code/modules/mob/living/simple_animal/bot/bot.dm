@@ -996,7 +996,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	access_card.add_access(player_access)
+	// If we have any bonys player accesses, add them to our internal ID card.
+	if(length(player_access))
+		access_card.add_access(player_access)
 	diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/Logout()

@@ -167,7 +167,7 @@
 	name = "LBX AC 10 Scattershot Ammunition"
 	desc = "Ammunition for the LBX AC 10 exosuit weapon."
 	id = "mech_scattershot_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/scattershot
 	materials = list(/datum/material/iron=6000)
 	construction_time = 20
@@ -188,7 +188,7 @@
 	name = "FNX-99 Carbine Ammunition"
 	desc = "Ammunition for the FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/incendiary
 	materials = list(/datum/material/iron=6000)
 	construction_time = 20
@@ -259,7 +259,7 @@
 	name = "SGL-6 Grenade Launcher Ammunition"
 	desc = "Ammunition for the SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
 	materials = list(/datum/material/iron=4000,/datum/material/gold=500,/datum/material/iron=500)
 	construction_time = 20
@@ -280,7 +280,7 @@
 	name = "SRM-8 Missile Rack Ammunition"
 	desc = "Ammunition for the SRM-8 Missile Rack."
 	id = "mech_missile_rack_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles_br
 	materials = list(/datum/material/iron=8000,/datum/material/gold=500,/datum/material/iron=500)
 	construction_time = 20
@@ -301,7 +301,7 @@
 	name = "SOB-3 Clusterbang Launcher Ammunition"
 	desc = "Ammunition for the SOB-3 Clusterbang Launcher"
 	id = "clusterbang_launcher_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/clusterbang
 	materials = list(/datum/material/iron=6000,/datum/material/gold=1500,/datum/material/uranium=1500)
 	construction_time = 20
@@ -442,7 +442,7 @@
 	name = "Ultra AC 2 Ammunition"
 	desc = "Ammunition for the Ultra AC 2 LMG"
 	id = "mech_lmg_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/lmg
 	materials = list(/datum/material/iron=4000)
 	construction_time = 20
