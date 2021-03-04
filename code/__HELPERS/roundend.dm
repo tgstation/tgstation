@@ -493,6 +493,12 @@
 /datum/controller/subsystem/ticker/proc/market_report()
 	var/list/parts = list()
 	parts += "<span class='header'>Station Economic Summary:</span>"
+	///total service income
+	var/tourist_income = GLOB.total_service_revenue
+	///restaurant customers served
+	var/restaurant_served = GLOB.restaurant_customers_served
+	///bar customers served
+	var/bar_served = GLOB.bar_customers_served
 	///This is the richest account on station at roundend.
 	var/datum/bank_account/mr_moneybags
 	///This is the station's total wealth at the end of the round.
@@ -507,6 +513,27 @@
 		station_vault += current_acc.account_balance
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
+
+	parts += "<span class='big servradio'>SERVICE DEPARTMENT STATISTICS:</span></div>"
+	parts += "The bar earned [bar_served] customers.<br>"
+	parts += "The restaurant earned [restaurant_served] customers.<br>"
+	parts += "In total, they earned [tourist_income] credits!<br>"
+	log_econ("Roundend service income: [tourist_income] credits.")
+	switch(tourist_income)
+		if(0)
+			parts += "<span class='redtext'>Service did not earn any credits...</span></div>"
+		if(1 to 1000)
+			parts += "<span class='redtext'>Come on service, surely you can do better than that.</span></div>"
+			award_service(/datum/award/achievement/jobs/service_bad)
+		if(1001 to 2000)
+			parts += "<span class='greentext'>Centcom is satisfied with service's job today.</span></div>"
+			award_service(/datum/award/achievement/jobs/service_okay)
+		else
+			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span></div>"
+			award_service(/datum/award/achievement/jobs/service_good)
+
+
+
 	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
 	if(total_players > 0)
 		parts += "An average of [station_vault/total_players] credits were collected.<br>"
@@ -516,6 +543,37 @@
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
 	return parts
+
+/**
+ * Awards the service department an achievement and updates the chef and bartender's highscore for tourists served.
+ *
+ * Arguments:
+ * * award: Achievement to give service department
+ */
+/datum/controller/subsystem/ticker/proc/award_service(award)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/service_member = i
+		if(!service_member.mind)
+			continue
+		var/datum/mind/service_mind = service_member.mind
+		if(!service_mind.assigned_role)
+			continue
+		for(var/job in GLOB.service_food_positions)
+			if(service_mind.assigned_role == job)
+				//general awards
+				service_member.client?.give_award(award, service_member)
+				if(service_mind.assigned_role == "Cook")
+					var/award_score = GLOB.restaurant_customers_served
+					var/award_status = service_member.client.get_award_status(/datum/award/score/chef_tourist_score)
+					if(award_score - award_status > 0)
+						award_score -= award_status
+					service_member.client?.give_award(/datum/award/score/chef_tourist_score, service_member, award_score)
+				if(service_mind.assigned_role == "Bartender")
+					var/award_score = GLOB.bar_customers_served
+					var/award_status = service_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
+					if(award_score - award_status > 0)
+						award_score -= award_status
+					service_member.client?.give_award(/datum/award/score/bartender_tourist_score, service_member, award_score)
 
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
