@@ -666,7 +666,9 @@
  * Metabolises a single reagent for a target owner carbon mob. See above.
  *
  * Arguments:
- * * mob/living/carbon/C - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * mob/living/carbon/owner - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * delta_time - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times this method has fired (across ALL reagents datums) (I think!!)
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
@@ -1361,7 +1363,7 @@
 		return
 
 	. = chem_temp
-	chem_temp = clamp(_temperature, 0, 99999)
+	chem_temp = clamp(_temperature, 0, CHEMICAL_MAXIMUM_TEMPERATURE)
 	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, .)
 
 /*
