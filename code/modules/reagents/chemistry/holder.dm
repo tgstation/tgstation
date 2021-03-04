@@ -741,7 +741,7 @@
 	if(reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		return added_volume
 	if(added_purity < 0)
-		stack_trace("Purity below 0 for chem on mob splitting: [type]!")
+		stack_trace("Purity below 0 for chem on mob splitting: [reagent.type]!")
 		added_purity = 0
 
 	if((reagent.inverse_chem_val > added_purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
