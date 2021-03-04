@@ -333,7 +333,7 @@
 		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
 		data["access_on_card"] = id_card.access
 		data["wildcardSlots"] = id_card.wildcard_slots
-		data["id_age"] = id_card.registered_age ? id_card.registered_age
+		data["id_age"] = id_card.registered_age
 
 		if(id_card.trim)
 			var/datum/id_trim/card_trim = id_card.trim
