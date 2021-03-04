@@ -139,6 +139,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 		target.reagents.maximum_volume += EXTRA_MAX_VOLUME_PER_SCOOP
 		if(target.reagents.total_volume < length(target.scoops))
 			target.reagents.add_reagent(/datum/reagent/consumable/sugar, min(SUGAR_PER_SCOOP, SUGAR_PER_SCOOP - target.reagents.total_volume), reagtemp = T0C)
+	SEND_SIGNAL(target, COMSIG_ICE_CREAM_ADD_FLAVOUR, R, custom_name)
 	target.update_icon()
 	target.update_name()
 	target.update_desc()

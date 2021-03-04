@@ -854,6 +854,8 @@
 #define COMSIG_ITEM_FRIED "item_fried"
 	#define COMSIG_FRYING_HANDLED (1<<0)
 
+///from base of /datum/ice_cream_flavour/add_flavour, sent to the target food: (/datum/ice_cream_flavour/flavour datum/reagents/reagents, custom_name)
+#define COMSIG_ICE_CREAM_ADD_FLAVOUR "ice_cream_add_flavour"
 //Drink
 
 ///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
