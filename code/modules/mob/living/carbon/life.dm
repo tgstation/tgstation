@@ -9,6 +9,7 @@
 
 	if(IS_IN_STASIS(src))
 		. = ..()
+		reagents.handle_stasis_chems(src, delta_time, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs(delta_time, times_fired)
@@ -348,7 +349,7 @@
 			if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 				organ.on_life(delta_time, times_fired)
 	else
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
