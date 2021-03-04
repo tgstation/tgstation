@@ -1,0 +1,5 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - bugfix: "Airlock Cyclelink Helpers can now function on the holodeck again."
+  - code_imp: "Airlocks can see out to 11 tiles now"
