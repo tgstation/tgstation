@@ -2,7 +2,7 @@
 	name = "paper bin"
 	desc = "Contains all the paper you'll never need."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "paper_bin1"
+	icon_state = "paper_bin_empty"
 	inhand_icon_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
@@ -15,17 +15,28 @@
 	var/total_paper = 30
 	var/list/papers = list()
 	var/obj/item/pen/bin_pen
+	/// Paper visible on top.
+	var/obj/item/paper/top_paper
+	/// This goes over the top of the top paper to give it the appearance of being inside this object.
+	var/paper_bin_overlay = "paper_bin_overlay"
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-	if(!mapload)
-		return
-	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
-	if(P && !bin_pen)
-		P.forceMove(src)
-		bin_pen = P
-		update_appearance()
+	if(mapload)
+		var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
+		if(P && !bin_pen)
+			P.forceMove(src)
+			bin_pen = P
+	update_appearance()
+
+/obj/item/paper_bin/proc/generate_paper()
+	var/obj/item/paper/P = new papertype(src)
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(30))
+			P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
+			P.AddComponent(/datum/component/honkspam)
+	return P
 
 /obj/item/paper_bin/Destroy()
 	if(papers)
@@ -73,25 +84,14 @@
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
 		update_appearance()
-	else if(total_paper >= 1)
+	else if(total_paper)
 		total_paper--
+		papers.Remove(top_paper)
+		top_paper.add_fingerprint(user)
+		top_paper.forceMove(user.loc)
+		user.put_in_hands(top_paper)
+		to_chat(user, "<span class='notice'>You take [top_paper] out of \the [src].</span>")
 		update_appearance()
-		// If there's any custom paper on the stack, use that instead of creating a new paper.
-		var/obj/item/paper/P
-		if(papers.len > 0)
-			P = papers[papers.len]
-			papers.Remove(P)
-		else
-			P = new papertype(src)
-			if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-				if(prob(30))
-					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-					P.AddComponent(/datum/component/honkspam)
-
-		P.add_fingerprint(user)
-		P.forceMove(user.loc)
-		user.put_in_hands(P)
-		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 	add_fingerprint(user)
@@ -119,27 +119,30 @@
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(total_paper)
-		. += "It contains [total_paper > 1 ? "[total_paper] papers" : " one paper"]."
+		. += "It contains [total_paper > 1 ? "[total_paper] papers" : "one paper"]."
 	else
 		. += "It doesn't contain anything."
 
-
-/obj/item/paper_bin/update_icon_state()
-	if(total_paper < 1)
-		icon_state = "paper_bin0"
-	else
-		icon_state = "[initial(icon_state)]"
-	return ..()
-
 /obj/item/paper_bin/update_overlays()
 	. = ..()
+	if(LAZYLEN(papers))
+		top_paper = papers[papers.len] //last in first out
+	else if(total_paper)
+		papers.Add(generate_paper())
+		top_paper = papers[papers.len]
+	else
+		top_paper = null
+
+	if(top_paper)
+		. += mutable_appearance(top_paper.icon, top_paper.icon_state)
+		. += top_paper.overlays
+		. += mutable_appearance(icon, paper_bin_overlay)
 	if(bin_pen)
 		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
 	desc = "Contains all the paper you'll never need, IN COLOR!"
-	icon_state = "paper_binc"
 	papertype = /obj/item/paper/construction
 
 /obj/item/paper_bin/bundlenatural
@@ -148,6 +151,7 @@
 	icon_state = "paper_bundle"
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
+	paper_bin_overlay = "paper_bundle_overlay"
 
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	..()
@@ -158,6 +162,8 @@
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/paper/carbon) && (W.icon_state == "paper_stack" || W.icon_state == "paper_stack_carbon"))
+		to_chat(user, "<span class='warning'>[W] won't fit into [src].</span>")
 	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
@@ -178,5 +184,6 @@
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"
 	desc = "Contains all the paper you'll ever need, in duplicate!"
-	icon_state = "paper_bin_carbon"
+	icon_state = "paper_bin_carbon_empty"
 	papertype = /obj/item/paper/carbon
+	paper_bin_overlay = "paper_bin_carbon_overlay"
