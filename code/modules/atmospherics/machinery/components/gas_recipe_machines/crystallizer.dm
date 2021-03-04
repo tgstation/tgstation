@@ -13,7 +13,7 @@
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
-	pipe_flags = PIPING_ONE_PER_TURF
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	///Base icon state for the machine to be used in update_icon()
 	var/base_icon = "crystallizer"
@@ -328,7 +328,7 @@
 			. = TRUE
 		if("gas_input")
 			var/_gas_input = params["gas_input"]
-			gas_input = clamp(_gas_input, 0, 50)
+			gas_input = clamp(_gas_input, 0, 500)
 	update_icon()
 
 #undef MIN_PROGRESS_AMOUNT
