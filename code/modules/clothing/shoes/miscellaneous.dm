@@ -276,6 +276,7 @@
 /obj/item/clothing/shoes/bhop/rocket 
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
+	actions_types = list(/datum/action/item_action/bhop/brocket)
 	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
 	jumpspeed = 5
 
