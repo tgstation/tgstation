@@ -133,7 +133,7 @@
 			else if(reagent.impure_chem) //Otherwise has an impure
 				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
 				out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-				out_message += "<span class='warning'>Impurities detected: </span><span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]\n"
+				out_message += "<span class='warning'>Impurities detected: </span><span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]":"")]\n"
 		else
 			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
