@@ -180,7 +180,7 @@
 	damtype = BURN
 	force = 15
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb_continuous = list("stings")
