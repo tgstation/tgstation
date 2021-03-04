@@ -295,10 +295,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/i_scream in get_all_contents_type(/mob/living))
+	for(var/mob/living/i_scream as anything in get_all_contents_type(/mob/living))
 		var/obj/item/food/icecream/IC = new()
-		IC.set_cone_type("waffle")
-		IC.add_mob_flavor(i_scream)
+		GLOB.ice_cream_flavours[ICE_CREAM_MOB].add_flavour(IC, null, i_scream.name)
 		icecreams += IC
 	. = ..()
 	for(var/obj/IC in icecreams)

@@ -394,9 +394,8 @@
 			food_item = new /obj/item/food/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
 			food_item = new /obj/item/food/icecream(T)
-			var/obj/item/food/icecream/I = food_item
-			I.add_ice_cream("vanilla")
-			I.desc = "Eat the ice cream."
+			GLOB.ice_cream_flavours[ICE_CREAM_VANILLA].add_flavour(food_item)
+			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
