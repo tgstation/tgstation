@@ -235,6 +235,7 @@
 	bonus_tame_chance = 0
 	pet_bonus = TRUE
 	pet_bonus_emote = "bloops happily!"
+	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
@@ -243,7 +244,7 @@
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
 
 /mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
-	disky.forceMove(get_turf(src))
+	disky.forceMove(drop_location())
 	disky = null
 	return ..()
 
@@ -267,7 +268,7 @@
 	if(disky)
 		if(isopenturf(attacked_target))
 			to_chat(src, "<span class='notice'>You place [disky] on [attacked_target]</span>")
-			disky.forceMove(attacked_target)
+			disky.forceMove(attacked_target.drop_location())
 			disky = null
 			regenerate_icons()
 			return
