@@ -69,13 +69,13 @@
 //Sends hands after you for your hubris
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	spawn_hands(owner)
-	lag_compensate += max(delta_time, 1) - 1
-	timer_id = addtimer(CALLBACK(src, .proc/spawn_hands), 1 SECONDS, TIMER_STOPPABLE)
+	lag_compensate += max(delta_time, 2) - 2
+	LAZYADD(timer_id, addtimer(CALLBACK(src, .proc/spawn_hands, owner), 1 SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
 	. = ..()
 
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
-	if(!owner)//Unit test has a very strange interation where hands spawned will no longer have a target causing the beam to runtime
-		return
+	if(!owner && iscarbon(holder.my_atom))//Catch timer
+		owner = holder.my_atom
 	//Adapted from the end of the curse - but lasts a short time
 	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 8)//Larger range so you have more time to dodge
@@ -94,8 +94,9 @@
 	while(lag_compensate > hands)
 		spawn_hands(owner)
 		hands++
-	deltimer(timer_id)
-	timer_id = null
+	for(var/id in timer_id) // So that we can be certain that all timers are deleted at the end.
+		deltimer(id)
+		LAZYREMOVE(timer_id, id)
 	. = ..()
 
 //libital
