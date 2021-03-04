@@ -646,7 +646,9 @@
  * Triggers metabolizing for all the reagents in this holder
  *
  * Arguments:
- * * mob/living/carbon/C - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * mob/living/carbon/carbon - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * delta_time - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's life() tick has been called aka The number of times SSmobs has fired
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
@@ -668,7 +670,7 @@
  * Arguments:
  * * mob/living/carbon/owner - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
  * * delta_time - the time in server seconds between proc calls (when performing normally it will be 2)
- * * times_fired - the number of times this method has fired (across ALL reagents datums) (I think!!)
+ * * times_fired - the number of times the owner's life() tick has been called aka The number of times SSmobs has fired
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
