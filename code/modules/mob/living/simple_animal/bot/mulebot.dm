@@ -539,10 +539,8 @@
 	B.setDir(direct)
 	bloodiness--
 
-/mob/living/simple_animal/bot/mulebot/Moved() //make sure we always use power after moving.
+/mob/living/simple_animal/bot/mulebot/Moved()
 	. = ..()
-
-	cell?.use(cell_move_power_usage)
 
 	for(var/potential_target in loc.contents)
 		if(potential_target == load)
@@ -550,9 +548,6 @@
 
 		if(ishuman(potential_target))
 			RunOver(potential_target)
-
-	if(cell.charge < cell_move_power_usage) //make sure we have enough power to move again, otherwise turn off.
-		turn_off()
 
 	diag_hud_set_mulebotcell()
 
@@ -833,6 +828,13 @@
 	if(.)
 		visible_message("<span class='notice'>[src]'s safeties are locked on.</span>")
 
+/mob/living/simple_animal/bot/mulebot/bot_step(dest)
+	if(!(cell?.use(cell_move_power_usage)))
+		turn_off()
+		return FALSE
+
+	return ..()
+
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
 	desc = "A rather ghastly looking... Multiple Utility Load Effector bot? It only seems to accept paranormal forces, and for this reason is fucking useless."
@@ -887,7 +889,6 @@
 	mode = BOT_IDLE
 	update_appearance()
 
-
 /mob/living/simple_animal/bot/mulebot/paranormal/update_overlays()
 	. = ..()
 	if(!isobserver(load))
@@ -913,3 +914,4 @@
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
+
