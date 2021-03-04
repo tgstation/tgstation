@@ -40,7 +40,7 @@
 	. = ..()
 	if(pen)
 		. += "<span class='notice'>Alt-click to remove [pen].</span>"
-	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(toppaper)
 		. += "<span class='notice'>Right-click to remove [toppaper].</span>"
 
@@ -51,7 +51,7 @@
 	paper.forceMove(user.loc)
 	user.put_in_hands(paper)
 	to_chat(user, "<span class='notice'>You remove [paper] from [src].</span>")
-	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(paper == toppaper)
 		toppaper_ref = null
 		var/obj/item/paper/newtop = locate(/obj/item/paper) in src
@@ -75,7 +75,7 @@
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
-	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(toppaper)
 		. += toppaper.icon_state
 		. += toppaper.overlays
@@ -85,13 +85,13 @@
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+		var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 		remove_paper(toppaper, user)
 		return TRUE
 	. = ..()
 
 /obj/item/clipboard/attackby(obj/item/weapon, mob/user, params)
-	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(istype(weapon, /obj/item/paper))
 		//Add paper into the clipboard
 		if(!user.transferItemToLoc(weapon, src))
@@ -124,7 +124,7 @@
 	var/list/data = list()
 	data["pen"] = "[pen]"
 
-	var/obj/item/paper/toppaper = toppaper_ref == null ? null : toppaper_ref.resolve()
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	data["top_paper"] = "[toppaper]"
 	data["top_paper_ref"] = "[REF(toppaper)]"
 
