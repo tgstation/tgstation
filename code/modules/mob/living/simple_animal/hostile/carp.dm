@@ -248,6 +248,10 @@
 	disky = null
 	return ..()
 
+/mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
+	. = ..()
+	QDEL_NULL(disky)
+
 /mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
 	. = ..()
 	if(disky)
@@ -271,10 +275,9 @@
 			disky.forceMove(attacked_target.drop_location())
 			disky = null
 			regenerate_icons()
-			return
 		else
 			disky.melee_attack_chain(src, attacked_target)
-			return
+		return
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/Exited(atom/movable/AM, atom/newLoc)
