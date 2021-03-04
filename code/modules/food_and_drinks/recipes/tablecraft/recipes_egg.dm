@@ -61,3 +61,12 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/eggbowl
 	subcategory = CAT_EGG
+
+/datum/crafting_recipe/food/bal_break
+	name= "Balanced Breakfast"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/boiledegg = 36,
+		/datum/reagent/consumable/nutriment/vitamin = 4
+	)
+	result = /obj/item/reagent_containers/food/snacks/balancedegg
+	subcategory = CAT_EGG
