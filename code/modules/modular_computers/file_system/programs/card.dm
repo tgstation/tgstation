@@ -44,7 +44,7 @@
 	job_templates.Cut()
 
 	// If the program isn't locked to a specific department or is_centcom and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
-	if((ACCESS_CHANGE_IDS in id_card.access) && (!target_dept || is_centcom))
+	if((!target_dept || is_centcom) && (ACCESS_CHANGE_IDS in id_card.access))
 		minor = FALSE
 		authenticated_user = "[id_card.name]"
 		job_templates = is_centcom ? SSid_access.centcom_job_templates.Copy() : SSid_access.station_job_templates.Copy()
