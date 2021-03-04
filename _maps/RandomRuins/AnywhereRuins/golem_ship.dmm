@@ -17,7 +17,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/mining_scanner,
 /obj/item/flashlight/lantern,
-/obj/item/card/id/mining,
+/obj/item/card/id/advanced/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "d" = (
@@ -30,7 +30,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/mining_scanner,
 /obj/item/flashlight/lantern,
-/obj/item/card/id/mining,
+/obj/item/card/id/advanced/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "e" = (

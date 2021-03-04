@@ -82,6 +82,8 @@
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
 	hand.preparePixelProjectile(owner, spawn_turf)
+	if(QDELETED(hand)) //safety check if above fails - above has a stack trace if it does fail
+		return
 	hand.fire()
 
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
