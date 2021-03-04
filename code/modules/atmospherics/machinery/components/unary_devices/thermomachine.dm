@@ -56,7 +56,8 @@
 	for(var/obj/machinery/atmospherics/device in get_turf(src))
 		if(device.piping_layer != piping_layer || device == src)
 			continue
-		deconstruct(FALSE)
+		visible_message("<span class='warning'>Something is hogging the pipe, remove the obstruction or change the machine piping layer.</span>")
+		deconstruct(TRUE)
 		return
 	return..()
 
