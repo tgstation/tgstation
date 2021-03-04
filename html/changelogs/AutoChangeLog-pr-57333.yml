@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "All uplink kits that previously had agent ID cards that were lost to the ID card rework now have agent ID cards again."
