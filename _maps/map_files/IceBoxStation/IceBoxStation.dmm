@@ -17664,10 +17664,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"bzb" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/plasma,
-/area/engineering/atmos)
 "bzc" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -30378,10 +30374,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
-"fqm" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/air,
-/area/engineering/atmos)
 "fqK" = (
 /obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
@@ -49294,6 +49286,12 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"sTS" = (
+/obj/machinery/computer/chef_order{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen)
 "sUk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -51468,7 +51466,6 @@
 /area/command/meeting_room)
 "uqM" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/engine/air,
 /area/engineering/atmos)
 "ure" = (
@@ -91736,7 +91733,7 @@ fJb
 bIZ
 ohp
 gHx
-fqm
+oUi
 oUi
 ccm
 boP
@@ -93777,7 +93774,7 @@ kJV
 gkf
 kJV
 ccm
-bzb
+mIQ
 gNY
 mIQ
 ccm
@@ -95018,7 +95015,7 @@ dfW
 mjA
 rLD
 nUo
-nUo
+sTS
 nUo
 nUo
 tIN

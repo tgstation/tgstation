@@ -1,0 +1,6 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Slimepeople should no longer be able to get to negative blood levels from toxin damage."
+  - bugfix: "Defibrillating slimepeople should no longer multiply toxin damage and reduce blood levels."
+  - bugfix: "People who are both toxin lovers and toxin immune should stop losing blood from toxin heals too."

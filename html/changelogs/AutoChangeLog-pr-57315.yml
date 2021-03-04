@@ -1,0 +1,6 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - qol: "Tweaks cryostylane to use the new reaction mechanics, incorporating stasis iceblocks, freezing, temporary organ decay prevention and surgery slows. Cryostylane when added to a corpse will tint them blue and pause organ decay temporarily, while it is in a mob it will slow down all surgery applied upon them. Inverse cryostylane will freeze you in a block of ice and put you in stasis (living and dead)."
+  - qol: "Tweaks cyrostylane to have a more indepth reaction, where colder temperatures will cause it's purity to decrease."
+  - code_imp: "cleans up some of holder.dm code and adds a REAGENT_IGNORE_STASIS bitflag."

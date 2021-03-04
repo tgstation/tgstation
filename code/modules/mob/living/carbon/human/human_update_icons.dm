@@ -185,7 +185,7 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
 		inv.update_appearance()
 
-	if(!gloves && blood_in_hands && !(NOBLOODOVERLAY in dna.species.species_traits))
+	if(!gloves && blood_in_hands && (num_hands > 0) && !(NOBLOODOVERLAY in dna.species.species_traits))
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
 		if(num_hands < 2)
 			if(has_left_hand(FALSE))
