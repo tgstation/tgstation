@@ -1380,8 +1380,8 @@
 	..()
 
 /datum/reagent/nitrium_high_metabolization
-	name = "Nitrium"
-	description = "A highly reactive gas that makes you feel faster, while dealing increasing toxin damage over time."
+	name = "Nitrosyl plasmide"
+	description = "A highly reactive byproduct that stops you from sleeping, while dealing increasing toxin damage over time."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
