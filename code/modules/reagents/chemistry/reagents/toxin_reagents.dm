@@ -564,6 +564,7 @@
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 1
+	ph = 2.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -599,6 +600,7 @@
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/opiods = 25)
 
@@ -620,6 +622,7 @@
 	color = "#00B4FF"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
+	ph = 9.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -649,6 +652,7 @@
 	color = "#C8C8C8"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 7
 	penetrates_skin = TOUCH|VAPOR
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -755,6 +759,7 @@
 	color = "#7DC3A0"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -787,6 +792,7 @@
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -859,6 +865,7 @@
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/heparin/on_mob_metabolize(mob/living/M)
@@ -877,6 +884,7 @@
 	color = "#AC88CA" //RGB: 172, 136, 202
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	ph = 6.2
 	taste_description = "spinning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -905,6 +913,7 @@
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
 	toxpwr = 0.15
+	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -970,7 +979,7 @@
 	color = "#5050FF"
 	toxpwr = 2
 	acidpwr = 42.0
-	ph = 1.3
+	ph = 0.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // SERIOUSLY
@@ -992,7 +1001,7 @@
 	color = "#5050FF"
 	toxpwr = 3
 	acidpwr = 5.0
-	ph = 3.3
+	ph = 1.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1026,6 +1035,7 @@
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
+	ph = 1.7
 	taste_description = "stillness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1041,6 +1051,7 @@
 	silent_toxin = TRUE //no point spamming them even more.
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
 	toxpwr = 0
+	ph = 3.1
 	taste_description = "bone hurting"
 	overdose_threshold = 50
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
