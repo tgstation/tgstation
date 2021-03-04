@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(id_access)
 /**
  * Called by [/datum/controller/subsystem/ticker/proc/setup]
  *
- * This runs through every /datum/id_trim singleton and ensures that its access is setup according to
+ * This runs through every /datum/id_trim/job singleton and ensures that its access is setup according to
  * appropriate config entries.
  */
 /datum/controller/subsystem/id_access/proc/refresh_job_trim_singletons()
