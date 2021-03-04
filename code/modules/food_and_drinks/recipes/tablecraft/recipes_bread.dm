@@ -107,7 +107,6 @@
 	name = "Baguette"
 	time = 40
 	reqs = list(/datum/reagent/consumable/salt = 1,
-	reqs = list(/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/food/pastrybase = 2
 	)
