@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 3000000
 	requirements = list(/datum/gas/freon = 120, /datum/gas/plasma = 70, /datum/gas/oxygen = 30)
-	products = list(/obj/item/stack/sheet/hot_ice = 1)
+	products = list(/obj/item/stack/sheet/hot_ice = 10)
 
 /datum/gas_recipe/crystallizer/ammonia_crystal
 	id = "ammonia_crystal"
