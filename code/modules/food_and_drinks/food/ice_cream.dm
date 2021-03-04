@@ -100,12 +100,11 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	/// The icon state of the flavour, overlay or not.
 	var/icon_state = "icecream_vanilla"
 	/**
-	  * The description of the food when it contains exactly one scoop of ice cream. Make sure your new subtypes have one.
-	  * $CONE_NAME and $CUSTOM_NAME are both placeholder names for
-	  * the cone and the custom ice cream respectively, as shown in [/obj/item/food/icecream/update_desc].
+	  * The description of the food when it contains only one flavour of ice cream. Make sure your new subtypes have one.
+	  * $CONE_NAME and $CUSTOM_NAME are both placeholder names for the cone and the custom ice cream respectively.
 	  */
 	var/desc = ""
-	/// The ingredients required to make one scoop
+	/// The ingredients required to produce a unit, these are multiplied by 3.
 	var/list/ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
 	/// The same as above, but in a readable text generated on spawn that can also contain extra ingredients such as "lot of love" or "optional flavorings".
 	var/ingredients_text = ""
