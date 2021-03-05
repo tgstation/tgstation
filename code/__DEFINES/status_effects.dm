@@ -93,6 +93,8 @@
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
 
+#define STATUS_EFFECT_WEBBED /datum/status_effect/webbed
+
 ///Raises click cooldowns for everything you do.
 #define STATUS_EFFECT_WOOZY /datum/status_effect/woozy
 
