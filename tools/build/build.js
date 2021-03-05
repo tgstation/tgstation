@@ -18,7 +18,7 @@ if (NODE_VERSION < NODE_VERSION_TARGET) {
   console.error('You have two options:');
   console.error('  a) Go to https://nodejs.org/ and install the latest LTS release of Node.js');
   console.error('  b) Uninstall Node.js (our build system automatically downloads one)');
-  process.exit();
+  process.exit(1);
 }
 
 // Main
