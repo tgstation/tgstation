@@ -757,7 +757,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
-	total_paper = 12
+	starting_sheets = 12
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
