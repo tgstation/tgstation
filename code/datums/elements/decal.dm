@@ -44,10 +44,10 @@
 	if(directional) //Even when the dirs are the same rotation is coming out as not 0 for some reason
 		rotation = SIMPLIFY_DEGREES(dir2angle(new_dir)-dir2angle(old_dir))
 		new_dir = turn(pic.dir,-rotation)
-	return list(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
+	return list(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
 
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _plane=FLOOR_PLANE, _description, _alpha=255, mutable_appearance/_pic)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
 	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
 		return ELEMENT_INCOMPATIBLE
