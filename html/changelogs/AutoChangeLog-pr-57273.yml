@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "fix multiz adapters, now they work on the same tile with different pipe layers and they keep the pipelines separated and sprite fix due to layer 1 and 5"
