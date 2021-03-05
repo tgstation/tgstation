@@ -131,6 +131,8 @@
 		message = replacetext(message," credits ",pick(" pounds "," quid "))
 		message = replacetext(message," drunk ",pick(" shitfaced "," pissed "))
 		message = replacetext(message," fucking "," bloody ")
+		message = replacetext(message," dick "," knob ")
+		message = replacetext(message," dickhead "," bellend ")
 		message = replacetext(message," pussy "," fanny ")
 		message = replacetext(message," stupid "," daft ")
 		message = replacetext(message," looking at  ","  gawpin' at ")
