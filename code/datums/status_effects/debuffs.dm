@@ -683,7 +683,7 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
