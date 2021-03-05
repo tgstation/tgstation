@@ -106,20 +106,20 @@
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
-	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags = NULL
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"
-	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags = NULL
 
 /area/shuttle/pod_3
 	name = "Escape Pod Three"
-	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	area_flags = NULL
 
 /area/shuttle/pod_4
 	name = "Escape Pod Four"
-	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
-
+	area_flags = NULL
+	
 /area/shuttle/mining
 	name = "Mining Shuttle"
 	area_flags = NONE //Set this so it doesn't inherit NO_ALERTS
