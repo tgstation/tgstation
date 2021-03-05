@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Unhackable safes should no longer tell you the status of their service panel on examine."

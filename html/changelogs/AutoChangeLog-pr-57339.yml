@@ -1,4 +1,0 @@
-author: "Foxtrot (Funce)"
-delete-after: True
-changes: 
-  - bugfix: "Restaurant and Bar Holosigns are now buildable in the Service Protolathe."
