@@ -1,4 +1,0 @@
-author: "SgtHunk"
-delete-after: True
-changes: 
-  - bugfix: "The Deltastation wall-mounted flash at the Brig entrance is now properly connected to the Brig Checkpoint flasher button."

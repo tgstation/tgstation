@@ -1,7 +1,0 @@
-author: "Whoneedspacee"
-delete-after: True
-changes: 
-  - rscadd: "Icebox mobs now have crusher trophies."
-  - rscadd: "Godslayer Armor can now be crafted by gathering drops from all three icebox megafauna."
-  - rscadd: "Adds the easy clockwork defender megafauna to the asteroid ruin."
-  - balance: "The Wendigo is now a proper megafauna."
