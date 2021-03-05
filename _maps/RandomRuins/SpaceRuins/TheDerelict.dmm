@@ -384,7 +384,7 @@
 "bU" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/autolathe,
-/obj/item/circuitboard/machine/protolathe{
+/obj/item/circuitboard/machine/protolathe/offstation{
 	pixel_x = -5;
 	pixel_y = -3
 	},
@@ -392,7 +392,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "bV" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation,
 /obj/item/ai_module/core/full/drone{
 	pixel_x = -4;
 	pixel_y = -2

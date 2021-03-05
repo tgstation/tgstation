@@ -1015,9 +1015,7 @@
 /area/ruin/powered/clownplanet)
 "eX" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "gX" = (
 /obj/effect/mapping_helpers/no_lava,
@@ -1026,13 +1024,22 @@
 "hY" = (
 /obj/machinery/light,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered/clownplanet)
+"os" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/machinery/door/airlock/external,
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "pv" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "ye" = (
 /turf/open/lava/smooth,
@@ -1041,9 +1048,7 @@
 /obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/hope,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Hj" = (
 /obj/effect/decal/cleanable/food/pie_smudge,
@@ -1065,7 +1070,9 @@
 	name = "stealth banana peel"
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/lavaland/surface/outdoors/explored)
 "LH" = (
 /obj/machinery/disposal/delivery_chute{
@@ -1075,28 +1082,21 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
-"Mv" = (
-/obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
 "MR" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "RW" = (
 /obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "TD" = (
 /obj/structure/disposalpipe/trunk,
@@ -1104,35 +1104,33 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Xm" = (
 /obj/item/clothing/head/cone,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "XO" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/lavaland/surface/outdoors/explored)
 "Yf" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "YI" = (
 /obj/machinery/light/small,
 /obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
-/turf/open/floor/noslip{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 
 (1,1,1) = {"
@@ -1443,7 +1441,7 @@ aa
 "}
 (10,1,1) = {"
 aa
-Mv
+XO
 cc
 ye
 an
@@ -1546,9 +1544,9 @@ cc
 (13,1,1) = {"
 eE
 eE
-cc
-ye
-cc
+eE
+eE
+cu
 at
 ar
 aB
@@ -1579,10 +1577,10 @@ cc
 "}
 (14,1,1) = {"
 eE
+RW
 Xm
+eE
 cc
-cc
-ye
 an
 ar
 ar
@@ -1612,10 +1610,10 @@ ye
 cc
 "}
 (15,1,1) = {"
-eX
+eE
+RW
 RW
 LH
-ch
 ch
 au
 ar
@@ -1646,11 +1644,11 @@ ye
 cc
 "}
 (16,1,1) = {"
-RW
+os
+eX
 CB
 YI
 cc
-ye
 ao
 ar
 aJ
@@ -1680,10 +1678,10 @@ ye
 cc
 "}
 (17,1,1) = {"
+eE
 eX
 RW
 TD
-ch
 ch
 av
 ay
@@ -1716,9 +1714,9 @@ cc
 (18,1,1) = {"
 eE
 RW
+RW
+eE
 cc
-cc
-ye
 cc
 az
 az
@@ -1750,8 +1748,8 @@ cc
 (19,1,1) = {"
 eE
 eE
-cc
-ye
+eE
+eE
 ye
 cc
 az
@@ -1783,7 +1781,7 @@ cc
 "}
 (20,1,1) = {"
 aa
-Mv
+XO
 cc
 ye
 cc

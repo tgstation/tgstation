@@ -78,7 +78,7 @@
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
 
