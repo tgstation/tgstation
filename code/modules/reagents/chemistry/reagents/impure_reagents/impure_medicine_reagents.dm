@@ -56,7 +56,7 @@
 	tox_damage = 0.25
 	ph = 14
 	//Compensates for delta_time lag by spawning multiple hands at the end
-	var/lag_compensate = 0
+	var/lag_remainder = 0
 	//Keeps track of the hand timer so we can cleanup on removal
 	var/timer_id
 
@@ -69,9 +69,17 @@
 //Sends hands after you for your hubris
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	spawn_hands(owner)
-	lag_compensate += max(delta_time, 2) - 2
-	LAZYADD(timer_id, addtimer(CALLBACK(src, .proc/spawn_hands, owner), 1 SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
-	. = ..()
+	lag_remainder += delta_time - floor(delta_time)
+	delta_time = round(delta_time, 1)
+	if(lag_remainder >= 1)
+		delta_time += 1
+		lag_remainder -= 1
+	var/hands = 1
+	var/time = 2 / delta_time
+	while(hands < delta_time) //we already made a hand now so start from 1
+		LAZYADD(timer_id, addtimer(CALLBACK(src, .proc/spawn_hands, owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
+		hands += time
+	return ..()
 
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
 	if(!owner && iscarbon(holder.my_atom))//Catch timer
@@ -91,13 +99,13 @@
 
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 	var/hands = 0
-	while(lag_compensate > hands)
+	while(lag_remainder > hands)
 		spawn_hands(owner)
 		hands++
 	for(var/id in timer_id) // So that we can be certain that all timers are deleted at the end.
 		deltimer(id)
 		LAZYREMOVE(timer_id, id)
-	. = ..()
+	return ..()
 
 //libital
 //Impure
