@@ -257,7 +257,6 @@
 			var/network_name = CONFIG_GET(string/cross_comms_network)
 			if (network_name)
 				payload["network"] = network_name
-			payload["sender_ckey"] = usr.ckey
 
 			send2otherserver(station_name(), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 			minor_announce(message, title = "Outgoing message to allied station")
@@ -345,7 +344,7 @@
 				return
 
 			if(!SSid_access.spare_id_safe_code)
-				to_chat(usr, "<span class='warning'>There is no safe code to deliver to your station.!</span>")
+				to_chat(usr, "<span class='warning'>There is no safe code to deliver to your station!</span>")
 				return
 
 			var/turf/pod_location = get_turf(src)
@@ -359,17 +358,19 @@
 	var/list/data = list(
 		"authenticated" = FALSE,
 		"emagged" = FALSE,
-		"hasConnection" = has_communication(),
 	)
 
 	var/ui_state = issilicon(user) ? cyborg_state : state
 
-	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code)
+	var/has_connection = has_communication()
+	data["hasConnection"] = has_connection
+
+	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
 		data["canRequestSafeCode"] = TRUE
 		data["safeCodeDeliveryWait"] = 0
 	else
 		data["canRequestSafeCode"] = FALSE
-		if(SSjob.safe_code_timer_id)
+		if(SSjob.safe_code_timer_id && has_connection)
 			data["safeCodeDeliveryWait"] = timeleft(SSjob.safe_code_timer_id)
 			data["safeCodeDeliveryArea"] = get_area(SSjob.safe_code_request_loc)
 		else
