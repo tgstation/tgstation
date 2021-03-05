@@ -22,22 +22,22 @@
 
 	switch(length(source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]))
 		if(0)
-			var/datum/element/decal/D = source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]
-			if(!istype(D))
+			var/datum/element/decal/decal = source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]
+			if(!istype(decal))
 				return
-			old_decals += D
-			resulting_decals_params += list(D.get_rotated_parameters(old_dir,new_dir))
+			old_decals += decal
+			resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
 		else
-			for(var/datum/element/decal/D in source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
-				old_decals += D
-				resulting_decals_params += list(D.get_rotated_parameters(old_dir,new_dir))
+			for(var/datum/element/decal/decal in source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
+				old_decals += decal
+				resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
 
 	//Instead we could generate ids and only remove duplicates to save on churn on four-corners symmetry ?
-	for(var/datum/element/decal/D in old_decals)
-		D.Detach(source)
+	for(var/datum/element/decal/decal in old_decals)
+		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source._AddElement(result)
+		source.AddElement(result)
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -50,7 +50,7 @@
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _plane=FLOOR_PLANE, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
-	if(!isatom(target) || ( !_pic && !generate_appearance(_icon, _icon_state, _dir, _layer, _plane, _color, _alpha, target)))
+	if(!isatom(target) || (!_pic && !generate_appearance(_icon, _icon_state, _dir, _layer, _plane, _color, _alpha, target)))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
@@ -117,10 +117,10 @@
 
 	examine_list += description
 
-/datum/element/decal/proc/shuttle_move_react(datum/source, turf/newT)
+/datum/element/decal/proc/shuttle_move_react(datum/source, turf/new_turf)
 	SIGNAL_HANDLER
 
-	if(newT == source)
+	if(new_turf == source)
 		return
 	Detach(source)
-	newT.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional , cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
+	new_turf.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional, cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
