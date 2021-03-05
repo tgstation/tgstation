@@ -607,7 +607,7 @@
 	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
 		return FALSE
 	Shake(15, 15, 1 SECONDS)
-	COOLDOWN_START(src, charge_cooldown + 1.5 SECONDS, charge_frequency)
+	COOLDOWN_START(src, charge_cooldown, charge_frequency + 1.5 SECONDS)
 	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
 
 /**
