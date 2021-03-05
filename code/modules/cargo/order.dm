@@ -51,7 +51,7 @@
 	P.info += "Order #[id]<br/>"
 	P.info += "Time of Order: [station_time_timestamp()]<br/>"
 	P.info += "Item: [pack.name]<br/>"
-	P.info += "Access Restrictions: [get_access_desc(pack.access)]<br/>"
+	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	P.info += "Requested by: [orderer]<br/>"
 	if(paying_account)
 		P.info += "Paid by: [paying_account.account_holder]<br/>"

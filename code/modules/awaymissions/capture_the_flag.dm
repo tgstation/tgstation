@@ -567,6 +567,7 @@
 	no_drops += W
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 
 	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
@@ -586,7 +587,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	id = /obj/item/card/id/syndicate_command //it's red
+	id = /obj/item/card/id/advanced/black/syndicate_command //it's red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
@@ -597,7 +598,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
-	id = /obj/item/card/id/centcom //it's blue
+	id = /obj/item/card/id/advanced/centcom //it's blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
