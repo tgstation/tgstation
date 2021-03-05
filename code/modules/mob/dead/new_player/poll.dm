@@ -245,7 +245,7 @@
 				if(option.option_id == vote_id)
 					prepared_options += option
 					option_copy -= option
-		prepared_options += option_copy
+		prepared_options += shuffle(option_copy)
 	//otherwise just shuffle the options
 	else
 		prepared_options = shuffle(poll.options)
