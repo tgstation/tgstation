@@ -1288,6 +1288,7 @@
 	result = /obj/item/paper_bin/bundlenatural/crafted
 	reqs = list(/obj/item/stack/cable_coil = 2,
 				/obj/item/paper = 1)
+	blacklist = list(/obj/item/paper/carbon) //sprite too fat
 	time = 4 SECONDS
 	category = CAT_MISC
 
