@@ -114,7 +114,7 @@
 /datum/status_effect/blooddrunk/on_apply()
 	. = ..()
 	if(.)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk")
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.physiology.brute_mod *= 0.1
@@ -137,7 +137,7 @@
 		H.physiology.clone_mod *= 10
 		H.physiology.stamina_mod *= 10
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT);
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -225,13 +225,13 @@
 
 /datum/status_effect/hippocratic_oath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
 /datum/status_effect/hippocratic_oath/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
@@ -339,7 +339,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
@@ -350,7 +350,7 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/antimagic
 	id = "antimagic"
@@ -399,11 +399,11 @@
 
 /datum/status_effect/duskndawn/on_apply()
 	. = ..()
-	ADD_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
 
 /datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
 	return ..()
 
@@ -416,11 +416,11 @@
 
 /datum/status_effect/marshal/on_apply()
 	. = ..()
-	ADD_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/marshal/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/marshal/tick()
 	. = ..()
@@ -510,3 +510,24 @@
 	to_chat(owner, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
 	owner.log_message("exited a blood frenzy", LOG_ATTACK)
 	QDEL_NULL(chainsaw)
+
+/datum/status_effect/speed_boost
+	id = "speed_boost"
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/speed_boost/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	return ..()
+
+/datum/status_effect/speed_boost/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+
+/datum/movespeed_modifier/status_speed_boost
+	multiplicative_slowdown = -1
+

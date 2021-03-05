@@ -117,7 +117,7 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Due to proximity to our supply station, the cargo shuttle will have a quicker flight time to your cargo department/"
+	report_message = "Due to proximity to our supply station, the cargo shuttle will have a quicker flight time to your cargo department."
 	blacklist = list(/datum/station_trait/slow_shuttle)
 
 /datum/station_trait/quick_shuttle/on_round_start()

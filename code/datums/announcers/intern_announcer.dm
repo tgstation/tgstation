@@ -32,6 +32,7 @@
 						ANNOUNCER_GRANOMALIES = 'sound/ai/intern/granomalies.ogg',
 						ANNOUNCER_INTERCEPT = 'sound/ai/intern/intercept.ogg',
 						ANNOUNCER_IONSTORM = 'sound/ai/intern/ionstorm.ogg',
+						ANNOUNCER_METEORS = 'sound/ai/intern/meteors.ogg',
 						ANNOUNCER_OUTBREAK5 = 'sound/ai/intern/outbreak5.ogg',
 						ANNOUNCER_OUTBREAK7 = 'sound/ai/intern/outbreak7.ogg',
 						ANNOUNCER_POWEROFF = 'sound/ai/intern/poweroff.ogg',

@@ -23,6 +23,8 @@
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 	departments = DEPARTMENT_COMMAND
 
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
+
 /datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()
 	if(announce_captaincy)
