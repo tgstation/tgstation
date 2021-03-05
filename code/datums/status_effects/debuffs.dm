@@ -253,11 +253,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /atom/movable/screen/alert/status_effect/strandling
@@ -292,11 +292,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -636,14 +636,14 @@
 
 /datum/status_effect/gonbola_pacify/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
-	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
+	ADD_TRAIT(owner, TRAIT_MUTE, type)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
 	return ..()
 
@@ -670,7 +670,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
-	ADD_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
@@ -683,7 +683,7 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
@@ -952,14 +952,14 @@
 	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 	owner.overlays += mob_overlay
 	owner.update_appearance()
-	ADD_TRAIT(owner, TRAIT_BLIND, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	return TRUE
 
 /datum/status_effect/cloudstruck/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	REMOVE_TRAIT(owner, TRAIT_BLIND, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	if(owner)
 		owner.overlays -= mob_overlay
 		owner.update_appearance()
@@ -967,3 +967,22 @@
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()
 	QDEL_NULL(mob_overlay)
+
+/datum/status_effect/webbed
+	id = "webbed"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = -1
+	duration = 10 SECONDS
+	alert_type = null
+
+/datum/status_effect/webbed/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/webbed/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/webbed)
+	return ..()
+
+/datum/status_effect/webbed/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/webbed)

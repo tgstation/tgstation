@@ -149,6 +149,8 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 3
+	ranged = TRUE
+	projectiletype = /obj/projectile/spider
 	web_speed = 0.25
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 	///The health HUD applied to the mob.
@@ -207,16 +209,9 @@
 	gold_core_spawnable = NO_SPAWN
 	charger = TRUE
 	charge_distance = 4
-	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
+	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability tied to right click to close distance with a target after a small windup. Does not inject toxin."
 	///Whether or not the tarantula is currently walking on webbing.
 	var/silk_walking = TRUE
-	///The spider's charge ability
-	var/obj/effect/proc_holder/tarantula_charge/charge
-
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Initialize()
-	. = ..()
-	charge = new
-	AddAbility(charge)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()
@@ -227,6 +222,14 @@
 	else if(!web && silk_walking)
 		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 		silk_walking = FALSE
+
+/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/RangedAttack(atom/target, modifiers)
+	. = ..()
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(COOLDOWN_FINISHED(src, charge_cooldown))
+			INVOKE_ASYNC(src, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
+		else
+			to_chat(src, "<span class='notice'>Your charge is still on cooldown!</B></span>")
 
 /**
  * # Spider Viper
@@ -275,6 +278,8 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 3
+	ranged = TRUE
+	projectiletype = /obj/projectile/spider/poison
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 	///If the spider is trying to cocoon something, what that something is.
@@ -293,6 +298,8 @@
 	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
 	///The ability for the spider to send a message to all currently living spiders.
 	var/datum/action/innate/spider/comm/letmetalkpls
+	///How long it takes for a broodmother to lay eggs
+	var/egg_lay_time = 15 SECONDS
 
 /mob/living/simple_animal/hostile/poison/giant_spider/midwife/Initialize()
 	. = ..()
@@ -445,63 +452,6 @@
 /obj/effect/proc_holder/wrap/on_lose(mob/living/carbon/user)
 	remove_ranged_ability()
 
-/obj/effect/proc_holder/tarantula_charge
-	name = "Charge"
-	panel = "Spider"
-	active = FALSE
-	action = null
-	desc = "Charge at a target, knocking them down if you collide with them.  Stuns yourself if you fail."
-	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
-	action_icon = 'icons/mob/actions/actions_animal.dmi'
-	action_icon_state = "wrap_0"
-	action_background_icon_state = "bg_alien"
-
-/obj/effect/proc_holder/tarantula_charge/Initialize()
-	. = ..()
-	action = new(src)
-
-/obj/effect/proc_holder/tarantula_charge/update_icon()
-	action.button_icon_state = "wrap_[active]"
-	action.UpdateButtonIcon()
-	return ..()
-
-/obj/effect/proc_holder/tarantula_charge/Click()
-	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/tarantula))
-		return TRUE
-	var/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/user = usr
-	activate(user)
-	return TRUE
-
-/obj/effect/proc_holder/tarantula_charge/proc/activate(mob/living/user)
-	var/message
-	var/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/spider = user
-	if(active)
-		message = "<span class='notice'>You stop preparing to charge.</span>"
-		remove_ranged_ability(message)
-	else
-		if(!COOLDOWN_FINISHED(spider, charge_cooldown))
-			message = "<span class='notice'>Your charge is still on cooldown!</B></span>"
-			remove_ranged_ability(message)
-		message = "<span class='notice'>You prepare to charge. <B>Left-click your target to charge them!</B></span>"
-		add_ranged_ability(user, message, TRUE)
-		return 1
-
-/obj/effect/proc_holder/tarantula_charge/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
-		return
-	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/poison/giant_spider/tarantula))
-		remove_ranged_ability()
-		return
-
-	var/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/user = ranged_ability_user
-
-	INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
-	remove_ranged_ability()
-	return TRUE
-
-/obj/effect/proc_holder/tarantula_charge/on_lose(mob/living/carbon/user)
-	remove_ranged_ability()
-
 /datum/action/innate/spider/lay_eggs
 	name = "Lay Eggs"
 	desc = "Lay a cluster of eggs, which will soon grow into a normal spider."
@@ -534,7 +484,7 @@
 		spider.is_busy = TRUE
 		spider.visible_message("<span class='notice'>[spider] begins to lay a cluster of eggs.</span>","<span class='notice'>You begin to lay a cluster of eggs.</span>")
 		spider.stop_automated_movement = TRUE
-		if(do_after(spider, 100, target = get_turf(spider)))
+		if(do_after(spider, spider.egg_lay_time, target = get_turf(spider)))
 			if(spider.is_busy)
 				eggs = locate() in get_turf(spider)
 				if(!eggs || !isturf(spider.loc))
@@ -612,6 +562,34 @@
 	usr.log_talk(message, LOG_SAY, tag="spider command")
 
 /**
+ * # Web shot
+ *
+ * A projectile shot by spiders, doesn't deal damage but instead grants debuffs to those hit
+ */
+/obj/projectile/spider
+	name = "web spit"
+	nodamage = TRUE
+	damage = 0
+	icon_state = "web_spit"
+
+/obj/projectile/spider/on_hit(atom/target, blocked = FALSE)
+	if(isliving(target) && blocked < 100)
+		var/mob/living/l_target = target
+		l_target?.apply_status_effect(STATUS_EFFECT_WEBBED)
+	..()
+
+/obj/projectile/spider/poison
+	name = "poisonous web spit"
+	color = rgb(50,255, 50)
+
+/obj/projectile/spider/poison/on_hit(atom/target, blocked = FALSE)
+	..()
+	if(!iscarbon(target) || blocked == 100)
+		return
+	var/mob/living/carbon/carbon_target = target
+	carbon_target.reagents?.add_reagent(/datum/reagent/toxin, 5)
+
+/**
  * # Giant Ice Spider
  *
  * A giant spider immune to temperature damage.  Injects frost oil.
@@ -661,23 +639,6 @@
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Fast ice spider variant specializing in catching running prey, but has less health. Immune to temperature damage. Frost oil injection of 10u per bite."
-
-/**
- * # Scrawny Hunter Spider
- *
- * A hunter spider that trades damage for health, unable to smash enviroments.
- *
- * Mainly used as a minor threat in abandoned places, such as areas in maintenance or a ruin.
- */
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny
-	name = "scrawny spider"
-	environment_smash = 0
-	health = 60
-	maxHealth = 60
-	melee_damage_lower = 5
-	melee_damage_upper = 10
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
-	menu_description = "Fast spider variant specializing in catching running prey, but has less damage than a normal hunter spider at the cost of more health. Toxin injection of 10u per bite."
 
 /**
  * # Flesh Spider
