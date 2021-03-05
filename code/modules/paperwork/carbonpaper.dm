@@ -44,8 +44,8 @@
 		C.update_icon_state()
 		user.put_in_hands(Copy)
 
-/obj/item/paper/carbon/attack_hand(mob/living/user, list/modifiers)
-	if(loc == user && user.is_holding(src) && LAZYACCESS(modifiers, RIGHT_CLICK))
+/obj/item/paper/carbon/attack_hand_secondary(mob/user, list/modifiers)
+	if(loc == user && user.is_holding(src))
 		removecopy(user)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
