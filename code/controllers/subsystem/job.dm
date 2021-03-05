@@ -41,6 +41,12 @@ SUBSYSTEM_DEF(job)
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
+	/// Whether the emergency safe code has been requested via a comms console on shifts with no Captain or Acting Captain.
+	var/safe_code_requested = FALSE
+	/// Timer ID for the emergency safe code request.
+	var/safe_code_timer_id
+	/// The loc to which the emergency safe code has been requested for delivery.
+	var/turf/safe_code_request_loc
 	/// If TRUE, the "Captain" job will always be given the code to the spare ID safe and always have a "Captain on deck!" announcement.
 	var/always_promote_captain_job = TRUE
 
@@ -775,6 +781,18 @@ SUBSYSTEM_DEF(job)
 	var/safe_code = SSid_access.spare_id_safe_code
 
 	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
+	update_appearance()
+
+/obj/item/paper/fluff/emergency_spare_id_safe_code
+	name = "Emergency Spare ID Safe Code Requisition"
+	desc = "Proof that nobody has been approved for Captaincy. A skeleton key for a skeleton shift."
+
+/obj/item/paper/fluff/emergency_spare_id_safe_code/Initialize()
+	. = ..()
+	var/safe_code = SSid_access.spare_id_safe_code
+
+	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
+	update_appearance()
 
 /datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
 	var/id_safe_code = SSid_access.spare_id_safe_code
@@ -804,3 +822,9 @@ SUBSYSTEM_DEF(job)
 			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
 
 	assigned_captain = TRUE
+
+/// Send a drop pod containing a piece of paper with the spare ID safe code to loc
+/datum/controller/subsystem/job/proc/send_spare_id_safe_code(loc)
+	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/paper/fluff/emergency_spare_id_safe_code())
+	safe_code_timer_id = null
+	safe_code_request_loc = null
