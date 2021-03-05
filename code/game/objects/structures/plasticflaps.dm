@@ -39,6 +39,7 @@
 	to_chat(user, "<span class='notice'>You [anchored ? "unscrew" : "screw"] [src] from the floor.</span>")
 	return TRUE
 
+///Update the flaps behaviour to gases, if not anchored will let air pass through
 /obj/structure/plasticflaps/proc/update_atmos_behaviour()
 	if(anchored)
 		CanAtmosPass = ATMOS_PASS_NO
