@@ -238,8 +238,8 @@
 	var/list/prepared_options = list()
 	//if they've already voted we use the order they voted in plus a shuffle of any options they haven't voted for, if any
 	if(length(voted_for))
+		var/list/option_copy = poll.options.Copy()
 		for(var/vote_id in voted_for)
-			var/list/option_copy = poll.options.Copy()
 			for(var/o in option_copy)
 				var/datum/poll_option/option = o
 				if(option.option_id == vote_id)
