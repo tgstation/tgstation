@@ -116,55 +116,25 @@
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = " [message] "
-		message = replacetext(message," security ",pick(" coppers "," bobbies "))
-		message = replacetext(message," friend ",pick(" mate "," bruv "," lad "))
-		message = replacetext(message," great ",pick(" bangin' "," sound "))
-		message = replacetext(message," man ",pick(" mate "," mans "))
-		message = replacetext(message," isnt ",pick(" innit "," aint it "))
-		message = replacetext(message," dumb ",pick(" daft "," stupid "))
-		message = replacetext(message," idiot ",pick(" wanker "," tosser "," mong "," prick "))
-		message = replacetext(message," little ",pick(" tad "," wee "))
-		message = replacetext(message," credits ",pick(" pounds "," quid "))
-		message = replacetext(message," drunk ",pick(" shitfaced "," pissed "))
-		message = replacetext(message," fucking "," bloody ")
-		message = replacetext(message," dick "," knob ")
-		message = replacetext(message," dickhead "," bellend ")
-		message = replacetext(message," pussy "," fanny ")
-		message = replacetext(message," stupid "," daft ")
-		message = replacetext(message," looking at  ","  gawpin' at ")
-		message = replacetext(message," head "," dome ")
-		message = replacetext(message," bar "," pub ")
-		message = replacetext(message," water "," wa'er ")
-		message = replacetext(message," music "," tunes ")
-		message = replacetext(message," dissapointed "," gutted ")
-		message = replacetext(message," vacuum "," hoover ")
-		message = replacetext(message," sus "," dodgy ")
-		message = replacetext(message," sleep "," kip ")
-		message = replacetext(message," tired "," knackered ")
-		message = replacetext(message," fries "," chips ")
-		message = replacetext(message," chips "," crisps ")
-		message = replacetext(message," what "," wot ")
-		message = replacetext(message," robust "," chin ")
-		message = replacetext(message," what "," wot ")
-		message = replacetext(message," windows "," windies ")
-		message = replacetext(message," window "," windy ")
-		message = replacetext(message," break "," do ")
-		message = replacetext(message," your "," yer ")
-		message = replacetext(message," no "," naw ")
-		message = replacetext(message," mom "," mum ")
-		message = replacetext(message," man "," bloke ")
-		message = replacetext(message," hair "," mop ")
-		message = replacetext(message," nothing "," bugger all ")
-		message = replacetext(message," food "," scran ")
-		message = replacetext(message," tough "," big ")
-		if(prob(30))
-			message += "mate"
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+	SIGNAL_HANDLER
 
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/chav_words = strings("chav_replacement.json", "chav")
+
+		for(var/key in chav_words)
+			var/value = chav_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+		if(prob(30))
+			message += ", mate"
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 /datum/mutation/human/elvis
 	name = "Elvis"
