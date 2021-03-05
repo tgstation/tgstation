@@ -20,16 +20,16 @@
 		//should probably also unregister itself
 		return
 
-	if(!length(source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]))
+	if(length(source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]))
+		for(var/datum/element/decal/decal in source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
+			old_decals += decal
+			resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
+	else
 		var/datum/element/decal/decal = source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]
 		if(!istype(decal))
 			return
 		old_decals += decal
 		resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
-	else
-		for(var/datum/element/decal/decal in source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
-			old_decals += decal
-			resulting_decals_params += list(decal.get_rotated_parameters(old_dir,new_dir))
 
 	//Instead we could generate ids and only remove duplicates to save on churn on four-corners symmetry ?
 	for(var/datum/element/decal/decal in old_decals)
