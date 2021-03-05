@@ -679,7 +679,7 @@
 /datum/reagent/consumable/soy_latte
 	name = "Soy Latte"
 	description = "A nice and tasty beverage while you are reading your hippie books."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#cc6404" // rgb: 204,100,4
 	quality = DRINK_NICE
 	taste_description = "creamy coffee"
 	glass_icon_state = "soy_latte"
@@ -702,7 +702,7 @@
 /datum/reagent/consumable/cafe_latte
 	name = "Cafe Latte"
 	description = "A nice, strong and tasty beverage while you are reading."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#cc6404" // rgb: 204,100,4
 	quality = DRINK_NICE
 	taste_description = "bitter cream"
 	glass_icon_state = "cafe_latte"

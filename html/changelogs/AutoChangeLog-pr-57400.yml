@@ -1,5 +1,0 @@
-author: "mozi_h"
-delete-after: True
-changes: 
-  - qol: "Consistency: Right-click to remove paper from a folder (instead of Alt-click)"
-  - refactor: "Tidied up folder UI code"

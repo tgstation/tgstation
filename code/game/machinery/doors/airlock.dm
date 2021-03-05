@@ -57,6 +57,8 @@
 
 #define DOOR_CLOSE_WAIT 60 /// Time before a door closes, if not overridden
 
+#define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
+
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
@@ -191,7 +193,7 @@
 		cyclelinkedairlock = null
 	if (!cyclelinkeddir)
 		return
-	var/limit = world.view
+	var/limit = DOOR_VISION_DISTANCE
 	var/turf/T = get_turf(src)
 	var/obj/machinery/door/airlock/FoundDoor
 	do
@@ -1599,3 +1601,5 @@
 #undef AIRLOCK_DENY_ANIMATION_TIME
 
 #undef DOOR_CLOSE_WAIT
+
+#undef DOOR_VISION_DISTANCE

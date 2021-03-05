@@ -237,9 +237,9 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
-		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
 		icon_state = "memento_mori_active"
 		active_owner = user
 
