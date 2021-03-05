@@ -76,18 +76,14 @@
 	var/rifts_charged = 0
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
-	/// The innate ability to use wing gust
-	var/datum/action/innate/space_dragon/gust_attack/gust
 	/// The innate ability to summon rifts
-	var/datum/action/innate/space_dragon/summon_rift/rift
+	var/datum/action/innate/summon_rift/rift
 	/// The color of the space dragon.
 	var/chosen_color
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	gust = new
-	gust.Grant(src)
 	rift = new
 	rift.Grant(src)
 
@@ -152,6 +148,16 @@
 	if(istype(target, /obj/vehicle/sealed/mecha))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
+	
+/mob/living/simple_animal/hostile/space_dragon/RangedAttack(atom/target, modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(using_special)
+			return
+		using_special = TRUE
+		icon_state = "spacedragon_gust"
+		add_dragon_overlay()
+		useGust(0)
+	..()
 
 /mob/living/simple_animal/hostile/space_dragon/Move()
 	if(!using_special)
@@ -444,30 +450,14 @@
 	sleep(50)
 	SSshuttle.emergency.request(null, set_coefficient = 0.3)
 
-/datum/action/innate/space_dragon
+/datum/action/innate/summon_rift
+	name = "Summon Rift"
 	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_space_dragon.dmi'
-
-/datum/action/innate/space_dragon/gust_attack
-	name = "Gust Attack"
-	button_icon_state = "gust_attack"
-	desc = "Use your wings to knock back foes with gusts of air, pushing them away and stunning them.  Using this too often will leave you vulnerable for longer periods of time."
-
-/datum/action/innate/space_dragon/gust_attack/Activate()
-	var/mob/living/simple_animal/hostile/space_dragon/S = owner
-	if(S.using_special)
-		return
-	S.using_special = TRUE
-	S.icon_state = "spacedragon_gust"
-	S.add_dragon_overlay()
-	S.useGust(0)
-
-/datum/action/innate/space_dragon/summon_rift
-	name = "Summon Rift"
 	button_icon_state = "carp_rift"
 	desc = "Summon a rift to bring forth a horde of space carp."
 
-/datum/action/innate/space_dragon/summon_rift/Activate()
+/datum/action/innate/summon_rift/Activate()
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return
