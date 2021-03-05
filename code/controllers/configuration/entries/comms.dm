@@ -26,7 +26,7 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/hell
-	protection = CONFIG_ENTRY_LOCKED // no trying to hotswap the config to shoot people to citadel, that's too cruel even for us
+	default = "byond://terry.tgstation13.org:3336"
 
 /datum/config_entry/string/the_abyss
-	protection = CONFIG_ENTRY_LOCKED
+	default = "byond://campbell.tgstation13.org:6337"

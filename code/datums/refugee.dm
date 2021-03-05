@@ -31,4 +31,5 @@
 	var/obj/machinery/mass_driver/typical_driver = /obj/machinery/mass_driver
 	var/throw_speed = initial(typical_driver.power)
 	new_body.throw_at(pickedgoal, 50, throw_speed)
+	priority_announce("Our scanners are picking up what appears to be a person being flung at your station at high speeds. Please do your best to make sure they don't get their grubby hands on anything.", sender_override = "Nanotrasen Department of Spacings")
 	qdel(src)

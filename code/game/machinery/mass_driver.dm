@@ -49,9 +49,9 @@
 				break
 			use_power(500)
 			if(isliving(O))
-				var/mob/living/possible_exhilee = O
-				if(possible_exhilee.client)
-					possible_exhilee.AddComponent(/datum/component/exhile, dir)
+				var/mob/living/possible_exilee = O
+				if(possible_exilee.client)
+					possible_exilee.AddComponent(/datum/component/exile, dir)
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 

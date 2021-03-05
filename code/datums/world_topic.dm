@@ -190,11 +190,11 @@
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
 
-/datum/world_topic/incoming_exhile
-	keyword = "incoming_exhile"
+/datum/world_topic/incoming_exile
+	keyword = "incoming_exile"
 	require_comms_key = TRUE
 
-/datum/world_topic/incoming_exhile/Run(list/input)
+/datum/world_topic/incoming_exile/Run(list/input)
 	var/exp_ckey = input["expected_ckey"]
 	var/force_name = input["name"]
 	var/launching_dir = input["dir"]
