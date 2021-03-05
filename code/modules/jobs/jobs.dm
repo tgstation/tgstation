@@ -61,7 +61,8 @@ GLOBAL_LIST_INIT(security_sub_positions, list(
 	"Security Officer (Cargo)",
 	"Security Officer (Engineering)",
 	"Security Officer (Medical)",
-	"Security Officer (Science)",))
+	"Security Officer (Science)",
+))
 
 GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"AI",
