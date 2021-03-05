@@ -2988,6 +2988,7 @@
 #include "code\modules\reagents\chemistry\items.dm"
 #include "code\modules\reagents\chemistry\reagents.dm"
 #include "code\modules\reagents\chemistry\recipes.dm"
+#include "code\modules\reagents\chemistry\machinery\centrifuge.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_dispenser.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_heater.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_master.dm"

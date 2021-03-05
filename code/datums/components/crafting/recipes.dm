@@ -1287,5 +1287,23 @@
 			)
 	category = CAT_CHEMISTRY
 
+/datum/crafting_recipe/improvised_centrifuge
+	name = "Makeshift centrifuge"
+	result = /obj/machinery/centrifuge
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH)
+	time = 25 SECONDS
+	reqs = list(
+				/obj/item/stack/cable_coil = 5,
+				/obj/item/reagent_containers/glass/beaker = 2,
+				/obj/item/stack/sheet/iron = 2,
+				/obj/item/pipe = 2
+				)
+	parts = list(
+				/obj/item/reagent_containers/glass/beaker = 2)
+	machinery = list(/obj/machinery/washing_machine = CRAFTING_MACHINERY_CONSUME)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/improvised_centrifuge/on_craft_completion(mob/user, atom/result)
+
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE
