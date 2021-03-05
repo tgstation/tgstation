@@ -231,7 +231,7 @@
 	else
 		missiondesc += " Follow orders given to you by your squad leader."
 	if(!rip_and_tear)
-		missiondesc += "Avoid civilian casualties when possible."
+		missiondesc += " Avoid civilian casualties when possible."
 
 	missiondesc += "<BR><B>Your Mission</B> : [ert_team.mission.explanation_text]"
 	to_chat(owner,missiondesc)

@@ -10,8 +10,6 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
 	var/mob/living/carbon/human/gunner = allocate(/mob/living/carbon/human)
 
-	ADD_TRAIT(victim, TRAIT_RESISTLOWPRESSURE, INNATE_TRAIT) // so pressure damage doesn't throw off our damage check
-
 	var/obj/item/ammo_casing/loaded_casing = test_gun.chambered
 	TEST_ASSERT(loaded_casing, "Gun started without round chambered, should be loaded")
 	var/obj/projectile/loaded_bullet = loaded_casing.loaded_projectile
