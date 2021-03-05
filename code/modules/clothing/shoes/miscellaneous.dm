@@ -72,7 +72,7 @@
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
-	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
+	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
 
 /obj/item/clothing/shoes/galoshes/dry/Initialize()
@@ -346,7 +346,7 @@
 	else
 		worn_icon_state = "[initial(icon_state)]"
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(wheels)
@@ -513,6 +513,11 @@
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = "JackFrostShoes_worn"
+/obj/item/clothing/shoes/swagshoes
+	name = "swag shoes"
+	desc = "They got me for my foams!"
+	icon_state = "SwagShoes"
+	inhand_icon_state = "SwagShoes"
 
 /obj/item/clothing/shoes/gunboots //admin boots that fire gunshots randomly while walking
 	name = "gunboots"

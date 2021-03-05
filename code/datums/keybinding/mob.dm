@@ -20,36 +20,6 @@
 		M.stop_pulling()
 	return TRUE
 
-/datum/keybinding/mob/cycle_intent_right
-	hotkey_keys = list("Northwest") // HOME
-	name = "cycle_intent_right"
-	full_name = "cycle intent right"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTRIGHT_DOWN
-
-/datum/keybinding/mob/cycle_intent_right/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.a_intent_change(INTENT_HOTKEY_RIGHT)
-	return TRUE
-
-/datum/keybinding/mob/cycle_intent_left
-	hotkey_keys = list("Insert")
-	name = "cycle_intent_left"
-	full_name = "cycle intent left"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTLEFT_DOWN
-
-/datum/keybinding/mob/cycle_intent_left/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.a_intent_change(INTENT_HOTKEY_LEFT)
-	return TRUE
-
 /datum/keybinding/mob/swap_hands
 	hotkey_keys = list("X", "Northeast") // PAGEUP
 	name = "swap_hands"

@@ -120,7 +120,7 @@ This file contains the cult dagger and rune list code
 		if(!(A in summon_objective.summon_spots))  // Check again to make sure they didn't move
 			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
 			return
-		priority_announce("Figments from an eldritch god are being summoned by [user] into [initial(A.name)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
+		priority_announce("Figments from an eldritch god are being summoned by [user] into [initial(A.name)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES)
 		for(var/B in spiral_range_turfs(1, user, 1))
 			var/obj/structure/emergency_shield/cult/narsie/N = new(B)
 			shields += N
@@ -158,7 +158,7 @@ This file contains the cult dagger and rune list code
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
 	var/area/A = get_area(T)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.area_flags & CULT_PERMITTED)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return TRUE

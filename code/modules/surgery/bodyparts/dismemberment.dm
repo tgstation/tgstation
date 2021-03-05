@@ -137,12 +137,12 @@
 	phantom_owner.update_body()
 	phantom_owner.update_hair()
 
-	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!Tsec) // Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
 	if(is_pseudopart)
-		drop_organs(phantom_owner)	//Psuedoparts shouldn't have organs, but just in case
+		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 		return
 
@@ -191,8 +191,7 @@
 
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new
-		dismembering.apply_dismember(src, wounding_type)
-		return TRUE
+		return dismembering.apply_dismember(src, wounding_type)
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
@@ -200,7 +199,7 @@
 	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	Remove(C)	//Changeling brain concerns are now handled in Remove
+	Remove(C) //Changeling brain concerns are now handled in Remove
 	forceMove(LB)
 	LB.brain = src
 	if(brainmob)
@@ -237,7 +236,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 			if(R)
-				R.update_icon()
+				R.update_appearance()
 		if(C.gloves)
 			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -255,7 +254,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 			if(L)
-				L.update_icon()
+				L.update_appearance()
 		if(C.gloves)
 			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -342,7 +341,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
-				hand.update_icon()
+				hand.update_appearance()
 		C.update_inv_gloves()
 
 	if(special) //non conventional limb attachment
@@ -415,8 +414,7 @@
 		H.hairstyle = hairstyle
 		H.facial_hair_color = facial_hair_color
 		H.facial_hairstyle = facial_hairstyle
-		H.lip_style = lip_style
-		H.lip_color = lip_color
+		H.update_lips(lip_style, lip_color, stored_lipstick_trait)
 	if(real_name)
 		C.real_name = real_name
 	real_name = ""

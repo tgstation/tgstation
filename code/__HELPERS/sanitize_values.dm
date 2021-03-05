@@ -68,11 +68,11 @@
 		char = color[i]
 		i += length(char)
 		switch(text2ascii(char))
-			if(48 to 57)		//numbers 0 to 9
+			if(48 to 57) //numbers 0 to 9
 				. += char
-			if(97 to 102)		//letters a to f
+			if(97 to 102) //letters a to f
 				. += char
-			if(65 to 70)		//letters A to F
+			if(65 to 70) //letters A to F
 				char = lowertext(char)
 				. += char
 			else

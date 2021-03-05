@@ -1,4 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "Monkeys are no longer able to hold items that require two hands."

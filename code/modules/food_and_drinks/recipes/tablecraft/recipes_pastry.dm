@@ -432,16 +432,6 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/chawanmushi
-	name = "Chawanmushi"
-	reqs = list(
-		/datum/reagent/water = 5,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/boiledegg = 2,
-		/obj/item/food/grown/mushroom/chanterelle = 1
-	)
-	result = /obj/item/food/chawanmushi
-	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -470,7 +460,7 @@
 	name = "Khachapuri"
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
@@ -493,7 +483,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/paper = 1
 	)
-	parts =	list(
+	parts = list(
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie

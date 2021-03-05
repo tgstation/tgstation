@@ -236,7 +236,7 @@
 			our_alert = our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied)
 
 
-/obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user)
+/obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!istype(user))
 		return ..()
 	if(loc == user && tied != SHOES_TIED && (user.mobility_flags & MOBILITY_USE))

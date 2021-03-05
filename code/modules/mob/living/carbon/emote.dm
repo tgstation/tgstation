@@ -42,7 +42,7 @@
 	cooldown = 6 SECONDS
 
 /datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
-	if(user.usable_hands < 2)
+	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
 /datum/emote/living/carbon/moan
@@ -112,6 +112,7 @@
 	key = "slap"
 	key_third_person = "slaps"
 	hands_use_check = TRUE
+	cooldown = 3 SECONDS // to prevent endless table slamming
 
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

@@ -3,6 +3,7 @@
 	desc = "Immortalized cast iron, the steel-like teeth holding it in place, it's vile extract has the power of rebirthing things, remaking them from the very beginning."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "crucible"
+	base_icon_state = "crucible"
 	anchored = FALSE
 	density = TRUE
 	///How much mass this currently holds
@@ -61,7 +62,7 @@
 
 	return ..()
 
-/obj/structure/eldritch_crucible/attack_hand(mob/user)
+/obj/structure/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	if(!IS_HERETIC(user) && !IS_HERETIC_MONSTER(user))
 		if(iscarbon(user))
 			devour(user)
@@ -100,36 +101,39 @@
 	update_icon_state()
 
 /obj/structure/eldritch_crucible/update_icon_state()
-	. = ..()
-	if(current_mass == max_mass)
-		icon_state = "crucible"
-	else
-		icon_state = "crucible_empty"
+	icon_state = "[base_icon_state][(current_mass == max_mass) ? null : "_empty"]"
+	return ..()
 
 /obj/structure/trap/eldritch
 	name = "elder carving"
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
 	icon = 'icons/obj/eldritch.dmi'
 	charges = 1
-	/// Weakref containing the owner of the trap
-	var/datum/weakref/owner
+	/// Reference to trap owner mob
+	var/mob/owner
 
 /obj/structure/trap/eldritch/Crossed(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
 	var/mob/living/living_mob = AM
-	if(living_mob == owner?.resolve() || IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+	if(living_mob == owner || IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
 		return
 	return ..()
 
 /obj/structure/trap/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I,/obj/item/melee/rune_knife) || istype(I,/obj/item/nullrod))
+	if(istype(I,/obj/item/melee/rune_carver) || istype(I,/obj/item/nullrod))
 		qdel(src)
 
 ///Proc that sets the owner
-/obj/structure/trap/eldritch/proc/set_owner(mob/owner)
-	src.owner = WEAKREF(owner)
+/obj/structure/trap/eldritch/proc/set_owner(mob/new_owner)
+	owner = new_owner
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/unset_owner)
+
+///Unsets the owner in case of deletion
+/obj/structure/trap/eldritch/proc/unset_owner()
+	SIGNAL_HANDLER
+	owner = null
 
 /obj/structure/trap/eldritch/alert
 	name = "alert carving"

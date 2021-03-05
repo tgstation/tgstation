@@ -14,7 +14,7 @@
 	/// Skill description shown on UI
 	var/skill_description
 	/// Category string. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
-	var/chip_category = "general"
+	var/chip_category = SKILLCHIP_CATEGORY_GENERAL
 	/// List of any incompatible categories.
 	var/list/incompatibility_list
 	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
@@ -433,3 +433,27 @@
 	skill_icon = "lungs"
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/quickcarry
+	name = "Ant Hauler skillchip"
+	auto_traits = list(TRAIT_QUICK_CARRY)
+	skill_name = "Ant Hauler"
+	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
+	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
+	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
+	skill_description = "Discover various lifting techniques to more accurately and quickly lift someone up into a fireman carry."
+	skill_icon = "hand-holding"
+	activate_message = "<span class='notice'>You feel like you can easily lift and carry people around.</span>"
+	deactivate_message = "<span class='notice'>Your skill at lifting people into a fireman carry fades from your mind.</span>"
+
+/obj/item/skillchip/quickercarry
+	name = "RES-Q skillchip"
+	auto_traits = list(TRAIT_QUICKER_CARRY)
+	skill_name = "RES-Q"
+	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
+	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
+	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
+	skill_description = "Learn how to fireman carry like a professional, and haul the injured, sick or dying with speed!"
+	skill_icon = "hand-holding"
+	activate_message = "<span class='notice'>Carrying people across your back feels like second nature to you.</span>"
+	deactivate_message = "<span class='notice'>Your expert knowledge in fireman carrying fades from your mind.</span>"

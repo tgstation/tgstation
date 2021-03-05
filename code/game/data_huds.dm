@@ -363,7 +363,7 @@ Diagnostic HUDs!
 		holder.icon_state = null
 	else if(deployed) //AI shell in use by an AI
 		holder.icon_state = "hudtrackingai"
-	else	//Empty AI shell
+	else //Empty AI shell
 		holder.icon_state = "hudtracking"
 
 //AI side tracking of AI shell control

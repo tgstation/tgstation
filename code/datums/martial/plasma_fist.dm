@@ -10,6 +10,7 @@
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 	var/plasma_increment = 1 //how much explosion power gets added per kill (1 = 1, 2, 4. 2 = 2, 4, 8 and so on)
 	var/plasma_cap = 12 //max size explosion level
+	display_combos = TRUE
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,TORNADO_COMBO))

@@ -163,10 +163,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")
 			return
-	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
+	else if(istype(I, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = I
 		if(M.get_amount() < 6)
-			to_chat(user, "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>")
+			to_chat(user, "<span class='warning'>You need at least six iron sheets to make good enough weights!</span>")
 			return
 		to_chat(user, "<span class='notice'>You begin to apply [I] to [src]...</span>")
 		if(do_after(user, 35, target = src))
@@ -227,10 +227,11 @@
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/restraints/legcuffs/beartrap/update_icon_state()
 	icon_state = "[initial(icon_state)][armed]"
+	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -242,12 +243,12 @@
 	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	armed = !armed
-	update_icon()
+	update_appearance()
 	to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
-	update_icon()
+	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
@@ -305,7 +306,7 @@
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
-/obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
+/obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
 	Crossed(user) //honk
 	return ..()
 

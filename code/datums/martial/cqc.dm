@@ -12,6 +12,7 @@
 	smashes_tables = TRUE
 	var/old_grab_state = null
 	var/restraining = FALSE
+	display_combos = TRUE
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
 	. = ..()
@@ -120,7 +121,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
-	if(A.a_intent == INTENT_GRAB && A!=D && can_use(A)) // A!=D prevents grabbing yourself
+	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
@@ -224,7 +225,7 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-	var/list/valid_areas = list(/area/crew_quarters/kitchen)
+	var/list/valid_areas = list(/area/service/kitchen)
 
 ///Prevents use if the cook is not in the kitchen.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/owner) //this is used to make chef CQC only work in kitchen

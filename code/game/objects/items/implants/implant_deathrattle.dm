@@ -40,6 +40,8 @@
 	UnregisterSignal(source, COMSIG_MOB_STATCHANGE)
 
 /datum/deathrattle_group/proc/on_implant_destruction(obj/item/implant/implant)
+	SIGNAL_HANDLER
+
 	implants -= implant
 
 /datum/deathrattle_group/proc/on_user_statchange(mob/living/owner, new_stat)
@@ -50,6 +52,14 @@
 
 	var/name = owner.mind ? owner.mind.name : owner.real_name
 	var/area = get_area_name(get_turf(owner))
+	// All "hearers" hear the same sound.
+	var/sound = pick(
+		'sound/items/knell1.ogg',
+		'sound/items/knell2.ogg',
+		'sound/items/knell3.ogg',
+		'sound/items/knell4.ogg',
+	)
+
 
 	for(var/_implant in implants)
 		var/obj/item/implant/deathrattle/implant = _implant
@@ -59,7 +69,9 @@
 			continue
 
 		// Deliberately the same message framing as nanite message + ghost deathrattle
-		to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'><b>[name]</b> has died at <b>[area]</b>.</span>\"")
+		var/mob/living/recipient = implant.imp_in
+		to_chat(recipient, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'><b>[name]</b> has died at <b>[area]</b>.</span>\"")
+		recipient.playsound_local(get_turf(recipient), sound, vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /obj/item/implant/deathrattle
 	name = "deathrattle implant"

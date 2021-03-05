@@ -1,17 +1,17 @@
 GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
 
 /atom/movable/openspace_backdrop
-	name			= "openspace_backdrop"
+	name = "openspace_backdrop"
 
-	anchored		= TRUE
+	anchored = TRUE
 
 	icon            = 'icons/turf/floors.dmi'
 	icon_state      = "grey"
 	plane           = OPENSPACE_BACKDROP_PLANE
-	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer           = SPLASHSCREEN_LAYER
 	//I don't know why the others are aligned but I shall do the same.
-	vis_flags		= VIS_INHERIT_ID
+	vis_flags = VIS_INHERIT_ID
 
 /turf/open/openspace
 	name = "open space"
@@ -21,7 +21,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	CanAtmosPassVertical = ATMOS_PASS_YES
 	baseturfs = /turf/open/openspace
 	intact = FALSE //this means wires go on top
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -109,12 +109,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		else
 			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
 		return
-	if(istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/iron))
 		if(!CanCoverUp())
 			return
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
+			var/obj/item/stack/tile/iron/S = C
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
@@ -123,7 +123,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+			to_chat(user, "<span class='warning'>The plating is going to need some support! Place iron rods first.</span>")
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
@@ -152,17 +152,27 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+	/// Replaces itself with replacement_turf if the turf below this one is in a no ruins allowed area (usually ruins themselves)
+	var/protect_ruin = TRUE
+	/// If true mineral turfs below this openspace turf will be mined automatically
+	var/drill_below = TRUE
 
 /turf/open/openspace/icemoon/Initialize()
 	. = ..()
 	var/turf/T = below()
-	if(T.flags_1 & NO_RUINS_1)
+	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return
-	if(!ismineralturf(T))
+	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
 	M.mineralAmt = 0
 	M.gets_drilled()
 	baseturfs = /turf/open/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
 
+/turf/open/openspace/icemoon/keep_below
+	drill_below = FALSE
+
+/turf/open/openspace/icemoon/ruins
+	protect_ruin = FALSE
+	drill_below = FALSE

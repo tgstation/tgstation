@@ -154,53 +154,6 @@
 /datum/nanite_program/metabolic_synthesis/active_effect()
 	host_mob.adjust_nutrition(-0.5)
 
-/datum/nanite_program/research
-	name = "Distributed Computing"
-	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
-	use_rate = 0.2
-	rogue_types = list(/datum/nanite_program/toxic)
-
-/datum/nanite_program/research/active_effect()
-	if(!iscarbon(host_mob))
-		return
-	var/points = 1
-	if(!host_mob.client) //less brainpower
-		points *= 0.25
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
-
-/datum/nanite_program/researchplus
-	name = "Neural Network"
-	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts."
-	use_rate = 0.3
-	rogue_types = list(/datum/nanite_program/brain_decay)
-
-/datum/nanite_program/researchplus/enable_passive_effect()
-	. = ..()
-	if(!iscarbon(host_mob))
-		return
-	if(host_mob.client)
-		SSnanites.neural_network_count++
-	else
-		SSnanites.neural_network_count += 0.25
-
-/datum/nanite_program/researchplus/disable_passive_effect()
-	. = ..()
-	if(!iscarbon(host_mob))
-		return
-	if(host_mob.client)
-		SSnanites.neural_network_count--
-	else
-		SSnanites.neural_network_count -= 0.25
-
-/datum/nanite_program/researchplus/active_effect()
-	if(!iscarbon(host_mob))
-		return
-	var/mob/living/carbon/C = host_mob
-	var/points = round(SSnanites.neural_network_count / 12, 0.1)
-	if(!C.client) //less brainpower
-		points *= 0.25
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
-
 /datum/nanite_program/access
 	name = "Subdermal ID"
 	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
@@ -313,16 +266,14 @@
 /datum/nanite_program/dermal_button/register_extra_settings()
 	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(1, 1, 9999)
 	extra_settings[NES_BUTTON_NAME] = new /datum/nanite_extra_setting/text("Button")
-	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("one","two","three","four","five","plus","minus","power"))
-	extra_settings[NES_COLOR] = new /datum/nanite_extra_setting/type("green", list("green","red","yellow","blue"))
+	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("blank","one","two","three","four","five","plus","minus","exclamation","question","cross","info","heart","skull","brain","brain_damage","injection","blood","shield","reaction","network","power","radioactive","electricity","magnetism","scan","repair","id","wireless","say","sleep","bomb"))
 
 /datum/nanite_program/dermal_button/enable_passive_effect()
 	. = ..()
 	var/datum/nanite_extra_setting/bn_name = extra_settings[NES_BUTTON_NAME]
 	var/datum/nanite_extra_setting/bn_icon = extra_settings[NES_ICON]
-	var/datum/nanite_extra_setting/bn_color = extra_settings[NES_COLOR]
 	if(!button)
-		button = new(src, bn_name.get_value(), bn_icon.get_value(), bn_color.get_value())
+		button = new(src, bn_name.get_value(), bn_icon.get_value())
 	button.target = host_mob
 	button.Grant(host_mob)
 
@@ -346,14 +297,14 @@
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
-	button_icon_state = "power_green"
+	button_icon_state = "nanite_power"
 	var/datum/nanite_program/dermal_button/program
 
-/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
+/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon)
 	..()
 	program = _program
 	name = _name
-	button_icon_state = "[_icon]_[_color]"
+	button_icon_state = "nanite_[_icon]"
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()

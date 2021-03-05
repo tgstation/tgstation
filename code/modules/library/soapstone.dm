@@ -90,7 +90,7 @@
 as instructions and/or memes for the next generation of spessmen.
 
 Limited in location to station_z only. Can be smashed out or exploded,
-but only permamently removed with the curator's soapstone.
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -150,10 +150,10 @@ but only permamently removed with the curator's soapstone.
 	creator_key = user.ckey
 	realdate = world.realtime
 	map = SSmapping.config.map_name
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/update_icon()
-	..()
+	. = ..()
 	var/hash = md5(hidden_message)
 	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
@@ -195,7 +195,7 @@ but only permamently removed with the curator's soapstone.
 	var/turf/newloc = locate(x, y, z)
 	if(isturf(newloc))
 		forceMove(newloc)
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/examine(mob/user)
 	. = ..()

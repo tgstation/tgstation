@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(mining_ambience,list(
 	'sound/ambience/ambiruin5.ogg', 'sound/ambience/ambiruin6.ogg',
 	'sound/ambience/ambiruin7.ogg', 'sound/ambience/ambidanger.ogg',
 	'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint1.ogg',
-	'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg', 
+	'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg',
 	'sound/ambience/ambilava3.ogg'))
 
 GLOBAL_LIST_INIT(medical_ambience,list('sound/ambience/ambinice.ogg'))

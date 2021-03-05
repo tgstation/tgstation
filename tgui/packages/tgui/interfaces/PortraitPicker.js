@@ -15,19 +15,23 @@ export const PortraitPicker = (props, context) => {
   const TABS = [
     {
       name: 'Common Portraits',
+      asset_prefix: "library",
       list: library,
     },
     {
       name: 'Secure Portraits',
+      asset_prefix: "library_secure",
       list: library_secure,
     },
     {
       name: 'Private Portraits',
+      asset_prefix: "library_private",
       list: library_private,
     },
   ];
   const tab2list = TABS[tabIndex].list;
-  const current_portrait = tab2list[listIndex]["title"];
+  const current_portrait_title = tab2list[listIndex]["title"];
+  const current_portrait_asset_name = TABS[tabIndex].asset_prefix + "_" + tab2list[listIndex]["md5"];
   return (
     <Window
       theme="ntos"
@@ -62,7 +66,7 @@ export const PortraitPicker = (props, context) => {
                 direction="column">
                 <Flex.Item>
                   <img
-                    src={resolveAsset(current_portrait)}
+                    src={resolveAsset(current_portrait_asset_name)}
                     height="96px"
                     width="96px"
                     style={{
@@ -71,7 +75,7 @@ export const PortraitPicker = (props, context) => {
                     }} />
                 </Flex.Item>
                 <Flex.Item className="Section__titleText">
-                  {current_portrait}
+                  {current_portrait_title}
                 </Flex.Item>
               </Flex>
             </Section>

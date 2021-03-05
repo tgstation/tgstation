@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(traumas)
 		"birds"            = construct_phobia_regex("birds"),
 		"falling"          = construct_phobia_regex("falling"),
 		"anime"            = construct_phobia_regex("anime"),
-		"insects"			 = construct_phobia_regex("insects"),
+		"insects"  = construct_phobia_regex("insects"),
 	)
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
 			/obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
 			/obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
-			/obj/machinery/door/airlock/centcom,
+			/obj/machinery/door/airlock/centcom, /obj/machinery/atmospherics/miner,
 		)),
 
 		"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
@@ -122,8 +122,8 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/rnd/research_director,
 			/obj/item/clothing/under/rank/medical/chief_medical_officer, /obj/item/clothing/under/rank/engineering/chief_engineer,
 			/obj/item/clothing/under/rank/centcom/officer, /obj/item/clothing/under/rank/centcom/commander,
-			/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/silver, /obj/item/card/id/gold,
-			/obj/item/card/id/captains_spare, /obj/item/card/id/centcom, /obj/machinery/door/airlock/command,
+			/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/advanced/silver, /obj/item/card/id/advanced/gold,
+			/obj/item/card/id/advanced/centcom, /obj/machinery/door/airlock/command, /obj/item/card/id/advanced/black,
 		)),
 
 		"the supernatural"  = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome,
@@ -178,7 +178,7 @@ SUBSYSTEM_DEF(traumas)
 	)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
-		"the supernatural" = typecacheof(list(/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
+		"the supernatural" = typecacheof(list(/turf/open/floor/iron/cult, /turf/closed/wall/mineral/cult)),
 		"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 			/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor
 		)),

@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "The new ID card system no longer ignores server config settings and will respect lowpop/highpop access settings in the config. This mean that highpop shifts no longer grant players lowpop access levels when the appropriate config entries are set."
+  - config: "As I am happy with the status quo, the headmins have agreed to disable the config entry that was being ignored due to the above bug. Players should not notice any new roundstart ID access changes by the time they're reading this changelog entry and will hopefully start with maximum job access at any population level because it is intended, rather than because of a bug."

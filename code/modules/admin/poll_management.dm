@@ -482,7 +482,7 @@
  */
 /datum/admins/proc/poll_option_panel(datum/poll_question/poll, datum/poll_option/option)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
-	output += {"<input type='hidden' name='src' value='[REF(src)]'>	Option for poll [poll.question]
+	output += {"<input type='hidden' name='src' value='[REF(src)]'> Option for poll [poll.question]
 	<br>
 	<textarea class='textbox' name='optiontext'>[option?.text]</textarea>
 	<br>

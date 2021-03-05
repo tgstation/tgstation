@@ -10,8 +10,8 @@
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
 	speak_emote = list("growls")
-	speed = 12
-	move_to_delay = 12
+	speed = 3
+	move_to_delay = 8
 	maxHealth = 300
 	health = 300
 	obj_damage = 40
@@ -28,7 +28,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/bear = 3, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 1)
 	loot = list()
-	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
+	crusher_loot = /obj/item/crusher_trophy/bear_paw
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -45,11 +45,11 @@
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/Life()
+/mob/living/simple_animal/hostile/asteroid/polarbear/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-maxHealth*0.025)
+	adjustHealth(-0.0125 * maxHealth * delta_time)
 	aggressive_message_said = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/death(gibbed)
@@ -62,3 +62,20 @@
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
 	faction = list("neutral")
+
+/obj/item/crusher_trophy/bear_paw
+	name = "polar bear paw"
+	desc = "It's a polar bear paw."
+	icon_state = "bear_paw"
+	denied_type = /obj/item/crusher_trophy/bear_paw
+
+/obj/item/crusher_trophy/bear_paw/effect_desc()
+	return "mark detonation to attack twice if you are below half your life"
+
+/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
+	if(user.health / user.maxHealth > 0.5)
+		return
+	var/obj/item/I = user.get_active_held_item()
+	if(!I)
+		return
+	I.melee_attack_chain(user, target, null)

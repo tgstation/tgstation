@@ -131,10 +131,11 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
+					log_codex_ciatrix("[key_name(last_user)] gained knowledge of [EK]")
 					charge -= initial(EK.cost)
 					return TRUE
 
-	update_icon() // Not applicable to all objects.
+	update_appearance() // Not applicable to all objects.
 
 /obj/item/forbidden_book/ui_close(mob/user)
 	flick("book_closing",src)

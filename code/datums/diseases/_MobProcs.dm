@@ -20,8 +20,7 @@
 	if(!(D.infectable_biotypes & mob_biotypes))
 		return FALSE
 
-
-	if(!(type in D.viable_mobtypes))
+	if(!D.is_viable_mobtype(type))
 		return FALSE
 
 	return TRUE

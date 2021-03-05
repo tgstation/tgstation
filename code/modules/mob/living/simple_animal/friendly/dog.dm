@@ -28,57 +28,60 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/pet/dog/Life()
+/mob/living/simple_animal/pet/dog/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = FALSE
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = FALSE
-				for(var/obj/item/potential_snack in oview(src,3))
-					if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
-						movement_target = potential_snack
-						break
-			if(movement_target)
-				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
+	if(stat || resting || buckled)
+		return
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					var/turf/T = get_turf(movement_target)
-					if(!T)
-						return
-					if (T.x < src.x)
-						setDir(WEST)
-					else if (T.x > src.x)
-						setDir(EAST)
-					else if (T.y < src.y)
-						setDir(SOUTH)
-					else if (T.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
+	turns_since_scan++
+	if(turns_since_scan > 5)
+		turns_since_scan = 0
+		if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc)))
+			movement_target = null
+			stop_automated_movement = FALSE
+		if(!movement_target || !(movement_target.loc in oview(src, 3)))
+			movement_target = null
+			stop_automated_movement = FALSE
+			for(var/obj/item/potential_snack in oview(src,3))
+				if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+					movement_target = potential_snack
+					break
 
-					if(!Adjacent(movement_target)) //can't reach food through windows.
-						return
+	if(movement_target)
+		stop_automated_movement = TRUE
+		step_to(src, movement_target, 1)
+		sleep(3)
+		step_to(src, movement_target, 1)
+		sleep(3)
+		step_to(src, movement_target, 1)
 
-					if(isturf(movement_target.loc))
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+		if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
+			var/turf/T = get_turf(movement_target)
+			if(!T)
+				return
+			if(T.x < src.x)
+				setDir(WEST)
+			else if (T.x > src.x)
+				setDir(EAST)
+			else if (T.y < src.y)
+				setDir(SOUTH)
+			else if (T.y > src.y)
+				setDir(NORTH)
+			else
+				setDir(SOUTH)
 
-		if(prob(1))
+			if(!Adjacent(movement_target)) //can't reach food through windows.
+				return
+
+			if(isturf(movement_target.loc))
+				movement_target.attack_animal(src)
+			else if(ishuman(movement_target.loc))
+				if(DT_PROB(10, delta_time))
+					manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+
+		if(DT_PROB(0.5, delta_time))
 			manual_emote(pick("dances around.","chases its tail!"))
 			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
@@ -100,7 +103,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/shaved = FALSE
-	var/nofur = FALSE 		//Corgis that have risen past the material plane of existence.
+	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
 
 /mob/living/simple_animal/pet/dog/corgi/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -413,7 +416,7 @@
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/ian
 	name = "Ian"
-	real_name = "Ian"	//Intended to hold the name without altering it.
+	real_name = "Ian" //Intended to hold the name without altering it.
 	gender = MALE
 	desc = "It's the HoP's beloved corgi."
 	response_help_continuous = "pets"
@@ -437,11 +440,7 @@
 	if(age == 0)
 		var/turf/target = get_turf(loc)
 		if(target)
-			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
-			P.name = "Ian"
-			P.real_name = "Ian"
-			P.gender = MALE
-			P.desc = "It's the HoP's beloved corgi puppy."
+			new /mob/living/simple_animal/pet/dog/corgi/puppy/ian(target)
 			Write_Memory(FALSE)
 			return INITIALIZE_HINT_QDEL
 	else if(age == record_age)
@@ -452,7 +451,7 @@
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
-/mob/living/simple_animal/pet/dog/corgi/ian/Life()
+/mob/living/simple_animal/pet/dog/corgi/ian/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -466,8 +465,8 @@
 /mob/living/simple_animal/pet/dog/corgi/ian/proc/Read_Memory()
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
-		S["age"] 		>> age
-		S["record_age"]	>> record_age
+		S["age"] >> age
+		S["record_age"] >> record_age
 		S["saved_head"] >> saved_head
 		fdel("data/npc_saves/Ian.sav")
 	else
@@ -523,7 +522,7 @@
 	unique_pet = TRUE
 	held_state = "narsian"
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
@@ -608,8 +607,15 @@
 		return
 	..()
 
+//PUPPY IAN! SQUEEEEEEEEE~
+/mob/living/simple_animal/pet/dog/corgi/puppy/ian
+	name = "Ian"
+	real_name = "Ian"
+	gender = MALE
+	desc = "It's the HoP's beloved corgi puppy."
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
+
+/mob/living/simple_animal/pet/dog/corgi/puppy/void //Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
 	desc = "A corgi puppy that has been infused with deep space energy. It's staring back..."
@@ -623,7 +629,7 @@
 	held_state = "void_puppy"
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
-	return 1	//Void puppies can navigate space.
+	return 1 //Void puppies can navigate space.
 
 
 //LISA! SQUEEEEEEEEE~
@@ -653,7 +659,6 @@
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
-	..()
-
+/mob/living/simple_animal/pet/dog/corgi/lisa/Life(delta_time = SSMOBS_DT, times_fired)
+	. = ..()
 	make_babies()

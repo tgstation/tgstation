@@ -1,4 +1,8 @@
 /proc/chem_recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
+	//We have to check to see if either is competitive so can ignore it (competitive reagents are supposed to conflict)
+	if((r1.reaction_flags & REACTION_COMPETITIVE) || (r2.reaction_flags & REACTION_COMPETITIVE))
+		return FALSE
+
 	//do the non-list tests first, because they are cheaper
 	if(r1.required_container != r2.required_container)
 		return FALSE
@@ -85,3 +89,116 @@
 		return
 	for(var/mob/M in viewers(5, location))
 		to_chat(M, notification)
+
+///Converts the pH into a tgui readable color - i.e. white and black text is readable over it. This is NOT the colourwheel for pHes however.
+/proc/convert_ph_to_readable_color(pH)
+	switch(pH)
+		if(-INFINITY to 1)
+			return "red"
+		if(1 to 2)
+			return "orange"
+		if(2 to 3)
+			return "average"
+		if(3 to 4)
+			return "yellow"
+		if(4 to 5)
+			return "olive"
+		if(5 to 6)
+			return "good"
+		if(6 to 8)
+			return "green"
+		if(8 to 9.5)
+			return "teal"
+		if(9.5 to 11)
+			return "blue"
+		if(11 to 12.5)
+			return "violet"
+		if(12.5 to INFINITY)
+			return "purple"
+
+///Converts pH to universal indicator colours. This is the colorwheel for pHes
+#define CONVERT_PH_TO_COLOR(pH, color) \
+	switch(pH) {\
+		if(14 to INFINITY)\
+			{ color = "#462c83" }\
+		if(13 to 14)\
+			{ color = "#63459b" }\
+		if(12 to 13)\
+			{ color = "#5a51a2" }\
+		if(11 to 12)\
+			{ color = "#3853a4" }\
+		if(10 to 11)\
+			{ color = "#3f93cf" }\
+		if(9 to 10)\
+			{ color = "#0bb9b7" }\
+		if(8 to 9)\
+			{ color = "#23b36e" }\
+		if(7 to 8)\
+			{ color = "#3aa651" }\
+		if(6 to 7)\
+			{ color = "#4cb849" }\
+		if(5 to 6)\
+			{ color = "#b5d335" }\
+		if(4 to 5)\
+			{ color = "#f7ec1e" }\
+		if(3 to 4)\
+			{ color = "#fbc314" }\
+		if(2 to 3)\
+			{ color = "#f26724" }\
+		if(1 to 2)\
+			{ color = "#ef1d26" }\
+		if(-INFINITY to 1)\
+			{ color = "#c6040c" }\
+		}
+
+///Returns a list of chemical_reaction datums that have the input STRING as a product
+/proc/get_reagent_type_from_product_string(string)
+	var/input_reagent = replacetext(lowertext(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	if (isnull(input_reagent))
+		return
+
+	var/list/shortcuts = list("meth" = /datum/reagent/drug/methamphetamine)
+	if(shortcuts[input_reagent])
+		input_reagent = shortcuts[input_reagent]
+	else
+		input_reagent = find_reagent(input_reagent)
+	return input_reagent
+
+///Returns reagent datum from typepath
+/proc/find_reagent(input)
+	. = FALSE
+	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
+		return input
+	else
+		return get_chem_id(input)
+
+/proc/find_reagent_object_from_type(input)
+	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
+		return GLOB.chemical_reagents_list[input]
+	else
+		return null
+
+///Returns a random reagent object minus blacklisted reagents
+/proc/get_random_reagent_id()
+	var/static/list/random_reagents = list()
+	if(!random_reagents.len)
+		for(var/thing in subtypesof(/datum/reagent))
+			var/datum/reagent/R = thing
+			if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+				random_reagents += R
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent
+
+///Returns reagent datum from reagent name string
+/proc/get_chem_id(chem_name)
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+		if(ckey(chem_name) == ckey(lowertext(R.name)))
+			return X
+
+///Takes a type in and returns a list of associated recipes
+/proc/get_recipe_from_reagent_product(input_type)
+	if(!input_type)
+		return
+	var/list/matching_reactions = GLOB.chemical_reactions_list_product_index[input_type]
+	return matching_reactions

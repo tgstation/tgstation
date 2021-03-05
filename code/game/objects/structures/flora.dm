@@ -70,7 +70,7 @@
 	if(!took_presents)
 		took_presents = list()
 
-/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -145,7 +145,7 @@
 	name = "grass"
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
-	gender = PLURAL	//"this is grass" not "this is a grass"
+	gender = PLURAL //"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -320,7 +320,7 @@
 	. = ..()
 	AddComponent(/datum/component/tactical)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
-	AddComponent(/datum/component/beauty, 500)
+	AddElement(/datum/element/beauty, 500)
 
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
 	. = ..()

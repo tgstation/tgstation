@@ -35,7 +35,7 @@
 		to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-	if(inserted_key)	//just in case there's an invalid key
+	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = I
 

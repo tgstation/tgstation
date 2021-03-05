@@ -3,7 +3,7 @@
 /datum/unit_test/reagent_recipe_collisions
 
 /datum/unit_test/reagent_recipe_collisions/Run()
-	build_chemical_reactions_list()
+	build_chemical_reactions_lists()
 	var/list/reactions = list()
 	for(var/V in GLOB.chemical_reactions_list)
 		reactions += GLOB.chemical_reactions_list[V]

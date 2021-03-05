@@ -1,21 +1,21 @@
 //Preferences stuff
 	//Hairstyles
-GLOBAL_LIST_EMPTY(hairstyles_list)			//stores /datum/sprite_accessory/hair indexed by name
-GLOBAL_LIST_EMPTY(hairstyles_male_list)		//stores only hair names
-GLOBAL_LIST_EMPTY(hairstyles_female_list)	//stores only hair names
-GLOBAL_LIST_EMPTY(facial_hairstyles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
-GLOBAL_LIST_EMPTY(facial_hairstyles_male_list)	//stores only hair names
-GLOBAL_LIST_EMPTY(facial_hairstyles_female_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(hairstyles_list) //stores /datum/sprite_accessory/hair indexed by name
+GLOBAL_LIST_EMPTY(hairstyles_male_list) //stores only hair names
+GLOBAL_LIST_EMPTY(hairstyles_female_list) //stores only hair names
+GLOBAL_LIST_EMPTY(facial_hairstyles_list) //stores /datum/sprite_accessory/facial_hair indexed by name
+GLOBAL_LIST_EMPTY(facial_hairstyles_male_list) //stores only hair names
+GLOBAL_LIST_EMPTY(facial_hairstyles_female_list) //stores only hair names
 	//Underwear
-GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear indexed by name
-GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
-GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
+GLOBAL_LIST_EMPTY(underwear_list) //stores /datum/sprite_accessory/underwear indexed by name
+GLOBAL_LIST_EMPTY(underwear_m) //stores only underwear name
+GLOBAL_LIST_EMPTY(underwear_f) //stores only underwear name
 	//Undershirts
-GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/undershirt indexed by name
-GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
-GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
+GLOBAL_LIST_EMPTY(undershirt_list) //stores /datum/sprite_accessory/undershirt indexed by name
+GLOBAL_LIST_EMPTY(undershirt_m)  //stores only undershirt name
+GLOBAL_LIST_EMPTY(undershirt_f)  //stores only undershirt name
 	//Socks
-GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/socks indexed by name
+GLOBAL_LIST_EMPTY(socks_list) //stores /datum/sprite_accessory/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)
@@ -164,9 +164,9 @@ GLOBAL_LIST_INIT(backpacklist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, 
 GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 
 //Uplink spawn loc
-#define UPLINK_PDA		"PDA"
-#define UPLINK_RADIO	"Radio"
-#define UPLINK_PEN		"Pen" //like a real spy!
+#define UPLINK_PDA "PDA"
+#define UPLINK_RADIO "Radio"
+#define UPLINK_PEN "Pen" //like a real spy!
 #define UPLINK_IMPLANT  "Implant"
 GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
 

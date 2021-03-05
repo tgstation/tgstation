@@ -8,8 +8,6 @@
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.6
 	pass_flags_self = PASSSTRUCTURE
-	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	emissive_blocker_plane = STRUCTURE_EMISSIVE_BLOCKER_PLANE
 	var/broken = FALSE
 
 /obj/structure/Initialize()

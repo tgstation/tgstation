@@ -72,7 +72,8 @@
 		product_types.Add(5)
 	create_reagents(100, NO_REACT | OPENCONTAINER)
 	for(var/reagent in icecream_vat_reagents)
-		reagents.add_reagent(reagent, icecream_vat_reagents[reagent])
+		reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
+	reagents.chem_temp = T0C //So ice doesn't melt
 
 /obj/machinery/icecream_vat/ui_interact(mob/user)
 	. = ..()
@@ -116,7 +117,7 @@
 				else
 					I.add_ice_cream(flavour_name)
 				if(I.reagents.total_volume < 10)
-					I.reagents.add_reagent(/datum/reagent/consumable/sugar, 10 - I.reagents.total_volume)
+					I.reagents.add_reagent(/datum/reagent/consumable/sugar, 10 - I.reagents.total_volume, reagtemp = T0C)
 				updateDialog()
 			else
 				to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
@@ -131,7 +132,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
+		update_appearance()
 		return
 	else if(O.is_drainable())
 		return
@@ -229,9 +230,9 @@
 	icon_state = "icecream_cone_[cone_name]"
 	switch (cone_type)
 		if ("waffle")
-			reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
+			reagents.add_reagent(/datum/reagent/consumable/nutriment, 1, reagtemp = T0C)
 		if ("chocolate")
-			reagents.add_reagent(/datum/reagent/consumable/coco, 1) // chocolate ain't as nutritious kids
+			reagents.add_reagent(/datum/reagent/consumable/coco, 1, reagtemp = T0C) // chocolate ain't as nutritious kids
 
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
@@ -241,19 +242,19 @@
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
 			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."
-			reagents.add_reagent(/datum/reagent/consumable/vanilla, 3)
+			reagents.add_reagent(/datum/reagent/consumable/vanilla, 3, reagtemp = T0C)
 		if ("chocolate")
 			desc = "A delicious [cone_type] cone filled with chocolate ice cream. Surprisingly, made with real cocoa."
-			reagents.add_reagent(/datum/reagent/consumable/coco, 3)
+			reagents.add_reagent(/datum/reagent/consumable/coco, 3, reagtemp = T0C)
 		if ("strawberry")
 			desc = "A delicious [cone_type] cone filled with strawberry ice cream. Definitely not made with real strawberries."
-			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 3)
+			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 3, reagtemp = T0C)
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
-			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 3)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 3, reagtemp = T0C)
 		if ("mob")
 			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
-			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
+			reagents.add_reagent(/datum/reagent/liquidgibs, 3, reagtemp = T0C)
 		if ("custom")
 			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
@@ -277,7 +278,7 @@
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 4)
+		new /obj/item/stack/sheet/iron(loc, 4)
 	qdel(src)
 
 /obj/machinery/icecream_vat/AltClick(mob/living/user)

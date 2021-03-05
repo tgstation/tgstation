@@ -33,9 +33,6 @@ $servers = array();
 $enable_live_tracking = true;
 $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 $tracked_branch = "master";
-$trackPRBalance = true;
-$prBalanceJson = '';
-$startingPRBalance = 30;
 $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
@@ -323,12 +320,6 @@ function handle_pr($payload) {
 			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
-			if(get_pr_code_friendliness($payload) <= 0){
-				$balances = pr_balances();
-				$author = $payload['pull_request']['user']['login'];
-				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
-					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
-			}
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);
@@ -347,7 +338,6 @@ function handle_pr($payload) {
 				$action = 'merged';
 				auto_update($payload);
 				checkchangelog($payload, true);
-				update_pr_balance($payload);
 				$validated = TRUE; //pr merged events always get announced.
 			}
 			break;
@@ -546,66 +536,6 @@ function get_pr_labels_array($payload){
 	return $result;
 }
 
-//helper for getting the path the the balance json file
-function pr_balance_json_path(){
-	global $prBalanceJson;
-	return $prBalanceJson != '' ? $prBalanceJson : 'pr_balances.json';
-}
-
-//return the assoc array of login -> balance for prs
-function pr_balances(){
-	$path = pr_balance_json_path();
-	if(file_exists($path))
-		return json_decode(file_get_contents($path), true);
-	else
-		return array();
-}
-
-//returns the difference in PR balance a pull request would cause
-function get_pr_code_friendliness($payload, $oldbalance = null){
-	global $startingPRBalance;
-	if($oldbalance == null)
-		$oldbalance = $startingPRBalance;
-	$labels = get_pr_labels_array($payload);
-	//anything not in this list defaults to 0
-	$label_values = array(
-		'Fix' => 3,
-		'Refactor' => 10,
-		'Code Improvement' => 2,
-		'Grammar and Formatting' => 1,
-		'Priority: High' => 15,
-		'Priority: CRITICAL' => 20,
-		'Unit Tests' => 6,
-		'Logging' => 1,
-		'Feedback' => 2,
-		'Performance' => 12,
-		'Feature' => -10,
-		'Balance/Rebalance' => -8,
-		'Tweak' => -2,
-		'Sound' => 1,
-		'Sprites' => 1,
-		'GBP: Reset' => $startingPRBalance - $oldbalance,
-	);
-
-	$maxNegative = 0;
-	$maxPositive = 0;
-	foreach($labels as $l){
-		if($l == 'GBP: No Update') {	//no effect on balance
-			return 0;
-		}
-		else if(isset($label_values[$l])) {
-			$friendliness = $label_values[$l];
-			if($friendliness > 0)
-				$maxPositive = max($friendliness, $maxPositive);
-			else
-				$maxNegative = min($friendliness, $maxNegative);
-		}
-	}
-
-	$affecting = abs($maxNegative) >= $maxPositive ? $maxNegative : $maxPositive;
-	return $affecting;
-}
-
 function is_maintainer($payload, $author){
 	global $maintainer_team_id;
 	$repo_is_org = $payload['pull_request']['base']['repo']['owner']['type'] == 'Organization';
@@ -620,29 +550,6 @@ function is_maintainer($payload, $author){
 		$result = json_decode(github_apisend($check_url), true);
 		return isset($result['state']) && $result['state'] == 'active';
 	}
-}
-
-//payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
-function update_pr_balance($payload) {
-	global $startingPRBalance;
-	global $trackPRBalance;
-	if(!$trackPRBalance)
-		return;
-	$author = $payload['pull_request']['user']['login'];
-	$balances = pr_balances();
-	if(!isset($balances[$author]))
-		$balances[$author] = $startingPRBalance;
-	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
-	$balances[$author] += $friendliness;
-	if(!is_maintainer($payload, $author)){	//immune
-		if($balances[$author] < 0 && $friendliness < 0)
-			create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
-		else if($balances[$author] >= 0 && ($balances[$author] - $friendliness) < 0)
-			create_comment($payload, 'Your Fix/Feature pull request delta is now above zero (' . $balances[$author] . '). Feel free to make Feature/Tweak/Balance PRs.');
-	}
-	$balances_file = fopen(pr_balance_json_path(), 'w');
-	fwrite($balances_file, json_encode($balances));
-	fclose($balances_file);
 }
 
 $github_diff = null;
@@ -745,6 +652,8 @@ function checkchangelog($payload, $compile = true) {
 		}
 
 		if (!strlen($firstword)) {
+			if (count($currentchangelogblock) <= 0)
+				continue;
 			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
 			continue;
 		}
@@ -766,12 +675,10 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
-			case 'rsctweak':
-			case 'tweaks':
-			case 'tweak':
-				if($item != 'tweaked a few things') {
-					$tags[] = 'Tweak';
-					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+			case 'qol':
+				if($item != 'made something easier to use') {
+					$tags[] = 'Quality of Life';
+					$currentchangelogblock[] = array('type' => 'qol', 'body' => $item);
 				}
 				break;
 			case 'soundadd':

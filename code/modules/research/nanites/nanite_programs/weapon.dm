@@ -172,6 +172,7 @@
 		sent_directive = ES.get_value()
 	brainwash(host_mob, sent_directive)
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[sent_directive]'.")
+	host_mob.log_message("has been brainwashed with the objective '[sent_directive]' triggered by a mind control nanite program.", LOG_ATTACK)
 	addtimer(CALLBACK(src, .proc/end_brainwashing), 600)
 
 /datum/nanite_program/comm/mind_control/proc/end_brainwashing()
