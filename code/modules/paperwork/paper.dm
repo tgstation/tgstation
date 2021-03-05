@@ -359,7 +359,7 @@
  * Natural paper
  */
 /obj/item/paper/natural
-	 name = "natural paper"
+	name = "natural paper"
 
 /obj/item/paper/natural/Initialize()
 	. = ..()
