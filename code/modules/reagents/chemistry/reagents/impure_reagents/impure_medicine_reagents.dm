@@ -69,7 +69,7 @@
 //Sends hands after you for your hubris
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	spawn_hands(owner)
-	lag_remainder += delta_time - floor(delta_time)
+	lag_remainder += delta_time - FLOOR(delta_time, 1)
 	delta_time = round(delta_time, 1)
 	if(lag_remainder >= 1)
 		delta_time += 1
