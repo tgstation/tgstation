@@ -623,7 +623,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!spell_desc)
 		return
 
-	var/robeless = (alert(usr, "Would you like to force this spell to be robeless?", "Robeless Casting?", "Yes", "No") == "Yes")
+	var/robeless = (alert(usr, "Would you like to force this spell to be robeless?", "Robeless Casting?", "Force Robeless", "Use Spell Setting") == "Force Robeless")
 
 	if(QDELETED(spell_recipient))
 		to_chat(usr, "<span class='warning'>The intended spell recipient no longer exists.</span>")
@@ -636,7 +636,9 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/spell_path = spell_list[spell_desc]
 	var/obj/effect/proc_holder/spell/new_spell = new spell_path()
 
-	new_spell.clothes_req = robeless ? FALSE : new_spell.clothes_req
+	if(robeless)
+		new_spell.clothes_req = FALSE
+		new_spell.cult_req = FALSE
 
 	if(spell_recipient.mind)
 		spell_recipient.mind.AddSpell(new_spell)
