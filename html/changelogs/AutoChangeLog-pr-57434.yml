@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "If you get qdeleted while crystalizing as ethereal, you no longer get super-owned"

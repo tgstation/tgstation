@@ -1,0 +1,4 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - bugfix: "Kilostation's security office is no longer haunted by a red siding in one of the security office's tiles."
