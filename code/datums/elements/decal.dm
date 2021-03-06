@@ -53,7 +53,7 @@
 		"layer" = pic.layer,
 		"desc" = description,
 		"alpha" = pic.alpha
-		)
+	)
 
 
 
