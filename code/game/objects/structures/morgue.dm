@@ -297,7 +297,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	var/list/icecreams = new()
 	for(var/mob/living/i_scream as anything in get_all_contents_type(/mob/living))
 		var/obj/item/food/icecream/IC = new()
-		GLOB.ice_cream_flavours[ICE_CREAM_MOB].add_flavour(IC, null, i_scream.name)
+		SEND_SIGNAL(IC, COMSIG_ICE_CREAM_ADD_SERVING, ICE_CREAM_MOB, null, i_scream.name)
 		icecreams += IC
 	. = ..()
 	for(var/obj/IC in icecreams)

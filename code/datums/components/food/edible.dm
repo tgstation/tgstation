@@ -1,5 +1,3 @@
-#define BITES_PER_ICE_CREAM_SCOOP 2
-
 /*!
 
 This component makes it possible to make things edible. What this means is that you can take a bite or force someone to take a bite (in the case of items).
@@ -81,8 +79,6 @@ Behavior that's still missing from this component that original food items had t
 		var/obj/item/item = parent
 		if (!item.grind_results)
 			item.grind_results = list() //If this doesn't already exist, add it as an empty list. This is needed for the grinder to accept it.
-		if(istype(item, /obj/item/food/icecream))
-			RegisterSignal(parent, COMSIG_ICE_CREAM_ADD_FLAVOUR, .proc/on_add_flavour)
 
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatIt)
@@ -464,9 +460,3 @@ Behavior that's still missing from this component that original food items had t
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
 
-///What happens when you one extra serving of ice cream? You get more bites of ice cream to take.
-/datum/component/edible/proc/on_add_flavour(datum/source, datum/ice_cream_flavour/flavour, datum/reagents/reagents, custom_name)
-	if(!flavour.is_a_cone)
-		bite_consumption += BITES_PER_ICE_CREAM_SCOOP
-
-#undef BITES_PER_ICE_CREAM_SCOOP

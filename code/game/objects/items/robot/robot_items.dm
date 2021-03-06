@@ -394,7 +394,7 @@
 			food_item = new /obj/item/food/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
 			food_item = new /obj/item/food/icecream(T)
-			GLOB.ice_cream_flavours[ICE_CREAM_VANILLA].add_flavour(food_item)
+			SEND_SIGNAL(food_item, COMSIG_ICE_CREAM_ADD_SERVING, ICE_CREAM_VANILLA)
 			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE

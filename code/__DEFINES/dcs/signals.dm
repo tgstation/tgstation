@@ -854,8 +854,6 @@
 #define COMSIG_ITEM_FRIED "item_fried"
 	#define COMSIG_FRYING_HANDLED (1<<0)
 
-///from base of /datum/ice_cream_flavour/add_flavour, sent to the target food: (/datum/ice_cream_flavour/flavour datum/reagents/reagents, custom_name)
-#define COMSIG_ICE_CREAM_ADD_FLAVOUR "ice_cream_add_flavour"
 //Drink
 
 ///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
@@ -1004,6 +1002,10 @@
 	#define COMPONENT_TWOHANDED_BLOCK_WIELD (1<<0)
 ///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
+
+// /datum/component/ice_cream_holder signals.
+/// Adds a serving of ice cream to the object. Bool. Refer to __DEFINES/food.dm for flavour defines: (flavour, reagents, custom_name, forced)
+#define COMSIG_ICE_CREAM_ADD_SERVING "ice_cream_add_serving"
 
 // /datum/element/movetype_handler signals
 /// Called when the floating anim has to be temporarily stopped and restarted later: (timer)

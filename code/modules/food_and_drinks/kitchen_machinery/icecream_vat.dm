@@ -1,5 +1,4 @@
 #define PREFILL_AMOUNT 5
-#define MAX_SCOOPS 3
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
@@ -14,6 +13,8 @@
 	var/list/product_types = list()
 	var/selected_flavour = ICE_CREAM_VANILLA
 	var/obj/item/reagent_containers/beaker
+	/// List of prototypes of dispensable ice cream cones. path as key, instance as assoc.
+	var/static/list/obj/item/food/icecream/cone_prototypes
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 6,
 		/datum/reagent/consumable/flour = 6,
@@ -27,16 +28,25 @@
 /obj/machinery/icecream_vat/Initialize()
 	. = ..()
 
+	if(!cone_prototypes)
+		cone_prototypes = list()
+		for(var/cone_path in typesof(/obj/item/food/icecream))
+			var/obj/item/food/icecream/cone = new cone_path
+			if(cone.ingredients)
+				cone_prototypes[cone_path] = cone
+				cone.ingredients_text = "(Ingredients: [reagent_paths_list_to_text(cone.ingredients)])"
+			else
+				qdel(cone)
+
 	create_reagents(100, NO_REACT | OPENCONTAINER)
 	reagents.chem_temp = T0C //So ice doesn't melt
 	for(var/flavour in GLOB.ice_cream_flavours)
 		if(GLOB.ice_cream_flavours[flavour].hidden)
 			continue
 		product_types[flavour] = PREFILL_AMOUNT
-	for(var/cone in GLOB.ice_cream_cones)
-		if(GLOB.ice_cream_cones[cone].hidden)
-			continue
+	for(var/cone in cone_prototypes)
 		product_types[cone] = PREFILL_AMOUNT
+
 	for(var/reagent in icecream_vat_reagents)
 		reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
 
@@ -50,10 +60,8 @@
 			continue
 		dat += "<b>[capitalize(flavour)] ice cream:</b> <a href='?src=[REF(src)];select=[flavour]'><b>Select</b></a> <a href='?src=[REF(src)];make=[flavour];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[flavour];amount=5'><b>x5</b></a> [product_types[flavour]] scoops left[GLOB.ice_cream_flavours[flavour].ingredients_text].<br>"
 	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
-	for(var/cone in GLOB.ice_cream_cones)
-		if(GLOB.ice_cream_cones[cone].hidden)
-			continue
-		dat += "<b>[capitalize(cone)]s:</b> <a href='?src=[REF(src)];cone=[cone]'><b>Dispense</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=5'><b>x5</b></a> [product_types[cone]] cones left[GLOB.ice_cream_cones[cone].ingredients_text].<br>"
+	for(var/cone in cone_prototypes)
+		dat += "<b>[capitalize(cone_prototypes[cone].name)]s:</b> <a href='?src=[REF(src)];cone=[cone]'><b>Dispense</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make_cone=[cone];amount=5'><b>x5</b></a> [product_types[cone]] cones left[cone_prototypes[cone].ingredients_text].<br>"
 	dat += "<br>"
 	if(beaker)
 		dat += "<b>BEAKER CONTENT</b><br><div class='statusDisplay'>"
@@ -72,20 +80,6 @@
 	popup.open()
 
 /obj/machinery/icecream_vat/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/food/icecream))
-		var/obj/item/food/icecream/I = O
-		if(length(I.scoops) < MAX_SCOOPS)
-			if(product_types[selected_flavour] > 0)
-				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [selected_flavour] ice cream into [I].</span>")
-				product_types[selected_flavour]--
-				var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[selected_flavour]
-				flavour.add_flavour(I, beaker?.reagents.total_volume ? beaker.reagents : null)
-				updateDialog()
-			else
-				to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
-		else
-			to_chat(user, "<span class='warning'>[O] can't hold anymore ice cream in it!</span>")
-		return 1
 	if(istype(O, /obj/item/reagent_containers) && !(O.item_flags & ABSTRACT) && O.is_open_container())
 		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = O
@@ -121,8 +115,9 @@
 		for(var/R in ingredients)
 			reagents.remove_reagent(R, recipe_amount)
 		product_types[make_type] += amount
-		if(GLOB.ice_cream_cones[make_type])
-			visible_message("<span class='info'>[user] cooks up some [make_type]s.</span>")
+		var/obj/item/food/icecream/cone = cone_prototypes[make_type]
+		if(cone)
+			visible_message("<span class='info'>[user] cooks up some [cone.name]s.</span>")
 		else
 			visible_message("<span class='info'>[user] whips up some [make_type] icecream.</span>")
 	else
@@ -139,13 +134,15 @@
 		selected_flavour = flavour.name
 
 	if(href_list["cone"])
-		var/href_cone = href_list["cone"]
-		if(product_types[href_cone] >= 1)
-			product_types[href_cone] -= 1
-			var/obj/item/food/icecream/cone = new(loc, href_cone)
+		var/obj/item/food/icecream/cone_path = text2path(href_list["cone"])
+		if(!cone_path)
+			return
+		if(product_types[cone_path] >= 1)
+			product_types[cone_path]--
+			var/obj/item/food/icecream/cone = new cone_path(loc)
 			visible_message("<span class='info'>[usr] dispenses a crunchy [cone] from [src].</span>")
 		else
-			to_chat(usr, "<span class='warning'>There are no [href_cone]s left!</span>")
+			to_chat(usr, "<span class='warning'>There are no [initial(cone_path.name)]s left!</span>")
 
 	if(href_list["make"])
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["make"]]
@@ -155,11 +152,12 @@
 		make(usr, href_list["make"], amount, flavour.ingredients)
 
 	if(href_list["make_cone"])
-		var/datum/ice_cream_flavour/cone = GLOB.ice_cream_cones[href_list["make_cone"]]
-		if(!cone || cone.hidden) //Nice try, tex.
+		var/path = text2path(href_list["make_cone"])
+		var/obj/item/food/icecream/cone = cone_prototypes[path]
+		if(!cone) //Nice try, tex.
 			return
 		var/amount = (text2num(href_list["amount"]))
-		make(usr, href_list["make_cone"], amount, cone.ingredients)
+		make(usr, path, amount, cone.ingredients)
 
 	if(href_list["disposeI"])
 		reagents.del_reagent(text2path(href_list["disposeI"]))

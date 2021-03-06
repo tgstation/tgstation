@@ -863,5 +863,29 @@
 	foodtypes = GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/food/icecream
+	name = "waffle cone"
+	desc = "Delicious waffle cone, but no ice cream."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "icecream_cone_waffle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("cream" = 2, "waffle" = 1)
+	bite_consumption = 4
+	foodtypes = DAIRY | SUGAR
+	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
+	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
+	var/list/ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar)
+	var/ingredients_text
+
+/obj/item/food/icecream/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, DEFAULT_MAX_ICE_CREAM_SCOOPS, TRUE, "ice cream", TRUE)
+
+/obj/item/food/icecream/chocolate
+	name = "chocolate cone"
+	desc = "Delicious chocolate cone, but no ice cream."
+	icon_state = "icecream_cone_chocolate"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/coco = 1)
+	ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
 
 #undef DONUT_SPRINKLE_CHANCE
