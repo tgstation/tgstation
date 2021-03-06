@@ -839,12 +839,12 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		if((E.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if((E.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK) && stomach)
 			if(H.combat_mode)
 				if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
 					to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
 					return
-				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 				if(stomach.crystal_charge > charge_limit)
 					to_chat(H, "<span class='warning'>Your charge is full!</span>")
 					return
@@ -864,7 +864,6 @@
 				if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
 					to_chat(H, "<span class='warning'>The APC can't receive anymore power!</span>")
 					return
-				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 				if(stomach.crystal_charge < APC_POWER_GAIN)
 					to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 					return
