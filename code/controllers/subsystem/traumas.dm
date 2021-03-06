@@ -14,9 +14,9 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "insects", "ocky_icky"))
+						"aliens", "strangers", "birds", "falling", "anime", "insects"))
 
-	phobia_regexes = list("spiders"          = construct_phobia_regex("spiders"),
+	phobia_regexes = list("spiders" = construct_phobia_regex("spiders"),
 		"space" = construct_phobia_regex("space"),
 		"security" = construct_phobia_regex("security"),
 		"clowns" = construct_phobia_regex("clowns"),
@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(traumas)
 		"ocky icky" = construct_phobia_regex("ocky icky"),
 	)
 
-	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
+	phobia_mobs = list("spiders" = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 		"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 		"lizards" = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
 		"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
