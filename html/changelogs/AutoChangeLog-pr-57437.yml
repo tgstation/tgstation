@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - qol: "Improves the chemical analyser to give you details on impurity and gives an % output in line with other purity descriptions"
