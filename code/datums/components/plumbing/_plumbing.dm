@@ -326,8 +326,6 @@
 	supply_connects = SOUTH
 
 /datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/O, new_layer)
-	SIGNAL_HANDLER
-
 	return
 
 #define READY 2
