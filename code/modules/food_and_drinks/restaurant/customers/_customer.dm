@@ -34,6 +34,18 @@
 	. = ..()
 	name_prefixes = world.file2list(prefix_file)
 
+/// Can this customer be chosen for this venue?
+/datum/customer_data/proc/can_use(datum/venue/venue)
+	return TRUE
+
+/// Called when the venue chooses this customer
+/datum/customer_data/proc/chosen(datum/venue/venue)
+
+/// Gets the order of this customer.
+/// In most cases, you shouldn't override this, and should just modify orderable_objects.
+/datum/customer_data/proc/get_order(datum/venue/venue)
+	return pickweight(orderable_objects[venue.type])
+
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
 
@@ -125,3 +137,63 @@
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/soup/milo = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/meatbun = 4, /obj/item/food/beef_stroganoff = 2),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/beer = 14, /datum/reagent/consumable/ethanol/sake = 9, /datum/reagent/consumable/cafe_latte = 3, /datum/reagent/consumable/coffee = 3, /datum/reagent/consumable/soy_latte = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1))
+
+/datum/customer_data/moth
+	nationality = "Mothman"
+	prefix_file = "strings/names/moth_prefix.txt"
+	found_seat_lines = list("Give me your hat!", "Moth?", "Certainly an... interesting venue.")
+	cant_find_seat_lines = list("If I can't find a seat, I'm flappity flapping out of here quick!", "I'm trying to flutter here!")
+	leave_mad_lines = list("I'm telling all my moth friends to never come here!", "Zero star rating, even worse than that time I ate a mothball!","Closing down permanently would still be too good of a fate for this place.")
+	leave_happy_lines = list("I'd tip you my hat, but I ate it!", "I hope that wasn't a collectible!", "That was the greatest thing I ever ate, even better than Guanaco!")
+	wait_for_food_lines = list("How hard is it to get food here? You're even wearing food yourself!", "My fuzzy robotic tummy is rumbling!", "I don't like waiting!")
+
+	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
+
+	// Always asks for the clothes that you have on, but this is a fallback.
+	orderable_objects = list(
+		/datum/venue/restaurant = list(
+			/obj/item/clothing/head/chefhat = 3,
+			/obj/item/clothing/shoes/sneakers/black = 3,
+			/obj/item/clothing/gloves/color/black = 1,
+		),
+	)
+
+// The whole gag is taking off your hat and giving it to the customer.
+// If it takes any more effort, it loses a bit of the comedy.
+// Therefore, only show up if it's reasonable for that gag to happen.
+/datum/customer_data/moth/can_use(datum/venue/venue)
+	return !isnull(get_dynamic_order(venue))
+
+/datum/customer_data/moth/chosen(datum/venue/venue)
+	. = ..()
+
+	// Only show up once, again for the purposes of keeping the comedic value.
+	// Also prevents the unlikely, but possible, that you keep getting the extremely easy to satisy
+	// moth bots, which isn't as fun as completing real orders.
+	venue.customer_types[type] = 0
+
+/datum/customer_data/moth/proc/get_dynamic_order(datum/venue/venue)
+	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
+	if (!istype(buffet))
+		return
+
+	var/list/orderable = list()
+
+	if (!QDELETED(buffet.head))
+		orderable[buffet.head] = 5
+
+	if (!QDELETED(buffet.gloves))
+		orderable[buffet.gloves] = 5
+
+	if (!QDELETED(buffet.shoes))
+		orderable[buffet.shoes] = 1
+
+	if (orderable.len)
+		var/datum/order = pickweight(orderable)
+		return order.type
+
+/datum/customer_data/moth/get_order(datum/venue/venue)
+	var/dynamic_order = get_dynamic_order(venue)
+
+	// Fall back to basic clothing.
+	return dynamic_order || ..()

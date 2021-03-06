@@ -5,7 +5,13 @@
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
-	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2)
+	var/list/customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+	)
 	///Is the venue open at the moment?
 	var/open
 	///Portal linked to this venue at the moment
@@ -21,7 +27,6 @@
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
 
-
 /datum/venue/process(delta_time)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))
 		return
@@ -31,7 +36,25 @@
 
 ///Spawns a new customer at the portal
 /datum/venue/proc/create_new_customer()
-	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), pickweight(customer_types), src)
+	var/list/customer_types_to_choose = customer_types
+	var/datum/customer_data/customer_type
+
+	// In practice, the list will never run out, but this is for sanity.
+	while (customer_types_to_choose.len)
+		customer_type = pickweightAllowZero(customer_types_to_choose)
+
+		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
+		if (customer.can_use(src))
+			customer.chosen(src)
+			break
+
+		// Only copy the list once, so that we're not mutating ourselves.
+		if (customer_types_to_choose == customer_types)
+			customer_types_to_choose = customer_types.Copy()
+
+		customer_types_to_choose[customer_type] = 0
+
+	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), customer_type, src)
 	current_visitors += new_customer
 
 /datum/venue/proc/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
@@ -87,6 +110,8 @@
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue = /datum/venue
 
+	/// A weak reference to the mob who turned on the portal
+	var/datum/weakref/turned_on_portal
 
 /obj/machinery/restaurant_portal/Initialize()
 	. = ..()
@@ -96,6 +121,7 @@
 
 /obj/machinery/restaurant_portal/Destroy()
 	. = ..()
+	turned_on_portal = null
 
 /obj/machinery/restaurant_portal/update_overlays()
 	. = ..()
@@ -140,7 +166,7 @@
 
 	var/datum/venue/chosen_venue = radial_results[choice]
 
-
+	turned_on_portal = WEAKREF(user)
 
 	if(!(chosen_venue.req_access in used_id.GetAccess()))
 		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
