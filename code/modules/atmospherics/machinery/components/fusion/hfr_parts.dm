@@ -175,8 +175,34 @@
 	else
 		to_chat(user, "<span class='notice'>Activate the machine first by using a multitool on the interface.</span>")
 
+/obj/machinery/hypertorus/interface/ui_static_data()
+	var/data = list()
+	data["selected_fuel"] = list(list("name" = "Nothing", "id" = null))
+	for(var/path in GLOB.gas_recipe_meta)
+		var/datum/gas_recipe/recipe = GLOB.gas_recipe_meta[path]
+		if(recipe.machine_type != "Hypertorus_Fusion_Reactor")
+			continue
+		data["selected_fuel"] += list(list("name" = recipe.name, "id" = recipe.id))
+	return data
+
 /obj/machinery/hypertorus/interface/ui_data()
 	var/data = list()
+
+	if(connected_core.selected_fuel)
+		data["selected"] = connected_core.selected_fuel.id
+	else
+		data["selected"] = null
+
+	var/list/product_gases
+	if(!connected_core.selected_fuel)
+		product_gases = list("Select a fuel mix to see the output")
+	else
+		product_gases = list("The [connected_core.selected_fuel.name] mix will produce the following gases:")
+		for(var/gas_type in connected_core.selected_fuel.products)
+			var/datum/gas/gas_produced = gas_type
+			product_gases += "-[initial(gas_produced.name)]"
+	data["product_gases"] = product_gases.Join("\n")
+
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()
 	if(connected_core.internal_fusion.total_moles())
@@ -303,6 +329,23 @@
 				connected_core.filter_type = gas
 				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
+		if("fuel")
+			connected_core.selected_fuel = null
+			var/fuel_mix = "nothing"
+			var/datum/gas_recipe/fuel = null
+			if(params["mode"] != "")
+				fuel = GLOB.gas_recipe_meta[params["mode"]]
+			if(fuel)
+				connected_core.selected_fuel = fuel
+				fuel_mix = fuel.name
+			if(connected_core.internal_fusion.total_moles())
+				connected_core.dump_gases()
+			connected_core.update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
+			connected_core.linked_input.update_parents()
+			connected_core.linked_output.update_parents()
+			connected_core.linked_moderator.update_parents()
+			investigate_log("was set to recipe [fuel_mix ? fuel_mix : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 
 /obj/machinery/hypertorus/corner

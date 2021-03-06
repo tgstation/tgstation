@@ -148,3 +148,40 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	energy_release = 29000
 	requirements = list(/datum/gas/antinoblium = 5, /datum/gas/zauker = 20, /datum/gas/bz = 7.5)
 	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)
+
+/datum/gas_recipe/hypertorus_fusion_reactor
+	machine_type = "Hypertorus_Fusion_Reactor"
+	//Normal id for recipe
+	id = ""
+	//The gases that are going to be used as fuel ("GasX + GasY fuel")
+	name = ""
+	//Not used
+	min_temp = 0
+	//Not used
+	max_temp = 0
+	//Not used
+	reaction_type = EXOTHERMIC_REACTION
+	//Not used
+	energy_release = 0
+	//Only gases no amounts (warning, 3 gases, the first 2 are the actual fuel, the third is a subgas that gets produced directly by the reaction, eg helium)
+	requirements = list()
+	//Only gases no amounts (must be 6 gases)
+	products = list()
+
+/datum/gas_recipe/hypertorus_fusion_reactor/hydrogen_tritium_fuel
+	id = "h2_t2_fuel"
+	name = "Hydrogen + Tritium fuel"
+	requirements = list(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/helium)
+	products = list(/datum/gas/helium, /datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/bz, /datum/gas/hypernoblium)
+
+/datum/gas_recipe/hypertorus_fusion_reactor/plasma_oxy_fuel
+	id = "plasma_o2_fuel"
+	name = "Plasma + Oxygen fuel"
+	requirements = list(/datum/gas/plasma, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
+	products = list(/datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/nitrous_oxide, /datum/gas/pluoxium, /datum/gas/halon)
+
+/datum/gas_recipe/hypertorus_fusion_reactor/hypernob_trit_fuel
+	id = "hypernob_trit_fuel"
+	name = "Hypernoblium + Tritium fuel"
+	requirements = list(/datum/gas/hypernoblium, /datum/gas/tritium, /datum/gas/antinoblium)
+	products = list(/datum/gas/antinoblium, /datum/gas/helium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/healium, /datum/gas/miasma)
