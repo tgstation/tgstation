@@ -115,12 +115,12 @@ the new instance inside the host to be updated to the template's stats.
 		return
 	log_talk(message, LOG_SAY)
 	var/rendered = "<span class='sentientdisease'><b>[src]</b> says, \"[message]\"</span>"
-	for(var/mob/mobs in GLOB.mob_list)
-		if(issentientdisease(mobs))
-			to_chat(mobs, rendered)
-		else if(isobserver(mobs))
-			var/link = FOLLOW_LINK(mobs, src)
-			to_chat(mobs, "[link] [rendered]")
+	for(var/mob/listener in GLOB.mob_list)
+		if(issentientdisease(listener))
+			to_chat(listener, rendered)
+		else if(isobserver(listener))
+			var/link = FOLLOW_LINK(listener, src)
+			to_chat(listener, "[link] [rendered]")
 	return
 
 /mob/camera/disease/Move(NewLoc, Dir = 0)
