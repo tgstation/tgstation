@@ -1,0 +1,4 @@
+author: "Dennok, Fikou, Armhulen"
+delete-after: True
+changes: 
+  - bugfix: "Fixes shuttle decals not working"

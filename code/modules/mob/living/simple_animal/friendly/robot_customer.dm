@@ -4,6 +4,7 @@
 	maxHealth = 1000 //go fuck yourself
 	health = 1000
 	desc = "I wonder what they'll order..."
+	gender = NEUTER
 	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"

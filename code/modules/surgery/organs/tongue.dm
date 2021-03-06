@@ -436,8 +436,8 @@
 	M.verb_whisper = "subtly signs"
 	M.verb_sing = "rythmically signs"
 	M.verb_yell = "emphatically signs"
-	ADD_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
-	REMOVE_TRAIT(M, TRAIT_MUTE, "tongue")
+	ADD_TRAIT(M, TRAIT_SIGN_LANG, ORGAN_TRAIT)
+	REMOVE_TRAIT(M, TRAIT_MUTE, ORGAN_TRAIT)
 
 /obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -446,7 +446,7 @@
 	M.verb_whisper = initial(verb_whisper)
 	M.verb_sing = initial(verb_sing)
 	M.verb_yell = initial(verb_yell)
-	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue") //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
+	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, ORGAN_TRAIT) //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
 

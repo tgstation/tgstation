@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - rscadd: "Comms Consoles now have the ability to request codes to the spare ID safe when there are no crew members in the chain of command on the shift. This can be done without logging into the comms console."

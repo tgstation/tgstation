@@ -50,6 +50,8 @@
 	old_area.update_beauty()
 
 /datum/element/beauty/Detach(datum/source, force)
+	if(!beauty_counter[source])
+		return ..()
 	var/area/current_area = get_area(source)
 	if(QDELETED(source))
 		. = ..()
@@ -57,6 +59,7 @@
 		if(current_area)
 			exit_area(source, current_area)
 		beauty_counter -= source
+		REMOVE_TRAIT(source, TRAIT_AREA_SENSITIVE, BEAUTY_ELEMENT_TRAIT)
 	else //lower the 'counter' down by one, update the area, and call parent if it's reached zero.
 		beauty_counter[source]--
 		if(current_area && !current_area.outdoors)
