@@ -7,23 +7,32 @@
 
 
 
-/mob/proc/bee_friendly()
-	return 0
+/mob/proc/bee_friendly() //Because we, are, your friends
+	return 0 //You'll, never be(e) alone again    //NB, returning 0 here means that the bees are actually not your friends (they lied to you)
 
+/mob/living/simple_animal/hostile/poison/bees/bee_friendly() 
+	return 1 //bee together strong
 
-/mob/living/simple_animal/hostile/poison/bees/bee_friendly()
-	return 1
+/mob/living/bee_friendly()
+	if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE)) //send your swarms but they'll never be(e) enough
+		return 1 //my shell's too tough
+	return 0 //Maui man
 
+/mob/living/carbon/alien/humanoid/royal/bee_friendly()
+	return 1 //can_inject() returns false for royal xenomorphs, so I guess they should no-sell bees too
+
+/mob/living/silicon/bee_friendly() //I wanted to do the Shiny joke here
+	return 1 //but then I wouldn't have had enough space left for "Maui man"
 
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing)) //very cursed
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+		if ((CS.clothing_flags & THICKMATERIAL) && (CH.clothing_flags & THICKMATERIAL)) //so that bees won't attack you if you're wearing beekeeper clothing or the like
 			return 1
-	return 0
+	return ..()
 
 
 /obj/structure/beebox
