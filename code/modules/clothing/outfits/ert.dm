@@ -164,7 +164,7 @@
 	id_trim = /datum/id_trim/centcom/official
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
+	backpack_contents = list(/obj/item/storage/box/survival=1,
 		/obj/item/stamp/centcom=1)
 	belt = /obj/item/gun/energy/e_gun
 	ears = /obj/item/radio/headset/headset_cent
