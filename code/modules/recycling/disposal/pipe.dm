@@ -119,8 +119,7 @@
 // pipe affected by explosion
 /obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		H.contents_explosion(severity, target)
+	H?.contents_explosion(severity, target)
 
 
 //welding tool: unfasten and convert to obj/disposalconstruct
