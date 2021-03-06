@@ -36,7 +36,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(result[1], result[2], result[3], result[4], result[5], result[6], result[7], result[8], result[9])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["cleanable"], result["color"], result["layer"], result["desc"], result["alpha"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -44,7 +44,17 @@
 	if(directional) //Even when the dirs are the same rotation is coming out as not 0 for some reason
 		rotation = SIMPLIFY_DEGREES(dir2angle(new_dir)-dir2angle(old_dir))
 		new_dir = turn(pic.dir,-rotation)
-	return list(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
+	return list(
+		"icon" = pic.icon,
+		"icon_state" = pic.icon_state,
+		"dir" = new_dir,
+		"cleanable" = cleanable,
+		"color" = pic.color,
+		"layer" = pic.layer,
+		"desc" = description,
+		"alpha" = pic.alpha
+		)
+
 
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
