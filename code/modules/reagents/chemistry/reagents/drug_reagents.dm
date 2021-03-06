@@ -440,6 +440,7 @@
 
 /datum/reagent/drug/blastoff
 	name = "bLaSToFF"
+	addiction_types = list(/datum/addiction/hallucinogens = 15)
 	///This is multiplied by the amount of units to get the chance to flip per second
 	var/flip_chance_per_unit = 1
 	///How many flips have we done so far?
@@ -460,10 +461,10 @@
 	game_plane_master_controller.add_filter("blastoff_filter", 10, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY))
 
 	for(var/filter in game_plane_master_controller.get_filters("blastoff_filter"))
-		animate(filter, color = col_filter_blue, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN, loop = -1)
-		animate(color = col_filter_mid, time = 3 SECONDS, easing = CUBIC_EASING|EASE_OUT)
-		animate(color = col_filter_red, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN)
-		animate(color = col_filter_mid, time = 3 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+		animate(filter, color = col_filter_blue, time = 3 SECONDS, loop = -1)
+		animate(color = col_filter_mid, time = 3 SECONDS)
+		animate(color = col_filter_red, time = 3 SECONDS)
+		animate(color = col_filter_mid, time = 3 SECONDS)
 
 /datum/reagent/drug/blastoff/on_mob_delete(mob/living/L)
 	. = ..()
@@ -476,7 +477,7 @@
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
 
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.4 * REM * delta_time)
 
 	if(!DT_PROB(flip_chance_per_unit * volume, delta_time))
 		return
@@ -496,13 +497,66 @@
 		M.adjust_disgust(1 * REM * delta_time)
 
 
+/datum/reagent/drug/kroncaine
+	name = "Kroncaine"
+	addiction_types = list(/datum/addiction/stimulants = 20)
+
+
+/datum/reagent/drug/kroncaine/on_mob_add(mob/living/L, amount)
+	. = ..()
+
+	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
+	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
+	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
+	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
+
+	game_plane_master_controller.add_filter("kroncaine_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/filter in game_plane_master_controller.get_filters("kroncaine_filter"))
+		animate(filter, loop = -1, color = col_filter_identity, time = 0, easing = JUMP_EASING)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
+
+/datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
+	M.Jitter(2 * REM * delta_time)
+	M.AdjustSleeping(-20 * REM * delta_time)
+	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+
+/datum/reagent/drug/kroncaine/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 2 * REM * delta_time)
+	M.Jitter(4 * REM * delta_time)
+
+/datum/reagent/drug/kroncaine/on_mob_delete(mob/living/L)
+	. = ..()
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.remove_filter("kroncaine_filter")
+	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+
 
 /datum/reagent/drug/saturnx
-
+	name = "SaturnX"
 
 
 /datum/reagent/drug/saturnx/on_mob_add(mob/living/L, amount)
 	. = ..()
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/drugged_human = L
+		drugged_human?.dna?.species?.body_alpha = 0
+		drugged_human.update_body()
+		drugged_human.update_hair()
+		drugged_human.update_body_parts()
+		drugged_human.update_mutations_overlay()
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
@@ -534,32 +588,3 @@
 
 
 
-
-/datum/reagent/drug/kroncaine
-
-
-
-/datum/reagent/drug/kroncaine/on_mob_add(mob/living/L, amount)
-	. = ..()
-
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
-	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
-	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
-	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
-
-	game_plane_master_controller.add_filter("kroncaine_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
-
-	for(var/filter in game_plane_master_controller.get_filters("kroncaine_filter"))
-		animate(filter, loop = -1, color = col_filter_identity, time = 0, easing = JUMP_EASING)
-		animate(color = col_filter_green, time = 4 SECONDS, easing = LINEAR_EASING)
-		animate(color = col_filter_blue, time = 4 SECONDS, easing = LINEAR_EASING)
-		animate(color = col_filter_red, time = 4 SECONDS, easing = LINEAR_EASING)
-
-/datum/reagent/drug/kroncaine/on_mob_delete(mob/living/L)
-	. = ..()
-
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	game_plane_master_controller.remove_filter("kroncaine_filter")
