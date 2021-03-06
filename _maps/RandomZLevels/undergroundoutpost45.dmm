@@ -3900,7 +3900,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ii" = (
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},

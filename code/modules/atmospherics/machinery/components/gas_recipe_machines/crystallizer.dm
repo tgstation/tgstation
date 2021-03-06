@@ -13,7 +13,7 @@
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
-	pipe_flags = PIPING_ONE_PER_TURF
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	///Base icon state for the machine to be used in update_icon()
 	var/base_icon = "crystallizer"
@@ -29,6 +29,10 @@
 	var/datum/gas_recipe/selected_recipe = null
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
+
+/obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
+	. = ..()
+	internal = new
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
@@ -256,9 +260,9 @@
 	data["on"] = on
 
 	if(selected_recipe)
-		data["selected_recipe"] = selected_recipe.id
+		data["selected"] = selected_recipe.id
 	else
-		data["selected_recipe"] = null
+		data["selected"] = null
 
 	var/list/internal_gas_data = list()
 	if(internal.total_moles())
@@ -315,16 +319,16 @@
 				dump_gases()
 			quality_loss = 0
 			progress_bar = 0
-			if(selected_recipe)
+			if(recipe)
 				selected_recipe = recipe
 				recipe_name = recipe.name
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
 				moles_calculations()
-			investigate_log("was set to recipe [recipe_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("was set to recipe [recipe_name ? recipe_name : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("gas_input")
 			var/_gas_input = params["gas_input"]
-			gas_input = clamp(_gas_input, 0, 50)
+			gas_input = clamp(_gas_input, 0, 500)
 	update_icon()
 
 #undef MIN_PROGRESS_AMOUNT

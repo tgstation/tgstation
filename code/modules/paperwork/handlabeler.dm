@@ -25,6 +25,7 @@
 
 			their_card.registered_name = user.real_name
 			their_card.update_label()
+			their_card.update_icon()
 
 	// NOT EVEN DEATH WILL TAKE AWAY THE STAIN
 	user.mind.name += " (suicide)"

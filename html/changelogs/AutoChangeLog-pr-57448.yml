@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - refactor: "makes the game screen bigger by removing the status bar and moving the chat bar"

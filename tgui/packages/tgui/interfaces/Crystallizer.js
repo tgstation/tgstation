@@ -6,14 +6,14 @@ import { Window } from '../layouts';
 
 export const Crystallizer = (props, context) => {
   const { act, data } = useBackend(context);
-  const recipeTypes = data.recipe_types || [];
+  const selectedRecipes = data.selected_recipes || [];
   const gasTypes = data.internal_gas_data || [];
   const {
     requirements,
     internal_temperature,
     progress_bar,
     gas_input,
-    selected_recipe,
+    selected,
   } = data;
   return (
     <Window
@@ -30,10 +30,10 @@ export const Crystallizer = (props, context) => {
                 onClick={() => act('power')} />
             </LabeledList.Item>
             <LabeledList.Item label="Recipe">
-              {recipeTypes.map(recipe => (
+              {selectedRecipes.map(recipe => (
                 <Button
                   key={recipe.id}
-                  selected={recipe.id === selected_recipe}
+                  selected={recipe.id === selected}
                   content={recipe.name}
                   onClick={() => act('recipe', {
                     mode: recipe.id,

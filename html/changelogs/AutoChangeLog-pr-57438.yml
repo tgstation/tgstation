@@ -1,0 +1,5 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - bugfix: "The slightly pixel shifted decal next to chemistry is no longer pixel shifted"
+  - bugfix: "The several windows that spawned on top of walls in cargo no longer do this"

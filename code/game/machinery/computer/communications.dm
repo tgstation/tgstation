@@ -75,7 +75,7 @@
 		return
 	obj_flags |= EMAGGED
 	if (authenticated)
-		authorize_access = get_all_accesses()
+		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
@@ -257,6 +257,7 @@
 			var/network_name = CONFIG_GET(string/cross_comms_network)
 			if (network_name)
 				payload["network"] = network_name
+			payload["sender_ckey"] = usr.ckey
 
 			send2otherserver(station_name(), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 			minor_announce(message, title = "Outgoing message to allied station")
@@ -302,7 +303,7 @@
 
 			if (obj_flags & EMAGGED)
 				authenticated = TRUE
-				authorize_access = get_all_accesses()
+				authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 				authorize_name = "Unknown"
 				to_chat(usr, "<span class='warning'>[src] lets out a quiet alarm as its login is overridden.</span>")
 				playsound(src, 'sound/machines/terminal_alert.ogg', 25, FALSE)
@@ -311,7 +312,7 @@
 				var/obj/item/card/id/id_card = L.get_idcard(hand_first = TRUE)
 				if (check_access(id_card))
 					authenticated = TRUE
-					authorize_access = id_card.access
+					authorize_access = id_card.access.Copy()
 					authorize_name = "[id_card.registered_name] - [id_card.assignment]"
 
 			state = STATE_MAIN
