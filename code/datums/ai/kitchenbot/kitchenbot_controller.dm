@@ -5,13 +5,14 @@
 	BB_KITCHENBOT_MODE = KITCHENBOT_MODE_REFUSE,
 	//BB_KITCHENBOT_MODE = KITCHENBOT_MODE_OFF,
 	BB_KITCHENBOT_CHOSEN_DISPOSALS = null,
+	BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH = FALSE,
 	BB_KITCHENBOT_TARGET_TO_DISPOSE = null,
 	BB_KITCHENBOT_CHOSEN_GRIDDLE = null,
 	BB_KITCHENBOT_CHOSEN_STOCKPILE = null,
 	BB_KITCHENBOT_ITEMS_WATCHED = list(),
 	BB_KITCHENBOT_ITEMS_BANNED = list(),
 	BB_KITCHENBOT_TAKE_OFF_GRILL = list(),
-	BB_KITCHENBOT_TARGET_TO_GRILL = null
+	BB_KITCHENBOT_TARGET_IN_STOCKPILE = null
 	)
 
 
@@ -29,28 +30,29 @@
 			var/obj/chosen_disposals = blackboard[BB_KITCHENBOT_CHOSEN_DISPOSALS]
 			var/obj/target_refuse = blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE]
 			if(!chosen_disposals)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_disposals)
-				return
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_disposals) //no return to search for trash at the same time
 			if(!target_refuse)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_refuse)
+				if(blackboard[BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH])
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_refuse)
+				else
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_refuse/fast)
 				return
 			if(!(target_refuse in pawn.contents))
 				//not holding plate, should be where we're going now
 				current_movement_target = target_refuse
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/grab_refuse)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/forcemove_grab/grab_refuse)
 				return
 			//holding plate, knows a disposals to dump it. get to work
 			current_movement_target = chosen_disposals
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/dump_refuse)
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposals_item/dump_refuse)
 		if(KITCHENBOT_MODE_THE_GRIDDLER)
 			var/obj/machinery/griddle/griddle = blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE]
 			var/obj/stockpile = blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE]
 			var/list/take_off_grill = blackboard[BB_KITCHENBOT_TAKE_OFF_GRILL]
 			if(!griddle)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_griddle)
-				return
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_griddle) //no return to search for stockpile at the same time
 			if(!stockpile)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_stockpile)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_stockpile)
 				return
 			if(take_off_grill.len)
 				current_movement_target = griddle
@@ -58,29 +60,26 @@
 				return
 			if(griddle.griddled_objects.len >= griddle.max_items)
 				return
-			if(blackboard[BB_KITCHENBOT_TARGET_TO_GRILL])
-				current_movement_target = griddle
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/put_on_grill)
+			if(!blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE])
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_stockpile_target)
+				return //don't try and grab griddlable if we don't have one
+			if(!(blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE] in pawn))
+				current_movement_target = blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/forcemove_grab/grab_griddlable)
 				return
-			var/list/should_griddle = list()
-			var/turf/stockpile_turf = get_turf(stockpile)
-			for(var/obj/item/grillable in stockpile_turf.contents)
-				var/list/banned_items = blackboard[BB_KITCHENBOT_ITEMS_BANNED]
-				if(grillable in banned_items)
-					continue
-				var/datum/component/grillable/grill_comp = grillable.GetComponent(/datum/component/grillable)
-				if(!grill_comp || !grill_comp.positive_result)//bad, don't grill this
-					banned_items += grillable
-					continue
-				should_griddle += grillable
-			if(!should_griddle.len)
-				return
-			current_movement_target = pick_n_take(should_griddle)
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/grab_griddlable)
+			current_movement_target = griddle
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/put_on_grill)
 		if(KITCHENBOT_MODE_WAITER)
 			return
 		else
-			stack_trace("Kitchenbot is in a mode it doesn't have!")
+			stack_trace("Kitchenbot is in a mode it doesn't have named [blackboard[BB_KITCHENBOT_MODE]] - switching to idle")
+			blackboard[BB_KITCHENBOT_MODE] = KITCHENBOT_MODE_IDLE
+
+/datum/ai_controller/kitchenbot/proc/DidNotGrill(obj/item/failed_grill)
+	SIGNAL_HANDLER
+
+	//no longer grilling, remove from watched items
+	blackboard[BB_KITCHENBOT_ITEMS_WATCHED] -= failed_grill
 
 /datum/ai_controller/kitchenbot/proc/GrillCompleted(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER

@@ -48,6 +48,7 @@
 	..()
 
 /mob/living/simple_animal/bot/kitchenbot/update_icon_state()
+	. = ..()
 	var/mode = ai_controller.blackboard[BB_KITCHENBOT_MODE]
 
 	var/list/mode2iconsuffix = list(
@@ -60,7 +61,6 @@
 		icon_state = "[initial(icon_state)][mode2iconsuffix[mode]]"
 	else
 		icon_state = "[initial(icon_state)]0"
-	return ..()
 
 /mob/living/simple_animal/bot/kitchenbot/hack(mob/user)
 	var/hack
@@ -83,10 +83,10 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 	var/mode = ai_controller.blackboard[BB_KITCHENBOT_MODE]
 	dat += "<BR>Kitchenbot Mode:"
 	if(!locked || issilicon(user)|| isAdminGhostAI(user))
-		dat += "<BR>Idle Mode (Nothing. Kitchen Mascot?): [mode == KITCHENBOT_MODE_IDLE ? "Selected" : "<A href='?src=[REF(src)];operation=idle'>Select</A>"]"
-		dat += "<BR>Cleanup Dishes and Clutter (Empty condiment bags, dirty plates): [mode == KITCHENBOT_MODE_REFUSE ? "Selected" : "<A href='?src=[REF(src)];operation=trash'>Select</A>"]"
-		dat += "<BR>The Griddler (You give it food, it griddles and manages it): [mode == KITCHENBOT_MODE_THE_GRIDDLER ? "Selected" : "<A href='?src=[REF(src)];operation=griddler'>Select</A>"]</A>"
-		dat += "<BR>Waiter (Take finished dishes, serve tourists): [mode == KITCHENBOT_MODE_WAITER ? "Selected" : "<A href='?src=[REF(src)];operation=waiter'>Select</A>"]</A>"
+		dat += "<BR>Idle Mode (Nothing. Kitchen Mascot?): [mode == KITCHENBOT_MODE_IDLE ? "<b>Selected</b>" : "<A href='?src=[REF(src)];operation=idle'>Select</A>"]"
+		dat += "<BR>Cleanup Dishes and Clutter (Empty condiment bags, dirty plates): [mode == KITCHENBOT_MODE_REFUSE ? "<b>Selected</b>" : "<A href='?src=[REF(src)];operation=trash'>Select</A>"]"
+		dat += "<BR>The Griddler (You give it food, it griddles and manages it): [mode == KITCHENBOT_MODE_THE_GRIDDLER ? "<b>Selected</b>" : "<A href='?src=[REF(src)];operation=griddler'>Select</A>"]</A>"
+		dat += "<BR>Waiter (Take finished dishes, serve tourists): [mode == KITCHENBOT_MODE_WAITER ? "<b>Selected</b>" : "<A href='?src=[REF(src)];operation=waiter'>Select</A>"]</A>"
 	else
 		dat += "<BR><BR>Sorry, you do not have access to the inner machinations of the amazing and illustrious Kitchenbot."
 	return dat
@@ -112,10 +112,17 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 	. = ..()
 	ai_controller.blackboard[BB_KITCHENBOT_MODE] = KITCHENBOT_MODE_IDLE
 	ai_controller.blackboard[BB_KITCHENBOT_CHOSEN_DISPOSALS] = null
+	var/obj/item/held_refuse = ai_controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE]
+	if(held_refuse && held_refuse in src)
+		held_refuse.forceMove(drop_location())
 	ai_controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE] = null
 	ai_controller.blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = null
 	ai_controller.blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE] = null
 	ai_controller.blackboard[BB_KITCHENBOT_ITEMS_WATCHED] = list()
+	var/obj/item/held_grillable = ai_controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
+	if(held_grillable && held_grillable in src)
+		held_grillable.forceMove(drop_location())
+	ai_controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE] = null
 
 /obj/machinery/bot_core/kitchenbot
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_ROBOTICS)

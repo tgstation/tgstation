@@ -89,6 +89,7 @@
 #define BB_KITCHENBOT_MODE "BB_kitchenbot_mode"
 //dishes mode vars
 #define BB_KITCHENBOT_CHOSEN_DISPOSALS "BB_kitchenbot_chosen_disposals"
+#define BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH "BB_kitchenbot_failed_last_target_search"
 #define BB_KITCHENBOT_TARGET_TO_DISPOSE "BB_kitchenbot_target_to_dispose"
 //griddle mode vars
 #define BB_KITCHENBOT_CHOSEN_GRIDDLE "BB_kitchenbot_chosen_griddle"
@@ -96,4 +97,4 @@
 #define BB_KITCHENBOT_ITEMS_WATCHED "BB_kitchenbot_items_watched" //currently griddling
 #define BB_KITCHENBOT_ITEMS_BANNED "BB_kitchenbot_items_banned" //items that we know won't grill
 #define BB_KITCHENBOT_TAKE_OFF_GRILL "BB_kitchenbot_take_off_grill" //done griddling, high priority to take off grill so it doesnt burn
-#define BB_KITCHENBOT_TARGET_TO_GRILL "BB_kitchenbot_target_to_grill"
+#define BB_KITCHENBOT_TARGET_IN_STOCKPILE "BB_kitchenbot_target_in_stockpile"

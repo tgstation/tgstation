@@ -1,127 +1,96 @@
 
+//Unless specifically mentioned, these are usable on other mobs (but will ofc be themed as kitchenbot)
 
 //CLEANING
 
-/datum/ai_behavior/find_disposals
-	action_cooldown = 8 SECONDS
+/datum/ai_behavior/find_and_set/find_disposals
+	locate_path = /obj/machinery/disposal/bin
+	bb_key_to_set = BB_KITCHENBOT_CHOSEN_DISPOSALS
 
-/datum/ai_behavior/find_disposals/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
+/datum/ai_behavior/find_and_set/find_disposals/react_to_success(datum/ai_controller/controller)
+	controller.pawn.audible_message("<span class='hear'>[controller.pawn] makes a chiming sound! It must have located a disposal bin.</span>")
+	playsound(controller.pawn, 'sound/machines/chime.ogg', 50, FALSE)
 
-	var/obj/machinery/disposal/found_disposals = locate(/obj/machinery/disposal/bin) in oview(7, kitchenbot)
+//kitchenbot because it uses some fail keys, could def be made normal
+/datum/ai_behavior/find_and_set/find_refuse
+	bb_key_to_set = BB_KITCHENBOT_TARGET_TO_DISPOSE
 
-	if(found_disposals)
-		kitchenbot.audible_message("<span class='hear'>[kitchenbot] makes a chiming sound! It must have located a disposal bin.</span>")
-		playsound(kitchenbot, 'sound/machines/chime.ogg', 50, FALSE)
-		controller.blackboard[BB_KITCHENBOT_CHOSEN_DISPOSALS] = found_disposals
-		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
-
-/datum/ai_behavior/find_refuse
-	action_cooldown = 8 SECONDS
-
-/datum/ai_behavior/find_refuse/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
+/datum/ai_behavior/find_and_set/find_refuse/search_tactic(datum/ai_controller/controller)
 	var/obj/item/found_refuse
-
-	for(var/obj/object in oview(7, kitchenbot))
+	for(var/obj/object in oview(7, controller.pawn))
 		if(istype(object, /obj/item/trash/plate)) //dirty dishes
 			found_refuse = object
 		else if(istype(object, /obj/item/reagent_containers/food/condiment)) //bags of sugar flour etc, dump if empty
 			var/obj/item/reagent_containers/food/condiment/condiment_container = object
 			if(!condiment_container.reagents || !condiment_container.reagents.total_volume) //EMPTY! TRASH! GARBAGE! REFUUUUUSE
 				found_refuse = condiment_container
-	if(found_refuse)
-		controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE] = found_refuse
-		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
+	return found_refuse
 
-/datum/ai_behavior/grab_refuse
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 1 //it looks better because of pickup animations
+/datum/ai_behavior/find_and_set/find_refuse/react_to_success(datum/ai_controller/controller)
+	controller.blackboard[BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH] = FALSE //we found some trash, go start using the fast version
 
-/datum/ai_behavior/grab_refuse/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
-	var/obj/item/target_refuse = controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE]
+/datum/ai_behavior/find_and_set/find_refuse/fast
+	action_cooldown = 0 SECONDS
 
-	target_refuse.do_pickup_animation(kitchenbot)
-	kitchenbot.visible_message("<span class='notice'>[kitchenbot] scoops up [target_refuse]!</span>")
-	target_refuse.forceMove(kitchenbot)
-	finish_action(controller, TRUE)
+/datum/ai_behavior/find_and_set/find_refuse/fast/react_to_failure(datum/ai_controller/controller)
+	controller.blackboard[BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH] = TRUE //we didn't find trash, go back to the slow version
 
-/datum/ai_behavior/dump_refuse
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 1
+/datum/ai_behavior/forcemove_grab/grab_refuse
+	bb_key_target = BB_KITCHENBOT_TARGET_TO_DISPOSE
+	grab_verb = "scoops up"
 
-/datum/ai_behavior/dump_refuse/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
+/datum/ai_behavior/disposals_item/dump_refuse
+	bb_key_target = BB_KITCHENBOT_TARGET_TO_DISPOSE
+	bb_key_disposals = BB_KITCHENBOT_CHOSEN_DISPOSALS
 
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
-	var/obj/machinery/disposal/target_disposals = controller.blackboard[BB_KITCHENBOT_CHOSEN_DISPOSALS]
-	var/obj/item/found_refuse = controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE]
-
-	target_disposals.place_item_in_disposal(found_refuse, kitchenbot)
-	controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE] = null //cave johnson we're done here
-	kitchenbot.audible_message("<span class='hear'>[kitchenbot] makes a delighted ping!</span>")
-	playsound(kitchenbot, 'sound/machines/ping.ogg', 50, FALSE)
-	finish_action(controller, TRUE)
+/datum/ai_behavior/disposals_item/dump_refuse/react_to_success(datum/ai_controller/controller)
+	controller.pawn.audible_message("<span class='hear'>[controller.pawn] makes a delighted ping!</span>")
+	playsound(controller.pawn, 'sound/machines/ping.ogg', 50, FALSE)
 
 //GRIDDLING
 
-/datum/ai_behavior/find_griddle
-	action_cooldown = 8 SECONDS
+/datum/ai_behavior/find_and_set/find_griddle
+	locate_path = /obj/machinery/griddle
+	bb_key_to_set = BB_KITCHENBOT_CHOSEN_GRIDDLE
 
-/datum/ai_behavior/find_griddle/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
+/datum/ai_behavior/find_and_set/find_griddle/react_to_success(datum/ai_controller/controller)
+	controller.pawn.audible_message("<span class='hear'>[controller.pawn] makes a chiming sound! It must have located a griddle.</span>")
+	playsound(controller.pawn, 'sound/machines/chime.ogg', 50, FALSE)
 
-	var/obj/machinery/griddle/found_griddle = locate(/obj/machinery/griddle) in oview(7, kitchenbot)
+/datum/ai_behavior/find_and_set/find_stockpile
+	locate_path = /obj/structure/holosign/kitchenbot_stockpile
+	bb_key_to_set = BB_KITCHENBOT_CHOSEN_STOCKPILE
 
-	if(found_griddle)
-		kitchenbot.audible_message("<span class='hear'>[kitchenbot] makes a chiming sound! It must have located a griddle.</span>")
-		playsound(kitchenbot, 'sound/machines/chime.ogg', 50, FALSE)
-		controller.blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = found_griddle
-		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
+/datum/ai_behavior/find_and_set/find_stockpile/react_to_success(datum/ai_controller/controller)
+	controller.pawn.audible_message("<span class='hear'>[controller.pawn] makes a chiming sound! It must have located a stockpile.</span>")
+	playsound(controller.pawn, 'sound/machines/chime.ogg', 50, FALSE)
 
-/datum/ai_behavior/find_stockpile
-	action_cooldown = 8 SECONDS
+//kitchenbot exclusive
+/datum/ai_behavior/find_and_set/find_stockpile_target
+	bb_key_to_set = BB_KITCHENBOT_TARGET_IN_STOCKPILE
 
-/datum/ai_behavior/find_stockpile/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
+/datum/ai_behavior/find_and_set/find_stockpile_target/search_tactic(datum/ai_controller/controller)
+	var/datum/ai_controller/kitchenbot/kitchenbot_controller = controller
+	var/obj/stockpile = kitchenbot_controller.blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE]
+	var/turf/stockpile_turf = get_turf(stockpile)
+	if(!stockpile_turf)
+		return
+	var/list/should_griddle = list()
+	for(var/obj/item/grillable in stockpile_turf.contents)
+		var/list/banned_items = kitchenbot_controller.blackboard[BB_KITCHENBOT_ITEMS_BANNED]
+		if(grillable in banned_items)
+			continue
+		var/datum/component/grillable/grill_comp = grillable.GetComponent(/datum/component/grillable) //change this for final merge
+		if(!grill_comp || !grill_comp.positive_result)//bad, don't grill this
+			banned_items += grillable
+			continue
+		should_griddle += grillable
+	return pick_n_take(should_griddle)
 
-	var/obj/structure/holosign/kitchenbot_stockpile/stockpile = locate(/obj/structure/holosign/kitchenbot_stockpile) in oview(7, kitchenbot)
+/datum/ai_behavior/forcemove_grab/grab_griddlable
+	bb_key_target = BB_KITCHENBOT_TARGET_IN_STOCKPILE
 
-	if(stockpile)
-		kitchenbot.audible_message("<span class='hear'>[kitchenbot] makes a chiming sound! It must have located a stockpile.</span>")
-		playsound(kitchenbot, 'sound/machines/chime.ogg', 50, FALSE)
-		controller.blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE] = stockpile
-		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
-
-/datum/ai_behavior/grab_griddlable
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 1 //it looks better because of pickup animations
-
-/datum/ai_behavior/grab_griddlable/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
-	var/obj/item/need_to_grill = controller.current_movement_target
-
-	need_to_grill.do_pickup_animation(kitchenbot)
-	kitchenbot.visible_message("<span class='notice'>[kitchenbot] grabs [need_to_grill]!</span>")
-	need_to_grill.forceMove(kitchenbot)
-	controller.blackboard[BB_KITCHENBOT_TARGET_TO_GRILL] = need_to_grill
-	finish_action(controller, TRUE)
-
+//kitchenbot exclusive - sorry sorry!
 /datum/ai_behavior/put_on_grill
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 1
@@ -131,7 +100,7 @@
 
 	var/mob/living/simple_animal/bot/kitchenbot/kitchenbot = controller.pawn
 	var/obj/machinery/griddle/griddle = controller.blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE]
-	var/obj/item/grillable = controller.blackboard[BB_KITCHENBOT_TARGET_TO_GRILL]
+	var/obj/item/grillable = controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
 
 	grillable.forceMove(griddle)
 	griddle.AddToGrill(grillable, kitchenbot)
@@ -142,11 +111,13 @@
 		griddle.update_appearance()
 		griddle.update_grill_audio()
 	controller.blackboard[BB_KITCHENBOT_ITEMS_WATCHED] += grillable
+	controller.RegisterSignal(grillable, COMSIG_MOVABLE_MOVED, /datum/ai_controller/kitchenbot.proc/DidNotGrill)
+	controller.RegisterSignal(grillable, COMSIG_PARENT_QDELETING, /datum/ai_controller/kitchenbot.proc/DidNotGrill)
 	controller.RegisterSignal(grillable, COMSIG_GRILL_COMPLETED, /datum/ai_controller/kitchenbot.proc/GrillCompleted)
-	controller.blackboard[BB_KITCHENBOT_TARGET_TO_GRILL] = null
+	controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE] = null
 	finish_action(controller, TRUE)
 
-
+//kitchenbot exclusive - sorry sorry!
 /datum/ai_behavior/take_off_grill
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 1
