@@ -197,4 +197,3 @@
 	return TRUE
 
 #undef PREFILL_AMOUNT
-#undef MAX_SCOOPS
