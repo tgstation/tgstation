@@ -214,7 +214,7 @@ const IDCardTarget = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               <NumberInput
-                value={id_age ? id_age : 0}
+                value={id_age || 0}
                 unit="Years"
                 minValue={17}
                 maxValue={85}
