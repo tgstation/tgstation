@@ -60,7 +60,7 @@
 	qdel(src)
 
 /obj/structure/transit_tube_pod/ex_act(severity, target)
-	..()
+	. = ..()
 	if(!QDELETED(src))
 		empty_pod()
 

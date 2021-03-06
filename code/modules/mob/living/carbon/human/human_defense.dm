@@ -375,8 +375,9 @@
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
 	if(TRAIT_BOMBIMMUNE in dna.species.species_traits)
-		return
-	..()
+		return FALSE
+
+	. = ..()
 	if (!severity || QDELETED(src))
 		return
 	var/brute_loss = 0
@@ -430,7 +431,7 @@
 	take_overall_damage(brute_loss,burn_loss)
 
 	//attempt to dismember bodyparts
-	if(severity <= 2 || !bomb_armor)
+	if(severity <= EXPLODE_HEAVY || !bomb_armor)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X

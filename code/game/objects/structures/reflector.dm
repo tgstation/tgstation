@@ -245,10 +245,7 @@
 	return ..()
 
 /obj/structure/reflector/ex_act()
-	if(admin)
-		return
-	else
-		return ..()
+	return admin ? FALSE : ..()
 
 /obj/structure/reflector/singularity_act()
 	if(admin)

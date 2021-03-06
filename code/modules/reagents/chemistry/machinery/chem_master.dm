@@ -65,8 +65,7 @@
 		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
-	if(severity < 3)
-		..()
+	return (severity < EXPLODE_LIGHT) ? ..() : FALSE
 
 /obj/machinery/chem_master/contents_explosion(severity, target)
 	. = ..()

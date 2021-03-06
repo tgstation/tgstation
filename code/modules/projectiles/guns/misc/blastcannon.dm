@@ -171,4 +171,4 @@
 		return
 
 /obj/projectile/blastwave/ex_act()
-	return
+	return FALSE

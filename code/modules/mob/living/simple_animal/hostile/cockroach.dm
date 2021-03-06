@@ -74,7 +74,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
-	return
+	return FALSE
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach
 	name = "hauberoach"

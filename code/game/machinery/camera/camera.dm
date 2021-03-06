@@ -172,9 +172,7 @@
 	addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 
 /obj/machinery/camera/ex_act(severity, target)
-	if(invuln)
-		return
-	..()
+	return invuln ? FALSE : ..()
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num

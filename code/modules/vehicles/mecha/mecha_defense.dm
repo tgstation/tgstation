@@ -122,7 +122,7 @@
 	if(prob(deflect_chance))
 		severity++
 		log_message("Armor saved, changing severity to [severity]", LOG_MECHA)
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/contents_explosion(severity, target)
 	severity++
