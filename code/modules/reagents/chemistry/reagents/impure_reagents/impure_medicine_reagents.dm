@@ -521,3 +521,137 @@
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+
+/*				Non c2 medicines 				*/
+
+/datum/reagent/impure/mannitol
+	name = "Mannitoil"
+	description = "Inefficiently causes brain damage."
+	color = "#CDCDFF"
+	pH = 12.4
+
+/datum/reagent/impure/mannitol/on_mob_life(mob/living/carbon/C)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, cached_purity*REM)
+	..()
+
+//I am incapable of making anything simple
+/datum/reagent/impure/neurine
+	name = "Neruwhine"
+	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
+	color = "#DCDCAA"
+	pH = 13.4
+	metabolization_rate = 0.05 * REM
+	metastress = 0.5
+	var/datum/brain_trauma/temp_trauma
+
+/datum/reagent/impure/neurine/on_mob_life(mob/living/carbon/C)
+	.=..()
+	if(temp_trauma)
+		return
+	if(!(prob(cached_purity)*10))
+		return
+	var/traumalist = subtypesof(/datum/brain_trauma)
+	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
+	var/datum/brain_trauma/BT = pick(traumalist)
+	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!(B.can_gain_trauma(BT) ) )
+		return
+	B.brain_gain_trauma(BT, TRAUMA_RESILIENCE_MAGIC)
+	temp_trauma = BT
+
+/datum/reagent/impure/neurine/on_mob_delete(mob/living/carbon/C)
+	.=..()
+	if(!temp_trauma)
+		return
+	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend))//Good friends stay by you, no matter what
+		return
+	C.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
+
+/datum/reagent/impure/corazone
+	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free.
+	description = "Can induce a Myocardial Infarction while in the patient if their heart is damaged."
+	color = "#5F5F5F"
+	self_consuming = TRUE
+	pH = 13.5
+	metabolization_rate = 0.075 * REM
+	metastress = 0.2
+	var/datum/disease/heart_failure/temp_myo
+
+/datum/reagent/impure/corazone/on_mob_add(mob/living/L)
+	var/mob/living/carbon/C = L
+	if(!C)
+		return
+	var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
+	if(cached_purity < 0.4) //Explosive purity is 0.35 - so they get 0.4, then they have to work for it
+		C.adjustOrganLoss(ORGAN_SLOT_HEART, 0.05) //If this gets powergamed - remove this line only.
+	if(!H)
+		return
+	if(!(prob(min(H.damage*2, 100))))
+		return
+	var/datum/disease/D = new /datum/disease/heart_failure
+	if(C.ForceContractDisease(D))
+		temp_myo = D
+	..()
+
+/datum/reagent/impure/corazone/on_mob_delete(mob/living/L)
+	if(temp_myo)
+		temp_myo.cure()
+	..()
+
+/datum/reagent/impure/antihol_inverse
+	name = "Prohol"
+	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
+	taste_description = "alcohol" //mostly for sneaky slips
+	chemical_flags = REAGENT_INVISIBLE
+	metastress = 0.35
+	color = "#4C8000"
+
+/datum/reagent/impure/antihol_inverse/on_mob_life(mob/living/carbon/C)
+	for(var/datum/reagent/consumable/ethanol/alch in C.reagents.reagent_list)
+		alch.boozepwr += 2
+	..()
+
+/datum/reagent/impure/oculine
+	name = "Oculater"
+	description = "temporarily blinds the patient."
+	reagent_state = LIQUID
+	color = "#DDDDDD"
+	metabolization_rate = 0.1
+	metastress = 0.75
+	taste_description = "funky toxin"
+	pH = 13
+
+/datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
+	if(prob(100*(1-cached_purity)))
+		C.become_blind("oculine_impure")
+	..()
+
+/datum/reagent/impure/oculine/on_mob_delete(mob/living/L)
+	L.cure_blind("oculine_impure")
+	..()
+
+/datum/reagent/impure/inacusiate
+	name = "Tinyacusiate"
+	description = "Makes the patient's hearing temporarily funky', and slowly causes ear damage."
+	reagent_state = LIQUID
+	color = "#DDDDFF"
+	metastress = 0.75
+	taste_description = "the heat evaporating from your mouth."
+	pH = 1
+	var/randomSpan = "clown"
+
+/datum/reagent/impure/inacusiate/on_mob_add(mob/living/L)
+	randomSpan = pick(list("clown", "small", "big", "spooky", "velvet", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
+	RegisterSignal(L, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	..()
+
+/datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
+	C.adjustOrganLoss(ORGAN_SLOT_EARS, ((1-cached_purity)/2))
+	..()
+
+/datum/reagent/impure/inacusiate/on_mob_delete(mob/living/L)
+	UnregisterSignal(L, COMSIG_MOVABLE_HEAR)
+	..()
+
+/datum/reagent/impure/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
