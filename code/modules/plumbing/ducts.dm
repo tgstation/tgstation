@@ -72,10 +72,14 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 
 	for(var/atom/movable/AM in loc)
-		var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
-		if(P?.active)
-			disconnect_duct() //let's not built under plumbing machinery
-			return
+		for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+			if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+				continue
+			var/datum/component/plumbing/plumb = plumber
+			if(plumb.active)
+				disconnect_duct() //let's not built under plumbing machinery
+				return
+
 	for(var/D in GLOB.cardinals)
 		if(dumb && !(D & connects))
 			continue
@@ -91,7 +95,7 @@ All the important duct code:
 
 	for(var/plumber in AM.GetComponents(/datum/component/plumbing))
 		if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-			return
+			continue
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
@@ -183,10 +187,11 @@ All the important duct code:
 				duct.add_duct(D)
 				D.reconnect()
 		else
-			var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
 			if(AM in get_step(src, neighbours[AM])) //did we move?
-				if(P)
-					connect_plumber(P, neighbours[AM])
+				for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+					if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+						return
+					connect_plumber(plumber, neighbours[AM])
 			else
 				neighbours -= AM //we moved
 
@@ -296,6 +301,7 @@ All the important duct code:
 		"<span class='notice'>You [anchored ? null : "un"]fasten \the [src].</span>", \
 		"<span class='hear'>You hear ratcheting.</span>")
 	return TRUE
+
 ///collection of all the sanity checks to prevent us from stacking ducts that shouldn't be stacked
 /obj/machinery/duct/proc/can_anchor(turf/T)
 	if(!T)
@@ -355,7 +361,7 @@ All the important duct code:
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
-	var/list/layers = list("Alternate Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT)
+	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()

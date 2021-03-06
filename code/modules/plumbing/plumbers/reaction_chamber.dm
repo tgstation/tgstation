@@ -24,9 +24,9 @@
 	///beaker that holds the alkaline buffer.
 	var/obj/item/reagent_containers/glass/beaker/alkaline_beaker
 
-/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
+/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
+	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
 	acidic_beaker = new (src)
 	alkaline_beaker = new (src)
