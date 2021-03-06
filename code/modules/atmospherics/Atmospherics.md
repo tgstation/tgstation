@@ -50,28 +50,25 @@ Now then, into the breach.
     - This is the heart and soul of environmental atmos, see more details below
     - All you need to know right now is it manages moving gas from tile to tile
     - Calls `process_cell()` on each `/turf/open` in the `active_turfs` list
-5. Excited group cleanup
-    - Rebuilds excited groups when the structure of their turfs changes
-    - Calls `cleanup_group()` on each `/turf/open` in the `cleanup_ex_groups` list
-6. Excited groups
+5. Excited groups
     - Manages excited groups, which are core to working flow simulation
     - More details to come, they handle differences between gasmixtures when active turfs can't do the job
     - Increases the `breakdown_cooldown` and `dismantle_cooldown` for each `/datum/excited_group` in the `excited_groups` list
     - If either cooldown for a given excited group has passed its threshold
     - Calls `self_breakdown()` or `dismantle()` appropriately on the excited group.
-7. High pressure deltas
+6. High pressure deltas
     - Takes the gas movement from Active Turfs and uses it to move objects on said turfs
     - Calls `high_pressure_movements()` on each `/turf/open` in the `high_pressure_delta` list.
     - Sets each turf's `pressure_difference` to 0
-8. Hotspots
+7. Hotspots
     - These are what you might know as fire, at least the effect of it.
     - They deal with burning things, and color calculations, lots of color calculations
     - Calls `process()` on each `/obj/effect/hotspot` in the `hotspots` list
-9. Superconductivity
+8. Superconductivity
     - Moves heat through turfs that don't allow gas to pass
     - Deals with heating up the floor below windows, and some other more painful heat stuff
     - Calls `super_conduct()` on each `/turf` in the `active_super_conductivity` list
-10. Atoms
+9. Atoms
     - Processes things in the world that should know about gas changes, used to account for turfs sleeping, I'll get more into that in a bit
     - Calls `process_exposure()` on each `/atom` in the `atom_process` list
 
@@ -167,7 +164,7 @@ This is a rather large subject, we will need to cover gas flow, turf sleeping, s
 
 Active turfs are the backbone of how gas moves from tile to tile. While most of `process_cell()` should be easy enough to understand, I am going to go into some detail about archiving, since I think it's a common source of hiccups.
 
-* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` ought to be similar in form to addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs. This isn't strictly the case unfortunately, but it's minor enough that we can ignore the effects.
+* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` ought to be similar in form to addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs. This additive behavior isn't strictly the case unfortunately, but it's minor enough that we can ignore the effects.
 
 Alright then, with that out of the way, what is an active turf.
 
@@ -216,13 +213,11 @@ When a turf is removed from active, the excited group is broken down, as it's as
 
 Now this issue here is we'd like to keep this napping, but we don't want to `garbage_collect()` the excited group constantly.
 
-So, a new proc was added, `sleep_active_turf()`. It removes the active turf from processing, but doesn't `garbage_collect()` the group. This has some additional costs however.
+So, a new proc was added, `sleep_active_turf()`. It removes the active turf from processing, but doesn't `garbage_collect()` the group.
 
-The excited group's `garbage_collect()` proc is the real issue here. When the landscape of the map changes, we need to rebuild the groups, as we don't want to rebuild them across a wall. The old way relied on the group rebuilding itself, in `process_cell()`, but since players can cause rebuilds quite often, can't afford to just wake all the turfs up.
+You'd think this would cause issues with maintaining the shape of an excited group, however this isn't actually a priority, since `garbage_collect()` and the subsequent rebuild in `process_cell()` causes turfs that are actually active to reform, just as it always has. This has benefits, as it lessens the tendency of one group to cover a huge space, equalize all at once, and fuck with things.
 
-Thus, we have excited group cleanup, which takes all the old turfs, and reaches out to their neighbors to rebuild the group. This allows us to rebuild excited groups without relying on active turfs.
-
-There's another issue here too, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
+There's another issue here however, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
 
 There's one more major aspect of environmental atmos to cover, and while it's not the most misunderstood, it is the code with the worst set dressing.
 

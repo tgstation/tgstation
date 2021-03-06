@@ -31,8 +31,8 @@ Difficulty: Extremely Hard
 	move_to_delay = 20
 	gps_name = "Bloodchilling Signal"
 	ranged = TRUE
-	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman)
-	loot = list(/obj/effect/decal/remains/plasma)
+	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman, /obj/item/ice_energy_crystal)
+	loot = list(/obj/effect/decal/remains/plasma, /obj/item/ice_energy_crystal)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -420,6 +420,14 @@ Difficulty: Extremely Hard
 		to_chat(owner, "<span class='notice'>The cube melts!</span>")
 	owner.cut_overlay(cube)
 	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+
+/obj/item/ice_energy_crystal
+	name = "ice energy crystal"
+	desc = "Remnants of the demonic frost miners ice energy."
+	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon_state = "ice_crystal"
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 0
 
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"

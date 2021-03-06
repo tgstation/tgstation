@@ -103,6 +103,54 @@
 	result = /obj/item/food/butterdog
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/baguette
+	name = "Baguette"
+	time = 40
+	reqs = list(/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/blackpepper = 1,
+		/obj/item/food/pastrybase = 2
+	)
+	result = /obj/item/food/baguette
+	subcategory = CAT_BREAD
+
+////////////////////////////////////////////////TOAST////////////////////////////////////////////////
+
+/datum/crafting_recipe/food/slimetoast
+	name = "Slime toast"
+	reqs = list(
+		/datum/reagent/toxin/slimejelly = 5,
+		/obj/item/food/breadslice/plain = 1
+	)
+	result = /obj/item/food/jelliedtoast/slime
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/jelliedyoast
+	name = "Jellied toast"
+	reqs = list(
+		/datum/reagent/consumable/cherryjelly = 5,
+		/obj/item/food/breadslice/plain = 1
+	)
+	result = /obj/item/food/jelliedtoast/cherry
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/butteredtoast
+	name = "Buttered Toast"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 1,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/butteredtoast
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/twobread
+	name = "Two bread"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/wine = 5,
+		/obj/item/food/breadslice/plain = 2
+	)
+	result = /obj/item/food/twobread
+	subcategory = CAT_BREAD
+
 /datum/crafting_recipe/food/moldybread // why would you make this?
 	name = "Moldy Bread"
 	reqs = list(
