@@ -158,14 +158,27 @@
 
 
 /obj/item/holosign_creator/robot_seat
-	name = "seating indicator placer"
+	name = "kitchen multipurpose projector"
 	creation_time = 1 SECONDS
 	holosign_type = /obj/structure/holosign/robot_seat
-	desc = "Use this to place seats for your restaurant guests!"
+	desc = "A projector used by cooks to indicate to robots where they need to be. Kind of like the space age equivalent of QR coding everything."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/holosign_creator/robot_seat/attack_self(mob/user)
-	return
+	if(holosign_type == /obj/structure/holosign/robot_seat)
+		to_chat(user, "<span class='notice'>You switch the projector to kitchenbot stockpile projections.</span>")
+		holosign_type = /obj/structure/holosign/kitchenbot_stockpile
+	else
+		to_chat(user, "<span class='notice'>You switch the projector to customer seat projections.</span>")
+		holosign_type = initial(holosign_type)
+
+/obj/item/holosign_creator/robot_seat/examine(mob/user)
+	. = ..()
+	var/mode = holosign_type == /obj/structure/holosign/robot_seat ? "'customer seat mode'" : "'kitchenbot stockpile mode'"
+	. += "<span class='bold notice'>[src] is currently set to [mode]!</span>"
+	. += "<span class='notice'>Use the 'customer seat mode' to place seats for your restaurant guests!</span>"
+	. += "<span class='notice'>Use the 'kitchenbot stockpile mode' to indicate stockpiles of meat waiting to get griddled!</span>"
+
 /obj/structure/holosign/robot_seat
 	density = FALSE
 	desc = "Used to indicate a place to sit for a robot tourist. I better be careful."
@@ -185,4 +198,21 @@
 /obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(I.type == projector?.type && !SSrestaurant.claimed_seats[src])
+		qdel(src)
+
+/obj/structure/holosign/kitchenbot_stockpile
+	density = FALSE
+	name = "kitchenbot stockpile hologram"
+	desc = "Used to indicate a place for kitchenbots to take from when griddling. Anything in this tile will be considered for griddling."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "stockpile"
+	layer = BELOW_MOB_LAYER
+	use_vis_overlay = FALSE
+
+/obj/structure/holosign/kitchenbot_stockpile/attack_holosign(mob/living/user, list/modifiers)
+	return
+
+/obj/structure/holosign/kitchenbot_stockpile/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if(I.type == projector?.type)
 		qdel(src)
