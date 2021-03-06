@@ -1,0 +1,4 @@
+author: "Sparkezel"
+delete-after: True
+changes: 
+  - bugfix: "Veil fluctations returned to normal values, cult can once more place runes in maintenance and few other areas and blob has lost its aversion to books."
