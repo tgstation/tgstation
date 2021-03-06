@@ -18477,7 +18477,7 @@
 "bBT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "bBU" = (
 /obj/machinery/firealarm{
@@ -38504,16 +38504,6 @@
 "ldi" = (
 /turf/closed/wall,
 /area/commons/storage/emergency/port)
-"ldK" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1;
-	pixel_x = -2
-	},
-/turf/open/floor/iron/white,
-/area/medical/medbay/lobby)
 "len" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -45885,10 +45875,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/command/bridge)
-"qsG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/cargo/miningdock)
 "qsV" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -49403,10 +49389,6 @@
 /obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
-"sWw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/cargo/storage)
 "sWz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -75764,7 +75746,7 @@ ybV
 soq
 jIx
 gnP
-sWw
+jIx
 jIx
 gnP
 boP
@@ -76796,7 +76778,7 @@ xsZ
 dCr
 jIx
 boP
-qsG
+oOH
 oOH
 oOH
 qXD
@@ -92713,7 +92695,7 @@ oOF
 bet
 bfH
 bhf
-ldK
+fYd
 fYd
 hWN
 bmJ
