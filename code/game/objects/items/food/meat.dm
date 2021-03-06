@@ -445,8 +445,8 @@
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_TINY
-	//spider eggs, xenomeat. both of those events have to happen or xenobio memes
-	venue_value = FOOD_PRICE_EXOTIC
+	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sashimi/Initialize()
 	. = ..()

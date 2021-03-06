@@ -48,6 +48,23 @@ SUBSYSTEM_DEF(id_access)
 
 	return ..()
 
+/**
+ * Called by [/datum/controller/subsystem/ticker/proc/setup]
+ *
+ * This runs through every /datum/id_trim/job singleton and ensures that its access is setup according to
+ * appropriate config entries.
+ */
+/datum/controller/subsystem/id_access/proc/refresh_job_trim_singletons()
+	for(var/trim in typesof(/datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim_singletons_by_path[trim]
+
+		if(QDELETED(job_trim))
+			stack_trace("Trim \[[trim]\] missing from trim singleton list. Reinitialising this trim.")
+			trim_singletons_by_path[trim] = new trim()
+			continue
+
+		job_trim.refresh_trim_access()
+
 /// Build access flag lists.
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
 	accesses_by_flag["[ACCESS_FLAG_COMMON]"] = COMMON_ACCESS

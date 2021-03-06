@@ -63919,7 +63919,7 @@
 /area/commons/vacant_room/commissary)
 "fCk" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
 "fCE" = (
