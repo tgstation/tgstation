@@ -136,3 +136,25 @@
 	kitchenbot.audible_message("<span class='hear'>[kitchenbot] makes a delighted ping!</span>")
 	playsound(kitchenbot, 'sound/machines/ping.ogg', 50, FALSE)
 	finish_action(controller, TRUE)
+
+//SERVING CUSTOMERS
+
+/datum/ai_behavior/listen_for_customers/kitchenbot
+	bb_key_venue = BB_KITCHENBOT_VENUE
+	bb_key_customers_list = BB_KITCHENBOT_CUSTOMERS_NOTED
+	bb_key_orders_list = BB_KITCHENBOT_ORDERS_WANTED
+
+/datum/ai_behavior/find_and_set/find_customer_order/kitchenbot
+	bb_key_orders_list = BB_KITCHENBOT_ORDERS_WANTED
+	bb_key_to_set = BB_KITCHENBOT_DISH_TO_SERVE
+
+/datum/ai_behavior/forcemove_grab/grab_customer_order
+	bb_key_target = BB_KITCHENBOT_DISH_TO_SERVE
+	grab_verb = "collects"
+
+/datum/ai_behavior/dropoff_item/drop_order_off
+	bb_key_item = BB_KITCHENBOT_DISH_TO_SERVE
+
+/datum/ai_behavior/dropoff_item/drop_order_off/perform(delta_time, datum/ai_controller/controller)
+	. = ..()
+	controller.blackboard[BB_KITCHENBOT_DISH_TO_SERVE] = null

@@ -2,8 +2,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.3 SECONDS
 	blackboard = list(
-	BB_KITCHENBOT_MODE = KITCHENBOT_MODE_REFUSE,
-	//BB_KITCHENBOT_MODE = KITCHENBOT_MODE_OFF,
+	BB_KITCHENBOT_MODE = KITCHENBOT_MODE_IDLE,
 	BB_KITCHENBOT_CHOSEN_DISPOSALS = null,
 	BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH = FALSE,
 	BB_KITCHENBOT_TARGET_TO_DISPOSE = null,
@@ -12,7 +11,11 @@
 	BB_KITCHENBOT_ITEMS_WATCHED = list(),
 	BB_KITCHENBOT_ITEMS_BANNED = list(),
 	BB_KITCHENBOT_TAKE_OFF_GRILL = list(),
-	BB_KITCHENBOT_TARGET_IN_STOCKPILE = null
+	BB_KITCHENBOT_TARGET_IN_STOCKPILE = null,
+	BB_KITCHENBOT_CUSTOMERS_NOTED = list(),
+	BB_KITCHENBOT_ORDERS_WANTED = list(),
+	BB_KITCHENBOT_VENUE = null,
+	BB_KITCHENBOT_DISH_TO_SERVE = null
 	)
 
 
@@ -70,10 +73,30 @@
 			current_movement_target = griddle
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/put_on_grill)
 		if(KITCHENBOT_MODE_WAITER)
-			return
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/listen_for_customers/kitchenbot)
+			var/obj/dish_to_serve = blackboard[BB_KITCHENBOT_DISH_TO_SERVE]
+			if(!dish_to_serve)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_customer_order/kitchenbot)
+				return
+			if(!(dish_to_serve in pawn.contents)) //haven't gotten it
+				current_movement_target = dish_to_serve
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/forcemove_grab/grab_customer_order)
+				return
+			//we have the dish, we need to find customer and go to em'
+			var/mob/living/simple_animal/robot_customer/customer = find_customer(dish_to_serve)
+			//get the turf they want to go
+			current_movement_target = get_step(customer,customer.dir)
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/dropoff_item/drop_order_off)
 		else
 			stack_trace("Kitchenbot is in a mode it doesn't have named [blackboard[BB_KITCHENBOT_MODE]] - switching to idle")
-			blackboard[BB_KITCHENBOT_MODE] = KITCHENBOT_MODE_IDLE
+			change_mode(KITCHENBOT_MODE_IDLE)
+
+/datum/ai_controller/kitchenbot/proc/find_customer(obj/item/what_they_want)
+	var/datum/venue/bb_venue = blackboard[BB_KITCHENBOT_VENUE]
+	for(var/mob/living/simple_animal/robot_customer/customer as anything in bb_venue.current_visitors)
+		var/their_order = customer.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+		if(their_order == what_they_want.type)
+			return customer
 
 /datum/ai_controller/kitchenbot/proc/DidNotGrill(obj/item/failed_grill)
 	SIGNAL_HANDLER
@@ -100,6 +123,10 @@
 	switch(blackboard[BB_KITCHENBOT_MODE])
 		if(KITCHENBOT_MODE_THE_GRIDDLER)
 			RegisterSignal(kitchenbot, COMSIG_PARENT_ATTACKBY, .proc/point_in_the_right_direction)
+		if(KITCHENBOT_MODE_WAITER)
+			if(!blackboard[BB_KITCHENBOT_VENUE])
+				//we need to begin listening for customers, and venues store that.
+				blackboard[BB_KITCHENBOT_VENUE] = SSrestaurant.all_venues[/datum/venue/restaurant]
 
 /datum/ai_controller/kitchenbot/proc/point_in_the_right_direction(datum/source, obj/item/grillable, mob/user)
 	SIGNAL_HANDLER

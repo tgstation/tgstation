@@ -85,7 +85,6 @@
 	if(I.type == projector?.type)
 		qdel(src)
 
-
 /////BAR/////
 /datum/venue/bar
 	name = "bar"

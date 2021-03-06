@@ -53,9 +53,9 @@
 
 	var/list/mode2iconsuffix = list(
 		KITCHENBOT_MODE_IDLE = 1,
-		KITCHENBOT_MODE_REFUSE = 1,
-		KITCHENBOT_MODE_THE_GRIDDLER = 2,
-		KITCHENBOT_MODE_WAITER = 3
+		KITCHENBOT_MODE_REFUSE = 2,
+		KITCHENBOT_MODE_THE_GRIDDLER = 3,
+		KITCHENBOT_MODE_WAITER = 4
 	)
 	if(on)
 		icon_state = "[initial(icon_state)][mode2iconsuffix[mode]]"
@@ -110,6 +110,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 
 /mob/living/simple_animal/bot/kitchenbot/turn_off()
 	. = ..()
+	//kitchenbot forgets a lot of stuff when you turn them off (lets them relearn new things)
 	ai_controller.blackboard[BB_KITCHENBOT_MODE] = KITCHENBOT_MODE_IDLE
 	ai_controller.blackboard[BB_KITCHENBOT_CHOSEN_DISPOSALS] = null
 	var/obj/item/held_refuse = ai_controller.blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE]

@@ -98,3 +98,9 @@
 #define BB_KITCHENBOT_ITEMS_BANNED "BB_kitchenbot_items_banned" //items that we know won't grill
 #define BB_KITCHENBOT_TAKE_OFF_GRILL "BB_kitchenbot_take_off_grill" //done griddling, high priority to take off grill so it doesnt burn
 #define BB_KITCHENBOT_TARGET_IN_STOCKPILE "BB_kitchenbot_target_in_stockpile"
+//serving food mode vars
+//first time we see a customer, we add them to this
+#define BB_KITCHENBOT_CUSTOMERS_NOTED "BB_kitchenbot_customers_noted"
+#define BB_KITCHENBOT_ORDERS_WANTED "BB_kitchenbot_orders_wanted"
+#define BB_KITCHENBOT_VENUE "BB_kitchenbot_venue"
+#define BB_KITCHENBOT_DISH_TO_SERVE "BB_kitchenbot_dish_to_serve"
