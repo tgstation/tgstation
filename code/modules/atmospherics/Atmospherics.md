@@ -272,7 +272,7 @@ All of these are averages by the way.
 * *`tick_overrun`* A percentage of how far past our allotted time we ran. This is what causes Time Dilation, it's bad.
 * *`ticks`* The amount of subsystem fires it takes to run through all the subprocesses once.
 
-The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving.
+The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving. (The only exception to this is pipenet rebuilds, the last entry. Because of its nature as something that can happen at any time, it doesn't have a rolling average, instead it just displays the time it used last process)
 
 The third line is the amount of "whatever" in each subprocess. Handy for noticing dupe bugs and crying at active turf cost. Speaking of, the last entry is the active turfs per overall cost. Not a great metric, but larger is better.
 

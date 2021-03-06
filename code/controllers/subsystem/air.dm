@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(air)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
+
 	var/cost_atoms = 0
 	var/cost_turfs = 0
 	var/cost_hotspots = 0
@@ -21,7 +22,7 @@ SUBSYSTEM_DEF(air)
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
-	var/list/pipenets_needing_rebuilt = list()
+	var/list/rebuild_queue = list()
 	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
@@ -65,7 +66,7 @@ SUBSYSTEM_DEF(air)
 	msg += "PN:[networks.len]|"
 	msg += "AM:[atmos_machinery.len]|"
 	msg += "AO:[atom_process.len]|"
-	msg += "RB:[pipenets_needing_rebuilt.len]|"
+	msg += "RB:[rebuild_queue.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
@@ -84,20 +85,18 @@ SUBSYSTEM_DEF(air)
 	var/timer = TICK_USAGE_REAL
 	var/delta_time = wait * 0.1
 
+	//Rebuilds can happen at any time, so this needs to be done outside of the normal system
+	cost_rebuilds = 0
+
 	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
 	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
-	if(length(pipenets_needing_rebuilt))
-		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
-		for(var/thing in pipenet_rebuilds)
-			var/obj/machinery/atmospherics/AT = thing
-			if(!thing) //If a null somehow shows up here, this next line runtimes and the subsystem dies
-				continue
-			AT.build_network()
-		cached_cost += TICK_USAGE_REAL - timer
-		pipenets_needing_rebuilt.Cut()
+	if(length(rebuild_queue))
+		timer = TICK_USAGE_REAL
+		process_rebuilds()
+		//This does mean that the apperent rebuild costs fluctuate very quickly, this is just the cost of having them always process, no matter what
+		cost_rebuilds = TICK_USAGE_REAL - timer
 		if(state != SS_RUNNING)
 			return
-		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(cached_cost))
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		timer = TICK_USAGE_REAL
@@ -215,7 +214,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
-		pipenets_needing_rebuilt += atmos_machine
+		rebuild_queue += atmos_machine
 
 /datum/controller/subsystem/air/proc/process_atoms(resumed = FALSE)
 	if(!resumed)
@@ -310,6 +309,18 @@ SUBSYSTEM_DEF(air)
 			EG.self_breakdown(poke_turfs = TRUE)
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
 			EG.dismantle()
+		if (MC_TICK_CHECK)
+			return
+
+/datum/controller/subsystem/air/proc/process_rebuilds()
+	//cache for sanic speed (lists are references anyways) (We don't copy this list, because it should be empty by the end)
+	//Yes this does mean rebuilding pipenets can freeze up the subsystem forever, but if we're in that situation something else is very wrong
+	var/list/currentrun = rebuild_queue
+	while(currentrun.len)
+		var/obj/machinery/atmospherics/remake = currentrun[currentrun.len]
+		currentrun.len--
+		if (remake)
+			remake.build_network()
 		if (MC_TICK_CHECK)
 			return
 

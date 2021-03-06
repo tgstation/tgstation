@@ -81,7 +81,7 @@
 		nullifyNode(i)
 
 	SSair.stop_processing_machine(src)
-	SSair.pipenets_needing_rebuilt -= src
+	SSair.rebuild_queue -= src
 
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
