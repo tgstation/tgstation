@@ -250,8 +250,8 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
-	. = ..()
 	QDEL_NULL(disky)
+	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
 	. = ..()
