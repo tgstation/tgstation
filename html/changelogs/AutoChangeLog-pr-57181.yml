@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Iron rods and pens can once again embed in targets if thrown at high speeds (like explosions)"
