@@ -39,7 +39,7 @@
 	. = ..()//drains product
 	explode_fire_vortex(holder, equilibrium, 2, 2, "overheat", TRUE)
 
-/datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, react_vol)
+/datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
@@ -182,7 +182,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
-/datum/chemical_reaction/medicine/convermol/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/medicine/convermol/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
 	if(oxy)
@@ -223,7 +223,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
-/datum/chemical_reaction/medicine/tirimol/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/medicine/tirimol/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
 	if(oxy)
@@ -304,7 +304,7 @@
 		explode_fire_square(holder, equilibrium, 1)
 		holder.my_atom.fire_act(holder.chem_temp, monover.volume)//I'm kinda banking on this setting the thing on fire. If you see this, then it didn't!
 
-/datum/chemical_reaction/medicine/multiver/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/medicine/multiver/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	if(delta_ph < 0.35)
 		//normalise delta_ph
@@ -331,7 +331,7 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
-/datum/chemical_reaction/medicine/syriniver/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/medicine/syriniver/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	reaction.delta_t = delta_t * delta_ph
 
