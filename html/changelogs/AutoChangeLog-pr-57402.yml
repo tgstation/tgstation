@@ -1,0 +1,4 @@
+author: "mozi_h"
+delete-after: True
+changes: 
+  - qol: "Carbon-copies can now only be removed with a right-click. HoPs, you are welcome (yet again)!"

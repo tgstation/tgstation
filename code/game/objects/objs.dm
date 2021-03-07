@@ -186,6 +186,7 @@
 	. = ..()
 	if(.)
 		return
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
 /mob/proc/unset_machine()

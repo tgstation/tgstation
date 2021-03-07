@@ -1,0 +1,4 @@
+author: "Mothblocks, Fikou for icon"
+delete-after: True
+changes: 
+  - rscadd: "The Jump to Mob button has been replaced with Spawners Menu."

@@ -69,12 +69,6 @@
 	research_disabled = !research_disabled
 	refresh_working()
 
-/obj/machinery/rnd/server/proc/mine()
-	. = base_mining_income
-	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
-	current_temp = get_env_temp()
-	. = max(. - penalty, 0)
-
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/turf/open/L = loc
 	if(isturf(L))

@@ -2,10 +2,6 @@
 	//The name of the job , used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
-	//Job access. The use of minimal_access or access is determined by a config setting: config.jobs_have_minimal_access
-	var/list/minimal_access = list() //Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
-	var/list/access = list() //Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
-
 	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
 	var/list/skills
 	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a full crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
@@ -68,22 +64,38 @@
 
 	var/bounty_types = CIV_JOB_BASIC
 
+	///Bitfield of departments this job belongs wit
+	var/departments = NONE
+
 	/// Should this job be allowed to be picked for the bureaucratic error event?
 	var/allow_bureaucratic_error = TRUE
 
+	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
+	var/list/family_heirlooms
+
 /datum/job/New()
 	. = ..()
-	var/list/jobs_changes = GetMapChanges()
+	var/list/jobs_changes = get_map_changes()
 	if(!jobs_changes)
 		return
-	if(isnum(jobs_changes["additional_access"]))
-		access += jobs_changes["additional_access"]
-	if(isnum(jobs_changes["additional_minimal_access"]))
-		minimal_access += jobs_changes["additional_minimal_access"]
 	if(isnum(jobs_changes["spawn_positions"]))
 		spawn_positions = jobs_changes["spawn_positions"]
 	if(isnum(jobs_changes["total_positions"]))
 		total_positions = jobs_changes["total_positions"]
+
+/// Loads up map configs if necessary and returns job changes for this job.
+/datum/job/proc/get_map_changes()
+	var/string_type = "[type]"
+	var/list/splits = splittext(string_type, "/")
+	var/endpart = splits[splits.len]
+
+	SSmapping.HACK_LoadMapConfig()
+
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!(endpart in job_changes))
+		return list()
+
+	return job_changes[endpart]
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -118,7 +130,7 @@
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-/datum/job/proc/announce(mob/living/carbon/human/H)
+/datum/job/proc/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	if(head_announce)
 		announce_head(H, head_announce)
 
@@ -135,7 +147,7 @@
 		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source, is_captain = FALSE)
 	if(!H)
 		return FALSE
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
@@ -153,24 +165,14 @@
 	if(outfit_override || outfit)
 		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
 
+	if(!visualsOnly && is_captain)
+		var/is_acting_captain = (title != "Captain")
+		SSjob.promote_to_captain(H, is_acting_captain)
+
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
 	if(!visualsOnly && announce)
-		announce(H)
-
-/datum/job/proc/get_access()
-	if(!config) //Needed for robots.
-		return src.minimal_access.Copy()
-
-	. = list()
-
-	if(CONFIG_GET(flag/jobs_have_minimal_access))
-		. = src.minimal_access.Copy()
-	else
-		. = src.access.Copy()
-
-	if(CONFIG_GET(flag/everyone_has_maint_access)) //Config has global maint access set
-		. |= list(ACCESS_MAINT_TUNNELS)
+		announce(H, is_captain)
 
 /datum/job/proc/announce_head(mob/living/carbon/human/H, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
@@ -200,26 +202,10 @@
 	return TRUE
 
 /datum/job/proc/map_check()
-	var/list/job_changes = GetMapChanges()
+	var/list/job_changes = get_map_changes()
 	if(!job_changes)
 		return FALSE
 	return TRUE
-
-/**
- * Gets the changes dictionary made to the job template by the map config. Returns null if job is removed.
- */
-/datum/job/proc/GetMapChanges()
-	var/string_type = "[type]"
-	var/list/splits = splittext(string_type, "/")
-	var/endpart = splits[splits.len]
-
-	SSmapping.HACK_LoadMapConfig()
-
-	var/list/job_changes = SSmapping.config.job_changes
-	if(!(endpart in job_changes))
-		return list()
-
-	return job_changes[endpart]
 
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
@@ -230,7 +216,7 @@
 	var/jobtype = null
 
 	uniform = /obj/item/clothing/under/color/grey
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
 	belt = /obj/item/pda
 	back = /obj/item/storage/backpack
@@ -280,13 +266,12 @@
 
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
-		C.access = J.get_access()
 		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
-		C.assignment = J.title
 		if(H.age)
 			C.registered_age = H.age
 		C.update_label()
+		C.update_icon()
 		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
 		if(B && B.account_id == H.account_id)
 			C.registered_account = B
@@ -310,9 +295,3 @@
 	types += satchel
 	types += duffelbag
 	return types
-
-//Warden and regular officers add this result to their get_access()
-/datum/job/proc/check_config_for_sec_maint()
-	if(CONFIG_GET(flag/security_has_maint_access))
-		return list(ACCESS_MAINT_TUNNELS)
-	return list()

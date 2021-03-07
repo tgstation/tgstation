@@ -9,6 +9,7 @@
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
 	eatverbs = list("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"

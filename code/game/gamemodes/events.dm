@@ -30,7 +30,7 @@
 
 /proc/power_restore()
 
-	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWEROFF)
+	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
 	for(var/obj/machinery/power/apc/C in GLOB.machines)
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
@@ -63,4 +63,3 @@
 		S.output_attempt = TRUE
 		S.update_appearance()
 		S.power_change()
-
