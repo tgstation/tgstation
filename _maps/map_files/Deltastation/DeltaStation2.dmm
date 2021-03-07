@@ -65259,6 +65259,12 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/office)
+"fZs" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 22
+	},
+/turf/open/floor/iron/white,
+/area/service/kitchen)
 "fZt" = (
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -72237,6 +72243,9 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/bag/tray,
 /obj/effect/turf_decal/bot,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "iEZ" = (
@@ -76266,9 +76275,8 @@
 /obj/item/toy/figure/chef,
 /obj/effect/turf_decal/bot,
 /obj/item/food/mint,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	pixel_y = 5
-	},
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "khj" = (
@@ -150605,7 +150613,7 @@ qVq
 qGc
 rRd
 kEi
-reI
+fZs
 vNy
 nBD
 kEi
