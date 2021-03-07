@@ -27,7 +27,7 @@
 /obj/item/ammo_casing/c45/ap
 	name = ".45 armor-piercing bullet casing"
 	desc = "A .45 bullet casing."
-	projectile_type = /obj/projectile/bullet/c45_ap
+	projectile_type = /obj/projectile/bullet/c45/ap
 
 /obj/item/ammo_casing/c45/inc
 	name = ".45 incendiary bullet casing"
