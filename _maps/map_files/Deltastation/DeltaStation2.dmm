@@ -25698,7 +25698,7 @@
 	dir = 8
 	},
 /obj/machinery/button/flasher{
-	id = "gulagshuttleflasher";
+	id = "brigflashdoor";
 	name = "Flash Control";
 	pixel_x = 26;
 	pixel_y = 7;
@@ -63919,7 +63919,7 @@
 /area/commons/vacant_room/commissary)
 "fCk" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
 "fCE" = (
