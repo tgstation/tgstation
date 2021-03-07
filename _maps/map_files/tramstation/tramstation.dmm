@@ -18265,9 +18265,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/tram/middle_part,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/industrial_lift/tram/central,
 /obj/machinery/computer/tram_controls,
 /turf/open/floor/vault,
 /area/hallway/primary/tram/center)

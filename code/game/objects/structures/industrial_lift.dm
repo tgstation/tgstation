@@ -412,15 +412,27 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/travel_direction
 	var/time_inbetween_moves = 1
 
+/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+
 /obj/structure/industrial_lift/tram/LateInitialize()
 	. = ..()
 	find_our_location()
 
 /obj/structure/industrial_lift/tram/proc/find_our_location()
-	for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
-		if(our_location.destination_id == initial_id)
-			from_where = our_location
-			break
+	if(!from_where)
+		for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
+			if(our_location.destination_id == initial_id)
+				from_where = our_location
+				break
+
+/obj/structure/industrial_lift/tram/central/find_our_location() //the tram knows where it is by knowing where it isn't
+	..()
+	for(var/location in lift_master_datum.lift_platforms)
+		var/obj/structure/industrial_lift/tram/tram_location = location
+		var/turf/turf = get_turf(src)
+		var/where_we_are = locate(/obj/effect/landmark/tram) in turf.contents
+		if(where_we_are)
+			tram_location.from_where = where_we_are //this gets set by the tram movement too but this actually makes sure we're at the dock we were moved to to prevent blender mode
 
 /obj/structure/industrial_lift/tram/use(mob/user) //dont click the floor dingus we use computers now
 	return
@@ -455,6 +467,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	for(var/lift in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		var/obj/structure/industrial_lift/tram/other_tram_part = lift
 		other_tram_part.travelling = FALSE
+		other_tram_part.find_our_location()
 		lift_master_datum.set_controls(UNLOCKED)
 
 /obj/effect/landmark/tram
