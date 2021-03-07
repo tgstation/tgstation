@@ -99,7 +99,7 @@ export const Hypertorus = (props, context) => {
                   content={recipe.name}
                   onClick={() => act('fuel', {
                     mode: recipe.id,
-                    })} />
+                  })} />
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Gases">
