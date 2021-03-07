@@ -1,8 +1,8 @@
 ///Robot customers
 /mob/living/simple_animal/robot_customer
 	name = "space-tourist bot"
-	maxHealth = 1000 //go fuck yourself
-	health = 1000
+	maxHealth = 150 //go fuck yourself
+	health = 150
 	desc = "I wonder what they'll order..."
 	gender = NEUTER
 	icon = 'icons/mob/tourists.dmi'

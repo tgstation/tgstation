@@ -44,6 +44,9 @@
 		big_guy.start_pulling(batman)
 		return
 
+
+	batman.visible_message("<span class='warning'>[batman] gets a slightly too tight hug from [big_guy]!</span>", "<span class='userdanger'>You feel your bones break as [big_guy] embraces you!</span>")
+
 	if(!iscarbon(batman))
 		batman.adjustBruteLoss(150)
 
