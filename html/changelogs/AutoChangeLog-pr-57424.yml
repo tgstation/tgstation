@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "fixes organ exploits with impure libitoil and convermol"
