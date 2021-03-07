@@ -329,7 +329,7 @@
 /mob/living/CtrlClick(mob/user)
 	if (isliving(user))
 		var/mob/living/user_living = user
-		if (user_living.apply_martial_art(src, null, TRUE))
+		if (user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
 			return
 	..()
 

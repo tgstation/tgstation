@@ -1924,10 +1924,11 @@
  */
 /mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab = FALSE)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return FALSE
+		return MARTIAL_ATTACK_INVALID
 	var/datum/martial_art/style = mind?.martial_art
 	if (!style)
-		return
+		return MARTIAL_ATTACK_INVALID
+	// will return boolean below since it's not invalid
 	if (is_grab)
 		return style.grab_act(src, target)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
