@@ -275,11 +275,6 @@
 	desc = "A bundle of paper created using administrative methods."
 	starting_sheets = 1000
 
-/obj/item/paper_bin/bundlenatural/jumbo/crafted
-	name = "wumbo paper bundle"
-	desc = "A bundle of paper created using traditional methods."
-	starting_sheets = 0
-
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"
 	desc = "Contains all the paper you'll ever need, in duplicate!"

@@ -1313,13 +1313,5 @@
 	parts = list(/obj/item/stack/cable_coil = 2,
 				/obj/item/paper = 30)
 
-/datum/crafting_recipe/paper_bundle/wumbo
-	name = "Improvised paper bin (90 sheets)"
-	result = /obj/item/paper_bin/bundlenatural/jumbo/crafted
-	reqs = list(/obj/item/stack/cable_coil = 6,
-				/obj/item/paper = 90)
-	parts = list(/obj/item/stack/cable_coil = 6,
-				/obj/item/paper = 90)
-
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE
