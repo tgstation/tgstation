@@ -2,12 +2,10 @@
 	icon_state = "tgate_map-3"
 	name = "temperature gate"
 	desc = "An activable gate that compares the input temperature with the interface set temperature to check if the gas can flow from the input side to the output side or not."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tgate"
-
 	///If the temperature of the mix before the gate is lower than this, the gas will flow (if inverted, if the temperature of the mix before the gate is higher than this)
 	var/target_temperature = T0C
 	///Minimum allowed temperature

@@ -6,6 +6,8 @@
 
 	min_players = 20
 
+	dynamic_should_hijack = TRUE
+
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
 /datum/round_event_control/blob/canSpawnEvent(players, gamemode)

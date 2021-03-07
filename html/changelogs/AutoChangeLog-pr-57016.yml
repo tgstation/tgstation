@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Fixes projectile_damage_multiplier not applying to stamina damage dealt by projectiles."

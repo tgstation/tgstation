@@ -4605,15 +4605,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter{
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail.";
-	environment_smash = 0;
-	health = 60;
-	maxHealth = 60;
-	melee_damage_lower = 5;
-	melee_damage_upper = 10;
-	name = "scrawny spider"
-	},
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "ajE" = (
@@ -9553,10 +9545,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "auj" = (
@@ -11439,18 +11429,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Starboard Hallway Research Desk";
-	name = "starboard camera"
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /turf/open/floor/iron/dark,
 /area/hallway/primary/starboard)
@@ -21774,6 +21758,13 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
+/obj/item/experi_scanner,
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/science/lab)
 "aZl" = (
@@ -23477,6 +23468,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/camera{
+	c_tag = "Starboard Hallway Research Desk";
+	dir = 4;
+	name = "starboard camera"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bcn" = (
@@ -53247,15 +53243,7 @@
 /area/maintenance/starboard)
 "cME" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter{
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail.";
-	environment_smash = 0;
-	health = 60;
-	maxHealth = 60;
-	melee_damage_lower = 5;
-	melee_damage_upper = 10;
-	name = "scrawny spider"
-	},
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cMF" = (
@@ -57252,6 +57240,7 @@
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/glass/beaker,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
 "eOX" = (
@@ -57342,14 +57331,10 @@
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "eRD" = (
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/computer/libraryconsole{
-	pixel_y = 5
-	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -57357,6 +57342,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 22
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "eRF" = (
@@ -61378,9 +61364,8 @@
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "hev" = (
-/obj/structure/sink{
-	pixel_y = 26
-	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/food_cart,
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen)
 "hfA" = (
@@ -65524,6 +65509,10 @@
 /obj/item/food/dough,
 /obj/item/kitchen/rollingpin,
 /obj/item/kitchen/rollingpin,
+/obj/item/paper/crumpled{
+	info = "Hey whoever designed this shithole didn't give us space to install the produce computer so it's in maintenance near the theatre.";
+	name = "hastily written note"
+	},
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
 "jAY" = (
@@ -69006,9 +68995,6 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/security/office)
 "lst" = (
@@ -70064,10 +70050,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"lUY" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/n2o,
-/area/engineering/atmos)
 "lVw" = (
 /turf/closed/wall/rust,
 /area/command/gateway)
@@ -71109,6 +71091,10 @@
 	},
 /obj/item/healthanalyzer,
 /obj/item/hand_labeler,
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = 5;
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "mzV" = (
@@ -72949,6 +72935,7 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hop)
 "nFz" = (
@@ -76318,7 +76305,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "ptQ" = (
@@ -82919,6 +82906,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "tfm" = (
@@ -85434,10 +85422,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/status_display/evac{
-	pixel_x = 32;
-	pixel_y = 32
-	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "uAx" = (
@@ -87321,7 +87305,6 @@
 /area/cargo/miningoffice)
 "vyL" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -87329,6 +87312,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "vyM" = (
@@ -88300,10 +88284,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/engineering/atmos)
-"waz" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/o2,
 /area/engineering/atmos)
 "waQ" = (
 /obj/machinery/door/firedoor,
@@ -90731,6 +90711,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/cargo/qm)
+"xwt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/chef_order{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/central)
 "xww" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/newscaster{
@@ -117804,7 +117793,7 @@ nVD
 idD
 knR
 thE
-waz
+thE
 idD
 mrF
 xcO
@@ -122699,7 +122688,7 @@ ckE
 ine
 qbM
 jQf
-lUY
+oNT
 idD
 acm
 aaa
@@ -124433,7 +124422,7 @@ aox
 aox
 buB
 ajq
-akM
+xwt
 uuQ
 sox
 ref

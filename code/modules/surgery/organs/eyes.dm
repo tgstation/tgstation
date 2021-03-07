@@ -160,6 +160,22 @@
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)
 
+/obj/item/organ/eyes/robotic/basic
+	name = "basic robotic eyes"
+	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to light."
+	eye_color = "5500ff"
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/eyes/robotic/basic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(prob(10 * severity))
+		damage += 20 * severity
+		to_chat(owner, "<span class='warning'>Your eyes start to fizzle in their sockets!</span>")
+		do_sparks(2, TRUE, owner)
+		owner.emote("scream")
+
 /obj/item/organ/eyes/robotic/xray
 	name = "\improper X-ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."

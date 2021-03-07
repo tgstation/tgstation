@@ -107,10 +107,12 @@
 
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
-	var/datum/job/paramedic/J = new /datum/job/paramedic
-	access_card.access += J.get_access()
-	prev_access = access_card.access
-	qdel(J)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
+	access_card.add_access(para_trim.access + para_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
+
 	skin = new_skin
 	update_appearance()
 	linked_techweb = SSresearch.science_tech
@@ -375,10 +377,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+		path = get_path_to(src, patient, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, patient, 30,1,id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

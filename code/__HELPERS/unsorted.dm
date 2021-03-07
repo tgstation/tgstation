@@ -339,6 +339,17 @@ Turf and target are separate in case you want to teleport some distance from a t
 			break
 	return loc
 
+//Returns a list of all locations (except the area) the movable is within.
+/proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)
+	. = list()
+	var/atom/location = AM.loc
+	var/turf/turf = get_turf(AM)
+	while(location && location != turf)
+		. += location
+		location = location.loc
+	if(location && include_turf) //At this point, only the turf is left, provided it exists.
+		. += location
+
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(atom/A, direction)
@@ -450,6 +461,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
+	if(get_dist(source, target) > length)
+		return FALSE
 	var/steps = 1
 	if(current != target_turf)
 		current = get_step_towards(current, target_turf)

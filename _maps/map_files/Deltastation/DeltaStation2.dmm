@@ -25698,7 +25698,7 @@
 	dir = 8
 	},
 /obj/machinery/button/flasher{
-	id = "gulagshuttleflasher";
+	id = "brigflashdoor";
 	name = "Flash Control";
 	pixel_x = 26;
 	pixel_y = 7;
@@ -29135,8 +29135,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cqu" = (
-/obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29147,6 +29145,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "cqH" = (
@@ -33807,10 +33806,11 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPd" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/white,
 /area/science/research)
 "cPe" = (
@@ -35295,15 +35295,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/science/research)
-"cSp" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/science/research)
 "cSq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -36199,6 +36190,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
+	},
+/obj/effect/turf_decal/arrows/white{
+	color = "#800080";
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -41271,6 +41266,13 @@
 	dir = 6
 	},
 /obj/machinery/power/apc/auto_name/west,
+/obj/item/experi_scanner,
+/obj/item/experi_scanner{
+	pixel_x = 4
+	},
+/obj/item/experi_scanner{
+	pixel_x = -4
+	},
 /turf/open/floor/iron,
 /area/science/lab)
 "dfr" = (
@@ -63917,7 +63919,7 @@
 /area/commons/vacant_room/commissary)
 "fCk" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
 "fCE" = (
@@ -66662,6 +66664,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hop)
 "gDQ" = (
@@ -69062,8 +69065,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "hzj" = (
-/obj/structure/table/wood,
-/obj/item/clothing/head/fedora,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -69074,6 +69075,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar/atrium)
 "hzE" = (
@@ -73925,6 +73927,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/head/fedora,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "jqu" = (
@@ -76244,6 +76247,10 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/chef,
 /obj/effect/turf_decal/bot,
+/obj/item/food/mint,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "khj" = (
@@ -77150,23 +77157,6 @@
 /obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/commons/dorms)
-"kxh" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/tcommsat/server)
 "kxv" = (
 /obj/structure/chair/stool,
 /obj/structure/cable,
@@ -80430,10 +80420,6 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "lLY" = (
-/obj/item/radio/intercom{
-	pixel_x = -26;
-	pixel_y = 26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -80443,6 +80429,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = -27;
+	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -88935,6 +88925,7 @@
 /obj/item/reagent_containers/glass/bowl,
 /obj/effect/turf_decal/bot,
 /obj/item/food/dough,
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "oJI" = (
@@ -93121,12 +93112,10 @@
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "qhn" = (
-/obj/structure/table/reinforced,
-/obj/item/food/mint,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/chef_order{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "qhE" = (
@@ -103599,6 +103588,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/toy/figure/bartender,
+/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "udl" = (
@@ -113571,6 +113561,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "xRL" = (
@@ -149835,7 +149826,7 @@ cmP
 cNp
 cOW
 cQH
-cSp
+dgv
 cUe
 cWb
 cXr
@@ -152119,7 +152110,7 @@ qOr
 lRN
 rXu
 bWW
-kxh
+bUF
 bUF
 ccD
 cet

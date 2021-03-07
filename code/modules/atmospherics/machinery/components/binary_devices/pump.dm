@@ -14,18 +14,18 @@
 	icon_state = "pump_map-3"
 	name = "gas pump"
 	desc = "A pump that moves gas by pressure."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
-	var/target_pressure = ONE_ATMOSPHERE
-
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
-
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
+	///Pressure that the pump will reach when on
+	var/target_pressure = ONE_ATMOSPHERE
+	///Frequency for radio signaling
+	var/frequency = 0
+	///ID for radio signaling
+	var/id = null
+	///Connection to the radio processing
+	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -52,7 +52,6 @@
 	icon_state = (on && is_operational) ? "pump_on-[set_overlay_offset(piping_layer)]" : "pump_off-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
-// ..()
 	if(!on || !is_operational)
 		return
 
@@ -62,13 +61,20 @@
 	if(air1.pump_gas_to(air2, target_pressure))
 		update_parents()
 
-//Radio remote control
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
 		return

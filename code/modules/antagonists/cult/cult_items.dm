@@ -20,6 +20,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
+	block_chance = 25
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
@@ -31,6 +32,19 @@
 	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", I)
+
+/obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/block_message = "[owner] parries [attack_text] with [src]"
+	if(owner.get_active_held_item() != src)
+		block_message = "[owner] parries [attack_text] with [src] in their offhand"
+
+	if(iscultist(owner) && prob(final_block_chance) && attack_type != PROJECTILE_ATTACK)
+		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
+		playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
+		owner.visible_message("<span class='danger'>[block_message]</span>")
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
@@ -47,6 +61,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
+	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -56,6 +71,15 @@
 /obj/item/melee/cultblade/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 100)
+
+/obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(iscultist(owner) && prob(final_block_chance))
+		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
+		playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
+		owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
@@ -76,6 +100,7 @@
 	force = 19 //can't break normal airlocks
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
+	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
 
 /obj/item/melee/cultblade/ghost/Initialize()
 	. = ..()
@@ -346,7 +371,7 @@
 	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = "cult_helmet"
-	armor = list(MELEE = 70, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 40, ACID = 75)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, RAD = 30, FIRE = 100, ACID = 100)
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
 	actions_types = list()
@@ -358,8 +383,11 @@
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
-	armor = list(MELEE = 70, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 40, ACID = 75)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, RAD = 30, FIRE = 100, ACID = 100)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
+
+/obj/item/clothing/suit/space/hardsuit/cult/real
+	slowdown = 0
 
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
@@ -446,7 +474,7 @@
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
-	if(!iscultist(user))
+	if(!iscultist(user) && slot == ITEM_SLOT_EYES)
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
@@ -641,6 +669,7 @@
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
 	icon_state = "occultpoleaxe0"
 	base_icon_state = "occultpoleaxe"
+	inhand_icon_state = "occultpoleaxe0"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 17
 	throwforce = 40
@@ -663,7 +692,7 @@
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_wielded = "[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
 
 /// triggered on wield of two handed item
 /obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
@@ -678,7 +707,8 @@
 	wielded = FALSE
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
-	icon_state = "[base_icon_state]0"
+	icon_state = wielded ? "[base_icon_state]1" : "[base_icon_state]0"
+	inhand_icon_state = wielded ? "[base_icon_state]1" : "[base_icon_state]0"
 	return ..()
 
 /obj/item/melee/cultblade/halberd/Destroy()
@@ -717,16 +747,19 @@
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
-	if(prob(final_block_chance))
+	if(iscultist(owner) && prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, TRUE)
+			playsound(get_turf(owner), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 			return TRUE
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 100, TRUE)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+			new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 			return TRUE
-	return FALSE
+	else
+		return FALSE
 
 /datum/action/innate/cult/halberd
 	name = "Bloody Bond"

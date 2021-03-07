@@ -2,17 +2,14 @@
 	icon_state = "tpump_map-3"
 	name = "temperature pump"
 	desc = "A pump that moves heat from one pipeline to another. The input will get cooler, and the output will get hotter."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "tpump"
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage
 	var/max_heat_transfer_rate = 100
-
-	construction_type = /obj/item/pipe/directional
-	pipe_state = "tpump"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/CtrlClick(mob/user)
 	if(can_interact(user))

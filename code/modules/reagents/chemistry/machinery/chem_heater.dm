@@ -1,5 +1,3 @@
-#define ENABLE_FLASHING -1
-
 ///Tutorial states
 #define TUT_NO_BUFFER 50
 #define TUT_START 1
@@ -26,7 +24,6 @@
 	var/heater_coefficient = 0.05
 	var/on = FALSE
 	var/dispense_volume = 1
-
 	//The list of active clients using this heater, so that we can update the UI on a reaction_step. I assume there are multiple clients possible.
 	var/list/ui_client_list
 	///If the user has the tutorial enabled
@@ -107,7 +104,6 @@
 					return
 				if(beaker?.reagents.has_reagent(/datum/reagent/mercury, 10) || beaker?.reagents.has_reagent(/datum/reagent/chlorine, 10))
 					tutorial_state = TUT_HAS_REAGENTS
-
 			if(TUT_HAS_REAGENTS)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury, 9)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine, 9)))
 					tutorial_state = TUT_MISSING
@@ -175,7 +171,6 @@
 			var/obj/item/reagent_containers/syringe/S = I
 			S.afterattack(beaker, user, 1)
 			return
-
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
@@ -253,7 +248,7 @@
 	data["beakerContents"] = beaker_contents
 
 	var/list/active_reactions = list()
-	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
+	var/flashing = DISABLE_FLASHING //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
 	for(var/_reaction in beaker?.reagents.reaction_list)
 		var/datum/equilibrium/equilibrium = _reaction
 		if(!length(beaker.reagents.reaction_list))//I'm not sure why when it explodes it causes the gui to fail (it's missing danger (?) )
@@ -275,7 +270,7 @@
 			if(equilibrium.reaction.optimal_ph_min > beaker?.reagents.ph || equilibrium.reaction.optimal_ph_max < beaker?.reagents.ph)
 				flashing = ENABLE_FLASHING
 		if(equilibrium.reaction.is_cold_recipe)
-			if(equilibrium.reaction.overheat_temp > beaker?.reagents.chem_temp)
+			if(equilibrium.reaction.overheat_temp > beaker?.reagents.chem_temp && equilibrium.reaction.overheat_temp != NO_OVERHEAT)
 				danger = TRUE
 				overheat = TRUE
 		else
@@ -494,3 +489,12 @@ To continue set your target temperature to 390K."}
 	. = ..()
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
+
+#undef TUT_NO_BUFFER
+#undef TUT_START
+#undef TUT_HAS_REAGENTS
+#undef TUT_IS_ACTIVE
+#undef TUT_IS_REACTING
+#undef TUT_FAIL
+#undef TUT_COMPLETE
+#undef TUT_MISSING

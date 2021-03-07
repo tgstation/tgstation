@@ -67,4 +67,4 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 	icon_state = "tentacle_end"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'

@@ -14,19 +14,20 @@
 	icon_state = "volpump_map-3"
 	name = "volumetric gas pump"
 	desc = "A pump that moves gas by volume."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
-	var/transfer_rate = MAX_TRANSFER_RATE
-	var/overclocked = FALSE
-
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
-
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
+	///Transfer rate of the component in L/s
+	var/transfer_rate = MAX_TRANSFER_RATE
+	///Check if the component has been overclocked
+	var/overclocked = FALSE
+	///Frequency for radio signaling
+	var/frequency = 0
+	///ID for radio signaling
+	var/id = null
+	///Connection to the radio processing
+	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -51,7 +52,6 @@
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos(delta_time)
-// ..()
 	if(!on || !is_operational)
 		return
 
@@ -90,12 +90,20 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
@@ -123,7 +131,7 @@
 	return data
 
 /obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
-	..()
+	. = ..()
 
 	set_frequency(frequency)
 

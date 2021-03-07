@@ -167,6 +167,7 @@
 	worn_icon_state = "musket_prime"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	can_misfire = FALSE
+	can_jam = FALSE
 	misfire_probability = 0
 	misfire_percentage_increment = 0
 	projectile_damage_multiplier = 1

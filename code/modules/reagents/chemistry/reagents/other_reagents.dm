@@ -2577,7 +2577,7 @@
 		M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
 		M.AdjustAllImmobility(-40 * REM * delta_time)
 		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
-		M.adjustToxLoss(-2 * REM * delta_time, FALSE)
+		M.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
 		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
 		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
 		M.adjustFireLoss(-2 * REM * delta_time, FALSE)

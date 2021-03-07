@@ -33,10 +33,7 @@
 	gold_core_spawnable = NO_SPAWN
 	deathsound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
-
-/mob/living/simple_animal/hostile/alien/Initialize()
-	. = ..()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

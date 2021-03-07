@@ -32,6 +32,8 @@
 #define MEDAL_VOID_ASCENSION "Void"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT          "Beginner Chemist"
+#define MEDAL_HOT_DAMN "Hot Damn!"
+#define MEDAL_CAYENNE_DISK "Very Important Piscis"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
@@ -106,3 +108,6 @@
 
 // DB ID for amount of consumed maintenance pills
 #define MAINTENANCE_PILL_SCORE "Maintenance Pill Score"
+
+// DB ID for intento score
+#define INTENTO_SCORE "Intento Score"

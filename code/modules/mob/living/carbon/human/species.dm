@@ -189,6 +189,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///For custom overrides for species ass images
 	var/icon/ass_image
 
+	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
+	var/list/family_heirlooms
+
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
 
@@ -965,7 +968,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
+		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
 	if(flying_species)
 		HandleFlight(H)
@@ -1136,8 +1139,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
 		return TRUE
-	if(chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
+	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
 		chem.overdosed = TRUE
+		chem.overdose_start(H)
+		log_game("[key_name(H)] has started overdosing on [chem.name] at [chem.volume] units.")
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value

@@ -2,10 +2,10 @@
 	icon_state = "pvalve_map-3"
 	name = "pressure valve"
 	desc = "An activable one way valve that let gas pass through if the pressure on the input side is higher than the set pressure."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "pvalve"
 	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE
 	///Frequency for radio signaling
@@ -16,9 +16,6 @@
 	var/datum/radio_frequency/radio_connection
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
-
-	construction_type = /obj/item/pipe/directional
-	pipe_state = "pvalve"
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -65,12 +62,22 @@
 		is_gas_flowing = FALSE
 	update_icon_nopipes()
 
+//Radio remote control
+
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/broadcast_status()
 	if(!radio_connection)
 		return

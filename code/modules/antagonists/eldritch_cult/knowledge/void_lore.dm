@@ -105,7 +105,7 @@
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/void_phase,/datum/eldritch_knowledge/summon/raw_prophet)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/shard,/obj/item/paper)
-	result_atoms = list(/obj/item/melee/rune_knife)
+	result_atoms = list(/obj/item/melee/rune_carver)
 
 /datum/eldritch_knowledge/crucible
 	name = "Mawed Crucible"

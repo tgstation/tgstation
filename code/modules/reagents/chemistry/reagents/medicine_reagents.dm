@@ -870,7 +870,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
 
-
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
@@ -1267,6 +1266,8 @@
 	reagent_state = SOLID
 	color = "#FFBE00"
 	overdose_threshold = 10
+	inverse_chem_val = 0.1 //Shouldn't happen - but this is so looking up the chem will point to the failed type
+	inverse_chem = /datum/reagent/impurity/probital_failed
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)

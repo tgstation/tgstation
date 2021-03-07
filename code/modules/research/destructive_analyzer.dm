@@ -111,11 +111,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
-		var/loaded_type = loaded_item.type
-		if(destroy_item(loaded_item))
-			stored_research.add_point_list(point_value)
-			stored_research.deconstructed_items[loaded_type] = point_value
-
+		destroy_item(loaded_item)
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()

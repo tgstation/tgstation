@@ -126,7 +126,7 @@
 	log_combat(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
-	SplashReagents(target)
+	SplashReagents(target, override_spillable = TRUE)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
@@ -567,7 +567,7 @@
 		for(var/i in 1 to 2)
 			if(istype(target, /obj/item/storage))
 				target = target.loc
-		SplashReagents(target)
+		SplashReagents(target, override_spillable = TRUE)
 		target.fire_act()
 	qdel(src)
 
