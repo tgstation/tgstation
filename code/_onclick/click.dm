@@ -326,6 +326,14 @@
 	if(istype(ML))
 		ML.pulled(src)
 
+/mob/living/CtrlClick(mob/user)
+	if (isliving(user))
+		var/mob/living/user_living = user
+		if (user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
+			return
+	..()
+
+
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
 		if(world.time < user.next_move)
@@ -346,7 +354,8 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
+	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
+		return
 	var/turf/T = get_turf(src)
 	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
 		user.listed_turf = T

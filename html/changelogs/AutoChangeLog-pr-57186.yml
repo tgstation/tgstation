@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Dogs now have all-new AI! Go throw a grenade at Ian and see what happens!"
+  - rscadd: "Added AI datum support for complex JPS pathing"

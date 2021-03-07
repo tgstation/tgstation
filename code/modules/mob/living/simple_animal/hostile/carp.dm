@@ -244,13 +244,14 @@
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
 
 /mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
-	disky.forceMove(drop_location())
-	disky = null
+	if(disky)
+		disky.forceMove(drop_location())
+		disky = null
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
-	. = ..()
 	QDEL_NULL(disky)
+	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
 	. = ..()

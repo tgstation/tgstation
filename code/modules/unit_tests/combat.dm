@@ -76,15 +76,15 @@
 	var/obj/structure/barricade/dense_object = allocate(/obj/structure/barricade)
 
 	// Attacker --> Victim --> Empty space --> Wall
-	attacker.forceMove(run_loc_bottom_left)
-	victim.forceMove(locate(run_loc_bottom_left.x + 1, run_loc_bottom_left.y, run_loc_bottom_left.z))
-	dense_object.forceMove(locate(run_loc_bottom_left.x + 3, run_loc_bottom_left.y, run_loc_bottom_left.z))
+	attacker.forceMove(run_loc_floor_bottom_left)
+	victim.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	dense_object.forceMove(locate(run_loc_floor_bottom_left.x + 3, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	// First disarm, world should now look like:
 	// Attacker --> Empty space --> Victim --> Wall
 	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
 
-	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_bottom_left.x + 2, "Victim wasn't moved back after being pushed")
+	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim wasn't moved back after being pushed")
 	TEST_ASSERT(!victim.has_status_effect(STATUS_EFFECT_KNOCKDOWN), "Victim was knocked down despite not being against a wall")
 	TEST_ASSERT_EQUAL(victim.get_active_held_item(), toolbox, "Victim dropped toolbox despite not being against a wall")
 
@@ -93,6 +93,6 @@
 	// Second disarm, victim was against wall and should be down
 	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
 
-	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_bottom_left.x + 2, "Victim was moved after being pushed against a wall")
+	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim was moved after being pushed against a wall")
 	TEST_ASSERT(victim.has_status_effect(STATUS_EFFECT_KNOCKDOWN), "Victim was not knocked down after being pushed against a wall")
 	TEST_ASSERT_EQUAL(victim.get_active_held_item(), null, "Victim didn't drop toolbox after being pushed against a wall")
