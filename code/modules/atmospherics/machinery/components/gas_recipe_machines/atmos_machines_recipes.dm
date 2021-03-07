@@ -155,13 +155,13 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	id = ""
 	//The gases that are going to be used as fuel ("GasX + GasY fuel")
 	name = ""
-	//Not used
+	//Multiplier for the minimum heat output of the HFR (min 0.01)
 	min_temp = 0
-	//Not used
+	//Multiplier for the maximum heat output of the HFR (min 0.01)
 	max_temp = 0
-	//Not used
+	//Not used... yet
 	reaction_type = EXOTHERMIC_REACTION
-	//Not used
+	//Multiplier for the fuel consumption and the energy released
 	energy_release = 0
 	//Only gases no amounts (warning, 3 gases, the first 2 are the actual fuel, the third is a subgas that gets produced directly by the reaction, eg helium)
 	requirements = list()
@@ -171,17 +171,53 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/hypertorus_fusion_reactor/hydrogen_tritium_fuel
 	id = "h2_t2_fuel"
 	name = "Hydrogen + Tritium fuel"
+	min_temp = 1
+	max_temp = 1
+	energy_release = 1
 	requirements = list(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/helium)
+	products = list(/datum/gas/helium, /datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/bz, /datum/gas/hypernoblium)
+
+/datum/gas_recipe/hypertorus_fusion_reactor/hydrogen_oxy_fuel
+	id = "h2_o2_fuel"
+	name = "Hydrogen + Oxygen fuel"
+	min_temp = 2
+	max_temp = 0.6
+	energy_release = 3
+	requirements = list(/datum/gas/hydrogen, /datum/gas/oxygen, /datum/gas/helium)
+	products = list(/datum/gas/helium, /datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/bz, /datum/gas/hypernoblium)
+
+/datum/gas_recipe/hypertorus_fusion_reactor/tritium_oxy_fuel
+	id = "t2_o2_fuel"
+	name = "Tritium + Oxygen fuel"
+	min_temp = 2.1
+	max_temp = 0.5
+	energy_release = 2
+	requirements = list(/datum/gas/tritium, /datum/gas/oxygen, /datum/gas/helium)
 	products = list(/datum/gas/helium, /datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/bz, /datum/gas/hypernoblium)
 
 /datum/gas_recipe/hypertorus_fusion_reactor/plasma_oxy_fuel
 	id = "plasma_o2_fuel"
 	name = "Plasma + Oxygen fuel"
+	min_temp = 2.5
+	max_temp = 0.1
+	energy_release = 10
 	requirements = list(/datum/gas/plasma, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
 	products = list(/datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/nitrous_oxide, /datum/gas/pluoxium, /datum/gas/halon)
+
+/datum/gas_recipe/hypertorus_fusion_reactor/hypernob_hydrogen_fuel
+	id = "hypernob_hydrogen_fuel"
+	name = "Hypernoblium + Hydrogen fuel"
+	min_temp = 0.2
+	max_temp = 2.2
+	energy_release = 0.2
+	requirements = list(/datum/gas/hypernoblium, /datum/gas/hydrogen, /datum/gas/antinoblium)
+	products = list(/datum/gas/antinoblium, /datum/gas/helium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/healium, /datum/gas/miasma)
 
 /datum/gas_recipe/hypertorus_fusion_reactor/hypernob_trit_fuel
 	id = "hypernob_trit_fuel"
 	name = "Hypernoblium + Tritium fuel"
+	min_temp = 0.1
+	max_temp = 2.5
+	energy_release = 0.1
 	requirements = list(/datum/gas/hypernoblium, /datum/gas/tritium, /datum/gas/antinoblium)
 	products = list(/datum/gas/antinoblium, /datum/gas/helium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/healium, /datum/gas/miasma)

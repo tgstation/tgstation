@@ -201,6 +201,14 @@
 		for(var/gas_type in connected_core.selected_fuel.products)
 			var/datum/gas/gas_produced = gas_type
 			product_gases += "-[initial(gas_produced.name)]"
+		var/minimum_temp = connected_core.selected_fuel.min_temp < 1 ? "Decrease" : "Increase"
+		var/maximum_temp = connected_core.selected_fuel.max_temp < 1 ? "Decrease" : "Increase"
+		var/energy = connected_core.selected_fuel.energy_release > 1 ? "Decrease" : "Increase"
+		product_gases += "The fuel mix will"
+		product_gases += "-[minimum_temp] the minimum cooling by a factor of [connected_core.selected_fuel.min_temp]"
+		product_gases += "-[maximum_temp] the maximum heating by a factor of [connected_core.selected_fuel.max_temp]"
+		product_gases += "-[energy] the energy output and the fuel consumption by a factor of [1 / connected_core.selected_fuel.energy_release]"
+
 	data["product_gases"] = product_gases.Join("\n")
 
 	//Internal Fusion gases

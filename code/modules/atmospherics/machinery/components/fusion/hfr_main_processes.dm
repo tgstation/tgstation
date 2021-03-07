@@ -304,6 +304,7 @@
 	//Can go either positive or negative depending on the instability and the negative_modifiers
 	//E=mc^2 with some changes for gameplay purposes
 	energy = ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
+	energy = energy / selected_fuel.energy_release
 	energy = clamp(energy, 0, 1e35) //ugly way to prevent NaN error
 	//Power of the gas mixture
 	internal_power = (scaled_fuel_list[scaled_fuel_list[1]] * power_modifier / 100) * (scaled_fuel_list[scaled_fuel_list[2]] * power_modifier / 100) * (PI * (2 * (scaled_fuel_list[scaled_fuel_list[1]] * CALCULATED_H2RADIUS) * (scaled_fuel_list[scaled_fuel_list[2]] * CALCULATED_TRITRADIUS))**2) * energy
@@ -322,7 +323,7 @@
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, - heat_limiter_modifier * 0.01, heat_limiter_modifier)
+	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, - heat_limiter_modifier * 0.01 * selected_fuel.min_temp, heat_limiter_modifier * selected_fuel.max_temp)
 
 	var/datum/gas_mixture/internal_output = new
 	//gas consumption and production
@@ -332,7 +333,7 @@
 
 		for(var/gas_id in selected_fuel.requirements)
 			if(gas_id == selected_fuel.requirements[1] || gas_id == selected_fuel.requirements[2])
-				internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85)
+				internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 / selected_fuel.energy_release)
 			else
 				internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
 		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
