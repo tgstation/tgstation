@@ -57,7 +57,7 @@
 		to_chat(user, "<span class='notice'>You hand [I] to [pawn]</span>")
 		eat_order(I, attending_venue)
 		return COMPONENT_NO_AFTERATTACK
-	else)
+	else
 		warn_greytider(user)
 
 
@@ -104,10 +104,12 @@
 	blackboard[BB_CUSTOMER_CURRENT_TARGET] = greytider
 
 
-/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/L)
+/datum/ai_controller/robot_customer/proc/on_get_punched(datum/source, mob/living/L)
 	SIGNAL_HANDLER
 
-	var/obj/item/card/id/used_id = puller.get_idcard(TRUE)
+	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
+
+	var/obj/item/card/id/used_id = L.get_idcard(TRUE)
 
 	if(used_id && attending_venue.req_access in used_id?.GetAccess())
 		return

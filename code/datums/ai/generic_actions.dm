@@ -60,5 +60,5 @@
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
 	controller[target_key] = null
+	return ..()
