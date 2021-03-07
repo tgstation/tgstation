@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "There are now space tourists from south of the border. Andele!"
+  - qol: "The two taco recipes are now distinguished by name in game to help tell the two apart."
+  - imageadd: "The Restaurant Holoseat Creator now uses a slightly different sprite to help it stand out."
