@@ -293,25 +293,42 @@
 		intercepttext += "<hr>"
 		intercepttext += report
 
-	if(station_goals.len)
-		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
-		for(var/datum/station_goal/G in station_goals)
-			G.on_report()
-			intercepttext += G.get_report()
-
-	if(SSstation.station_traits.len)
-		intercepttext += "<hr><b>Identified shift divergencies:</b>"
-		for(var/i in SSstation.station_traits)
-			var/datum/station_trait/station_trait_iterator = i
-			if(!station_trait_iterator.show_in_report)
-				return
-			intercepttext += station_trait_iterator.get_report()
+	intercepttext += generate_station_goal_report()
+	intercepttext += generate_station_trait_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", ANNOUNCER_INTERCEPT)
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
+/*
+ * Generate a list of station goals available to purchase to report to the crew.
+ *
+ * Returns a formatted string all station goals that are available to the station.
+ */
+/datum/game_mode/proc/generate_station_goal_report()
+	if(!station_goals.len)
+		return
+	. = "<hr><b>Special Orders for [station_name()]:</b><BR>"
+	for(var/datum/station_goal/station_goal in station_goals)
+		station_goal.on_report()
+		. += station_goal.get_report()
+	return
+
+/*
+ * Generate a list of active station traits to report to the crew.
+ *
+ * Returns a formatted string of all station traits (that are shown) affecting the station.
+ */
+/datum/game_mode/proc/generate_station_trait_report()
+	if(!SSstation.station_traits.len)
+		return
+	. = "<hr><b>Identified shift divergencies:</b><BR>"
+	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
+		if(!station_trait.show_in_report)
+			continue
+		. += "[station_trait.get_report()]<BR>"
+	return
 
 // This is a frequency selection system. You may imagine it like a raffle where each player can have some number of tickets. The more tickets you have the more likely you are to
 // "win". The default is 100 tickets. If no players use any extra tickets (earned with the antagonist rep system) calling this function should be equivalent to calling the normal

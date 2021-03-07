@@ -17664,10 +17664,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"bzb" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/plasma,
-/area/engineering/atmos)
 "bzc" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -18481,7 +18477,7 @@
 "bBT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "bBU" = (
 /obj/machinery/firealarm{
@@ -30378,10 +30374,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
-"fqm" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/air,
-/area/engineering/atmos)
 "fqK" = (
 /obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
@@ -38512,16 +38504,6 @@
 "ldi" = (
 /turf/closed/wall,
 /area/commons/storage/emergency/port)
-"ldK" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1;
-	pixel_x = -2
-	},
-/turf/open/floor/iron/white,
-/area/medical/medbay/lobby)
 "len" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -40214,7 +40196,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "mpi" = (
@@ -45893,10 +45875,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/command/bridge)
-"qsG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/cargo/miningdock)
 "qsV" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -49294,6 +49272,12 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"sTS" = (
+/obj/machinery/computer/chef_order{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen)
 "sUk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -49405,10 +49389,6 @@
 /obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
-"sWw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/cargo/storage)
 "sWz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -51468,7 +51448,6 @@
 /area/command/meeting_room)
 "uqM" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/engine/air,
 /area/engineering/atmos)
 "ure" = (
@@ -75767,7 +75746,7 @@ ybV
 soq
 jIx
 gnP
-sWw
+jIx
 jIx
 gnP
 boP
@@ -76799,7 +76778,7 @@ xsZ
 dCr
 jIx
 boP
-qsG
+oOH
 oOH
 oOH
 qXD
@@ -91736,7 +91715,7 @@ fJb
 bIZ
 ohp
 gHx
-fqm
+oUi
 oUi
 ccm
 boP
@@ -92716,7 +92695,7 @@ oOF
 bet
 bfH
 bhf
-ldK
+fYd
 fYd
 hWN
 bmJ
@@ -93777,7 +93756,7 @@ kJV
 gkf
 kJV
 ccm
-bzb
+mIQ
 gNY
 mIQ
 ccm
@@ -95018,7 +94997,7 @@ dfW
 mjA
 rLD
 nUo
-nUo
+sTS
 nUo
 nUo
 tIN

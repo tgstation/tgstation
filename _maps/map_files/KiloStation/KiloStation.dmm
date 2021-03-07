@@ -4605,15 +4605,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter{
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail.";
-	environment_smash = 0;
-	health = 60;
-	maxHealth = 60;
-	melee_damage_lower = 5;
-	melee_damage_upper = 10;
-	name = "scrawny spider"
-	},
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "ajE" = (
@@ -53251,15 +53243,7 @@
 /area/maintenance/starboard)
 "cME" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter{
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail.";
-	environment_smash = 0;
-	health = 60;
-	maxHealth = 60;
-	melee_damage_lower = 5;
-	melee_damage_upper = 10;
-	name = "scrawny spider"
-	},
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cMF" = (
@@ -65525,6 +65509,10 @@
 /obj/item/food/dough,
 /obj/item/kitchen/rollingpin,
 /obj/item/kitchen/rollingpin,
+/obj/item/paper/crumpled{
+	info = "Hey whoever designed this shithole didn't give us space to install the produce computer so it's in maintenance near the theatre.";
+	name = "hastily written note"
+	},
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
 "jAY" = (
@@ -69007,9 +68995,6 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/security/office)
 "lst" = (
@@ -70065,10 +70050,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"lUY" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/n2o,
-/area/engineering/atmos)
 "lVw" = (
 /turf/closed/wall/rust,
 /area/command/gateway)
@@ -76324,7 +76305,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "ptQ" = (
@@ -88304,10 +88285,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
-"waz" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/engine/o2,
-/area/engineering/atmos)
 "waQ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/door_assembly/door_assembly_ext{
@@ -90734,6 +90711,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/cargo/qm)
+"xwt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/chef_order{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/central)
 "xww" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/newscaster{
@@ -117807,7 +117793,7 @@ nVD
 idD
 knR
 thE
-waz
+thE
 idD
 mrF
 xcO
@@ -122702,7 +122688,7 @@ ckE
 ine
 qbM
 jQf
-lUY
+oNT
 idD
 acm
 aaa
@@ -124436,7 +124422,7 @@ aox
 aox
 buB
 ajq
-akM
+xwt
 uuQ
 sox
 ref

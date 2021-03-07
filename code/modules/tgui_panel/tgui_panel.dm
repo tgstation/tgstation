@@ -48,9 +48,11 @@
 	))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
-	// Preload assets for /datum/tgui_window
+	// Preload assets for /datum/tgui
 	var/datum/asset/asset_tgui = get_asset_datum(/datum/asset/simple/tgui)
-	asset_tgui.send(src.client)
+	var/flush_queue = asset_tgui.send(src.client)
+	if(flush_queue)
+		src.client.browse_queue_flush()
 	// Other setup
 	request_telemetry()
 	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 5 SECONDS)
