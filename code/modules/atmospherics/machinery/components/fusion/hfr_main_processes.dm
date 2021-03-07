@@ -42,12 +42,12 @@
 		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + internal_fusion.temperature) / 9e5, 1) - 2700) / 400, 0), 0)
 
 	if(internal_fusion.total_moles() < 2000 || power_level <= 5)
-		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 600) / 200, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1200) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() > 0 && internal_fusion.temperature < 5e5 && power_level <= 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 5, 0), 0)
 
-	critical_threshold_proximity += max(round(iron_content, 1) - 1, 0)
+	critical_threshold_proximity += max(iron_content - 0.35, 0)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
@@ -399,9 +399,9 @@
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
 					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.products[4]][MOLES] += scaled_production * 1.65
+					moderator_internal.gases[selected_fuel.products[4]][MOLES] += scaled_production * 0.65
 					moderator_internal.gases[selected_fuel.products[5]][MOLES] += scaled_production
-					moderator_internal.gases[selected_fuel.products[6]][MOLES] += scaled_production * 0.55
+					moderator_internal.gases[selected_fuel.products[6]][MOLES] += scaled_production * 0.75
 					if(moderator_list[/datum/gas/plasma] > 15)
 						internal_output.assert_gases(/datum/gas/freon)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
@@ -434,6 +434,7 @@
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.9 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.0065)) * delta_time
 				if(6)
 					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption_rate) * delta_time
+					moderator_internal.gases[selected_fuel.products[5]][MOLES] += scaled_production * 0.35
 					moderator_internal.gases[selected_fuel.products[6]][MOLES] += scaled_production
 					if(moderator_list[/datum/gas/plasma] > 30)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
@@ -496,10 +497,10 @@
 
 		var/datum/gas_mixture/internal_remove
 		if(internal_fusion.gases[selected_fuel.requirements[3]][MOLES] > 0)
-			internal_remove = internal_fusion.remove_specific(selected_fuel.requirements[3], internal_fusion.gases[selected_fuel.requirements[3]][MOLES] * 0.95)
+			internal_remove = internal_fusion.remove_specific(selected_fuel.requirements[3], internal_fusion.gases[selected_fuel.requirements[3]][MOLES] * (1 - (1 - 0.25) ** delta_time))
 			linked_output.airs[1].merge(internal_remove)
 		if(internal_fusion.gases[/datum/gas/antinoblium][MOLES] > 0)
-			internal_remove = internal_fusion.remove_specific(/datum/gas/antinoblium, internal_fusion.gases[/datum/gas/antinoblium][MOLES] * 0.95)
+			internal_remove = internal_fusion.remove_specific(/datum/gas/antinoblium, internal_fusion.gases[/datum/gas/antinoblium][MOLES] * (1 - (1 - 0.25) ** delta_time))
 			linked_output.airs[1].merge(internal_remove)
 		internal_fusion.garbage_collect()
 		moderator_internal.garbage_collect()

@@ -25,8 +25,6 @@
 	///Checks for the fuel to be injected
 	var/start_fuel = FALSE
 
-	var/datum/gas_recipe/selected_fuel
-
 	/**
 	 * Hypertorus internal objects and gasmixes
 	 */
@@ -47,6 +45,8 @@
 	var/datum/gas_mixture/moderator_internal
 	///Set the filtering type of the waste remove
 	var/filter_type = null
+	///Stores the current fuel mix that the user has selected
+	var/datum/gas_recipe/selected_fuel
 
 	/**
 	 * Fusion vars
