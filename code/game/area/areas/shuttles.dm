@@ -171,9 +171,6 @@
 /area/shuttle/transport
 	name = "Transport Shuttle"
 
-/area/shuttle/transport/tramstation
-	name = "Transit Shuttle"
-
 /area/shuttle/assault_pod
 	name = "Steel Rain"
 
