@@ -151,7 +151,7 @@
 	rate_up_lim = 25 //Give a chance to pull back
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
-/datum/chemical_reaction/nitrous_oxide/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/nitrous_oxide/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
 	var/turf/exposed_turf = get_turf(holder.my_atom)
 	if(!exposed_turf)
@@ -159,7 +159,7 @@
 	exposed_turf.atmos_spawn_air("n2o=[equilibrium.step_target_vol/2];TEMP=[holder.chem_temp]")
 	clear_products(holder, equilibrium.step_target_vol)
 
-/datum/chemical_reaction/nitrous_oxide/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/nitrous_oxide/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	return //This is empty because the explosion reaction will occur instead (see pyrotechnics.dm). This is just here to update the lookup ui.
 
 
@@ -738,7 +738,7 @@
 	required_reagents = list(/datum/reagent/consumable/ice = 1)
 	required_temp = 275
 	optimal_temp = 350
-	overheat_temp = 99999
+	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 0
 	optimal_ph_max = 14
 	thermic_constant = 0
@@ -754,7 +754,7 @@
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/ethanol = 1, /datum/reagent/iodine = 1)
 	required_temp = 274
 	optimal_temp = 350
-	overheat_temp = 99999
+	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 0
 	optimal_ph_max = 14
 	thermic_constant = 0

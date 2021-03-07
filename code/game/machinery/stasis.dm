@@ -18,25 +18,13 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
-	var/obj/machinery/computer/operating/op_computer
-
-/obj/machinery/stasis/Initialize()
-	. = ..()
-	for(var/direction in GLOB.alldirs)
-		op_computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
-		if(op_computer)
-			op_computer.sbed = src
-			break
 
 /obj/machinery/stasis/Destroy()
 	. = ..()
-	if(op_computer && op_computer.sbed == src)
-		op_computer.sbed = null
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
-	. += "<span class='notice'>\The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()

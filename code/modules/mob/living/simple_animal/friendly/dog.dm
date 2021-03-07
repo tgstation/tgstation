@@ -19,71 +19,14 @@
 	can_be_held = TRUE
 	pet_bonus = TRUE
 	pet_bonus_emote = "woofs happily!"
-	var/turns_since_scan = 0
-	var/obj/movement_target
+	ai_controller = /datum/ai_controller/dog
+	stop_automated_movement = TRUE
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	add_cell_sample()
-
-/mob/living/simple_animal/pet/dog/Life(delta_time = SSMOBS_DT, times_fired)
-	..()
-
-	//Feeding, chasing food, FOOOOODDDD
-	if(stat || resting || buckled)
-		return
-
-	turns_since_scan++
-	if(turns_since_scan > 5)
-		turns_since_scan = 0
-		if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc)))
-			movement_target = null
-			stop_automated_movement = FALSE
-		if(!movement_target || !(movement_target.loc in oview(src, 3)))
-			movement_target = null
-			stop_automated_movement = FALSE
-			for(var/obj/item/potential_snack in oview(src,3))
-				if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
-					movement_target = potential_snack
-					break
-
-	if(movement_target)
-		stop_automated_movement = TRUE
-		step_to(src, movement_target, 1)
-		sleep(3)
-		step_to(src, movement_target, 1)
-		sleep(3)
-		step_to(src, movement_target, 1)
-
-		if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
-			var/turf/T = get_turf(movement_target)
-			if(!T)
-				return
-			if(T.x < src.x)
-				setDir(WEST)
-			else if (T.x > src.x)
-				setDir(EAST)
-			else if (T.y < src.y)
-				setDir(SOUTH)
-			else if (T.y > src.y)
-				setDir(NORTH)
-			else
-				setDir(SOUTH)
-
-			if(!Adjacent(movement_target)) //can't reach food through windows.
-				return
-
-			if(isturf(movement_target.loc))
-				movement_target.attack_animal(src)
-			else if(ishuman(movement_target.loc))
-				if(DT_PROB(10, delta_time))
-					manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
-
-		if(DT_PROB(0.5, delta_time))
-			manual_emote(pick("dances around.","chases its tail!"))
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
 //Corgis and pugs are now under one dog subtype
 
@@ -198,6 +141,7 @@
 	dat += "<tr><td><B>Head:</B></td><td><A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'><font color=grey>Empty</font>"]</A></td></tr>"
 	dat += "<tr><td><B>Back:</B></td><td><A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'><font color=grey>Empty</font>"]</A></td></tr>"
 	dat += "<tr><td><B>Collar:</B></td><td><A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>ID Card:</B></td><td><A href='?src=[REF(src)];[access_card ? "remove_inv=card'>[access_card]" : "add_inv=card'><font color=grey>Empty</font>"]</A></td></tr>"
 	dat += {"</table>
 	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
@@ -281,6 +225,10 @@
 					pcollar = null
 					update_corgi_fluff()
 					regenerate_icons()
+			if("card")
+				if(access_card)
+					usr.put_in_hands(access_card)
+					access_card = null
 
 		show_inv(usr)
 
@@ -333,9 +281,22 @@
 						return
 
 					item_to_add.forceMove(src)
-					src.inventory_back = item_to_add
+					inventory_back = item_to_add
 					update_corgi_fluff()
 					regenerate_icons()
+			if("card")
+				if(access_card)
+					to_chat(usr, "<span class='warning'>[src] already has \an [access_card] pinned to [p_them()]!</span>")
+					return
+				var/obj/item/item_to_add = usr.get_active_held_item()
+				if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
+					to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot pin it to [src]!</span>")
+					return
+				if(!istype(item_to_add, /obj/item/card/id))
+					to_chat(usr, "<span class='warning'>You can't pin [item_to_add] to [src]!</span>")
+					return
+				item_to_add.forceMove(src)
+				access_card = item_to_add
 
 		show_inv(usr)
 	else

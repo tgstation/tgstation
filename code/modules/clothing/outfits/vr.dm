@@ -3,15 +3,11 @@
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	ears = /obj/item/radio/headset
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/vr
 
 /datum/outfit/vr/pre_equip(mob/living/carbon/human/H)
 	H.dna.species.before_equip_job(null, H)
-
-/datum/outfit/vr/post_equip(mob/living/carbon/human/H)
-	var/obj/item/card/id/id = H.wear_id
-	if (istype(id))
-		id.access |= get_all_accesses()
 
 /datum/outfit/vr/syndicate
 	name = "Syndicate VR Operative - Basic"
@@ -19,11 +15,12 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	back = /obj/item/storage/backpack
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon/black
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/paper/fluff/vr/fluke_ops
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival)
+	id_trim = /datum/id_trim/vr/operative
 
 /datum/outfit/vr/syndicate/post_equip(mob/living/carbon/human/H)
 	. = ..()

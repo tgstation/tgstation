@@ -427,29 +427,96 @@
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_PLANT
 
+#define CRYOSTYLANE_UNDERHEAT_TEMP 50
+#define CRYOSTYLANE_IMPURE_TEMPERATURE_RANGE 200
+
 /datum/chemical_reaction/cryostylane
 	results = list(/datum/reagent/cryostylane = 3)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
-	is_cold_recipe = TRUE //This is kind of a strange reaction that I will come back to tweak later
-	required_temp = 1000
-	optimal_temp = 800
-	overheat_temp = 0 //Replace with NO_OVERHEAT when part 2 is in
-	thermic_constant = 0
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
+	required_temp = -200
+	optimal_temp = 300
+	overheat_temp = NO_OVERHEAT //There is an overheat - 50 see reaction_step()
+	optimal_ph_min = 4
+	optimal_ph_max = 10
+	determin_ph_range = 6
+	temp_exponent_factor = 0.5
+	ph_exponent_factor = 1
+	thermic_constant = -7.5
+	H_ion_release = 0
+	rate_up_lim = 10
+	purity_min = 0.2
+	reaction_flags = REACTION_HEAT_ARBITARY
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_ORGAN
 
+//Halve beaker temp on reaction
 /datum/chemical_reaction/cryostylane/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
-	holder.chem_temp = 20 // cools the fuck down
+	var/datum/reagent/oxygen = holder.has_reagent(/datum/reagent/oxygen) //If we have oxygen, bring in the old cooling effect
+	if(oxygen)
+		holder.chem_temp =  max(holder.chem_temp - (10 * oxygen.volume * 2),0)
+		holder.remove_reagent(/datum/reagent/oxygen, oxygen.volume) // halves the temperature - tried to bring in some of the old effects at least!
 	return
+
+//purity != temp (above 50) - the colder you are the more impure it becomes
+/datum/chemical_reaction/cryostylane/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+	. = ..()
+	if(holder.chem_temp < CRYOSTYLANE_UNDERHEAT_TEMP)
+		overheated(holder, reaction, step_reaction_vol)
+	//Modify our purity by holder temperature
+	var/step_temp = ((holder.chem_temp-CRYOSTYLANE_UNDERHEAT_TEMP)/CRYOSTYLANE_IMPURE_TEMPERATURE_RANGE)
+	if(step_temp >= 1) //We're hotter than 300
+		return
+	reaction.delta_ph *= step_temp
+
+/datum/chemical_reaction/cryostylane/reaction_finish(datum/reagents/holder, react_vol)
+	. = ..()
+	if(holder.chem_temp < CRYOSTYLANE_UNDERHEAT_TEMP)
+		overheated(holder, null, react_vol) //replace null with fix win 2.3 is merged
+
+//Freezes the area around you!
+/datum/chemical_reaction/cryostylane/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
+	if(!cryostylane)
+		return ..()
+	var/turf/local_turf = get_turf(holder.my_atom)
+	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	local_turf.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
+	clear_reactants(holder, 15)
+	holder.chem_temp += 100
+
+//Makes a snowman if you're too impure!
+/datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
+	var/turf/local_turf = get_turf(holder.my_atom)
+	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
+	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS, 5)
+	new /obj/structure/statue/snow/snowman(local_turf)
+	clear_reactants(holder)
+	clear_products(holder)
+
+#undef CRYOSTYLANE_UNDERHEAT_TEMP
+#undef CRYOSTYLANE_IMPURE_TEMPERATURE_RANGE
 
 /datum/chemical_reaction/cryostylane_oxygen
 	results = list(/datum/reagent/cryostylane = 1)
 	required_reagents = list(/datum/reagent/cryostylane = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
+	is_cold_recipe = TRUE
+	required_temp = 99999
+	optimal_temp = 300
+	overheat_temp = 0
+	optimal_ph_min = 0
+	optimal_ph_max = 14
+	determin_ph_range = 0
+	temp_exponent_factor = 1
+	ph_exponent_factor = 1
+	thermic_constant = -50 //This is the part that cools things down now
+	H_ion_release = 0
+	rate_up_lim = 4
+	purity_min = 0.15
+	reaction_flags = REACTION_HEAT_ARBITARY
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
-
-/datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
-	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
 
 /datum/chemical_reaction/pyrosium_oxygen
 	results = list(/datum/reagent/pyrosium = 1)
@@ -466,7 +533,7 @@
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/phosphorus = 1)
 	required_temp = 0
 	optimal_temp = 20
-	overheat_temp = 9999//Replace with NO_OVERHEAT when part 2 is in
+	overheat_temp = NO_OVERHEAT
 	temp_exponent_factor = 10
 	thermic_constant = 0
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE

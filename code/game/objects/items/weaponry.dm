@@ -109,7 +109,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/claymore/highlander/Destroy()
@@ -124,7 +124,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER) //AND WE WON'T BLEED OUT LIKE COWARDS
+		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)

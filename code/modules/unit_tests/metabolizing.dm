@@ -5,6 +5,8 @@
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 
 	for (var/reagent_type in subtypesof(/datum/reagent))
+		if(reagent_type in GLOB.fake_reagent_blacklist)
+			continue
 		test_reagent(human, reagent_type)
 
 /datum/unit_test/metabolization/proc/test_reagent(mob/living/carbon/C, reagent_type)
