@@ -15,8 +15,16 @@
 	var/starting_sheets = 30
 	var/list/papers = list()
 	var/obj/item/pen/bin_pen
-	/// This goes over the top to give the paper the appearance of being inside the object.
-	var/paper_bin_overlay = "paper_bin_overlay"
+	//Overlay of the pen on top of the bin.
+	var/mutable_appearance/pen_overlay
+	///Name of icon that goes over the paper overlays.
+	var/bin_overlay_string = "paper_bin_overlay"
+	//Overlay that goes over the paper overlays.
+	var/mutable_appearance/bin_overlay
+	//After this point, each new sheet comes with a chance for it all to spill.
+	var/paper_limit = 100
+	//Odds of spilling with each new sheet added above the limit.
+	var/spill_prob = 5
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
@@ -39,16 +47,21 @@
 	return P
 
 /obj/item/paper_bin/Destroy()
-	if(papers)
-		for(var/i in papers)
-			qdel(i)
+	if(LAZYLEN(papers))
+		for(var/paper in papers)
+			qdel(paper)
 		papers.Cut()
 	. = ..()
 
-/obj/item/paper_bin/dump_contents()
-	var/atom/droppoint = drop_location()
+/obj/item/paper_bin/dump_contents(atom/droppoint)
+	if(!droppoint)
+		droppoint = drop_location()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(droppoint)
+		if(!AM.pixel_y)
+			AM.pixel_y = rand(-5,5)
+		if(!AM.pixel_x)
+			AM.pixel_x = rand(-5,5)
 	papers.Cut()
 	update_appearance()
 
@@ -66,6 +79,9 @@
 
 	if(over_object == M)
 		M.put_in_hands(src)
+
+	if(isturf(over_object))
+		to_chat(M,"<span class='notice'><b>Use it in-hand</b> to dump it out.</span>")
 
 	else if(istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over_object
@@ -111,6 +127,10 @@
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
+		if(LAZYLEN(papers) > paper_limit)
+			if(prob(spill_prob))
+				visible_message("<span class='warning'>The stack of paper collapses!</span>")
+				dump_contents()
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/P = I
@@ -122,36 +142,49 @@
 	else
 		return ..()
 
+/obj/item/paper_bin/attack_self(mob/user)
+	if(LAZYLEN(contents))
+		user.visible_message("<span class='warning'>[user] begins dumping out [src]!</span>", "<span class='notice'>You begin dumping out [src]...</span>")
+		if(do_after(user, 0.3 SECONDS * LAZYLEN(contents)))
+			user.visible_message("<span class='warning'>[user] dumps out [src]!</span>", "<span class='notice'>You dump out [src].</span>")
+			dump_contents()
+
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(papers))
 		. += "It contains [LAZYLEN(papers) > 1 ? "[LAZYLEN(papers)] papers" : "one paper"]."
+	. += "<span class='notice'><b>Click and drag to your sprite</b> to pick it up.</span>"
+	. += "<span class='notice'><b>Use it in-hand</b> to dump it out.</span>"
 
 /obj/item/paper_bin/update_overlays()
 	. = ..()
+
+	if(bin_pen)
+		pen_overlay = mutable_appearance(bin_pen.icon, bin_pen.icon_state)
+
 	if(LAZYLEN(papers))
 		var/paper_number = 1
 		for(var/obj/item/paper/current_paper in papers)
 			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
 			paper_overlay.color = current_paper.color
-			switch(paper_number)
-				if(1 to 8)
-					paper_overlay.pixel_y -= 2
-				if(9 to 16)
-					paper_overlay.pixel_y -= 1
-				if(17 to 24)
-					paper_overlay.pixel_y += 0
-				if(25 to 32)
-					paper_overlay.pixel_y += 1
-				if(33 to INFINITY)
-					paper_overlay.pixel_y += 2
+			paper_overlay.pixel_y = paper_number/8 - 2
+			if(istype(src, /obj/item/paper_bin/bundlenatural))
+				bin_overlay.pixel_y = paper_overlay.pixel_y //keeps it from falling down the front
+			if(bin_pen)
+				pen_overlay.pixel_y = paper_overlay.pixel_y
 			. += paper_overlay
 			. += current_paper.overlays
 			paper_number++
-	if(LAZYLEN(papers))
-		. += mutable_appearance(icon, paper_bin_overlay)
+
+		if(!bin_overlay)
+			bin_overlay = mutable_appearance(icon, bin_overlay_string)
+		. += bin_overlay
+
 	if(bin_pen)
-		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
+		. += pen_overlay
+
+/obj/item/paper_bin/crafted
+	starting_sheets = 0
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
@@ -164,20 +197,32 @@
 	icon_state = null
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
-	paper_bin_overlay = "paper_bundle_overlay"
-	///Color of the cable this bundle is held together with.
-	var/cable_color = "#a9734f"
+	bin_overlay_string = "paper_bundle_overlay"
+	///Cable this bundle is held together with.
+	var/obj/item/stack/cable_coil/binding_cable
+
+/obj/item/paper_bin/bundlenatural/Initialize(mapload)
+	binding_cable = new /obj/item/stack/cable_coil(src, 2)
+	binding_cable.color = "#a9734f"
+	binding_cable.cable_color = "brown"
+	binding_cable.desc += " Non-natural."
+	return ..()
+
+/obj/item/paper_bin/bundlenatural/dump_contents(atom/droppoint)
+	. = ..()
+	qdel(src)
+
+/obj/item/paper_bin/bundlenatural/update_overlays()
+	bin_overlay = mutable_appearance(icon, bin_overlay_string)
+	bin_overlay.color = binding_cable.color
+	return ..()
 
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
 	..()
 	if(!LAZYLEN(papers))
 		deconstruct(FALSE)
 
-/obj/item/paper_bin/bundlenatural/deconstruct(disassembled = TRUE)
-	var/obj/item/stack/cable_coil/dropped_cable = new /obj/item/stack/cable_coil(drop_location(), 2)
-	dropped_cable.color = cable_color
-	dropped_cable.cable_color = "brown"
-	dropped_cable.desc += " Non-natural."
+/obj/item/paper_bin/bundlenatural/deconstruct(disassembled)
 	dump_contents()
 	qdel(src)
 
@@ -189,8 +234,9 @@
 		to_chat(user, "<span class='warning'>[W] won't fit into [src].</span>")
 		return
 	if(W.get_sharpness())
-		to_chat(user, "<span class='notice'>You slice the cable from [src].</span>")
-		deconstruct(TRUE)
+		if(W.use_tool(src, user, 1 SECONDS))
+			to_chat(user, "<span class='notice'>You slice the cable from [src].</span>")
+			deconstruct(TRUE)
 	else
 		..()
 
@@ -203,15 +249,27 @@
 
 /obj/item/paper_bin/bundlenatural/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] is held together with cable. It could be <b>cut</b>.</span>"
+	. += "<span class='notice'>The cable looks <b>cuttable</b>.</span>"
 
 /obj/item/paper_bin/bundlenatural/crafted
 	name = "handcrafted paper bundle"
-	starting_sheets = 1
+	starting_sheets = 0
+
+/obj/item/paper_bin/bundlenatural/CheckParts(list/parts_list, datum/crafting_recipe/R)
+	..()
+	for(var/obj/item/paper/sick_pape in contents)
+		papers.Add(sick_pape)
+
+	for(var/obj/item/stack/cable_coil/found_cable in contents)
+		if(found_cable != binding_cable)
+			qdel(binding_cable)
+			binding_cable = found_cable
+
+	update_appearance()
 
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"
 	desc = "Contains all the paper you'll ever need, in duplicate!"
 	icon_state = "paper_bin_carbon_empty"
 	papertype = /obj/item/paper/carbon
-	paper_bin_overlay = "paper_bin_carbon_overlay"
+	bin_overlay_string = "paper_bin_carbon_overlay"

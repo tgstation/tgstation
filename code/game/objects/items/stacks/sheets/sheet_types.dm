@@ -111,7 +111,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
 	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS), \
-	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time= 2 SECONDS)
+	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time= 2 SECONDS), \
+	new/datum/stack_recipe("paper bin", /obj/item/paper_bin/crafted, 2, time= 2 SECONDS)
 ))
 
 /obj/item/stack/sheet/iron
