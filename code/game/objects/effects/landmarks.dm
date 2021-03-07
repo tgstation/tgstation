@@ -451,17 +451,34 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return
 	if(prob(60))
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
+	if(prob(70))
+		var/bottle_count = rand(1, 3)
+		for(var/index in 1 to bottle_count)
+			var/turf/turf_to_spawn_on = get_step(src, pick(GLOB.alldirs))
+			if(!isopenturf(turf_to_spawn_on))
+				continue
+			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/M)
 	if(!iscarbon(M))
 		return
 	var/mob/living/carbon/spawned_carbon = M
+	spawned_carbon.Sleeping(rand(2 SECONDS, 5 SECONDS))
 	if(prob(50))
 		spawned_carbon.adjust_drugginess(rand(15, 20))
 	else
 		spawned_carbon.drunkenness += rand(15, 25)
-	spawned_carbon.adjust_disgust(rand(5, 60)) //How hungover are you?
+	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
+	if(spawned_carbon.head)
+		return
+	if(prob(100))
+		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cardborg))
+		hat = new hat(spawned_carbon)
+		spawned_carbon.equip_to_slot(hat, ITEM_SLOT_HEAD)
+
+
+
 
 /obj/effect/landmark/start/hangover/JoinPlayerHere(mob/M, buckle)
 	. = ..()
@@ -472,7 +489,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "hangover_spawn_closet"
 
 /obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/M, buckle)
-	M.make_hungover(M)
+	make_hungover(M)
 	for(var/obj/structure/closet in contents)
 		M.forceMove(closet)
 		return //If we found a closet return

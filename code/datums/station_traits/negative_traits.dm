@@ -38,11 +38,11 @@
 /datum/station_trait/hangover
 	name = "Hangover"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 200000
+	weight = 2
 	show_in_report = TRUE
 	report_message = "Ohh....Man....That mandatory office party from last shift...God that was awesome..I woke up in some random toilet 3 sectors away..."
 	trait_to_give = STATION_TRAIT_HANGOVER
-	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/random_spawns))
+	blacklist = list(/datum/station_trait/late_arrivals, /datum/station_trait/random_spawns)
 
 /datum/station_trait/blackout
 	name = "Blackout"
