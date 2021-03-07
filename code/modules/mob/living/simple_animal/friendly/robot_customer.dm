@@ -25,7 +25,7 @@
 /mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data = /datum/customer_data/american, datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant])
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT) //dont push me bitch
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, INNATE_TRAIT) //dont teleport me bitch
-	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT) //strong arms
+	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT) //strong arms bitch
 	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	clothes_set = pick(customer_info.clothing_sets)
@@ -85,4 +85,3 @@
 	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 		. += "<span class='notice'>Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"</span>"
-
