@@ -36,6 +36,18 @@
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/multiver = 1)
 	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
+	required_temp = 200
+	optimal_temp = 650
+	overheat_temp  = 800
+	optimal_ph_min  = 2
+	optimal_ph_max  = 5
+	determin_ph_range = 10
+	temp_exponent_factor = 0.05
+	ph_exponent_factor = 1
+	thermic_constant = 330
+	H_ion_release  = 3
+	rate_up_lim  = 25
+	purity_min = 0.25
 
 /datum/chemical_reaction/medicine/synaptizine
 	results = list(/datum/reagent/medicine/synaptizine = 3)

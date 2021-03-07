@@ -524,27 +524,37 @@
 
 /*				Non c2 medicines 				*/
 
-/datum/reagent/impure/mannitol
+/datum/reagent/impurity/mannitol
 	name = "Mannitoil"
 	description = "Inefficiently causes brain damage."
 	color = "#CDCDFF"
+	addiction_types = list(/datum/addiction/medicine = 5)
 	pH = 12.4
+	///The speech we're forcing on the owner
+	var/speech_option
 
-/datum/reagent/impure/mannitol/on_mob_life(mob/living/carbon/C)
-	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, cached_purity*REM)
-	..()
+/datum/reagent/impurity/mannitol/on_mob_add(mob/living/owner, amount)
+	. = ..()
+	speech_option = pick(list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE))
+	owner.dna?.activate_mutation(speech_option)
+
+/datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
+	. = ..()
+	owner.dna?.remove_mutation(speech_option)
 
 //I am incapable of making anything simple
-/datum/reagent/impure/neurine
+/datum/reagent/inverse/neurine
 	name = "Neruwhine"
 	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
 	color = "#DCDCAA"
 	pH = 13.4
+	addiction_types = list(/datum/addiction/medicine = 8)
 	metabolization_rate = 0.05 * REM
 	metastress = 0.5
+	//The temporary trauma passed to the owner
 	var/datum/brain_trauma/temp_trauma
 
-/datum/reagent/impure/neurine/on_mob_life(mob/living/carbon/C)
+/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/owner)
 	.=..()
 	if(temp_trauma)
 		return
@@ -552,106 +562,138 @@
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
-	var/datum/brain_trauma/BT = pick(traumalist)
-	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!(B.can_gain_trauma(BT) ) )
+	var/datum/brain_trauma/trauma = pick(traumalist)
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!(brain.can_gain_trauma(trauma) ) )
 		return
-	B.brain_gain_trauma(BT, TRAUMA_RESILIENCE_MAGIC)
-	temp_trauma = BT
+	brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC)
+	temp_trauma = trauma
 
-/datum/reagent/impure/neurine/on_mob_delete(mob/living/carbon/C)
+/datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
 	.=..()
 	if(!temp_trauma)
 		return
 	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend))//Good friends stay by you, no matter what
 		return
-	C.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
+	owner.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
 
-/datum/reagent/impure/corazone
+/datum/reagent/inverse/corazone
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free.
-	description = "Can induce a Myocardial Infarction while in the patient if their heart is damaged."
+	description = "Interferes with the body's natural pacemaker, forcing the patient to manually beat their heart."
 	color = "#5F5F5F"
 	self_consuming = TRUE
 	pH = 13.5
+	addiction_types = list(/datum/addiction/medicine = 2.5)
 	metabolization_rate = 0.075 * REM
 	metastress = 0.2
-	var/datum/disease/heart_failure/temp_myo
+	///The old heart we're swapping for
+	var/obj/item/organ/heart/original_heart
+	///The new heart that's temp added
+	var/obj/item/organ/heart/cursed/manual_heart
 
-/datum/reagent/impure/corazone/on_mob_add(mob/living/L)
-	var/mob/living/carbon/C = L
-	if(!C)
+///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
+/datum/reagent/inverse/corazone/on_mob_add(mob/living/owner)
+	if(!iscarbon(owner))
 		return
-	var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
-	if(cached_purity < 0.4) //Explosive purity is 0.35 - so they get 0.4, then they have to work for it
-		C.adjustOrganLoss(ORGAN_SLOT_HEART, 0.05) //If this gets powergamed - remove this line only.
-	if(!H)
+	var/mob/living/carbon/carbon_mob = owner
+	original_heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	if(!original_heart)
 		return
-	if(!(prob(min(H.damage*2, 100))))
-		return
-	var/datum/disease/D = new /datum/disease/heart_failure
-	if(C.ForceContractDisease(D))
-		temp_myo = D
+	manual_heart = new(null, src)
+	original_heart.Remove(carbon_mob, special = TRUE) //So we don't suddenly die
+	original_heart.forceMove(manual_heart)
+	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
+	manual_heart.Insert(carbon_mob, special = TRUE)
+	//these last so instert doesn't call them
+	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	..()
 
-/datum/reagent/impure/corazone/on_mob_delete(mob/living/L)
-	if(temp_myo)
-		temp_myo.cure()
-	..()
+///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
+/datum/reagent/inverse/corazone/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	if(!istype(organ, obj/item/organ/heart))
+		return
+	original_heart = organ
+	original_heart.Remove(carbon_mob, special = TRUE)
+	original_heart.forceMove(manual_heart)
+	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
+	if(!manual_heart)
+		manual_heart = new(null, src)
+	manual_heart.Insert(carbon_mob, special = TRUE)
 
-/datum/reagent/impure/antihol_inverse
+///If we're ejecting out the organ - replace it with the original
+/datum/reagent/inverse/corazone/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	if(!organ == manual_heart)
+		return
+	original_heart.forceMove(organ.loc)
+	original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
+	organ.forceMove(null)
+	qdel(organ)
+
+///We're done - remove the curse and restore the old one
+/datum/reagent/inverse/corazone/on_mob_delete(mob/living/L)
+	//Do these first so Insert doesn't call them
+	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_mob = owner
+	if(original_heart) //Mostly a just in case
+		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
+		original_heart.Insert(carbon_mob, special = TRUE) forceMove(organ.loc)
+	manual_heart.forceMove(null) //so we can be sure this is removed
+	qdel(manual_heart)
+	..()
+/datum/reagent/inverse/antihol
 	name = "Prohol"
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
 	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
-	metastress = 0.35
+	addiction_types = list(/datum/addiction/medicine = 4.5)
 	color = "#4C8000"
 
-/datum/reagent/impure/antihol_inverse/on_mob_life(mob/living/carbon/C)
-	for(var/datum/reagent/consumable/ethanol/alch in C.reagents.reagent_list)
-		alch.boozepwr += 2
+/datum/reagent/inverse/antihol_inverse/on_mob_life(mob/living/carbon/C)
+	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
+		alcohol.boozepwr += 2
 	..()
 
-/datum/reagent/impure/oculine
+/datum/reagent/inverse/oculine
 	name = "Oculater"
 	description = "temporarily blinds the patient."
 	reagent_state = LIQUID
 	color = "#DDDDDD"
-	metabolization_rate = 0.1
-	metastress = 0.75
+	metabolization_rate = 0.1 * REM
+	addiction_types = list(/datum/addiction/medicine = 3)
 	taste_description = "funky toxin"
 	pH = 13
 
-/datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
+/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/C)
 	if(prob(100*(1-cached_purity)))
 		C.become_blind("oculine_impure")
 	..()
 
-/datum/reagent/impure/oculine/on_mob_delete(mob/living/L)
+/datum/reagent/inverse/oculine/on_mob_delete(mob/living/L)
 	L.cure_blind("oculine_impure")
 	..()
 
-/datum/reagent/impure/inacusiate
+/datum/reagent/impurity/inacusiate
 	name = "Tinyacusiate"
 	description = "Makes the patient's hearing temporarily funky', and slowly causes ear damage."
 	reagent_state = LIQUID
+	addiction_types = list(/datum/addiction/medicine = 5.6)
 	color = "#DDDDFF"
-	metastress = 0.75
 	taste_description = "the heat evaporating from your mouth."
 	pH = 1
-	var/randomSpan = "clown"
+	var/randomSpan
 
-/datum/reagent/impure/inacusiate/on_mob_add(mob/living/L)
-	randomSpan = pick(list("clown", "small", "big", "spooky", "velvet", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
-	RegisterSignal(L, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+/datum/reagent/impurity/inacusiate/on_mob_add(mob/living/owner)
+	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	..()
 
-/datum/reagent/impure/oculine/on_mob_life(mob/living/carbon/C)
-	C.adjustOrganLoss(ORGAN_SLOT_EARS, ((1-cached_purity)/2))
+/datum/reagent/impurity/inacusiate/on_mob_delete(mob/living/owner)
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	..()
 
-/datum/reagent/impure/inacusiate/on_mob_delete(mob/living/L)
-	UnregisterSignal(L, COMSIG_MOVABLE_HEAR)
-	..()
-
-/datum/reagent/impure/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+/datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
 	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
