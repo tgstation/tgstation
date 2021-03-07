@@ -472,7 +472,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
 	if(spawned_carbon.head)
 		return
-	if(prob(100))
+	if(prob(35))
 		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cardborg))
 		hat = new hat(spawned_carbon)
 		spawned_carbon.equip_to_slot(hat, ITEM_SLOT_HEAD)
