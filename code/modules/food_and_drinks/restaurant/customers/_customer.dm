@@ -19,6 +19,15 @@
 	var/list/leave_happy_lines = list("Leaving with food")
 	///Lines the robot says when leaving waiting for food
 	var/list/wait_for_food_lines = list("I'm still waiting for food")
+	///Line when pulled by a friendly venue owner
+	var/friendly_pull_line = "Where are we going?"
+	///Line when harrased by someone for the first time
+	var/first_warning_line = "Don't touch me!"
+	///Line when harrased by someone for the second time
+	var/second_warning_line = "This is your last warning!"
+	///Line when harrased by someone for the last time
+	var/self_defense_line = "Omae wa mo, shinderou"
+
 	///Clothing sets to pick from when dressing the robot.
 	var/list/clothing_sets = list("amerifat_clothes")
 	///List of prefixes for our robots name

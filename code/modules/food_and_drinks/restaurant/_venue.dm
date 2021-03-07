@@ -20,6 +20,8 @@
 	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
+	///Blacklist for idiots that attack bots. Key is the mob that did it, and the value is the amount of warnings they've received.
+	var/list/mob_blacklist = list()
 
 
 /datum/venue/process(delta_time)
