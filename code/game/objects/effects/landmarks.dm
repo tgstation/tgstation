@@ -473,7 +473,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(spawned_carbon.head)
 		return
 	if(prob(35))
-		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cardborg))
+		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cone))
 		hat = new hat(spawned_carbon)
 		spawned_carbon.equip_to_slot(hat, ITEM_SLOT_HEAD)
 
