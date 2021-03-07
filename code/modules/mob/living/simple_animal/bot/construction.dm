@@ -526,3 +526,66 @@
 				new /obj/item/assembly/prox_sensor(Tsec)
 				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
 				build_step--
+
+//Little kitchen helper
+/obj/item/bot_assembly/kitchenbot
+	name = "incomplete kitchenbot assembly"
+	desc = "I hear the kitchen is getting swamped by orders from robots. It's time to fight fire with fire."
+	icon_state = "kitchenbot_assembly_1"
+	created_name = "Hygienebot"
+
+/obj/item/bot_assembly/kitchenbot/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	var/atom/Tsec = drop_location()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
+				if(I.use_tool(src, user, 0, volume=40))
+					to_chat(user, "<span class='notice'>You carefully break the upper plate with [I], creating a hole in [src]!</span>")
+					icon_state = "kitchenbot_assembly_2"
+					build_step++
+					return
+			if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=40))
+					new /obj/item/trash/plate(Tsec)
+					new /obj/item/trash/plate(Tsec)
+					to_chat(user, "<span class='notice'>You disassemble the kitchenbot assembly. Which was just two plates, so...</span>")
+					qdel(src)
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(istype(I, /obj/item/stack/ducts)) //Construct
+				var/obj/item/stack/ducts/used_ducts = I
+				if(used_ducts.get_amount() < 1)
+					to_chat(user, "<span class='warning'>You need one fluid duct to continue building [src]!</span>")
+					return
+				to_chat(user, "<span class='notice'>You begin to add engines to [src]...</span>")
+				if(do_after(user, 40, target = src) && used_ducts.use(1))
+					to_chat(user, "<span class='notice'>You pipe up [src]'s engines.</span>")
+					icon_state = "kitchenbot_assembly_3"
+					build_step++
+				return
+			if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=40))
+					build_step--
+					new /obj/item/trash/plate(Tsec)
+					new /obj/item/trash/plate/broken(Tsec)
+					to_chat(user, "<span class='notice'>You disassemble the kitchenbot assembly. One of the plates is broken and unusable.</span>")
+					qdel(src)
+
+		if(ASSEMBLY_THIRD_STEP)
+			if(!can_finish_build(I, user, 0))
+				return
+			if(isprox(I)) //Construct
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user, "<span class='notice'>You add [I] to [src], and it whirs to life!</span>")
+				var/mob/living/simple_animal/bot/kitchenbot/created_kitchenbot = new(drop_location())
+				created_kitchenbot.name = created_name
+				qdel(I)
+				qdel(src)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
+				if(I.use_tool(src, user, 0, volume=30))
+					to_chat(user, "<span class='notice'>You disassemble the engines in [src], returning it to just being two plates.</span>")
+					icon_state = "kitchenbot_assembly_2"
+					new /obj/item/stack/ducts(Tsec, 1)
+					build_step--

@@ -66,6 +66,11 @@
 	icon_state = "plate"
 	resistance_flags = NONE
 
+/obj/item/trash/plate/broken
+	name = "broken plate"
+	icon_state = "plate_broken"
+	desc = "Someone broke this. Crazy, because plates are pretty hard to break around here."
+
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"

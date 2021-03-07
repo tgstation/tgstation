@@ -1652,6 +1652,13 @@
 		var/item = pick(contains)
 		new item(C)
 
+/datum/supply_pack/service/kitchenbot
+	name = "Kitchenbot Crate"
+	desc = "Kitchen getting a little too busy? Robotics is fucking useless? Order a Kitchenbot today!"
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/mob/living/simple_animal/bot/kitchenbot)
+	crate_name = "kitchenbot crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

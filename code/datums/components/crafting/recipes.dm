@@ -413,6 +413,24 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/kitchenbot
+	name = "Kitchenbot Assembly"
+	result = /obj/item/bot_assembly/kitchenbot
+	reqs = list(/obj/item/trash/plate = 2)
+	tool_behaviors = list(TOOL_WELDER)
+	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kitchenbot
+	name = "Kitchenbot"
+	result = /mob/living/simple_animal/bot/kitchenbot
+	reqs = list(/obj/item/bot_assembly/kitchenbot = 1,
+				/obj/item/stack/ducts = 1,
+				/obj/item/assembly/prox_sensor = 1)
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto

@@ -24,11 +24,15 @@
 /datum/ai_controller/kitchenbot/TryPossessPawn(atom/new_pawn)
 	if(!ismovable(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	var/atom/movable/cool_pawn
+	cool_pawn.pass_flags |= PASSTABLE | PASSMACHINE
+	RegisterSignal(cool_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	return ..() //Run parent at end
 
 /datum/ai_controller/kitchenbot/UnpossessPawn(destroy)
+	var/atom/movable/cool_pawn = pawn
 	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND))
+	cool_pawn.pass_flags = initial(cool_pawn.pass_flags)
 	return ..() //Run parent at end
 
 /datum/ai_controller/kitchenbot/SelectBehaviors(delta_time)
@@ -187,13 +191,13 @@
 	blackboard[BB_KITCHENBOT_MODE] = KITCHENBOT_MODE_IDLE
 	blackboard[BB_KITCHENBOT_REFUSE_LIST] = list()
 	var/obj/item/held_refuse = blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE]
-	if(held_refuse && held_refuse in src)
+	if(held_refuse && (held_refuse in src))
 		held_refuse.forceMove(pawn.drop_location())
 	blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE] = null
 	blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = null
 	blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE] = null
 	blackboard[BB_KITCHENBOT_ITEMS_WATCHED] = list()
 	var/obj/item/held_grillable = blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
-	if(held_grillable && held_grillable in src)
+	if(held_grillable && (held_grillable in src))
 		held_grillable.forceMove(pawn.drop_location())
 	blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE] = null

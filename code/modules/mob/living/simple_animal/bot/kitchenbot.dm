@@ -48,8 +48,9 @@
 	visible_message("<span class='boldannounce'>[src] blows apart, plates clattering to the ground!</span>")
 	do_sparks(3, TRUE, src)
 	on = FALSE
-	new /obj/item/trash/plate(loc)
-	new /obj/item/trash/plate(loc)
+	var/atom/drop_location = drop_location()
+	new /obj/item/trash/plate(drop_location)
+	new /obj/item/trash/plate/broken(drop_location)
 	..()
 
 /mob/living/simple_animal/bot/kitchenbot/update_icon_state()
