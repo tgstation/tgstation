@@ -52,7 +52,7 @@
 					/obj/item/storage/backpack/medic = 4,
 					/obj/item/storage/backpack/satchel/med = 4,
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 4,
-					/obj/item/clothing/suit/hooded/wintercoat/medical/paramedic = 4,
+					/obj/item/clothing/suit/hooded/wintercoat/medical/paramedic= 4,
 					/obj/item/clothing/under/rank/medical/paramedic = 4,
 					/obj/item/clothing/under/rank/medical/paramedic/skirt = 4,
 					/obj/item/clothing/under/rank/medical/doctor/nurse = 4,
@@ -230,6 +230,7 @@
 					/obj/item/storage/backpack/satchel/explorer = 1,
 					/obj/item/clothing/glasses/regular = 2,
 					/obj/item/clothing/glasses/regular/jamjar = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/curator = 2,
 					/obj/item/storage/bag/books = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -260,6 +261,7 @@
 					/obj/item/clothing/neck/petcollar = 1,
 					/obj/item/storage/belt/bandolier = 1,
 					/obj/item/storage/pill_bottle/dice/hazard = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/bartender = 2,
 					/obj/item/storage/bag/money = 2)
 	premium = list(/obj/item/storage/box/dishdrive = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
@@ -288,7 +290,7 @@
 					/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 					/obj/item/clothing/shoes/cookflops = 2,
 					/obj/item/reagent_containers/glass/rag = 1,
-					/obj/item/clothing/suit/hooded/wintercoat = 2)
+					/obj/item/clothing/suit/hooded/wintercoat/chef = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -353,6 +355,7 @@
 					/obj/item/clothing/under/rank/civilian/lawyer/black = 1,
 					/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 					/obj/item/clothing/shoes/laceup = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/security/lawyer = 2,
 					/obj/item/clothing/accessory/lawyers_badge = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -381,6 +384,7 @@
 					/obj/item/clothing/head/taqiyahwhite = 1,
 					/obj/item/clothing/head/taqiyahred = 3,
 					/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/chap = 2,
 					/obj/item/clothing/head/beanie/rasta = 1)
 	contraband = list(/obj/item/toy/plush/ratplush = 1,
 					/obj/item/toy/plush/narplush = 1,

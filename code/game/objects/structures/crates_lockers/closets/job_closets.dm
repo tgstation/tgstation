@@ -42,6 +42,7 @@
 		/obj/item/clothing/suit/toggle/chef = 1,
 		/obj/item/clothing/under/rank/civilian/chef = 1,
 		/obj/item/clothing/head/chefhat = 1,
+		/obj/item/clothing/suit/hooded/wintercoat/chef = 1,
 		/obj/item/reagent_containers/glass/rag = 1)
 	generate_items_inside(items_inside,src)
 
@@ -302,6 +303,7 @@
 		/obj/item/clothing/suit/apron = 2,
 		/obj/item/clothing/suit/apron/overalls = 2,
 		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
+		/obj/item/clothing/suit/hooded/wintercoat/medical/psych = 3,
 		/obj/item/clothing/mask/bandana = 3)
 	generate_items_inside(items_inside,src)
 
