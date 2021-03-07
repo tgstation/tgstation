@@ -1,0 +1,5 @@
+author: "That REALLY Good Soda Flavor"
+delete-after: True
+changes: 
+  - bugfix: "Fixed issues with monkeys unable to attack with martial arts."
+  - bugfix: "Fixed issues when using martial arts against an alien."
