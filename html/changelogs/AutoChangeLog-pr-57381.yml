@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Hello lads, atmos has changed again, actually instant settling of say plasma over large spaces should be much less common, and if I've done my job right things should seem a bit more snappy"

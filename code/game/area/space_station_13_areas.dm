@@ -153,7 +153,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
@@ -234,7 +234,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
 
 //Maintenance - Generic
 
@@ -537,11 +537,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/commons
 	name = "Crew Quarters"
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/commons/dorms
 	name = "Dormitories"
 	icon_state = "dorms"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/commons/dorms/barracks
 	name = "Sleep Barracks"
@@ -705,7 +705,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	mood_bonus = 5
 	mood_message = "<span class='nicegreen'>I love being in the library!</span>\n"
 	mood_trait = TRAIT_INTROVERT
-	area_flags = CULT_PERMITTED
+	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
 	sound_environment = SOUND_AREA_LARGE_SOFTFLOOR
 
 /area/service/library/lounge
@@ -732,7 +732,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/library/abandoned
 	name = "Abandoned Library"
 	icon_state = "abandoned_library"
-	area_flags = CULT_PERMITTED
 
 /area/service/chapel
 	icon_state = "chapel"
@@ -773,7 +772,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/janitor
 	name = "Custodial Closet"
 	icon_state = "janitor"
-	area_flags = CULT_PERMITTED
+	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/service/hydroponics
@@ -817,7 +816,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
-	area_flags = CULT_PERMITTED
 
 /area/engineering/atmos/upper
 	name = "Upper Atmospherics"
@@ -825,7 +823,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/engineering/lobby
 	name = "Engineering Lobby"
@@ -834,7 +832,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/engineering/break_room
@@ -867,7 +865,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/storage/tcomms
 	name = "Telecomms Storage"
 	icon_state = "tcom"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 //Engineering - Construction
 
@@ -1052,7 +1050,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
-	area_flags = CULT_PERMITTED
 
 /area/medical/morgue
 	name = "Morgue"
@@ -1321,7 +1318,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/test_area
 	name = "Toxins Test Area"
 	icon_state = "tox_test"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/science/mixing
 	name = "Toxins Mixing Lab"
@@ -1330,7 +1327,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/mixing/chamber
 	name = "Toxins Mixing Chamber"
 	icon_state = "tox_mix_chamber"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/science/genetics
 	name = "Genetics Lab"

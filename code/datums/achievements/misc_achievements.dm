@@ -166,8 +166,14 @@
 	database_id = MEDAL_HOT_DAMN
 	icon = "hotdamn"
 
-/*datum/award/achievement/misc/tram_surfer
+/datum/award/achievement/misc/cayenne_disk
+	name = "Very Important Piscis"
+	desc = "You can rest well now."
+	database_id = MEDAL_CAYENNE_DISK
+	icon = "cayenne_disk"
+
+/datum/award/achievement/misc/tram_surfer
 	name = "Tram Surfer"
 	desc = "Lights out, guerilla radio!"
 	database_id = MEDAL_TRAM_SURFER
-	icon = "tram_surfer"*/
+	icon = "tram_surfer"
