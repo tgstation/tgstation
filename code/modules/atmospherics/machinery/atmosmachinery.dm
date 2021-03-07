@@ -96,9 +96,9 @@
 	return
 
 /**
- * Called by all machines when on_construction() is called, it builds the network for the node
+ * Returns a list of new pipelines that need to be built up
  */
-/obj/machinery/atmospherics/proc/build_network()
+/obj/machinery/atmospherics/proc/get_rebuild_canidates()
 	return
 
 /**
@@ -411,7 +411,7 @@
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.atmosinit()
 		A.addMember(src)
-	build_network()
+	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/Entered(atom/movable/AM)
 	if(istype(AM, /mob/living))

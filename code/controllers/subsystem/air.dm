@@ -23,6 +23,8 @@ SUBSYSTEM_DEF(air)
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/rebuild_queue = list()
+	//Subservient to rebuild queue
+	var/list/expansion_queue = list()
 	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
@@ -67,6 +69,7 @@ SUBSYSTEM_DEF(air)
 	msg += "AM:[atmos_machinery.len]|"
 	msg += "AO:[atom_process.len]|"
 	msg += "RB:[rebuild_queue.len]|"
+	msg += "EP:[expansion_queue.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
@@ -90,7 +93,7 @@ SUBSYSTEM_DEF(air)
 
 	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
 	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
-	if(length(rebuild_queue))
+	if(length(rebuild_queue) || length(expansion_queue))
 		timer = TICK_USAGE_REAL
 		process_rebuilds()
 		//This does mean that the apperent rebuild costs fluctuate very quickly, this is just the cost of having them always process, no matter what
@@ -216,6 +219,18 @@ SUBSYSTEM_DEF(air)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
 		rebuild_queue += atmos_machine
 
+/datum/controller/subsystem/air/proc/add_to_expansion(datum/pipeline/line, starting_point)
+	var/list/new_packet = new(SSAIR_REBUILD_QUEUE)
+	new_packet[SSAIR_REBUILD_PIPELINE] = line
+	new_packet[SSAIR_REBUILD_QUEUE] = list(starting_point)
+	expansion_queue += list(new_packet)
+
+/datum/controller/subsystem/air/proc/remove_from_expansion(datum/pipeline/line)
+	for(var/list/packet in expansion_queue)
+		if(packet[SSAIR_REBUILD_PIPELINE] == line)
+			expansion_queue -= packet
+			return
+
 /datum/controller/subsystem/air/proc/process_atoms(resumed = FALSE)
 	if(!resumed)
 		src.currentrun = atom_process.Copy()
@@ -314,15 +329,65 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/process_rebuilds()
 	//cache for sanic speed (lists are references anyways) (We don't copy this list, because it should be empty by the end)
+
 	//Yes this does mean rebuilding pipenets can freeze up the subsystem forever, but if we're in that situation something else is very wrong
 	var/list/currentrun = rebuild_queue
 	while(currentrun.len)
-		var/obj/machinery/atmospherics/remake = currentrun[currentrun.len]
-		currentrun.len--
-		if (remake)
-			remake.build_network()
-		if (MC_TICK_CHECK)
-			return
+		while(currentrun.len && !length(expansion_queue)) //If we found anything, process that first
+			var/obj/machinery/atmospherics/remake = currentrun[currentrun.len]
+			currentrun.len--
+			if (!remake)
+				continue
+			var/list/canidates = remake.get_rebuild_canidates() //This'll add to the expansion queue
+			for(var/datum/pipeline/lad in canidates)
+				lad.build_pipeline(remake)
+
+			if (MC_TICK_CHECK)
+				return
+
+		var/list/queue = expansion_queue
+		while(queue.len)
+			var/list/pack = queue[queue.len]
+			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
+			var/list/border = pack[SSAIR_REBUILD_QUEUE]
+			while(border.len)
+				var/obj/machinery/atmospherics/borderline = border[border.len]
+				border.len--
+				var/list/result = borderline.pipeline_expansion(linepipe)
+				if(!length(result))
+					continue
+				for(var/obj/machinery/atmospherics/considered_device in result)
+					if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
+						considered_device.setPipenet(linepipe, borderline)
+						linepipe.addMachineryMember(considered_device)
+						continue
+					var/obj/machinery/atmospherics/pipe/item = considered_device
+					if(linepipe.members.Find(item))
+						continue
+					if(item.parent)
+						var/static/pipenetwarnings = 10
+						if(pipenetwarnings > 0)
+							log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
+							pipenetwarnings--
+						if(pipenetwarnings == 0)
+							log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
+
+					linepipe.members += item
+					border += item
+
+					linepipe.air.volume += item.volume
+					item.parent = linepipe
+
+					if(item.air_temporary)
+						linepipe.air.merge(item.air_temporary)
+						item.air_temporary = null
+				if (MC_TICK_CHECK)
+					return
+
+			linepipe.building = FALSE
+			queue.len--
+			if (MC_TICK_CHECK)
+				return
 
 ///Removes a turf from processing, and causes its excited group to clean up so things properly adapt to the change
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
@@ -460,6 +525,7 @@ SUBSYSTEM_DEF(air)
 		if (!ET.excited)
 			ET.excited = TRUE
 			. += ET
+
 /turf/open/space/resolve_active_graph()
 	return list()
 
@@ -473,7 +539,9 @@ SUBSYSTEM_DEF(air)
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		AM.build_network()
+		var/list/canidates = AM.get_rebuild_canidates()
+		for(var/datum/pipeline/son in canidates)
+			son.build_pipeline_blocking(AM)
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
@@ -496,8 +564,11 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		AM.build_network()
+		var/list/canidates = AM.get_rebuild_canidates()
+		for(var/datum/pipeline/boi in canidates)
+			boi.build_pipeline_blocking(AM)
 		CHECK_TICK
+
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
 	if(!pipe_init_dirs_cache[type])
