@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fixed crystallizer, now working properly, the GUI was broken when i changed name of a var, now the gui works again, also the internal gasmixture wasn't initialized anymore for some reason"
-  - balance: "changed some recipe to cost less, zaukerite and SM shard cost a bit less now (was intended to be changed in the main PR but i forgot)"

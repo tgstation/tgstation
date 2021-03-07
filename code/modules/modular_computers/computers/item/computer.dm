@@ -97,14 +97,64 @@
 
 /obj/item/modular_computer/GetID()
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot)
-		return card_slot.GetID()
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+
+	var/obj/item/card/id/first_id = card_slot?.GetID()
+	var/obj/item/card/id/second_id = card_slot2?.GetID()
+
+	// We have two IDs, pick the one with the most command accesses, preferring the primary slot.
+	if(first_id && second_id)
+		var/first_id_tally = SSid_access.tally_access(first_id, ACCESS_FLAG_COMMAND)
+		var/second_id_tally = SSid_access.tally_access(second_id, ACCESS_FLAG_COMMAND)
+
+		return (first_id_tally >= second_id_tally) ? first_id : second_id
+
+	// If we don't have both ID slots filled, pick the one that is filled.
+	if(first_id)
+		return first_id
+	if(second_id)
+		return second_id
+
+	// Otherwise, we have no ID at all.
 	return ..()
+
+/obj/item/modular_computer/get_id_examine_strings(mob/user)
+	. = ..()
+
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+
+	var/obj/item/card/id/id_card1 = card_slot?.GetID()
+	var/obj/item/card/id/id_card2 = card_slot2?.GetID()
+
+	if(id_card1 || id_card2)
+		if(id_card1 && id_card2)
+			. += "\The [src] is displaying [id_card1] and [id_card2]."
+			var/list/id_icons = list()
+			id_icons += id_card1.get_id_examine_strings(user)
+			id_icons += id_card2.get_id_examine_strings(user)
+			. += id_icons.Join(" ")
+		else if(id_card1)
+			. += "\The [src] is displaying [id_card1]."
+			. += id_card1.get_id_examine_strings(user)
+		else
+			. += "\The [src] is displaying [id_card2]."
+			. += id_card2.get_id_examine_strings(user)
 
 /obj/item/modular_computer/RemoveID()
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	return (card_slot2?.try_eject() || card_slot?.try_eject()) //Try the secondary one first.
+
+	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
+	if(removed_id)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
+		update_slot_icon()
+		return removed_id
+
+	return ..()
 
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
@@ -117,7 +167,13 @@
 		return FALSE
 
 	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
+		update_slot_icon()
 		return TRUE
+
 	return FALSE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
