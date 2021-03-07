@@ -168,8 +168,8 @@
 	. = ..()
 
 	// Only show up once, again for the purposes of keeping the comedic value.
-	// Also prevents the unlikely, but possible, that you keep getting the extremely easy to satisy
-	// moth bots, which isn't as fun as completing real orders.
+	// Also prevents the unlikely, but otherwise possible, scenario that you keep
+	// getting the extremely easy to satisy moth bots, which isn't as fun as completing real orders.
 	venue.customer_types[type] = 0
 
 /datum/customer_data/moth/proc/get_dynamic_order(datum/venue/venue)
