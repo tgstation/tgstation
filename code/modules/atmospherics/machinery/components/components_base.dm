@@ -99,7 +99,7 @@
 	..()
 	update_parents()
 
-/obj/machinery/atmospherics/components/get_rebuild_canidates()
+/obj/machinery/atmospherics/components/get_rebuild_targets()
 	var/list/to_return = list()
 	for(var/i in 1 to device_type)
 		if(parents[i])

@@ -35,7 +35,7 @@
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
 
-/obj/machinery/atmospherics/pipe/get_rebuild_canidates()
+/obj/machinery/atmospherics/pipe/get_rebuild_targets()
 	if(!QDELETED(parent))
 		return
 	parent = new

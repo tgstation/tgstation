@@ -215,9 +215,10 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
-	if(istype(atmos_machine, /obj/machinery/atmospherics))
+/datum/controller/subsystem/air/proc/add_to_rebuild_queue(obj/machinery/atmospherics/atmos_machine)
+	if(istype(atmos_machine, /obj/machinery/atmospherics) && !atmos_machine.rebuilding)
 		rebuild_queue += atmos_machine
+		atmos_machine.rebuilding = TRUE
 
 /datum/controller/subsystem/air/proc/add_to_expansion(datum/pipeline/line, starting_point)
 	var/list/new_packet = new(SSAIR_REBUILD_QUEUE)
@@ -336,9 +337,10 @@ SUBSYSTEM_DEF(air)
 			currentrun.len--
 			if (!remake)
 				continue
-			var/list/canidates = remake.get_rebuild_canidates() //This'll add to the expansion queue
-			for(var/datum/pipeline/lad in canidates)
-				lad.build_pipeline(remake)
+			var/list/targets = remake.get_rebuild_targets()
+			remake.rebuilding = FALSE //It's allowed to renter the queue now
+			for(var/datum/pipeline/lad as anything in targets)
+				lad.build_pipeline(remake) //This'll add to the expansion queue
 			if (MC_TICK_CHECK)
 				return
 
@@ -537,8 +539,8 @@ SUBSYSTEM_DEF(air)
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		var/list/canidates = AM.get_rebuild_canidates()
-		for(var/datum/pipeline/son in canidates)
+		var/list/targets = AM.get_rebuild_targets()
+		for(var/datum/pipeline/son as anything in targets)
 			son.build_pipeline_blocking(AM)
 		CHECK_TICK
 
@@ -562,8 +564,8 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		var/list/canidates = AM.get_rebuild_canidates()
-		for(var/datum/pipeline/boi in canidates)
+		var/list/targets = AM.get_rebuild_targets()
+		for(var/datum/pipeline/boi as anything in targets)
 			boi.build_pipeline_blocking(AM)
 		CHECK_TICK
 

@@ -56,6 +56,9 @@
 	///Whether it can be painted
 	var/paintable = FALSE
 
+	///Is the thing being rebuilt by SSair or not. Prevents list blaot
+	var/rebuilding = FALSE
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
@@ -98,7 +101,7 @@
 /**
  * Returns a list of new pipelines that need to be built up
  */
-/obj/machinery/atmospherics/proc/get_rebuild_canidates()
+/obj/machinery/atmospherics/proc/get_rebuild_targets()
 	return
 
 /**
