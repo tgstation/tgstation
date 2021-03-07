@@ -72,8 +72,12 @@
 
 ///Haunted item controller defines
 
-//falsey, when kitchenbot is not on
-#define KITCHENBOT_MODE_OFF 0
+
+#define RADIAL_FORGET_BUTTON "Forget Everything"
+#define RADIAL_IDLE_BUTTON "Idle Mode"
+#define RADIAL_REFUSE_BUTTON "Kitchen Cleaning Mode"
+#define RADIAL_THE_GRIDDLER_BUTTON "The Griddler Mode"
+#define RADIAL_WAITER_BUTTON "Food Service Mode"
 //do nothing. good for transporting?
 #define KITCHENBOT_MODE_IDLE 1
 //collect dishes, dump them
@@ -85,12 +89,17 @@
 
 ///Kitchenbot AI controller blackboard keys
 
+//optional text for completing tasks, has a default
+#define BB_KITCHENBOT_TASK_TEXT "BB_kitchenbot_task_text"
+//optional sound for completing tasks
+#define BB_KITCHENBOT_TASK_SOUND "BB_kitchenbot_task_sound"
 //mode they're in
+#define BB_KITCHENBOT_RADIAL_OPEN "BB_kitchenbot_radial_open"
 #define BB_KITCHENBOT_MODE "BB_kitchenbot_mode"
 //dishes mode vars
-#define BB_KITCHENBOT_CHOSEN_DISPOSALS "BB_kitchenbot_chosen_disposals"
-#define BB_KITCHENBOT_FAILED_LAST_TARGET_SEARCH "BB_kitchenbot_failed_last_target_search"
+#define BB_KITCHENBOT_REFUSE_LIST "BB_kitchenbot_refuse_list"
 #define BB_KITCHENBOT_TARGET_TO_DISPOSE "BB_kitchenbot_target_to_dispose"
+#define BB_KITCHENBOT_TARGET_DISPOSAL "BB_kitchenbot_target_disposal"
 //griddle mode vars
 #define BB_KITCHENBOT_CHOSEN_GRIDDLE "BB_kitchenbot_chosen_griddle"
 #define BB_KITCHENBOT_CHOSEN_STOCKPILE "BB_kitchenbot_chosen_stockpile"

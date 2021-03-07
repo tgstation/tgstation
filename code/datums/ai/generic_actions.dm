@@ -24,31 +24,28 @@
 	finish_action(controller, TRUE)
 
 
-///Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.
+/**find and set
+ * Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.
+ * if you want to do something more complicated than find a single atom, change the search_tactic() proc
+ * cool tip: search_tactic() can set lists
+ */
 /datum/ai_behavior/find_and_set
 	action_cooldown = 15 SECONDS
+	//optional, don't use if you're changing search_tactic()
 	var/locate_path
 	var/bb_key_to_set
 
 /datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
-	var/atom/find_this_thing = search_tactic(controller)
+	var/find_this_thing = search_tactic(controller)
 	if(find_this_thing)
 		controller.blackboard[bb_key_to_set] = find_this_thing
-		react_to_success(controller)
 		finish_action(controller, TRUE)
 	else
-		react_to_failure(controller)
 		finish_action(controller, FALSE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller)
 	return locate(locate_path) in oview(7, controller.pawn)
-
-/datum/ai_behavior/find_and_set/proc/react_to_success(datum/ai_controller/controller)
-	return
-
-/datum/ai_behavior/find_and_set/proc/react_to_failure(datum/ai_controller/controller)
-	return
 
 ///Goes to the move target, and forcemoves it inside itself. Simple creatures will enjoy this, more advanced ones should probably put in hands or something.
 /datum/ai_behavior/forcemove_grab
@@ -60,6 +57,8 @@
 /datum/ai_behavior/forcemove_grab/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/grabbed_item = controller.blackboard[bb_key_target]
+	if(!grabbed_item)
+		finish_action(controller, FALSE)
 	grabbed_item.do_pickup_animation(controller.pawn)
 	controller.pawn.visible_message("<span class='notice'>[controller.pawn] [grab_verb] [grabbed_item]!</span>")
 	grabbed_item.forceMove(controller.pawn)
@@ -67,6 +66,7 @@
 
 ///drops an item at the turf of your movement target. this assumes the object is being held in some way by our pawn, so it forcemoves to the spot. If they're not holding the item, this looks and is !WEIRD!
 /datum/ai_behavior/dropoff_item
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 1
 	//key that corresponds to the item we're dropping
 	var/bb_key_item
@@ -82,23 +82,21 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 1
 	var/bb_key_target
-	///You can use /datum/ai_behavior/find_and_set to locate a disposals bin, pretty handy stuff
 	var/bb_key_disposals
 
 /datum/ai_behavior/disposals_item/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
-	var/mob/disposals_user = controller.pawn
 	var/obj/machinery/disposal/bin/bin = controller.blackboard[bb_key_disposals]
 	var/atom/movable/throw_away = controller.blackboard[bb_key_target]
-
-	bin.place_item_in_disposal(throw_away, disposals_user)
-	controller.blackboard[bb_key_target] = null //cave johnson we're done here (we probably don't need this again.)
-
-	react_to_success(controller.pawn)
+	if(!bin || !throw_away)
+		finish_action(controller, FALSE)
+	bin.place_item_in_disposal(throw_away, controller.pawn)
 	finish_action(controller, TRUE)
 
-/datum/ai_behavior/disposals_item/proc/react_to_success(mob/pawn)
-	return
+/datum/ai_behavior/disposals_item/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.blackboard[bb_key_target] = null
+	controller.blackboard[bb_key_disposals] = null
 
 //this behavior is for listening for customers from a venue, and getting their orders. how niche, right?
 /datum/ai_behavior/listen_for_customers
@@ -116,6 +114,9 @@
 	var/list/orders_list = controller.blackboard[bb_key_orders_list]
 	var/initial_order_length = orders_list.len
 	for(var/mob/living/simple_animal/robot_customer/customer as anything in bb_venue.current_visitors)
+		if(isnull(customer))
+			customers_list -= customer
+			continue
 		if(customer in customers_list)
 			continue //we took their order already
 		var/datum/ai_controller/customer_ai = customer.ai_controller
@@ -126,18 +127,11 @@
 			continue //we'll just need to wait for them to actually sit and place their order
 		customers_list += customer //so we don't get their order again
 		orders_list += order //and we get their order
-		RegisterSignal(customer, COMSIG_PARENT_QDELETING, .proc/customer_left, customers_list, orders_list)
 	finish_action(controller, initial_order_length < orders_list.len)
-
-/datum/ai_behavior/listen_for_customers/proc/customer_left(datum/source, list/customers_list, list/orders_list)
-	SIGNAL_HANDLER
-	var/mob/living/simple_animal/robot_customer/customer = source
-	customers_list -= customer
-	orders_list -= customer.ai_controller.current_behaviors[BB_CUSTOMER_CURRENT_ORDER]
 
 //behavior for finding what customers ordered (it goes well with listen_for_customers if you didn't guess)
 /datum/ai_behavior/find_and_set/find_customer_order
-	action_cooldown = 40 SECONDS //let em take their time, this is intensive af
+	action_cooldown = 20 SECONDS //let em take their time, this is intensive af
 	//key for the orders we need to find.
 	var/bb_key_orders_list
 

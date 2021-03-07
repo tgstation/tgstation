@@ -93,6 +93,7 @@
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
+	var/uses_interact = TRUE
 
 	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
 	COOLDOWN_DECLARE(next_salute_check)
@@ -293,7 +294,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!user.combat_mode)
+	if(!user.combat_mode && uses_interact)
 		interact(user)
 	else
 		return ..()
