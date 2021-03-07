@@ -146,7 +146,7 @@
 	leave_mad_lines = list("This place is just downright shameful, and I'm telling my coworkers.", "What a waste of my time.", "I hope you don't take pride in the operation you run here.")
 	leave_happy_lines = list("Thank you for the hospitality.", "Otsukaresama deshita.", "Business calls.")
 	wait_for_food_lines = list("Zzzzzzzzzz...", "Dame da ne~", "Dame yo dame na no yo~")
-	friendly_pull_line = "Are we going on a bussiness trip?"
+	friendly_pull_line = "Are we going on a business trip?"
 	first_warning_line = "Hey, only my employer gets to mess with me like that."
 	second_warning_line = "Leave me be, I'm trying to focus. Last warning!"
 	self_defense_line = "I didn't want it to end up like this."
