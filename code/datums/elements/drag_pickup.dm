@@ -18,7 +18,7 @@
 		return
 
 	if(over == M)
-		M.put_in_hands(source)
+		INVOKE_ASYNC(M, /mob/.proc/put_in_hands, source)
 
 	else if(istype(over, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over
