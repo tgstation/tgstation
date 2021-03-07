@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "lavaland clownplanet ruin outside turfs now spawn with normal air, no longer will kill the clowns near roundstart"

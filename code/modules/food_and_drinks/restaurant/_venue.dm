@@ -5,7 +5,7 @@
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
-	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2)
+	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2, /datum/customer_data/mexican = 10)
 	///Is the venue open at the moment?
 	var/open
 	///Portal linked to this venue at the moment
@@ -159,6 +159,7 @@
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"
+	icon_state = "signmaker_service"
 	creation_time = 1 SECONDS
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
