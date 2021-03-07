@@ -165,3 +165,9 @@
 	desc = "Sometimes you need to make some noise to make a point."
 	database_id = MEDAL_HOT_DAMN
 	icon = "hotdamn"
+
+/datum/award/achievement/misc/cayenne_disk
+	name = "Very Important Piscis"
+	desc = "You can rest well now."
+	database_id = MEDAL_CAYENNE_DISK
+	icon = "cayenne_disk"

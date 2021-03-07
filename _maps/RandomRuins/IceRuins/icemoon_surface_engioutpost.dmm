@@ -1049,7 +1049,7 @@
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "de" = (
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "df" = (

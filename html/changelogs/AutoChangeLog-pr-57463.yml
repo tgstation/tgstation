@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - rscadd: "Directional subtypes to common wall mounts for mapper use"

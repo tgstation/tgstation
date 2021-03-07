@@ -26,6 +26,8 @@ SUBSYSTEM_DEF(id_access)
 	var/list/sub_department_managers_tgui = list()
 	/// Helper list containing all trim paths that can be used as job templates. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
 	var/list/station_job_templates = list()
+	/// Helper list containing all trim paths that can be used as Centcom templates.
+	var/list/centcom_job_templates = list()
 	/// Helper list containing all PDA paths that can be painted by station machines. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
 	var/list/station_pda_templates = list()
 	/// Helper list containing all station regions.
@@ -47,6 +49,23 @@ SUBSYSTEM_DEF(id_access)
 	spare_id_safe_code = "[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
 
 	return ..()
+
+/**
+ * Called by [/datum/controller/subsystem/ticker/proc/setup]
+ *
+ * This runs through every /datum/id_trim/job singleton and ensures that its access is setup according to
+ * appropriate config entries.
+ */
+/datum/controller/subsystem/id_access/proc/refresh_job_trim_singletons()
+	for(var/trim in typesof(/datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim_singletons_by_path[trim]
+
+		if(QDELETED(job_trim))
+			stack_trace("Trim \[[trim]\] missing from trim singleton list. Reinitialising this trim.")
+			trim_singletons_by_path[trim] = new trim()
+			continue
+
+		job_trim.refresh_trim_access()
 
 /// Build access flag lists.
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
@@ -187,6 +206,11 @@ SUBSYSTEM_DEF(id_access)
 				continue
 			var/list/templates = manager["templates"]
 			templates[trim_path] = trim.assignment
+
+	var/list/centcom_job_trims = typesof(/datum/id_trim/centcom) - typesof(/datum/id_trim/centcom/corpse)
+	for(var/trim_path in centcom_job_trims)
+		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+		centcom_job_templates[trim_path] = trim.assignment
 
 	var/list/all_pda_paths = typesof(/obj/item/pda)
 	var/list/pda_regions = PDA_PAINTING_REGIONS
