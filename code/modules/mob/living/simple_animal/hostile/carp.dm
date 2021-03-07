@@ -209,11 +209,11 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list("neutral")
 	health = 200
+	maxHealth = 200
 	icon_dead = "magicarp_dead"
 	icon_gib = "magicarp_gib"
 	icon_living = "magicarp"
 	icon_state = "magicarp"
-	maxHealth = 200
 	random_color = FALSE
 	food_type = list()
 	tame_chance = 0
@@ -229,6 +229,8 @@
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
+	health = 200
+	maxHealth = 200
 	rarechance = 10
 	food_type = list()
 	tame_chance = 0
