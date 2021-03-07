@@ -31,8 +31,6 @@
 	qdel(pathfind_datum)
 
 	SSpathfinder.mobs.found(l)
-	if(!path)
-		path = list()
 	return path
 
 /**
@@ -128,7 +126,7 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 
-/// The proc you use to run the search, returns FALSE if it's invalid, an empty list if no path could be found, or a valid path to the target
+/// The proc you use to run the search, returns a list with the steps to the destination if one is available, or nothing if one couldn't be found
 /datum/pathfind/proc/search()
 	start = get_turf(caller)
 	if(!start || !end)

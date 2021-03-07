@@ -37,7 +37,8 @@
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
 		var/obj/projectile/A = new projectile(get_turf(src))
-		A.preparePixelProjectile(target, source, params, spread)
+		var/modifiers = params2list(params)
+		A.preparePixelProjectile(target, source, modifiers, spread)
 
 		A.fire()
 		if(!A.suppressed && firing_effect_type)

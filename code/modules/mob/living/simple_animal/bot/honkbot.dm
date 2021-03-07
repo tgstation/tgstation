@@ -41,9 +41,11 @@
 	. = ..()
 	update_appearance()
 	auto_patrol = TRUE
-	var/datum/job/clown/J = new/datum/job/clown
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/clown_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/clown]
+	access_card.add_access(clown_trim.access + clown_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 
 /mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE
