@@ -36,15 +36,12 @@
 	set_anchored(!anchored)
 	update_atmos_behaviour()
 	air_update_turf(TRUE)
-	to_chat(user, "<span class='notice'>You [anchored ? "unscrew" : "screw"] [src] from the floor.</span>")
+	to_chat(user, "<span class='notice'>You [uraction] the floor.</span>")
 	return TRUE
 
 ///Update the flaps behaviour to gases, if not anchored will let air pass through
 /obj/structure/plasticflaps/proc/update_atmos_behaviour()
-	if(anchored)
-		CanAtmosPass = ATMOS_PASS_NO
-	else
-		CanAtmosPass = ATMOS_PASS_YES
+	CanAtmosPass = anchored ? ATMOS_PASS_YES : ATMOS_PASS_NO
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()
