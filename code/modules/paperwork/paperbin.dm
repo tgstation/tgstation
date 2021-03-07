@@ -15,16 +15,12 @@
 	var/starting_sheets = 30
 	var/list/papers = list()
 	var/obj/item/pen/bin_pen
-	//Overlay of the pen on top of the bin.
+	///Overlay of the pen on top of the bin.
 	var/mutable_appearance/pen_overlay
 	///Name of icon that goes over the paper overlays.
 	var/bin_overlay_string = "paper_bin_overlay"
-	//Overlay that goes over the paper overlays.
+	///Overlay that goes over the paper overlays.
 	var/mutable_appearance/bin_overlay
-	//After this point, each new sheet comes with a chance for it all to spill.
-	var/paper_limit = 100
-	//Odds of spilling with each new sheet added above the limit.
-	var/spill_prob = 5
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
@@ -77,6 +73,11 @@
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
 
+	if(overlays.len >= MAX_ATOM_OVERLAYS)
+		visible_message("<span class='warning'>The stack of paper collapses!</span>")
+		dump_contents()
+		return
+
 	if(over_object == M)
 		M.put_in_hands(src)
 
@@ -99,6 +100,10 @@
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
 			return
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(overlays.len >= MAX_ATOM_OVERLAYS)
+		visible_message("<span class='warning'>The stack of paper collapses!</span>")
+		dump_contents()
+		return
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
 		P.add_fingerprint(user)
@@ -121,16 +126,16 @@
 	return ..()
 
 /obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
+	if(overlays.len >= MAX_ATOM_OVERLAYS)
+		visible_message("<span class='warning'>The stack of paper collapses!</span>")
+		dump_contents()
+		return
 	if(istype(I, /obj/item/paper))
 		var/obj/item/paper/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
-		if(LAZYLEN(papers) > paper_limit)
-			if(prob(spill_prob))
-				visible_message("<span class='warning'>The stack of paper collapses!</span>")
-				dump_contents()
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/P = I
@@ -152,10 +157,8 @@
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(papers))
-		. += "It contains [LAZYLEN(papers) > 1 ? "[LAZYLEN(papers)] papers" : "one paper"]."
-	. += "<span class='notice'><b>Click and drag to your sprite</b> to pick it up.</span>"
-	. += "<span class='notice'><b>Use it in-hand</b> to dump it out.</span>"
-
+		. += "<span class='notice'>It contains [LAZYLEN(papers) > 1 ? "[LAZYLEN(papers)] sheets" : "one sheet"]."
+	. += "<span class='notice'><b>Click and drag to your sprite</b> to pick it up.</span>[LAZYLEN(papers) ? " <span class='notice'><b>Use it in-hand</b> to dump it out.</span>" : ""]"
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
@@ -169,9 +172,9 @@
 			paper_overlay.color = current_paper.color
 			paper_overlay.pixel_y = paper_number/8 - 2
 			if(istype(src, /obj/item/paper_bin/bundlenatural))
-				bin_overlay.pixel_y = paper_overlay.pixel_y //keeps it from falling down the front
+				bin_overlay.pixel_y = paper_overlay.pixel_y //keeps it on top
 			if(bin_pen)
-				pen_overlay.pixel_y = paper_overlay.pixel_y
+				pen_overlay.pixel_y = paper_overlay.pixel_y //keeps it on top
 			. += paper_overlay
 			. += current_paper.overlays
 			paper_number++
@@ -266,6 +269,16 @@
 			binding_cable = found_cable
 
 	update_appearance()
+
+/obj/item/paper_bin/bundlenatural/jumbo
+	name = "jumbo paper bundle"
+	desc = "A bundle of paper created using administrative methods."
+	starting_sheets = 1000
+
+/obj/item/paper_bin/bundlenatural/jumbo/crafted
+	name = "wumbo paper bundle"
+	desc = "A bundle of paper created using traditional methods."
+	starting_sheets = 0
 
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"
