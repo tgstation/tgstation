@@ -269,3 +269,11 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/oculine = 2)
 	tastes = list("creamy peas"= 2, "parsnip" = 1)
 	foodtypes = VEGETABLES
+
+/obj/item/food/soup/indian_curry
+	name = "indian chicken curry"
+	desc = "A mild, creamy curry from the old subcontinent. Liked by the Space-British, because it reminds them of the Raj."
+	icon_state = "indian_curry"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
+	foodtypes = VEGETABLES | MEAT | DAIRY
