@@ -5,7 +5,9 @@
 	var/list/obj/machinery/atmospherics/pipe/members
 	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
+	///Should we equalize air amoung all our members?
 	var/update = TRUE
+	///Is this pipeline being reconstructed?
 	var/building = FALSE
 
 /datum/pipeline/New()
@@ -37,6 +39,7 @@
 		reconcile_air()
 	update = air.react(src)
 
+///Preps a pipeline for rebuilding, insterts it into the rebuild queue
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	building = TRUE
 	var/volume = 0
@@ -56,6 +59,7 @@
 	air.volume = volume
 	SSair.add_to_expansion(src, base)
 
+///Has the same effect as build_pipeline(), but this doesn't queue its work, so overrun abounds. It's useful for the pregame
 /datum/pipeline/proc/build_pipeline_blocking(obj/machinery/atmospherics/base)
 	var/volume = 0
 	if(!istype(base, /obj/machinery/atmospherics/pipe))

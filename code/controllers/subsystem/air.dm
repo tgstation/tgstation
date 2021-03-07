@@ -328,11 +328,9 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_rebuilds()
-	//cache for sanic speed (lists are references anyways) (We don't copy this list, because it should be empty by the end)
-
 	//Yes this does mean rebuilding pipenets can freeze up the subsystem forever, but if we're in that situation something else is very wrong
 	var/list/currentrun = rebuild_queue
-	while(currentrun.len)
+	while(currentrun.len || length(expansion_queue))
 		while(currentrun.len && !length(expansion_queue)) //If we found anything, process that first
 			var/obj/machinery/atmospherics/remake = currentrun[currentrun.len]
 			currentrun.len--
@@ -341,13 +339,13 @@ SUBSYSTEM_DEF(air)
 			var/list/canidates = remake.get_rebuild_canidates() //This'll add to the expansion queue
 			for(var/datum/pipeline/lad in canidates)
 				lad.build_pipeline(remake)
-
 			if (MC_TICK_CHECK)
 				return
 
 		var/list/queue = expansion_queue
 		while(queue.len)
 			var/list/pack = queue[queue.len]
+			//We operate directly with the pipeline like this because we can trust any rebuilds to remake it properly
 			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
 			var/list/border = pack[SSAIR_REBUILD_QUEUE]
 			while(border.len)
