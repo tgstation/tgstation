@@ -30,7 +30,7 @@
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
 		if(template.load(T, centered = TRUE))
-			var/affected = template.get_affected_turfs(T, centered=TRUE)
+			var/affected = template.get_affected_turfs(T, centered = center)
 			for(var/AT in affected)
 				for(var/obj/docking_port/mobile/P in AT)
 					if(istype(P, /obj/docking_port/mobile))
