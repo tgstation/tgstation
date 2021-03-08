@@ -26,7 +26,7 @@
 								'sound/ai/intern/commandreport/2.ogg',
 								'sound/ai/intern/commandreport/3.ogg')
 
-	event_sounds = list(ANNOUNCER_AIMALF = 'sound/ai/intern/aimalf.ogg',
+	event_sounds = list(ANNOUNCER_AIMALF = 'sound/ai/default/aimalf.ogg',
 						ANNOUNCER_ALIENS = 'sound/ai/intern/aliens.ogg',
 						ANNOUNCER_ANIMES = 'sound/ai/intern/animes.ogg',
 						ANNOUNCER_GRANOMALIES = 'sound/ai/intern/granomalies.ogg',
