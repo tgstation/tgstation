@@ -657,7 +657,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
-* After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
+* After leaving reviews on an open pull request, maintainers may convert it to a draft, provided the issues raised in the review(s) are not minor. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
 
 ## Porting features/sprites/sounds/tools from other codebases
 
