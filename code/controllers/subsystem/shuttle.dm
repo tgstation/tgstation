@@ -45,6 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/discoveredPlants = list() //Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
 	var/list/supply_packs = list()
+	var/list/chef_groceries = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/orderhistory = list()

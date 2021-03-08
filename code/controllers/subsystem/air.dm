@@ -10,7 +10,6 @@ SUBSYSTEM_DEF(air)
 	var/cost_atoms = 0
 	var/cost_turfs = 0
 	var/cost_hotspots = 0
-	var/cost_ex_cleanup = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_superconductivity = 0
@@ -19,7 +18,6 @@ SUBSYSTEM_DEF(air)
 	var/cost_rebuilds = 0
 
 	var/list/excited_groups = list()
-	var/list/cleanup_ex_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
@@ -51,7 +49,6 @@ SUBSYSTEM_DEF(air)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
-	msg += "CL:[round(cost_ex_cleanup, 1)]|"
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
@@ -62,7 +59,6 @@ SUBSYSTEM_DEF(air)
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
 	msg += "HS:[hotspots.len]|"
-	msg += "CL:[cleanup_ex_groups.len]|"
 	msg += "EG:[excited_groups.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "SC:[active_super_conductivity.len]|"
@@ -86,7 +82,6 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
-	var/delta_time = wait * 0.1
 
 	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
 	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
@@ -107,7 +102,7 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
-		process_pipenets(delta_time, resumed)
+		process_pipenets(resumed)
 		cached_cost += TICK_USAGE_REAL - timer
 		if(state != SS_RUNNING)
 			return
@@ -119,7 +114,7 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
-		process_atmos_machinery(delta_time, resumed)
+		process_atmos_machinery(resumed)
 		cached_cost += TICK_USAGE_REAL - timer
 		if(state != SS_RUNNING)
 			return
@@ -143,23 +138,11 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
-		process_hotspots(delta_time, resumed)
+		process_hotspots(resumed)
 		cached_cost += TICK_USAGE_REAL - timer
 		if(state != SS_RUNNING)
 			return
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		currentpart = SSAIR_EXCITEDCLEANUP
-
-	if(currentpart == SSAIR_EXCITEDCLEANUP)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_excited_cleanup(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_ex_cleanup = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 		currentpart = SSAIR_EXCITEDGROUPS
 
@@ -214,7 +197,7 @@ SUBSYSTEM_DEF(air)
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
 
-/datum/controller/subsystem/air/proc/process_pipenets(delta_time, resumed = FALSE)
+/datum/controller/subsystem/air/proc/process_pipenets(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = networks.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -223,7 +206,7 @@ SUBSYSTEM_DEF(air)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
-			thing.process(delta_time)
+			thing.process()
 		else
 			networks.Remove(thing)
 		if(MC_TICK_CHECK)
@@ -247,7 +230,7 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_atmos_machinery(delta_time, resumed = FALSE)
+/datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = atmos_machinery.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -255,7 +238,7 @@ SUBSYSTEM_DEF(air)
 	while(currentrun.len)
 		var/obj/machinery/M = currentrun[currentrun.len]
 		currentrun.len--
-		if(!M || (M.process_atmos(delta_time) == PROCESS_KILL))
+		if(!M || (M.process_atmos() == PROCESS_KILL))
 			atmos_machinery.Remove(M)
 		if(MC_TICK_CHECK)
 			return
@@ -273,7 +256,7 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_hotspots(delta_time, resumed = FALSE)
+/datum/controller/subsystem/air/proc/process_hotspots(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = hotspots.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -282,7 +265,7 @@ SUBSYSTEM_DEF(air)
 		var/obj/effect/hotspot/H = currentrun[currentrun.len]
 		currentrun.len--
 		if (H)
-			H.process(delta_time)
+			H.process()
 		else
 			hotspots -= H
 		if(MC_TICK_CHECK)
@@ -311,30 +294,6 @@ SUBSYSTEM_DEF(air)
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
-
-/datum/controller/subsystem/air/proc/process_excited_cleanup(resumed = FALSE)
-	//cache for sanic speed
-	var/fire_count = times_fired
-	if (!resumed)
-		src.currentrun = cleanup_ex_groups.Copy()
-		cleanup_ex_groups.Cut() //Cut the list here so any later breakdowns get added properly
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-	while(currentrun.len)
-		var/list/turf_packet = currentrun[currentrun.len]
-		var/breakdown = turf_packet[EX_CLEANUP_BREAKDOWN]
-		var/dismantle = turf_packet[EX_CLEANUP_DISMANTLE]
-		var/list/turf_list = turf_packet[EX_CLEANUP_TURFS]
-		while(turf_list.len) //The turf list
-			var/turf/open/T = turf_list[turf_list.len]
-			//I'd normally check for nulls here, but turfs are dumb with refs, so it's not an issue
-			//We don't allow planetary turfs as a semi stopgap to worldspanning groups
-			if(istype(T) && !istype(T.air, /datum/gas_mixture/immutable) && !T.planetary_atmos)
-				T.cleanup_group(fire_count, breakdown, dismantle)
-			turf_list.len--
-			if (MC_TICK_CHECK)
-				return
-		currentrun.len-- //If we process all the turfs in a packet, del it.
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
@@ -366,7 +325,7 @@ SUBSYSTEM_DEF(air)
 		if(T.excited_group)
 			//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
 			//The group also expands by a tile per rebuild on each edge, suffering
-			T.excited_group.garbage_collect(will_cleanup = TRUE) //Poke everybody in the group and reform
+			T.excited_group.garbage_collect() //Kill the excited group, it'll reform on its own later
 
 ///Puts an active turf to sleep so it doesn't process. Do this without cleaning up its excited group.
 /datum/controller/subsystem/air/proc/sleep_active_turf(turf/open/T)
@@ -403,10 +362,6 @@ SUBSYSTEM_DEF(air)
 		return
 	else
 		T.requires_activation = TRUE
-
-/datum/controller/subsystem/air/proc/add_to_cleanup(datum/excited_group/ex_grp)
-	//Store the cooldowns. If we're already doing cleanup, DO NOT add to the currently processing list, infinite loop man bad.
-	cleanup_ex_groups += list(list(ex_grp.breakdown_cooldown, ex_grp.dismantle_cooldown, ex_grp.turf_list.Copy()))
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)

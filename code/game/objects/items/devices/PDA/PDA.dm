@@ -903,7 +903,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	SIGNAL_HANDLER
 	set_light_on(FALSE)
 	set_light_range(0) //We won't be turning on again.
-	update_icon()
+	update_appearance()
 	visible_message("<span class='danger'>The light in [src] shorts out!</span>")
 	return COMPONENT_BLOCK_LIGHT_EATER
 

@@ -109,8 +109,15 @@
 	var/mob/living/carbon/consumer = L
 	if(!consumer)
 		return
+	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	this_liver.alcohol_tolerance *= 2
+
+/datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	if(!istype(organ, /obj/item/organ/liver))
+		return
+	var/obj/item/organ/liver/this_liver = organ
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
@@ -123,6 +130,7 @@
 	. = ..()
 	var/mob/living/carbon/consumer = L
 	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	if(!this_liver)
 		return
@@ -324,10 +332,20 @@
 
 /datum/reagent/inverse/healing/convermol/on_mob_add(mob/living/owner, amount)
 	. = ..()
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
+	apply_lung_levels(lungs)
+
+/datum/reagent/inverse/healing/convermol/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	if(!istype(organ, /obj/item/organ/lungs))
+		return
+	var/obj/item/organ/lungs/lungs = organ
+	apply_lung_levels(lungs)
+
+/datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/lungs/lungs)
 	cached_heat_level_1 = lungs.heat_level_1_threshold
 	cached_heat_level_2 = lungs.heat_level_2_threshold
 	cached_heat_level_3 = lungs.heat_level_3_threshold
@@ -360,6 +378,7 @@
 /datum/reagent/inverse/healing/convermol/on_mob_delete(mob/living/owner)
 	. = ..()
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return

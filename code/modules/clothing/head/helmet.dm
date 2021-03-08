@@ -409,8 +409,8 @@
 	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
-	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : ""]"
-	return ..()
+	. = ..()
+	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : null]"
 
 /obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
 	. = ..()

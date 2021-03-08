@@ -1,9 +1,10 @@
 ///Robot customers
 /mob/living/simple_animal/robot_customer
 	name = "space-tourist bot"
-	maxHealth = 50000000 //go fuck yourself
-	health = 50000000
+	maxHealth = 1000 //go fuck yourself
+	health = 1000
 	desc = "I wonder what they'll order..."
+	gender = NEUTER
 	icon = 'icons/mob/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"
@@ -12,6 +13,7 @@
 	AIStatus = AI_OFF
 	del_on_death = TRUE
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/robot_customer
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
@@ -33,14 +35,14 @@
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
 	icon_state = customer_info.base_icon
 	name = "[pick(customer_info.name_prefixes)]-bot ([customer_info.nationality])"
-	color = rgb(rand(150,255), rand(150,255), rand(150,255))
+	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/simple_animal/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	attending_venue.current_visitors -= src
-	SSrestaurant.claimed_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
+	attending_venue.linked_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
@@ -75,7 +77,7 @@
 /mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)
 	. = ..()
 	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	playsound(src, customer_info.speech_sound, TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 5)
+	playsound(src, customer_info.speech_sound, 30, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 5)
 
 /mob/living/simple_animal/robot_customer/examine(mob/user)
 	. = ..()

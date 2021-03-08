@@ -56,6 +56,13 @@ GLOBAL_LIST_INIT(security_positions, list(
 	"Detective",
 	"Security Officer"))
 
+/// These aren't defacto jobs, but are the special departmental variants for sec officers.
+GLOBAL_LIST_INIT(security_sub_positions, list(
+	"Security Officer (Cargo)",
+	"Security Officer (Engineering)",
+	"Security Officer (Medical)",
+	"Security Officer (Science)",
+))
 
 GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"AI",
