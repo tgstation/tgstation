@@ -152,7 +152,7 @@
 	clothing_sets = list("wires", "bad_takes")
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/toy/crayon/red = 1, /obj/item/toy/crayon/orange = 1, /obj/item/toy/crayon/yellow = 1, /obj/item/toy/crayon/green = 1, /obj/item/toy/crayon/blue = 1, /obj/item/toy/crayon/purple = 1),
-	/datum/venue/bar = list(/datum/reagent/consumable/failed_reaction = 1, /datum/reagent/reaction_agent/basic_buffer = 1, /datum/reagent/reaction_agent/acidic_buffer = 1))
+	/datum/venue/bar = list(/datum/reagent/consumable/failed_reaction = 1, /datum/reagent/spraytan = 1, /datum/reagent/reaction_agent/basic_buffer = 1, /datum/reagent/reaction_agent/acidic_buffer = 1))
 
 	found_seat_lines = list("customer_pawn.say(pick(customer_data.found_seat_lines))", "I saw your sector on the hub. What are the laws of this land?")
 	cant_find_seat_lines = list("Don't stress test MY artificial intelligence, buster! My engineers thought of exactly ZERO edge cases!", "I can't tell if I can't find a seat because i'm broken, are you are.", "Maybe I need to search more than 7 tiles away for a seat.")
@@ -167,7 +167,7 @@
 	//self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
 
 
-/* uncomment when mothblocks moth nationality merged
+/* uncomment when mothblocks moth nationality merged, also mothblocks is tweaking venue customer pickweights and i don't wanna mess with that
 /datum/customer_data/malfunction/chosen(datum/venue/venue)
 	. = ..()
 
