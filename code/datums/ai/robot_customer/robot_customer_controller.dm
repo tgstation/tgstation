@@ -114,4 +114,4 @@
 		return
 
 	if(living_hitter.combat_mode)
-	INVOKE_ASYNC(src, .proc/warn_greytider, living_hitter)
+		INVOKE_ASYNC(src, .proc/warn_greytider, living_hitter)
