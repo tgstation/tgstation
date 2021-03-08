@@ -460,10 +460,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
 
 ///Spawns the mob with some drugginess/drunkeness, and some disgust.
-/obj/effect/landmark/start/hangover/proc/make_hungover(mob/M)
-	if(!iscarbon(M))
+/obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
+	if(!iscarbon(hangover_mob))
 		return
-	var/mob/living/carbon/spawned_carbon = M
+	var/mob/living/carbon/spawned_carbon = hangover_mob
 	spawned_carbon.Sleeping(rand(2 SECONDS, 5 SECONDS))
 	if(prob(50))
 		spawned_carbon.adjust_drugginess(rand(15, 20))
@@ -477,9 +477,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		hat = new hat(spawned_carbon)
 		spawned_carbon.equip_to_slot(hat, ITEM_SLOT_HEAD)
 
-
-
-
 /obj/effect/landmark/start/hangover/JoinPlayerHere(mob/M, buckle)
 	. = ..()
 	make_hungover(M)
@@ -492,5 +489,5 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	make_hungover(M)
 	for(var/obj/structure/closet in contents)
 		M.forceMove(closet)
-		return //If we found a closet return
+		return
 	..() //Call parent as fallback
