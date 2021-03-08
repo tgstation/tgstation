@@ -7,7 +7,7 @@
 	density = FALSE
 	health = 25
 	maxHealth = 25
-
+	pass_flags = PASSFIRELOCK | PASSFLAPS
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
@@ -16,6 +16,7 @@
 	window_id = "autofloor"
 	window_name = "Automatic Station Floor Repairer v1.1"
 	path_image_color = "#FFA500"
+	layer = TABLE_LAYER
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection

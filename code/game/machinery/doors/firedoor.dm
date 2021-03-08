@@ -12,6 +12,7 @@
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF
 	heat_proof = TRUE
+	pass_flags_self = PASSFIRELOCK
 	glass = TRUE
 	sub_door = TRUE
 	explosion_block = 1
