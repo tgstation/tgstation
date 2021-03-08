@@ -483,7 +483,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/M, buckle)
 	make_hungover(M)
-	for(var/obj/structure/closet in contents)
+	for(var/obj/structure/closet/closet in contents)
+		if(closet.opened)
+			continue
 		M.forceMove(closet)
 		return
 	..() //Call parent as fallback
