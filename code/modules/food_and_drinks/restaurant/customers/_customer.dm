@@ -137,8 +137,8 @@
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/whiskey = 6, /datum/reagent/consumable/ethanol/tequila = 20, /datum/reagent/consumable/ethanol/tequila_sunrise = 1, /datum/reagent/consumable/ethanol/beer = 15, /datum/reagent/consumable/ethanol/patron = 5, /datum/reagent/consumable/ethanol/brave_bull = 5, /datum/reagent/consumable/ethanol/margarita = 8))
 
 
-	found_seat_lines = list("Como te va, space station 13?", "Who's ready to party!", "Ah, muchos gracias.", "Ahhh, smells like mi abuela's cooking!")
-	cant_find_seat_lines = list("En Serio? Seriously, no seats?", "Andele! I want a table to watch the football match!", "Ay Caramba...")
-	leave_mad_lines = list("Aye dios mio, I'm out of here.", "Esto es ridiculo! I'm leaving!", "I've seen better cooking at taco campana!", "I though this was a restaurant, pero es porqueria!")
+	found_seat_lines = list("¿Como te va, space station 13?", "Who's ready to party!", "Ah, muchas gracias.", "Ahhh, smells like mi abuela's cooking!")
+	cant_find_seat_lines = list("¿En Serio? Seriously, no seats?", "Andele! I want a table to watch the football match!", "Ay Caramba...")
+	leave_mad_lines = list("Aye dios mio, I'm out of here.", "Esto es ridículo! I'm leaving!", "I've seen better cooking at taco campana!", "I though this was a restaurant, pero es porquería!")
 	leave_happy_lines = list("Amigo, era delicio. Thank you!", "Yo tuve el mono, and you friend? You hit the spot.", "Just the right amount of spicy!")
 	wait_for_food_lines = list("Ay ay ay, what's taking so long...", "Are you ready yet, amigo?")

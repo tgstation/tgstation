@@ -1,5 +1,5 @@
 Ranchero
-Senor
+Señor
 Bandito
 Mariachi
 Presidente
@@ -9,5 +9,5 @@ Deportista
 Gonzales
 Rio
 Pele
-Conqustador
+Conquistador
 Gulf
