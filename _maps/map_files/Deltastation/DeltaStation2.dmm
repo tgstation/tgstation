@@ -32616,6 +32616,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
 "cMe" = (
@@ -98961,6 +98962,16 @@
 	},
 /turf/open/floor/wood,
 /area/commons/dorms)
+"sjt" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
+/turf/open/floor/iron,
+/area/hallway/primary/central/aft)
 "sjz" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
@@ -158400,7 +158411,7 @@ xjg
 xqi
 wog
 cMd
-cNn
+sjt
 cPy
 cQZ
 cSD
