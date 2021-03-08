@@ -357,6 +357,12 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 
+/obj/item/food/muffin/moffin
+	name = "moffin"
+	desc = "A delicious and spongy little cake, with little cloth strips embedded inside of it."
+	tastes = list("muffin" = 2, "dust" = 1, "lint" = 1)
+	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST
+
 
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
