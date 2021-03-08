@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The xenobio exports file are now included in the .dme, which means xenobiologists can exports slime cores to cargonia if they wish to again."
