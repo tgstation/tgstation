@@ -13,8 +13,8 @@
 /proc/status_bar_set_text(target, text)
 	var/client/client = CLIENT_FROM_VAR(target)
 	// Stop a winset call if text didn't change.
-	if(status_bar_prev_text == text)
+	if(client.status_bar_prev_text == text)
 		return
-	status_bar_prev_text = text
+	client.status_bar_prev_text = text
 	winset(client, "mapwindow.status_bar",
 		"text=[url_encode(text)]&is-visible=[!!text]")
