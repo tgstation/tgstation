@@ -41,10 +41,7 @@
 	if(get_dist(batman, big_guy) >= give_up_distance)
 		finish_action(controller, FALSE)
 
-	if(big_guy.pulling != batman || big_guy.grab_state < GRAB_AGGRESSIVE) //not an aggro grab on target yet
-		big_guy.start_pulling(batman)
-		return
-
+	big_guy.start_pulling(batman)
 
 	batman.visible_message("<span class='warning'>[batman] gets a slightly too tight hug from [big_guy]!</span>", "<span class='userdanger'>You feel your bones break as [big_guy] embraces you!</span>")
 
@@ -56,7 +53,7 @@
 		for(var/obj/item/bodypart/bodypart_to_break in carbon_batman.bodyparts)
 			if(bodypart_to_break.body_zone == BODY_ZONE_HEAD)
 				continue
-			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 25)
+			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 35)
 
 	finish_action(controller, TRUE)
 
