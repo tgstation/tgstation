@@ -423,6 +423,10 @@
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/spraytan/New()
+	. = ..()
+	AddElement(/datum/element/venue_price, DRINK_PRICE_HIGH)
+
 /datum/reagent/spraytan/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
 	if(ishuman(exposed_mob))

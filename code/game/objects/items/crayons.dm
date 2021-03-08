@@ -86,6 +86,8 @@
 
 	drawtype = pick(all_drawables)
 
+	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)//probably easy to get but without fail will make the chef have to find it, also easter egg bot orders it
+
 	refill()
 
 /obj/item/toy/crayon/examine(mob/user)

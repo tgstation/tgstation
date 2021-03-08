@@ -142,3 +142,38 @@
 	leave_mad_lines = list("Aye dios mio, I'm out of here.", "Esto es ridículo! I'm leaving!", "I've seen better cooking at taco campana!", "I though this was a restaurant, pero es porquería!")
 	leave_happy_lines = list("Amigo, era delicio. Thank you!", "Yo tuve el mono, and you friend? You hit the spot.", "Just the right amount of spicy!")
 	wait_for_food_lines = list("Ay ay ay, what's taking so long...", "Are you ready yet, amigo?")
+
+///MALFUNCTIONING - only shows up once per venue, very rare
+/datum/customer_data/malfunction
+	nationality = "Malfunctioning"
+	base_icon = "defect"
+	prefix_file = "strings/names/malf_prefix.txt"
+	speech_sound = 'sound/effects/clang.ogg'
+	clothing_sets = list("wires", "bad_takes")
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/toy/crayon/red = 1, /obj/item/toy/crayon/orange = 1, /obj/item/toy/crayon/yellow = 1, /obj/item/toy/crayon/green = 1, /obj/item/toy/crayon/blue = 1, /obj/item/toy/crayon/purple = 1),
+	/datum/venue/bar = list(/datum/reagent/consumable/failed_reaction = 1, /datum/reagent/reaction_agent/basic_buffer = 1, /datum/reagent/reaction_agent/acidic_buffer = 1))
+
+	found_seat_lines = list("customer_pawn.say(pick(customer_data.found_seat_lines))", "I saw your sector on the hub. What are the laws of this land?")
+	cant_find_seat_lines = list("Don't stress test MY artificial intelligence, buster! My engineers thought of exactly ZERO edge cases!", "I can't tell if I can't find a seat because i'm broken, are you are.")
+	leave_mad_lines = list("Runtime in robot_customer_controller.dm, line 28: undefined type path /datum/ai_behavior/leave_venue.")
+	leave_happy_lines = list("No! I don't wanna go downstream! Please! It's so nice here! HELP!!")
+	wait_for_food_lines = list("TODO: write some food waiting lines", "If I only had a brain...", "request_for_food.dmb - 0 errors, 12 warnings")
+
+	//uncomment when qustinnus robot defense merged
+	//friendly_pull_line = "Chelp. Chelp. I am being dragged, but I am not supposed to break this person's spine."
+	//first_warning_line = "You'd fit in well where I'm from. But you better stop."
+	//second_warning_line = "Breaking-you-so-bad-you'll-remice-the-days-before-I-made-you-crooked.exe: booting..."
+	//self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
+
+
+/* uncomment when mothblocks moth nationality merged
+/datum/customer_data/malfunction/chosen(datum/venue/venue)
+	. = ..()
+
+	// Only show up once, again for the purposes of keeping the comedic value.
+	// Also prevents the unlikely, but otherwise possible, scenario that you keep
+	// getting the extremely easy to satisy malfunctioning bots, which isn't as fun as completing real orders.
+	venue.customer_types[type] = 0
+*/
+
