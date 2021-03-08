@@ -61,7 +61,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
-	venue_value = FOOD_PRICE_EXOTIC
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/fishfry
 	name = "fish fry"

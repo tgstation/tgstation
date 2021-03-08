@@ -206,6 +206,7 @@
 	max_volume = 100
 	tastes = list("tomato" = 1, "carrot" = 1)
 	foodtypes = VEGETABLES
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/sweetpotato
 	name = "sweet potato soup"
@@ -277,3 +278,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
 	foodtypes = VEGETABLES | MEAT | DAIRY
+	venue_value = FOOD_PRICE_NORMAL
