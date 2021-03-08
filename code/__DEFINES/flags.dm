@@ -24,43 +24,44 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // scroll down before changing the numbers on these
 
 /// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HEAR_1 (1<<3)
+#define HEAR_1 (1<<0)
 /// Is this object currently processing in the atmos object list?
-#define ATMOS_IS_PROCESSING_1 (1<<4)
+#define ATMOS_IS_PROCESSING_1 (1<<1)
 /// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<5)
+#define CONDUCT_1 (1<<2)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
-#define NODECONSTRUCT_1 (1<<7)
+#define NODECONSTRUCT_1 (1<<3)
 /// atom queued to SSoverlay
-#define OVERLAY_QUEUED_1 (1<<8)
+#define OVERLAY_QUEUED_1 (1<<4)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<9)
+#define ON_BORDER_1 (1<<5)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1 << 10)
+#define NO_SCREENTIPS_1 (1 << 6)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<11)
-#define HOLOGRAM_1 (1<<12)
+#define PREVENT_CLICK_UNDER_1 (1<<7)
+#define HOLOGRAM_1 (1<<8)
 /// Prevents mobs from getting chainshocked by teslas and the supermatter
-#define SHOCKED_1 (1<<13)
+#define SHOCKED_1 (1<<9)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<14)
+#define INITIALIZED_1 (1<<10)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1     (1<<15)
+#define ADMIN_SPAWNED_1     (1<<11)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<12)
 /// should the contents of this atom be acted upon
-#define RAD_PROTECT_CONTENTS_1 (1 << 17)
+#define RAD_PROTECT_CONTENTS_1 (1 << 13)
 /// should this object be allowed to be contaminated
-#define RAD_NO_CONTAMINATE_1 (1 << 18)
+#define RAD_NO_CONTAMINATE_1 (1 << 14)
 /// Should this object be paintable with very dark colors?
-#define ALLOW_DARK_PAINTS_1 (1 << 19)
+#define ALLOW_DARK_PAINTS_1 (1 << 15)
 /// Should this object be unpaintable?
-#define UNPAINTABLE_1 (1 << 20)
+#define UNPAINTABLE_1 (1 << 16)
 /// Is the thing currently spinning?
-#define IS_SPINNING_1 (1 << 21)
-#define IS_ONTOP_1 (1 << 22)
-#define SUPERMATTER_IGNORES_1 (1 << 23)
-
+#define IS_SPINNING_1 (1 << 17)
+#define IS_ONTOP_1 (1 << 18)
+#define SUPERMATTER_IGNORES_1 (1 << 19)
+/// If a turf can be made dirty at roundstart. This is also used in areas.
+#define CAN_BE_DIRTY_1 (1<<20)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -79,19 +80,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// If the thing can reflect matter (bullets/bomb shrapnel)
 #define RICOCHET_HARD (1<<1)
 
-//turf-only flags
-#define NOJAUNT_1 (1<<0)
-#define UNUSED_RESERVATION_TURF_1 (1<<1)
-/// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<2)
-/// If blood cultists can draw runes or build structures on this turf
-#define CULT_PERMITTED_1 (1<<3)
-/// Blocks lava rivers being generated on the turf
-#define NO_LAVA_GEN_1 (1<<6)
-/// Blocks ruins spawning on the turf
-#define NO_RUINS_1 (1<<10)
-/// Should this tile be cleaned up and reinserted into an excited group?
-#define EXCITED_CLEANUP_1 (1 << 13)
+//TURF FLAGS
+/// If a turf cant be jaunted through.
+#define NOJAUNT (1<<0)
+#define UNUSED_RESERVATION_TURF (1<<1)
+/// Blocks lava rivers being generated on the turf.
+#define NO_LAVA_GEN (1<<3)
+/// Blocks ruins spawning on the turf.
+#define NO_RUINS (1<<4)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -120,6 +116,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ABDUCTOR_PROOF (1<<11)
 /// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
 #define NO_ALERTS (1<<12)
+/// If blood cultists can draw runes or build structures on this AREA.
+#define CULT_PERMITTED (1<<13)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

@@ -546,7 +546,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			return 10
 
 	if(turret_flags & TURRET_FLAG_AUTH_WEAPONS) //check for weapon authorization
-		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
+		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/advanced/chameleon))
 
 			if(allowed(perp)) //if the perp has security access, return 0
 				return 0

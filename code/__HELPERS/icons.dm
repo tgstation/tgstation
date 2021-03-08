@@ -1123,7 +1123,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	dummySave = null
 	fdel("tmp/dummySave.sav") //if you get the idea to try and make this more optimized, make sure to still call unlock on the savefile after every write to unlock it.
 
-/proc/icon2html(thing, target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE)
+/proc/icon2html(thing, target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE, extra_classes = null)
 	if (!thing)
 		return
 
@@ -1151,7 +1151,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 				SSassets.transport.send_assets(thing2, name)
 			if(sourceonly)
 				return SSassets.transport.get_asset_url(name)
-			return "<img class='icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
+			return "<img class='[extra_classes] icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
 		var/atom/A = thing
 
 		I = A.icon
@@ -1185,7 +1185,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		SSassets.transport.send_assets(thing2, key)
 	if(sourceonly)
 		return SSassets.transport.get_asset_url(key)
-	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
+	return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
 /proc/icon2base64html(thing)
 	if (!thing)

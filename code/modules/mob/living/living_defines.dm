@@ -65,6 +65,8 @@
 	var/list/roundstart_quirks = list()
 
 	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
+	///Mob specific surgery speed modifier
+	var/mob_surgery_speed_mod = 1
 
 	var/now_pushing = null //! Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 

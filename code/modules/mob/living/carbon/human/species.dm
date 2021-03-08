@@ -189,6 +189,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///For custom overrides for species ass images
 	var/icon/ass_image
 
+	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
+	var/list/family_heirlooms
+
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
 
@@ -965,7 +968,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
+		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
 	if(flying_species)
 		HandleFlight(H)
@@ -1323,7 +1326,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.grab_act(user,target))
+	if(attacker_style?.grab_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
 		target.grabbedby(user)
@@ -1339,7 +1342,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your attack at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.harm_act(user,target))
+	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
 
@@ -1421,7 +1424,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.disarm_act(user,target))
+	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	if(user.body_position != STANDING_UP)
 		return FALSE

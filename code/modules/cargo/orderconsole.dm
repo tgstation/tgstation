@@ -82,6 +82,7 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		data["points"] = D.account_balance
+	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
