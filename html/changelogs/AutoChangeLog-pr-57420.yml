@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - rscadd: "Centcom ID consoles have extended template support."
-  - bugfix: "ID cards with no registered age will no longer show null age in Plexagon Access Management."

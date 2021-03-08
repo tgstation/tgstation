@@ -1,6 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - rscadd: "His Grace now sounds like a toolbox when picked up/set down"
-  - bugfix: "Fixes His Grace in-hand icons not updating when he ascends"
-  - rscadd: "Windup toolbox has more *immersive latch snapping toy action™️*"
