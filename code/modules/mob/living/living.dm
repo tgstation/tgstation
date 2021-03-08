@@ -1923,24 +1923,19 @@
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab)
+/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab = FALSE)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return FALSE
-	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
-		return FALSE
+		return MARTIAL_ATTACK_INVALID
 	var/datum/martial_art/style = mind?.martial_art
-	var/attack_result = FALSE
-	if (style)
-		if (is_grab)
-			attack_result = style.grab_act(src, target)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			attack_result = style.disarm_act(src, target)
-		if(combat_mode)
-			if (HAS_TRAIT(src, TRAIT_PACIFISM))
-				return FALSE
-			attack_result = style.harm_act(src, target)
-		else
-			attack_result = style.help_act(src, target)
-
-
-	return attack_result
+	if (!style)
+		return MARTIAL_ATTACK_INVALID
+	// will return boolean below since it's not invalid
+	if (is_grab)
+		return style.grab_act(src, target)
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+		return style.disarm_act(src, target)
+	if(combat_mode)
+		if (HAS_TRAIT(src, TRAIT_PACIFISM))
+			return FALSE
+		return style.harm_act(src, target)
+	return style.help_act(src, target)

@@ -117,7 +117,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/snowman
-	name = "Snowman Head"
+	name = "snowman head"
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
 	inhand_icon_state = "snowman_h"
