@@ -102,7 +102,8 @@
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/reagent_containers/hypospray/combat=1,\
-		/obj/item/gun/medbeam=1)
+		/obj/item/gun/medbeam=1,\
+		/obj/item/storage/box/hug/plushes=1)
 
 /datum/outfit/centcom/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -122,7 +123,8 @@
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/reagent_containers/hypospray/combat/nanites=1,\
-		/obj/item/gun/medbeam=1)
+		/obj/item/gun/medbeam=1,\
+		/obj/item/storage/box/hug/plushes=1)
 
 /datum/outfit/centcom/ert/engineer
 	name = "ERT Engineer"

@@ -1,4 +1,0 @@
-author: "Dorsisdwarf"
-delete-after: True
-changes: 
-  - admin: "Admins can now see who sent a cross-server message and from where"

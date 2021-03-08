@@ -2,18 +2,20 @@
 
 This build script is the recommended way to compile the game, including not only the DM code but also the JavaScript and any other dependencies.
 
-- VSCode: use `Ctrl+Shift+B` to build or `F5` to build and run.
-
-- Windows: double-click `Build.bat` in the repository root to build.
-
-- Linux: run `tools/build/build` from the repository root.
+- VSCode:
+  a) Press `Ctrl+Shift+B` to build.
+  b) Press `F5` to build and run with debugger attached.
+- Windows:
+  a) Double-click `BUILD.bat` in the repository root to build (will wait for a key press before it closes).
+  b) Double-click `tools/build/build.bat` to build (will exit as soon as it finishes building).
+- Linux:
+  a) Run `tools/build/build` from the repository root.
 
 The script will skip build steps whose inputs have not changed since the last run.
 
 ## Dependencies
 
-- On Windows, `Build.bat` will automatically install a private copy of Node.
-
+- On Windows, `BUILD.bat` will automatically install a private (vendored) copy of Node.
 - On Linux, install Node using your package manager or from <https://nodejs.org/en/download/>.
 
 ## Why?

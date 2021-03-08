@@ -2,6 +2,9 @@
 /datum/venue/restaurant
 	name = "restaurant"
 	req_access = ACCESS_KITCHEN
+	min_time_between_visitor = 80 SECONDS
+	max_time_between_visitor = 100 SECONDS
+
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering

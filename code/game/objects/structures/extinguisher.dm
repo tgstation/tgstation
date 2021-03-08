@@ -155,6 +155,18 @@
 			stored_extinguisher = null
 	qdel(src)
 
+/obj/structure/extinguisher_cabinet/directional/north
+	pixel_y = 32
+
+/obj/structure/extinguisher_cabinet/directional/south
+	pixel_y = -32
+
+/obj/structure/extinguisher_cabinet/directional/east
+	pixel_x = 26
+
+/obj/structure/extinguisher_cabinet/directional/west
+	pixel_x = -26
+
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
