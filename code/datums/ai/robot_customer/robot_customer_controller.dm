@@ -106,6 +106,7 @@
 		if(3)
 			customer.say(customer_data.self_defense_line)
 	blackboard[BB_CUSTOMER_CURRENT_TARGET] = greytider
+
 	CancelActions()
 
 /datum/ai_controller/robot_customer/proc/on_get_punched(datum/source, mob/living/living_hitter)
