@@ -101,8 +101,7 @@
 		if(3)
 			customer.say(customer_data.self_defense_line)
 	blackboard[BB_CUSTOMER_CURRENT_TARGET] = greytider
-	SelectBehaviors() //Recalculate plan instantly, we're going into battle!
-
+	CancelActions()
 
 /datum/ai_controller/robot_customer/proc/on_get_punched(datum/source, mob/living/living_hitter)
 	SIGNAL_HANDLER
@@ -114,4 +113,5 @@
 	if(used_id && attending_venue.req_access in used_id?.GetAccess())
 		return
 
-	warn_greytider(living_hitter)
+	if(living_hitter.combat_mode)
+		warn_greytider(living_hitter)

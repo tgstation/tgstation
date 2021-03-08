@@ -42,18 +42,18 @@
 		finish_action(controller, FALSE)
 
 	big_guy.start_pulling(batman)
+	big_guy.setDir(get_dir(big_guy, batman))
 
 	batman.visible_message("<span class='warning'>[batman] gets a slightly too tight hug from [big_guy]!</span>", "<span class='userdanger'>You feel your bones break as [big_guy] embraces you!</span>")
 
-	if(!iscarbon(batman))
-		batman.adjustBruteLoss(150)
-
-	else
+	if(iscarbon(batman))
 		var/mob/living/carbon/carbon_batman = batman
 		for(var/obj/item/bodypart/bodypart_to_break in carbon_batman.bodyparts)
 			if(bodypart_to_break.body_zone == BODY_ZONE_HEAD)
 				continue
 			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 35)
+	else
+		batman.adjustBruteLoss(150)
 
 	finish_action(controller, TRUE)
 
