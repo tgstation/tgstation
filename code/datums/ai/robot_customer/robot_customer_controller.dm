@@ -81,7 +81,7 @@
 
 	var/obj/item/card/id/used_id = puller.get_idcard(TRUE)
 
-	if(used_id && attending_venue.req_access in used_id?.GetAccess())
+	if(used_id && (attending_venue.req_access in used_id?.GetAccess()))
 		customer.say(customer_data.friendly_pull_line)
 		return
 	warn_greytider(puller)
@@ -115,7 +115,7 @@
 
 	var/obj/item/card/id/used_id = living_hitter.get_idcard(hand_first = TRUE)
 
-	if(used_id && attending_venue.req_access in used_id?.GetAccess())
+	if(used_id && (attending_venue.req_access in used_id?.GetAccess()))
 		return
 
 	if(living_hitter.combat_mode)
