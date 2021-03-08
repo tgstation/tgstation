@@ -96,7 +96,7 @@
 	H_ion_release = -25
 	rate_up_lim = 20
 	purity_min = 0.5
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_BURN | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/nitracid
@@ -116,7 +116,7 @@
 	H_ion_release = -20
 	rate_up_lim = 20
 	purity_min = 0.5
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_BURN | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/sulfonal
@@ -136,7 +136,7 @@
 	H_ion_release = 4
 	rate_up_lim = 20
 	purity_min = 0.5
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_TOXIN | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/lipolicide
@@ -176,7 +176,7 @@
 	H_ion_release = -4
 	rate_up_lim = 10
 	purity_min = 0.7
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/lexorin
@@ -196,6 +196,7 @@
 	H_ion_release = 0.1
 	rate_up_lim = 25
 	purity_min = 0.4
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OXY
 
 /datum/chemical_reaction/hot_ice_melt
@@ -219,9 +220,10 @@
 	temp_exponent_factor = 2
 	ph_exponent_factor = 2
 	thermic_constant = 250
-	H_ion_release = 0.2
+	H_ion_release = 2
 	rate_up_lim = 10
 	purity_min = 0.6
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
@@ -241,6 +243,7 @@
 	H_ion_release = -0.2
 	rate_up_lim = 15
 	purity_min = 0.4
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/zombiepowder
@@ -260,6 +263,7 @@
 	H_ion_release = -0.25
 	rate_up_lim = 15
 	purity_min = 0.3
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/ghoulpowder
@@ -279,6 +283,7 @@
 	H_ion_release = -0.25
 	rate_up_lim = 15
 	purity_min = 0.4
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/mindbreaker
@@ -298,6 +303,7 @@
 	H_ion_release = -0.3
 	rate_up_lim = 15
 	purity_min = 0.4
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/heparin
@@ -317,6 +323,7 @@
 	H_ion_release = -0.6
 	rate_up_lim = 10
 	purity_min = 0.6
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/rotatium
@@ -336,6 +343,7 @@
 	H_ion_release = 0.15
 	rate_up_lim = 15
 	purity_min = 0.6
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_TOXIN | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/anacea
@@ -355,6 +363,7 @@
 	H_ion_release = 0.5
 	rate_up_lim = 10
 	purity_min = 0.7
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_TOXIN | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/mimesbane
@@ -374,6 +383,7 @@
 	H_ion_release = -2
 	rate_up_lim = 15
 	purity_min = 0.5
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/bonehurtingjuice
@@ -393,4 +403,5 @@
 	H_ion_release = -0.4
 	rate_up_lim = 15
 	purity_min = 0.4
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
