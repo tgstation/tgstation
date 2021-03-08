@@ -58,7 +58,7 @@
 		eat_order(I, attending_venue)
 		return COMPONENT_NO_AFTERATTACK
 	else
-		warn_greytider(user)
+		INVOKE_ASYNC(src, .proc/warn_greytider, user)
 
 
 /datum/ai_controller/robot_customer/proc/eat_order(obj/item/order_item, datum/venue/attending_venue)
@@ -79,8 +79,7 @@
 	if(used_id && attending_venue.req_access in used_id?.GetAccess())
 		customer.say(customer_data.friendly_pull_line)
 		return
-
-	warn_greytider(puller)
+	INVOKE_ASYNC(src, .proc/warn_greytider, puller)
 	customer.resist()
 
 
@@ -102,16 +101,17 @@
 		if(3)
 			customer.say(customer_data.self_defense_line)
 	blackboard[BB_CUSTOMER_CURRENT_TARGET] = greytider
+	SelectBehaviors() //Recalculate plan instantly, we're going into battle!
 
 
-/datum/ai_controller/robot_customer/proc/on_get_punched(datum/source, mob/living/L)
+/datum/ai_controller/robot_customer/proc/on_get_punched(datum/source, mob/living/living_hitter)
 	SIGNAL_HANDLER
 
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
-	var/obj/item/card/id/used_id = L.get_idcard(TRUE)
+	var/obj/item/card/id/used_id = living_hitter.get_idcard(hand_first = TRUE)
 
 	if(used_id && attending_venue.req_access in used_id?.GetAccess())
 		return
 
-	warn_greytider(L)
+	warn_greytider(living_hitter)

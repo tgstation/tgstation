@@ -26,6 +26,7 @@
 
 /datum/ai_behavior/break_spine
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	action_cooldown = 0.7 SECONDS
 	var/target_key
 	var/give_up_distance = 10
 
@@ -34,13 +35,13 @@
 	var/mob/living/batman = controller.blackboard[target_key]
 	var/mob/living/big_guy = controller.pawn //he was molded by the darkness
 
-	if(!batman.stat)
+	if(batman.stat)
 		finish_action(controller, TRUE)
 
 	if(get_dist(batman, big_guy) >= give_up_distance)
 		finish_action(controller, FALSE)
 
-	if(big_guy.grab_state < GRAB_AGGRESSIVE) //not an aggro grab yet
+	if(big_guy.pulling != batman || big_guy.grab_state < GRAB_AGGRESSIVE) //not an aggro grab on target yet
 		big_guy.start_pulling(batman)
 		return
 
@@ -55,10 +56,11 @@
 		for(var/obj/item/bodypart/bodypart_to_break in carbon_batman.bodyparts)
 			if(bodypart_to_break.body_zone == BODY_ZONE_HEAD)
 				continue
-			bodypart_to_break.receive_damage(brute=15, wound_bonus = 25)
+			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 25)
 
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded)
-	controller[target_key] = null
+	if(succeeded)
+		controller.blackboard[target_key] = null
 	return ..()
