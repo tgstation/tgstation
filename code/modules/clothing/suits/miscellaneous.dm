@@ -692,4 +692,3 @@
 	icon_state = "DutchJacket"
 	inhand_icon_state = "DutchJacket"
 	body_parts_covered = ARMS
-
