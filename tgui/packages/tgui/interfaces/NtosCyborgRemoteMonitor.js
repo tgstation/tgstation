@@ -128,7 +128,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                       : cyborg.integ <= 25
                       ? "Functionality Disrupted"
                       : cyborg.integ <= 75
-                      ? "Functionality Impared"
+                      ? "Functionality Impaired"
                       : "Operational"
                     }
                   </Box>
