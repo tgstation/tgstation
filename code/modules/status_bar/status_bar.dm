@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2020 Aleksej Komarov
+ * Copyright (c) 2021 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
 
