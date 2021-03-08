@@ -70,6 +70,11 @@
 ///Called when
 /datum/ai_controller/robot_customer/proc/on_get_pulled(datum/source, mob/living/puller)
 	SIGNAL_HANDLER
+
+
+	INVOKE_ASYNC(src, .proc/async_on_get_pulled, source, puller)
+
+/datum/ai_controller/robot_customer/proc/async_on_get_pulled(datum/source, mob/living/puller)
 	var/mob/living/simple_animal/robot_customer/customer = pawn
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
@@ -79,7 +84,7 @@
 	if(used_id && attending_venue.req_access in used_id?.GetAccess())
 		customer.say(customer_data.friendly_pull_line)
 		return
-	INVOKE_ASYNC(src, .proc/warn_greytider, puller)
+	warn_greytider(puller)
 	customer.resist()
 
 
