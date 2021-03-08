@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Flex, Fragment, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import { Box, Button, Fragment, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props, context) => {
@@ -7,7 +7,7 @@ export const NtosCyborgRemoteMonitor = (props, context) => {
     <NtosWindow
       width={600}
       height={800}>
-      <NtosWindow.Content scrollable>
+      <NtosWindow.Content>
         <NtosCyborgRemoteMonitorContent />
       </NtosWindow.Content>
     </NtosWindow>
@@ -50,9 +50,11 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
   }
 
   return (
-    <Flex
-      direction={"column"}>
-    <Flex.Item
+    <Stack
+      direction={"column"}
+      vertical
+      fill>
+    <Stack.Item
       position="relative"
       mb={1}>
       <Tabs>
@@ -71,7 +73,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
           Stored Log File
         </Tabs.Tab>
       </Tabs>
-    </Flex.Item>
+    </Stack.Item>
     {tab_main === 1 && (
       <>
         {!card && (
@@ -79,6 +81,11 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
             Certain features require an ID card login.
           </NoticeBox>
         )}
+        <Stack.Item
+          grow={1}>
+          <Section
+            fill
+            scrollable>
         {cyborgs.map(cyborg => {
           return (
             <Section
@@ -110,6 +117,22 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                           : "Nominal"}
                   </Box>
                 </LabeledList.Item>
+                <LabeledList.Item label="Condition">
+                  <Box color={cyborg.integ <= 25
+                    ? 'bad'
+                    : cyborg.integ <= 75
+                      ? 'average'
+                      : 'good'}>
+                    {cyborg.integ == 0
+                      ? "Hard Fault"
+                      : cyborg.integ <= 25
+                      ? "Functionality Disrupted"
+                      : cyborg.integ <= 75
+                      ? "Functionality Impared"
+                      : "Operational"
+                    }
+                  </Box>
+                </LabeledList.Item>
                 <LabeledList.Item label="Charge">
                   <Box color={cyborg.charge <= 30
                     ? 'bad'
@@ -131,11 +154,13 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
             </Section>
           );
         })}
+          </Section>
+        </Stack.Item>
       </>
     )}
     {tab_main === 2 && (
       <Fragment>
-        <Flex.Item>
+        <Stack.Item>
           <Section>
             Scan a cyborg to download stored logs.
             <ProgressBar
@@ -143,9 +168,9 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
               {ProgressSwitch(DL_progress)}
             </ProgressBar>
           </Section>
-        </Flex.Item>
-        <Flex.Item
-          height={50}>
+        </Stack.Item>
+        <Stack.Item
+          grow={1}>
           <Section
             fill
             scrollable
@@ -159,9 +184,9 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
               </Box>
             ))}
           </Section>
-        </Flex.Item>
+        </Stack.Item>
       </Fragment>
     )}
-    </Flex>
+    </Stack>
   );
 };

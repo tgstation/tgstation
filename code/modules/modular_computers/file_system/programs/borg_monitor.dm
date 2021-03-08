@@ -70,7 +70,6 @@
 		DL_progress = -1
 		DL_source = null
 		for(var/datum/tgui/window in SStgui.open_uis_by_src[REF(src)])
-			to_chat(world, "DEBUG -- found [window]")
 			window.send_full_update()
 		return
 
@@ -98,6 +97,7 @@
 
 		var/list/cyborg_data = list(
 			name = R.name,
+			integ = round((R.health + 100) / 2), //mob heath is -100 to 100, we want to scale that to 0 - 100
 			locked_down = R.lockcharge,
 			status = R.stat,
 			shell_discon = shell,
