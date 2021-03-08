@@ -25,11 +25,7 @@
 	inverse_chem = null
 	failed_chem = null
 	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will decrease by 0.4
-	var/strength =30
-
-/datum/reagent/reaction_agent/acidic_buffer/New()
-	. = ..()
-	AddElement(/datum/element/venue_price, DRINK_PRICE_HIGH)
+	var/strength = 30
 
 //Consumes self on addition and shifts ph
 /datum/reagent/reaction_agent/acidic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
@@ -57,10 +53,6 @@
 	failed_chem = null
 	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will increase by 0.4
 	var/strength = 30
-
-/datum/reagent/reaction_agent/basic_buffer/New()
-	. = ..()
-	AddElement(/datum/element/venue_price, DRINK_PRICE_HIGH)
 
 /datum/reagent/reaction_agent/basic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()

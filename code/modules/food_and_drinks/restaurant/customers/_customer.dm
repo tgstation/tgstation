@@ -163,7 +163,7 @@
 	//uncomment when qustinnus robot defense merged
 	//friendly_pull_line = "Chelp. Chelp. I am being dragged, but I am not supposed to break this person's spine."
 	//first_warning_line = "You'd fit in well where I'm from. But you better stop."
-	//second_warning_line = "Breaking-you-so-bad-you'll-remice-the-days-before-I-made-you-crooked.exe: booting..."
+	//second_warning_line = "Breaking-you-so-bad-you'll-reminisce-the-days-before-I-made-you-crooked.exe: booting..."
 	//self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
 
 
