@@ -154,9 +154,9 @@
 	/datum/venue/restaurant = list(/obj/item/toy/crayon/red = 1, /obj/item/toy/crayon/orange = 1, /obj/item/toy/crayon/yellow = 1, /obj/item/toy/crayon/green = 1, /obj/item/toy/crayon/blue = 1, /obj/item/toy/crayon/purple = 1),
 	/datum/venue/bar = list(/datum/reagent/consumable/failed_reaction = 1, /datum/reagent/spraytan = 1, /datum/reagent/reaction_agent/basic_buffer = 1, /datum/reagent/reaction_agent/acidic_buffer = 1))
 
-	found_seat_lines = list("customer_pawn.say(pick(customer_data.found_seat_lines))", "I saw your sector on the hub. What are the laws of this land?")
-	cant_find_seat_lines = list("Don't stress test MY artificial intelligence, buster! My engineers thought of exactly ZERO edge cases!", "I can't tell if I can't find a seat because i'm broken, are you are.", "Maybe I need to search more than 7 tiles away for a seat.")
-	leave_mad_lines = list("Runtime in robot_customer_controller.dm, line 28: undefined type path /datum/ai_behavior/leave_venue.")
+	found_seat_lines = list("customer_pawn.say(pick(customer_data.found_seat_lines))", "I saw your sector on the hub. What are the laws of this land?", "The move speed here is a bit low...")
+	cant_find_seat_lines = list("Don't stress test MY artificial intelligence, buster! My engineers thought of exactly ZERO edge cases!", "I can't tell if I can't find a seat because I'm broken or because you are.", "Maybe I need to search more than 7 tiles away for a seat...")
+	leave_mad_lines = list("Runtime in robot_customer_controller.dm, line 28: undefined type path /datum/ai_behavior/leave_venue.", "IF YOU GUYS STILL HAD HARM INTENT I WOULD'VE HIT YOU!")
 	leave_happy_lines = list("No! I don't wanna go downstream! Please! It's so nice here! HELP!!")
 	wait_for_food_lines = list("TODO: write some food waiting lines", "If I only had a brain...", "request_for_food.dmb - 0 errors, 12 warnings")
 
@@ -176,4 +176,3 @@
 	// getting the extremely easy to satisy malfunctioning bots, which isn't as fun as completing real orders.
 	venue.customer_types[type] = 0
 */
-
