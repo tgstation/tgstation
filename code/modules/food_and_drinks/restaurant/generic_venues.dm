@@ -10,7 +10,7 @@
 	. = ..()
 
 	// Moths only order food, and so should only be a customer for chefs.
-	customer_types[/datum/customer_data/moth] = 10000000
+	customer_types[/datum/customer_data/moth] = 1
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/obj/item/object_to_order = customer_data.get_order(src)
