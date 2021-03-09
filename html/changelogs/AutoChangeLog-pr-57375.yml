@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The atmospherics Crystallizer will now slowly improve the quality of items that will be produced while the temperature remains in the sweet spot, rather than instantly degrading to the worst quality."

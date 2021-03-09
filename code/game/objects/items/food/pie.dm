@@ -228,6 +228,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 8)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/pie/dulcedebatata/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/dulcedebatata, 5, 20)

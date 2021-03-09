@@ -52,6 +52,13 @@
 	if(board)
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
+
+	for(var/obj/machinery/atmospherics/device in get_turf(src))
+		if(device.piping_layer != piping_layer || device == src)
+			continue
+		visible_message("<span class='warning'>A pipe is hogging the output, remove the obstruction or change the machine piping layer.</span>")
+		deconstruct(TRUE)
+		return
 	return..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
