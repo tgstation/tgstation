@@ -1,0 +1,6 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - qol: "Stat panel: Verbs no longer wrap, and truncate with an ellipsis. All verb text is revealed on mouse over."
+  - qol: "Stat panel: Nicer tab appearance in dark mode."
+  - bugfix: "Stat panel: Fixed 4 column layout in 1920x1080 + widescreen map."

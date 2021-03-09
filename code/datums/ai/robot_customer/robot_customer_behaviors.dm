@@ -110,3 +110,7 @@
 	. = ..()
 	qdel(controller.pawn) //save the world, my final message, goodbye.
 	finish_action(controller, TRUE)
+
+
+/datum/ai_behavior/break_spine/robot_customer
+	target_key = BB_CUSTOMER_CURRENT_TARGET
