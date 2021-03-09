@@ -78,11 +78,6 @@
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION (T20C+80)
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION (T20C+400)
 
-//Excited Group Cleanup helper defines
-#define EX_CLEANUP_BREAKDOWN 1
-#define EX_CLEANUP_DISMANTLE 2
-#define EX_CLEANUP_TURFS 3
-
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
 //Should not exceed 0.4 else strange heat flow occur
@@ -229,9 +224,9 @@
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
 /// (L/s) Maximum speed powered equipment can work at.
-#define MAX_TRANSFER_RATE 400
+#define MAX_TRANSFER_RATE 200
 /// How many percent of the contents that an overclocked volume pumps leak into the air
-#define VOLUME_PUMP_LEAK_AMOUNT 0.2
+#define VOLUME_PUMP_LEAK_AMOUNT 0.1
 //used for device_type vars
 #define UNARY 1
 #define BINARY 2
