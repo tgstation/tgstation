@@ -284,3 +284,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
+
+/// Martial arts attack requested but is not available, allow a check for a regular attack.
+#define MARTIAL_ATTACK_INVALID -1
+
+/// Martial arts attack happened but failed, do not allow a check for a regular attack.
+#define MARTIAL_ATTACK_FAIL FALSE
+
+/// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
+#define MARTIAL_ATTACK_SUCCESS TRUE
