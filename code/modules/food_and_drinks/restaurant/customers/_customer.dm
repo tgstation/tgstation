@@ -175,6 +175,10 @@
 	leave_mad_lines = list("I'm telling all my moth friends to never come here!", "Zero star rating, even worse than that time I ate a mothball!","Closing down permanently would still be too good of a fate for this place.")
 	leave_happy_lines = list("I'd tip you my hat, but I ate it!", "I hope that wasn't a collectible!", "That was the greatest thing I ever ate, even better than Guanaco!")
 	wait_for_food_lines = list("How hard is it to get food here? You're even wearing food yourself!", "My fuzzy robotic tummy is rumbling!", "I don't like waiting!")
+	friendly_pull_line = "Moff?"
+	first_warning_line = "Go away, I'm trying to get some hats here!"
+	second_warning_line = "Last Warning! I'll destroy you!"
+	self_defense_line = "Flap Attack!"
 
 	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
 
