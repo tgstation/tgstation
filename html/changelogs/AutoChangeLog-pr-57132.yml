@@ -1,0 +1,5 @@
+author: "That REALLY Good Soda Flavor"
+delete-after: True
+changes: 
+  - bugfix: "A bun will no longer disappear if you add an ingredient to it while it is in your hand."
+  - bugfix: "Custom burgers will no longer disappear from adding too many ingredients."

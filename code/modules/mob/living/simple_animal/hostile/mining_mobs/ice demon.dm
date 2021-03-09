@@ -15,7 +15,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"
-	ranged_cooldown_time = 3 SECONDS
+	ranged_cooldown_time = 1.5 SECONDS
 	minimum_distance = 3
 	retreat_distance = 3
 	maxHealth = 150

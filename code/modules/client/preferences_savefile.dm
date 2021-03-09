@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 39
+#define SAVEFILE_VERSION_MAX 40
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -90,6 +90,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 39)
 		LAZYADD(key_bindings["F"], "toggle_combat_mode")
 		LAZYADD(key_bindings["4"], "toggle_combat_mode")
+	if (current_version < 40)
+		LAZYADD(key_bindings["Space"], "hold_throw_mode")
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	return

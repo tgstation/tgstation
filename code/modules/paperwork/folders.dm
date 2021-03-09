@@ -27,7 +27,7 @@
 /obj/item/folder/examine()
 	. = ..()
 	if(contents)
-		. += "<span class='notice'>Alt-click to remove [contents[1]].</span>"
+		. += "<span class='notice'>Right-click to remove [contents[1]].</span>"
 
 /obj/item/folder/proc/rename(mob/user)
 	if(!user.is_literate())
@@ -49,10 +49,11 @@
 		to_chat(user, "<span class='notice'>You remove [Item] from [src].</span>")
 		update_icon()
 
-/obj/item/folder/AltClick(mob/user)
-	..()
-	if(contents)
+/obj/item/folder/attack_hand(mob/user, list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		remove_item(contents[1], user)
+		return TRUE
+	. = ..()
 
 /obj/item/folder/update_overlays()
 	. = ..()
