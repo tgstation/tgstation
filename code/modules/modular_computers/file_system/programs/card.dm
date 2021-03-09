@@ -18,6 +18,8 @@
 	var/authenticated_user
 	/// The regions this program has access to based on the authenticated ID.
 	var/list/region_access = list()
+	/// The list of accesses this program is verified to change based on the authenticated ID. Used for state checking against player input.
+	var/list/valid_access = list()
 	/// List of job templates that can be applied to ID cards from this program.
 	var/list/job_templates = list()
 	/// Which departments this program has access to. See region defines.
@@ -38,28 +40,30 @@
 		return
 
 	region_access.Cut()
-	// If the console isn't locked to a specific department and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
-	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.access))
+	valid_access.Cut()
+	job_templates.Cut()
+
+	// If the program isn't locked to a specific department or is_centcom and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
+	if((!target_dept || is_centcom) && (ACCESS_CHANGE_IDS in id_card.access))
 		minor = FALSE
 		authenticated_user = "[id_card.name]"
-		job_templates = SSid_access.station_job_templates.Copy()
+		job_templates = is_centcom ? SSid_access.centcom_job_templates.Copy() : SSid_access.station_job_templates.Copy()
+		valid_access = is_centcom ? SSid_access.get_region_access_list(list(REGION_CENTCOM)) : SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 		update_static_data(user)
 		return TRUE
 
 	// Otherwise, we're minor and now we have to build a list of restricted departments we can change access for.
-	job_templates.Cut()
-	var/list/head_types = list()
 	var/list/managers = SSid_access.sub_department_managers_tgui
 	for(var/access_as_text in managers)
 		var/list/info = managers[access_as_text]
 		var/access = text2num(access_as_text)
 		if((access in id_card.access) && ((target_dept in info["regions"]) || !target_dept))
 			region_access |= info["regions"]
-			head_types |= info["head"]
 			job_templates |= info["templates"]
 
 	if(length(region_access))
 		minor = TRUE
+		valid_access |= SSid_access.get_region_access_list(region_access)
 		authenticated_user = "[id_card.name] \[LIMITED ACCESS\]"
 		update_static_data(user)
 		return TRUE
@@ -157,7 +161,7 @@
 					return TRUE
 
 			// Set the new assignment then remove the trim.
-			target_id_card.assignment = "Demoted"
+			target_id_card.assignment = is_centcom ? "Fired" : "Demoted"
 			SSid_access.remove_trim_from_card(target_id_card)
 
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
@@ -200,14 +204,21 @@
 		if("PRG_age")
 			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
-			target_id_card.registered_age = params["id_age"]
+
+			var/new_age = params["id_age"]
+			if(!isnum(new_age))
+				stack_trace("[key_name(usr)] ([usr]) attempted to set invalid age \[[new_age]\] to [target_id_card]")
+				return TRUE
+
+			target_id_card.registered_age = new_age
 			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
 		// Change assignment
 		if("PRG_assign")
 			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
-			target_id_card.assignment = params["assignment"]
+			var/new_asignment = sanitize(params["assignment"])
+			target_id_card.assignment = new_asignment
 			playsound(computer, "terminal_type", 50, FALSE)
 			target_id_card.update_label()
 			return TRUE
@@ -218,20 +229,23 @@
 			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
-			if(access_type in (is_centcom ? SSid_access.get_region_access_list(list(REGION_CENTCOM)) : SSid_access.get_region_access_list(list(REGION_ALL_STATION))))
-				if(access_type in target_id_card.access)
-					target_id_card.remove_access(list(access_type))
-					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [SSid_access.get_access_desc(access_type)]")
-					return TRUE
+			if(!(access_type in valid_access))
+				stack_trace("[key_name(usr)] ([usr]) attempted to add invalid access \[[access_type]\] to [target_id_card]")
+				return TRUE
 
-				if(!target_id_card.add_access(list(access_type), try_wildcard))
-					to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
-					LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
-					return TRUE
+			if(access_type in target_id_card.access)
+				target_id_card.remove_access(list(access_type))
+				LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [SSid_access.get_access_desc(access_type)]")
+				return TRUE
 
-				if(access_type in ACCESS_ALERT_ADMINS)
-					message_admins("[ADMIN_LOOKUPFLW(user)] just added [SSid_access.get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [SSid_access.get_access_desc(access_type)]")
+			if(!target_id_card.add_access(list(access_type), try_wildcard))
+				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+				LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				return TRUE
+
+			if(access_type in ACCESS_ALERT_ADMINS)
+				message_admins("[ADMIN_LOOKUPFLW(user)] just added [SSid_access.get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [SSid_access.get_access_desc(access_type)]")
 			return TRUE
 		// Apply template to ID card.
 		if("PRG_template")
@@ -252,6 +266,8 @@
 				SSid_access.add_trim_access_to_card(target_id_card, trim_path)
 				return TRUE
 
+			stack_trace("[key_name(usr)] ([usr]) attempted to apply invalid template \[[template_name]\] to [target_id_card]")
+
 			return TRUE
 
 /datum/computer_file/program/card_mod/ui_static_data(mob/user)
@@ -263,7 +279,7 @@
 	var/list/regions = list()
 	var/list/tgui_region_data = SSid_access.all_region_access_tgui
 	if(is_centcom)
-		regions += list(tgui_region_data[REGION_CENTCOM])
+		regions += tgui_region_data[REGION_CENTCOM]
 	else
 		for(var/region in SSid_access.station_regions)
 			if((minor || target_dept) && !(region in region_access))

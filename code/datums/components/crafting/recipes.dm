@@ -1144,15 +1144,6 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/elder_atmosian_fireaxe
-	name = "Elder Axe"
-	result = /obj/item/fireaxe/elder_atmosian_fireaxe
-	time = 6 SECONDS
-	reqs = list(/obj/item/fireaxe/metal_h2_axe = 1,
-				/obj/item/stack/sheet/mineral/zaukerite = 10,
-				)
-	category = CAT_MISC
-
 /datum/crafting_recipe/shutters
 	name = "Shutters"
 	reqs = list(/obj/item/stack/sheet/plasteel = 10,
