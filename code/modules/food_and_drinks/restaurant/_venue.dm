@@ -51,7 +51,7 @@
 
 		customer_types_to_choose -= customer_type
 
-	if (initial(customer_data.is_unique))
+	if (initial(customer_type.is_unique))
 		customer_types -= customer_data
 
 	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), customer_type, src)
