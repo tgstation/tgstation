@@ -1,4 +1,5 @@
 #define CIV_BOUNTY_SPLIT 30
+GLOBAL_LIST_EMPTY(incomplete_civilian_bounties)
 
 ///Pad for the Civilian Bounty Control.
 /obj/machinery/piratepad/civilian
@@ -98,6 +99,10 @@
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
+		var/time_taken = gameTimestamp("hh:mm:ss", world.time - curr_bounty.start_time)
+		var/credits_per_minute = curr_bounty.reward / (world.time - curr_bounty.start_time) / 10 / 60
+		SSblackbox.record_feedback("associative", "civilian_bounties", 1, list("[SQLtime()]" = list("Name" = "[curr_bounty.name]", "Type" = "[curr_bounty.type]", "Status" = "Complete", "Time to complete" = "[time_taken]", "Credits per minute" = "[credits_per_minute]")))
+		GLOB.incomplete_civilian_bounties -= curr_bounty
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
@@ -132,8 +137,15 @@
 	if(!inserted_scan_id?.registered_account)
 		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
+	if(inserted_scan_id.registered_account.civilian_bounty)
+		to_chat(world, "There was an existing bounty!")
+		var/datum/bounty/current_bounty = inserted_scan_id.registered_account.civilian_bounty
+		SSblackbox.record_feedback("associative", "civilian_bounties", 1, list("[SQLtime()]" = list("Name" = "[current_bounty.name]", "Type" = "[current_bounty.type]", "Status" = "Replaced")))
+		GLOB.incomplete_civilian_bounties -= current_bounty
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
+	inserted_scan_id.registered_account.civilian_bounty.start_time = world.time
 	inserted_scan_id.registered_account.bounties = null
+	GLOB.incomplete_civilian_bounties += inserted_scan_id.registered_account.civilian_bounty
 	return inserted_scan_id.registered_account.civilian_bounty
 
 /obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)

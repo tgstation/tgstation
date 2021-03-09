@@ -4,6 +4,7 @@
 	var/reward = 1000 // In credits.
 	var/claimed = FALSE
 	var/high_priority = FALSE
+	var/start_time
 
 /datum/bounty/proc/can_claim()
 	return !claimed

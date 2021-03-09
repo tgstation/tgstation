@@ -90,6 +90,9 @@ SUBSYSTEM_DEF(blackbox)
 		var/datum/player_details/PD = GLOB.player_details[player_key]
 		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
 
+	for(var/datum/bounty/current_bounty in GLOB.incomplete_civilian_bounties)
+		record_feedback("associative", "civilian_bounties", 1, list("[SQLtime()]" = list("Name" = "[current_bounty.name]", "Type" = "[current_bounty.type]", "Status" = "Incomplete")))
+
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
 	FinalFeedback()
