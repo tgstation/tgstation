@@ -445,8 +445,8 @@
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_TINY
-	//spider eggs, xenomeat. both of those events have to happen or xenobio memes
-	venue_value = FOOD_PRICE_EXOTIC
+	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sashimi/Initialize()
 	. = ..()
@@ -850,7 +850,7 @@
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"
 	desc = "According to legends of old, consuming raw gondola flesh grants one inner peace."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/tranquility = 5, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/gondola_mutation_toxin = 5, /datum/reagent/consumable/cooking_oil = 3)
 	tastes = list("meat" = 4, "tranquility" = 1)
 	foodtypes = RAW | MEAT
 

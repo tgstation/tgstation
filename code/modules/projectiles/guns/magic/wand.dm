@@ -246,4 +246,18 @@
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 
+/////////////////////////////////////
+//foam finger that shoots rockets??
+/////////////////////////////////////
 
+/obj/item/gun/magic/wand/foamfinger
+	name = "foam finger"
+	desc = "Pull my finger- unless, like, it blew off your hand."
+	icon_state = "foamfinger"
+	inhand_icon_state = "foamfinger"
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
+	max_charges = 5000
+	variable_charges = FALSE
+	checks_antimagic = FALSE
+	ammo_type = /obj/item/ammo_casing/caseless/rocket
