@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Corrects the wiring of the Metastation telecomms SMES so that the station powers the satelite, rather than the reverse."
