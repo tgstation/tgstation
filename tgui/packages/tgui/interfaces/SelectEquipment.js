@@ -35,7 +35,7 @@ export const SelectEquipment = (props, context) => {
   const [
     tabIndex,
     setTabIndex,
-  ] = useLocalState(context, 'tab-index', 1);
+  ] = useLocalState(context, 'tab-index', "General");
 
   const OutfitTab = props => {
     const { name, ...rest } = props;
@@ -64,16 +64,16 @@ export const SelectEquipment = (props, context) => {
 
   const outfitCategory = () => {
     switch (tabIndex) {
-      case 1:
+      case "General":
         return (base);
 
-      case 2:
+      case "Jobs":
         return (jobs);
 
-      case 3:
+      case "Plasmamen Outfits":
         return (plasmaman);
 
-      case 4:
+      case "Custom":
         return (custom);
 
       default:
