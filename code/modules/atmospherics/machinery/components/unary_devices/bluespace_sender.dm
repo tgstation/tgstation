@@ -43,6 +43,8 @@
 		/datum/gas/halon = 1
 	)
 
+	var/list/vendors
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize()
 	. = ..()
 	initialize_directions = dir
