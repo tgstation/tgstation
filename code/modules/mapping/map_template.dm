@@ -64,7 +64,7 @@
 		if(!SSatoms.initialized)
 			continue
 
-		for(var/atom/movable/movable_in_turf as anything in current_turf)
+		for(var/movable_in_turf in current_turf)
 			movables += movable_in_turf
 			if(istype(movable_in_turf, /obj/structure/cable))
 				cables += movable_in_turf
