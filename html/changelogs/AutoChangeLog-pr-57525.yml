@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "New station trait that causes you all to spawn hungover after a mandatory office party"

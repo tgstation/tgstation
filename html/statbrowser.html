@@ -12,17 +12,27 @@
 		font-size: 12px !important;
 		margin: 0 !important;
 		padding: 0 !important;
+		overflow-x: hidden;
+		overflow-y: scroll;
 	}
 
 	body.dark {
 		background-color: #131313;
-		color: #abc6ec;
+		color: #b2c4dd;
+		scrollbar-base-color: #1c1c1c;
+		scrollbar-face-color: #3b3b3b;
+		scrollbar-3dlight-color: #252525;
+		scrollbar-highlight-color: #252525;
+		scrollbar-track-color: #1c1c1c;
+		scrollbar-arrow-color: #929292;
+		scrollbar-shadow-color: #3b3b3b;
 	}
 
 	#menu {
 		background-color: #F0F0F0;
 		position: fixed;
 		width: 100%;
+		z-index: 100;
 	}
 
 	.dark #menu {
@@ -39,7 +49,7 @@
 	}
 
 	.dark a {
-		color: #abc6ec;
+		color: #b2c4dd;
 	}
 
 	a:hover, .dark a:hover {
@@ -81,73 +91,96 @@
 
 	.button {
 		background-color: #dfdfdf;
-		border-color: #cecece;
-		border-width: 1px;
-		border-style: solid;
+		border: 1px solid #cecece;
+		border-bottom-width: 2px;
 		color: rgba(0, 0, 0, 0.7);
-		padding: 6px 4px;
+		padding: 6px 4px 4px;
 		text-align: center;
 		text-decoration: none;
 		font-size: 12px;
 		margin: 0;
 		cursor: pointer;
-		transition-duration: 0.25s;
+		transition-duration: 100ms;
 		order: 3;
 		min-width: 40px;
 	}
 
 	.dark button {
-		background-color: #444444;
+		background-color: #222222;
 		border-color: #343434;
-		color: rgba(255, 255, 255, 0.7);
+		color: rgba(255, 255, 255, 0.5);
 	}
 
 	.button:hover {
 		background-color: #ececec;
+		transition-duration: 0;
 	}
 
 	.dark button:hover {
-		background-color:  #4d4d4d;
+		background-color:  #2e2e2e;
 	}
 
 	.button:active, .button.active {
 		background-color: #ffffff;
 		color: black;
-		border-top: 1px solid #cecece;
-		border-left: 1px solid #cecece;
-		border-right: 1px solid #cecece;
-		border-bottom: 1px solid #ffffff;
+		border-top-color: #cecece;
+		border-left-color: #cecece;
+		border-right-color: #cecece;
+		border-bottom-color: #ffffff;
 	}
 
 	.dark .button:active, .dark .button.active {
-		background-color: #131313;
+		background-color: #444444;
 		color: white;
-		border-top: 1px solid #343434;
-		border-left: 1px solid #343434;
-		border-right: 1px solid #343434;
-		border-bottom: 1px solid #131313;
+		border-top-color: #343434;
+		border-left-color: #343434;
+		border-right-color: #343434;
+		border-bottom-color: #ffffff;
 	}
 
 	.grid-container {
-		display: inline-flex;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		align-items: flex-start;
-		min-width: 0;
-		min-height: 0;
-		white-space: pre-wrap;
+		margin: -2px;
+		margin-right: -15px;
 	}
 
 	.grid-item {
-		color: black;
+		position: relative;
+		display: inline-block;
 		width: 150px;
-		font-size: 11px;
-		line-height: 24px;
-		text-align: left;
-		min-width: 0;
-		min-height: 0;
-		white-space: pre-wrap;
-		padding-right: 12px; /* A little more than two spaces, to look good in IE8 where flex-justify does nothing */
+		padding: 3px 2px;
+		text-decoration: none;
+		overflow: visible;
+	}
+
+	@media only screen and (min-width: 720px) {
+		.grid-item {
+			width: 170px;
+		}
+	}
+
+	.grid-item:hover {
+		z-index: 1;
+	}
+
+	.grid-item:hover .grid-item-text {
+		width: auto;
+		text-decoration: underline;
+	}
+
+	.grid-item-text {
+		display: inline-block;
+		width: 100%;
+		background-color: #ffffff;
+		margin: 0 -6px;
+		padding: 0 6px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		pointer-events: none;
+	}
+
+	.dark .grid-item-text {
+		background-color: #131313;
 	}
 
 	.link {
@@ -1046,8 +1079,11 @@ function draw_verbs(cat){
 
 			var a = document.createElement("a");
 			a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
-			a[textContentKey] = command;
 			a.className = "grid-item";
+			var t = document.createElement("span");
+			t[textContentKey] = command;
+			t.className = "grid-item-text";
+			a.appendChild(t);
 			(subCat ? additions[subCat] : table).appendChild(a);
 		}
 	}
@@ -1104,7 +1140,7 @@ if(!current_tab) {
 
 window.onload = function() {
 	NotifyByondOnload();
-	};
+};
 
 function NotifyByondOnload() {
 	window.location.href = "byond://winset?command=Panel-Ready";

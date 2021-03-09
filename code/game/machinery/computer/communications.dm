@@ -330,15 +330,53 @@
 				log_game("[key_name(usr)] enabled emergency maintenance access.")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] enabled emergency maintenance access.")
 				deadchat_broadcast(" enabled emergency maintenance access at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+		// Request codes for the Captain's Spare ID safe.
+		if("requestSafeCodes")
+			if(SSjob.assigned_captain)
+				to_chat(usr, "<span class='warning'>There is already an assigned Captain or Acting Captain on deck!</span>")
+				return
+
+			if(SSjob.safe_code_timer_id)
+				to_chat(usr, "<span class='warning'>The safe code has already been requested and is being delivered to your station!</span>")
+				return
+
+			if(SSjob.safe_code_requested)
+				to_chat(usr, "<span class='warning'>The safe code has already been requested and delivered to your station!</span>")
+				return
+
+			if(!SSid_access.spare_id_safe_code)
+				to_chat(usr, "<span class='warning'>There is no safe code to deliver to your station!</span>")
+				return
+
+			var/turf/pod_location = get_turf(src)
+
+			SSjob.safe_code_request_loc = pod_location
+			SSjob.safe_code_requested = TRUE
+			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, /datum/controller/subsystem/job.proc/send_spare_id_safe_code, pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
 		"authenticated" = FALSE,
 		"emagged" = FALSE,
-		"hasConnection" = has_communication(),
 	)
 
 	var/ui_state = issilicon(user) ? cyborg_state : state
+
+	var/has_connection = has_communication()
+	data["hasConnection"] = has_connection
+
+	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
+		data["canRequestSafeCode"] = TRUE
+		data["safeCodeDeliveryWait"] = 0
+	else
+		data["canRequestSafeCode"] = FALSE
+		if(SSjob.safe_code_timer_id && has_connection)
+			data["safeCodeDeliveryWait"] = timeleft(SSjob.safe_code_timer_id)
+			data["safeCodeDeliveryArea"] = get_area(SSjob.safe_code_request_loc)
+		else
+			data["safeCodeDeliveryWait"] = 0
+			data["safeCodeDeliveryArea"] = null
 
 	if (authenticated || issilicon(user))
 		data["authenticated"] = TRUE
