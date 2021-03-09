@@ -187,6 +187,11 @@
 /datum/mood_event/nanite_happiness/add_effects(message)
 	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"
 
+/datum/mood_event/funny_prank
+	description = "<span class='nicegreen'>That was a funny prank, clown!</span>\n"
+	mood_change = 2
+	timeout = 2 MINUTES
+
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0

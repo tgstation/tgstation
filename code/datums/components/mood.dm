@@ -294,6 +294,11 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+	
+/datum/component/mood/proc/has_event(category)
+	if(!istext(category))
+		category = REF(category)
+	return mood_events[category]
 
 /datum/component/mood/proc/remove_temp_moods() //Removes all temp moods
 	for(var/i in mood_events)

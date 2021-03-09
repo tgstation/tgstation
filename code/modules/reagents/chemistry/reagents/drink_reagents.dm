@@ -178,6 +178,15 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
+/datum/reagent/consumable/laughter/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	var/mob/living/carbon/human/reactor = M
+	if(istype(reactor))
+		var/datum/component/mood/mood = reactor.GetComponent(/datum/component/mood)
+		if (mood.get_event("slipped"))
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "laughter", /datum/mood_event/funny_prank)
+			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "slipped")
+			reactor.AdjustKnockdown(-20)
+
 /datum/reagent/consumable/superlaughter
 	name = "Super Laughter"
 	description = "Funny until you're the one laughing."
