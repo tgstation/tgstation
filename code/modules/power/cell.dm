@@ -152,7 +152,7 @@
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
 		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-		if((E.drain_time > world.time) && !stomach)
+		if((E.drain_time > world.time) || !stomach)
 			return
 		if(charge < CELL_POWER_DRAIN)
 			to_chat(H, "<span class='warning'>[src] doesn't have enough power!</span>")
