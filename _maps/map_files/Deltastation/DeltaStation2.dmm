@@ -61409,7 +61409,6 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/main)
 "eGE" = (
-/obj/structure/chair/stool/bar,
 /obj/item/radio/intercom{
 	pixel_x = 26
 	},
@@ -63191,23 +63190,24 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "fnA" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/service/kitchen)
+/obj/item/lighter{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/lighter,
+/turf/open/floor/iron/dark,
+/area/service/bar)
 "fnV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -63537,7 +63537,6 @@
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
 "fun" = (
-/obj/structure/chair/stool/bar,
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
@@ -63550,6 +63549,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/structure/chair/stool/bar{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
@@ -65257,6 +65259,12 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/office)
+"fZs" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 22
+	},
+/turf/open/floor/iron/white,
+/area/service/kitchen)
 "fZt" = (
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -72235,6 +72243,9 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/bag/tray,
 /obj/effect/turf_decal/bot,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "iEZ" = (
@@ -76242,15 +76253,30 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"kgW" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/service/bar/atrium)
 "khf" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/toy/figure/chef,
 /obj/effect/turf_decal/bot,
 /obj/item/food/mint,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	pixel_y = 5
-	},
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "khj" = (
@@ -81586,7 +81612,6 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -83147,11 +83172,6 @@
 /area/medical/surgery/room_b)
 "mJv" = (
 /obj/structure/table/reinforced,
-/obj/item/lighter{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/lighter,
 /obj/machinery/camera{
 	c_tag = "Bar - Fore";
 	dir = 4;
@@ -83167,6 +83187,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "mJE" = (
@@ -84239,6 +84260,23 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
+"nbJ" = (
+/obj/effect/landmark/start/assistant,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/service/bar/atrium)
 "nca" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/requests_console{
@@ -90470,6 +90508,23 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/iron/dark,
 /area/service/library)
+"phz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/door/airlock{
+	name = "Kitchen";
+	req_access_txt = "28"
+	},
+/turf/open/floor/iron/dark,
+/area/service/kitchen)
 "phI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -99379,8 +99434,6 @@
 /turf/open/floor/wood,
 /area/service/library)
 "sxz" = (
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -99390,6 +99443,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/door/window/southright{
+	name = "Bar Door";
+	req_one_access_txt = "25;28"
 	},
 /turf/open/floor/iron/dark,
 /area/service/bar)
@@ -99821,15 +99878,13 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "sFF" = (
-/obj/structure/rack,
-/obj/item/book/manual/chef_recipes,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/service/kitchen)
 "sGh" = (
@@ -112123,6 +112178,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
+"xom" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar,
+/turf/open/floor/iron,
+/area/service/bar/atrium)
 "xon" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -150544,7 +150613,7 @@ qVq
 qGc
 rRd
 kEi
-reI
+fZs
 vNy
 nBD
 kEi
@@ -151311,7 +151380,7 @@ ofO
 rFn
 wnt
 mfc
-hWe
+phz
 sFF
 qTW
 nFS
@@ -151556,8 +151625,8 @@ aXI
 vWE
 xKE
 hXi
-orP
-hiK
+fnA
+kgW
 ofO
 lJy
 kRT
@@ -151814,7 +151883,7 @@ wrg
 uFa
 unM
 orP
-hiK
+kgW
 ofO
 fSq
 gwW
@@ -152071,7 +152140,7 @@ kUs
 ijJ
 mvD
 iPV
-hiK
+kgW
 ofO
 fSq
 jqt
@@ -152081,9 +152150,9 @@ nLa
 kOD
 fSq
 ofO
-ofO
-kEi
-fnA
+xom
+fjP
+uIn
 hKw
 oJz
 qrQ
@@ -152328,7 +152397,7 @@ ude
 uFa
 unM
 orP
-hiK
+kgW
 ofO
 fSq
 lHa
@@ -152585,7 +152654,7 @@ dZu
 jNP
 krF
 orP
-oOl
+nbJ
 ofO
 tLs
 fSq
