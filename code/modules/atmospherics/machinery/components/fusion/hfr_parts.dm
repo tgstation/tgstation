@@ -191,7 +191,7 @@
 	if(connected_core.selected_fuel)
 		data["selected"] = connected_core.selected_fuel.id
 	else
-		data["selected"] = null
+		data["selected"] = ""
 
 	var/list/product_gases
 	if(!connected_core.selected_fuel)
