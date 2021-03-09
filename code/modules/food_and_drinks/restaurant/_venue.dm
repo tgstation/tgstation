@@ -20,13 +20,17 @@
 	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
+	///Blacklist for idiots that attack bots. Key is the mob that did it, and the value is the amount of warnings they've received.
+	var/list/mob_blacklist = list()
+	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
+	var/list/linked_seats = list()
 
 
 /datum/venue/process(delta_time)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))
 		return
 	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
-	if(current_visitors.len < max_guests)
+	if(current_visitors.len < max_guests && current_visitors.len < linked_seats.len + 1) //Not above max guests, and not more than one waiting customer.
 		create_new_customer()
 
 ///Spawns a new customer at the portal
@@ -59,7 +63,7 @@
 /datum/venue/proc/open()
 	open = TRUE
 	restaurant_portal.update_icon()
-	COOLDOWN_START(src, visit_cooldown, 10 SECONDS) //First one comes faster
+	COOLDOWN_START(src, visit_cooldown, 4 SECONDS) //First one comes faster
 	START_PROCESSING(SSobj, src)
 
 /datum/venue/proc/close()
@@ -179,11 +183,16 @@
 /obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
+	linked_venue.linked_seats[src] += null
 
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
 /obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(I.type == projector?.type && !SSrestaurant.claimed_seats[src])
+	if(I.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
+
+/obj/structure/holosign/robot_seat/Destroy()
+	linked_venue.linked_seats -= src
+	return ..()

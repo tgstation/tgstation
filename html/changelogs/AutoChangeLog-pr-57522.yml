@@ -1,0 +1,4 @@
+author: "Lylsburg"
+delete-after: True
+changes: 
+  - imageadd: "mafia sprite tweaked, and it now has an animation"
