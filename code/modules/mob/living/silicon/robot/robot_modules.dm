@@ -651,10 +651,10 @@
 	if (energy >= amount)
 		energy -= amount
 		if (energy == 0)
-			return 1
-		return 2
+			return TRUE
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)

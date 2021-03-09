@@ -112,6 +112,13 @@
 	belt = /obj/item/storage/belt/medical
 	glasses = /obj/item/clothing/glasses/hud/health
 	l_hand = /obj/item/storage/firstaid/regular
+	backpack_contents = list(
+    /obj/item/storage/box/survival/engineer=1,
+		/obj/item/melee/baton/loaded=1,
+		/obj/item/reagent_containers/hypospray/combat=1,
+		/obj/item/gun/medbeam=1,
+		/obj/item/storage/box/hug/plushes=1,
+   )
 
 
 /datum/outfit/centcom/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -127,6 +134,7 @@
 /datum/outfit/centcom/ert/medic/alert
 	name = "ERT Medic - High Alert"
 
+
 	backpack_contents = list(
 		/obj/item/storage/box/survival/engineer=1,
 		/obj/item/melee/baton/loaded=1,
@@ -135,6 +143,15 @@
 		/obj/item/gun/medbeam=1,
 		/obj/item/storage/box/hug/plushes=1,
 )
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	backpack_contents = list(
+    /obj/item/storage/box/survival/engineer=1,
+		/obj/item/melee/baton/loaded=1,
+		/obj/item/gun/energy/pulse/pistol/loyalpin=1,
+		/obj/item/reagent_containers/hypospray/combat/nanites=1,
+		/obj/item/gun/medbeam=1,
+		/obj/item/storage/box/hug/plushes=1,
+   )
 
 /datum/outfit/centcom/ert/engineer
 	name = "ERT Engineer"

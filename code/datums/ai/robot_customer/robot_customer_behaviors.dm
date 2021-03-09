@@ -5,15 +5,16 @@
 	. = ..()
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
 	var/obj/structure/holosign/robot_seat/found_seat
 
 	for(var/obj/structure/holosign/robot_seat/potential_seat in oview(7, controller.pawn))
 
-		if(potential_seat.linked_venue != controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]) //Incorrect venue
+		if(potential_seat.linked_venue != attending_venue) //Incorrect venue
 			continue
 
-		if(SSrestaurant.claimed_seats[potential_seat]) //Someone called dibs
+		if(attending_venue.linked_seats[potential_seat]) //Someone called dibs
 			continue
 		var/turf/seat_turf = get_turf(potential_seat)
 
@@ -26,7 +27,7 @@
 	if(found_seat)
 		customer_pawn.say(pick(customer_data.found_seat_lines))
 		controller.blackboard[BB_CUSTOMER_MY_SEAT] = found_seat
-		SSrestaurant.claimed_seats[found_seat] = customer_pawn
+		attending_venue.linked_seats[found_seat] = customer_pawn
 		finish_action(controller, TRUE)
 	else
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
@@ -109,3 +110,7 @@
 	. = ..()
 	qdel(controller.pawn) //save the world, my final message, goodbye.
 	finish_action(controller, TRUE)
+
+
+/datum/ai_behavior/break_spine/robot_customer
+	target_key = BB_CUSTOMER_CURRENT_TARGET
