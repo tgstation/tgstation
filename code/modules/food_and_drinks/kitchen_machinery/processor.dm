@@ -1,4 +1,4 @@
-#define PROCESSOR_SELECT_RECIPE(AM) LAZYACCESS(processor_inputs[type], AM.type)
+#define PROCESSOR_SELECT_RECIPE(movable_input) LAZYACCESS(processor_inputs[type], movable_input.type)
 
 /obj/machinery/processor
 	name = "food processor"
@@ -25,17 +25,18 @@
 
 /obj/machinery/processor/Initialize()
 	. = ..()
-	if(!processor_inputs)
-		processor_inputs = list()
-		for(var/datum/food_processor_process/recipe as anything in subtypesof(/datum/food_processor_process))
-			if(!initial(recipe.input))
-				continue
-			recipe = new recipe
-			var/list/typecache = list()
-			for(var/input_type in typesof(recipe.input))
-				typecache[input_type] = recipe
-			for(var/machine_type in typesof(recipe.required_machine))
-				LAZYADD(processor_inputs[machine_type], typecache)
+	if(processor_inputs)
+		return
+	processor_inputs = list()
+	for(var/datum/food_processor_process/recipe as anything in subtypesof(/datum/food_processor_process))
+		if(!initial(recipe.input))
+			continue
+		recipe = new recipe
+		var/list/typecache = list()
+		for(var/input_type in typesof(recipe.input))
+			typecache[input_type] = recipe
+		for(var/machine_type in typesof(recipe.required_machine))
+			LAZYADD(processor_inputs[machine_type], typecache)
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -133,12 +134,12 @@
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 	use_power(500)
 	var/total_time = 0
-	for(var/atom/A as anything in processor_contents)
-		var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(A)
-		if (!P)
-			log_admin("DEBUG: [A] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
+	for(var/atom/movable/movable_input as anything in processor_contents)
+		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(movable_input)
+		if (!recipe)
+			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
-		total_time += P.time
+		total_time += recipe.time
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
