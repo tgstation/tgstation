@@ -305,3 +305,17 @@
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
+
+/obj/item/clothing/under/proc/dump_attachment()
+	if(!attached_accessory)
+		return
+	var/atom/L = drop_location()
+	attached_accessory.transform *= 2
+	attached_accessory.pixel_x -= 8
+	attached_accessory.pixel_y += 8
+	if(L)
+		attached_accessory.forceMove(L)
+
+/obj/item/clothing/under/rank/Destroy()
+	dump_attachment()
+	return ..()
