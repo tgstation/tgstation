@@ -4,13 +4,15 @@
 	req_access = ACCESS_KITCHEN
 	min_time_between_visitor = 80 SECONDS
 	max_time_between_visitor = 100 SECONDS
-
-
-/datum/venue/restaurant/New()
-	. = ..()
-
-	// Moths only order food, and so should only be a customer for chefs.
-	customer_types[/datum/customer_data/moth] = 1
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/moth = 1,
+	)
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/obj/item/object_to_order = customer_data.get_order(src)
@@ -68,6 +70,14 @@
 	req_access = ACCESS_BAR
 	min_time_between_visitor = 40 SECONDS
 	max_time_between_visitor = 60 SECONDS
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])
