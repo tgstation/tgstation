@@ -1354,7 +1354,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			atk_effect = ATTACK_EFFECT_KICK
 
 		if(atk_effect == ATTACK_EFFECT_BITE)
-			if(user.is_mouth_covered(FALSE, TRUE))
+			if(user.is_mouth_covered(mask_only = TRUE))
 				to_chat(user, "<span class='warning'>You can't [atk_verb] with your mouth covered!</span>")
 				return FALSE
 		user.do_attack_animation(target, atk_effect)
