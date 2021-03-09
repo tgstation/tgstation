@@ -671,7 +671,7 @@
  */
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny
 	name = "scrawny spider"
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 60
 	maxHealth = 60
 	melee_damage_lower = 5
@@ -688,7 +688,7 @@
  */
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/scrawny
 	name = "scrawny tarantula"
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 150
 	maxHealth = 150
 	melee_damage_lower = 20
@@ -705,7 +705,7 @@
  */
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/scrawny
 	name = "scrawny nurse spider"
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 30
 	maxHealth = 30
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes, and looks abnormally thin and frail."
