@@ -176,7 +176,7 @@
 	prefix_file = "strings/names/moth_prefix.txt"
 	base_icon = "mothbot"
 	found_seat_lines = list("Give me your hat!", "Moth?", "Certainly an... interesting venue.")
-	cant_find_seat_lines = list("If I can't find a seat, I'm flippity flapping out of here quick!", "I'm trying to flutter here!")
+	cant_find_seat_lines = list("If I can't find a seat, I'm flappity flapping out of here quick!", "I'm trying to flutter here!")
 	leave_mad_lines = list("I'm telling all my moth friends to never come here!", "Zero star rating, even worse than that time I ate a mothball!","Closing down permanently would still be too good of a fate for this place.")
 	leave_happy_lines = list("I'd tip you my hat, but I ate it!", "I hope that wasn't a collectible!", "That was the greatest thing I ever ate, even better than Guanaco!")
 	wait_for_food_lines = list("How hard is it to get food here? You're even wearing food yourself!", "My fuzzy robotic tummy is rumbling!", "I don't like waiting!")
