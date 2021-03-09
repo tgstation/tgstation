@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Hieroclub teleportation now respects unteleportable mobs such as anchored AIs and megafauna."

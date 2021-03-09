@@ -418,7 +418,7 @@
 	description = "A refreshing beverage."
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
-	glass_icon_state  = "glass_brown"
+	glass_icon_state  = "spacecola"
 	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -537,7 +537,7 @@
 	description = "A tangy substance made of 0.5% natural citrus!"
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "tangy lime and lemon soda"
-	glass_icon_state = "glass_yellow"
+	glass_icon_state = "lemonlime"
 	glass_name = "glass of lemon-lime"
 	glass_desc = "You're pretty certain a real fruit has never actually touched this."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -553,7 +553,7 @@
 	description = "The only drink with the PWR that true gamers crave."
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
-	glass_icon_state = "glass_red"
+	glass_icon_state = "pwrggame"
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -576,7 +576,7 @@
 	description = "~Shake me up some of that Shambler's Juice!~"
 	color = "#f00060" // rgb: 94, 0, 38
 	taste_description = "carbonated metallic soda"
-	glass_icon_state = "glass_red"
+	glass_icon_state = "shamblerjuice"
 	glass_name = "glass of Shambler's juice"
 	glass_desc = "Mmm mm, shambly."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -590,7 +590,7 @@
 	description = "A can of club soda. Why not make a scotch and soda?"
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "carbonated water"
-	glass_icon_state = "glass_clear"
+	glass_icon_state = "glass_clearcarb"
 	glass_name = "glass of soda water"
 	glass_desc = "Soda water. Why not make a scotch and soda?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -615,7 +615,7 @@
 	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 	color = "#0064C8" // rgb: 0, 100, 200
 	taste_description = "tart and fresh"
-	glass_icon_state = "glass_clear"
+	glass_icon_state = "glass_clearcarb"
 	glass_name = "glass of tonic water"
 	glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
