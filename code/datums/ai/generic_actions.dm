@@ -44,7 +44,7 @@
 	big_guy.start_pulling(batman)
 	big_guy.setDir(get_dir(big_guy, batman))
 
-	batman.visible_message("<span class='warning'>[batman] gets a slightly too tight hug from [big_guy]!</span>", "<span class='userdanger'>You feel your bones break as [big_guy] embraces you!</span>")
+	batman.visible_message("<span class='warning'>[batman] gets a slightly too tight hug from [big_guy]!</span>", "<span class='userdanger'>You feel your body break as [big_guy] embraces you!</span>")
 
 	if(iscarbon(batman))
 		var/mob/living/carbon/carbon_batman = batman
