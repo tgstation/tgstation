@@ -67,7 +67,7 @@
 		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
 		if(card_tally > winning_tally)
 			winning_tally = card_tally
-			front_id = id_card
+			front_id = id_card //searches for the id that will show on secHUD
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
 
@@ -79,7 +79,8 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearing_human = loc
 		if(wearing_human.wear_id == src)
-			wearing_human.sec_hud_set_ID()
+			wearing_human.sec_hud_set_ID() //sets the sechud icon
+			front_id = (locate(/obj/item/card/id) in contents) //picks first id in the wallet as the appearance of it
 
 	update_label()
 	update_appearance(UPDATE_ICON)
