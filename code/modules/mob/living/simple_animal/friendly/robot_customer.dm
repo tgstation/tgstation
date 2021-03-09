@@ -35,14 +35,14 @@
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
 	icon_state = customer_info.base_icon
 	name = "[pick(customer_info.name_prefixes)]-bot ([customer_info.nationality])"
-	color = rgb(rand(150,255), rand(150,255), rand(150,255))
+	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/simple_animal/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	attending_venue.current_visitors -= src
-	SSrestaurant.claimed_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
+	attending_venue.linked_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 

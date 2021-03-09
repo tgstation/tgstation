@@ -4049,10 +4049,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/item/stack/cable_coil{
 	pixel_y = 8
 	},
@@ -4975,10 +4971,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -37372,10 +37364,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/machinery/light_switch{
 	pixel_x = -24;
 	pixel_y = -24
@@ -43791,10 +43779,6 @@
 "cje" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -78636,10 +78620,6 @@
 /turf/open/floor/engine,
 /area/engineering/main)
 "qHv" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
 	name = "BrewMaster 2199"
@@ -78793,10 +78773,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
 	},
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
@@ -81028,10 +81004,10 @@
 "rZn" = (
 /obj/structure/bed/dogbed/ian,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /mob/living/simple_animal/pet/dog/corgi/ian{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "rZN" = (

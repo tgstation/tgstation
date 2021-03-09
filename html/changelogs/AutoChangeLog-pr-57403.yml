@@ -1,0 +1,6 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "adds a windoor to the bar, and a door to the kitchen to allow access to the atrium"
+  - rscadd: "opens the kitchen up a bit more"
+  - bugfix: "tourists now sit facing the bar on delta"
