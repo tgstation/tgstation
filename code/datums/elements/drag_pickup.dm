@@ -1,10 +1,15 @@
+/**
+ * drag_pickup element; for allowing things to be picked up by dragging.
+ *
+ * Used for paper bins.
+ */
 /datum/element/drag_pickup
 	element_flags = ELEMENT_DETACH
 
 /datum/element/drag_pickup/Attach(datum/target)
-	if(isatom(target))
-		if(ismovable(target))
-			RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/pick_up)
+	if(!ismovable(target))
+		return ELEMENT_INCOMPATIBLE
+	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/pick_up)
 	return ..()
 
 /datum/element/drag_pickup/Detach(datum/source, force)
@@ -13,13 +18,13 @@
 
 /datum/element/drag_pickup/proc/pick_up(atom/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-	var/mob/living/M = user
-	if(!istype(M) || M.incapacitated() || !source.Adjacent(M))
+	var/mob/living/picker = user
+	if(!istype(picker) || picker.incapacitated() || !source.Adjacent(picker))
 		return
 
-	if(over == M)
-		INVOKE_ASYNC(M, /mob/.proc/put_in_hands, source)
+	if(over == picker)
+		INVOKE_ASYNC(picker, /mob/.proc/put_in_hands, source)
 
 	else if(istype(over, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over
-		M.putItemFromInventoryInHandIfPossible(source, H.held_index)
+		var/atom/movable/screen/inventory/hand/Selected_hand = over
+		picker.putItemFromInventoryInHandIfPossible(source, Selected_hand.held_index)
