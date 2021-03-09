@@ -520,10 +520,10 @@
 	switch(tourist_income)
 		if(0)
 			parts += "<span class='redtext'>Service did not earn any credits...</span><br>"
-		if(1 to 1000)
+		if(1 to 2000)
 			parts += "<span class='redtext'>Centcom is displeased. Come on service, surely you can do better than that.</span><br>"
 			award_service(/datum/award/achievement/jobs/service_bad)
-		if(1001 to 2000)
+		if(2001 to 4999)
 			parts += "<span class='greentext'>Centcom is satisfied with service's job today.</span><br>"
 			award_service(/datum/award/achievement/jobs/service_okay)
 		else
