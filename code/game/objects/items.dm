@@ -191,6 +191,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/list/juice_results
 
 	var/canMouseDown = FALSE
+	
+	//item hover FX
+	var/outline_filter
 
 /obj/item/Initialize()
 
