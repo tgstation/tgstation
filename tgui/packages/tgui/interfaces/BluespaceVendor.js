@@ -13,7 +13,7 @@ export const BluespaceVendor = (props, context) => {
     gas_transfer_rate,
     price_multiplier,
     pumping,
-    selected_gas
+    selected_gas,
   } = data;
   const bluespace_network_gases = flow([
     filter(gas => gas.amount >= 0.01),
@@ -22,10 +22,10 @@ export const BluespaceVendor = (props, context) => {
   const gasMax = Math.max(1, ...bluespace_network_gases.map(gas => gas.amount));
   return (
     <Window
-     title="Bluespace Vendor"
-     width={500}
-     height={600}>
-     <Window.Content scrollable>
+      title="Bluespace Vendor"
+      width={500}
+      height={600}>
+      <Window.Content scrollable>
         <Section
           title="Controls">
           <NumberInput
@@ -37,7 +37,7 @@ export const BluespaceVendor = (props, context) => {
             maxValue={100}
             onDrag={(e, value) => act('pumping_rate', {
               rate: value,
-          })} />
+            })} />
           <Button
             ml={1}
             icon="plus"
@@ -53,13 +53,13 @@ export const BluespaceVendor = (props, context) => {
             )} />
           <Box>
             {
-            <ProgressBar
-            value={data.tank_full / 1010}
-            ranges={{
-              good: [0.67, 1],
-              average: [0.34, 0.66],
-              bad: [0, 0.33],
-            }} />
+              <ProgressBar
+                value={data.tank_full / 1010}
+                ranges={{
+                  good: [0.67, 1],
+                  average: [0.34, 0.66],
+                  bad: [0, 0.33],
+                }} />
             }
           </Box>
         </Section>
@@ -79,22 +79,22 @@ export const BluespaceVendor = (props, context) => {
                 <Box>
                   {"Cost: " + gas.price + " Credits per mole"}
                 </Box>
-                  <Button
-                    ml={1}
-                    icon="plus"
-                    content="Start Pumping"
-                    disabled={data.pumping || !data.inserted_tank}
-                    onClick={() => act('start_pumping', {
-                      gas_id: gas.id,
-                    })} />
-                  <Button
-                    ml={1}
-                    icon="minus"
-                    content="Stop Pumping"
-                    disabled={!data.pumping && data.selected_gas !== gas.id}
-                    onClick={() => act('stop_pumping', {
-                      gas_id: gas.id,
-                    })} />
+                <Button
+                  ml={1}
+                  icon="plus"
+                  content="Start Pumping"
+                  disabled={data.pumping || !data.inserted_tank}
+                  onClick={() => act('start_pumping', {
+                    gas_id: gas.id,
+                  })} />
+                <Button
+                  ml={1}
+                  icon="minus"
+                  content="Stop Pumping"
+                  disabled={!data.pumping && data.selected_gas !== gas.id}
+                  onClick={() => act('stop_pumping', {
+                    gas_id: gas.id,
+                  })} />
               </LabeledList.Item>
             ))}
           </LabeledList>

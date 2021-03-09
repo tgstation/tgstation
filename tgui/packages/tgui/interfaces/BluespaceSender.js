@@ -11,7 +11,7 @@ export const BluespaceSender = (props, context) => {
   const {
     on,
     gas_transfer_rate,
-    price_multiplier
+    price_multiplier,
   } = data;
   const bluespace_network_gases = flow([
     filter(gas => gas.amount >= 0.01),
@@ -20,10 +20,10 @@ export const BluespaceSender = (props, context) => {
   const gasMax = Math.max(1, ...bluespace_network_gases.map(gas => gas.amount));
   return (
     <Window
-     title="Bluespace Sender"
-     width={500}
-     height={600}>
-     <Window.Content scrollable>
+      title="Bluespace Sender"
+      width={500}
+      height={600}>
+      <Window.Content scrollable>
         <Section
           title="Controls"
           buttons={(
@@ -33,16 +33,16 @@ export const BluespaceSender = (props, context) => {
               selected={data.on}
               onClick={() => act('power')} />
           )}>
-            <NumberInput
-              animated
-              value={gas_transfer_rate}
-              step={0.01}
-              width="63px"
-              unit="moles/S"
-              minValue={0}
-              maxValue={1}
-              onDrag={(e, value) => act('rate', {
-                rate: value,
+          <NumberInput
+            animated
+            value={gas_transfer_rate}
+            step={0.01}
+            width="63px"
+            unit="moles/S"
+            minValue={0}
+            maxValue={1}
+            onDrag={(e, value) => act('rate', {
+              rate: value,
             })} />
         </Section>
         <Section title="Bluespace Network Gases">
@@ -68,7 +68,7 @@ export const BluespaceSender = (props, context) => {
                   onDrag={(e, value) => act('price', {
                     gas_price: value,
                     gas_type: gas.id,
-                })} />
+                  })} />
               </LabeledList.Item>
             ))}
           </LabeledList>
