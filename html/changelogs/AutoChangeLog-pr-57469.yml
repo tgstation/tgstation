@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - admin: "Spells now ask you if you want to make them robeless in VV when adding spells. Forcing robeless means the spell can be cast without cult armour or spellcasting robes."
-  - admin: "Spells have new options in VV to toggle some of the most common spell behaviours including robeless casting, cult robeless casting, whether the spell requires a humanoid mod and whether the spell requires a physical body and cannot be cast by pAIs and brain mobs."

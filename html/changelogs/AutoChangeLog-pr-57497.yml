@@ -1,6 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - balance: "Robotourists pay more for food now"
-  - qol: "Only one robo-tourist will wait at the door at any time, preventing constant spam if you only have 2 seats."
-  - qol: "more variation in robo-tourist colors"

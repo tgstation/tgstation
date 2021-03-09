@@ -458,12 +458,19 @@ SUBSYSTEM_DEF(job)
 	if(!joined_late)
 		var/spawning_handled = FALSE
 		var/obj/S = null
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && job.random_spawns_possible)
 			SendToLateJoin(living_mob)
 			spawning_handled = TRUE
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS) && job.random_spawns_possible)
 			DropLandAtRandomHallwayPoint(living_mob)
 			spawning_handled = TRUE
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER) && job.random_spawns_possible)
+			for(var/obj/effect/landmark/start/hangover/hangover_spawn in GLOB.start_landmarks_list)
+				S = hangover_spawn
+				if(locate(/mob/living) in hangover_spawn.loc) //so we can revert to spawning them on top of eachother if something goes wrong
+					continue
+				hangover_spawn.used = TRUE
+				break
 		else if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
 		else

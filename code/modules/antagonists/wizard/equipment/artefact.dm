@@ -117,6 +117,7 @@
 	density = TRUE
 	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
