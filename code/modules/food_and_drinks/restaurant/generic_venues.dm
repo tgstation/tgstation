@@ -1,12 +1,4 @@
 
-
-///revenue of all venues in existence, used in roundend reports!
-GLOBAL_VAR_INIT(total_service_revenue, 0)
-///how many customers the restaurant served, used in achievements and roundend reports
-GLOBAL_VAR_INIT(restaurant_customers_served, 0)
-///how many customers the bar served, used in achievements and roundend reports
-GLOBAL_VAR_INIT(bar_customers_served, 0)
-
 /////RESTAURANT/////
 /datum/venue/restaurant
 	name = "restaurant"
@@ -48,8 +40,8 @@ GLOBAL_VAR_INIT(bar_customers_served, 0)
 	var/obj/item/food/ordered_food = order_item
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	GLOB.total_service_revenue += ordered_food.venue_value
-	GLOB.restaurant_customers_served += 1
+	total_income += ordered_food.venue_value
+	customers_served += 1
 	qdel(ordered_food)
 
 /obj/machinery/restaurant_portal/restaurant
@@ -111,8 +103,8 @@ GLOBAL_VAR_INIT(bar_customers_served, 0)
 
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
-	GLOB.total_service_revenue += ordered_reagent_type.glass_price
-	GLOB.bar_customers_served += 1
+	total_income += ordered_reagent_type.glass_price
+	customers_served += 1
 	order_item.reagents.clear_reagents()
 
 

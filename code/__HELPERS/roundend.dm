@@ -494,11 +494,7 @@
 	var/list/parts = list()
 
 	///total service income
-	var/tourist_income = GLOB.total_service_revenue
-	///restaurant customers served
-	var/restaurant_served = GLOB.restaurant_customers_served
-	///bar customers served
-	var/bar_served = GLOB.bar_customers_served
+	var/tourist_income = 0
 	///This is the richest account on station at roundend.
 	var/datum/bank_account/mr_moneybags
 	///This is the station's total wealth at the end of the round.
@@ -513,10 +509,12 @@
 		station_vault += current_acc.account_balance
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
-	parts += "<div class='panel stationborder'><span class='header'>Station Economic Summary:</span>"
+	parts += "<div class='panel stationborder'><span class='header'>Station Economic Summary:</span><br>"
 	parts += "<span class='service'>Service Statistics:</span><br>"
-	parts += "The bar served [bar_served] customers.<br>"
-	parts += "The restaurant served [restaurant_served] customers.<br>"
+	for(var/venue_path in SSrestaurant.all_venues)
+		var/datum/venue/venue = SSrestaurant.all_venues[venue_path]
+		tourist_income += venue.total_income
+		parts += "The [venue] served [venue.customers_served] customers and made [venue.total_income] credits.<br>"
 	parts += "In total, they earned [tourist_income] credits[tourist_income ? "!" : "..."]<br>"
 	log_econ("Roundend service income: [tourist_income] credits.")
 	switch(tourist_income)
@@ -562,13 +560,15 @@
 				//general awards
 				service_member.client?.give_award(award, service_member)
 				if(service_mind.assigned_role == "Cook")
-					var/award_score = GLOB.restaurant_customers_served
+					var/datum/venue/restaurant = SSrestaurant.all_venues[/datum/venue/restaurant]
+					var/award_score = restaurant.total_income
 					var/award_status = service_member.client.get_award_status(/datum/award/score/chef_tourist_score)
 					if(award_score - award_status > 0)
 						award_score -= award_status
 					service_member.client?.give_award(/datum/award/score/chef_tourist_score, service_member, award_score)
 				if(service_mind.assigned_role == "Bartender")
-					var/award_score = GLOB.bar_customers_served
+					var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
+					var/award_score = bar.total_income
 					var/award_status = service_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
 					if(award_score - award_status > 0)
 						award_score -= award_status

@@ -20,6 +20,10 @@
 	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
+	///how many robots got their wanted thing
+	var/customers_served = 0
+	///Total income of those venue
+	var/total_income = 0
 
 
 /datum/venue/process(delta_time)
