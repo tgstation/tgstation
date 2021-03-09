@@ -51,7 +51,8 @@
 	return TRUE
 
 /// Gets the order of this customer.
-/// In most cases, you shouldn't override this, and should just modify orderable_objects.
+/// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
+/// If the list of orders are static, just modify orderable_objects.
 /datum/customer_data/proc/get_order(datum/venue/venue)
 	return pickweight(orderable_objects[venue.type])
 
