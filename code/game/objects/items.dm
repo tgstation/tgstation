@@ -829,11 +829,54 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+		var/mob/living/L = usr
+		if(istype(L) && L.incapacitated())
+			apply_outline(COLOR_RED_GRAY)
+		else
+			apply_outline()
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	remove_outline()
 
 /obj/item/MouseExited()
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
+	remove_outline()
 
+/obj/item/proc/apply_outline(colour = null)
+	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr))
+		return
+	var/theme = lowertext(usr.client.prefs.UI_style)
+	if(!colour)
+		switch(theme) //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			if("midnight")
+				colour = COLOR_THEME_MIDNIGHT
+			if("plasmafire")
+				colour = COLOR_THEME_PLASMAFIRE
+			if("retro")
+				colour = COLOR_THEME_RETRO
+			if("slimecore")
+				colour = COLOR_THEME_SLIMECORE
+			if("operative")
+				colour = COLOR_THEME_OPERATIVE
+			if("clockwork")
+				colour = COLOR_THEME_CLOCKWORK
+			if("glass")
+				colour = COLOR_THEME_GLASS
+			else
+				colour = COLOR_WHITE
+	if(color)
+		colour = COLOR_WHITE //avoid pee green cable coils
+	if(outline_filter)
+		filters -= outline_filter
+	outline_filter = filter(type="outline", size=1, color=colour)
+	filters += outline_filter
+
+/obj/item/proc/remove_outline()
+	if(outline_filter)
+		filters -= outline_filter
+		outline_filter = null
 
 /// Called when a mob tries to use the item as a tool. Handles most checks.
 /obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
