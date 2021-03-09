@@ -58,6 +58,9 @@
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
 
+/datum/customer_data/proc/get_underlays(mob/living/simple_animal/robot_customer/customer)
+	return
+
 /datum/customer_data/american
 	nationality = "Space-American"
 	orderable_objects = list(
@@ -170,6 +173,7 @@
 /datum/customer_data/moth
 	nationality = "Mothman"
 	prefix_file = "strings/names/moth_prefix.txt"
+	base_icon = "mothbot"
 	found_seat_lines = list("Give me your hat!", "Moth?", "Certainly an... interesting venue.")
 	cant_find_seat_lines = list("If I can't find a seat, I'm flappity flapping out of here quick!", "I'm trying to flutter here!")
 	leave_mad_lines = list("I'm telling all my moth friends to never come here!", "Zero star rating, even worse than that time I ate a mothball!","Closing down permanently would still be too good of a fate for this place.")
@@ -190,6 +194,11 @@
 			/obj/item/clothing/gloves/color/black = 1,
 		),
 	)
+
+	clothing_sets = list("mothbot_clothes")
+
+	/// The wings chosen for the moth customers.
+	var/list/wings_chosen
 
 // The whole gag is taking off your hat and giving it to the customer.
 // If it takes any more effort, it loses a bit of the comedy.
@@ -224,6 +233,38 @@
 	if (orderable.len)
 		var/datum/order = pickweight(orderable)
 		return order.type
+
+/datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
+	var/customer_ref = WEAKREF(customer)
+	if (!LAZYACCESS(wings_chosen, customer_ref))
+		LAZYSET(wings_chosen, customer_ref, GLOB.moth_wings_list[pick(GLOB.moth_wings_list)])
+	return wings_chosen[customer_ref]
+
+/datum/customer_data/moth/get_underlays(mob/living/simple_animal/robot_customer/customer)
+	var/list/underlays = list()
+
+	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
+
+	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+	wings_behind.appearance_flags = RESET_COLOR
+	underlays += wings_behind
+
+	return underlays
+
+/datum/customer_data/moth/get_overlays(mob/living/simple_animal/robot_customer/customer)
+	var/list/overlays = list()
+
+	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
+
+	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+	wings_front.appearance_flags = RESET_COLOR
+	overlays += wings_front
+
+	var/mutable_appearance/jetpack = mutable_appearance(icon = customer.icon, icon_state = "mothbot_jetpack")
+	jetpack.appearance_flags = RESET_COLOR
+	overlays += jetpack
+
+	return overlays
 
 /datum/customer_data/moth/get_order(datum/venue/venue)
 	var/dynamic_order = get_dynamic_order(venue)
