@@ -1,8 +1,8 @@
-Annoying
-Bugged
-Buzzing
-Emaciated
-Flapping
-Fluttering
-Noisy
-Obnoxious
+Annoy
+Bug
+Buzz
+Flap
+Fluff
+Flutter
+Noise
+Wing
