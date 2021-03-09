@@ -96,7 +96,7 @@
 	H_ion_release = -25
 	rate_up_lim = 20
 	purity_min = 0.5
-	reaction_flags = REACTION_CLEAR_IMPURE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_BURN | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/nitracid
@@ -116,7 +116,7 @@
 	H_ion_release = -20
 	rate_up_lim = 20
 	purity_min = 0.5
-	reaction_flags = REACTION_CLEAR_IMPURE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_BURN | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/sulfonal
@@ -133,10 +133,10 @@
 	temp_exponent_factor = 1.5
 	ph_exponent_factor = 1.5
 	thermic_constant = 200
-	H_ion_release = 4
-	rate_up_lim = 20
+	H_ion_release = 0.13
+	rate_up_lim = 10
 	purity_min = 0.5
-	reaction_flags = REACTION_CLEAR_IMPURE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_TOXIN | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/lipolicide
@@ -154,7 +154,7 @@
 	ph_exponent_factor = 0.2
 	thermic_constant = 500
 	H_ion_release = 2.5
-	rate_up_lim = 15
+	rate_up_lim = 10
 	purity_min = 0.7
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
@@ -173,10 +173,10 @@
 	temp_exponent_factor = 2
 	ph_exponent_factor = 5
 	thermic_constant = 350
-	H_ion_release = -4
+	H_ion_release = 0.1
 	rate_up_lim = 10
 	purity_min = 0.7
-	reaction_flags = REACTION_CLEAR_IMPURE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/lexorin
@@ -196,7 +196,7 @@
 	H_ion_release = 0.1
 	rate_up_lim = 25
 	purity_min = 0.4
-	reaction_flags = REACTION_CLEAR_IMPURE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OXY
 
 /datum/chemical_reaction/hot_ice_melt
@@ -211,7 +211,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/chlorine = 3, /datum/reagent/water = 1)
 	mix_message = "The mixture turns deep blue."
 	is_cold_recipe = FALSE
-	required_temp = 100
+	required_temp = 200
 	optimal_temp = 450
 	overheat_temp = 900
 	optimal_ph_min = 7
@@ -247,7 +247,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/zombiepowder
-	results = list(/datum/reagent/toxin/zombiepowder = 2)
+	results = list(/datum/reagent/toxin/zombiepowder = 5)
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/morphine = 5, /datum/reagent/copper = 5)
 	mix_message = "The mixture turns into a strange green powder."
 	is_cold_recipe = FALSE
@@ -263,7 +263,7 @@
 	H_ion_release = -0.25
 	rate_up_lim = 15
 	purity_min = 0.3
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/ghoulpowder
@@ -296,14 +296,14 @@
 	overheat_temp = 900
 	optimal_ph_min = 6
 	optimal_ph_max = 14
-	determin_ph_range = 2
+	determin_ph_range = 3
 	temp_exponent_factor = 2.5
 	ph_exponent_factor = 2
 	thermic_constant = 150
-	H_ion_release = -0.3
+	H_ion_release = -0.15
 	rate_up_lim = 15
 	purity_min = 0.4
-	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/heparin
