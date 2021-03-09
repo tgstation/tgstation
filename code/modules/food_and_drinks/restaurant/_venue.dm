@@ -39,18 +39,20 @@
 
 	// In practice, the list will never run out, but this is for sanity.
 	while (customer_types_to_choose.len)
-		customer_type = pickweightAllowZero(customer_types_to_choose)
+		customer_type = pickweight(customer_types_to_choose)
 
 		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
 		if (customer.can_use(src))
-			customer.chosen(src)
 			break
 
 		// Only copy the list once, so that we're not mutating ourselves.
 		if (customer_types_to_choose == customer_types)
 			customer_types_to_choose = customer_types.Copy()
 
-		customer_types_to_choose[customer_type] = 0
+		customer_types_to_choose -= customer_type
+
+	if (initial(customer_data.is_unique))
+		customer_types -= customer_data
 
 	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), customer_type, src)
 	current_visitors += new_customer

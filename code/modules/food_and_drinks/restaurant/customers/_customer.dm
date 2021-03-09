@@ -39,6 +39,9 @@
 	///Sound to use when this robot type speaks
 	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
 
+	/// Is this unique once per venue?
+	var/is_unique = FALSE
+
 /datum/customer_data/New()
 	. = ..()
 	name_prefixes = world.file2list(prefix_file)
@@ -46,9 +49,6 @@
 /// Can this customer be chosen for this venue?
 /datum/customer_data/proc/can_use(datum/venue/venue)
 	return TRUE
-
-/// Called when the venue chooses this customer
-/datum/customer_data/proc/chosen(datum/venue/venue)
 
 /// Gets the order of this customer.
 /// In most cases, you shouldn't override this, and should just modify orderable_objects.
@@ -196,6 +196,7 @@
 	)
 
 	clothing_sets = list("mothbot_clothes")
+	is_unique = TRUE
 
 	/// The wings chosen for the moth customers.
 	var/list/wings_chosen
@@ -205,14 +206,6 @@
 // Therefore, only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue)
 	return !isnull(get_dynamic_order(venue))
-
-/datum/customer_data/moth/chosen(datum/venue/venue)
-	. = ..()
-
-	// Only show up once, again for the purposes of keeping the comedic value.
-	// Also prevents the unlikely, but otherwise possible, scenario that you keep
-	// getting the extremely easy to satisy moth bots, which isn't as fun as completing real orders.
-	venue.customer_types[type] = 0
 
 /datum/customer_data/moth/proc/get_dynamic_order(datum/venue/venue)
 	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
