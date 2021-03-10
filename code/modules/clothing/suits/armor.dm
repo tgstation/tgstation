@@ -299,7 +299,7 @@
 	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "h2armor"
 	inhand_icon_state = "h2armor"
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	custom_materials = list(/datum/material/metalhydrogen = 8)
 	armor = list(MELEE = 50, BULLET = 30, LASER = 40, ENERGY = 40, BOMB = 20, BIO = 10, RAD = 40, FIRE = 100, ACID = 100, WOUND = 30)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
