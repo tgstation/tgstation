@@ -247,7 +247,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/zombiepowder
-	results = list(/datum/reagent/toxin/zombiepowder = 5)
+	results = list(/datum/reagent/toxin/zombiepowder = 2)
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/morphine = 5, /datum/reagent/copper = 5)
 	mix_message = "The mixture turns into a strange green powder."
 	is_cold_recipe = FALSE
