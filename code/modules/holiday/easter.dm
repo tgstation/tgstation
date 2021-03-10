@@ -53,6 +53,9 @@
 	pet_bonus_emote = "hops around happily!"
 	can_be_held = TRUE
 
+/mob/living/simple_animal/chicken/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
+	eggsleft = 0 //if you want to harvest toys and easter bunny gear from these guys, you're gonna need to feed them carrots first
+
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
 	icon_state = "s_rabbit_white"
