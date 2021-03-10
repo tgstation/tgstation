@@ -259,11 +259,11 @@
 	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 5
 	optimal_ph_max = 8
-	determin_ph_range = 6
+	determin_ph_range = 2
 	temp_exponent_factor = 1
 	ph_exponent_factor = 0.5
 	thermic_constant = -500
-	H_ion_release = -6
+	H_ion_release = -2
 	rate_up_lim = 15
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
