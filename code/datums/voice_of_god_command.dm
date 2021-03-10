@@ -3,13 +3,23 @@
 #define COOLDOWN_MEME 3 SECONDS
 #define COOLDOWN_NONE 1 SECONDS
 
+/// Used to stop listeners with silly or clown-esque (first) names such as "Honk" or "Flip" from screwing up certain commands.
+GLOBAL_DATUM(all_voice_of_god_triggers, /regex)
+/// List of all voice of god commands
 GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /proc/init_voice_of_god_commands()
 	. = list()
+	var/all_triggers
+	var/separator
 	for(var/datum/voice_of_god_command/prototype as anything in subtypesof(/datum/voice_of_god_command))
-		if(initial(prototype.trigger))
-			. += new prototype
+		var/init_trigger = initial(prototype.trigger)
+		if(!init_trigger)
+			continue
+		. += new prototype
+		all_triggers += "[separator][init_trigger]"
+		separator = "|" // Shouldn't be at the start or end of the regex, or it won't work.
+	GLOB.all_voice_of_god_triggers = regex(all_triggers, "i")
 
 //////////////////////////////////////
 ///////////VOICE OF GOD///////////////
@@ -34,35 +44,23 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 	message = lowertext(message)
 
-
+	var/list/mob/living/listeners = list()
 	//used to check if the speaker specified a name or a job to focus on
 	var/list/specific_listeners = list()
-	var/found_string = null
-
-	var/list/mob/living/listeners = list()
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/living in candidates)
 		if(living.stat != DEAD && living.can_hear() && !living.anti_magic_check(magic = FALSE, holy = TRUE))
 			listeners += living
 
-			if(findtext(message, living.real_name, 1, length(living.real_name) + 1))
+			var/their_first_name = living.first_name()
+			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"
+			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[their_first_name](\\L|$)", "i")))
 				specific_listeners += living //focus on those with the specified name
-				//Cut out the name so it doesn't trigger commands
-				found_string = living.real_name
-				continue
-
-			var/their_name = living.first_name()
-			if(findtext(message, their_name, 1, their_name) + 1)
-				specific_listeners += living //focus on those with the specified name
-				//Cut out the name so it doesn't trigger commands
-				found_string = their_name
 				continue
 
 			var/their_role = living.mind?.assigned_role
-			if(their_role && findtext(message, their_role, 1, length(their_role) + 1))
+			if(their_role && findtext(message, their_role))
 				specific_listeners += living //focus on those with the specified job
-				//Cut out the job so it doesn't trigger commands
-				found_string = living.mind.assigned_role
 
 	if(!listeners.len)
 		return
@@ -84,14 +82,12 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	if(is_cultie)
 		power_multiplier *= 2
 
-
 	//Get the proper job titles
 	message = get_full_job_name(message)
 
 	if(specific_listeners.len)
 		listeners = specific_listeners
 		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
-		message = copytext(message, length(found_string) + 1)
 
 	for(var/datum/voice_of_god_command/command as anything in GLOB.voice_of_god_commands)
 		if(findtext(message, command.trigger))
@@ -274,7 +270,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/who_are_you/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, target.real_name), 5 * iteration)
+		addtimer(CALLBACK(target, /atom/movable/proc/say, target.real_name), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say the user's name
@@ -284,7 +280,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, user.name), 5 * iteration)
+		addtimer(CALLBACK(target, /atom/movable/proc/say, user.name), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say "Who's there?".
@@ -294,7 +290,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/knock_knock/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /atom/movable/proc/say, "Who's there?"), 5 * iteration)
+		addtimer(CALLBACK(target, /atom/movable/proc/say, "Who's there?"), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces silicon listeners to state all their laws.
@@ -302,8 +298,10 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	trigger = "state\\s*(your)?\\s*laws"
 
 /datum/voice_of_god_command/state_laws/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+	var/iteration = 1
 	for(var/mob/living/silicon/target in listeners)
-		target.statelaws(force = 1)
+		addtimer(CALLBACK(target, /mob/living/silicon/proc/statelaws, TRUE), 0.5 SECONDS * iteration)
+		iteration++
 
 /// This command forces the listeners to take step in a direction chosen by the user, otherwise a random cardinal one.
 /datum/voice_of_god_command/move
@@ -385,15 +383,14 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		var/obj/structure/chair/chair = locate(/obj/structure/chair) in get_turf(target)
 		chair?.buckle_mob(target)
 
-/// This command forces each listener currently sitting on chair to unbuckle from it.
+/// This command forces each listener to unbuckle from whatever they are buckled to.
 /datum/voice_of_god_command/stand
 	trigger = "stand"
 	is_regex = FALSE
 
 /datum/voice_of_god_command/stand/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.buckled && istype(target.buckled, /obj/structure/chair))
-			target.buckled.unbuckle_mob(target)
+		target.buckled?.unbuckle_mob(target)
 
 /// This command forces the listener to do the jump emote 3/4 of the times or reply "HOW HIGH?!!".
 /datum/voice_of_god_command/jump
@@ -415,7 +412,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/honk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 2.5 SECONDS)
-	if(user.mind && user.mind.assigned_role == "Clown")
+	if(user.mind?.assigned_role == "Clown")
 		. = COOLDOWN_STUN //it slips.
 		for(var/mob/living/carbon/target in listeners)
 			target.slip(14 SECONDS * power_multiplier)
