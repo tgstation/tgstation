@@ -303,7 +303,7 @@
 	armor = list(MELEE = 45, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 20, BIO = 10, RAD = 40, FIRE = 100, ACID = 100, WOUND = 30)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS )
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/armor/vest/centcom_formal
