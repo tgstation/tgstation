@@ -62,12 +62,13 @@
 	data["icon64"] = icon2base64(dummysprite)
 
 	if(!cached_outfits)
-		cached_outfits = list()
 		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
+		cached_outfits = list()
 		cached_outfits["General"] = list("naked" = "Naked") + make_job_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits["Jobs"] = make_job_entries(typesof(/datum/outfit/job))
 		cached_outfits["Plasmamen Outfits"] = make_job_entries(typesof(/datum/outfit/plasmaman))
-		cached_outfits["Custom"] = list("createCustom" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
+
+	cached_outfits["Custom"] = list("createCustom" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
 
 	data["outfits"] = cached_outfits
 	data["name"] = target
