@@ -14,7 +14,7 @@
 	var/mob/living/carbon/human/dummy/dummy
 
 	var/static/list/cached_outfits
-	var/datum/outfit/selected_outfit
+	var/datum/outfit/selected_outfit = /datum/outfit/job/ce
 
 /datum/select_equipment/New(usr, mob/M)
 	user = CLIENT_FROM_VAR(usr)
@@ -63,10 +63,11 @@
 
 	if(!cached_outfits)
 		cached_outfits = list()
-		cached_outfits["base"] = list("naked" = "Naked") + make_job_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
-		cached_outfits["jobs"] = make_job_entries(typesof(/datum/outfit/job))
-		cached_outfits["plasmaman"] = make_job_entries(typesof(/datum/outfit/plasmaman))
-		cached_outfits["custom"] = list("createCustom" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
+		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
+		cached_outfits["General"] = list("naked" = "Naked") + make_job_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
+		cached_outfits["Jobs"] = make_job_entries(typesof(/datum/outfit/job))
+		cached_outfits["Plasmamen Outfits"] = make_job_entries(typesof(/datum/outfit/plasmaman))
+		cached_outfits["Custom"] = list("createCustom" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
 
 	data["outfits"] = cached_outfits
 	data["name"] = target

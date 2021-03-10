@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, ByondUi, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
+import { Box, Button, Tabs, Section, Input, Stack, Flex } from '../components';
 import { Window } from '../layouts';
 
 export const SelectEquipment = (props, context) => {
@@ -16,7 +16,6 @@ export const SelectEquipment = (props, context) => {
     plasmaman,
     custom,
   } = outfits;
-  const outfitCategories = Object.keys(outfits);
 
   const [
     searchText,
@@ -50,38 +49,20 @@ export const SelectEquipment = (props, context) => {
     );
   };
 
+  const outfitCategories = Object.keys(outfits);
+
   const displayTabs
     = (
       <Tabs textAlign="center">
 
-        <OutfitTab name="General" />
-        <OutfitTab name="Jobs" />
-        <OutfitTab name="Plasmamen Outfits" />
-        <OutfitTab name="Custom" />
+        {outfitCategories.map(cat => { return (
+          <OutfitTab key={cat} name={cat} />
+        ); })}
 
       </Tabs>
     );
 
-  // the fact that this is needed at all is wack and I'll make it proper later
-  const outfitCategory = () => {
-    switch (tabIndex) {
-      case "General":
-        return (base);
-
-      case "Jobs":
-        return (jobs);
-
-      case "Plasmamen Outfits":
-        return (plasmaman);
-
-      case "Custom":
-        return (custom);
-
-      default:
-        return ([]);
-    } };
-
-  const makeOutfit = outfit => {
+  const outfitButton = outfit => {
     return (
       <Stack.Item>
         <Button
@@ -93,9 +74,9 @@ export const SelectEquipment = (props, context) => {
   };
 
   const displayedOutfits
-    = Object.entries(outfitCategory())
-      ?.filter(searchFilter)
-      ?.map(makeOutfit);
+  = Object.entries(outfits[tabIndex])
+    ?.filter(searchFilter)
+    ?.map(outfitButton);
 
   return (
     <Window
@@ -103,6 +84,7 @@ export const SelectEquipment = (props, context) => {
       height={660}>
       <Window.Content>
         <Flex height="100%">
+
           <Flex.Item grow={1} basis={0}>
             <Section fill scrollable>
               {displayTabs}
@@ -111,6 +93,7 @@ export const SelectEquipment = (props, context) => {
               </Stack>
             </Section>
           </Flex.Item>
+
 
           <Flex.Item grow={2} basis={0}>
             <Section fill
