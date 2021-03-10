@@ -514,7 +514,7 @@
 	for(var/venue_path in SSrestaurant.all_venues)
 		var/datum/venue/venue = SSrestaurant.all_venues[venue_path]
 		tourist_income += venue.total_income
-		parts += "The [venue] served [venue.customers_served] customer[venue.customers_served == 1 ? "" : "s"] and made [venue.total_income] credits.<br>"
+		parts += "The [venue] served [venue.customers_served] customer\s and made [venue.total_income] credits.<br>"
 	parts += "In total, they earned [tourist_income] credits[tourist_income ? "!" : "..."]<br>"
 	log_econ("Roundend service income: [tourist_income] credits.")
 	switch(tourist_income)
@@ -548,31 +548,31 @@
  * * award: Achievement to give service department
  */
 /datum/controller/subsystem/ticker/proc/award_service(award)
-	for(var/i in GLOB.human_list)
-		var/mob/living/carbon/human/service_member = i
+	for(var/mob/living/carbon/human/service_member as anything in GLOB.human_list)
 		if(!service_member.mind)
 			continue
 		var/datum/mind/service_mind = service_member.mind
 		if(!service_mind.assigned_role)
 			continue
 		for(var/job in GLOB.service_food_positions)
-			if(service_mind.assigned_role == job)
-				//general awards
-				service_member.client?.give_award(award, service_member)
-				if(service_mind.assigned_role == "Cook")
-					var/datum/venue/restaurant = SSrestaurant.all_venues[/datum/venue/restaurant]
-					var/award_score = restaurant.total_income
-					var/award_status = service_member.client.get_award_status(/datum/award/score/chef_tourist_score)
-					if(award_score - award_status > 0)
-						award_score -= award_status
-					service_member.client?.give_award(/datum/award/score/chef_tourist_score, service_member, award_score)
-				if(service_mind.assigned_role == "Bartender")
-					var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
-					var/award_score = bar.total_income
-					var/award_status = service_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
-					if(award_score - award_status > 0)
-						award_score -= award_status
-					service_member.client?.give_award(/datum/award/score/bartender_tourist_score, service_member, award_score)
+			if(service_mind.assigned_role != job)
+				continue
+			//general awards
+			service_member.client?.give_award(award, service_member)
+			if(service_mind.assigned_role == "Cook")
+				var/datum/venue/restaurant = SSrestaurant.all_venues[/datum/venue/restaurant]
+				var/award_score = restaurant.total_income
+				var/award_status = service_member.client.get_award_status(/datum/award/score/chef_tourist_score)
+				if(award_score > award_status)
+					award_score -= award_status
+				service_member.client?.give_award(/datum/award/score/chef_tourist_score, service_member, award_score)
+			if(service_mind.assigned_role == "Bartender")
+				var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
+				var/award_score = bar.total_income
+				var/award_status = service_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
+				if(award_score - award_status > 0)
+					award_score -= award_status
+				service_member.client?.give_award(/datum/award/score/bartender_tourist_score, service_member, award_score)
 
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
