@@ -117,7 +117,7 @@
 	else
 		grill_loop.stop()
 
-/obj/structure/griddle/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/griddle/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I, 2 SECONDS)
 	return TRUE
