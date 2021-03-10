@@ -604,9 +604,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "kitchen_cold"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/service/kitchen/tourist_seating_area
-	name = "Tourist Seating Area"
-	icon_state = "kitchen"
+/area/service/kitchen/diner
+	name = "Diner"
 
 /area/service/bar
 	name = "Bar"
