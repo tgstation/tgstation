@@ -33,7 +33,6 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_overlays()
 	. = ..()
-	cut_overlays()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue

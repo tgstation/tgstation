@@ -41,7 +41,6 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/update_overlays()
 	. = ..()
-	cut_overlays()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue

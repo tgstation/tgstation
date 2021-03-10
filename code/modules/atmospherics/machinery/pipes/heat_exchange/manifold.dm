@@ -15,11 +15,11 @@
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "he_manifold"
 
-	var/mutable_appearance/center
+	///List of cached overlays of the middle part indexed by piping layer
+	var/static/list/mutable_appearance/center_cache = list()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/New()
 	icon_state = ""
-	center = mutable_appearance(icon, "manifold_center")
 	return ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
@@ -28,15 +28,17 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_overlays()
 	. = ..()
-	cut_overlays()
-	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
+	var/mutable_appearance/center = center_cache["[piping_layer]"]
+	if(!center)
+		center = mutable_appearance(icon, "manifold_center")
+		PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
+		center_cache["[piping_layer]"] = center
 	. += center
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
 			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
-	update_layer()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2
 	piping_layer = 2
