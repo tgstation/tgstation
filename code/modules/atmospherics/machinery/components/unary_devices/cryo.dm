@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 				beaker = null
 				. = TRUE
 
-/obj/machinery/atmospherics/components/can_interact(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/can_interact(mob/user)
 	. = ..()
 	return . && user.loc != src
 
