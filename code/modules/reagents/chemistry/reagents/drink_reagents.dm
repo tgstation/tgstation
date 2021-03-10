@@ -185,7 +185,7 @@
 		if (mood.get_event("slipped"))
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "laughter", /datum/mood_event/funny_prank)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "slipped")
-			reactor.AdjustKnockdown(-20)
+			reactor.AdjustKnockdown(-2 SECONDS)
 
 /datum/reagent/consumable/superlaughter
 	name = "Super Laughter"
@@ -1028,4 +1028,3 @@
 	if(M.drowsyness < 3)
 		M.drowsyness += 1 * REM * delta_time
 	return ..()
-
