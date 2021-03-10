@@ -23,56 +23,62 @@ export const BluespaceSender = (props, context) => {
       title="Bluespace Sender"
       width={500}
       height={600}>
-      <Window.Content scrollable>
-        <Section
-          title="Controls"
-          buttons={(
-            <Button
-              icon={data.on ? 'power-off' : 'times'}
-              content={data.on ? 'On' : 'Off'}
-              selected={data.on}
-              onClick={() => act('power')} />
-          )}>
-          <NumberInput
-            animated
-            value={gas_transfer_rate}
-            step={0.01}
-            width="63px"
-            unit="moles/S"
-            minValue={0}
-            maxValue={1}
-            onDrag={(e, value) => act('rate', {
-              rate: value,
-            })} />
-        </Section>
-        <Section title="Bluespace Network Gases">
-          <LabeledList>
-            {bluespace_network_gases.map(gas => (
-              <LabeledList.Item
-                key={gas.name}
-                label={getGasLabel(gas.name)}>
-                <ProgressBar
-                  color={getGasColor(gas.name)}
-                  value={gas.amount}
-                  minValue={0}
-                  maxValue={gasMax}>
-                  {toFixed(gas.amount, 2) + ' moles'}
-                </ProgressBar>
-                <NumberInput
-                  animated
-                  value={gas.price}
-                  width="63px"
-                  unit="Credits per mole"
-                  minValue={0}
-                  maxValue={10}
-                  onDrag={(e, value) => act('price', {
-                    gas_price: value,
-                    gas_type: gas.id,
-                  })} />
-              </LabeledList.Item>
-            ))}
-          </LabeledList>
-        </Section>
+      <Window.Content>
+        <Stack vertical>
+          <Stack.Item>
+            <Section
+              title="Controls"
+              buttons={(
+                <Button
+                  icon={data.on ? 'power-off' : 'times'}
+                  content={data.on ? 'On' : 'Off'}
+                  selected={data.on}
+                  onClick={() => act('power')} />
+              )}>
+              <NumberInput
+                animated
+                value={gas_transfer_rate}
+                step={0.01}
+                width="63px"
+                unit="moles/S"
+                minValue={0}
+                maxValue={1}
+                onDrag={(e, value) => act('rate', {
+                  rate: value,
+                })} />
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section scrollable title="Bluespace Network Gases">
+              <LabeledList>
+                {bluespace_network_gases.map(gas => (
+                  <LabeledList.Item
+                    key={gas.name}
+                    label={getGasLabel(gas.name)}>
+                    <ProgressBar
+                      color={getGasColor(gas.name)}
+                      value={gas.amount}
+                      minValue={0}
+                      maxValue={gasMax}>
+                      {toFixed(gas.amount, 2) + ' moles'}
+                    </ProgressBar>
+                    <NumberInput
+                      animated
+                      value={gas.price}
+                      width="63px"
+                      unit={gas.price === 1 && "credit per mole" || "credits per mole"}
+                      minValue={0}
+                      maxValue={10}
+                      onDrag={(e, value) => act('price', {
+                        gas_price: value,
+                        gas_type: gas.id,
+                      })} />
+                  </LabeledList.Item>
+                ))}
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
