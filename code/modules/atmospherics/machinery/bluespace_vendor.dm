@@ -37,7 +37,6 @@
 			continue
 		register_machine(sender)
 
-
 /obj/machinery/bluespace_vendor/process()
 	if(!selected_gas)
 		return
@@ -55,6 +54,24 @@
 			register_machine(multitool.buffer)
 			to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
 			return TRUE
+
+/obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
+	if(istype(item, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/iron = item
+		if (iron.use(1))
+			empty_tanks++
+			return TRUE
+		return ..()
+	return ..()
+
+/obj/machinery/bluespace_vendor/examine(mob/user)
+	. = ..()
+	if(empty_tanks > 1)
+		. += "<span class='notice'>There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.</span>"
+	else if(empty_tanks == 1)
+		. += "<span class='notice'>There is only one empty tank available, please refill the machine by using iron sheets.</span>"
+	else
+		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
 
 /obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
