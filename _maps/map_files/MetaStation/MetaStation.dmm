@@ -28974,6 +28974,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil,
 /obj/item/assembly/igniter,
+/obj/item/stock_parts/cell,
 /turf/open/floor/iron/white,
 /area/science/research)
 "cXE" = (
