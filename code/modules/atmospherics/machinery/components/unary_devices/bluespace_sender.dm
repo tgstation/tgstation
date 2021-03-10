@@ -2,8 +2,8 @@
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
 
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
+	name = "Bluespace Gas Sender"
+	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
 
 	density = TRUE
 	max_integrity = 300
@@ -44,6 +44,7 @@
 	)
 
 	var/list/vendors
+	var/credits_gained = 0
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize()
 	. = ..()
@@ -153,6 +154,7 @@
 				"area" = get_area(vendor),
 			)))
 	data["vendors_list"] = vendors_list
+	data["credits"] = credits_gained
 	return data
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/ui_act(action, params)
@@ -172,6 +174,6 @@
 
 		if("price")
 			var/gas_type = gas_id2path(params["gas_type"])
-			base_prices[gas_type] = clamp(params["gas_price"], 0, 10)
+			base_prices[gas_type] = clamp(params["gas_price"], 0, 100)
 			. = TRUE
 

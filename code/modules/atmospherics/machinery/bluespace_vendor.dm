@@ -2,8 +2,8 @@
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
 
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
+	name = "Bluespace Gas Vendor"
+	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	density = TRUE
 	max_integrity = 300
@@ -17,6 +17,26 @@
 	var/pumping = FALSE
 	var/inserted_tank = FALSE
 	var/gas_transfer_rate = 0
+	var/tank_cost = 10
+	var/gas_price = 0
+	var/map_spawned = TRUE
+
+/obj/machinery/bluespace_vendor/built
+	map_spawned = FALSE
+
+/obj/machinery/bluespace_vendor/Initialize()
+	. = ..()
+	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
+
+/obj/machinery/bluespace_vendor/LateInitialize()
+	. = ..()
+	if(!map_spawned)
+		return
+	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender in GLOB.machines)
+		if(!sender)
+			continue
+		register_machine(sender)
+
 
 /obj/machinery/bluespace_vendor/process()
 	if(!selected_gas)
@@ -28,18 +48,39 @@
 	if(istype(multitool))
 		if(istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
 			if(connected_machine)
-				to_chat(user, "<span class='notice'>[src] is already connected to [connected_machine].</span>")
-				return TRUE
-			connected_machine = multitool.buffer
-			LAZYADD(connected_machine.vendors, src)
-			RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
+				to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
+			if(!do_after(user, 0.2 SECONDS, src))
+				return
+			playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
+			register_machine(multitool.buffer)
 			to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
 			return TRUE
+
+/obj/machinery/bluespace_vendor/proc/register_machine(var/machine)
+	connected_machine = machine
+	LAZYADD(connected_machine.vendors, src)
+	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
 
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
 	LAZYREMOVE(connected_machine.vendors, src)
 	connected_machine = null
+
+/obj/machinery/bluespace_vendor/proc/check_price(mob/user)
+	var/temp_price = 0
+	for(var/gas_id in internal_tank.air_contents.gases)
+		temp_price += internal_tank.air_contents.total_moles(gas_id) * connected_machine.base_prices[gas_id]
+	gas_price = temp_price
+
+	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
+		var/datum/gas_mixture/remove = internal_tank.air_contents.remove(internal_tank.air_contents.total_moles())
+		connected_machine.bluespace_network.merge(remove)
+		return
+	connected_machine.credits_gained += gas_price + tank_cost
+
+	if(internal_tank && Adjacent(user)) //proper capitalysm take money before goods
+		inserted_tank = FALSE
+		user.put_in_hands(internal_tank)
 
 /obj/machinery/bluespace_vendor/ui_interact(mob/user, datum/tgui/ui)
 	if(!connected_machine)
@@ -106,7 +147,5 @@
 			empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
-			if(internal_tank && Adjacent(usr))
-				inserted_tank = FALSE
-				usr.put_in_hands(internal_tank)
-				. = TRUE
+			check_price(usr)
+			. = TRUE

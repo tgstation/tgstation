@@ -64,6 +64,10 @@ export const BluespaceSender = (props, context) => {
                 onClick={() => act('power')} />
             </>
           )}>
+          <Box>
+            {"The vendors have made " + data.credits + " credits so far."}
+          </Box>
+          <Divider />
           <LabeledList>
             {bluespace_network_gases.map(gas => (
               <>
@@ -78,7 +82,7 @@ export const BluespaceSender = (props, context) => {
                         width="63px"
                         unit="per mole"
                         minValue={0}
-                        maxValue={10}
+                        maxValue={100}
                         onDrag={(e, value) => act('price', {
                           gas_price: value,
                           gas_type: gas.id,
