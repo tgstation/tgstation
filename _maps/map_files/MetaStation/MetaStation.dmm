@@ -36453,11 +36453,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/storage/box/drinkingglasses,
-/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "fDd" = (
@@ -67323,7 +67318,6 @@
 "rWs" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/storage/box/lights/mixed,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -67335,6 +67329,9 @@
 	c_tag = "Service - Starboard";
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "rXb" = (
