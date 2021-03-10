@@ -529,3 +529,18 @@
 	assets = list(
 		"chem_help_advisor.gif" = 'icons/UI_Icons/Advisors/chem_help_advisor.gif',
 	)
+
+/datum/asset/spritesheet/moods
+	name = "moods"
+
+/datum/asset/spritesheet/moods/register()
+	Insert("mood1", 'icons/hud/screen_gen.dmi', "mood1")
+	Insert("mood2", 'icons/hud/screen_gen.dmi', "mood2")
+	Insert("mood3", 'icons/hud/screen_gen.dmi', "mood3")
+	Insert("mood4", 'icons/hud/screen_gen.dmi', "mood4")
+	Insert("mood5", 'icons/hud/screen_gen.dmi', "mood5")
+	Insert("mood6", 'icons/hud/screen_gen.dmi', "mood6")
+	Insert("mood7", 'icons/hud/screen_gen.dmi', "mood7")
+	Insert("mood8", 'icons/hud/screen_gen.dmi', "mood8")
+	Insert("mood9", 'icons/hud/screen_gen.dmi', "mood9")
+	..()
