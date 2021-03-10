@@ -574,8 +574,8 @@
 
 /obj/projectile/spider/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target) && blocked < 100)
-		var/mob/living/l_target = target
-		l_target?.apply_status_effect(STATUS_EFFECT_WEBBED)
+		var/mob/living/living_target = target
+		living_target?.apply_status_effect(STATUS_EFFECT_WEBBED)
 	..()
 
 /obj/projectile/spider/poison
