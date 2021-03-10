@@ -178,7 +178,7 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
-/datum/reagent/consumable/laughter/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/consumable/laughter/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	var/mob/living/carbon/human/reactor = M
 	if(istype(reactor))
 		var/datum/component/mood/mood = reactor.GetComponent(/datum/component/mood)
