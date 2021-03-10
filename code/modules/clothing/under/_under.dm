@@ -315,7 +315,11 @@
 	attached_accessory.pixel_y += 8
 	if(L)
 		attached_accessory.forceMove(L)
+	src.cut_overlays()
+	src.attached_accessory = null
+	src.accessory_overlay = null
+	update_appearance()
 
-/obj/item/clothing/under/rank/Destroy()
+/obj/item/clothing/under/rank/obj_destruction(damage_flag)
 	dump_attachment()
 	return ..()
