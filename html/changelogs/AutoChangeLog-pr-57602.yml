@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Prevents martial arts warping people that they can view into their killing hands with the power of their martial prowess. And a missing adjacency check."

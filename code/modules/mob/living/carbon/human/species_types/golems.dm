@@ -195,6 +195,7 @@
 	meat = /obj/item/stack/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching. You also magnetically attach to surfaces and so don't float without gravity and cannot have positions swapped with other beings."
 	attack_verb = "smash"
+	attack_effect = ATTACK_EFFECT_SMASH
 	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 	prefix = "Plasteel"
 	special_names = null

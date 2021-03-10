@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Prevents Tranquility from being synthesized. No more appearing in botany plants!"
