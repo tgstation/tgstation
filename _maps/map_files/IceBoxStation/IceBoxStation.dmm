@@ -11606,7 +11606,7 @@
 "bba" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "bbb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -11643,7 +11643,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "bbA" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 2"
@@ -11652,7 +11652,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "bbE" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/green,
@@ -11947,7 +11947,7 @@
 /obj/machinery/light,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "bdf" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -26468,7 +26468,7 @@
 "cBm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "cBr" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/bot,
@@ -26969,6 +26969,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
+"cMu" = (
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/service/kitchen/tourist_seating_area)
 "cNc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -33409,6 +33413,9 @@
 "hua" = (
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter)
+"hul" = (
+/turf/open/floor/iron,
+/area/service/kitchen/tourist_seating_area)
 "hun" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
@@ -40829,6 +40836,11 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
+"mFc" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "mFt" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -43198,7 +43210,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "opE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -43580,7 +43592,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "oHS" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -46906,6 +46918,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
+"qYS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/service/kitchen/tourist_seating_area)
 "qYV" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
@@ -48484,7 +48507,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "rZy" = (
 /obj/structure/chair/office,
 /turf/open/floor/wood,
@@ -49645,6 +49668,13 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/qm)
+"sUW" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/service/kitchen/tourist_seating_area)
 "sUX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -49936,7 +49966,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/hallway/primary/starboard)
+/area/service/kitchen/tourist_seating_area)
 "tfw" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
@@ -56121,6 +56151,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
+"xnK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/service/kitchen/tourist_seating_area)
 "xoj" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -56946,6 +56986,10 @@
 "xQa" = (
 /turf/open/floor/wood,
 /area/command/meeting_room)
+"xQr" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/service/kitchen/tourist_seating_area)
 "xQP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -91753,7 +91797,7 @@ jcA
 dLp
 kLH
 wXj
-aYV
+mFc
 iKz
 aYV
 bfF
@@ -95351,9 +95395,9 @@ nUo
 tIN
 mjA
 opx
-rmv
-iKz
-aYV
+cMu
+xnK
+hul
 bfK
 bnM
 biw
@@ -95610,7 +95654,7 @@ mjA
 bbz
 bba
 teo
-aYV
+hul
 bfK
 msX
 biy
@@ -95865,9 +95909,9 @@ nUo
 xiq
 xoj
 oHO
-aYV
-iKz
-aYV
+hul
+xnK
+hul
 bfK
 bfK
 bfK
@@ -96122,9 +96166,9 @@ nZu
 nKP
 pIM
 rZu
-rmv
-iKz
-aYV
+cMu
+xnK
+hul
 ibn
 cyA
 qmk
@@ -96379,8 +96423,8 @@ nUo
 myl
 pIM
 oHO
-aYV
-iKz
+hul
+xnK
 cBm
 ibn
 ife
@@ -96636,8 +96680,8 @@ nUo
 xiq
 ewZ
 oHO
-aYV
-pEE
+hul
+qYS
 bdc
 ibn
 gWO
@@ -96893,9 +96937,9 @@ gfd
 oYr
 mjA
 bbA
-aYV
-iKz
-aYV
+hul
+xnK
+hul
 ibn
 dmG
 vYe
@@ -97149,10 +97193,10 @@ byc
 nEi
 ddo
 mjA
-bbz
-aYV
-pEE
-aYV
+sUW
+xQr
+qYS
+hul
 bfL
 bfL
 bfL
