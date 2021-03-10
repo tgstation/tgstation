@@ -18135,6 +18135,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
 	},
+/obj/structure/closet/crate,
+/obj/item/storage/box/drinkingglasses,
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "bNE" = (
@@ -36453,9 +36456,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/item/storage/box/drinkingglasses,
-/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "fDd" = (
