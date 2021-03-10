@@ -10,8 +10,8 @@
 	var/client/user
 	var/mob/target
 
+	var/dummy_key
 	var/mob/living/carbon/human/dummy/dummy
-
 
 	var/static/list/cached_outfits
 	var/datum/outfit/selected_outfit
@@ -36,10 +36,18 @@
 	return target //if target is gone the UI should close
 
 /datum/select_equipment/ui_close(mob/user)
-	clear_human_dummy("selectequipmentUI_[target]")
+	clear_human_dummy(dummy_key)
 	qdel(src)
 
 /datum/select_equipment/proc/init_dummy()
+	dummy_key = "selectequipmentUI_[target]"
+	dummy = generate_or_wait_for_human_dummy(dummy_key)
+	var/mob/living/carbon/C = target
+	if(istype(C))
+		C.dna.transfer_identity(dummy)
+		dummy.updateappearance()
+
+	unset_busy_human_dummy(dummy_key)
 	return
 
 /datum/select_equipment/ui_static_data(mob/user)
@@ -47,7 +55,10 @@
 	if(!dummy)
 		init_dummy()
 
-	var/icon/dummysprite = get_flat_human_icon(null, dummy_key = "selectequipmentUI_[target]", outfit_override = selected_outfit)
+	var/datum/preferences/prefs
+	if(target.client)
+		prefs = target.client.prefs
+	var/icon/dummysprite = get_flat_human_icon(null, prefs=prefs, dummy_key = dummy_key, outfit_override = selected_outfit)
 	data["icon64"] = icon2base64(dummysprite)
 
 	if(!cached_outfits)

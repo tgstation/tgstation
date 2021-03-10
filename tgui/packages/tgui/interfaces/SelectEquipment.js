@@ -6,6 +6,7 @@ import { Window } from '../layouts';
 export const SelectEquipment = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    name,
     outfits,
     icon64,
   } = data;
@@ -61,7 +62,7 @@ export const SelectEquipment = (props, context) => {
       </Tabs>
     );
 
-
+  // the fact that this is needed at all is wack and I'll make it proper later
   const outfitCategory = () => {
     switch (tabIndex) {
       case "General":
@@ -113,7 +114,8 @@ export const SelectEquipment = (props, context) => {
 
           <Flex.Item grow={2} basis={0}>
             <Section fill
-              title="Pain"
+              title={name}
+              textAlign="center"
               buttons={searchBar}>
               <Box as="img"
                 m={1}
