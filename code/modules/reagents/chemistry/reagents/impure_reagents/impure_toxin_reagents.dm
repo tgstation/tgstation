@@ -3,15 +3,7 @@
 //Invert = Whole conversion
 //Failed = End reaction below purity_min
 
-//START SUBTYPES
-
-//We don't want these to hide - they're helpful!
-
-
-// END SUBTYPES
-
 ////////////////////TOXINS///////////////////////////
-
 
 //Lipolicide
 //impure
@@ -37,7 +29,7 @@
 
 /datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/owner)
 	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
-		eyes.applyOrganDamage(0.5)
+	eyes.applyOrganDamage(0.5)
 	return ..()
 
 
