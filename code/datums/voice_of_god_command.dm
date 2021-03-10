@@ -47,23 +47,29 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/list/mob/living/listeners = list()
 	//used to check if the speaker specified a name or a job to focus on
 	var/list/specific_listeners = list()
+	// string to remove at the end of the following of the following loop, so saying "Burn Mr. Hopkins" doesn't also burn the HoP later when we check jobs.
+	var/to_remove_string
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/living in candidates)
 		if(living.stat != DEAD && living.can_hear() && !living.anti_magic_check(magic = FALSE, holy = TRUE))
 			listeners += living
 
-			var/their_first_name = living.first_name()
 			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"
+			var/their_first_name = living.first_name()
 			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[their_first_name](\\L|$)", "i")))
 				specific_listeners += living //focus on those with the specified name
+				to_remove_string += "[to_remove_string ? "|" : null][their_first_name]"
 				continue
-
-			var/their_role = living.mind?.assigned_role
-			if(their_role && findtext(message, their_role))
-				specific_listeners += living //focus on those with the specified job
+			var/their_last_name = living.last_name()
+			if(!GLOB.all_voice_of_god_triggers.Find(their_last_name) && findtext(message, regex("(\\L|^)[their_last_name](\\L|$)", "i")))
+				specific_listeners += living // Ditto
+				to_remove_string += "[to_remove_string ? "|" : null][their_last_name]"
 
 	if(!listeners.len)
 		return
+	if(to_remove_string)
+		to_remove_string = "(\\L|^)([to_remove_string])(\\L|$)"
+		message = replacetext(message, regex(to_remove_string, "i"), "")
 
 	var/power_multiplier = base_multiplier
 
@@ -82,8 +88,12 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	if(is_cultie)
 		power_multiplier *= 2
 
-	//Get the proper job titles
+	//Now get the proper job titles and check for matches.
 	message = get_full_job_name(message)
+	for(var/mob/living/living in candidates)
+		var/their_role = living.mind?.assigned_role
+		if(their_role && findtext(message, their_role))
+			specific_listeners |= living //focus on those with the specified job. "|=" instead "+=" so "Mrs. Capri the Captain" doesn't get affected twice.
 
 	if(specific_listeners.len)
 		listeners = specific_listeners
