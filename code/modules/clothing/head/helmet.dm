@@ -372,7 +372,7 @@
 	strip_delay = 80
 
 /obj/item/clothing/head/helmet/elder_atmosian
-	name = "Elder Atmosian Helmet"
+	name = "/improper Elder Atmosian Helmet"
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2helmet"
