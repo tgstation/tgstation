@@ -547,6 +547,29 @@ for (var/month in 1 to 12)
 for (var/i in reagents)
 ```
 
+### Avoid double negatives
+Similar to [Avoid negative variable names](#avoid-negative-variable-names), try to avoid double negatives in general. It makes code harder to read.
+
+```dm
+// Bad. You should not lead with negative conditionals, as it creates a double negative.
+if (!hat)
+	request_hat()
+else
+	tip_hat()
+
+// Good
+if (hat)
+	tip_hat()
+else
+	request_hat()
+
+// Bad.
+var/score = !defeated_boss ? 10 : 500
+
+// Good.
+var/score = defeated_boss ? 500 : 10
+```
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
