@@ -36453,6 +36453,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/storage/box/drinkingglasses,
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "fDd" = (
@@ -67324,14 +67327,12 @@
 	},
 /obj/item/cultivator,
 /obj/item/clothing/head/chefhat,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/camera{
 	c_tag = "Service - Starboard";
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/lights/mixed,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "rXb" = (
