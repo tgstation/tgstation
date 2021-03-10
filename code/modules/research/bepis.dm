@@ -61,6 +61,9 @@
 		return
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/Card = O
+		if(istype(Card, /obj/item/card/id/departmental_budget)
+			say("Nanotrasen legal accountability services would like you remind you not to try and siphon funds from your department. Please use another card.")
+			return
 		if(Card.registered_account)
 			account = Card.registered_account
 			account_name = Card.registered_name
