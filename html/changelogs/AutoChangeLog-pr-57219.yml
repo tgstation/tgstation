@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - balance: "Removed extra brute healing from Quadruple Sec drink for security personnel."
+  - balance: "Removed extra brute, burn, oxygen and toxin healing from Quintuple Sec drink for security personnel."

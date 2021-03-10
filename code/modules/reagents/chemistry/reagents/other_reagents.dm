@@ -2364,7 +2364,6 @@
 	description = "A highly mutative liquid of unknown origin."
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	penetrates_skin = NONE
 
 /datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)

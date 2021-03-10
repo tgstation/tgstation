@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Uranium, bananium and bluespace golems and ethereals now properly show visual attack effects on do_attack_animation()."
+  - rscadd: "simple animals can now have their own visual attack effects instead of just punch or smash. e.g. carps bite and hivebots claw."
+  - imageadd: "the slash attack effect now has a sprite."

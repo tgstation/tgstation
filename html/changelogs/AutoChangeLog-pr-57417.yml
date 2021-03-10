@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - bugfix: "Ethereals can once again channel power into APCs. Right click an APC with an open hand off of combat mode to do so (and to drain, do it on combat mode)."
