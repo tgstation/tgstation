@@ -56,7 +56,7 @@
 			to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
 			return TRUE
 
-/obj/machinery/bluespace_vendor/proc/register_machine(var/machine)
+/obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
 	LAZYADD(connected_machine.vendors, src)
 	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
