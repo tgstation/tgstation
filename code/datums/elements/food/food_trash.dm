@@ -42,10 +42,9 @@
 
 	var/obj/item/trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
 
-	if(istype(edible_object.loc))
-		var/mob/living/food_holding_mob = edible_object.loc
+	var/mob/living/food_holding_mob = edible_object.loc
+	if(istype(food_holding_mob))
 		food_holding_mob.put_in_hands(trash_item)
-		return
 
 /datum/element/food_trash/proc/food_crossed(datum/source, mob/crosser, bitecount)
 	SIGNAL_HANDLER
