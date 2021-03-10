@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "PDA & ID Painter no longer talks about itself so much in warning messages."
-  - bugfix: "PDA & ID Painter will now correctly paint Assistant trims and clown PDA skins instead of failing in certain edge cases."

@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - qol: "Stat panel and verb tabs now have smoother size scaling to higher resolutions, switching from fixed-width buttons to a fixed number of variable-width columns depending on screen resolution."
