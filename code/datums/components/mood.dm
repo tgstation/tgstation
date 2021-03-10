@@ -295,7 +295,7 @@
 	qdel(event)
 	update_mood()
 	
-/datum/component/mood/proc/has_event(category)
+/datum/component/mood/proc/get_event(category)
 	if(!istext(category))
 		category = REF(category)
 	return mood_events[category]
