@@ -129,7 +129,7 @@
 		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
 /obj/item/pen/attack(mob/living/M, mob/user, params)
-	if(force)	// If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
+	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
 		return ..()
 	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
@@ -191,11 +191,11 @@
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user, params)
 	. = ..()
-	if(!.) //If we didn't stab them, no injection.
+	if(!.)
 		return
-	if(!reagents.total_volume) //If we don't have reagents in the pen, no injection.
+	if(!reagents.total_volume)
 		return
-	if(!M.reagents) //If the target doesn't have a reagents container, no injection.
+	if(!M.reagents)
 		return
 	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
 
