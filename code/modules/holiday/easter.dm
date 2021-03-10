@@ -94,7 +94,8 @@
 	icon_state = "bunnyhead"
 	inhand_icon_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
-	slowdown = -1
+	slowdown = -0.3
+	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/bunnysuit
@@ -102,7 +103,8 @@
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	inhand_icon_state = "bunnysuit"
-	slowdown = -1
+	slowdown = -0.3
+	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
