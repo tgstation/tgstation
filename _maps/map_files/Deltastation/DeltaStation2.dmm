@@ -19331,7 +19331,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "bKx" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -57471,6 +57471,22 @@
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
 /area/medical/virology)
+"dXs" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/security/interrogation)
 "dXA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -62654,7 +62670,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "fbz" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -64689,7 +64705,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "fRk" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -68355,7 +68371,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "hlP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -68382,6 +68398,20 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"hmd" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/security/interrogation)
 "hmo" = (
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_x = 32;
@@ -74604,7 +74634,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "jDv" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -76936,8 +76966,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "ksV" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
@@ -78236,7 +78270,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "kVJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -81086,7 +81120,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "lYb" = (
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
@@ -82814,7 +82848,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "mCi" = (
 /obj/machinery/light{
 	dir = 4
@@ -84089,7 +84123,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "nac" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -94329,7 +94363,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "qBO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -94680,6 +94714,11 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"qHn" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/interrogation)
 "qHA" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -96987,7 +97026,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "rAP" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
@@ -100140,7 +100179,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/brig)
 "sMV" = (
 /obj/machinery/light{
 	dir = 1
@@ -100724,7 +100763,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "sYF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -103308,7 +103347,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "tXm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -107674,7 +107713,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "vCJ" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/item/radio/intercom{
@@ -109646,7 +109685,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "wpW" = (
 /turf/closed/wall/r_wall,
 /area/command/heads_quarters/hop)
@@ -109916,6 +109955,19 @@
 	},
 /turf/open/floor/iron,
 /area/service/janitor)
+"wvl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/security/interrogation)
 "wvt" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -110258,7 +110310,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "wBD" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -111760,7 +111812,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/office)
+/area/security/interrogation)
 "xhy" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
@@ -166745,9 +166797,9 @@ oXg
 hQM
 xYt
 tuZ
-wTx
+hmd
 qBM
-etJ
+wvl
 tuZ
 tyx
 bHE
@@ -167002,7 +167054,7 @@ sAv
 uyV
 sIg
 tuZ
-etJ
+wvl
 wpg
 wBq
 tuZ
@@ -167259,7 +167311,7 @@ sWf
 nOL
 ohQ
 fQY
-etJ
+wvl
 jDh
 fbr
 tuZ
@@ -167773,9 +167825,9 @@ lTi
 jFj
 jCE
 tuZ
-etJ
-etJ
-etJ
+wvl
+wvl
+wvl
 tuZ
 bFP
 bHI
@@ -168030,9 +168082,9 @@ fNO
 nxf
 qUA
 tuZ
-vZk
-vZk
-vZk
+qHn
+qHn
+qHn
 tuZ
 bFQ
 bHJ
@@ -168801,7 +168853,7 @@ kAO
 qVt
 pJV
 vZk
-wTx
+dXs
 sYy
 lXR
 tuZ

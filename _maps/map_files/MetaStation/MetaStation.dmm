@@ -5813,7 +5813,7 @@
 "avj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "avk" = (
 /turf/open/floor/iron/dark,
 /area/security/brig)
@@ -6134,7 +6134,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "awv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -6143,7 +6143,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "aww" = (
 /obj/structure/chair{
 	dir = 4
@@ -6152,7 +6152,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "awx" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
@@ -6160,7 +6160,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "awy" = (
 /obj/structure/chair{
 	dir = 8
@@ -6169,7 +6169,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "awz" = (
 /obj/machinery/camera{
 	c_tag = "Interrogation room";
@@ -6180,7 +6180,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "awA" = (
 /obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
@@ -6427,7 +6427,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "axz" = (
 /obj/structure/table,
 /obj/item/folder/red,
@@ -6440,19 +6440,19 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "axA" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "axB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/interrogation)
 "axL" = (
 /obj/item/caution,
 /obj/effect/turf_decal/stripes/line{
@@ -32881,6 +32881,11 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"eiq" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/iron/grimy,
+/area/security/interrogation)
 "ejl" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -35666,7 +35671,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/iron/grimy,
-/area/security/office)
+/area/security/interrogation)
 "flP" = (
 /obj/machinery/sparker{
 	id = "Xenobio";
@@ -37415,7 +37420,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/grimy,
-/area/security/office)
+/area/security/interrogation)
 "fYp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -51982,6 +51987,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/cargo/storage)
+"lYw" = (
+/turf/closed/wall/r_wall,
+/area/security/interrogation)
 "lYK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -52724,6 +52732,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"mmE" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23
+	},
+/turf/open/floor/iron/dark,
+/area/security/interrogation)
 "mmH" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -54369,6 +54384,9 @@
 	icon_state = "wood-broken3"
 	},
 /area/maintenance/port/aft)
+"mTI" = (
+/turf/open/floor/iron/dark,
+/area/security/interrogation)
 "mTR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -55875,7 +55893,7 @@
 "nyI" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
-/area/security/office)
+/area/security/interrogation)
 "nyO" = (
 /obj/machinery/computer/secure_data{
 	dir = 8
@@ -59160,6 +59178,7 @@
 	name = "Interrogation Monitoring";
 	req_one_access_txt = "1;4"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/security/office)
 "oQH" = (
@@ -63358,14 +63377,14 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "qxj" = (
-/mob/living/simple_animal/bot/mulebot{
-	name = "Leaping Rabbit"
-	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/decal/cleanable/blood/gibs/down,
+/mob/living/simple_animal/bot/mulebot{
+	name = "Leaping Rabbit"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "qxl" = (
@@ -63442,6 +63461,9 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
+"qxL" = (
+/turf/closed/wall,
+/area/security/interrogation)
 "qyj" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -66030,7 +66052,7 @@
 "rzp" = (
 /obj/structure/chair,
 /turf/open/floor/iron/grimy,
-/area/security/office)
+/area/security/interrogation)
 "rzE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -69245,7 +69267,7 @@
 	pixel_y = -30
 	},
 /turf/open/floor/iron/grimy,
-/area/security/office)
+/area/security/interrogation)
 "sMw" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -72108,11 +72130,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "tUt" = (
-/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
+/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "tUK" = (
@@ -72208,7 +72230,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/iron/grimy,
-/area/security/office)
+/area/security/interrogation)
 "tXy" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
@@ -75336,6 +75358,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"vkp" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/security/office)
 "vks" = (
 /obj/structure/chair/office/light,
 /obj/structure/disposalpipe/segment{
@@ -81924,8 +81953,9 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "xWG" = (
+/obj/structure/cable,
 /turf/open/floor/iron/grimy,
-/area/security/office)
+/area/security/interrogation)
 "xWI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -114565,7 +114595,7 @@ qdW
 xvZ
 vuS
 vST
-vuS
+vkp
 oXY
 rmG
 ajm
@@ -114827,7 +114857,7 @@ rmG
 rmG
 avj
 awv
-avk
+mTI
 ayJ
 ayJ
 ayJ
@@ -115078,14 +115108,14 @@ gpr
 tPK
 rmG
 tRd
-rmG
+lYw
 xWG
 rzp
 nyI
-avk
+mTI
 aww
 axy
-ahx
+qxL
 azW
 aBq
 aqb
@@ -115335,14 +115365,14 @@ vTB
 ljC
 anD
 aoL
-wZI
-xWG
+qxL
+eiq
 sLf
 nyI
-avk
+mTI
 awx
 axz
-ahx
+qxL
 azX
 aoP
 wpL
@@ -115592,14 +115622,14 @@ ldD
 pBm
 rmG
 aoM
-wZI
+qxL
 fYg
 rzp
 nyI
-avk
+mTI
 awy
 axA
-ahx
+qxL
 dhz
 aoP
 wpL
@@ -115849,14 +115879,14 @@ rmG
 rmG
 rmG
 aoN
-wZI
+qxL
 tXs
 flO
-wZI
-avk
+qxL
+mmE
 awz
 axB
-ahx
+qxL
 azY
 aoP
 wpL
@@ -116106,14 +116136,14 @@ ala
 amt
 agq
 dhr
-wZI
-wZI
-wZI
-wZI
-ahx
-ahx
-ahx
-ahx
+qxL
+qxL
+qxL
+qxL
+qxL
+qxL
+qxL
+qxL
 aGE
 aBr
 aCz

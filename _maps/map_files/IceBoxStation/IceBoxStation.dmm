@@ -828,7 +828,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "acY" = (
 /obj/structure/closet/crate,
 /obj/item/food/breadslice/plain,
@@ -1039,7 +1039,7 @@
 "adG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "adH" = (
 /turf/open/floor/iron/white,
 /area/security/prison)
@@ -1746,7 +1746,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "agt" = (
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
@@ -1787,7 +1787,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "agI" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -1796,23 +1796,23 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "agJ" = (
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "agK" = (
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "agL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "agM" = (
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
@@ -1943,12 +1943,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "ahq" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "ahr" = (
 /obj/structure/closet{
 	name = "Evidence Closet"
@@ -2116,7 +2116,7 @@
 /obj/item/folder/red,
 /obj/item/taperecorder,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "ahW" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/camera{
@@ -2219,7 +2219,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "ain" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -2269,14 +2269,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "aiC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "aiD" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/dark,
@@ -2286,8 +2292,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "aiF" = (
 /obj/structure/bed,
 /obj/item/clothing/suit/straight_jacket,
@@ -2425,7 +2432,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/security/prison)
+/area/security/interrogation)
 "aiX" = (
 /turf/closed/wall/r_wall,
 /area/security/brig)
@@ -29150,6 +29157,13 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"epX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/security/interrogation)
 "eqa" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
 	dir = 8
@@ -52715,6 +52729,9 @@
 	},
 /turf/open/floor/iron,
 /area/command/bridge)
+"vfl" = (
+/turf/closed/wall/r_wall,
+/area/security/interrogation)
 "vfm" = (
 /obj/machinery/piratepad/civilian,
 /obj/effect/turf_decal/tile/brown,
@@ -82108,11 +82125,11 @@ aNk
 arS
 aTq
 aai
-aai
-aai
-aai
-aai
-aai
+vfl
+vfl
+vfl
+vfl
+aiV
 ajt
 akc
 akJ
@@ -82369,7 +82386,7 @@ agL
 agK
 agK
 aiB
-aai
+aiX
 aiX
 akf
 aiX
@@ -82626,7 +82643,7 @@ agH
 ags
 ags
 aiC
-acd
+agj
 ajv
 ake
 agj
@@ -82882,8 +82899,8 @@ acd
 agI
 ahq
 ahV
-aiC
-acd
+epX
+agj
 lov
 akh
 afK
@@ -83139,8 +83156,8 @@ acd
 agJ
 ahp
 ahp
-aiC
-acd
+epX
+agj
 ajx
 akg
 agj

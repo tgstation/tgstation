@@ -874,7 +874,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "abI" = (
 /obj/structure/chair{
 	dir = 8
@@ -884,7 +884,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "abJ" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/plating/asteroid,
@@ -1055,10 +1055,7 @@
 /turf/open/floor/iron,
 /area/security/warden)
 "acc" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "security maintenance";
-	req_one_access_txt = "4;63"
-	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/port/aft)
 "acd" = (
@@ -1415,7 +1412,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "acJ" = (
 /obj/machinery/light_switch{
 	pixel_x = 24
@@ -1483,7 +1480,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "acQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -1658,16 +1655,11 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "adj" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "adk" = (
 /obj/machinery/button/door{
 	id = "bank";
@@ -2360,7 +2352,7 @@
 /obj/item/wirerod,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "aeK" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
@@ -5902,7 +5894,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "alS" = (
 /obj/structure/rack,
 /obj/item/gun/energy/disabler{
@@ -6091,12 +6083,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/science/robotics/lab)
 "amn" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "amo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -8650,7 +8640,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "asi" = (
 /turf/closed/wall/r_wall,
 /area/medical/morgue)
@@ -11969,7 +11959,7 @@
 	},
 /obj/item/pen/blue,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "aAO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12170,7 +12160,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "aBI" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -17064,7 +17054,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "aQk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -17318,7 +17308,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "aQF" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -32919,7 +32909,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "bLy" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
@@ -32935,7 +32925,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "bLB" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -32948,7 +32938,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "bLE" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -32960,7 +32950,7 @@
 	pixel_x = 24
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "bLH" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/orange,
@@ -33154,7 +33144,7 @@
 	pixel_x = -26
 	},
 /turf/open/floor/iron/dark,
-/area/security/warden)
+/area/security/interrogation)
 "bMy" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -54429,6 +54419,9 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/service/hydroponics)
+"dkd" = (
+/turf/closed/wall/r_wall,
+/area/security/interrogation)
 "dky" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -57371,6 +57364,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/bar)
+"eSq" = (
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/aft)
 "eSG" = (
 /obj/machinery/computer/mecha{
 	dir = 1
@@ -79502,6 +79501,9 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
+"rgd" = (
+/turf/closed/wall/r_wall/rust,
+/area/security/interrogation)
 "rgn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -81028,10 +81030,10 @@
 "rZn" = (
 /obj/structure/bed/dogbed/ian,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /mob/living/simple_animal/pet/dog/corgi/ian{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "rZN" = (
@@ -114685,7 +114687,7 @@ bVo
 bWS
 bYF
 bVq
-agX
+dkd
 ash
 acI
 bLs
@@ -114942,7 +114944,7 @@ aer
 afm
 bYI
 bVt
-aag
+rgd
 alR
 acO
 bLz
@@ -115199,7 +115201,7 @@ cou
 bEI
 buk
 cyy
-agX
+dkd
 abH
 aAN
 bLB
@@ -115456,7 +115458,7 @@ bqx
 bMR
 bYO
 bzO
-agX
+dkd
 abI
 adi
 bLz
@@ -115713,11 +115715,11 @@ ajd
 cAb
 bYR
 cab
-agX
+dkd
 amn
 adj
 bLE
-agX
+dkd
 aag
 agX
 agX
@@ -115970,11 +115972,11 @@ ajd
 aer
 cwO
 caf
-aag
-agX
+rgd
+dkd
 acc
-agX
-agX
+dkd
+dkd
 bmz
 bBq
 arq
@@ -116229,7 +116231,7 @@ ajd
 bYR
 cbc
 cou
-bMR
+eSq
 bZh
 ajd
 bpl

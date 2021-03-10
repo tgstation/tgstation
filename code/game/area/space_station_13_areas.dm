@@ -1113,6 +1113,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "sec_cremation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/security/interrogation
+	name = "Interrogation Room"
+	icon_state =  "interrogation"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /area/security/warden
 	name = "Brig Control"
 	icon_state = "warden"
