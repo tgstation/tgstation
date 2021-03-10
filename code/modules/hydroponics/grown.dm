@@ -75,7 +75,7 @@
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
 	return
 
-///Callback for bonus behavior for generating trash of grown food.
+/// Callback proc for bonus behavior for generating trash of grown food. Used by [/datum/element/food_trash].
 /obj/item/food/grown/proc/generate_trash()
 	// If this is some type of grown thing, we pass a seed arg into its Inititalize()
 	if(istype(trash_type, /obj/item/grown) || istype(trash_type, /obj/item/food/grown))
