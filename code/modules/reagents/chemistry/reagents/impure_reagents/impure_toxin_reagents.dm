@@ -13,8 +13,8 @@
 	ph = 7
 	liver_damage = 0
 
-/datum/reagent/impurity/ipecacide/on_mob_metabolize(mob/living/carbon/owner)
-	owner.adjust_disgust(100)
+/datum/reagent/impurity/ipecacide/on_mob_add(mob/living/carbon/owner)
+	owner.adjust_disgust(60)
 	..()
 
 
