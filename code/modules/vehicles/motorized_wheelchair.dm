@@ -149,7 +149,7 @@
 		disabled.adjustStaminaLoss(40)
 		if(isliving(A))
 			var/mob/living/ramtarget = A
-			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
+			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(80)
 			ramtarget.adjustStaminaLoss(35)
