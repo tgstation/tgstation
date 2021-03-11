@@ -41,7 +41,7 @@
 	to_chat(usr, "Done! Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.txt OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .txt default program! Try downloading it instead, and use that file to set a default program! Have a nice day!")
 
 
-//Generate the big list of reagent based reactions.
+/// Generate the big list of reagent based reactions.
 /proc/generate_chemwiki_line(datum/reagent/reagent, datum/chemical_reaction/reaction)
 	//name | Reagent pH | reagents | reaction temp | Overheat temp | pH range | Kinetics | description | OD level | Addiction level | Metabolism rate | impure chem | inverse chem
 
@@ -196,4 +196,3 @@
 
 	outstring += "\n|-"
 	return outstring
-
