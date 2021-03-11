@@ -263,15 +263,11 @@
 
 /obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	if(!phasing || get_charge() <= phasing_energy_drain || throwing)
-		return blocker_opinion
+		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	use_power(phasing_energy_drain)
-	addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 	var/area/destination_area = target.loc
 	if(destination_area.area_flags & NOTELEPORT)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from phasing here!</span>")
-		spark_system.start()
 		return FALSE
 	return TRUE
 
@@ -551,7 +547,7 @@
 			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
-			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
+			if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
 				to_chat(livinguser, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
 			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
@@ -683,13 +679,19 @@
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
 	. = step(src,direction, dir)
-
+	if(phasing)
+		use_power(phasing_energy_drain)
 	if(strafe)
 		setDir(olddir)
 
 
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	. = ..()
+	if(phasing) //Theres only one cause for phasing canpass fails
+		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from phasing here!</span>")
+		spark_system.start()
+		return
 	if(.) //mech was thrown/door/whatever
 		return
 	if(bumpsmash) //Need a pilot to push the PUNCH button.
