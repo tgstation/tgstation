@@ -536,7 +536,7 @@
 
 /datum/asset/spritesheet/moods/register()
 	for(var/i in 1 to 9)
-		var/target_to_insert = "mood"+iconinserted
+		var/target_to_insert = "mood"+"[iconinserted]"
 		Insert(target_to_insert, 'icons/hud/screen_gen.dmi', target_to_insert)
 		iconinserted++
 	..()
