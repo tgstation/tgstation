@@ -1,0 +1,94 @@
+{
+	"adventure_name": "SYNDIKILLER 2000",
+	"starting_node": "SYNDI1",
+	"starting_qualities": {
+		"HP": 3
+	},
+	"required_site_traits": [
+		"technology present"
+	],
+	"loot_categories": [
+		"weapons"
+	],
+	"scan_band_mods": {
+		"Hydrocarbons/Molecular oxygen": 1,
+		"Narrow-band radio waves": 1
+	},
+	"triggers": [],
+	"nodes": [
+		{
+			"name": "SYNDI1",
+			"description": "YOU SEE A SYNDIE",
+			"choices": [
+				{
+					"key": "C1",
+					"name": "KILL SYNDIE",
+					"exit_node": "SYNDI2",
+					"requirements": [
+						{
+							"quality": "HP",
+							"operator": ">",
+							"value": 0
+						}
+					]
+				},
+				{
+					"key": "C2",
+					"name": "DIE TO SYNDIE",
+					"exit_node": "FAIL"
+				},
+				{
+					"key": "C3",
+					"name": "GET HIT",
+					"exit_node": "SYNDI1",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "HP",
+							"value": -1
+						}
+					]
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,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"
+		},
+		{
+			"name": "SYNDI2",
+			"description": "YOU SEE ANOTHER SYNDIE, HE SEEMS MORE GEARED UP",
+			"choices": [
+				{
+					"key": "C1",
+					"name": "KILL THE OTHER SYNDIE",
+					"exit_node": "WIN",
+					"requirements": [
+						{
+							"quality": "HP",
+							"operator": ">",
+							"value": 0
+						}
+					]
+				},
+				{
+					"key": "C2",
+					"name": "DIE TO SYNDIE",
+					"exit_node": "FAIL"
+				},
+				{
+					"key": "C3",
+					"name": "GET HIT",
+					"exit_node": "SYNDI2",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "HP",
+							"value": -2
+						}
+					]
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,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"
+		}
+	]
+}

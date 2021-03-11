@@ -527,6 +527,15 @@
 		Insert(id, fish_icon, fish_icon_state)
 	..()
 
+/datum/asset/simple/adventure
+	assets = list(
+		"default" = 'icons/adventure/default.png',
+		"grue" = 'icons/adventure/grue.png',
+		"signal_lost" ='icons/adventure/signal_lost.png',
+		"trade" = 'icons/adventure/trade.png',
+	)
+
+
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")

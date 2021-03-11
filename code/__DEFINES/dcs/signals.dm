@@ -1144,3 +1144,20 @@
 
 ///from /obj/item/assembly/proc/pulsed()
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
+
+/// Exoprobe adventure finished
+#define COMSIG_ADVENTURE_FINISHED "adventure_done"
+
+#define COMSIG_ADVENTURE_QUALITY_INIT "adventure_quality_init"
+
+#define COMSIG_ADVENTURE_DELAY_START "adventure_delay_start"
+#define COMSIG_ADVENTURE_DELAY_END "adventure_delay_end"
+
+/// Exoprobe status changed
+#define COMSIG_EXODRONE_STATUS_CHANGED "exodrone_status_changed"
+
+/// Scanner controller signals
+#define COMSIG_EXOSCAN_STARTED "exoscan_started"
+#define COMSIG_EXOSCAN_FINISHED "exoscan_finished"
+/// Exoscan datum signals
+#define COMSIG_EXOSCAN_INTERRUPTED "exoscan_interrupted"
