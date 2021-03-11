@@ -832,24 +832,24 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
-		var/mob/living/alive = usr
-		if(istype(alive) && alive.incapacitated()) // are we alive? are we handcuffed?
-			apply_outline(COLOR_RED_GRAY) //red meeans stop trying to click on it
+		var/mob/living/living_user = usr
+		if(istype(living_user) && living_user.incapacitated()) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
+			apply_outline(COLOR_RED_GRAY)
 		else
-			apply_outline()
+			apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
 
 /obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	remove_outline() //remove the outline when we drag and drop this
-
+	remove_outline() //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
+e
 /obj/item/MouseExited()
-	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
+	deltimer(tip_timer) //delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 	remove_outline()
 
 /obj/item/proc/apply_outline(outline_color = null)
-	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr)) //are we real? are we somewhere in a GUI? is the person hovering over the item a ghost?
-		return
+	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
+th		return
 	var/theme = lowertext(usr.client.prefs.UI_style)
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
 		switch(theme) //yeah it kinda has to be this way
@@ -870,7 +870,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			else //this should never happen, hopefully
 				outline_color = COLOR_WHITE
 	if(color)
-		outline_color = COLOR_WHITE //if the item is recolored then the outline will be too, blame byond
+		outline_color = COLOR_WHITE //if the item is recolored then the outline will be too, let's make the outline white so it becomes the same color instead of some ugly mix of the theme and the tint
 	if(outline_filter)
 		filters -= outline_filter
 	outline_filter = filter(type="outline", size=1, color=outline_color)
