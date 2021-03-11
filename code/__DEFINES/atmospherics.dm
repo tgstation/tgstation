@@ -41,9 +41,16 @@
 #define MOLES_N2STANDARD (MOLES_CELLSTANDARD*N2STANDARD)
 /// liters in a cell
 #define CELL_VOLUME 2500
-
-/// liters in a normal breath. note that breaths are taken once every 4 life ticks, which is 8 seconds
-#define BREATH_VOLUME 2
+/** liters in a normal breath. note that breaths are taken once every 4 life ticks, which is 8 seconds
+ * Addendum for people tweaking this value in the future.
+ * Because o2 tank release values/human o2 requirements are very strictly set to the same pressure, small errors can cause breakage
+ * This comes from QUANTIZE being used in /datum/gas_mixture.remove(), forming a slight sawtooth pattern of the added/removed gas, centered on the actual pressure
+ * Changing BREATH_VOLUME can set us on the lower half of this sawtooth, making humans unable to breath at standard pressure.
+ * There's no good way I can come up with to hardcode a fix for this. So if you're going to change this variable
+ * graph the functions that describe how it is used/how it interacts with breath code, and pick something on the upper half of the sawtooth
+ *
+**/
+#define BREATH_VOLUME 1.99
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
