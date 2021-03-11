@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
-	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	icon_state = "freezer"
+	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon_state = "bluespace_sender"
 
 	name = "Bluespace Gas Sender"
 	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
@@ -70,7 +70,7 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
+		add_overlay(getpipeimage(icon, "pipe", initialize_directions))
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/process_atmos()
 	if(!is_operational || !on || !nodes[1])  //if it has no power or its switched off, dont process atmos
