@@ -34,15 +34,15 @@
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/setDir(newdir)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
