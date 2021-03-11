@@ -377,7 +377,7 @@
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2helmet"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
-	custom_materials = list(/datum/material/metalhydrogen = 5)
+	custom_materials = list(/datum/material/metalhydrogen = 10000)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
