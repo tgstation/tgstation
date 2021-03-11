@@ -31,11 +31,11 @@ const { regQuery } = require('./cbt/winreg');
 
 const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/releases/*')
-  .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/yarn.lock')
   .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
-  .depends('tgui/packages/**/*.+(js|jsx|ts|tsx|cjs|mjs|scss)')
+  .depends('tgui/packages/**/*.js')
+  .depends('tgui/packages/**/*.jsx')
   .provides('tgui/public/tgui.bundle.css')
   .provides('tgui/public/tgui.bundle.js')
   .provides('tgui/public/tgui-common.bundle.js')
@@ -44,9 +44,9 @@ const taskTgui = new Task('tgui')
   .build(async () => {
     // Instead of calling `tgui/bin/tgui`, we reproduce the whole pipeline
     // here for maximum compilation speed.
-    const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
+    const yarnRelease = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
       .replace('/tgui/', '/');
-    const yarn = args => exec('node', [yarnPath, ...args], {
+    const yarn = args => exec('node', [yarnRelease, ...args], {
       cwd: './tgui',
     });
     await yarn(['install']);
@@ -62,6 +62,7 @@ const taskDm = new Task('dm')
   .depends('interface/**')
   .depends('tgui/public/tgui.html')
   .depends('tgui/public/*.bundle.*')
+  .depends('tgui/public/*.chunk.*')
   .depends('tgstation.dme')
   .provides('tgstation.dmb')
   .provides('tgstation.rsc')
@@ -108,8 +109,13 @@ const taskDm = new Task('dm')
         process.platform === 'win32' && 'dm.exe'
         || 'DreamMaker'
       );
-    })();
-    await exec(dmPath, ['tgstation.dme']);
+      if (installPath) {
+        compiler = resolvePath(installPath, 'bin/dm.exe');
+      }
+    } else {
+      compiler = 'DreamMaker';
+    }
+    await exec(compiler, ['tgstation.dme']);
   });
 
 // Frontend
@@ -118,7 +124,7 @@ const tasksToRun = [
   taskDm,
 ];
 
-if (process.env.TG_BUILD_TGS_MODE) {
+if (process.env['TG_BUILD_TGS_MODE']) {
   tasksToRun.pop();
 }
 

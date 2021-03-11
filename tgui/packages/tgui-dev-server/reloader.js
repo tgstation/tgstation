@@ -8,6 +8,7 @@ import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import os from 'os';
 import { basename } from 'path';
+import { promisify } from 'util';
 import { resolveGlob, resolvePath } from './util.js';
 import { regQuery } from './winreg.js';
 import { DreamSeeker } from './dreamseeker.js';
@@ -103,10 +104,12 @@ export const reloadByondCache = async bundleDir => {
       }
       logger.log(`copied ${assets.length} files to '${cacheDir}'`);
     }
-    catch (err) {
-      logger.error(`failed copying to '${cacheDir}'`);
-      logger.error(err);
+    // Copy assets
+    for (let asset of assets) {
+      const destination = resolvePath(cacheDir, basename(asset));
+      await promisify(fs.copyFile)(asset, destination);
     }
+    logger.log(`copied ${assets.length} files to '${cacheDir}'`);
   }
   // Notify dreamseeker
   const dss = await dssPromise;
