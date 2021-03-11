@@ -95,6 +95,10 @@
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
+/obj/structure/holosign/barrier/atmos/sturdy
+	name = "sturdy holofirelock"
+	max_integrity = 150
+
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE, TRUE)
