@@ -10,6 +10,7 @@
 	clean_type = CLEAN_TYPE_BLOOD
 	var/dryname = "dried blood" //when the blood lasts long enough, it becomes dry and gets a new name
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
+	var/drytime = 0
 
 /obj/effect/decal/cleanable/blood/Initialize()
 	. = ..()
@@ -18,18 +19,31 @@
 	else
 		dry()
 
+/obj/effect/decal/cleanable/blood/process()
+	if(world.time > drytime)
+		dry()
+
+/obj/effect/decal/cleanable/blood/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/effect/decal/cleanable/blood/proc/get_timer()
+	drytime = world.time + 3 MINUTES
+
 /obj/effect/decal/cleanable/blood/proc/start_drying()
-	addtimer(CALLBACK(src, .proc/dry), 3 MINUTES)
+	get_timer()
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/proc/dry()
 	if(bloodiness > 20)
 		bloodiness -= BLOOD_AMOUNT_PER_DECAL
-		start_drying()
+		get_timer()
 	else
 		name = dryname
 		desc = drydesc
 		bloodiness = 0
 		color =  COLOR_GRAY //not all blood splatters have their own sprites... It still looks pretty nice
+		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
