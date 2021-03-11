@@ -14,6 +14,7 @@
 	var/mob/living/carbon/human/dummy/dummy
 
 	var/static/list/cached_outfits
+	var/static/list/cached_custom_outfits = list()
 	var/datum/outfit/selected_outfit = /datum/outfit/job/ce
 
 /datum/select_equipment/New(usr, mob/M)
@@ -50,11 +51,19 @@
 	unset_busy_human_dummy(dummy_key)
 	return
 
-/datum/select_equipment/proc/make_job_entries(list/L)
-	var/entries = list()
+/datum/select_equipment/proc/make_outfit_entries(list/L)
+	var/list/entries = list()
 	for(var/path in L)
 		var/datum/outfit/O = path
 		entries[path] = initial(O.name)
+	return sortList(entries)
+
+//GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
+/datum/select_equipment/proc/make_custom_outfit_entries(list/L)
+	var/list/entries = list()
+	for(var/datum/outfit/O in L)
+		cached_custom_outfits[O.name] = O
+		entries[O.name] = O.name //it's either this or special handling on the UI side
 	return sortList(entries)
 
 /datum/select_equipment/ui_static_data(mob/user)
@@ -71,11 +80,12 @@
 	if(!cached_outfits)
 		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
 		cached_outfits = list()
-		cached_outfits["General"] = list(/datum/outfit = "Naked") + make_job_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
-		cached_outfits["Jobs"] = make_job_entries(typesof(/datum/outfit/job))
-		cached_outfits["Plasmamen Outfits"] = make_job_entries(typesof(/datum/outfit/plasmaman))
+		cached_outfits["General"] = list(/datum/outfit = "Naked") + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
+		cached_outfits["Jobs"] = make_outfit_entries(typesof(/datum/outfit/job))
+		cached_outfits["Plasmamen Outfits"] = make_outfit_entries(typesof(/datum/outfit/plasmaman))
 
-	cached_outfits["Custom"] = list("click confirm to create one" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
+
+	cached_outfits["Custom"] = list("Click confirm to open the outfit manager" = "Create a custom outfit...") + make_custom_outfit_entries(GLOB.custom_outfits)
 
 	data["outfits"] = cached_outfits
 	data["name"] = target
@@ -83,6 +93,16 @@
 	return data
 
 
+/datum/select_equipment/proc/resolve_outfit(text)
+	var/path = text2path(text)
+
+	if(ispath(path, /datum/outfit))
+		return new path
+
+	else //don't bail yet - could be a special option or custom outfit
+		var/datum/outfit/custom_outfit = cached_custom_outfits[text]
+		if(istype(custom_outfit))
+			return custom_outfit
 
 /datum/select_equipment/ui_act(action, params)
 	. = ..()
@@ -91,25 +111,19 @@
 	message_admins("ui act - [action] | [english_list(params)]")
 	switch(action)
 		if("preview")
-			var/path = text2path(params["path"])
-			var/datum/outfit/O = new path
+			var/datum/outfit/O = resolve_outfit(params["path"])
 			if(!istype(O))
 				return
-			selected_outfit = path //the typepath - not the initialized object
+			selected_outfit = O.type //the typepath - not the object
 			update_static_data(user.mob)
 
 		if("applyoutfit")
-			var/path = text2path(params["path"])
-			if(!ispath(path, /datum/outfit)) //don't bail yet - could be a special option or custom outfit
-				path = params["path"] //reuse the variable because why make a new one
-
-				if(path == "click confirm to create one") //trigg todo - implement special options properly
-					user.outfit_manager()
-				//trigg todo - implement custom outfit handling
-				//probably gonna change GLOB.custom_outfits to be an assoc list keyed by outfit name
+			var/text = params["path"]
+			if(text == "Click confirm to open the outfit manager") //trigg todo - implement special options properly
+				user.outfit_manager()
 				return
 
-			var/datum/outfit/O = new path
+			var/datum/outfit/O = resolve_outfit(text)
 			if(!istype(O))
 				return
 			user.admin_apply_outfit(target, O)
