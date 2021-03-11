@@ -1,0 +1,5 @@
+author: "Kathy Ryals & Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Pens now alert the stabbed person again."
+  - refactor: "Refactored attack() code pens and sleepypens."
