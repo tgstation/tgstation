@@ -211,12 +211,14 @@
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
 	if(world.time > next_ollie)
 		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
+		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
 		if (vehicle.grinding)
 			return
 		var/mob/living/rider = owner
 		var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
 		rider.adjustStaminaLoss(vehicle.instability*2)
 		if (rider.getStaminaLoss() >= 100)
+			vehicle.obj_flags &= ~CAN_BE_HIT
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			vehicle.unbuckle_mob(rider)
 			rider.throw_at(landing_turf, 2, 2)
@@ -232,8 +234,9 @@
 			rider.Move(landing_turf, vehicle_target.dir)
 			passtable_off(rider, VEHICLE_TRAIT)
 			vehicle.pass_flags &= ~PASSTABLE
-		if(locate(/obj/structure/table) in vehicle.loc.contents)
+		if((locate(/obj/structure/table) in vehicle.loc.contents) || (locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents))
+			/*if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
+				rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)*/
 			vehicle.grinding = TRUE
 			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
 			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
-		next_ollie = world.time + 5
