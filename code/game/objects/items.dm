@@ -192,7 +192,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 	
-	//item hover FX
+	/// item hover FX
 	var/outline_filter
 
 /obj/item/Initialize()
