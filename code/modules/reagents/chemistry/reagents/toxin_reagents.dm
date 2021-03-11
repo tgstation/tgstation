@@ -291,6 +291,7 @@
 	taste_description = "sourness"
 	ph = 11
 	impure_chem = /datum/reagent/impurity/rosenol
+	inverse_chem = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
