@@ -55,7 +55,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	density = TRUE
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	generic_canpass = FALSE
 	movement_type = PHASING | FLYING
 	var/mob/living/wizard
 	var/z_original = 0
@@ -74,7 +73,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
 
-/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at, force_looping)
+/obj/effect/immovablerod/Initialize(mapload, atom/start, atom/end, aimed_at, force_looping)
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 
