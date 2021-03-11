@@ -75,7 +75,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/New(atom/start, atom/end, aimed_at, force_looping)
 	. = ..()
-	message_admins("[1], [start], [end], [aimed_at], [force_looping], ")
 	SSaugury.register_doom(src, 2000)
 
 	destination = end
