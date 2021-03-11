@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Rabbits summoned by stage magic will start with 0 loaded eggs remaining instead of 10. You can still feed them carrots to cause them to generate more loaded eggs, though."
+  - balance: "The speed boost from wearing the Easter Bunny head and/or the Easter Bunny suit has been nerfed, but is still present."
