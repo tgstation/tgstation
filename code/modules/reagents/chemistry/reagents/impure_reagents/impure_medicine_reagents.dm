@@ -526,7 +526,7 @@
 
 /datum/reagent/impurity/mannitol
 	name = "Mannitoil"
-	description = "Inefficiently causes brain damage."
+	description = "Gives the patient a speech impediment."
 	color = "#CDCDFF"
 	addiction_types = list(/datum/addiction/medicine = 5)
 	pH = 12.4
@@ -644,6 +644,7 @@
 	manual_heart.forceMove(null) //so we can be sure this is removed
 	qdel(manual_heart)
 	..()
+
 /datum/reagent/inverse/antihol
 	name = "Prohol"
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
