@@ -376,12 +376,10 @@
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2helmet"
-	armor = list(MELEE = 40, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 20, BIO = 10, RAD = 40, FIRE = 100, ACID = 40, WOUND = 30)
+	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
 	custom_materials = list(/datum/material/metalhydrogen = 5)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 //monkey sentience caps
 
