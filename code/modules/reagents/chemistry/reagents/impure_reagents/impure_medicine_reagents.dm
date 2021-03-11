@@ -542,7 +542,6 @@
 	. = ..()
 	owner.dna?.remove_mutation(speech_option)
 
-//I am incapable of making anything simple
 /datum/reagent/inverse/neurine
 	name = "Neruwhine"
 	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
@@ -640,7 +639,7 @@
 	var/mob/living/carbon/carbon_mob = owner
 	if(original_heart) //Mostly a just in case
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
-		original_heart.Insert(carbon_mob, special = TRUE) forceMove(organ.loc)
+		original_heart.Insert(carbon_mob, special = TRUE)
 	manual_heart.forceMove(null) //so we can be sure this is removed
 	qdel(manual_heart)
 	..()
