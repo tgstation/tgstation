@@ -646,9 +646,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 #define ORION_TRAIL_SEARCH "Old Ship Search"
 
 #define ORION_STATUS_START 0
-#define ORION_STATUS_NORMAL 1
-#define ORION_STATUS_GAMEOVER 2
-#define ORION_STATUS_MARKET 3
+#define ORION_STATUS_INSTRUCTIONS 1
+#define ORION_STATUS_NORMAL 2
+#define ORION_STATUS_GAMEOVER 3
+#define ORION_STATUS_MARKET 4
 
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
@@ -663,10 +664,18 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/fuel = 60
 	var/turns = 4
 	var/alive = 4
-	var/eventdat = null
-	var/event = null
+	var/datum/orion_event/event = null
 	var/reason
 	var/list/settlers = list("Harry","Larry","Bob")
+	var/list/settlermoods = list()
+	//list of paths, turns into list of singletons after init
+	var/list/events = list(
+		/datum/orion_event/engine_part,
+		/datum/orion_event/electronic_part,
+		/datum/orion_event/hull_part
+	)
+
+	/*
 	var/list/events = list(ORION_TRAIL_RAIDERS = 3,
 						   ORION_TRAIL_FLUX = 1,
 						   ORION_TRAIL_ILLNESS = 3,
@@ -677,8 +686,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						   ORION_TRAIL_SPACEPORT = 2,
 						   ORION_TRAIL_OLDSHIP = 2
 						   )
-	var/list/stops = list()
-	var/list/stopblurbs = list()
+	*/
 	var/lings_aboard = 0
 	var/spaceport_raided = 0
 	var/spaceport_freebie = 0
@@ -695,9 +703,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	. = ..()
 	Radio = new /obj/item/radio(src)
 	Radio.listening = 0
+	for(var/path in events)
+		var/datum/orion_event/new_event = new path(src)
+		events[path] = new_event.weight
+		path = new_event
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
 	QDEL_NULL(Radio)
+	for(var/datum/orion_event/dat_to_del as anything in events)
+		dat_to_del.game = null
+		qdel(dat_to_del)
 	return ..()
 
 /obj/machinery/computer/arcade/orion_trail/kobayashi
@@ -708,21 +723,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
 	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
 	settlers = list("Kirk","Worf","Gene")
-
-/obj/machinery/computer/arcade/orion_trail/Reset()
-	// Sets up the main trail
-	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
-	stopblurbs = list(
-		"Pluto, long since occupied with long-range sensors and scanners, stands ready to, and indeed continues to probe the far reaches of the galaxy.",
-		"At the edge of the Sol system lies a treacherous asteroid belt. Many have been crushed by stray asteroids and misguided judgement.",
-		"The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now a low-population sanctuary for adventurers and traders.",
-		"This region of space is particularly devoid of matter. Such low-density pockets are known to exist, but the vastness of it is astounding.",
-		"Rigel Prime, the center of the Rigel system, burns hot, basking its planetary bodies in warmth and radiation.",
-		"Tau Ceti Beta has recently become a waypoint for colonists headed towards Orion. There are many ships and makeshift stations in the vicinity.",
-		"Sensors indicate that a black hole's gravitational field is affecting the region of space we were headed through. We could stay of course, but risk of being overcome by its gravity, or we could change course to go around, which will take longer.",
-		"You have come into range of the first man-made structure in this region of space. It has been constructed not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonists' success.",
-		"You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for mankind!"
-		)
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
@@ -789,175 +789,165 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		ui = new(user, src, "OrionGame", name)
 		ui.open()
 
+/obj/machinery/computer/arcade/orion_trail/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/moods),
+	)
+
 /obj/machinery/computer/arcade/orion_trail/ui_data(mob/user)
 	var/list/data = list()
-	data["busy"] = busy
 	data["gamestatus"] = gameStatus
 
 	data["engine"] = engine
+	data["turns"] = turns
 	data["hull"] = hull
 	data["electronics"] = electronics
 	data["food"] = food
 	data["fuel"] = fuel
 
-	data["settlers"] = settlers
-	data["eventname"] = event
-	data["eventdata"] = eventdat
+	if(event)
+		data["eventname"] = event.name
+		data["eventtext"] = event.text
+		data["buttons"] = event.event_responses
+	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
-	. = ..()
-	data["gamename"] = name
-	data["emagged"] = obj_flags & EMAGGED
-	data["stopblurbs"] = stopblurbs
+	var/list/static_data = list()
+	static_data["gamename"] = name
+	static_data["emagged"] = obj_flags & EMAGGED
+	static_data["settlers"] = settlers
+	static_data["settlermoods"] = settlermoods
+	return static_data
 
-/*
-	var/dat = ""
-
-
-	else if(event)
-		dat = eventdat
-	else if(gameStatus == ORION_STATUS_NORMAL)
-		var/title = stops[turns]
-		var/subtext = stopblurbs[turns]
-		dat = "<center><h1>[title]</h1></center>"
-		dat += "[subtext]"
-		dat += "<h3><b>Crew:</b></h3>"
-		dat += english_list(settlers)
-		dat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
-		dat += "<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
-		if(turns == 7)
-			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];pastblack=1'>Go Around</a> <a href='byond://?src=[REF(src)];blackhole=1'>Continue</a></P>"
-		else
-			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];continue=1'>Continue</a></P>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-	else
-		dat = "<center><h2>The Orion Trail</h2></center>"
-		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
-		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a></b></center>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-*/
+/**
+ * Creates a new mood icon for each settler
+ *
+ * By default, it just sends an audible message and a sound, both vars on the orion datum
+ * Arguments:
+ * * gamer: victim to apply effects to
+ * * gamerSkill: skill of the gamer, because gamers gods can lessen the effects of the emagged machine
+ * * gamerSkillLevel: skill level of the gamer, another way to measure emag downside avoidance
+ */
+/obj/machinery/computer/arcade/orion_trail/proc/new_settler_mood()
+	settlers.Cut()
+	settlermoods.Cut()
+	for(var/i in 1 to settlers.len)
+		settlermoods[settlers[i]] += (settlers.len + rand(-1,1))
+	return settlermoods
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
-	if(!isliving(usr))
+	if(!iscarbon(usr))
 		return
-	var/mob/living/gamer = usr
 
-	busy = TRUE
+	. = TRUE
+
+	var/mob/living/carbon/gamer = usr
 
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
-	var/gamerSkillRands = 0
+	//var/gamerSkillRands = 0
 
 	if(gamer?.mind)
 		gamerSkillLevel = gamer.mind.get_skill_level(/datum/skill/gaming)
 		gamerSkill = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
-		gamerSkillRands = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
-
-	/*
+		//gamerSkillRands = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 
 	var/xp_gained = 0
 
-	if (href_list["continue"]) //Continue your travels
-		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
-			if(turns >= ORION_TRAIL_WINTURN)
-				win(usr)
-				xp_gained += 34
-			else
-				food -= (alive+lings_aboard)*2
-				fuel -= 5
-				if(turns == 2 && prob(30-gamerSkill))
-					event = ORION_TRAIL_COLLISION
-					event()
-				else if(prob(75-gamerSkill))
-					event = pickweight(events)
-					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55-gamerSkill))
-							event = ORION_TRAIL_LING_ATTACK
-					event()
-				turns += 1
-			if(obj_flags & EMAGGED)
-				var/mob/living/carbon/M = usr //for some vars
-				switch(event)
-					if(ORION_TRAIL_RAIDERS)
-						if(prob(50-gamerSkill))
-							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
-							M.hallucination += 30
-						else
-							to_chat(usr, "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>")
-							M.take_bodypart_damage(30)
-							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
-					if(ORION_TRAIL_ILLNESS)
-						var/maxSeverity = 3
-						if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
-							maxSeverity = 2 //part of gitting gud is rng mitigation
-						var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
-						if(severity == 1)
-							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
-						if(severity == 2)
-							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseated and hunch over until it passes.</span>")
-							M.Stun(60)
-						if(severity >= 3) //you didn't pray hard enough
-							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
-							M.Stun(100)
-							sleep(30)
-							M.vomit(10, distance = 5)
-					if(ORION_TRAIL_FLUX)
-						if(prob(75-gamerSkill))
-							M.Paralyze(60)
-							say("A sudden gust of powerful wind slams [M] into the floor!")
-							M.take_bodypart_damage(25)
-							playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
-						else
-							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
-					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90-gamerSkill))
-							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
-							var/turf/open/floor/F
-							for(F in orange(1, src))
-								F.ScrapeAway()
-							say("Something slams into the floor around [src], exposing it to space!")
-							if(hull)
-								sleep(10)
-								say("A new floor suddenly appears around [src]. What the hell?")
-								playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
-								var/turf/open/space/T
-								for(T in orange(1, src))
-									T.PlaceOnTop(/turf/open/floor/plating)
-						else
-							say("Something slams into the floor around [src] - luckily, it didn't get through!")
-							playsound(loc, 'sound/effects/bang.ogg', 50, TRUE)
-					if(ORION_TRAIL_MALFUNCTION)
-						playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
-						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
-						var/oldfood = food
-						var/oldfuel = fuel
-						food = rand(10,80) / rand(1,2)
-						fuel = rand(10,60) / rand(1,2)
-						if(electronics)
-							sleep(10)
-							if(oldfuel > fuel && oldfood > food)
-								audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
-							else if(oldfuel < fuel || oldfood < food)
-								audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
-							food = oldfood
-							fuel = oldfuel
-							playsound(loc, 'sound/machines/chime.ogg', 50, TRUE)
-
-	else if(href_list["newgame"]) //Reset everything
-		if(gameStatus == ORION_STATUS_START)
+	if(event)
+		event.response(action)
+		return TRUE
+	switch(action)
+		if("start_game")
+			if(gameStatus != ORION_STATUS_START)
+				return
 			newgame()
-	else if(href_list["menu"]) //back to the main menu
-		if(gameStatus == ORION_STATUS_GAMEOVER)
+		if("instructions")
+			if(gameStatus != ORION_STATUS_START)
+				return
+			gameStatus = ORION_STATUS_INSTRUCTIONS
+		if("back_to_menu") //back to the main menu
+			if(gameStatus != ORION_STATUS_GAMEOVER)
+				return
 			gameStatus = ORION_STATUS_START
 			event = null
 			reason = null
 			food = 80
 			fuel = 60
 			settlers = list("Harry","Larry","Bob")
+		if("continue")
+			if(gameStatus != ORION_STATUS_NORMAL || event || turns != 7)
+				return
+			if(turns >= ORION_TRAIL_WINTURN)
+				win(usr)
+				xp_gained += 34
+				return
+			food -= (alive+lings_aboard)*2
+			fuel -= 5
+			turns += 1
+			//special turn 2 event
+			if(turns == 2 && prob(30-gamerSkill))
+				event = ORION_TRAIL_COLLISION
+				encounter_event(/datum/orion_event/hull_part, gamer, gamerSkill, gamerSkillLevel)
+				return
+			//an uneventful (get it) turn
+			if(prob(25 + gamerSkill))
+				return
+			encounter_event(null, gamer, gamerSkill, gamerSkillLevel)
+			if(lings_aboard && (istype(event, /datum/orion_event/changeling_infiltration) || prob(45 + gamerSkill)))
+				//upgrade infiltration/whatever else we got to attack right away
+				encounter_event(/datum/orion_event/changeling_attack, gamer, gamerSkill, gamerSkillLevel)
+		if("kill_crew")
+			if(gameStatus != ORION_STATUS_NORMAL || event != ORION_TRAIL_LING)
+				return
+			var/sheriff = remove_crewmember() //I shot the sheriff
+			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+			killed_crew++
+
+			var/mob/living/user = usr
+
+			if(!settlers.len || !alive)
+				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
+				if(obj_flags & EMAGGED)
+					user.death()
+				set_game_over(gamer)
+
+				if(killed_crew >= 4)
+					xp_gained -= 15//no cheating by spamming game overs
+					report_player(usr)
+			else if(obj_flags & EMAGGED)
+				if(usr.name == sheriff)
+					say("The crew of the ship chose to kill [usr.name]!")
+					user.death()
+
+			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
+				event = null
+				killed_crew-- // the kill was valid
+
+/**
+ * pickweights a new event, sets event var as it. it then preps the event if it needs it
+ *
+ * giving a path argument will instead find that instanced datum instead of pickweighting. Used in events that follow from events.
+ * Arguments:
+ * * path: if we want a specific event, this is the path of the wanted one
+ */
+/obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamerSkill, gamerSkillLevel)
+	if(!path)
+		event = pickweightAllowZero(events)
+	else
+		for(var/datum/orion_event/instance as anything in events)
+			if(instance.type == path)
+				event = instance
+				break
+	event.on_select()
+	if(obj_flags & EMAGGED)
+		event.emag_effect(gamer, gamerSkill, gamerSkillLevel)
+
+	/*
+
 	else if(href_list["search"]) //search old ship
 		if(event == ORION_TRAIL_OLDSHIP)
 			event = ORION_TRAIL_SEARCH
@@ -973,21 +963,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			fuel -= 15
 			turns += 1
 			event = null
-	else if(href_list["useengine"]) //use parts
-		if(event == ORION_TRAIL_BREAKDOWN)
-			engine = max(0, --engine)
-			event = null
-	else if(href_list["useelec"]) //use parts
-		if(event == ORION_TRAIL_MALFUNCTION)
-			electronics = max(0, --electronics)
-			event = null
-	else if(href_list["usehull"]) //use parts
 		if(event == ORION_TRAIL_COLLISION)
 			hull = max(0, --hull)
-			event = null
-	else if(href_list["wait"]) //wait 3 days
-		if(event == ORION_TRAIL_BREAKDOWN || event == ORION_TRAIL_MALFUNCTION || event == ORION_TRAIL_COLLISION)
-			food -= ((alive+lings_aboard)*2)*3
 			event = null
 	else if(href_list["keepspeed"]) //keep speed
 		if(event == ORION_TRAIL_FLUX)
@@ -1015,38 +992,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				turns += 1
 	else if(href_list["holedeath"])
 		if(event == ORION_TRAIL_BLACKHOLE)
-			gameStatus = ORION_STATUS_GAMEOVER
-			event = null
-	else if(href_list["eventclose"]) //end an event
-		if(canContinueEvent)
-			event = null
-
-	else if(href_list["killcrew"]) //shoot a crewmember
-		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
-			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
-			killed_crew++
-
-			var/mob/living/user = usr
-
-			if(settlers.len == 0 || alive == 0)
-				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
-				if(obj_flags & EMAGGED)
-					user.death()
-				gameStatus = ORION_STATUS_GAMEOVER
-				event = null
-
-				if(killed_crew >= 4)
-					xp_gained -= 15//no cheating by spamming game overs
-					report_player(usr)
-			else if(obj_flags & EMAGGED)
-				if(usr.name == sheriff)
-					say("The crew of the ship chose to kill [usr.name]!")
-					user.death()
-
-			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
-				event = null
-				killed_crew-- // the kill was valid
+			set_game_over(usr)
 
 	//Spaceport specific interactions
 	//they get a header because most of them don't reset event (because it's a shop, you leave when you want to)
@@ -1152,7 +1098,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
 
 
-/obj/machinery/computer/arcade/orion_trail/proc/event()
+
 	eventdat = "<center><h1>[event]</h1></center>"
 	canContinueEvent = 0
 	switch(event)
@@ -1182,33 +1128,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(ORION_TRAIL_OLDSHIP)
 			eventdat += "Your crew spots an old ship floating through space. It might have some supplies, but then again it looks rather unsafe."
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];search=1'>Search it</a><a href='byond://?src=[REF(src)];eventclose=1'>Leave it</a></P><P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			canContinueEvent = 1
-
-		if(ORION_TRAIL_SEARCH)
-			switch(rand(100))
-				if(0 to 15)
-					var/rescued = add_crewmember()
-					var/oldfood = rand(1,7)
-					var/oldfuel = rand(4,10)
-					food += oldfood
-					fuel += oldfuel
-					eventdat += "As you look through it you find some supplies and a living person!"
-					eventdat += "[rescued] was rescued from the abandoned ship!"
-					eventdat += "You found [oldfood] <b>Food</b> and [oldfuel] <b>Fuel</b>."
-				if(15 to 35)
-					var/lfuel = rand(4,7)
-					var/deadname = remove_crewmember()
-					fuel -= lfuel
-					eventdat += "[deadname] was lost deep in the wreckage, and your own vessel lost [lfuel] <b>Fuel</b> maneuvering to the the abandoned ship."
-				if(35 to 65)
-					var/oldfood = rand(5,11)
-					food += oldfood
-					engine++
-					eventdat += "You found [oldfood] <b>Food</b> and some parts amongst the wreck."
-				else
-					eventdat += "As you look through the wreck you cannot find much of use."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 			canContinueEvent = 1
 
 		if(ORION_TRAIL_ILLNESS)
@@ -1424,12 +1343,38 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	*/
 
-/obj/machinery/computer/arcade/orion_trail/proc/set_game_over()
+/*
+	var/dat = ""
+
+
+	else if(event)
+		dat = eventdat
+	else if(gameStatus == ORION_STATUS_NORMAL)
+		var/title = stops[turns]
+		var/subtext = stopblurbs[turns]
+		dat = "<center><h1>[title]</h1></center>"
+		dat += "[subtext]"
+		dat += "<h3><b>Crew:</b></h3>"
+		dat += english_list(settlers)
+		dat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
+		dat += "<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
+		if(turns == 7)
+			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];pastblack=1'>Go Around</a> <a href='byond://?src=[REF(src)];blackhole=1'>Continue</a></P>"
+		else
+			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];=1'>Continue</a></P>"
+	else
+		dat = "<center><h2>The Orion Trail</h2></center>"
+		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a></b></center>"
+		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+*/
+
+/obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user)
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
-	reason = death_reason()
+	reason = death_reason(user)
 
-/obj/machinery/computer/arcade/orion_trail/proc/death_reason()
+/obj/machinery/computer/arcade/orion_trail/proc/death_reason(mob/living/carbon/gamer)
 	var/reason
 	if(!settlers.len)
 		reason = "Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
@@ -1437,25 +1382,24 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(food <= 0)
 			reason = "You ran out of food and starved."
 			if(obj_flags & EMAGGED)
-				user.set_nutrition(0) //yeah you pretty hongry
-				to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
+				gamer.set_nutrition(0) //yeah you pretty hongry
+				to_chat(gamer, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 		if(fuel <= 0)
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
-				var/mob/living/M = user
-				M.adjust_fire_stacks(5)
-				M.IgniteMob() //flew into a star, so you're on fire
-				to_chat(user, "<span class='userdanger'>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
+				gamer.adjust_fire_stacks(5)
+				gamer.IgniteMob() //flew into a star, so you're on fire
+				to_chat(gamer, "<span class='userdanger'>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
 
 	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='userdanger'>You're never going to make it to Orion...</span>")
-		user.death()
+		to_chat(gamer, "<span class='userdanger'>You're never going to make it to Orion...</span>")
+		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
 		gameStatus = ORION_STATUS_START
 		name = "The Orion Trail"
 		desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
-	user?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
+	gamer?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
 	return reason
 
 //Add Random/Specific crewmember
@@ -1471,6 +1415,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(newcrew)
 		settlers += newcrew
 		alive++
+	new_settler_mood()//bro, i...
+	update_static_data(usr)
 	return newcrew
 
 
@@ -1490,6 +1436,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			lings_aboard = max(0,--lings_aboard)
 		settlers -= removed
 		alive--
+	new_settler_mood()//bro, i...
+	update_static_data(usr)
 	return removed
 
 
