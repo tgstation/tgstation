@@ -327,15 +327,18 @@
 		ML.pulled(src)
 
 /mob/living/CtrlClick(mob/user)
-	if(isliving(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
-			return FALSE
-		var/mob/living/user_living = user
-		if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
-			user_living.changeNext_move(CLICK_CD_MELEE)
-			return
-	else
-		..()
+	if(!isliving(user) || !Adjacent(user) || user.incapacitated())
+		return ..()
+
+	if(world.time < user.next_move)
+		return ..()
+
+	var/mob/living/user_living = user
+	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
+		user_living.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
+
+	return ..()
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
