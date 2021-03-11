@@ -111,6 +111,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
+	UnregisterSignal(src, COMSIG_MOB_BOT_PRESTEP, COMSIG_MOB_BOT_STEP)
 	unload(0)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
