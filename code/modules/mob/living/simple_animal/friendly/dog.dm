@@ -594,6 +594,10 @@
 	maxbodytemp = T0C + 40
 	held_state = "void_puppy"
 
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
+
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
 	return 1 //Void puppies can navigate space.
 
