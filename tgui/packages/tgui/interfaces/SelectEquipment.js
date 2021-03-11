@@ -63,6 +63,7 @@ export const SelectEquipment = (props, context) => {
       <Stack.Item>
         <Button
           fluid
+          ellipsis
           content={outfit[1]}
           title={outfit[0]}
           selected={outfit[0]===selectedOutfit}

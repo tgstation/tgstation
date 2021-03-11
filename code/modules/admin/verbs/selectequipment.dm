@@ -75,7 +75,7 @@
 		cached_outfits["Jobs"] = make_job_entries(typesof(/datum/outfit/job))
 		cached_outfits["Plasmamen Outfits"] = make_job_entries(typesof(/datum/outfit/plasmaman))
 
-	cached_outfits["Custom"] = list("createCustom" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
+	cached_outfits["Custom"] = list("click confirm to create one" = "Create a custom outfit...") + make_job_entries(GLOB.custom_outfits)
 
 	data["outfits"] = cached_outfits
 	data["name"] = target
@@ -94,21 +94,23 @@
 			var/path = text2path(params["path"])
 			var/datum/outfit/O = new path
 			if(!istype(O))
-				message_admins("bitch - path=[params["path"]]")
 				return
 			selected_outfit = path //the typepath - not the initialized object
 			update_static_data(user.mob)
-			return TRUE
 
 		if("applyoutfit")
 			var/path = text2path(params["path"])
-			if(!ispath(path, /datum/outfit)) //don't bail yet - could be a custom path or the special "naked" option
-				message_admins("çosjngkjsmn")
+			if(!ispath(path, /datum/outfit)) //don't bail yet - could be a special option or custom outfit
+				path = params["path"] //reuse the variable because why make a new one
+
+				if(path == "click confirm to create one") //trigg todo - implement special options properly
+					user.outfit_manager()
+				//trigg todo - implement custom outfit handling
+				//probably gonna change GLOB.custom_outfits to be an assoc list keyed by outfit name
 				return
 
 			var/datum/outfit/O = new path
 			if(!istype(O))
-				message_admins("bitch - path=[params["path"]]")
 				return
 			user.admin_apply_outfit(target, O)
 			update_static_data(user.mob)
