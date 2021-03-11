@@ -50,6 +50,13 @@
 	unset_busy_human_dummy(dummy_key)
 	return
 
+/datum/select_equipment/proc/make_job_entries(list/L)
+	var/entries = list()
+	for(var/path in L)
+		var/datum/outfit/O = path
+		entries[path] = initial(O.name)
+	return sortList(entries)
+
 /datum/select_equipment/ui_static_data(mob/user)
 	var/list/data = list()
 	if(!dummy)
@@ -64,7 +71,7 @@
 	if(!cached_outfits)
 		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
 		cached_outfits = list()
-		cached_outfits["General"] = list("naked" = "Naked") + make_job_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
+		cached_outfits["General"] = list(/datum/outfit = "Naked") + make_job_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits["Jobs"] = make_job_entries(typesof(/datum/outfit/job))
 		cached_outfits["Plasmamen Outfits"] = make_job_entries(typesof(/datum/outfit/plasmaman))
 
@@ -75,12 +82,66 @@
 
 	return data
 
-/datum/select_equipment/proc/make_job_entries(list/L)
-	var/entries = list()
-	for(var/path in L)
-		var/datum/outfit/O = path
-		entries[path] = initial(O.name)
-	return sortList(entries)
+
+
+/datum/select_equipment/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	message_admins("ui act - [action] | [english_list(params)]")
+	switch(action)
+		if("preview")
+			var/path = text2path(params["path"])
+			var/datum/outfit/O = new path
+			if(!istype(O))
+				message_admins("bitch - path=[params["path"]]")
+				return
+			selected_outfit = path //the typepath - not the initialized object
+			update_static_data(user.mob)
+			return TRUE
+
+		if("applyoutfit")
+			var/path = text2path(params["path"])
+			if(!ispath(path, /datum/outfit)) //don't bail yet - could be a custom path or the special "naked" option
+				message_admins("çosjngkjsmn")
+				return
+
+			var/datum/outfit/O = new path
+			if(!istype(O))
+				message_admins("bitch - path=[params["path"]]")
+				return
+			user.admin_apply_outfit(target, O)
+			update_static_data(user.mob)
+
+
+/client/proc/admin_apply_outfit(mob/M, dresscode)
+	if(!(ishuman(M) || isobserver(M)))
+		alert("Invalid mob")
+		return
+
+	if(!dresscode)
+		return
+
+	var/delete_pocket
+	var/mob/living/carbon/human/H
+	if(isobserver(M))
+		H = M.change_mob_type(/mob/living/carbon/human, null, null, TRUE)
+	else
+		H = M
+		if(H.l_store || H.r_store || H.s_store) //saves a lot of time for admins and coders alike
+			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
+				delete_pocket = TRUE
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	for (var/obj/item/I in H.get_equipped_items(delete_pocket))
+		qdel(I)
+	if(dresscode != "Naked")
+		H.equipOutfit(dresscode)
+
+	H.regenerate_icons()
+
+	log_admin("[key_name(usr)] changed the equipment of [key_name(H)] to [dresscode].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(H)] to [dresscode].</span>")
 
 /client/proc/robust_dress_shop2()
 
@@ -133,8 +194,3 @@
 			return
 
 	return dresscode
-
-/datum/select_equipment/ui_act(action, params)
-	. = ..()
-	if(.)
-		return

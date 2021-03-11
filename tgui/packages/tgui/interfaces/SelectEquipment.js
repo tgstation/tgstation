@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Tabs, Section, Input, Stack, Flex } from '../components';
+import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
 import { Window } from '../layouts';
 
 export const SelectEquipment = (props, context) => {
@@ -10,12 +10,7 @@ export const SelectEquipment = (props, context) => {
     outfits,
     icon64,
   } = data;
-  const {
-    base,
-    jobs,
-    plasmaman,
-    custom,
-  } = outfits;
+
 
   const [
     searchText,
@@ -26,11 +21,13 @@ export const SelectEquipment = (props, context) => {
   );
   const searchBar
     = (<Input
+      fluid
       autoFocus
       placeholder="Search"
       value={searchText}
       onInput={(e, value) => setSearchText(value)}
-      mx={1} />);
+      mb={1} />);
+
 
   const [
     tabIndex,
@@ -50,7 +47,6 @@ export const SelectEquipment = (props, context) => {
   };
 
   const outfitCategories = Object.keys(outfits);
-
   const displayTabs
     = (
       <Tabs textAlign="center">
@@ -68,10 +64,33 @@ export const SelectEquipment = (props, context) => {
         <Button
           fluid
           content={outfit[1]}
-          title={outfit[0]} />
+          title={outfit[0]}
+          selected={outfit[0]===selectedOutfit}
+          onClick={() => selectOutfit(outfit[0])} />
       </Stack.Item>
     );
   };
+
+  const selectOutfit = outfitPath => {
+    setSelectedOutfit(outfitPath);
+    act("preview", { path: outfitPath });
+  };
+
+  const [
+    selectedOutfit,
+    setSelectedOutfit,
+  ] = useLocalState(context, 'selected-outfit', "/datum/outfit");
+
+  const currentlySelectedDisplay
+  = (
+    <Flex direction="column" textAlign="center" align="center">
+      Currently selected:<br />{selectedOutfit}
+      <Flex.Item grow={1}>
+        <Button selected content="Confirm"
+          onClick={() => act("applyoutfit", { path: selectedOutfit })} />
+      </Flex.Item>
+    </Flex>
+  );
 
   const displayedOutfits
   = Object.entries(outfits[tabIndex])
@@ -86,8 +105,14 @@ export const SelectEquipment = (props, context) => {
         <Flex height="100%">
 
           <Flex.Item grow={1} basis={0}>
-            <Section fill scrollable>
+            <Section height="15%" mb={0}>
               {displayTabs}
+              {currentlySelectedDisplay}
+            </Section>
+
+            <Section height="85%" fill scrollable>
+              <Divider />
+              {searchBar}
               <Stack vertical direction="column">
                 {displayedOutfits}
               </Stack>
@@ -98,8 +123,7 @@ export const SelectEquipment = (props, context) => {
           <Flex.Item grow={2} basis={0}>
             <Section fill
               title={name}
-              textAlign="center"
-              buttons={searchBar}>
+              textAlign="center">
               <Box as="img"
                 m={1}
                 src={`data:image/jpeg;base64,${icon64}`}
