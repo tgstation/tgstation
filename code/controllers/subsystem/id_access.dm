@@ -428,6 +428,7 @@ SUBSYSTEM_DEF(id_access)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
+	id_card.trim_assignment_override = trim.assignment
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -443,6 +444,7 @@ SUBSYSTEM_DEF(id_access)
 /datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
+	id_card.trim_assignment_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

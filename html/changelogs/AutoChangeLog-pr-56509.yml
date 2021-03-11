@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Adds a brand new map - Tramstation"
+  - rscadd: "Three segmented branches inter-connected via a transit system"
+  - rscadd: "2 z-levels, with the lower being interlaced with maintenance tunnels to traverse the entire station through various ladder shafts and tram tunnels."
