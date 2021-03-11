@@ -849,7 +849,7 @@ e
 
 /obj/item/proc/apply_outline(outline_color = null)
 	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
-th		return
+		return
 	var/theme = lowertext(usr.client.prefs.UI_style)
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
 		switch(theme) //yeah it kinda has to be this way
