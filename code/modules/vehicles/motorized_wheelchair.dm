@@ -141,12 +141,12 @@
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
 		if(isliving(A))
-			var/mob/living/D = A
-			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
-			D.throw_at(throw_target, 2, 3)
-			D.Knockdown(80)
-			D.adjustStaminaLoss(35)
-			visible_message("<span class='danger'>[src] crashes into [A], sending [H] and [D] flying!</span>")
+			var/mob/living/ramtarget = A
+			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
+			ramtarget.throw_at(throw_target, 2, 3)
+			ramtarget.Knockdown(80)
+			ramtarget.adjustStaminaLoss(35)
+			visible_message("<span class='danger'>[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!</span>")
 		else
 			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
