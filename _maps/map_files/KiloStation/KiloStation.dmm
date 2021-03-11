@@ -77285,6 +77285,10 @@
 "pVa" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "pVk" = (
@@ -78833,6 +78837,10 @@
 /area/commons/storage/primary)
 "qNO" = (
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "security maintenance";
+	req_access_txt = "63"
+	},
 /turf/open/floor/iron/dark,
 /area/maintenance/port/aft)
 "qOk" = (
@@ -85772,6 +85780,12 @@
 /area/cargo/warehouse)
 "uBo" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "uBq" = (
