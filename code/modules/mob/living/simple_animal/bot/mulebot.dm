@@ -61,6 +61,9 @@
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 
+	RegisterSignal(src, COMSIG_MOB_BOT_PRESTEP, .proc/check_pre_step)
+	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
+
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 
 	if(prob(0.666) && mapload)
@@ -587,12 +590,14 @@
 					path -= next
 					return
 				if(isturf(next))
+					if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRESTEP) & COMPONENT_MOB_BOT_CANCELSTEP)
+						return
 					var/oldloc = loc
 					var/moved = step_towards(src, next) // attempt to move
 					if(moved && oldloc!=loc) // successful move
+						SEND_SIGNAL(src, COMSIG_MOB_BOT_STEP)
 						blockcount = 0
 						path -= loc
-
 						if(destination == home_destination)
 							mode = BOT_GO_HOME
 						else
@@ -828,15 +833,22 @@
 	if(.)
 		visible_message("<span class='notice'>[src]'s safeties are locked on.</span>")
 
-/mob/living/simple_animal/bot/mulebot/bot_step(dest)
+/// Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.
+/mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
+	SIGNAL_HANDLER
+
 	if(!on)
-		return FALSE
+		return COMPONENT_MOB_BOT_CANCELSTEP
 
-	if(!(cell?.use(cell_move_power_usage)))
+	if(cell?.charge < cell_move_power_usage)
 		turn_off()
-		return FALSE
+		return COMPONENT_MOB_BOT_CANCELSTEP
 
-	return ..()
+/// Uses power from the cell when the bot steps.
+/mob/living/simple_animal/bot/mulebot/proc/on_bot_step(datum/source)
+	SIGNAL_HANDLER
+
+	cell?.use(cell_move_power_usage)
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
