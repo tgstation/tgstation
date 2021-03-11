@@ -309,15 +309,15 @@
 /obj/item/clothing/under/proc/dump_attachment()
 	if(!attached_accessory)
 		return
-	var/atom/L = drop_location()
+	var/atom/drop_location = drop_location()
 	attached_accessory.transform *= 2
 	attached_accessory.pixel_x -= 8
 	attached_accessory.pixel_y += 8
-	if(L)
-		attached_accessory.forceMove(L)
-	src.cut_overlays()
-	src.attached_accessory = null
-	src.accessory_overlay = null
+	if(drop_location)
+		attached_accessory.forceMove(drop_location)
+	cut_overlays()
+	attached_accessory = null
+	accessory_overlay = null
 	update_appearance()
 
 /obj/item/clothing/under/rank/obj_destruction(damage_flag)
