@@ -24709,6 +24709,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"cFa" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/tram/center)
 "cFo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/multiz/layer4{
@@ -25777,6 +25787,14 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"daH" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/iron,
+/area/hallway/primary/tram/center)
 "daS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -28255,6 +28273,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
+"edw" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/right)
 "edC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -33264,6 +33291,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
+"gqA" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/tram/center)
 "gre" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -35294,6 +35331,13 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
+"hhZ" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/right)
 "him" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -38408,6 +38452,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
+"iKh" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/tram/right)
 "iKQ" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -46837,6 +46891,15 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
+"mOP" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/left)
 "mOQ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -47150,6 +47213,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/brig)
+"mVn" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/center)
 "mVs" = (
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
@@ -47390,6 +47460,14 @@
 /obj/item/folder,
 /turf/open/floor/iron/white,
 /area/science/lab)
+"mZC" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/iron,
+/area/hallway/primary/tram/right)
 "mZO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
@@ -50599,6 +50677,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/brig)
+"oEe" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/center)
 "oEz" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -51591,6 +51676,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"pbn" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/tram/left)
 "pbK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -53415,6 +53509,15 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/central)
+"pPd" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/center)
 "pPn" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningdorm3";
@@ -54625,6 +54728,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"quL" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/center)
 "quT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -56368,6 +56480,14 @@
 /obj/item/beacon,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"rkh" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/iron,
+/area/hallway/primary/tram/center)
 "rko" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -57178,6 +57298,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/cytology)
+"rAi" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/iron,
+/area/hallway/primary/tram/left)
 "rAv" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -62046,6 +62173,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/science/nanite)
+"tPg" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/glass/reinforced,
+/area/hallway/primary/tram/left)
 "tPz" = (
 /obj/structure/bed/maint,
 /obj/structure/sign/poster/contraband/rip_badger{
@@ -160815,9 +160949,9 @@ stk
 avc
 xXC
 axY
-axY
+tPg
 azC
-axY
+mOP
 axY
 qGt
 aDk
@@ -161072,9 +161206,9 @@ ara
 avj
 aEn
 axZ
-axZ
+rAi
 azx
-axZ
+pbn
 axZ
 crW
 asj
@@ -167240,9 +167374,9 @@ asI
 asg
 aEr
 ayf
-ayf
+rkh
 iBv
-ayf
+gqA
 ayf
 aFa
 aDo
@@ -167497,9 +167631,9 @@ uXA
 avC
 usd
 ayg
-ayg
+mVn
 aAa
-ayg
+pPd
 ayg
 gHx
 aDr
@@ -171095,9 +171229,9 @@ nyE
 avR
 oLf
 aym
-aym
+oEe
 aAu
-aym
+quL
 aym
 nIG
 aDs
@@ -171352,9 +171486,9 @@ atB
 avX
 aEy
 ayn
-ayn
+daH
 rzc
-ayn
+cFa
 ayn
 aFb
 ask
@@ -177520,9 +177654,9 @@ atP
 awe
 aEE
 ayw
-ayw
+mZC
 qHK
-ayw
+iKh
 ayw
 aFc
 asm
@@ -177777,9 +177911,9 @@ atQ
 awf
 xQQ
 ayy
-ayy
+hhZ
 aAO
-ayy
+edw
 ayy
 mNz
 tAD
