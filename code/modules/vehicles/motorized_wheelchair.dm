@@ -146,7 +146,7 @@
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(80)
 			ramtarget.adjustStaminaLoss(35)
-			visible_message("<span class='danger'>[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!</span>")
+			visible_message("<span class='danger'>[src] crashes into [ramtarget], sending [H] and [ramtarget] flying!</span>")
 		else
 			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
