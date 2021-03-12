@@ -344,6 +344,8 @@
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
 	icon_state = "his_grace_ascended"
 	inhand_icon_state = "toolbox_gold"
+	slot_flags = ITEM_SLOT_BELT
+	worn_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
