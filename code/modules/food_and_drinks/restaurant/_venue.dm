@@ -5,7 +5,7 @@
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
-	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2, /datum/customer_data/mexican = 10)
+	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2, /datum/customer_data/mexican = 3)
 	///Is the venue open at the moment?
 	var/open
 	///Portal linked to this venue at the moment
@@ -55,7 +55,7 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
