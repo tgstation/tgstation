@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
+import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 export const SelectEquipment = (props, context) => {
@@ -84,13 +84,15 @@ export const SelectEquipment = (props, context) => {
 
   const currentlySelectedDisplay
   = (
-    <Flex direction="column" textAlign="center" align="center">
-      Currently selected:<br />{selectedOutfit}
-      <Flex.Item grow={1}>
-        <Button selected content="Confirm"
-          onClick={() => act("applyoutfit", { path: selectedOutfit })} />
-      </Flex.Item>
-    </Flex>
+    <Box height="50%">
+      <Flex direction="column" textAlign="center" align="center">
+        Currently selected:<br />{selectedOutfit}
+        <Flex.Item>
+          <Button selected content="Confirm"
+            onClick={() => act("applyoutfit", { path: selectedOutfit })} />
+        </Flex.Item>
+      </Flex>
+    </Box>
   );
 
   const displayedOutfits
@@ -112,10 +114,9 @@ export const SelectEquipment = (props, context) => {
             <Section height="15%" mb={0}>
               {displayTabs}
               {currentlySelectedDisplay}
-            </Section>
-
-            <Section height="85%" fill scrollable>
               <Divider />
+            </Section>
+            <Section height="85%" fill scrollable>
               {searchBar}
               {displayedOutfits}
             </Section>

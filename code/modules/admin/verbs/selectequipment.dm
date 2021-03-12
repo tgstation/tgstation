@@ -33,6 +33,11 @@
 /datum/select_equipment/ui_state(mob/user)
 	return GLOB.admin_state
 
+/datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
+	if(QDELETED(target))
+		return UI_CLOSE
+	return ..()
+
 /datum/select_equipment/ui_close(mob/user)
 	clear_human_dummy(dummy_key)
 	qdel(src)
@@ -62,11 +67,6 @@
 		cached_custom_outfits[O.name] = O
 		entries[O.name] = O.name //it's either this or special handling on the UI side
 	return sortAssocList(entries)
-
-/datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
-	if(QDELETED(target))
-		return UI_CLOSE
-	return ..()
 
 /datum/select_equipment/ui_static_data(mob/user)
 	var/list/data = list()
@@ -121,7 +121,7 @@
 
 		if("applyoutfit")
 			var/text = params["path"]
-			if(text == "Click confirm to open the outfit manager") //trigg todo - implement special options properly
+			if(text == "Click confirm to open the outfit manager")
 				user.outfit_manager()
 				return
 
