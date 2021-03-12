@@ -107,8 +107,7 @@
 
 
 /datum/select_equipment/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)

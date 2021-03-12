@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider, NoticeBox } from '../components';
+import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
 import { Window } from '../layouts';
 
 export const SelectEquipment = (props, context) => {
@@ -12,6 +12,7 @@ export const SelectEquipment = (props, context) => {
   } = data;
 
 
+  // search bar
   const [
     searchText,
     setSearchText,
@@ -29,6 +30,7 @@ export const SelectEquipment = (props, context) => {
       mb={1} />);
 
 
+  // outfit tabs; mapped and named from the data sent by ui_static_data
   const [
     tabIndex,
     setTabIndex,
@@ -58,6 +60,30 @@ export const SelectEquipment = (props, context) => {
       </Tabs>
     );
 
+
+  // outfit selection
+  const selectOutfit = outfitPath => {
+    setSelectedOutfit(outfitPath);
+    act("preview", { path: outfitPath });
+  };
+
+  const [
+    selectedOutfit,
+    setSelectedOutfit,
+  ] = useLocalState(context, 'selected-outfit', "/datum/outfit");
+
+  const currentlySelectedDisplay
+    = (
+      <Flex direction="column" textAlign="center" align="center">
+        Currently selected:<br />{selectedOutfit}
+        <Flex.Item>
+          <Button selected content="Confirm"
+            onClick={() => act("applyoutfit", { path: selectedOutfit })} />
+        </Flex.Item>
+      </Flex>
+    );
+
+
   const outfitButton = outfit => {
     return (
       <Stack.Item>
@@ -72,29 +98,6 @@ export const SelectEquipment = (props, context) => {
     );
   };
 
-  const selectOutfit = outfitPath => {
-    setSelectedOutfit(outfitPath);
-    act("preview", { path: outfitPath });
-  };
-
-  const [
-    selectedOutfit,
-    setSelectedOutfit,
-  ] = useLocalState(context, 'selected-outfit', "/datum/outfit");
-
-  const currentlySelectedDisplay
-  = (
-    <Box height="50%">
-      <Flex direction="column" textAlign="center" align="center">
-        Currently selected:<br />{selectedOutfit}
-        <Flex.Item>
-          <Button selected content="Confirm"
-            onClick={() => act("applyoutfit", { path: selectedOutfit })} />
-        </Flex.Item>
-      </Flex>
-    </Box>
-  );
-
   const displayedOutfits
   = (
     <Stack vertical direction="column">
@@ -102,6 +105,8 @@ export const SelectEquipment = (props, context) => {
         ?.filter(searchFilter)
         ?.map(outfitButton)}
     </Stack>);
+
+
   return (
     <Window
       width={950}
@@ -110,7 +115,6 @@ export const SelectEquipment = (props, context) => {
         <Flex height="100%">
 
           <Flex.Item grow={1} basis={0}>
-
             <Section height="15%" mb={0}>
               {displayTabs}
               {currentlySelectedDisplay}
@@ -120,7 +124,6 @@ export const SelectEquipment = (props, context) => {
               {searchBar}
               {displayedOutfits}
             </Section>
-
           </Flex.Item>
 
 
