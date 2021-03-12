@@ -5,6 +5,8 @@
 	inhand_icon_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	worn_icon_state = "toolbox_material"
 	flags_1 = CONDUCT_1
 	force = 12
 	throwforce = 12
@@ -45,6 +47,7 @@
 	name = "emergency toolbox"
 	icon_state = "red"
 	inhand_icon_state = "toolbox_red"
+	worn_icon_state = "toolbox_red"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
@@ -63,6 +66,7 @@
 /obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
+	worn_icon_state = "toolbox_red_soul_poopy"
 	has_latches = FALSE
 	material_flags = NONE
 
@@ -70,6 +74,7 @@
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	inhand_icon_state = "toolbox_blue"
+	worn_icon_state = "toolbox_blue"
 	material_flags = NONE
 	/// If FALSE, someone with a ensouled soulstone can sacrifice a spirit to change the sprite of this toolbox.
 	var/has_soul = FALSE
@@ -85,6 +90,7 @@
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
+	worn_icon_state = "toolbox_blue_soul_poopy"
 	has_latches = FALSE
 	has_soul = TRUE
 
@@ -102,6 +108,7 @@
 	desc = "An old, blue toolbox, it looks robust."
 	icon_state = "oldtoolboxclean"
 	inhand_icon_state = "toolbox_blue"
+	worn_icon_state = "toolbox_blue_soul"
 	has_latches = FALSE
 	force = 19
 	throwforce = 22
@@ -134,6 +141,7 @@
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	inhand_icon_state = "toolbox_yellow"
+	worn_icon_state = "toolbox_yellow"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
@@ -153,6 +161,7 @@
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	inhand_icon_state = "toolbox_syndi"
+	worn_icon_state = "toolbox_sus"
 	force = 15
 	throwforce = 18
 	material_flags = NONE
@@ -175,6 +184,7 @@
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	inhand_icon_state = "toolbox_blue"
+	worn_icon_state = "toolbox_blue"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
@@ -192,6 +202,7 @@
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
+	worn_icon_state = "toolbox_green"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
@@ -218,6 +229,7 @@
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	inhand_icon_state = "ammobox"
+	slot_flags = null //let's not touch other random toolbox subtypes when we want to touch toolboxes, k?
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound =  'sound/items/handling/ammobox_pickup.ogg'
 
@@ -235,6 +247,7 @@
 	desc = "It contains some gun maintenance supplies"
 	icon_state = "maint_kit"
 	inhand_icon_state = "ammobox"
+	slot_flags = null
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
@@ -248,6 +261,7 @@
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
 	icon_state = "infiltrator_case"
 	inhand_icon_state = "infiltrator_case"
+	slot_flags = null
 	force = 15
 	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL
