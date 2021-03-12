@@ -337,7 +337,6 @@
 	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
 		user_living.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
-
 	return ..()
 
 
