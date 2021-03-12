@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The Atmospherics Crystallizer will no longer do wacky things with an empty recipe when \"Nothing\" is selected."

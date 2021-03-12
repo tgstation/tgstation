@@ -1,6 +1,0 @@
-author: "Kush1Push1"
-delete-after: True
-changes: 
-  - qol: "Blood splatters only make your shoes or feet bloody if the tile is bloody enough,"
-  - qol: "Light steps trait prevents clothing from being covered in blood if you step on a bloody tile with your shoes off."
-  - rscadd: "Blood dries over time. Usually, 3 or 6 minutes. If a splatter is big enough, it can stay wet up to 15 minutes."

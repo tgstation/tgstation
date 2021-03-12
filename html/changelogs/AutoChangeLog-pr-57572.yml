@@ -1,4 +1,0 @@
-author: "prodirus"
-delete-after: True
-changes: 
-  - bugfix: "Jumpsuits should now drop attachments such as medals or ribbons when they are destroyed instead of making the attachments disappear as well."
