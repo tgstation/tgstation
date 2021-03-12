@@ -12,7 +12,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees
 	name = "bee"
-	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
+	desc = "hey buddy i think you got the wrong hive, the buzz club's two trays down<br>fuck you<br>ah, fuck you bee-head. maybe you and i should settle it right here on the hive floor"
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
@@ -251,7 +251,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees/queen
 	name = "queen bee"
-	desc = "She's the queen of bees, BZZ BZZ!"
+	desc = "I'll show you who's queen of this hive."
 	icon_base = "queen"
 	isqueen = TRUE
 
@@ -287,7 +287,7 @@
 
 /obj/item/queen_bee
 	name = "queen bee"
-	desc = "She's the queen of bees, BZZ BZZ!"
+	desc = "I'll show you who's queen of this hive."
 	icon_state = "queen_item"
 	inhand_icon_state = ""
 	icon = 'icons/mob/bees.dmi'
@@ -347,7 +347,7 @@
 
 /obj/item/trash/bee
 	name = "bee"
-	desc = "No wonder the bees are dying out, you monster."
+	desc = "Get out of that uh, jabroni hive."
 	icon = 'icons/mob/bees.dmi'
 	icon_state = "bee_item"
 	var/datum/reagent/beegent
