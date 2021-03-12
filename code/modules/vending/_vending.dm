@@ -847,6 +847,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					return
 				else if(!C.registered_account.account_job)
 					say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
+					flick(icon_deny, src)
 					vend_ready = TRUE
 					return
 				else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
