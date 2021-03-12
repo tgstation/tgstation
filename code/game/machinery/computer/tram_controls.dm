@@ -17,18 +17,26 @@
 	find_tram()
 
 /obj/machinery/computer/tram_controls/Destroy()
-	tram_part.console = null
+	for(var/obj/structure/industrial_lift/tram/tram_finder in GLOB.lifts)
+		tram_finder.console = null
 	return ..()
 
 /obj/machinery/computer/tram_controls/proc/find_tram()
-	var/obj/structure/industrial_lift/tram/tram_struct = locate(/obj/structure/industrial_lift/tram) in GLOB.lifts
-	tram_part = tram_struct //possibly setting to something null, that's fine, but
+	var/obj/structure/industrial_lift/tram/central/tram_loc = locate(/obj/structure/industrial_lift/tram/central) in GLOB.lifts
+	tram_part = tram_loc //possibly setting to something null, that's fine, but
 	tram_part.find_our_location()
 	for(var/obj/structure/industrial_lift/tram/tram_finder in GLOB.lifts)
 		tram_finder.console = src
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
+
+/obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
+	if(travelling)
+		return UI_CLOSE
+	if(!in_range(user, src) && !isobserver(user))
+		return UI_CLOSE
+	return ..()
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

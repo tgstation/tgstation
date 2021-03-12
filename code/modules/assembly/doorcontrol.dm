@@ -256,4 +256,5 @@
 		return
 
 	say("The tram has been called to [to_where]. Please wait for its arrival.")
+	computer.travelling = TRUE
 	tram_part.tram_travel(from_where, to_where)

@@ -25806,6 +25806,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "dby" = (
@@ -36444,6 +36447,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "hKa" = (
@@ -41237,6 +41241,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "kdT" = (
@@ -42644,6 +42651,9 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -64027,6 +64037,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "uKl" = (
@@ -65439,6 +65450,21 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
+"vqu" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Treatment Center";
+	req_access_txt = "5"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/medical/treatment_center)
 "vrc" = (
 /obj/machinery/telecomms/bus/preset_two,
 /turf/open/floor/iron/dark/telecomms,
@@ -170602,9 +170628,9 @@ kaB
 uht
 uht
 uht
-dbr
+vqu
 tDm
-dbr
+vqu
 uht
 uht
 uht
