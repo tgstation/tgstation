@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the critical issue of players not being able to anchor griddles"

@@ -441,7 +441,7 @@
 	for(var/mob/living/L in range(aoe_mob_range, epicenter)) //handle aoe mob damage
 		L.adjustFireLoss(aoe_mob_damage)
 		to_chat(L, "<span class='userdanger'>\The [src] sears you!</span>")
-	for(var/turf/T in range(aoe_fire_range, epicenter)) //handle aoe fire
+	for(var/turf/T in RANGE_TURFS(aoe_fire_range, epicenter)) //handle aoe fire
 		if(prob(aoe_fire_chance))
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
