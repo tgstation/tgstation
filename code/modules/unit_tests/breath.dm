@@ -1,3 +1,8 @@
+/// Tests to make sure humans can breath in normal situations
+/// Built to prevent regression on an issue surrounding QUANTIZE() and BREATH_VOLUME
+/// See the comment on BREATH_VOLUME for more details
+/datum/unit_test/breath_sanity
+
 /datum/unit_test/breath_sanity/Run()
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human)
 	var/obj/item/clothing/mask/breath/tube = allocate(/obj/item/clothing/mask/breath)
