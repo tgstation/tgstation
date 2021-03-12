@@ -1,6 +1,6 @@
 /client/proc/triggtest(mob/M in GLOB.mob_list)
-	set name = "AAAAAAAAAAAAAAA"
-	set category = "Debug.Trigg is devving oh god"
+	set category = "Admin.Events"
+	set name = "Select equipment but better"
 
 
 	var/datum/select_equipment/ui  = new(usr, M)
@@ -15,7 +15,7 @@
 
 	var/static/list/cached_outfits
 	var/static/list/cached_custom_outfits = list()
-	var/datum/outfit/selected_outfit = /datum/outfit/job/ce
+	var/datum/outfit/selected_outfit = /datum/outfit
 
 /datum/select_equipment/New(usr, mob/M)
 	user = CLIENT_FROM_VAR(usr)
@@ -56,7 +56,7 @@
 	for(var/path in L)
 		var/datum/outfit/O = path
 		entries[path] = initial(O.name)
-	return sortList(entries)
+	return sortAssocList(entries)
 
 //GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
 /datum/select_equipment/proc/make_custom_outfit_entries(list/L)
@@ -64,7 +64,7 @@
 	for(var/datum/outfit/O in L)
 		cached_custom_outfits[O.name] = O
 		entries[O.name] = O.name //it's either this or special handling on the UI side
-	return sortList(entries)
+	return sortAssocList(entries)
 
 /datum/select_equipment/ui_static_data(mob/user)
 	var/list/data = list()
@@ -103,6 +103,7 @@
 		var/datum/outfit/custom_outfit = cached_custom_outfits[text]
 		if(istype(custom_outfit))
 			return custom_outfit
+
 
 /datum/select_equipment/ui_act(action, params)
 	. = ..()

@@ -94,10 +94,12 @@ export const SelectEquipment = (props, context) => {
   );
 
   const displayedOutfits
-  = Object.entries(outfits[tabIndex])
-    ?.filter(searchFilter)
-    ?.map(outfitButton);
-
+  = (
+    <Stack vertical direction="column">
+      {Object.entries(outfits[tabIndex])
+        ?.filter(searchFilter)
+        ?.map(outfitButton)}
+    </Stack>);
   return (
     <Window
       width={950}
@@ -106,6 +108,7 @@ export const SelectEquipment = (props, context) => {
         <Flex height="100%">
 
           <Flex.Item grow={1} basis={0}>
+
             <Section height="15%" mb={0}>
               {displayTabs}
               {currentlySelectedDisplay}
@@ -114,10 +117,9 @@ export const SelectEquipment = (props, context) => {
             <Section height="85%" fill scrollable>
               <Divider />
               {searchBar}
-              <Stack vertical direction="column">
-                {displayedOutfits}
-              </Stack>
+              {displayedOutfits}
             </Section>
+
           </Flex.Item>
 
 
