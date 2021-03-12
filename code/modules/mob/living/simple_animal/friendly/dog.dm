@@ -57,8 +57,12 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/dog/corgi/Destroy()
-	QDEL_NULL(inventory_head)
-	QDEL_NULL(inventory_back)
+	if(inventory_head)
+		inventory_head.forceMove(drop_location())
+		inventory_head = null
+	if(inventory_back)
+		inventory_back.forceMove(drop_location())
+		inventory_back = null
 	return ..()
 
 /mob/living/simple_animal/pet/dog/corgi/handle_atom_del(atom/A)
