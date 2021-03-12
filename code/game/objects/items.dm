@@ -191,7 +191,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/list/juice_results
 
 	var/canMouseDown = FALSE
-	
+
 	/// item hover FX
 	var/outline_filter
 
@@ -828,7 +828,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()
-	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && !QDELETED(src))
+	if(get(src, /mob) == usr && !QDELETED(src))
 		var/mob/living/L = usr
 		if(usr.client.prefs.enable_tips)
 			var/timedelay = usr.client.prefs.tip_delay/100
@@ -849,7 +849,7 @@ e
 	remove_outline()
 
 /obj/item/proc/apply_outline(outline_color = null)
-	if(!(item_flags & IN_INVENTORY || item_flags & IN_STORAGE) || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
+	if(get(src, /mob) != usr || QDELETED(src) || isobserver(usr)) //cancel if the item isn't in an inventory, is being deleted, or if the person hovering is a ghost (so that people spectating you don't randomly make your items glow)
 		return
 	var/theme = lowertext(usr.client.prefs.UI_style)
 	if(!outline_color) //if we weren't provided with a color, take the theme's color
