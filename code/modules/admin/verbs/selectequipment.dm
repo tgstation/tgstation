@@ -1,4 +1,4 @@
-/client/proc/triggtest(mob/M in GLOB.mob_list)
+/client/proc/cmd_select_equipment(mob/M in GLOB.mob_list)
 	set category = "Admin.Events"
 	set name = "Select equipment but better"
 
