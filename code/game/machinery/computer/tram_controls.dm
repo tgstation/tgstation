@@ -16,6 +16,10 @@
 	//find the tram, late so the tram is all... set up so when this is called? i'm seriously stupid and 90% of what i do consists of barely educated guessing :)
 	find_tram()
 
+/obj/machinery/computer/tram_controls/Destroy()
+	tram_part.console = null
+	return ..()
+
 /obj/machinery/computer/tram_controls/proc/find_tram()
 	var/obj/structure/industrial_lift/tram/tram_struct = locate(/obj/structure/industrial_lift/tram) in GLOB.lifts
 	tram_part = tram_struct //possibly setting to something null, that's fine, but
