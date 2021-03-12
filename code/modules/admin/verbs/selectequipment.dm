@@ -20,7 +20,8 @@
 /datum/select_equipment/New(usr, mob/M)
 	user = CLIENT_FROM_VAR(usr)
 
-	if(!istype(M))
+	if(!(ishuman(M) || isobserver(M)))
+		alert("Invalid mob")
 		return
 	target = M
 
