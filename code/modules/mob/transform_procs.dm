@@ -253,7 +253,7 @@
 	. = new_corgi
 	qdel(src)
 
-/mob/living/carbon/proc/gorillize()
+/mob/living/carbon/proc/gorillize(weaktransform)
 	if(notransform)
 		return
 	notransform = TRUE
@@ -269,12 +269,21 @@
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
+
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
 	new_gorilla.set_combat_mode(TRUE)
 	if(mind)
 		mind.transfer_to(new_gorilla)
 	else
 		new_gorilla.key = key
+
+	if(weaktransform == 1) //if the gorilla was produced via monkey irradiation, nerf it
+		new_gorilla.health = 110
+		new_gorilla.maxHealth = 110
+		new_gorilla.melee_damage_upper = 8
+		new_gorilla.melee_damage_upper = 5
+		new_gorilla.obj_damage = 10
+
 	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
 	. = new_gorilla
 	qdel(src)
