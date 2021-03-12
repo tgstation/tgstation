@@ -569,7 +569,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='warning'>You can't fit this on [src]!</span>")
+		to_chat(usr, "<span class='warning'>You can't fit this on [src], [p_they()] [p_are()] too small!</span>")
 		return
 	..()
 
