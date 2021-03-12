@@ -695,6 +695,8 @@
 	var/trim_icon_override
 	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
+	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	var/trim_assignment_override
 
 /obj/item/card/id/advanced/get_icon_source()
 	return get_cached_flat_icon()

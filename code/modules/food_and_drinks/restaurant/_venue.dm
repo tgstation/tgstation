@@ -20,6 +20,10 @@
 	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
+	///how many robots got their wanted thing
+	var/customers_served = 0
+	///Total income of those venue
+	var/total_income = 0
 	///Blacklist for idiots that attack bots. Key is the mob that did it, and the value is the amount of warnings they've received.
 	var/list/mob_blacklist = list()
 	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
@@ -51,7 +55,7 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
