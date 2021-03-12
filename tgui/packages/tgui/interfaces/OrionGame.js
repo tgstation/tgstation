@@ -76,8 +76,8 @@ const locationInfo = [
     blurb: "Tau Ceti Beta has recently become a waypoint for colonists headed towards Orion. There are many ships and makeshift stations in the vicinity.",
   },
   {
-    title: "Black Hole",
-    blurb: "Sensors indicate that a black hole's gravitational field is affecting the region of space we were headed through. We could stay of course, but risk of being overcome by its gravity, or we could change course to go around, which will take longer.",
+    title: "Space Bugs",
+    blurb: "You see some space bugs out your window. They contort in various reality bending ways, and it makes you sick. You know it's Galactic Policy to report all sightings of space bugs.",
   },
   {
     title: "Space Outpost Beta-9",
@@ -322,7 +322,9 @@ const ORION_STATUS_NORMAL = (props, context) => {
                       textAlign="center"
                       icon="skull"
                       content="KILL"
-                      onClick={() => act('start_game')} />
+                      onClick={() => act('kill_crew', {
+                        who: settler
+                      })} />
                   </Stack.Item>
                   <Stack.Item mr={0}>
                     <Box className={'moods32x32 mood' + (settlermoods[settler] + 1)} />
@@ -333,35 +335,35 @@ const ORION_STATUS_NORMAL = (props, context) => {
             <Divider vertical />
             <Stack.Item>
               <Stack vertical fill>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="hamburger"
                     content={"Food Left: " + food}
                     color="green" />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="gas-pump"
                     content={"Fuel Left: " + fuel}
                     color="olive" />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="wrench"
                     content={"Hull Parts: "+hull}
                     color="average" />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="server"
                     content={"Electronics: "+electronics}
                     color="blue" />
                 </Stack.Item>
-                <Stack.Item mb={-0.65} grow>
+                <Stack.Item mb={1}>
                   <Button
                     fluid
                     icon="rocket"

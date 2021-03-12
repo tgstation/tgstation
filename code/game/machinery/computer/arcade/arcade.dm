@@ -672,21 +672,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/list/events = list(
 		/datum/orion_event/engine_part,
 		/datum/orion_event/electronic_part,
-		/datum/orion_event/hull_part
+		/datum/orion_event/hull_part,
+		/datum/orion_event/old_ship,
+		/datum/orion_event/exploring_derelict,
+		/datum/orion_event/raiders,
+		/datum/orion_event/illness,
+		/datum/orion_event/flux,
+		/datum/orion_event/black_hole,
+		/datum/orion_event/black_hole_death
+		//ling
+		//spaceport
 	)
-
-	/*
-	var/list/events = list(ORION_TRAIL_RAIDERS = 3,
-						   ORION_TRAIL_FLUX = 1,
-						   ORION_TRAIL_ILLNESS = 3,
-						   ORION_TRAIL_BREAKDOWN = 2,
-						   ORION_TRAIL_LING = 3,
-						   ORION_TRAIL_MALFUNCTION = 2,
-						   ORION_TRAIL_COLLISION = 1,
-						   ORION_TRAIL_SPACEPORT = 2,
-						   ORION_TRAIL_OLDSHIP = 2
-						   )
-	*/
 	var/lings_aboard = 0
 	var/spaceport_raided = 0
 	var/spaceport_freebie = 0
@@ -849,6 +845,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(event)
 		event.response(action)
+		if(!settlers.len || food <= 0 || fuel <= 0)
+			set_game_over(gamer)
+			return
+		new_settler_mood() //events shake people up a bit and can also change food
 		update_static_data(usr)
 		return TRUE
 	switch(action)
@@ -877,10 +877,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			food -= (alive+lings_aboard)*2
 			fuel -= 5
 			turns += 1
-			//special turn 2 event
-			if(turns == 2 && prob(30-gamerSkill))
-				event = ORION_TRAIL_COLLISION
+			//out of supplies, die
+			if(food <= 0 || fuel <= 0)
+				set_game_over(gamer)
+			if(turns == 2 && prob(30-gamerSkill)) //asteroids part of the trip
 				encounter_event(/datum/orion_event/hull_part, gamer, gamerSkill, gamerSkillLevel)
+				return
+			if(turns == 4) //halfway mark
+				encounter_event(/datum/orion_event/space_port/tau_ceti, gamer, gamerSkill, gamerSkillLevel)
+				return
+			if(turns == 7) //black hole part of the trip
+				encounter_event(/datum/orion_event/black_hole, gamer, gamerSkill, gamerSkillLevel)
 				return
 			//an uneventful (get it) turn
 			if(prob(25 + gamerSkill))
@@ -901,7 +908,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				if(obj_flags & EMAGGED)
 					gamer.death()
 				set_game_over(gamer)
-
 				if(killed_crew >= 4)
 					xp_gained -= 15//no cheating by spamming game overs
 					report_player(gamer)
@@ -928,9 +934,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if(instance.type == path)
 				event = instance
 				break
-	event.on_select()
+	event.on_select(gamerSkill, gamerSkillLevel)
 	if(obj_flags & EMAGGED)
-		event.emag_effect(gamer, gamerSkill, gamerSkillLevel)
+		event.emag_effect(gamer)
 
 	/* THE LAST OF THE STUFF I NEED TO DATUMIZE
 
@@ -946,21 +952,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75-gamerSkill))
-				event = ORION_TRAIL_BLACKHOLE
-				event()
-				if(obj_flags & EMAGGED)
-					playsound(loc, 'sound/effects/supermatter.ogg', 100, TRUE)
-					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-					if(isliving(usr))
-						var/mob/living/L = usr
-						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
-					var/S = new /obj/singularity/academy(usr.loc)
-					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
-					QDEL_IN(S, 50)
-			else
-				event = null
-				turns += 1
+
 	else if(href_list["holedeath"])
 		if(istype(event, ORION_TRAIL_BLACKHOLE)
 			set_game_over(usr)
@@ -1258,6 +1250,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else
 */
 
+/obj/machinery/computer/arcade/orion_trail/proc/lose_condition_met()
+
+		return TRUE
+
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
@@ -1334,18 +1330,31 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /**
  * Creates a new mood icon for each settler
  *
- * their moods all match the settler count, but half of the time they can possibly feel a little worse or better.
+ * Things that effect mood:
+ * * +1 for determination
+ * * Pioneer count
+ * * Low food
+ * * Low parts
+ * * Sometimes they're just a bit happier or sadder
  * Arguments:
  * * None!
  */
 /obj/machinery/computer/arcade/orion_trail/proc/new_settler_mood()
 	settlermoods.Cut()
 	for(var/i in 1 to settlers.len)
+		var/food_mood = food <= 15
+		var/supply_mood = -1
+		if(hull)
+			supply_mood++
+		if(electronics)
+			supply_mood++
+		if(engine)
+			supply_mood++
+		supply_mood = min(supply_mood, 1) //they expect multiple things stocked
 		var/changing_mood = 0
-		if(prob(50))
+		if(prob(60)) //sometimes they just feel better or worse
 			changing_mood = rand(-1,1)
-		settlermoods[settlers[i]] += (settlers.len + changing_mood)
-	return settlermoods
+		settlermoods[settlers[i]] += min(settlers.len + 1 + changing_mood + food_mood + supply_mood, 1)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	gameStatus = ORION_STATUS_START

@@ -12,19 +12,25 @@
 	var/emag_sound = 'sound/effects/bamf.ogg'
 	///our game
 	var/obj/machinery/computer/arcade/orion_trail/game
+	//gaming skill level of the player
+	var/gamerSkillLevel = 0
+	//gaming skill of the player
+	var/gamerSkill = 0
 
 /datum/orion_event/New(_game)
 	. = ..()
 	game = _game
 
 /**
- * What happens when this event is selected to trigger, in case you want an event that has changing text or randomization
+ * What happens when this event is selected to trigger, sets vars. also can set some event pre-encounter randomization
  *
  * Arguments:
- * * None!
+ * * _gamerSkill: gaming skill of the player
+ * * _gamerSkillLevel: gaming skill level of the player
  */
-/datum/orion_event/proc/on_select()
-	return
+/datum/orion_event/proc/on_select(_gamerSkill, _gamerSkillLevel)
+	gamerSkillLevel = _gamerSkillLevel
+	gamerSkill = _gamerSkill
 
 /**
  * What happens when you respond to this event by choosing one of the buttons
@@ -44,7 +50,7 @@
  * * gamerSkill: skill of the gamer, because gamers gods can lessen the effects of the emagged machine
  * * gamerSkillLevel: skill level of the gamer, another way to measure emag downside avoidance
  */
-/datum/orion_event/proc/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/proc/emag_effect(mob/living/carbon/gamer)
 	game.audible_message(emag_message)
 	playsound(game, emag_sound, 100, TRUE)
 
@@ -57,18 +63,19 @@
 	emag_message = "<span class='warning'>You hear some large object lurch to a halt right behind you! When you go to look, nothing's there...</span>"
 	emag_sound = 'sound/effects/creak1.ogg'
 	weight = 2
-	event_responses = list("Wait")
+	event_responses = list()
 
 /datum/orion_event/engine_part/on_select()
 	if(game.engine >= 1)
 		event_responses += "Fix Engine"
+	event_responses += "Wait"
 
 /datum/orion_event/engine_part/response(choice)
 	if(choice == "Fix Engine")
 		game.engine = max(0, --game.engine)
 	else
 		game.food -= ((game.alive + game.lings_aboard)*2)*3
-	event_responses.Remove("Fix Engine")
+	event_responses.Cut()
 	..()
 
 ///Malfunction - spend one engine part or wait 3 days (emag effect randomizes some stats)
@@ -78,21 +85,23 @@
 	You can replace the broken electronics with spares, \
 	or you can spend 3 days troubleshooting the AI."
 	weight = 2
-	event_responses = list("Wait")
+	//set by select
+	event_responses = list()
 
 /datum/orion_event/electronic_part/on_select()
 	if(game.engine >= 1)
 		event_responses += "Repair Electronics"
+	event_responses += "Wait"
 
 /datum/orion_event/electronic_part/response(choice)
 	if(choice == "Repair Electronics")
 		game.electronics = max(0, --game.electronics)
 	else
 		game.food -= ((game.alive + game.lings_aboard)*2)*3
-	event_responses.Remove("Repair Electronics")
+	event_responses.Cut()
 	..()
 
-/datum/orion_event/electronic_part/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/electronic_part/emag_effect(mob/living/carbon/gamer)
 	playsound(game, 'sound/effects/empulse.ogg', 50, TRUE)
 	game.visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 	var/oldfood = game.food
@@ -116,21 +125,22 @@
 	You can repair the damage with hull plates, or you can spend \
 	the next 3 days welding scrap together."
 	weight = 2
-	event_responses = list("Wait")
+	event_responses = list()
 
 /datum/orion_event/hull_part/on_select()
 	if(game.hull >= 1)
 		event_responses += "Restore Hull"
+	event_responses += "Wait"
 
 /datum/orion_event/hull_part/response(choice)
 	if(choice == "Restore Hull")
 		game.hull = max(0, --game.hull)
 	else
 		game.food -= ((game.alive + game.lings_aboard)*2)*3
-	event_responses.Remove("Restore Hull")
+	event_responses.Cut()
 	..()
 
-/datum/orion_event/hull_part/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/hull_part/emag_effect(mob/living/carbon/gamer)
 	if(prob(10+gamerSkill))
 		game.say("Something slams into the floor around [src] - luckily, it didn't get through!")
 		playsound(game, 'sound/effects/bang.ogg', 50, TRUE)
@@ -160,7 +170,7 @@
 		return ..()
 	game.encounter_event(/datum/orion_event/exploring_derelict)
 
-/datum/orion_event/old_ship/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/old_ship/emag_effect(mob/living/carbon/gamer)
 	return //do nothing because this leads into an event where we actually will do something.
 
 /datum/orion_event/exploring_derelict
@@ -171,7 +181,7 @@
 
 /datum/orion_event/exploring_derelict/on_select()
 	switch(rand(100))
-		if(0 to 15)
+		if(0 to 14)
 			var/rescued = game.add_crewmember()
 			var/oldfood = rand(1,7)
 			var/oldfuel = rand(4,10)
@@ -186,7 +196,7 @@
 			game.fuel -= lostfuel
 			text = "[deadname] was lost deep in the wreckage, and your own vessel lost [lostfuel] Fuel maneuvering to the the abandoned ship."
 			event_responses += "Where did you go?!"
-		if(35 to 65)
+		if(36 to 65)
 			var/oldfood = rand(5,11)
 			game.food += oldfood
 			game.engine++
@@ -195,6 +205,10 @@
 		else
 			text = "As you look through the wreck you cannot find much of use."
 			event_responses += "Continue travels."
+
+/datum/orion_event/exploring_derelict/response(choice)
+	event_responses.Cut() //so they don't pile up between games
+	..()
 
 /datum/orion_event/raiders
 	name = "Raiders"
@@ -215,7 +229,7 @@
 	else
 		text += "Fortunately, you fended them off without any trouble."
 
-/datum/orion_event/raiders/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/raiders/emag_effect(mob/living/carbon/gamer)
 	if(prob(50-gamerSkill))
 		to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 		gamer.hallucination += 30
@@ -234,7 +248,7 @@
 	var/deadname = game.remove_crewmember()
 	text = "A deadly illness has been contracted! [deadname] was killed by the disease."
 
-/datum/orion_event/illness/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/illness/emag_effect(mob/living/carbon/gamer)
 	var/maxSeverity = 3
 	if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
 		maxSeverity = 2 //part of gitting gud is rng mitigation
@@ -268,7 +282,7 @@
 		game.fuel -= 5
 		..()
 
-/datum/orion_event/flux/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
+/datum/orion_event/flux/emag_effect(mob/living/carbon/gamer)
 	if(prob(25 + gamerSkill))//withstand the wind with your GAMER SKILL
 		to_chat(gamer, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 		return
@@ -283,3 +297,69 @@
 
 /datum/orion_event/changeling_infiltration
 	name = "Changeling Infiltration"
+
+///Black Hole - final  (emag can spawn singulo, see death event)
+/datum/orion_event/black_hole
+	name = "Looming Black Hole"
+	text = "Sensors indicate that a black hole's gravitational field is \
+	affecting the region of space we were headed through. We could stay \
+	of course, but risk of being overcome by its gravity, or we could \
+	change course to go around, which will take longer."
+	event_responses = list("Speed Past","Go Around")
+
+/datum/orion_event/black_hole/response(choice)
+	if(choice == "Go Around")
+		game.food -= ((game.alive + game.lings_aboard)*2)*3
+		game.fuel -= 15
+		game.turns += 1
+		return ..()
+	if(prob(75-gamerSkill))
+		game.encounter_event(/datum/orion_event/black_hole_death)
+		return
+	game.turns += 1
+	..()
+
+///You died to a black hole, have some fluff text
+/datum/orion_event/black_hole_death
+	name = "Event Horizon"
+	text = "As you jet the shuttle forward, you realize you underestimated the \
+	pull of the black hole. Try as you may, you cannot escape its stellar force. \
+	It isn't long before you pass the event horizon, and you close your eyes, readying \
+	to be torn apart as your ship begins to buckle under the immense pull."
+	event_responses = list("Oh...")
+
+/datum/orion_event/black_hole_death/response(choice)
+	game.set_game_over(usr, "You were swept away into the black hole.")
+	..()
+
+/datum/orion_event/black_hole_death/emag_effect(mob/living/carbon/gamer)
+	if(game.obj_flags & EMAGGED)
+		playsound(game.loc, 'sound/effects/supermatter.ogg', 100, TRUE)
+		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
+		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
+		var/S = new /obj/singularity/academy(gamer.loc)
+		addtimer(CALLBACK(game, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
+		QDEL_IN(S, 5 SECONDS)
+
+///You found a space port!
+/datum/orion_event/space_port
+	name = "Space Port"
+	text = "You have spotted a small pocket of civilization along the Orion Trail. \
+	A friendly hailing from the nearby space port assures that you can dock to rest \
+	and prepare for the travels ahead."
+	weight = 2
+	event_responses = list("Dock")
+
+/datum/orion_event/space_port/response(choice)
+	game.gameStatus = ORION_STATUS_MARKET
+	..()
+
+///You found the midway mark!
+/datum/orion_event/space_port/tau_ceti
+	name = "Tau Ceti Beta"
+	text = "You have reached the halfway point in your journey, the largest space port \
+	along the trail: Tau Ceti Beta. It bustles with activity and life. It gives you hope \
+	of finding your future at Orion."
+	//triggered by getting halfway
+	weight = 0
+
