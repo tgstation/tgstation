@@ -281,7 +281,7 @@
 		new_gorilla.health = 110
 		new_gorilla.maxHealth = 110
 		new_gorilla.melee_damage_upper = 8
-		new_gorilla.melee_damage_upper = 5
+		new_gorilla.melee_damage_lower = 5
 		new_gorilla.obj_damage = 10
 
 	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
