@@ -1,4 +1,0 @@
-author: "Y0SH1_M4S73R"
-delete-after: True
-changes: 
-  - qol: "Pulsing a cut open wire on airlocks will now open it. Since cutting the open wire prevents airlocks from being opened by physical contact, this allows you to make airlocks only openable using assemblies. Try connecting a voice analyzer to the cut open wire."

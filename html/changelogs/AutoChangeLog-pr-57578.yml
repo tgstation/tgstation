@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - refactor: "refactored the voice of god. Specifically, I made the commands into singleton datums. It's also more robust against edge cases and bad text matches."
-  - bugfix: "The voice of god spell should now work for AIs."
-  - qol: "the voice of god commands themselves should tolerate the lack of whitespaces now."
