@@ -395,7 +395,7 @@
 	icon_state = "cult_sharpener"
 	uses = 1
 	increment = 5
-	max = 40
+	max = 30
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon_state()
