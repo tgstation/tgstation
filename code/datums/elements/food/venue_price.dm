@@ -16,10 +16,10 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER)
 
-/datum/element/venue_price/proc/item_sold(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/container)
+/datum/element/venue_price/proc/item_sold(datum/thing_sold, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
 	SIGNAL_HANDLER
 
-	var/datum/venue/venue_to_pay = customer_pawn.ai_controller?.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
+	var/datum/venue/venue_to_pay = sold_to.ai_controller?.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
 	new /obj/item/holochip(get_turf(container), venue_price)
 	venue_to_pay.total_income += venue_price

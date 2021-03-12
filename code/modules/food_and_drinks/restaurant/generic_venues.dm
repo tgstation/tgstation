@@ -102,11 +102,10 @@
 	for(var/datum/reagent/reagent as anything in order_item.reagents.reagent_list)
 		if(reagent.type != ordered_reagent_type)
 			continue
-		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
-	total_income += ordered_reagent_type.glass_price
 	customers_served += 1
 	order_item.reagents.clear_reagents()
 
