@@ -867,7 +867,7 @@ e
 			if("clockwork")
 				outline_color = COLOR_THEME_CLOCKWORK //if you want free gbp go fix the fact that clockwork's tooltip css is glass'
 			if("glass")
-				outline_color = COLOR_THEME_GLASS //do the glass color thingy here later
+				outline_color = COLOR_THEME_GLASS
 			else //this should never happen, hopefully
 				outline_color = COLOR_WHITE
 	if(color)
