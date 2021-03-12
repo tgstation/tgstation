@@ -235,6 +235,7 @@
 			name = "tattered [initial(name)]"
 
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
+	update_appearance()
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
@@ -503,6 +504,7 @@ BLIND     // can't see anything
 			else
 				M.visible_message("<span class='danger'>[src] fall[p_s()] apart, completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 		name = "shredded [initial(name)]" // change the name -after- the message, not before.
+		update_appearance()
 	else
 		..()
 

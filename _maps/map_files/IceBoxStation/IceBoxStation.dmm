@@ -15218,13 +15218,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay)
-"bpv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/medical/medbay)
 "bpD" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
@@ -94426,7 +94419,7 @@ bgQ
 bll
 xqe
 eRH
-bpv
+boc
 pBF
 bfG
 btV

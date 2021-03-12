@@ -1,0 +1,4 @@
+author: "maxymax13"
+delete-after: True
+changes: 
+  - rscadd: "Items in your inventory now have an outline when you hover over them, originally from BeeStation. This can be disabled in Game Preferences."
