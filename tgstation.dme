@@ -2317,7 +2317,6 @@
 #include "code\modules\library\skill_learning\job_skillchips\research_director.dm"
 #include "code\modules\library\skill_learning\job_skillchips\roboticist.dm"
 #include "code\modules\library\skill_learning\job_skillchips\station_engineer.dm"
-#include "code\modules\library\skill_learning\job_skillchips\traitor.dm"
 #include "code\modules\lighting\emissive_blocker.dm"
 #include "code\modules\lighting\lighting_area.dm"
 #include "code\modules\lighting\lighting_atom.dm"

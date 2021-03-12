@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "holodeck templates no longer have two entries each in the Template - Place verb"
