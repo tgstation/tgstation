@@ -380,17 +380,29 @@ const ORION_STATUS_NORMAL = (props, context) => {
 const ORION_STATUS_GAMEOVER = (props, context) => {
   const { data, act } = useBackend(context);
   const {
-    order_datums,
-    total_cost,
+    reason,
   } = data;
   return (
-    <Stack vertical fill>
-      <Stack.Item grow>
-        <Section fill>
-          game over screen
-        </Section>
-      </Stack.Item>
-    </Stack>
+    <Section fill>
+      <Stack vertical textAlign="center" fill>
+        <Stack.Item grow={1}/>
+        <Stack.Item color="red" fontSize="32px">
+          {"Game Over"}
+        </Stack.Item>
+        <Stack.Item grow fontSize="15px" color="label">
+          {reason}
+        </Stack.Item>
+        <Stack.Item fontSize="15px">
+          <Button
+            lineHeight={2}
+            fluid
+            icon="arrow-left"
+            content="Main Menu"
+            onClick={() => act('back_to_menu')} />
+        </Stack.Item>
+        <Stack.Item grow={3}/>
+      </Stack>
+    </Section>
   );
 };
 

@@ -210,7 +210,7 @@
 		game.fuel -= sfuel
 		text += "They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
 	else if(prob(10))
-		var/deadname = remove_crewmember()
+		var/deadname = game.remove_crewmember()
 		text += "[deadname] tried to fight back, but was killed."
 	else
 		text += "Fortunately, you fended them off without any trouble."
@@ -231,7 +231,7 @@
 	event_responses = list("Continue")
 
 /datum/orion_event/illness/on_select()
-	var/deadname = remove_crewmember()
+	var/deadname = game.remove_crewmember()
 	text = "A deadly illness has been contracted! [deadname] was killed by the disease."
 
 /datum/orion_event/illness/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)

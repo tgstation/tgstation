@@ -810,6 +810,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	data["eventname"] = event?.name
 	data["eventtext"] = event?.text
 	data["buttons"] = event?.event_responses
+
+	data["reason"] = reason
+
 	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
@@ -929,7 +932,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(obj_flags & EMAGGED)
 		event.emag_effect(gamer, gamerSkill, gamerSkillLevel)
 
-	/*
+	/* THE LAST OF THE STUFF I NEED TO DATUMIZE
 
 
 	else if(href_list["pastblack"]) //slow down
@@ -1247,23 +1250,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
-		var/title = stops[turns]
-		var/subtext = stopblurbs[turns]
-		dat = "<center><h1>[title]</h1></center>"
-		dat += "[subtext]"
-		dat += "<h3><b>Crew:</b></h3>"
-		dat += english_list(settlers)
-		dat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
-		dat += "<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
+
 		if(turns == 7)
 			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];pastblack=1'>Go Around</a> <a href='byond://?src=[REF(src)];blackhole=1'>Continue</a></P>"
 		else
 			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];=1'>Continue</a></P>"
 	else
-		dat = "<center><h2>The Orion Trail</h2></center>"
-		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
-		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a></b></center>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 */
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
