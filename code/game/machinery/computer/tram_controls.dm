@@ -6,6 +6,7 @@
 	icon_screen = "tram"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/tram_controls
+	var/travelling = FALSE
 
 	var/obj/structure/industrial_lift/tram/tram_part
 	light_color = LIGHT_COLOR_GREEN
@@ -19,6 +20,7 @@
 	var/obj/structure/industrial_lift/tram/tram_struct = locate(/obj/structure/industrial_lift/tram) in GLOB.lifts
 	tram_part = tram_struct //possibly setting to something null, that's fine, but
 	tram_part.find_our_location()
+	tram_part.console = src
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
@@ -52,6 +54,8 @@
 
 /obj/machinery/computer/tram_controls/ui_act(action, params)
 	. = ..()
+	if(travelling)
+		return
 	if(. || tram_part.travelling)
 		return
 	var/destination_name = params["destination"]
@@ -63,5 +67,6 @@
 		CRASH("Controls couldn't find the destination \"[destination_name]\"!")
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started
 		return
+	travelling = TRUE
 	tram_part.tram_travel(tram_part.from_where, to_where)
 	update_static_data(usr) //show new location of tram

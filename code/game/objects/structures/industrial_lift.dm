@@ -404,6 +404,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	armor = list(MELEE = 80, BULLET = 80, LASER = 80, ENERGY = 80, BOMB = 100, BIO = 80, RAD = 80, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/obj/machinery/computer/tram_controls/console //console sets this in late initialize
 	var/travelling = FALSE
 	var/travel_distance = 0
 	///for finding the landmark initially - should be the exact same as the landmark's destination id.
@@ -468,6 +469,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		var/obj/structure/industrial_lift/tram/other_tram_part = lift
 		other_tram_part.travelling = FALSE
 		other_tram_part.find_our_location()
+		other_tram_part.console.travelling = FALSE
 		lift_master_datum.set_controls(UNLOCKED)
 
 /obj/effect/landmark/tram
