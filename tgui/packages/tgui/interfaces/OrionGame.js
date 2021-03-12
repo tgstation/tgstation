@@ -48,6 +48,9 @@ const STATUS2COMPONENT = [
   {
     component: () => ORION_STATUS_GAMEOVER,
   },
+  {
+    component: () => ORION_STATUS_MARKET,
+  },
 ];
 
 const locationInfo = [
@@ -97,7 +100,7 @@ const ORION_STATUS_START = (props, context) => {
   return (
     <Section fill>
       <Stack vertical textAlign="center" fill>
-        <Stack.Item grow={1}/>
+        <Stack.Item grow={1} />
         <Stack.Item fontSize="32px">
           {gamename}
         </Stack.Item>
@@ -120,7 +123,7 @@ const ORION_STATUS_START = (props, context) => {
             content="Instructions"
             onClick={() => act('instructions')} />
         </Stack.Item>
-        <Stack.Item grow={3}/>
+        <Stack.Item grow={3} />
       </Stack>
     </Section>
   );
@@ -322,8 +325,8 @@ const ORION_STATUS_NORMAL = (props, context) => {
                       textAlign="center"
                       icon="skull"
                       content="KILL"
-                      onClick={() => act('kill_crew', {
-                        who: settler
+                      onClick={() => act('target_kill', {
+                        who: settler,
                       })} />
                   </Stack.Item>
                   <Stack.Item mr={0}>
@@ -387,7 +390,7 @@ const ORION_STATUS_GAMEOVER = (props, context) => {
   return (
     <Section fill>
       <Stack vertical textAlign="center" fill>
-        <Stack.Item grow={1}/>
+        <Stack.Item grow={1} />
         <Stack.Item color="red" fontSize="32px">
           {"Game Over"}
         </Stack.Item>
@@ -402,9 +405,139 @@ const ORION_STATUS_GAMEOVER = (props, context) => {
             content="Main Menu"
             onClick={() => act('back_to_menu')} />
         </Stack.Item>
-        <Stack.Item grow={3}/>
+        <Stack.Item grow={3} />
       </Stack>
     </Section>
+  );
+};
+
+const ORION_STATUS_MARKET = (props, context) => {
+  const { data, act } = useBackend(context);
+  const {
+    settlers,
+    settlermoods,
+    hull,
+    electronics,
+    engine,
+    food,
+    fuel,
+    turns,
+    eventname,
+    eventtext,
+    buttons,
+  } = data;
+  return (
+    <Stack vertical fill>
+      <Stack.Item grow>
+        <Section title={!!eventname && "Event" || "Location"} fill>
+          <Stack fill textAlign="center" vertical>
+            <Stack.Item grow >
+              <Box bold fontSize="15px">
+                {!!eventname && eventname || locationInfo[turns-1].title}
+              </Box>
+              <br />
+              <Box fontSize="15px">
+                {!!eventtext && eventtext || locationInfo[turns-1].blurb}
+              </Box>
+            </Stack.Item>
+            <Stack.Item>
+              {!!buttons && (
+                buttons.map(button => (
+                  <Stack.Item key={button}>
+                    <Button
+                      mb={1}
+                      lineHeight={3}
+                      width={16}
+                      icon={variousButtonIcons[button]}
+                      content={button}
+                      onClick={() => act(button)} />
+                  </Stack.Item>
+                ))
+              ) || (
+                <Button
+                  mb={1}
+                  lineHeight={3}
+                  width={16}
+                  icon="arrow-right"
+                  content="Continue"
+                  onClick={() => act('continue')} />
+              )}
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Stack.Item>
+      <Stack.Item>
+        <Section
+          title="Adventure Status"
+          fill >
+          <Stack mb={-1} fill>
+            <Stack.Item grow mb={-0.5}>
+              {settlers?.map(settler => (
+                <Stack key={settler}>
+                  <Stack.Item grow mt={0.9}>
+                    {settler}
+                  </Stack.Item>
+                  <Stack.Item mt={0.9}>
+                    <Button
+                      fluid
+                      color="red"
+                      textAlign="center"
+                      icon="skull"
+                      content="KILL"
+                      onClick={() => act('target_kill', {
+                        who: settler,
+                      })} />
+                  </Stack.Item>
+                  <Stack.Item mr={0}>
+                    <Box className={'moods32x32 mood' + (settlermoods[settler] + 1)} />
+                  </Stack.Item>
+                </Stack>
+              ))}
+            </Stack.Item>
+            <Divider vertical />
+            <Stack.Item>
+              <Stack vertical fill>
+                <Stack.Item>
+                  <Button
+                    fluid
+                    icon="hamburger"
+                    content={"Food Left: " + food}
+                    color="green" />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    fluid
+                    icon="gas-pump"
+                    content={"Fuel Left: " + fuel}
+                    color="olive" />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    fluid
+                    icon="wrench"
+                    content={"Hull Parts: "+hull}
+                    color="average" />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    fluid
+                    icon="server"
+                    content={"Electronics: "+electronics}
+                    color="blue" />
+                </Stack.Item>
+                <Stack.Item mb={1}>
+                  <Button
+                    fluid
+                    icon="rocket"
+                    content={"Engine Parts: "+engine}
+                    color="violet" />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 

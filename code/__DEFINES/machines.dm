@@ -150,3 +150,10 @@
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
 #define MASSDRIVER_SHACK "shack"
+
+//orion game states
+#define ORION_STATUS_START 0
+#define ORION_STATUS_INSTRUCTIONS 1
+#define ORION_STATUS_NORMAL 2
+#define ORION_STATUS_GAMEOVER 3
+#define ORION_STATUS_MARKET 4

@@ -631,25 +631,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 #define ORION_TRAIL_WINTURN 9
 
-//Orion Trail Events
-#define ORION_TRAIL_RAIDERS "Raiders"
-#define ORION_TRAIL_FLUX "Interstellar Flux"
-#define ORION_TRAIL_ILLNESS "Illness"
-#define ORION_TRAIL_BREAKDOWN "Breakdown"
-#define ORION_TRAIL_LING "Changelings?"
-#define ORION_TRAIL_LING_ATTACK "Changeling Ambush"
-#define ORION_TRAIL_MALFUNCTION "Malfunction"
-#define ORION_TRAIL_COLLISION "Collision"
-#define ORION_TRAIL_SPACEPORT "Spaceport"
-#define ORION_TRAIL_BLACKHOLE "BlackHole"
-#define ORION_TRAIL_OLDSHIP "Old Ship"
-#define ORION_TRAIL_SEARCH "Old Ship Search"
-
-#define ORION_STATUS_START 0
-#define ORION_STATUS_INSTRUCTIONS 1
-#define ORION_STATUS_NORMAL 2
-#define ORION_STATUS_GAMEOVER 3
-#define ORION_STATUS_MARKET 4
+//defines in machines.dm
 
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
@@ -679,16 +661,21 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/datum/orion_event/illness,
 		/datum/orion_event/flux,
 		/datum/orion_event/black_hole,
-		/datum/orion_event/black_hole_death
-		//ling
-		//spaceport
+		/datum/orion_event/black_hole_death,
+		/datum/orion_event/changeling_infiltration,
+		/datum/orion_event/changeling_attack,
+		/datum/orion_event/space_port,
+		/datum/orion_event/space_port/tau_ceti,
+		/datum/orion_event/space_port_raid
 	)
+	//actual amount of lings on board
 	var/lings_aboard = 0
+	//if the game should pretend there are lings on board.
+	var/lings_suspected = FALSE
 	var/spaceport_raided = 0
 	var/spaceport_freebie = 0
-	var/last_spaceport_action = ""
+	var/spaceport_feedback = ""
 	var/gameStatus = ORION_STATUS_START
-	var/canContinueEvent = 0
 
 	var/obj/item/radio/Radio
 	var/list/gamers = list()
@@ -744,7 +731,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	//spaceport junk
 	spaceport_raided = 0
 	spaceport_freebie = 0
-	last_spaceport_action = ""
+	spaceport_feedback = ""
 
 /obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
 	if(gamers[gamer] == -2)
@@ -802,10 +789,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	data["electronics"] = electronics
 	data["food"] = food
 	data["fuel"] = fuel
+	data["lings_suspected"] = lings_suspected
 
 	data["eventname"] = event?.name
 	data["eventtext"] = event?.text
 	data["buttons"] = event?.event_responses
+
+	data["spaceport_raided"] = spaceport_raided
+	data["spaceport_freebie"] = spaceport_freebie
+	data["spaceport_feedback"] = spaceport_feedback
 
 	data["reason"] = reason
 
@@ -834,12 +826,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
-	//var/gamerSkillRands = 0
+	var/gamerSkillRands = 0
 
 	if(gamer?.mind)
 		gamerSkillLevel = gamer.mind.get_skill_level(/datum/skill/gaming)
 		gamerSkill = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
-		//gamerSkillRands = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+		gamerSkillRands = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 
 	var/xp_gained = 0
 
@@ -881,13 +873,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if(food <= 0 || fuel <= 0)
 				set_game_over(gamer)
 			if(turns == 2 && prob(30-gamerSkill)) //asteroids part of the trip
-				encounter_event(/datum/orion_event/hull_part, gamer, gamerSkill, gamerSkillLevel)
+				encounter_event(/datum/orion_event/hull_part, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
 				return
 			if(turns == 4) //halfway mark
-				encounter_event(/datum/orion_event/space_port/tau_ceti, gamer, gamerSkill, gamerSkillLevel)
+				encounter_event(/datum/orion_event/space_port/tau_ceti, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
 				return
 			if(turns == 7) //black hole part of the trip
-				encounter_event(/datum/orion_event/black_hole, gamer, gamerSkill, gamerSkillLevel)
+				encounter_event(/datum/orion_event/black_hole, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
 				return
 			//an uneventful (get it) turn
 			if(prob(25 + gamerSkill))
@@ -895,265 +887,81 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			encounter_event(null, gamer, gamerSkill, gamerSkillLevel)
 			if(lings_aboard && (istype(event, /datum/orion_event/changeling_infiltration) || prob(45 + gamerSkill)))
 				//upgrade infiltration/whatever else we got to attack right away
-				encounter_event(/datum/orion_event/changeling_attack, gamer, gamerSkill, gamerSkillLevel)
-		if("kill_crew")
-			if(gameStatus != ORION_STATUS_NORMAL || event != ORION_TRAIL_LING)
-				return
-			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
-			killed_crew++
-
-			if(!settlers.len || !alive)
-				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
-				if(obj_flags & EMAGGED)
-					gamer.death()
-				set_game_over(gamer)
-				if(killed_crew >= 4)
-					xp_gained -= 15//no cheating by spamming game overs
-					report_player(gamer)
-			else if(obj_flags & EMAGGED)
-				if(findtext(gamer.name, sheriff))
-					say("The crew of the ship chose to kill [gamer]!")
-					gamer.death()
-
-			if(istype(event, /datum/orion_event/changeling_infiltration)) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
-				killed_crew-- // the kill was valid
-
-/**
- * pickweights a new event, sets event var as it. it then preps the event if it needs it
- *
- * giving a path argument will instead find that instanced datum instead of pickweighting. Used in events that follow from events.
- * Arguments:
- * * path: if we want a specific event, this is the path of the wanted one
- */
-/obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamerSkill, gamerSkillLevel)
-	if(!path)
-		event = pickweightAllowZero(events)
-	else
-		for(var/datum/orion_event/instance as anything in events)
-			if(instance.type == path)
-				event = instance
-				break
-	event.on_select(gamerSkill, gamerSkillLevel)
-	if(obj_flags & EMAGGED)
-		event.emag_effect(gamer)
-
-	/* THE LAST OF THE STUFF I NEED TO DATUMIZE
-
-
-	else if(href_list["pastblack"]) //slow down
-		if(turns == 7)
-			food -= ((alive+lings_aboard)*2)*3
-			fuel -= 15
-			turns += 1
-			event = null
-		if(istype(event, ORION_TRAIL_COLLISION)
-			hull = max(0, --hull)
-			event = null
-	else if(href_list["blackhole"]) //keep speed past a black hole
-		if(turns == 7)
-
-	else if(href_list["holedeath"])
-		if(istype(event, ORION_TRAIL_BLACKHOLE)
-			set_game_over(usr)
-
-	//Spaceport specific interactions
-	//they get a header because most of them don't reset event (because it's a shop, you leave when you want to)
-	//they also call event() again, to regen the eventdata, which is kind of odd but necessary
-	else if(href_list["buycrew"]) //buy a crewmember
-		if(gameStatus == ORION_STATUS_MARKET)
+				encounter_event(/datum/orion_event/changeling_attack, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+		if("random_kill")
+			execute_crewmember(gamer)
+		if("target_kill")
+			execute_crewmember(gamer, params["who"])
+		//Spaceport specific interactions
+		if("buycrew") //buy a crewmember
 			if(!spaceport_raided && food >= 10 && fuel >= 10)
 				var/bought = add_crewmember()
-				last_spaceport_action = "You hired [bought] as a new crewmember."
+				spaceport_feedback = "You hired [bought] as a new crewmember."
 				fuel -= 10
 				food -= 10
-				event()
 				killed_crew-- // I mean not really but you know
-
-	else if(href_list["sellcrew"]) //sell a crewmember
-		if(gameStatus == ORION_STATUS_MARKET)
+		if("sellcrew") //sell a crewmember
 			if(!spaceport_raided && settlers.len > 1)
 				var/sold = remove_crewmember()
-				last_spaceport_action = "You sold your crewmember, [sold]!"
+				spaceport_feedback = "You sold your crewmember, [sold]!"
 				fuel += 7
 				food += 7
-				event()
-
-	else if(href_list["leave_spaceport"])
-		if(gameStatus == ORION_STATUS_MARKET)
-			event = null
+		if("leave_spaceport")
 			gameStatus = ORION_STATUS_NORMAL
 			spaceport_raided = 0
 			spaceport_freebie = 0
-			last_spaceport_action = ""
-
-	else if(href_list["raid_spaceport"])
-		if(gameStatus == ORION_STATUS_MARKET)
-			if(!spaceport_raided)
-				var/success = min(15 * alive + gamerSkill,100) //default crew (4) have a 60% chance
-				spaceport_raided = 1
-
-				var/FU = 0
-				var/FO = 0
-				if(prob(success))
-					FU = rand(5 + gamerSkillRands,15 + gamerSkillRands)
-					FO = rand(5 + gamerSkillRands,15 + gamerSkillRands)
-					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
-					xp_gained += 10
-				else
-					FU = rand(-5,-15)
-					FO = rand(-5,-15)
-					last_spaceport_action = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
-
-					//your chance of lose a crewmember is 1/2 your chance of success
-					//this makes higher % failures hurt more, don't get cocky space cowboy!
-					if(prob(success*5))
-						var/lost_crew = remove_crewmember()
-						last_spaceport_action = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
-						if(obj_flags & EMAGGED)
-							say("WEEWOO! WEEWOO! Spaceport security en route!")
-							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
-							for(var/i, i<=3, i++)
-								var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
-								O.target = usr
-
-
-				fuel += FU
-				food += FO
-				event()
-
-	else if(href_list["buyparts"])
-		if(gameStatus == ORION_STATUS_MARKET)
+			spaceport_feedback = ""
+		if("raid_spaceport")
+			spaceport_raided = TRUE
+			encounter_event(/datum/orion_event/space_port_raid, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+		if("buyparts")
 			if(!spaceport_raided && fuel > 5)
-				switch(text2num(href_list["buyparts"]))
+				switch(text2num("buyparts"))
 					if(1) //Engine Parts
 						engine++
-						last_spaceport_action = "Bought Engine Parts"
+						spaceport_feedback = "You bought Engine Parts."
 					if(2) //Hull Plates
 						hull++
-						last_spaceport_action = "Bought Hull Plates"
+						spaceport_feedback = "You bought Hull Plates."
 					if(3) //Spare Electronics
 						electronics++
-						last_spaceport_action = "Bought Spare Electronics"
+						spaceport_feedback = "You bought Spare Electronics."
 				fuel -= 5 //they all cost 5
-				event()
-
-	else if(href_list["trade"])
-		if(gameStatus == ORION_STATUS_MARKET)
+		if("trade")
 			if(!spaceport_raided)
-				switch(text2num(href_list["trade"]))
+				switch(text2num("trade"))
 					if(1) //Fuel
 						if(fuel > 5)
 							fuel -= 5
 							food += 5
-							last_spaceport_action = "Traded Fuel for Food"
-							event()
+							spaceport_feedback = "You traded some Fuel for Food."
 					if(2) //Food
 						if(food > 5)
 							fuel += 5
 							food -= 5
-							last_spaceport_action = "Traded Food for Fuel"
-							event()
-
-	add_fingerprint(usr)
+							spaceport_feedback = "You traded some Food for Fuel."
+	add_fingerprint(gamer)
 	updateUsrDialog()
-	busy = FALSE
 
-
-
-
+/*
 	eventdat = "<center><h1>[event]</h1></center>"
 	canContinueEvent = 0
 	switch(event)
-
-		if(ORION_TRAIL_BLACKHOLE)
-			eventdat += "You were swept away into the black hole."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];holedeath=1'>Oh...</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			settlers = list()
-
-		if(ORION_TRAIL_LING)
-			eventdat += "Strange reports warn of changelings infiltrating crews on trips to Orion..."
-			if(settlers.len <= 2)
-				eventdat += "Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-				if(prob(10)) // "likely", I didn't say it was guaranteed!
-					lings_aboard = min(++lings_aboard,2)
-			else
-				if(lings_aboard) //less likely to stack lings
-					if(prob(20))
-						lings_aboard = min(++lings_aboard,2)
-				else if(prob(70))
-					lings_aboard = min(++lings_aboard,2)
-
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Risk it</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			canContinueEvent = 1
-
-		if(ORION_TRAIL_LING_ATTACK)
-			if(lings_aboard <= 0) //shouldn't trigger, but hey.
-				eventdat += "Haha, fooled you, there are no changelings on board!"
-				eventdat += "(You should report this to a coder :S)"
-			else
-				var/ling1 = remove_crewmember()
-				var/ling2 = ""
-				if(lings_aboard >= 2)
-					ling2 = remove_crewmember()
-
-				eventdat += "Changelings among your crew suddenly burst from hiding and attack!"
-				if(ling2)
-					eventdat += "[ling1] and [ling2]'s arms twist and contort into grotesque blades!"
-				else
-					eventdat += "[ling1]'s arm twists and contorts into a grotesque blade!"
-
-				var/chance2attack = alive*20
-				if(prob(chance2attack))
-					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
-					if(prob(chancetokill))
-						var/deadguy = remove_crewmember()
-						var/murder_text = pick("The changeling[ling2 ? "s" : ""] bring[ling2 ? "" : "s"] down [deadguy] and disembowel[ling2 ? "" : "s"] them in a spray of gore!", \
-						"[ling2 ? pick(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
-						"[ling2 ? pick(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
-						eventdat += "[murder_text]"
-					else
-						eventdat += "<b>You valiantly fight off the changeling[ling2 ? "s":""]!</b>"
-						if(ling2)
-							food += 30
-							lings_aboard = max(0,lings_aboard-2)
-						else
-							food += 15
-							lings_aboard = max(0,--lings_aboard)
-						eventdat += "<i>Well, it's perfectly good food...</i>\
-						You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
-				else
-					eventdat += "[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
-					the changeling[ling2 ? "s":""] vanish[ling2 ? "" : "es"] into space through the airlocks! You're safe... for now."
-					if(ling2)
-						lings_aboard = max(0,lings_aboard-2)
-					else
-						lings_aboard = max(0,--lings_aboard)
-
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			canContinueEvent = 1
-
 
 		if(ORION_TRAIL_SPACEPORT)
 			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
 				eventdat += "The spaceport is on high alert! You've been barred from docking by the local authorities after your failed raid."
-				if(last_spaceport_action)
-					eventdat += "<b>Last Spaceport Action:</b> [last_spaceport_action]"
+				if(spaceport_feedback)
+					eventdat += "<b>Last Spaceport Action:</b> [spaceport_feedback]"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 			else
 				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
 				eventdat += "This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
 				eventdat += "Trading terms: FU = Fuel, FO = Food"
-				if(last_spaceport_action)
-					eventdat += "<b>Last action:</b> [last_spaceport_action]"
+				if(spaceport_feedback)
+					eventdat += "<b>Last action:</b> [spaceport_feedback]"
 				eventdat += "<h3><b>Crew:</b></h3>"
 				eventdat += english_list(settlers)
 				eventdat += "<b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
@@ -1235,20 +1043,26 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	*/
 
-/*
-	var/dat = ""
-
-
-	else if(event)
-		dat = eventdat
-	else if(gameStatus == ORION_STATUS_NORMAL)
-
-		if(turns == 7)
-			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];pastblack=1'>Go Around</a> <a href='byond://?src=[REF(src)];blackhole=1'>Continue</a></P>"
-		else
-			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];=1'>Continue</a></P>"
+/**
+ * pickweights a new event, sets event var as it. it then preps the event if it needs it
+ *
+ * giving a path argument will instead find that instanced datum instead of pickweighting. Used in events that follow from events.
+ * Arguments:
+ * * path: if we want a specific event, this is the path of the wanted one
+ */
+/obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+	if(!path)
+		event = pickweightAllowZero(events)
 	else
-*/
+		for(var/datum/orion_event/instance as anything in events)
+			if(instance.type == path)
+				event = instance
+				break
+	if(!event)
+		CRASH("Woah, hey! we could not find the specified event \"[path]\"! Add it to the events list, numb nuts!")
+	event.on_select(gamerSkill, gamerSkillLevel, gamerSkillRands)
+	if(obj_flags & EMAGGED)
+		event.emag_effect(gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/lose_condition_met()
 
@@ -1328,6 +1142,31 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return removed
 
 /**
+ * Crewmember executed code, targeted when there are no lings and untargeted when there are some
+ * If there was no suspected lings (aka random shots) this is just murder and counts towards killed crew
+ *
+ * Arguments:
+ * * gamer: carbon that may need emag effects applied
+ */
+/obj/machinery/computer/arcade/orion_trail/proc/execute_crewmember(mob/living/carbon/gamer, target)
+	var/sheriff = remove_crewmember(target) //I shot the sheriff
+	if(target)
+		killed_crew += 1 //if there was no suspected lings, this is just plain murder
+	playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+	if(!settlers.len || !alive)
+		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
+		if(obj_flags & EMAGGED)
+			gamer.death()
+		set_game_over(gamer, "Your last pioneer committed suicide.")
+		if(killed_crew >= 4)
+			gamer.mind?.adjust_experience(/datum/skill/gaming, -15)//no cheating by spamming game overs
+			report_player(gamer)
+	else if(obj_flags & EMAGGED)
+		if(findtext(gamer.name, sheriff))
+			say("The crew of the ship chose to kill [gamer]!")
+			gamer.death()
+
+/**
  * Creates a new mood icon for each settler
  *
  * Things that effect mood:
@@ -1342,7 +1181,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/orion_trail/proc/new_settler_mood()
 	settlermoods.Cut()
 	for(var/i in 1 to settlers.len)
-		var/food_mood = food <= 15
+		var/food_mood = food >= 15
 		var/supply_mood = -1
 		if(hull)
 			supply_mood++
@@ -1458,22 +1297,3 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "Mediborg's Festive Amputation Adventure"
 	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
 	prize_override = list(/obj/item/a_gift/anything = 1)
-
-#undef ORION_TRAIL_WINTURN
-#undef ORION_TRAIL_RAIDERS
-#undef ORION_TRAIL_FLUX
-#undef ORION_TRAIL_ILLNESS
-#undef ORION_TRAIL_BREAKDOWN
-#undef ORION_TRAIL_LING
-#undef ORION_TRAIL_LING_ATTACK
-#undef ORION_TRAIL_MALFUNCTION
-#undef ORION_TRAIL_COLLISION
-#undef ORION_TRAIL_SPACEPORT
-#undef ORION_TRAIL_BLACKHOLE
-#undef ORION_TRAIL_OLDSHIP
-#undef ORION_TRAIL_SEARCH
-
-#undef ORION_STATUS_START
-#undef ORION_STATUS_NORMAL
-#undef ORION_STATUS_GAMEOVER
-#undef ORION_STATUS_MARKET
