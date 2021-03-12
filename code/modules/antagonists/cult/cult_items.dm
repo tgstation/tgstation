@@ -286,13 +286,14 @@
 	breakouttime = 60
 	knockdown = 30
 
-/obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/user, list/modifiers)
+/obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
+	var/stun = 6 SECONDS
 	if(!iscultist(user))
-		if(user.num_legs <= 1)
+		if(user.num_legs < 2 || user.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			user.dropItemToGround(src, TRUE)
-			user.Paralyze(100)
+			user.Paralyze(stun)
 		else
 			to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
 			ensnare(user)
