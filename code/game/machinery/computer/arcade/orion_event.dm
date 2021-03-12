@@ -57,13 +57,18 @@
 	emag_message = "<span class='warning'>You hear some large object lurch to a halt right behind you! When you go to look, nothing's there...</span>"
 	emag_sound = 'sound/effects/creak1.ogg'
 	weight = 2
-	event_responses = list("Use Part", "Wait")
+	event_responses = list("Wait")
+
+/datum/orion_event/engine_part/on_select()
+	if(game.engine >= 1)
+		event_responses += "Fix Engine"
 
 /datum/orion_event/engine_part/response(choice)
-	if(choice == "Use Part")
+	if(choice == "Fix Engine")
 		game.engine = max(0, --game.engine)
 	else
 		game.food -= ((game.alive + game.lings_aboard)*2)*3
+	event_responses.Remove("Fix Engine")
 	..()
 
 ///Malfunction - spend one engine part or wait 3 days (emag effect randomizes some stats)
@@ -73,13 +78,18 @@
 	You can replace the broken electronics with spares, \
 	or you can spend 3 days troubleshooting the AI."
 	weight = 2
-	event_responses = list("Use Part", "Wait")
+	event_responses = list("Wait")
+
+/datum/orion_event/electronic_part/on_select()
+	if(game.engine >= 1)
+		event_responses += "Repair Electronics"
 
 /datum/orion_event/electronic_part/response(choice)
-	if(choice == "Use Part")
+	if(choice == "Repair Electronics")
 		game.electronics = max(0, --game.electronics)
 	else
 		game.food -= ((game.alive + game.lings_aboard)*2)*3
+	event_responses.Remove("Repair Electronics")
 	..()
 
 /datum/orion_event/electronic_part/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
@@ -106,13 +116,18 @@
 	You can repair the damage with hull plates, or you can spend \
 	the next 3 days welding scrap together."
 	weight = 2
-	event_responses = list("Use Part", "Wait")
+	event_responses = list("Wait")
+
+/datum/orion_event/hull_part/on_select()
+	if(game.hull >= 1)
+		event_responses += "Restore Hull"
 
 /datum/orion_event/hull_part/response(choice)
-	if(choice == "Use Part")
+	if(choice == "Restore Hull")
 		game.hull = max(0, --game.hull)
 	else
 		game.food -= ((game.alive + game.lings_aboard)*2)*3
+	event_responses.Remove("Restore Hull")
 	..()
 
 /datum/orion_event/hull_part/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
@@ -150,8 +165,6 @@
 
 /datum/orion_event/exploring_derelict
 	name = "Derelict Exploration"
-	text = "Your crew spots an old ship floating through space. \
-	It might have some supplies, but then again it looks rather unsafe."
 	weight = 2
 	//set by on_select
 	event_responses = list()
@@ -183,14 +196,24 @@
 			text = "As you look through the wreck you cannot find much of use."
 			event_responses += "Continue travels."
 
-//WIP
 /datum/orion_event/raiders
-	name = "Raider"
-	text = "Your crew spots an old ship floating through space. \
-	It might have some supplies, but then again it looks rather unsafe."
-	weight = 2
-	//set by on_select
-	event_responses = list()
+	name = "Raiders"
+	weight = 3
+	event_responses = list("Continue")
+
+/datum/orion_event/raiders/on_select()
+	text = "Raiders have come aboard your ship! "
+	if(prob(50))
+		var/sfood = rand(1,10)
+		var/sfuel = rand(1,10)
+		game.food -= sfood
+		game.fuel -= sfuel
+		text += "They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
+	else if(prob(10))
+		var/deadname = remove_crewmember()
+		text += "[deadname] tried to fight back, but was killed."
+	else
+		text += "Fortunately, you fended them off without any trouble."
 
 /datum/orion_event/raiders/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
 	if(prob(50-gamerSkill))
@@ -201,14 +224,15 @@
 		gamer.take_bodypart_damage(30)
 		playsound(game, 'sound/weapons/genhit2.ogg', 100, TRUE)
 
-//WIP
 /datum/orion_event/illness
 	name = "Space Illness"
-	text = "Your crew spots an old ship floating through space. \
-	It might have some supplies, but then again it looks rather unsafe."
-	weight = 2
-	//set by on_select
-	event_responses = list()
+	//needs to specify who died, set by select
+	weight = 3
+	event_responses = list("Continue")
+
+/datum/orion_event/illness/on_select()
+	var/deadname = remove_crewmember()
+	text = "A deadly illness has been contracted! [deadname] was killed by the disease."
 
 /datum/orion_event/illness/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
 	var/maxSeverity = 3
@@ -217,23 +241,32 @@
 	var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 	if(severity == 1)
 		to_chat(gamer, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
+		gamer.adjust_disgust(50)
 	if(severity == 2)
 		to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseated and hunch over until it passes.</span>")
+		gamer.adjust_disgust(110)
 		gamer.Stun(60)
 	if(severity >= 3) //you didn't pray hard enough
 		to_chat(gamer, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
+		gamer.adjust_disgust(150) //max this bitch out so they barf a lot
 		gamer.Stun(100)
-		sleep(30)
-		gamer.vomit(10, distance = 5)
 
-//WIP
 /datum/orion_event/flux
 	name = "Flux"
-	text = "Your crew spots an old ship floating through space. \
-	It might have some supplies, but then again it looks rather unsafe."
-	weight = 2
-	//set by on_select
-	event_responses = list()
+	text = "This region of space is highly turbulent. If we go \
+	slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
+	weight = 1
+	event_responses = list("Keep Speed","Slow Down")
+
+/datum/orion_event/flux/response(choice)
+	if("Keep Speed")
+		if(prob(25))
+			return ..()
+		game.encounter_event(/datum/orion_event/engine_part)
+	else //Slow Down response
+		game.food -= (game.alive+game.lings_aboard)*2
+		game.fuel -= 5
+		..()
 
 /datum/orion_event/flux/emag_effect(mob/living/carbon/gamer, gamerSkill, gamerSkillLevel)
 	if(prob(25 + gamerSkill))//withstand the wind with your GAMER SKILL

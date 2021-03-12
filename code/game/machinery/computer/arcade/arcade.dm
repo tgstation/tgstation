@@ -705,8 +705,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Radio.listening = 0
 	for(var/path in events)
 		var/datum/orion_event/new_event = new path(src)
-		events[path] = new_event.weight
-		path = new_event
+		events[new_event] = new_event.weight
+		popleft(events) //remove the old path
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
 	QDEL_NULL(Radio)
@@ -726,10 +726,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
+	var/mob/living/carbon/player = usr
+	var/player_crew_name = player.first_name()
 	settlers = list()
 	for(var/i = 1; i <= 3; i++)
-		add_crewmember()
-	add_crewmember("[usr]")
+		add_crewmember(update = FALSE)
+	add_crewmember("[player_crew_name]") //final crewmember is you, so DO update the settler moods now
 	// Re-set items to defaults
 	engine = 1
 	hull = 1
@@ -805,10 +807,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	data["food"] = food
 	data["fuel"] = fuel
 
-	if(event)
-		data["eventname"] = event.name
-		data["eventtext"] = event.text
-		data["buttons"] = event.event_responses
+	data["eventname"] = event?.name
+	data["eventtext"] = event?.text
+	data["buttons"] = event?.event_responses
 	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
@@ -819,21 +820,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	static_data["settlermoods"] = settlermoods
 	return static_data
 
-/**
- * Creates a new mood icon for each settler
- *
- * By default, it just sends an audible message and a sound, both vars on the orion datum
- * Arguments:
- * * gamer: victim to apply effects to
- * * gamerSkill: skill of the gamer, because gamers gods can lessen the effects of the emagged machine
- * * gamerSkillLevel: skill level of the gamer, another way to measure emag downside avoidance
- */
-/obj/machinery/computer/arcade/orion_trail/proc/new_settler_mood()
-	settlers.Cut()
-	settlermoods.Cut()
-	for(var/i in 1 to settlers.len)
-		settlermoods[settlers[i]] += (settlers.len + rand(-1,1))
-	return settlermoods
+
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
 	. = ..()
@@ -859,6 +846,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(event)
 		event.response(action)
+		update_static_data(usr)
 		return TRUE
 	switch(action)
 		if("start_game")
@@ -870,21 +858,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				return
 			gameStatus = ORION_STATUS_INSTRUCTIONS
 		if("back_to_menu") //back to the main menu
-			if(gameStatus != ORION_STATUS_GAMEOVER)
-				return
 			gameStatus = ORION_STATUS_START
-			event = null
-			reason = null
-			food = 80
-			fuel = 60
-			settlers = list("Harry","Larry","Bob")
+			if(gameStatus == ORION_STATUS_GAMEOVER)
+				event = null
+				reason = null
+				food = 80
+				fuel = 60
+				settlers = list("Harry","Larry","Bob")
 		if("continue")
-			if(gameStatus != ORION_STATUS_NORMAL || event || turns != 7)
-				return
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(usr)
 				xp_gained += 34
 				return
+			usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
 			food -= (alive+lings_aboard)*2
 			fuel -= 5
 			turns += 1
@@ -907,24 +893,21 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 			killed_crew++
 
-			var/mob/living/user = usr
-
 			if(!settlers.len || !alive)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(obj_flags & EMAGGED)
-					user.death()
+					gamer.death()
 				set_game_over(gamer)
 
 				if(killed_crew >= 4)
 					xp_gained -= 15//no cheating by spamming game overs
-					report_player(usr)
+					report_player(gamer)
 			else if(obj_flags & EMAGGED)
-				if(usr.name == sheriff)
-					say("The crew of the ship chose to kill [usr.name]!")
-					user.death()
+				if(findtext(gamer.name, sheriff))
+					say("The crew of the ship chose to kill [gamer]!")
+					gamer.death()
 
-			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
-				event = null
+			if(istype(event, /datum/orion_event/changeling_infiltration)) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
 				killed_crew-- // the kill was valid
 
 /**
@@ -948,31 +931,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	/*
 
-	else if(href_list["search"]) //search old ship
-		if(event == ORION_TRAIL_OLDSHIP)
-			event = ORION_TRAIL_SEARCH
-			event()
-	else if(href_list["slow"]) //slow down
-		if(event == ORION_TRAIL_FLUX)
-			food -= (alive+lings_aboard)*2
-			fuel -= 5
-		event = null
+
 	else if(href_list["pastblack"]) //slow down
 		if(turns == 7)
 			food -= ((alive+lings_aboard)*2)*3
 			fuel -= 15
 			turns += 1
 			event = null
-		if(event == ORION_TRAIL_COLLISION)
+		if(istype(event, ORION_TRAIL_COLLISION)
 			hull = max(0, --hull)
 			event = null
-	else if(href_list["keepspeed"]) //keep speed
-		if(event == ORION_TRAIL_FLUX)
-			if(prob(75))
-				event = "Breakdown"
-				event()
-			else
-				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
 			if(prob(75-gamerSkill))
@@ -991,7 +959,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 				turns += 1
 	else if(href_list["holedeath"])
-		if(event == ORION_TRAIL_BLACKHOLE)
+		if(istype(event, ORION_TRAIL_BLACKHOLE)
 			set_game_over(usr)
 
 	//Spaceport specific interactions
@@ -1095,84 +1063,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
-	usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
+
 
 
 
 	eventdat = "<center><h1>[event]</h1></center>"
 	canContinueEvent = 0
 	switch(event)
-		if(ORION_TRAIL_RAIDERS)
-			eventdat += "Raiders have come aboard your ship!"
-			if(prob(50))
-				var/sfood = rand(1,10)
-				var/sfuel = rand(1,10)
-				food -= sfood
-				fuel -= sfuel
-				eventdat += "They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
-			else if(prob(10))
-				var/deadname = remove_crewmember()
-				eventdat += "[deadname] tried to fight back, but was killed."
-			else
-				eventdat += "Fortunately, you fended them off without any trouble."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			canContinueEvent = 1
-
-		if(ORION_TRAIL_FLUX)
-			eventdat += "This region of space is highly turbulent. If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
-			eventdat += "What will you do?"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];slow=1'>Slow Down</a> <a href='byond://?src=[REF(src)];keepspeed=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-
-		if(ORION_TRAIL_OLDSHIP)
-			eventdat += "Your crew spots an old ship floating through space. It might have some supplies, but then again it looks rather unsafe."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];search=1'>Search it</a><a href='byond://?src=[REF(src)];eventclose=1'>Leave it</a></P><P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			canContinueEvent = 1
-
-		if(ORION_TRAIL_ILLNESS)
-			eventdat += "A deadly illness has been contracted!"
-			var/deadname = remove_crewmember()
-			eventdat += "[deadname] was killed by the disease."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			canContinueEvent = 1
-
-		if(ORION_TRAIL_BREAKDOWN)
-			eventdat += "Oh no! The engine has broken down!"
-			eventdat += "You can repair it with an engine part, or you can make repairs for 3 days."
-			if(engine >= 1)
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];useengine=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
-			else
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-
-		if(ORION_TRAIL_MALFUNCTION)
-			eventdat += "The ship's systems are malfunctioning!"
-			eventdat += "You can replace the broken electronics with spares, or you can spend 3 days troubleshooting the AI."
-			if(electronics >= 1)
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];useelec=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
-			else
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-
-		if(ORION_TRAIL_COLLISION)
-			eventdat += "Something hit us! Looks like there's some hull damage."
-			if(prob(25))
-				var/sfood = rand(5,15)
-				var/sfuel = rand(5,15)
-				food -= sfood
-				fuel -= sfuel
-				eventdat += "[sfood] <b>Food</b> and [sfuel] <b>Fuel</b> was vented out into space."
-			if(prob(10))
-				var/deadname = remove_crewmember()
-				eventdat += "[deadname] was killed by rapid depressurization."
-			eventdat += "You can repair the damage with hull plates, or you can spend the next 3 days welding scrap together."
-			if(hull >= 1)
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];usehull=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
-			else
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 
 		if(ORION_TRAIL_BLACKHOLE)
 			eventdat += "You were swept away into the black hole."
@@ -1369,10 +1266,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 */
 
-/obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user)
+/obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
-	reason = death_reason(user)
+	reason = given_reason || death_reason(user)
 
 /obj/machinery/computer/arcade/orion_trail/proc/death_reason(mob/living/carbon/gamer)
 	var/reason
@@ -1403,7 +1300,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return reason
 
 //Add Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(specific = "")
+/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(specific = "", update = TRUE)
 	var/newcrew = ""
 	if(specific)
 		newcrew = specific
@@ -1415,13 +1312,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(newcrew)
 		settlers += newcrew
 		alive++
-	new_settler_mood()//bro, i...
-	update_static_data(usr)
+	if(update)
+		new_settler_mood()//new faces!
+		update_static_data(usr)
 	return newcrew
 
 
 //Remove Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "")
+/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "", update = TRUE)
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)
@@ -1436,10 +1334,26 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			lings_aboard = max(0,--lings_aboard)
 		settlers -= removed
 		alive--
-	new_settler_mood()//bro, i...
-	update_static_data(usr)
+	if(update)
+		new_settler_mood()//bro, i...
+		update_static_data(usr)
 	return removed
 
+/**
+ * Creates a new mood icon for each settler
+ *
+ * their moods all match the settler count, but half of the time they can possibly feel a little worse or better.
+ * Arguments:
+ * * None!
+ */
+/obj/machinery/computer/arcade/orion_trail/proc/new_settler_mood()
+	settlermoods.Cut()
+	for(var/i in 1 to settlers.len)
+		var/changing_mood = 0
+		if(prob(50))
+			changing_mood = rand(-1,1)
+		settlermoods[settlers[i]] += (settlers.len + changing_mood)
+	return settlermoods
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	gameStatus = ORION_STATUS_START

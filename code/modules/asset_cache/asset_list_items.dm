@@ -556,4 +556,5 @@
 			blended_color = "#86d656"
 		else
 			blended_color = "#2eeb9a"
-	return I.Blend(blended_color)
+	I.Blend(blended_color, ICON_MULTIPLY)
+	return I
