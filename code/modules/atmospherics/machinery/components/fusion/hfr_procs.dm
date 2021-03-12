@@ -166,11 +166,9 @@
 	var/gas_check = 0
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		if(gas_type == selected_fuel.requirements[3])
-			continue
 		if(internal_fusion.gases[gas_type][MOLES] >= FUSION_MOLE_THRESHOLD)
 			gas_check++
-	if(gas_check == selected_fuel.requirements.len - 1)
+	if(gas_check == length(selected_fuel.requirements))
 		return TRUE
 	return FALSE
 
@@ -189,8 +187,6 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
-		if(gas_type == selected_fuel.requirements[3])
-			continue
 		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
 			return FALSE
 	return TRUE

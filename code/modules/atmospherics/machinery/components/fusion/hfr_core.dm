@@ -46,7 +46,7 @@
 	///Set the filtering type of the waste remove
 	var/filter_type = null
 	///Stores the current fuel mix that the user has selected
-	var/datum/gas_recipe/selected_fuel
+	var/datum/hfr_fuel/selected_fuel
 
 	/**
 	 * Fusion vars

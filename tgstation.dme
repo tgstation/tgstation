@@ -1764,6 +1764,7 @@
 #include "code\modules\atmospherics\machinery\components\binary_devices\volume_pump.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_core.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_defines.dm"
+#include "code\modules\atmospherics\machinery\components\fusion\hfr_fuel_datums.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_main_processes.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_parts.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_procs.dm"

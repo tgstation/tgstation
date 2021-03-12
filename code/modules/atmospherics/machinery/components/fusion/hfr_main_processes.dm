@@ -123,8 +123,6 @@
 
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		if(gas_type == selected_fuel.requirements[3])
-			continue
 		internal_fusion.merge(linked_input.airs[1].remove_specific(gas_type, linked_input.airs[1].gases[gas_type][MOLES] * fuel_injection_rate * 0.1))
 
 	if(!linked_moderator.airs[1].total_moles())
@@ -194,8 +192,12 @@
 	var/volume = internal_fusion.volume * (magnetic_constrictor * 0.01)
 
 	//Assert the gases that will be used/created during the process
-	for(var/gas_id in selected_fuel.requirements)
+	for(var/gas_id in selected_fuel.requirements) //These are the fuels
 		internal_fusion.assert_gas(gas_id)
+
+	for(var/gas_id in selected_fuel.primary_products) //These are the gases that can be produced inside the internal_fusion mix
+		internal_fusion.assert_gas(gas_id)
+
 	internal_fusion.assert_gas(/datum/gas/antinoblium)
 
 	for(var/gas_id in GLOB.meta_gas_info)
@@ -205,6 +207,10 @@
 
 	var/list/fuel_list = list()
 	for(var/gas_id in selected_fuel.requirements)
+		fuel_list |= gas_id
+		fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
+
+	for(var/gas_id in selected_fuel.primary_products)
 		fuel_list |= gas_id
 		fuel_list[gas_id] = internal_fusion.gases[gas_id][MOLES]
 
@@ -220,6 +226,10 @@
 	//Scaled down moles of gases, no less than 0
 	var/list/scaled_fuel_list = list()
 	for(var/gas_id in selected_fuel.requirements)
+		scaled_fuel_list |= gas_id
+		scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+
+	for(var/gas_id in selected_fuel.primary_products)
 		scaled_fuel_list |= gas_id
 		scaled_fuel_list[gas_id] = max((fuel_list[gas_id] - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
@@ -304,7 +314,7 @@
 	//Can go either positive or negative depending on the instability and the negative_modifiers
 	//E=mc^2 with some changes for gameplay purposes
 	energy = ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
-	energy = energy / selected_fuel.energy_release
+	energy = energy / selected_fuel.energy_concentration_multiplier
 	energy = clamp(energy, 0, 1e35) //ugly way to prevent NaN error
 	//Power of the gas mixture
 	internal_power = (scaled_fuel_list[scaled_fuel_list[1]] * power_modifier / 100) * (scaled_fuel_list[scaled_fuel_list[2]] * power_modifier / 100) * (PI * (2 * (scaled_fuel_list[scaled_fuel_list[1]] * CALCULATED_H2RADIUS) * (scaled_fuel_list[scaled_fuel_list[2]] * CALCULATED_TRITRADIUS))**2) * energy
@@ -323,27 +333,28 @@
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, - heat_limiter_modifier * 0.01 * selected_fuel.min_temp, heat_limiter_modifier * selected_fuel.max_temp)
+	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, \
+					- heat_limiter_modifier * 0.01 * selected_fuel.negative_temperature_multiplier, \
+					heat_limiter_modifier * selected_fuel.positive_temperature_multiplier)
 
 	var/datum/gas_mixture/internal_output = new
 	//gas consumption and production
 	if(check_fuel())
-		var/fuel_consumption_rate = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30)
+		var/fuel_consumption_rate = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30) * selected_fuel.gas_production_multiplier
 		var/fuel_consumption = fuel_consumption_rate * delta_time
 
 		for(var/gas_id in selected_fuel.requirements)
-			if(gas_id == selected_fuel.requirements[1] || gas_id == selected_fuel.requirements[2])
-				internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 / selected_fuel.energy_release)
-			else
-				internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
+			internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption * 0.85 / selected_fuel.fuel_consumption_multiplier)
+		for(var/gas_id in selected_fuel.primary_products)
+			internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
 		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 		//Also dependant on what is the power level and what moderator gases are present
 		if(power_output)
 			switch(power_level)
 				if(1)
 					var/scaled_production = clamp(heat_output * 1e-2, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.products[1]][MOLES] += scaled_production * 0.95
-					moderator_internal.gases[selected_fuel.products[2]][MOLES] += scaled_production *0.75
+					moderator_internal.gases[selected_fuel.secondary_products[1]][MOLES] += scaled_production * 0.95
+					moderator_internal.gases[selected_fuel.secondary_products[2]][MOLES] += scaled_production *0.75
 					if(moderator_list[/datum/gas/plasma] > 100)
 						moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
@@ -353,12 +364,12 @@
 						moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.95)
 				if(2)
 					var/scaled_production = clamp(heat_output * 1e-3, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.products[1]][MOLES] += scaled_production * 1.65
-					moderator_internal.gases[selected_fuel.products[2]][MOLES] += scaled_production
+					moderator_internal.gases[selected_fuel.secondary_products[1]][MOLES] += scaled_production * 1.65
+					moderator_internal.gases[selected_fuel.secondary_products[2]][MOLES] += scaled_production
 					if(moderator_list[/datum/gas/plasma] > 50)
 						internal_output.assert_gases(/datum/gas/bz)
 						internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
-						moderator_internal.gases[selected_fuel.products[3]] += scaled_production * 1.15
+						moderator_internal.gases[selected_fuel.secondary_products[3]] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
 					if(moderator_list[/datum/gas/proto_nitrate] > 20)
 						radiation *= 1.55
@@ -369,11 +380,11 @@
 				if(3, 4)
 					var/scaled_production = clamp(heat_output * 5e-4, 0, fuel_consumption_rate) * delta_time
 					if(power_level == 3)
-						moderator_internal.gases[selected_fuel.products[2]][MOLES] += scaled_production * 0.5
-						moderator_internal.gases[selected_fuel.products[3]][MOLES] += scaled_production * 0.45
+						moderator_internal.gases[selected_fuel.secondary_products[2]][MOLES] += scaled_production * 0.5
+						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 0.45
 					if(power_level == 4)
-						moderator_internal.gases[selected_fuel.products[3]][MOLES] += scaled_production * 1.65
-						moderator_internal.gases[selected_fuel.products[4]][MOLES] += scaled_production * 1.25
+						moderator_internal.gases[selected_fuel.secondary_products[3]][MOLES] += scaled_production * 1.65
+						moderator_internal.gases[selected_fuel.secondary_products[4]][MOLES] += scaled_production * 1.25
 					if(moderator_list[/datum/gas/plasma] > 10)
 						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
@@ -400,9 +411,9 @@
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
 					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.products[4]][MOLES] += scaled_production * 0.65
-					moderator_internal.gases[selected_fuel.products[5]][MOLES] += scaled_production
-					moderator_internal.gases[selected_fuel.products[6]][MOLES] += scaled_production * 0.75
+					moderator_internal.gases[selected_fuel.secondary_products[4]][MOLES] += scaled_production * 0.65
+					moderator_internal.gases[selected_fuel.secondary_products[5]][MOLES] += scaled_production
+					moderator_internal.gases[selected_fuel.secondary_products[6]][MOLES] += scaled_production * 0.75
 					if(moderator_list[/datum/gas/plasma] > 15)
 						internal_output.assert_gases(/datum/gas/freon)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
@@ -435,8 +446,8 @@
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.9 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.0065)) * delta_time
 				if(6)
 					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption_rate) * delta_time
-					moderator_internal.gases[selected_fuel.products[5]][MOLES] += scaled_production * 0.35
-					moderator_internal.gases[selected_fuel.products[6]][MOLES] += scaled_production
+					moderator_internal.gases[selected_fuel.secondary_products[5]][MOLES] += scaled_production * 0.35
+					moderator_internal.gases[selected_fuel.secondary_products[6]][MOLES] += scaled_production
 					if(moderator_list[/datum/gas/plasma] > 30)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
@@ -461,8 +472,9 @@
 					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_fuel_list[scaled_fuel_list[3]] / (fuel_injection_rate * 0.0095)) * delta_time
 
 	//Modifies the internal_fusion temperature with the amount of heat output
-	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
-		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE)
+	var/temperature_modifier = selected_fuel.temperature_change_multiplier
+	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE * temperature_modifier)
+		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE * temperature_modifier)
 	else
 		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
 
@@ -497,9 +509,10 @@
 				linked_output.airs[1].merge(removed)
 
 		var/datum/gas_mixture/internal_remove
-		if(internal_fusion.gases[selected_fuel.requirements[3]][MOLES] > 0)
-			internal_remove = internal_fusion.remove_specific(selected_fuel.requirements[3], internal_fusion.gases[selected_fuel.requirements[3]][MOLES] * (1 - (1 - 0.25) ** delta_time))
-			linked_output.airs[1].merge(internal_remove)
+		for(var/gas_id in selected_fuel.primary_products)
+			if(internal_fusion.gases[gas_id][MOLES] > 0)
+				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
+				linked_output.airs[1].merge(internal_remove)
 		if(internal_fusion.gases[/datum/gas/antinoblium][MOLES] > 0)
 			internal_remove = internal_fusion.remove_specific(/datum/gas/antinoblium, internal_fusion.gases[/datum/gas/antinoblium][MOLES] * (1 - (1 - 0.25) ** delta_time))
 			linked_output.airs[1].merge(internal_remove)
