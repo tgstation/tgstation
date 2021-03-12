@@ -395,7 +395,7 @@
 	text = "As you jet the shuttle forward, you realize you underestimated the \
 	pull of the black hole. Try as you may, you cannot escape its stellar force. \
 	It isn't long before you pass the event horizon, and you close your eyes, readying \
-	to be torn apart as your ship begins to buckle under the immense pull."
+	to be torn apart as your ship begins to buckle under the pull."
 	event_responses = list("Oh...")
 
 /datum/orion_event/black_hole_death/response(choice)

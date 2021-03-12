@@ -891,6 +891,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if("random_kill")
 			execute_crewmember(gamer)
 		if("target_kill")
+			to_chat(world, params["who"])
 			execute_crewmember(gamer, params["who"])
 		//Spaceport specific interactions
 		if("buycrew") //buy a crewmember
@@ -1122,6 +1123,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 //Remove Random/Specific crewmember
 /obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "", update = TRUE)
+	to_chat(world, specific)
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)
