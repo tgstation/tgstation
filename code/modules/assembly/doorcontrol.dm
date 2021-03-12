@@ -214,3 +214,46 @@
 	lift.lift_master_datum.set_controls(UNLOCKED)
 
 #undef FLOOR_TRAVEL_TIME
+
+/obj/item/assembly/control/tram
+	name = "tram call button"
+	desc = "A small device used to bring trams to you."
+	///for finding the landmark initially - should be the exact same as the landmark's destination id.
+	var/initial_id
+	///this is our destination's landmark, so we only have to find it the first time.
+	var/obj/effect/landmark/tram/to_where
+
+/obj/item/assembly/control/tram/activate()
+	if(cooldown)
+		return
+	cooldown = TRUE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+	var/obj/structure/industrial_lift/tram/tram_part
+
+	var/obj/machinery/computer/tram_controls/computer = locate(/obj/machinery/computer/tram_controls) in GLOB.machines
+	tram_part = computer?.tram_part
+	if(!tram_part)
+		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
+		return
+	if(!tram_part.from_where) //edge case where the tram has not moved yet and set up it's landmarks but has been called
+		for(var/obj/effect/landmark/tram/tram_landmark in GLOB.landmarks_list)
+			if(tram_landmark.destination_id == tram_part.initial_id)
+				tram_part.from_where = tram_landmark
+				break
+	//find where the tram is going to/is
+	var/obj/effect/landmark/tram/from_where = tram_part.from_where
+	if(tram_part.travelling) //in use
+		say("The tram is already travelling to [from_where].")
+		return
+	if(!to_where)
+		//find where the tram needs to go to (our destination). only needs to happen the first time
+		for(var/obj/effect/landmark/tram/our_destination in GLOB.landmarks_list)
+			if(our_destination.destination_id == initial_id)
+				to_where = our_destination
+				break
+	if(from_where == to_where) //already here
+		say("The tram is already here. Please board the tram and select a destination.")
+		return
+
+	say("The tram has been called to [to_where]. Please wait for its arrival.")
+	tram_part.tram_travel(from_where, to_where)

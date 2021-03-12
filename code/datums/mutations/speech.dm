@@ -116,33 +116,25 @@
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = " [message] "
-		message = replacetext(message," looking at  ","  gawpin' at ")
-		message = replacetext(message," great "," bangin' ")
-		message = replacetext(message," man "," mate ")
-		message = replacetext(message," friend ",pick(" mate "," bruv "," bledrin "))
-		message = replacetext(message," what "," wot ")
-		message = replacetext(message," drink "," wet ")
-		message = replacetext(message," get "," giz ")
-		message = replacetext(message," what "," wot ")
-		message = replacetext(message," no thanks "," wuddent fukken do one ")
-		message = replacetext(message," i don't know "," wot mate ")
-		message = replacetext(message," no "," naw ")
-		message = replacetext(message," robust "," chin ")
-		message = replacetext(message,"  hi  "," how what how ")
-		message = replacetext(message," hello "," sup bruv ")
-		message = replacetext(message," kill "," bang ")
-		message = replacetext(message," murder "," bang ")
-		message = replacetext(message," windows "," windies ")
-		message = replacetext(message," window "," windy ")
-		message = replacetext(message," break "," do ")
-		message = replacetext(message," your "," yer ")
-		message = replacetext(message," security "," coppers ")
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+	SIGNAL_HANDLER
 
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/chav_words = strings("chav_replacement.json", "chav")
+
+		for(var/key in chav_words)
+			var/value = chav_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+		if(prob(30))
+			message += ", mate"
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 /datum/mutation/human/elvis
 	name = "Elvis"

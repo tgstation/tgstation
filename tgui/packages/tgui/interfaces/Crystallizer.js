@@ -47,7 +47,7 @@ export const Crystallizer = (props, context) => {
                 width="63px"
                 unit="moles/s"
                 minValue={0}
-                maxValue={500}
+                maxValue={250}
                 onDrag={(e, value) => act('gas_input', {
                   gas_input: value,
                 })} />
