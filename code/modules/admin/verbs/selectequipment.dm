@@ -33,9 +33,6 @@
 /datum/select_equipment/ui_state(mob/user)
 	return GLOB.admin_state
 
-/datum/select_equipment/ui_host(mob/user)
-	return target //if target is gone the UI should close
-
 /datum/select_equipment/ui_close(mob/user)
 	clear_human_dummy(dummy_key)
 	qdel(src)
@@ -66,6 +63,11 @@
 		entries[O.name] = O.name //it's either this or special handling on the UI side
 	return sortAssocList(entries)
 
+/datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
+	if(QDELETED(target))
+		return UI_CLOSE
+	return ..()
+
 /datum/select_equipment/ui_static_data(mob/user)
 	var/list/data = list()
 	if(!dummy)
@@ -83,7 +85,6 @@
 		cached_outfits["General"] = list(/datum/outfit = "Naked") + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits["Jobs"] = make_outfit_entries(typesof(/datum/outfit/job))
 		cached_outfits["Plasmamen Outfits"] = make_outfit_entries(typesof(/datum/outfit/plasmaman))
-
 
 	cached_outfits["Custom"] = list("Click confirm to open the outfit manager" = "Create a custom outfit...") + make_custom_outfit_entries(GLOB.custom_outfits)
 
