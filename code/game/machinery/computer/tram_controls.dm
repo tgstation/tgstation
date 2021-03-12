@@ -58,6 +58,7 @@
 		return
 	if(. || tram_part.travelling)
 		return
+	travelling = TRUE //no multi-inputs please go away!!!
 	var/destination_name = params["destination"]
 	var/obj/effect/landmark/tram/to_where
 	for(var/obj/effect/landmark/tram/destination in GLOB.landmarks_list)
@@ -65,8 +66,7 @@
 			to_where = destination
 	if(!to_where)
 		CRASH("Controls couldn't find the destination \"[destination_name]\"!")
-	if(tram_part.controls_locked || tram_part.travelling) // someone else started
+	if(tram_part.controls_locked || tram_part.travelling || travelling) // someone else started
 		return
-	travelling = TRUE
 	tram_part.tram_travel(tram_part.from_where, to_where)
 	update_static_data(usr) //show new location of tram
