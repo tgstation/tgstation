@@ -24,7 +24,8 @@
 	var/obj/structure/industrial_lift/tram/tram_struct = locate(/obj/structure/industrial_lift/tram) in GLOB.lifts
 	tram_part = tram_struct //possibly setting to something null, that's fine, but
 	tram_part.find_our_location()
-	tram_part.console = src
+	for(var/obj/structure/industrial_lift/tram/tram_finder in GLOB.lifts)
+		tram_finder.console = src
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
