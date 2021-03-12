@@ -553,7 +553,7 @@
 	description = "The only drink with the PWR that true gamers crave."
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
-	glass_icon_state = "pwrggame"
+	glass_icon_state = "pwrgame"
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

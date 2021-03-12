@@ -262,7 +262,7 @@
 	if(selected_recipe)
 		data["selected"] = selected_recipe.id
 	else
-		data["selected"] = null
+		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
 	if(internal.total_moles())
@@ -319,7 +319,7 @@
 				dump_gases()
 			quality_loss = 0
 			progress_bar = 0
-			if(recipe)
+			if(recipe && recipe.id != "")
 				selected_recipe = recipe
 				recipe_name = recipe.name
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating

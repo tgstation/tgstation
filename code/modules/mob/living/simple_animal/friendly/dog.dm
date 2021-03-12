@@ -21,6 +21,11 @@
 	pet_bonus_emote = "woofs happily!"
 	ai_controller = /datum/ai_controller/dog
 	stop_automated_movement = TRUE
+	///In the case 'melee_damage_upper' is somehow raised above 0
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -588,6 +593,10 @@
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 	held_state = "void_puppy"
+
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
 	return 1 //Void puppies can navigate space.
