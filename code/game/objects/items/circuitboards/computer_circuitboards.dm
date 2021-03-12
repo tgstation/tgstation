@@ -321,10 +321,6 @@
 	name = "Bounty Pad (Computer Board)"
 	build_path = /obj/machinery/computer/piratepad_control/civilian
 
-/obj/item/circuitboard/computer/tram_controls
-	name = "Tram Controls (Computer Board)"
-	build_path = /obj/machinery/computer/tram_controls
-
 //Medical
 
 /obj/item/circuitboard/computer/crew
