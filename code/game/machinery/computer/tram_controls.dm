@@ -70,7 +70,7 @@
 			to_where = destination
 	if(!to_where)
 		CRASH("Controls couldn't find the destination \"[destination_name]\"!")
-	if(tram_part.controls_locked || tram_part.travelling || travelling) // someone else started
+	if(tram_part.controls_locked || tram_part.travelling) // someone else started
 		return
 	tram_part.tram_travel(tram_part.from_where, to_where)
 	update_static_data(usr) //show new location of tram
