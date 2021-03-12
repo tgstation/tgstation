@@ -828,15 +828,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()
-	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && usr.client.prefs.enable_tips && !QDELETED(src))
-		var/timedelay = usr.client.prefs.tip_delay/100
-		var/user = usr
-		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
-		var/mob/living/living_user = usr
-		if(istype(living_user) && living_user.incapacitated()) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
-			apply_outline(COLOR_RED_GRAY)
-		else
-			apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
+	if((item_flags & IN_INVENTORY || item_flags & IN_STORAGE) && !QDELETED(src))
+		var/mob/living/L = usr
+		if(usr.client.prefs.enable_tips)
+			var/timedelay = usr.client.prefs.tip_delay/100
+			tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+		if(usr.client.prefs.itemoutline_pref)
+			if(istype(L) && L.incapacitated())
+				apply_outline(COLOR_RED_GRAY) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
+			else
+				apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
 
 /obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
