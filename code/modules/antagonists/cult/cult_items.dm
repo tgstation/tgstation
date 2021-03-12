@@ -289,8 +289,14 @@
 /obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
-		ensnare(user)
+		if(user.num_legs <= 1)
+			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+			user.dropItemToGround(src, TRUE)
+			user.Paralyze(100)
+		else
+			to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
+			ensnare(user)
+
 
 /obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscultist(hit_atom))
