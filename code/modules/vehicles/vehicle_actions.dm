@@ -146,6 +146,17 @@
 		else
 			playsound(vehicle_entered_target, hornsound, 75)
 
+/datum/action/vehicle/sealed/headlights
+	name = "Toggle Headlights"
+	desc = "Turn on your brights!"
+	button_icon_state = "car_headlights"
+
+/datum/action/vehicle/sealed/headlights/Trigger()
+	to_chat(owner, "<span class='notice'>You flip the switch for the vehicle's headlights.</span>")
+	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
+	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
+	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
 	desc = "Dump all objects and people in your car on the floor."
