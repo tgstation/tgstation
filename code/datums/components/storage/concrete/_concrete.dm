@@ -123,8 +123,8 @@
 	for(var/mob/M in seeing_mobs)
 		M.client.screen -= AM
 	if(isitem(AM))
-		removed_item.item_flags &= ~IN_STORAGE
 		var/obj/item/removed_item = AM
+		removed_item.item_flags &= ~IN_STORAGE
 		if(ismob(parent.loc))
 			var/mob/carrying_mob = parent.loc
 			removed_item.dropped(carrying_mob, TRUE)
