@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(spooky_ambience,list(
 	'sound/ambience/ambiodd.ogg', 'sound/ambience/ambimystery.ogg'))
 
 GLOBAL_LIST_INIT(space_ambience,list(
-	'sound/ambience/ambispace.ogg', 'sound/ambience/ambispace2.ogg',
+	'sound/ambience/ambispace.ogg', 'sound/ambience/ambispace2.ogg', 'sound/ambience/title2.ogg',
 	'sound/ambience/ambispace3.ogg', 'sound/ambience/ambiatmos.ogg'))
 
 GLOBAL_LIST_INIT(maint_ambience,list(
