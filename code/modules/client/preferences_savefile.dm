@@ -419,6 +419,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
 	READ_FILE(S["prefered_security_department"], prefered_security_department)
+	if (!(prefered_security_department in GLOB.security_depts_prefs))
+		prefered_security_department = SEC_DEPT_NONE
 
 	//Jobs
 	READ_FILE(S["joblessrole"], joblessrole)

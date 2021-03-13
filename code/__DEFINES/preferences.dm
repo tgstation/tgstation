@@ -63,9 +63,7 @@
 #define PARALLAX_DELAY_MED     1
 #define PARALLAX_DELAY_LOW     2
 
-// MOTHBLOCKS TODO: Make this mean random, and remove random.
 #define SEC_DEPT_NONE "None"
-#define SEC_DEPT_RANDOM "Random"
 #define SEC_DEPT_ENGINEERING "Engineering"
 #define SEC_DEPT_MEDICAL "Medical"
 #define SEC_DEPT_SCIENCE "Science"
