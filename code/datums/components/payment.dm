@@ -66,8 +66,8 @@
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks funds. Aborting.</span>")
 		return COMPONENT_OBJ_CANCEL_CHARGE
-	target_acc.transfer_money(card.registered_account, cost)
-	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
+	target_acc.transfer_money(card.registered_account, cost + extra_fees)
+	card.registered_account.bank_card_talk("[cost + extra_fees] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 
 /datum/component/payment/proc/change_cost(datum/source, new_cost)

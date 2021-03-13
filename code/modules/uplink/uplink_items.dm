@@ -1200,15 +1200,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear) //clown ops are allowed to buy this kit, since it's basically a costume
 
-/datum/uplink_item/stealthy_tools/chameleon_skillchip
-	name = "Chameleon Skillchip"
-	desc = "A highly advanced skillchip that contains data on all available skillchips. \
-			This skillchip only takes up a single skillchip slot in the user's brain. \
-			Comes with a single-use Syndicate autosurgeon for immediate self-application."
-	item = /obj/item/autosurgeon/skillchip/syndicate/chameleon_chip
-	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't \

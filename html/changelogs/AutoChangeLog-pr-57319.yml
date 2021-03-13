@@ -1,0 +1,4 @@
+author: "Potato Masher"
+delete-after: True
+changes: 
+  - bugfix: "Taking Metastation's delivery chute to science and service should no longer cause bone fractures."

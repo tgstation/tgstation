@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Gas will actually dissipate now. Screee at me in the issue reports if you see jank around this or breathing (Please don't ask)"
