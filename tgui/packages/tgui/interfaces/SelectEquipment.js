@@ -20,14 +20,17 @@ export const SelectEquipment = (props, context) => {
   const searchFilter = createSearch(searchText, entry =>
     (entry[0] + entry[1])
   );
-  const searchBar
-    = (<Input
-      fluid
-      autoFocus
-      placeholder="Search"
-      value={searchText}
-      onInput={(e, value) => setSearchText(value)}
-      mb={1} />);
+  const SearchBar = (props, context) => {
+    const { act, data } = useBackend(context);
+    return (
+      <Input
+        fluid
+        autoFocus
+        placeholder="Search"
+        value={searchText}
+        onInput={(e, value) => setSearchText(value)}
+        mb={1} />);
+  };
 
 
   // outfit tabs; mapped and named from the data sent by ui_static_data
@@ -121,7 +124,7 @@ export const SelectEquipment = (props, context) => {
               <Divider />
             </Section>
             <Section height="85%" fill scrollable>
-              {searchBar}
+              <SearchBar />
               {displayedOutfits}
             </Section>
           </Flex.Item>
