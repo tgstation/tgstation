@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - rscadd: "Clear PDAs can now be found for sale in the black market occasionally."
