@@ -168,7 +168,7 @@
 /datum/ai_behavior/harass/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	if(!istype(living_pawn))
+	if(!istype(living_pawn) || !(isturf(living_pawn.loc) || HAS_TRAIT(living_pawn, TRAIT_AI_BAGATTACK)))
 		return
 
 	var/atom/movable/harass_target = controller.blackboard[BB_DOG_HARASS_TARGET]

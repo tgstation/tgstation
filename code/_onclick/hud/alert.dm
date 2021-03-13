@@ -86,6 +86,10 @@
 		client.screen -= alert
 	qdel(alert)
 
+// Proc to check for an alert
+/mob/proc/has_alert(category)
+	return !isnull(alerts[category])
+
 /atom/movable/screen/alert
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"

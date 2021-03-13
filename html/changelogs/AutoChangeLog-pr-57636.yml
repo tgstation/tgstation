@@ -1,0 +1,4 @@
+author: "sergeirocks100"
+delete-after: True
+changes: 
+  - bugfix: "The glass of beer now uses its unused icon."

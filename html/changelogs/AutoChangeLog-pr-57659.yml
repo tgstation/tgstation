@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Mouse hover outlines will now only show if the item is on your person."

@@ -73,8 +73,8 @@
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/fire_range = round(created_volume/30)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(fire_range,T))
-		new /obj/effect/hotspot(turf)
+	for(var/turf/target as anything in RANGE_TURFS(fire_range,T))
+		new /obj/effect/hotspot(target)
 	holder.chem_temp = 500
 	..()
 
@@ -87,7 +87,7 @@
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/fire_range = round(created_volume/20)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(fire_range,T))
+	for(var/turf/turf as anything in RANGE_TURFS(fire_range,T))
 		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 750
 	..()
@@ -232,8 +232,8 @@
 
 /datum/chemical_reaction/clf3/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(1,T))
-		new /obj/effect/hotspot(turf)
+	for(var/turf/target as anything in RANGE_TURFS(1,T))
+		new /obj/effect/hotspot(target)
 	holder.chem_temp = 1000 // hot as shit
 
 /datum/chemical_reaction/reagent_explosion/methsplosion
@@ -246,8 +246,8 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(1,T))
-		new /obj/effect/hotspot(turf)
+	for(var/turf/target in RANGE_TURFS(1,T))
+		new /obj/effect/hotspot(target)
 	holder.chem_temp = 1000 // hot as shit
 	..()
 

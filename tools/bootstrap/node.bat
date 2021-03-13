@@ -4,7 +4,7 @@ if %errorlevel% == 0 (
 	echo | set /p printed_str="Using system-wide Node "
 	call node.exe --version
 	call node.exe %*
-	exit /b %errorlevel%
+	goto exit_with_last_error_level
 )
 call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Download-Node
 for /f "tokens=* USEBACKQ" %%s in (`
@@ -17,7 +17,10 @@ if %errorlevel% == 0 (
 	echo | set /p printed_str="Using vendored Node "
 	call node.exe --version
 	call node.exe %*
-	exit /b %errorlevel%
+	goto exit_with_last_error_level
 )
 echo "build.bat: Failed to bootstrap Node!"
-exit /b 1
+%COMSPEC% /c exit 1
+
+:exit_with_last_error_level
+if not %errorlevel% == 0 %COMSPEC% /c exit %errorlevel% >nul

@@ -150,9 +150,17 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
+/*
+ * this updates some effects: mostly old stuff such as drunkness, druggy, stuttering, etc.
+ * that should be converted to status effect datums one day.
+ */
 /mob/living/proc/handle_status_effects(delta_time, times_fired)
-	return
+	if(stuttering)
+		stuttering = max(stuttering - (0.5 * delta_time), 0)
+	if(slurring)
+		slurring = max(slurring - (0.5 * delta_time),0)
+	if(cultslurring)
+		cultslurring = max(cultslurring - (0.5 * delta_time), 0)
 
 /mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes
