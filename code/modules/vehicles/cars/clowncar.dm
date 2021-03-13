@@ -13,12 +13,23 @@
 	light_range = 8
 	light_power = 2
 	light_on = FALSE
+	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
 	var/thankscount
 	var/cannonmode = FALSE
 	var/cannonbusy = FALSE
+
+/obj/vehicle/sealed/car/clowncar/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj,src)
+
+/obj/vehicle/sealed/car/clowncar/process()
+	if(light_on && obj_flags & EMAGGED )
+		set_light_color(pick(headlight_colors))
+	else
+		return
 
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
@@ -100,6 +111,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	STOP_PROCESSING(SSobj,src)
 	return ..()
 
 /obj/vehicle/sealed/car/clowncar/Move(newloc, dir)
