@@ -351,6 +351,15 @@
 	#define COMPONENT_MOVABLE_BLOCK_UNCROSS (1<<0)
 ///from base of atom/movable/Uncrossed(): (/atom/movable)
 #define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"
+///from base of atom/movable/Cross(): (/atom/movable)
+#define COMSIG_MOVABLE_CROSS_AM "movable_cross_am"
+///from base of atom/movable/Crossed(): (/atom/movable)
+#define COMSIG_MOVABLE_CROSSED_AM "movable_crossed_am"
+///from base of atom/movable/Uncross(): (/atom/movable)
+#define COMSIG_MOVABLE_UNCROSS_AM "movable_uncross_am"
+	#define COMPONENT_MOVABLE_BLOCK_UNCROSS_AM (1<<0)
+///from base of atom/movable/Uncrossed(): (/atom/movable)
+#define COMSIG_MOVABLE_UNCROSSED_AM "movable_uncross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)

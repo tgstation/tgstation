@@ -63,6 +63,7 @@
 
 	RegisterSignal(src, COMSIG_MOB_BOT_PRESTEP, .proc/check_pre_step)
 	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_AM, .proc/on_crossed_am)
 
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 
@@ -543,15 +544,19 @@
 	B.setDir(direct)
 	bloodiness--
 
+/**
+ * Signal handler for COMSIG_MOVABLE_CROSSED_AM signals sent by this mulebot.
+ *
+ * Intended to be used to crush various things.
+ */
+/mob/living/simple_animal/bot/mulebot/proc/on_crossed_am(atom/movable/source, atom/movable/crossed_atom)
+	SIGNAL_HANDLER
+
+	if(ishuman(crossed_atom))
+		run_over(crossed_atom)
+
 /mob/living/simple_animal/bot/mulebot/Moved()
 	. = ..()
-
-	for(var/potential_target in loc.contents)
-		if(potential_target == load)
-			continue
-
-		if(ishuman(potential_target))
-			RunOver(potential_target)
 
 	diag_hud_set_mulebotcell()
 
@@ -740,7 +745,7 @@
 	return ..()
 
 // when mulebot is in the same loc
-/mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/H)
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!</span>")
