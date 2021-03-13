@@ -414,11 +414,37 @@
 ///You found a space port!
 /datum/orion_event/space_port
 	name = "Space Port"
-	text = "You have spotted a small pocket of civilization along the Orion Trail. \
-	A friendly hailing from the nearby space port assures that you can dock to rest \
-	and prepare for the travels ahead."
+	var/normal_arrival = "You have spotted a small pocket of civilization \
+	along the Orion Trail. A friendly hailing from the nearby space port \
+	assures that you can dock to rest and prepare for the travels ahead."
 	weight = 2
 	event_responses = list("Dock")
+
+/datum/orion_event/space_port/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
+	. = ..()
+	//If your crew is pathetic you can get freebies (provided you haven't already gotten one from this port)
+	if(fuel > 20 && food > 20) //but you don't need one
+		text = normal_arrival
+		return
+	text = "The workers at the Port are shocked at the state of \
+	your pioneers. With supplies that low, they take pity on you and \
+	your crew, generously giving you some free supplies! "
+
+
+	var/fuel = 10
+	var/food = 10
+	var/freecrew = 0
+	if(prob(30))
+		fuel = 25
+		food = 25
+	if(prob(10))
+		add_crewmember()
+		freecrew++
+	text += "(+[fuel] fuel, +[food] food)"
+	if(freecrew)
+		text += " A worker at the Port is inspired by your determination, and joins your crew!"
+	fuel += fuel
+	food += food
 
 /datum/orion_event/space_port/response(choice)
 	game.gameStatus = ORION_STATUS_MARKET
@@ -427,7 +453,7 @@
 ///You found the midway mark!
 /datum/orion_event/space_port/tau_ceti
 	name = "Tau Ceti Beta"
-	text = "You have reached the halfway point in your journey, the largest space port \
+	normal_arrival = "You have reached the halfway point in your journey, the largest space port \
 	along the trail: Tau Ceti Beta. It bustles with activity and life. It gives you hope \
 	of finding your future at Orion."
 	//triggered by getting halfway
@@ -444,17 +470,17 @@
 	var/success = min(15 * game.alive + gamerSkill,100) //default crew (4) have a 60% chance
 	game.spaceport_raided = TRUE
 
-	var/FU = 0
-	var/FO = 0
+	var/fuel = 0
+	var/food = 0
 	if(prob(success))
-		FU = rand(5 + gamerSkillRands,15 + gamerSkillRands)
-		FO = rand(5 + gamerSkillRands,15 + gamerSkillRands)
-		text = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+		fuel = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+		food = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+		text = "You successfully raided the spaceport! You gained [fuel] Fuel and [food] Food! (+[fuel]fuel,+[food]food)"
 		usr?.mind?.adjust_experience(/datum/skill/gaming, 10)
 	else
-		FU = rand(-5,-15)
-		FO = rand(-5,-15)
-		text = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
+		fuel = rand(-5,-15)
+		food = rand(-5,-15)
+		text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food in your scramble to escape! ([fuel]fuel,[food]food)"
 
 		//your chance of lose a crewmember is 1/2 your chance of success
 		//this makes higher % failures hurt more, don't get cocky space cowboy!
@@ -463,13 +489,13 @@
 			if(!game.settlers.len)
 				game.set_game_over(usr, "You were gunned down by space port security.")
 				return ..()
-			text = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
+			text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food, AND [lost_crew] in your scramble to escape! ([fuel]FI,[food]food,-Crew)"
 			if(game.obj_flags & EMAGGED)
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i, i<=3, i++)
 					var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
 					O.target = usr
-	game.fuel += FU
-	game.food += FO
+	game.fuel += fuel
+	game.food += food
 

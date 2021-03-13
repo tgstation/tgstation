@@ -673,8 +673,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	//if the game should pretend there are lings on board.
 	var/lings_suspected = FALSE
 	var/spaceport_raided = 0
-	var/spaceport_freebie = 0
-	var/spaceport_feedback = ""
 	var/gameStatus = ORION_STATUS_START
 
 	var/obj/item/radio/Radio
@@ -730,8 +728,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	//spaceport junk
 	spaceport_raided = 0
-	spaceport_freebie = 0
-	spaceport_feedback = ""
 
 /obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
 	if(gamers[gamer] == -2)
@@ -796,8 +792,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	data["buttons"] = event?.event_responses
 
 	data["spaceport_raided"] = spaceport_raided
-	data["spaceport_freebie"] = spaceport_freebie
-	data["spaceport_feedback"] = spaceport_feedback
+	data[""] =
 
 	data["reason"] = reason
 
@@ -897,50 +892,41 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if("buycrew") //buy a crewmember
 			if(!spaceport_raided && food >= 10 && fuel >= 10)
 				var/bought = add_crewmember()
-				spaceport_feedback = "You hired [bought] as a new crewmember."
 				fuel -= 10
 				food -= 10
 				killed_crew-- // I mean not really but you know
 		if("sellcrew") //sell a crewmember
 			if(!spaceport_raided && settlers.len > 1)
 				var/sold = remove_crewmember()
-				spaceport_feedback = "You sold your crewmember, [sold]!"
 				fuel += 7
 				food += 7
 		if("leave_spaceport")
 			gameStatus = ORION_STATUS_NORMAL
 			spaceport_raided = 0
-			spaceport_freebie = 0
-			spaceport_feedback = ""
 		if("raid_spaceport")
 			spaceport_raided = TRUE
 			encounter_event(/datum/orion_event/space_port_raid, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
 		if("buyparts")
 			if(!spaceport_raided && fuel > 5)
-				switch(text2num("buyparts"))
+				switch(params["part"])
 					if(1) //Engine Parts
 						engine++
-						spaceport_feedback = "You bought Engine Parts."
 					if(2) //Hull Plates
 						hull++
-						spaceport_feedback = "You bought Hull Plates."
 					if(3) //Spare Electronics
 						electronics++
-						spaceport_feedback = "You bought Spare Electronics."
 				fuel -= 5 //they all cost 5
 		if("trade")
 			if(!spaceport_raided)
-				switch(text2num("trade"))
+				switch(params["what"])
 					if(1) //Fuel
 						if(fuel > 5)
 							fuel -= 5
 							food += 5
-							spaceport_feedback = "You traded some Fuel for Food."
 					if(2) //Food
 						if(food > 5)
 							fuel += 5
 							food -= 5
-							spaceport_feedback = "You traded some Food for Fuel."
 	add_fingerprint(gamer)
 	updateUsrDialog()
 
@@ -953,16 +939,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
 				eventdat += "The spaceport is on high alert! You've been barred from docking by the local authorities after your failed raid."
-				if(spaceport_feedback)
-					eventdat += "<b>Last Spaceport Action:</b> [spaceport_feedback]"
+				if()
+					eventdat += "<b>Last Spaceport Action:</b> []"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 			else
 				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
 				eventdat += "This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
 				eventdat += "Trading terms: FU = Fuel, FO = Food"
-				if(spaceport_feedback)
-					eventdat += "<b>Last action:</b> [spaceport_feedback]"
+				if()
+					eventdat += "<b>Last action:</b> []"
 				eventdat += "<h3><b>Crew:</b></h3>"
 				eventdat += english_list(settlers)
 				eventdat += "<b>Food: </b>[food] | <b>Fuel: </b>[fuel]"

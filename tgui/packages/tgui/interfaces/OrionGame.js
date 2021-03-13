@@ -412,7 +412,7 @@ const ORION_STATUS_GAMEOVER = (props, context) => {
   );
 };
 
-const marketButtonSpacing = 0.8
+const marketButtonSpacing = 0.8;
 
 const ORION_STATUS_MARKET = (props, context) => {
   const { data, act } = useBackend(context);
@@ -451,12 +451,12 @@ const ORION_STATUS_MARKET = (props, context) => {
           <Stack fill textAlign="center" vertical>
             <Stack.Item grow >
               <Box mb={-2} bold fontSize="15px">
-                {turns == 4 && "Tau Ceti Beta" || "Small Space Port"}
+                {turns === 4 && "Tau Ceti Beta" || "Small Space Port"}
               </Box>
               <br />
               <Box fontSize="14px">
-                "Hello, Pioneer! We have supplies for you to help you reach
-                Orion. They aren't free, though!"
+                &quot;Hello, Pioneer! We have supplies for you to help you reach
+                Orion. They aren&apos;t free, though!&quot;
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -471,7 +471,10 @@ const ORION_STATUS_MARKET = (props, context) => {
                         fluid
                         icon="hamburger"
                         content={"5 Food for 5 Fuel"}
-                        color="green" />
+                        color="green"
+                        onClick={() => act('trade', {
+                          what: 2,
+                        })} />
                     </Stack.Item>
                     <Divider />
                     <Stack.Item mt={0}>
@@ -482,21 +485,30 @@ const ORION_STATUS_MARKET = (props, context) => {
                         fluid
                         icon="wrench"
                         content={"5 Fuel for Hull Plates"}
-                        color="average" />
+                        color="average"
+                        onClick={() => act('buyparts', {
+                          part: 1,
+                        })} />
                     </Stack.Item>
                     <Stack.Item mb={marketButtonSpacing}>
                       <Button
                         fluid
                         icon="server"
                         content={"5 Fuel for Electronics"}
-                        color="blue" />
+                        color="blue"
+                        onClick={() => act('buyparts', {
+                          part: 2,
+                        })} />
                     </Stack.Item>
                     <Stack.Item mb={marketButtonSpacing}>
                       <Button
                         fluid
                         icon="rocket"
                         content={"5 Fuel for Engine Parts"}
-                        color="violet" />
+                        color="violet"
+                        onClick={() => act('buyparts', {
+                          part: 3,
+                        })} />
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
@@ -507,7 +519,10 @@ const ORION_STATUS_MARKET = (props, context) => {
                         fluid
                         icon="gas-pump"
                         content={"5 Fuel for 5 Food"}
-                        color="olive" />
+                        color="olive"
+                        onClick={() => act('trade', {
+                          what: 2,
+                        })} />
                     </Stack.Item>
                     <Divider />
                     <Stack.Item mt={0}>
