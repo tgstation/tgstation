@@ -21478,6 +21478,7 @@
 	dir = 4;
 	name = "port camera"
 	},
+/obj/machinery/bluespace_vendor/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -33831,6 +33832,7 @@
 	c_tag = "Fore Hallway Diner";
 	name = "fore camera"
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "bOM" = (
@@ -38387,6 +38389,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/bluespace_vendor/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "bXm" = (
@@ -79077,6 +79080,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"qIw" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "qIS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/cable,
@@ -88774,7 +88786,7 @@
 /area/maintenance/disposal/incinerator)
 "vYu" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/pipedispenser/disposal/transit_tube,
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "vYE" = (
@@ -121943,7 +121955,7 @@ spu
 nQy
 bgL
 bZG
-cbq
+qIw
 sQQ
 gTA
 gvk

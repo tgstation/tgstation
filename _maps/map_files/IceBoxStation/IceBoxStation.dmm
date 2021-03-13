@@ -15154,6 +15154,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bpf" = (
@@ -27867,6 +27868,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "dnV" = (
@@ -28289,6 +28291,11 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar)
+"dEd" = (
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron,
+/area/hallway/primary/fore)
 "dEh" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/igniter{
@@ -31963,6 +31970,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
+"goE" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "goT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -38144,7 +38161,7 @@
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "kKG" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "kKM" = (
@@ -40549,6 +40566,10 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"mvR" = (
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron,
+/area/commons/locker)
 "mvU" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics South West";
@@ -47415,6 +47436,10 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
+"rsO" = (
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "rsQ" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/flash/handheld,
@@ -50132,6 +50157,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
+"tmH" = (
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "tmO" = (
 /obj/machinery/camera{
 	c_tag = "Dormitory South";
@@ -55402,6 +55431,10 @@
 /obj/machinery/processor/slime,
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"wPD" = (
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "wPN" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -72213,7 +72246,7 @@ asE
 asE
 asE
 asE
-aRd
+goE
 ayl
 fbY
 oJg
@@ -74787,7 +74820,7 @@ gZC
 lYu
 lYu
 lYu
-lYu
+mvR
 xPS
 rxW
 jjv
@@ -84545,7 +84578,7 @@ tjm
 xcv
 dyc
 sgN
-aJq
+wPD
 bBi
 aOE
 aJn
@@ -88123,7 +88156,7 @@ tuC
 vad
 anz
 agD
-aoz
+dEd
 ahn
 aqh
 hTM
@@ -91753,7 +91786,7 @@ jcA
 dLp
 kLH
 wXj
-aYV
+rsO
 iKz
 aYV
 bfF
@@ -105376,7 +105409,7 @@ sNB
 vVm
 aYV
 qXW
-aYV
+tmH
 bgc
 bgc
 biX

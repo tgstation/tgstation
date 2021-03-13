@@ -3092,6 +3092,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -11653,6 +11654,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
+"aUS" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/bluespace_vendor/west,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit/departure_lounge)
 "aVm" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/camera{
@@ -12135,6 +12141,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/bluespace_vendor/west,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "aYH" = (
@@ -21882,6 +21889,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/east,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bUF" = (
@@ -27309,6 +27317,19 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/port)
+"ckW" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "cla" = (
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
@@ -31192,6 +31213,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "cIE" = (
@@ -54787,6 +54809,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"dQu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "dQz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -62789,10 +62821,10 @@
 /turf/closed/wall,
 /area/engineering/atmos)
 "fkK" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "fkR" = (
@@ -66725,6 +66757,21 @@
 	heat_capacity = 1e+006
 	},
 /area/commons/dorms)
+"gIK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "gIX" = (
 /obj/machinery/door/airlock/external{
 	name = "MiniSat Exterior Access";
@@ -80513,6 +80560,20 @@
 	icon_state = "chapel"
 	},
 /area/service/chapel/main)
+"lJO" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/port)
 "lKp" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/bookmanagement,
@@ -93951,6 +94012,20 @@
 	},
 /turf/open/floor/wood,
 /area/command/corporate_showroom)
+"qmW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/commons/dorms)
 "qnf" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "custodialshutters";
@@ -105978,6 +106053,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4,
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -107544,6 +107620,18 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
+"viB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/hallway/primary/central)
 "viJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -112642,6 +112730,14 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"xfm" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/west,
+/turf/open/floor/iron,
+/area/hallway/primary/aft)
 "xgR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -146464,7 +146560,7 @@ eVC
 ttg
 lqK
 sPw
-bUm
+lJO
 bWD
 bYO
 hZU
@@ -152201,7 +152297,7 @@ eaE
 ebk
 eca
 ecF
-dVl
+aUS
 dVl
 edX
 eeG
@@ -153084,7 +153180,7 @@ aaa
 aaa
 aaa
 abf
-ajD
+gIK
 ajV
 akE
 alw
@@ -154491,7 +154587,7 @@ dwD
 dwD
 dwD
 dwD
-dwD
+xfm
 dwD
 dMq
 dNP
@@ -157283,7 +157379,7 @@ eZs
 ojl
 lij
 vZj
-boL
+ckW
 cKD
 cMb
 cNz
@@ -161902,7 +161998,7 @@ csO
 cbk
 cvM
 cxa
-cyM
+viB
 pZu
 mac
 pSt
@@ -164454,7 +164550,7 @@ bNg
 bPm
 bRn
 bHr
-bVc
+dQu
 bXx
 bZF
 fof
@@ -166535,7 +166631,7 @@ ffV
 bwK
 fMP
 vbb
-oot
+qmW
 jVy
 eOt
 vbb

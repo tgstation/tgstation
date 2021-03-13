@@ -13458,6 +13458,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "bjZ" = (
@@ -14492,6 +14493,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"boI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/bluespace_vendor/west,
+/turf/open/floor/iron,
+/area/commons/dorms)
 "boJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -16259,6 +16268,7 @@
 	},
 /obj/item/pen,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/bluespace_vendor/east,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "bzR" = (
@@ -33403,6 +33413,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/captain/private)
+"etN" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "etX" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
@@ -37101,6 +37124,16 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/engineering/main)
+"fQm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/west,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit/departure_lounge)
 "fRv" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 4;
@@ -43395,6 +43428,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/bluespace_vendor/west,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "ivC" = (
@@ -48565,6 +48599,14 @@
 /obj/item/bodypart/l_arm,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
+"kCu" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/bluespace_vendor/west,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "kCw" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -48827,10 +48869,10 @@
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "kHU" = (
@@ -60604,6 +60646,17 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"poC" = (
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron,
+/area/hallway/primary/fore)
 "poI" = (
 /obj/item/hand_labeler,
 /obj/item/stack/package_wrap,
@@ -69413,6 +69466,7 @@
 "sKS" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/bluespace_vendor/south,
 /turf/open/floor/iron,
 /area/commons/locker)
 "sKT" = (
@@ -77280,6 +77334,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"vUh" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/primary/port)
 "vUI" = (
 /obj/structure/table/glass,
 /obj/structure/disposalpipe/segment{
@@ -99207,7 +99272,7 @@ baE
 bnM
 baE
 baE
-jMF
+vUh
 bNh
 bNK
 ikK
@@ -108264,7 +108329,7 @@ cMS
 cNJ
 cMg
 cMV
-cMV
+fQm
 cPO
 cQm
 cQJ
@@ -111041,7 +111106,7 @@ doK
 gMj
 eCo
 lLe
-bTQ
+etN
 bVj
 bWw
 bXU
@@ -111513,7 +111578,7 @@ aBe
 aCp
 aDD
 aDC
-aGo
+poC
 aHD
 aIM
 aIR
@@ -118174,7 +118239,7 @@ aaa
 tdI
 xBC
 lHu
-lHu
+kCu
 peP
 ntj
 kKV
@@ -118192,7 +118257,7 @@ sTJ
 dqy
 iPs
 lHS
-bpa
+boI
 ftn
 kZO
 int
