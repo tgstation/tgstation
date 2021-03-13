@@ -792,7 +792,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	data["buttons"] = event?.event_responses
 
 	data["spaceport_raided"] = spaceport_raided
-	data[""] =
 
 	data["reason"] = reason
 
@@ -805,8 +804,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	static_data["settlers"] = settlers
 	static_data["settlermoods"] = settlermoods
 	return static_data
-
-
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
 	. = ..()
@@ -891,13 +888,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		//Spaceport specific interactions
 		if("buycrew") //buy a crewmember
 			if(!spaceport_raided && food >= 10 && fuel >= 10)
-				var/bought = add_crewmember()
+				if(params["odd"])
+					//find some silly crewmember name
+					add_crewmember(pick(GLOB.commando_names + GLOB.nightmare_names + GLOB.ai_names + GLOB.clown_names + GLOB.mime_names + GLOB.plasmaman_names + GLOB.ethereal_names + GLOB.carp_names))
+				else
+					add_crewmember()
 				fuel -= 10
 				food -= 10
 				killed_crew-- // I mean not really but you know
 		if("sellcrew") //sell a crewmember
 			if(!spaceport_raided && settlers.len > 1)
-				var/sold = remove_crewmember()
+				remove_crewmember()
 				fuel += 7
 				food += 7
 		if("leave_spaceport")
@@ -929,106 +930,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							food -= 5
 	add_fingerprint(gamer)
 	updateUsrDialog()
-
-/*
-	eventdat = "<center><h1>[event]</h1></center>"
-	canContinueEvent = 0
-	switch(event)
-
-		if(ORION_TRAIL_SPACEPORT)
-			gameStatus = ORION_STATUS_MARKET
-			if(spaceport_raided)
-				eventdat += "The spaceport is on high alert! You've been barred from docking by the local authorities after your failed raid."
-				if()
-					eventdat += "<b>Last Spaceport Action:</b> []"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-			else
-				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
-				eventdat += "This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
-				eventdat += "Trading terms: FU = Fuel, FO = Food"
-				if()
-					eventdat += "<b>Last action:</b> []"
-				eventdat += "<h3><b>Crew:</b></h3>"
-				eventdat += english_list(settlers)
-				eventdat += "<b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
-				eventdat += "<b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
-
-
-				//If your crew is pathetic you can get freebies (provided you haven't already gotten one from this port)
-				if(!spaceport_freebie && (fuel < 20 || food < 20))
-					spaceport_freebie++
-					var/FU = 10
-					var/FO = 10
-					var/freecrew = 0
-					if(prob(30))
-						FU = 25
-						FO = 25
-
-					if(prob(10))
-						add_crewmember()
-						freecrew++
-
-					eventdat += "The traders of the spaceport take pity on you, and generously give you some free supplies! (+[FU]FU, +[FO]FO)"
-					if(freecrew)
-						eventdat += "You also gain a new crewmember!"
-
-					fuel += FU
-					food += FO
-
-				//CREW INTERACTIONS
-				eventdat += "<P ALIGN=Right>Crew Management:</P>"
-
-				//Buy crew
-				if(food >= 10 && fuel >= 10)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buycrew=1'>Hire a New Crewmember (-10FU, -10FO)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You cannot afford a new crewmember.</P>"
-
-				//Sell crew
-				if(settlers.len > 1)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];sellcrew=1'>Sell Crew for Fuel and Food (+7FU, +7FO)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You have no other crew to sell.</P>"
-
-				//BUY/SELL STUFF
-				eventdat += "<P ALIGN=Right>Spare Parts:</P>"
-
-				//Engine parts
-				if(fuel > 5)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buyparts=1'>Buy Engine Parts (-5FU)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You cannot afford engine parts.</a>"
-
-				//Hull plates
-				if(fuel > 5)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buyparts=2'>Buy Hull Plates (-5FU)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You cannot afford hull plates.</a>"
-
-				//Electronics
-				if(fuel > 5)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buyparts=3'>Buy Spare Electronics (-5FU)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You cannot afford spare electronics.</a>"
-
-				//Trade
-				if(fuel > 5)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];trade=1'>Trade Fuel for Food (-5FU,+5FO)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You don't have 5FU to trade.</P"
-
-				if(food > 5)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];trade=2'>Trade Food for Fuel (+5FU,-5FO)</a></P>"
-				else
-					eventdat += "<P ALIGN=Right>You don't have 5FO to trade.</P"
-
-				//Raid the spaceport
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];raid_spaceport=1'>!! Raid Spaceport !!</a></P>"
-
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
-
-	*/
 
 /**
  * pickweights a new event, sets event var as it. it then preps the event if it needs it
@@ -1110,6 +1011,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 //Remove Random/Specific crewmember
 /obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "", update = TRUE)
 	to_chat(world, specific)
+	to_chat(world, dont_remove)
+	to_chat(world, "----")
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)
@@ -1118,6 +1021,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		safe2remove = list(specific)
 	else
 		removed = pick(safe2remove)
+
+	to_chat(world, safe2remove)
+	to_chat(world, removed)
 
 	if(removed)
 		if(lings_aboard && prob(40*lings_aboard)) //if there are 2 lings you're twice as likely to get one, obviously
@@ -1158,7 +1064,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
  * Creates a new mood icon for each settler
  *
  * Things that effect mood:
- * * +1 for determination
  * * Pioneer count
  * * Low food
  * * Low parts
@@ -1181,7 +1086,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/changing_mood = 0
 		if(prob(60)) //sometimes they just feel better or worse
 			changing_mood = rand(-1,1)
-		settlermoods[settlers[i]] += min(settlers.len + 1 + changing_mood + food_mood + supply_mood, 1)
+		settlermoods[settlers[i]] +=  max(settlers.len + food_mood + supply_mood + changing_mood, 1)
+		if(lings_suspected) //lings ruin any good mood
+			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 4)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	gameStatus = ORION_STATUS_START

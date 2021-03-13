@@ -299,6 +299,7 @@
 
 /datum/orion_event/changeling_infiltration
 	name = "Changeling Infiltration"
+	weight = 3
 	event_responses = list("Continue")
 
 /datum/orion_event/changeling_infiltration/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
@@ -332,12 +333,10 @@
 	var/ling2 = ""
 	if(game.lings_aboard >= 2)
 		ling2 = game.remove_crewmember()
-
-	text = "Changelings among your crew suddenly burst from hiding and attack!"
 	if(ling2)
-		text += " [ling1] and [ling2]'s arms twist and contort into grotesque blades!"
+		text = " [ling1] and [ling2]'s arms twist and contort into grotesque blades!"
 	else
-		text += " [ling1]'s arm twists and contorts into a grotesque blade!"
+		text = " [ling1]'s arm twists and contorts into a grotesque blade!"
 
 	var/chance2attack = game.alive*20
 	if(!prob(chance2attack))
@@ -365,7 +364,7 @@
 		else
 			game.food += 15
 			game.lings_aboard = max(0, --game.lings_aboard)
-		text += " Well, it's perfectly good food...\
+		text += " Well, it's perfectly good food... \
 			You cut the changeling[ling2 ? "s" : ""] into meat, gaining [ling2 ? "30" : "15"] Food!"
 
 ///Black Hole - final  (emag can spawn singulo, see death event)
@@ -398,6 +397,11 @@
 	to be torn apart as your ship begins to buckle under the pull."
 	event_responses = list("Oh...")
 
+/datum/orion_event/black_hole_death/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
+	. = ..()
+	for(var/value in game.settlermoods)
+		value = 1
+
 /datum/orion_event/black_hole_death/response(choice)
 	game.set_game_over(usr, "You were swept away into the black hole.")
 	..()
@@ -423,7 +427,7 @@
 /datum/orion_event/space_port/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
 	. = ..()
 	//If your crew is pathetic you can get freebies (provided you haven't already gotten one from this port)
-	if(fuel > 20 && food > 20) //but you don't need one
+	if(game.fuel > 20 && game.food > 20) //but you don't need one
 		text = normal_arrival
 		return
 	text = "The workers at the Port are shocked at the state of \
@@ -431,20 +435,19 @@
 	your crew, generously giving you some free supplies! "
 
 
-	var/fuel = 10
-	var/food = 10
-	var/freecrew = 0
+	var/pity_fuel = 10
+	var/pity_food = 10
+	var/freecrew = prob(10)
 	if(prob(30))
-		fuel = 25
-		food = 25
-	if(prob(10))
-		add_crewmember()
-		freecrew++
-	text += "(+[fuel] fuel, +[food] food)"
+		pity_fuel = 25
+		pity_fuel = 25
+	if(freecrew)
+		game.add_crewmember()
+	text += "(+[pity_food] fuel, +[pity_fuel] food)"
 	if(freecrew)
 		text += " A worker at the Port is inspired by your determination, and joins your crew!"
-	fuel += fuel
-	food += food
+	game.fuel += pity_fuel
+	game.food += pity_food
 
 /datum/orion_event/space_port/response(choice)
 	game.gameStatus = ORION_STATUS_MARKET
@@ -475,12 +478,12 @@
 	if(prob(success))
 		fuel = rand(5 + gamerSkillRands,15 + gamerSkillRands)
 		food = rand(5 + gamerSkillRands,15 + gamerSkillRands)
-		text = "You successfully raided the spaceport! You gained [fuel] Fuel and [food] Food! (+[fuel]fuel,+[food]food)"
+		text = "You successfully raided the spaceport! You gained [fuel] Fuel and [food] Food! (+[fuel] fuel, +[food] food)"
 		usr?.mind?.adjust_experience(/datum/skill/gaming, 10)
 	else
 		fuel = rand(-5,-15)
 		food = rand(-5,-15)
-		text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food in your scramble to escape! ([fuel]fuel,[food]food)"
+		text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food in your scramble to escape! ([fuel] fuel, [food] food)"
 
 		//your chance of lose a crewmember is 1/2 your chance of success
 		//this makes higher % failures hurt more, don't get cocky space cowboy!
@@ -489,7 +492,7 @@
 			if(!game.settlers.len)
 				game.set_game_over(usr, "You were gunned down by space port security.")
 				return ..()
-			text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food, AND [lost_crew] in your scramble to escape! ([fuel]FI,[food]food,-Crew)"
+			text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food, AND [lost_crew] in your scramble to escape! ([fuel]fuel, [food] food, -Crew)"
 			if(game.obj_flags & EMAGGED)
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
