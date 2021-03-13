@@ -292,7 +292,7 @@
 	toxpwr = 0
 	taste_description = "sourness"
 	ph = 11
-	impure_chem = /datum/reagent/impurity/rosenol
+	impure_chem = /datum/reagent/impurity/rosenax
 	inverse_chem = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
@@ -427,7 +427,7 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	ph = 11
-	impure_chem = /datum/reagent/impurity/chloral
+	impure_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -570,7 +570,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 1
 	ph = 2.0
-	impure_chem = /datum/reagent/impurity/methanol
+	impure_chem = /datum/reagent/impurity/methanax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -799,7 +799,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 	ph = 6
-	impure_chem = /datum/reagent/impurity/ipecacide
+	impure_chem = /datum/reagent/impurity/ipecax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
