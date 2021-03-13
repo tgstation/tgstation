@@ -64,7 +64,8 @@ RSF
 			to_chat(user, "<span class='warning'>\The [src] can't hold any more [discriptor]!</span>")
 			return
 		if(isstack(W))
-			W.use(1)
+			var/obj/item/stack/stack = W
+			stack.use(1)
 		else
 			qdel(W)
 		matter = tempMatter //We add its value
