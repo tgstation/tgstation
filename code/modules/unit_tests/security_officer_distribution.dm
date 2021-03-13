@@ -36,24 +36,24 @@ TEST_FOCUS(/datum/unit_test/security_officer_distribution)
 	test(list(SEC_DEPT_NONE, SEC_DEPT_NONE, SEC_DEPT_NONE, SEC_DEPT_NONE), list("d", "d", "c", "c"))
 
 /datum/unit_test/security_officer_distribution/proc/test_with_mock_players()
-	var/officer_a = create_officer("a")
-	var/officer_b = create_officer("b")
-	var/officer_c = create_officer("c")
-	var/officer_d = create_officer("d")
+	var/mob/dead/new_player/officer_a = create_officer("a")
+	var/mob/dead/new_player/officer_b = create_officer("b")
+	var/mob/dead/new_player/officer_c = create_officer("c")
+	var/mob/dead/new_player/officer_d = create_officer("d")
 
 	var/list/outcome = SSticker.decide_security_officer_departments(
 		list(officer_a, officer_b, officer_c, officer_d),
 		departments,
 	)
 
-	TEST_ASSERT_EQUAL(outcome[officer_a], "a")
-	TEST_ASSERT_EQUAL(outcome[officer_b], "b")
-	TEST_ASSERT_EQUAL(outcome[officer_c], "b")
-	TEST_ASSERT_EQUAL(outcome[officer_d], "a")
+	TEST_ASSERT_EQUAL(outcome[officer_a.new_character], "a", "Officer A's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[officer_b.new_character], "b", "Officer B's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[officer_c.new_character], "b", "Officer C's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[officer_d.new_character], "a", "Officer D's department outcome was incorrect.")
 
 /datum/unit_test/security_officer_distribution/proc/create_officer(preference)
 	var/mob/dead/new_player/new_player = allocate(/mob/dead/new_player)
-	var/datum/client_interface/mock_client = allocate(/datum/client_interface)
+	var/datum/client_interface/mock_client = new
 
 	mock_client.prefs = new
 	mock_client.prefs.prefered_security_department = preference
@@ -62,5 +62,6 @@ TEST_FOCUS(/datum/unit_test/security_officer_distribution)
 	new_character.mind_initialize()
 	new_character.mind.assigned_role = "Security Officer"
 
+	new_player.new_character = new_character
 	new_player.mock_client = mock_client
 	return new_player

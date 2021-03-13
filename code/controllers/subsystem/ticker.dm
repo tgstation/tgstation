@@ -388,7 +388,10 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
-	decide_security_officer_departments(shuffle(GLOB.new_player_list), shuffle(GLOB.available_depts))
+	GLOB.security_officer_distribution = decide_security_officer_departments(
+		shuffle(GLOB.new_player_list),
+		shuffle(GLOB.available_depts),
+	)
 
 	var/captainless = TRUE
 
