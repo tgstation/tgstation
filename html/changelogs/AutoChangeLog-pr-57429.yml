@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "twohandend-required items shouldn't fall down when equipped on another slot."
