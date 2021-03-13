@@ -53,6 +53,13 @@
 
 	update_appearance()
 
+/obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
+	if(bluespace_network.total_moles())
+		var/turf/local_turf = get_turf(src)
+		local_turf.assume_air(bluespace_network)
+		local_turf.air_update_turf(FALSE, FALSE)
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
 	if(panel_open)
 		icon_state = "[base_icon]_open"
@@ -89,6 +96,10 @@
 			return
 	if(default_change_direction_wrench(user, item))
 		return
+	if(item.tool_behaviour == TOOL_CROWBAR && panel_open && bluespace_network.total_moles() > 0)
+		say("WARNING - Bluespace network can contain hazardous gases, deconstruct with caution!")
+		if(!do_after(user, 3 SECONDS, src))
+			return
 	if(default_deconstruction_crowbar(item))
 		return
 	return ..()
@@ -179,3 +190,10 @@
 			base_prices[gas_type] = clamp(params["gas_price"], 0, 100)
 			. = TRUE
 
+		if("retrieve")
+			if(bluespace_network.total_moles() > 0)
+				var/datum/gas_mixture/remove = bluespace_network.remove(bluespace_network.total_moles())
+				airs[1].merge(remove)
+				update_parents()
+				bluespace_network.garbage_collect()
+			. = TRUE

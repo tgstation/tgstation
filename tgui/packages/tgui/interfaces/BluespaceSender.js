@@ -62,6 +62,12 @@ export const BluespaceSender = (props, context) => {
                 tooltipPosition="bottom-left"
                 tooltip="Will only take in gases while on."
                 onClick={() => act('power')} />
+              <Button
+                ml={0.5}
+                content="Retrieve gases"
+                tooltipPosition="bottom-left"
+                tooltip="Will transfer any gases inside to the pipe."
+                onClick={() => act('retrieve')} />
             </>
           )}>
           <Box>
