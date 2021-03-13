@@ -55,12 +55,21 @@
 	unset_busy_human_dummy(dummy_key)
 	return
 
-#define OUTFIT_ENTRY(path, name) list(list("path" = path, "name" = name))
-/datum/select_equipment/proc/make_outfit_entries(list/L)
+/*
+category (string) - The tab it will be under
+path (typepath or string) - This will sent this back to ui_act to preview or spawn in an outfit
+name (string) - Will be the text on the button
+priority (int) - default 0, 1 for favorites, 2 for priority buttons
+*/
+#define OUTFIT_ENTRY(category, path, name, priority) list(list("category" = category, "path" = path, "name" = name, "priority" = priority))
+/datum/select_equipment/proc/make_outfit_entries(category="General", list/L)
 	var/list/entries = list()
 	for(var/path in L)
 		var/datum/outfit/O = path
-		entries += OUTFIT_ENTRY(path, initial(O.name))
+		var/priority = 0
+		if(path == /datum/outfit/job/roboticist)
+			priority = 1
+		entries += OUTFIT_ENTRY(category, path, initial(O.name), priority)
 	return entries
 
 
@@ -69,7 +78,7 @@
 	var/list/entries = list()
 	for(var/datum/outfit/O in L)
 		cached_custom_outfits[O.name] = O
-		entries += OUTFIT_ENTRY(O.name, O.name) //it's either this or special handling on the UI side
+		entries += OUTFIT_ENTRY("Custom", O.name, O.name, 2) //it's either this or special handling on the UI side
 	return entries
 
 
@@ -83,19 +92,26 @@
 		prefs = target.client.prefs
 	var/icon/dummysprite = get_flat_human_icon(null, prefs=prefs, dummy_key = dummy_key, outfit_override = selected_outfit)
 	data["icon64"] = icon2base64(dummysprite)
-
-	if(!cached_outfits)
-		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
-		cached_outfits = list()
-		cached_outfits["General"] = OUTFIT_ENTRY(/datum/outfit, "Naked") + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
-		cached_outfits["Jobs"] = make_outfit_entries(typesof(/datum/outfit/job))
-		cached_outfits["Plasmamen Outfits"] = make_outfit_entries(typesof(/datum/outfit/plasmaman))
-
-	cached_outfits["Custom"] = OUTFIT_ENTRY("Click confirm to open the outfit manager", "Create a custom outfit...") + make_custom_outfit_entries(GLOB.custom_outfits)
-
-	data["outfits"] = cached_outfits
 	data["name"] = target
 
+	var/list/custom
+	custom += OUTFIT_ENTRY("Custom", "Click confirm to open the outfit manager", "Create a custom outfit...", 2)
+	custom += make_custom_outfit_entries(GLOB.custom_outfits)
+	data["custom_outfits"] = custom
+
+	return data
+
+
+/datum/select_equipment/ui_static_data(mob/user)
+	var/list/data = list()
+	if(!cached_outfits)
+		cached_outfits = list()
+		cached_outfits += OUTFIT_ENTRY("General", /datum/outfit, "Naked", 2)
+		cached_outfits += make_outfit_entries("General", subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
+		cached_outfits += make_outfit_entries("Jobs", typesof(/datum/outfit/job))
+		cached_outfits += make_outfit_entries("Plasmamen Outfits", typesof(/datum/outfit/plasmaman))
+
+	data["outfits"] = cached_outfits
 	return data
 
 

@@ -2,15 +2,20 @@ import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
 import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
 import { Window } from '../layouts';
+import { flow } from 'common/fp';
+import { filter, map, sortBy, uniqBy } from 'common/collections';
 
 export const SelectEquipment = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     name,
-    outfits,
     icon64,
   } = data;
 
+  const outfits = [
+    ...data.outfits,
+    ...data.custom_outfits,
+  ];
 
   // search bar
   const [
@@ -18,7 +23,7 @@ export const SelectEquipment = (props, context) => {
     setSearchText,
   ] = useLocalState(context, 'searchText', '');
   const searchFilter = createSearch(searchText, entry =>
-    (entry[0] + entry[1])
+    (entry.name + entry.path)
   );
   const searchBar
     = (<Input
@@ -48,7 +53,8 @@ export const SelectEquipment = (props, context) => {
     );
   };
 
-  const outfitCategories = Object.keys(outfits);
+  const outfitCategories = uniqBy(x => x)(outfits.map(entry => entry.category));
+
   const DisplayTabs = (props, context) => {
     return (
       <Tabs textAlign="center">
@@ -102,12 +108,17 @@ export const SelectEquipment = (props, context) => {
   const DisplayedOutfits = (props, context) => {
     return (
       <Stack vertical direction="column">
-        {outfits[tabIndex]
-          ?.filter(searchFilter)
-          ?.map(outfitButton)}
+        {entries}
       </Stack>);
   };
 
+  const entries = flow([
+    filter(entry => entry.category === tabIndex),
+    filter(searchFilter),
+    sortBy(entry => entry.name),
+    sortBy(entry => -entry.priority),
+    map(outfitButton),
+  ])(outfits);
 
   return (
     <Window
