@@ -30,6 +30,7 @@
 	if(!ui)
 		ui = new(user, src, "SelectEquipment", "Select Equipment")
 		ui.open()
+		ui.set_autoupdate(FALSE)
 
 /datum/select_equipment/ui_state(mob/user)
 	return GLOB.admin_state
@@ -69,7 +70,7 @@
 		entries[O.name] = O.name //it's either this or special handling on the UI side
 	return sortAssocList(entries)
 
-/datum/select_equipment/ui_static_data(mob/user)
+/datum/select_equipment/ui_data(mob/user)
 	var/list/data = list()
 	if(!dummy)
 		init_dummy()
@@ -117,7 +118,7 @@
 			if(!istype(O))
 				return
 			selected_outfit = O.type //the typepath - not the object
-			update_static_data(user.mob)
+			return TRUE
 
 		if("applyoutfit")
 			var/text = params["path"]
@@ -129,7 +130,7 @@
 			if(!istype(O))
 				return
 			user.admin_apply_outfit(target, O)
-			update_static_data(user.mob)
+			return TRUE
 
 
 /client/proc/admin_apply_outfit(mob/M, dresscode)
