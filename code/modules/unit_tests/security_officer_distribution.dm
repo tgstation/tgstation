@@ -79,15 +79,15 @@
 		var/mob/officer = allocate(/mob/living/carbon/human)
 		distribution[officer] = officer_preference
 
-	TEST_ASSERT_EQUAL(
-		get_new_officer_distribution_from_late_join(
-			preference,
-			SECURITY_OFFICER_DEPARTMENTS,
-			distribution,
-		), \
-		expected, \
-		"Latejoin distribution was incorrect (preference = [preference], preferences_of_others = [json_encode(preferences_of_others)])." \
+	var/result = get_new_officer_distribution_from_late_join(
+		preference,
+		SECURITY_OFFICER_DEPARTMENTS,
+		distribution,
 	)
+
+	var/failure_message = "Latejoin distribution was incorrect (preference = [preference], preferences_of_others = [json_encode(preferences_of_others)])."
+
+	TEST_ASSERT_EQUAL(result, expected, failure_message)
 
 /datum/unit_test/security_officer_latejoin_distribution/Run()
 	test("a", list(), "a")
