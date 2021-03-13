@@ -101,6 +101,12 @@
 	list_reagents = list(/datum/reagent/consumable/enzyme = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/enzyme/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>40 Milk, 5 Enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the Enzyme isn't used up, so return it to the bottle, dingus!</span>"
+
+
 /obj/item/reagent_containers/food/condiment/sugar
 	name = "sugar sack"
 	desc = "Tasty spacey sugar!"
@@ -110,6 +116,10 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list(/datum/reagent/consumable/sugar = 50)
 	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/sugar/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>15 Flour, 15 Egg Yolk (Or soy milk), 5 sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
 	name = "salt shaker" // a large one.
@@ -167,6 +177,11 @@
 	list_reagents = list(/datum/reagent/consumable/milk = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/milk/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>40 Milk, 5 Enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the Enzyme isn't used up, so return it to the bottle, dingus!</span>"
+
 /obj/item/reagent_containers/food/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
@@ -176,6 +191,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list(/datum/reagent/consumable/flour = 30)
 	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/flour/examine(mob/user)
+	. = ..()
+	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
+	. += "<span class='notice'>15 Flour, 10 Water makes normal dough. You can make flat dough from it.</span>"
+	. += "<span class='notice'>15 Flour, 15 Egg Yolk (Or soy milk), 5 sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/soymilk
 	name = "soy milk"
