@@ -1,15 +1,25 @@
+/obj/item/wallframe/bluespace_vendor_mount
+	name = "bluespace vendor wall mount"
+	desc = "Used for placing bluespace vendors."
+	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon_state = "bluespace_vendor_open"
+	result_path = /obj/machinery/bluespace_vendor/built
+
+#define BS_MODE_OFF 1
+#define BS_MODE_IDLE 2
+#define BS_MODE_PUMPING 3
+#define BS_MODE_OPEN 4
+
 /obj/machinery/bluespace_vendor
-	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	icon_state = "freezer"
+	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon_state = "bluespace_vendor_off"
 
 	name = "Bluespace Gas Vendor"
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
-	density = TRUE
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/thermomachine
 	var/obj/machinery/atmospherics/components/unary/bluespace_sender/connected_machine
 	var/empty_tanks = 10
 	var/obj/item/tank/internal_tank
@@ -20,9 +30,40 @@
 	var/tank_cost = 10
 	var/gas_price = 0
 	var/map_spawned = TRUE
+	var/base_icon = "bluespace_vendor"
+	var/mode = BS_MODE_OFF
 
 /obj/machinery/bluespace_vendor/built
 	map_spawned = FALSE
+	mode = BS_MODE_OPEN
+
+/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
+	dir = SOUTH
+	pixel_y = 30
+
+/obj/machinery/bluespace_vendor/south
+	dir = NORTH
+	pixel_y = -30
+
+/obj/machinery/bluespace_vendor/east
+	dir = WEST
+	pixel_x = 30
+
+/obj/machinery/bluespace_vendor/west
+	dir = EAST
+	pixel_x = -30
+
+/obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
+	. = ..()
+	if(ndir)
+		setDir(ndir)
+
+	if(nbuild)
+		panel_open = TRUE
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
+		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
+
+	update_appearance()
 
 /obj/machinery/bluespace_vendor/Initialize()
 	. = ..()
@@ -37,7 +78,21 @@
 			continue
 		register_machine(sender)
 
+/obj/machinery/bluespace_vendor/update_icon_state()
+	switch(mode)
+		if(BS_MODE_OFF)
+			icon_state = "[base_icon]_off"
+		if(BS_MODE_IDLE)
+			icon_state = "[base_icon]_idle"
+		if(BS_MODE_PUMPING)
+			icon_state = "[base_icon]_pumping"
+		if(BS_MODE_OPEN)
+			icon_state = "[base_icon]_open"
+	return ..()
+
 /obj/machinery/bluespace_vendor/process()
+	if(mode == BS_MODE_OPEN)
+		return
 	if(!selected_gas)
 		return
 	var/gas_path = gas_id2path(selected_gas)
@@ -56,6 +111,15 @@
 			return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
+	if(!pumping)
+		if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
+			check_mode()
+			return
+	if(default_deconstruction_crowbar(item, FALSE, custom_deconstruct = TRUE))
+		new/obj/item/wallframe/bluespace_vendor_mount(user.loc)
+		qdel(src)
+		return
+
 	if(istype(item, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/iron = item
 		if (iron.use(1))
@@ -73,15 +137,28 @@
 	else
 		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
 
+/obj/machinery/bluespace_vendor/proc/check_mode()
+	if(panel_open)
+		mode = BS_MODE_OPEN
+	else if(connected_machine)
+		mode = BS_MODE_IDLE
+	else
+		mode = BS_MODE_OFF
+	update_appearance()
+
 /obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
 	LAZYADD(connected_machine.vendors, src)
 	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
+	mode = BS_MODE_IDLE
+	update_appearance()
 
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
 	LAZYREMOVE(connected_machine.vendors, src)
 	connected_machine = null
+	mode = BS_MODE_OFF
+	update_appearance()
 
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
@@ -100,8 +177,7 @@
 		user.put_in_hands(internal_tank)
 
 /obj/machinery/bluespace_vendor/ui_interact(mob/user, datum/tgui/ui)
-	if(!connected_machine)
-		message_admins("NOT CONNECTED")
+	if(!connected_machine || mode == BS_MODE_OPEN)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -146,14 +222,21 @@
 	if(.)
 		return
 
+	if(mode == BS_MODE_OPEN)
+		return
+
 	switch(action)
 		if("start_pumping")
 			pumping = TRUE
 			selected_gas = params["gas_id"]
+			mode = BS_MODE_PUMPING
+			update_appearance()
 			. = TRUE
 		if("stop_pumping")
 			pumping = FALSE
 			selected_gas = null
+			mode = BS_MODE_IDLE
+			update_appearance()
 			. = TRUE
 		if("pumping_rate")
 			gas_transfer_rate = clamp(params["rate"], 0, 100)
@@ -166,3 +249,8 @@
 		if("tank_expel")
 			check_price(usr)
 			. = TRUE
+
+#undef BS_MODE_OFF
+#undef BS_MODE_IDLE
+#undef BS_MODE_PUMPING
+#undef BS_MODE_OPEN

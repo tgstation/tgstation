@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
-	icon_state = "bluespace_sender"
+	icon_state = "bluespace_sender_off"
 
 	name = "Bluespace Gas Sender"
 	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
@@ -9,13 +9,11 @@
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/thermomachine
+	circuit = /obj/item/circuitboard/machine/bluespace_sender
 
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
-	var/icon_state_off = "freezer"
-	var/icon_state_on = "freezer_1"
-	var/icon_state_open = "freezer-o"
+	var/base_icon = "bluespace_sender"
 
 	var/datum/gas_mixture/bluespace_network
 	var/gas_transfer_rate = 0.5
@@ -53,14 +51,16 @@
 	for(var/gas_id in GLOB.meta_gas_info)
 		bluespace_network.assert_gas(gas_id)
 
+	update_appearance()
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
 	if(panel_open)
-		icon_state = icon_state_open
+		icon_state = "[base_icon]_open"
 		return ..()
 	if(on && is_operational)
-		icon_state = icon_state_on
+		icon_state = "[base_icon]_on"
 		return ..()
-	icon_state = icon_state_off
+	icon_state =  "[base_icon]_off"
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()
@@ -82,17 +82,18 @@
 	bluespace_network.temperature = T20C
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/attackby(obj/item/item, mob/user, params)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+		if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
+			update_appearance()
 			return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(item))
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/default_change_direction_wrench(mob/user, obj/item/I)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/default_change_direction_wrench(mob/user, obj/item/item)
 	if(!..())
 		return FALSE
 	SetInitDirections()
@@ -166,6 +167,7 @@
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			update_appearance()
 			. = TRUE
 
 		if("rate")
