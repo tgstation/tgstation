@@ -55,20 +55,23 @@
 	unset_busy_human_dummy(dummy_key)
 	return
 
+#define OUTFIT_ENTRY(path, name) list(list("path" = path, "name" = name))
 /datum/select_equipment/proc/make_outfit_entries(list/L)
 	var/list/entries = list()
 	for(var/path in L)
 		var/datum/outfit/O = path
-		entries[path] = initial(O.name)
-	return sortAssocList(entries)
+		entries += OUTFIT_ENTRY(path, initial(O.name))
+	return entries
+
 
 //GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
 /datum/select_equipment/proc/make_custom_outfit_entries(list/L)
 	var/list/entries = list()
 	for(var/datum/outfit/O in L)
 		cached_custom_outfits[O.name] = O
-		entries[O.name] = O.name //it's either this or special handling on the UI side
-	return sortAssocList(entries)
+		entries += OUTFIT_ENTRY(O.name, O.name) //it's either this or special handling on the UI side
+	return entries
+
 
 /datum/select_equipment/ui_data(mob/user)
 	var/list/data = list()
@@ -84,11 +87,11 @@
 	if(!cached_outfits)
 		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
 		cached_outfits = list()
-		cached_outfits["General"] = list(/datum/outfit = "Naked") + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
+		cached_outfits["General"] = OUTFIT_ENTRY(/datum/outfit, "Naked") + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits["Jobs"] = make_outfit_entries(typesof(/datum/outfit/job))
 		cached_outfits["Plasmamen Outfits"] = make_outfit_entries(typesof(/datum/outfit/plasmaman))
 
-	cached_outfits["Custom"] = list("Click confirm to open the outfit manager" = "Create a custom outfit...") + make_custom_outfit_entries(GLOB.custom_outfits)
+	cached_outfits["Custom"] = OUTFIT_ENTRY("Click confirm to open the outfit manager", "Create a custom outfit...") + make_custom_outfit_entries(GLOB.custom_outfits)
 
 	data["outfits"] = cached_outfits
 	data["name"] = target
@@ -163,3 +166,5 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(H)] to [dresscode].</span>")
 
 	return dresscode
+
+#undef OUTFIT_ENTRY

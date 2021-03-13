@@ -91,10 +91,10 @@ export const SelectEquipment = (props, context) => {
         <Button
           fluid
           ellipsis
-          content={outfit[1]}
-          title={outfit[0]}
-          selected={outfit[0]===selectedOutfit}
-          onClick={() => selectOutfit(outfit[0])} />
+          content={outfit.name}
+          title={outfit.path}
+          selected={outfit.path===selectedOutfit}
+          onClick={() => selectOutfit(outfit.path)} />
       </Stack.Item>
     );
   };
@@ -102,7 +102,7 @@ export const SelectEquipment = (props, context) => {
   const DisplayedOutfits = (props, context) => {
     return (
       <Stack vertical direction="column">
-        {Object.entries(outfits[tabIndex])
+        {outfits[tabIndex]
           ?.filter(searchFilter)
           ?.map(outfitButton)}
       </Stack>);
