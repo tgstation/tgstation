@@ -63,7 +63,7 @@
 
 	RegisterSignal(src, COMSIG_MOB_BOT_PRESTEP, .proc/check_pre_step)
 	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_AM, .proc/on_crossed_am)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over)
 
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 
@@ -545,11 +545,11 @@
 	bloodiness--
 
 /**
- * Signal handler for COMSIG_MOVABLE_CROSSED_AM signals sent by this mulebot.
+ * Signal handler for COMSIG_MOVABLE_CROSSED_OVER signals sent by this mulebot.
  *
  * Intended to be used to crush various things.
  */
-/mob/living/simple_animal/bot/mulebot/proc/on_crossed_am(atom/movable/source, atom/movable/crossed_atom)
+/mob/living/simple_animal/bot/mulebot/proc/on_crossed_over(atom/movable/source, atom/movable/crossed_atom)
 	SIGNAL_HANDLER
 
 	if(ishuman(crossed_atom))
