@@ -857,7 +857,7 @@
 /**
  * Updates the appearance of the apparatus when the stored object's icon gets updated.
  *
- * Returns NONE as we have not done anything tothe stored object itself,
+ * Returns NONE as we have not done anything to the stored object itself,
  * which is where this signal that this handler intercepts is sent from.
  */
 /obj/item/borg/apparatus/proc/on_stored_updated_icon(datum/source, updates)
