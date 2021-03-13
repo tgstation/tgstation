@@ -95,6 +95,7 @@
 	event_responses = list()
 
 /datum/orion_event/electronic_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+	..()
 	if(game.engine >= 1)
 		event_responses += "Repair Electronics"
 	event_responses += "Wait"
@@ -134,6 +135,7 @@
 	event_responses = list()
 
 /datum/orion_event/hull_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+	..()
 	if(game.hull >= 1)
 		event_responses += "Restore Hull"
 	event_responses += "Wait"
@@ -186,6 +188,7 @@
 	event_responses = list()
 
 /datum/orion_event/exploring_derelict/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+	..()
 	switch(rand(100))
 		if(0 to 14)
 			var/rescued = game.add_crewmember()
@@ -222,6 +225,7 @@
 	event_responses = list("Continue")
 
 /datum/orion_event/raiders/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+	..()
 	text = "Raiders have come aboard your ship! "
 	if(prob(50))
 		var/sfood = rand(1,10)
@@ -251,6 +255,7 @@
 	event_responses = list("Continue")
 
 /datum/orion_event/illness/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+	..()
 	var/deadname = game.remove_crewmember()
 	text = "A deadly illness has been contracted! [deadname] was killed by the disease."
 
@@ -279,7 +284,7 @@
 	event_responses = list("Keep Speed","Slow Down")
 
 /datum/orion_event/flux/response(choice)
-	if("Keep Speed")
+	if(choice == "Keep Speed")
 		if(prob(25))
 			return ..()
 		game.encounter_event(/datum/orion_event/engine_part)
