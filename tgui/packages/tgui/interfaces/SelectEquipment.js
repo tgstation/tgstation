@@ -20,17 +20,14 @@ export const SelectEquipment = (props, context) => {
   const searchFilter = createSearch(searchText, entry =>
     (entry[0] + entry[1])
   );
-  const SearchBar = (props, context) => {
-    const { act, data } = useBackend(context);
-    return (
-      <Input
-        fluid
-        autoFocus
-        placeholder="Search"
-        value={searchText}
-        onInput={(e, value) => setSearchText(value)}
-        mb={1} />);
-  };
+  const searchBar
+    = (<Input
+      fluid
+      autoFocus
+      placeholder="Search"
+      value={searchText}
+      onInput={(e, value) => setSearchText(value)}
+      mb={1} />);
 
 
   // outfit tabs; mapped and named from the data sent by ui_static_data
@@ -52,8 +49,8 @@ export const SelectEquipment = (props, context) => {
   };
 
   const outfitCategories = Object.keys(outfits);
-  const displayTabs
-    = (
+  const DisplayTabs = (props, context) => {
+    return (
       <Tabs textAlign="center">
 
         {outfitCategories.map(cat => { return (
@@ -62,6 +59,7 @@ export const SelectEquipment = (props, context) => {
 
       </Tabs>
     );
+  };
 
 
   // outfit selection
@@ -75,8 +73,8 @@ export const SelectEquipment = (props, context) => {
     setSelectedOutfit,
   ] = useLocalState(context, 'selected-outfit', "/datum/outfit");
 
-  const currentlySelectedDisplay
-    = (
+  const CurrentlySelectedDisplay = (props, context) => {
+    return (
       <Flex direction="column" textAlign="center" align="center">
         Currently selected:<br />{selectedOutfit}
         <Flex.Item>
@@ -85,7 +83,7 @@ export const SelectEquipment = (props, context) => {
         </Flex.Item>
       </Flex>
     );
-
+  };
 
   const outfitButton = outfit => {
     return (
@@ -101,13 +99,14 @@ export const SelectEquipment = (props, context) => {
     );
   };
 
-  const displayedOutfits
-  = (
-    <Stack vertical direction="column">
-      {Object.entries(outfits[tabIndex])
-        ?.filter(searchFilter)
-        ?.map(outfitButton)}
-    </Stack>);
+  const DisplayedOutfits = (props, context) => {
+    return (
+      <Stack vertical direction="column">
+        {Object.entries(outfits[tabIndex])
+          ?.filter(searchFilter)
+          ?.map(outfitButton)}
+      </Stack>);
+  };
 
 
   return (
@@ -119,13 +118,13 @@ export const SelectEquipment = (props, context) => {
 
           <Flex.Item grow={1} basis={0}>
             <Section height="15%" mb={0}>
-              {displayTabs}
-              {currentlySelectedDisplay}
+              <DisplayTabs />
+              <CurrentlySelectedDisplay />
               <Divider />
             </Section>
             <Section height="85%" fill scrollable>
-              <SearchBar />
-              {displayedOutfits}
+              {searchBar}
+              <DisplayedOutfits />
             </Section>
           </Flex.Item>
 
