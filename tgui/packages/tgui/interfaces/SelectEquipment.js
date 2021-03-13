@@ -102,7 +102,7 @@ export const SelectEquipment = (props, context) => {
   const DisplayedOutfits = (props, context) => {
     return (
       <Stack vertical direction="column">
-        {outfits[tabIndex]
+        {Object.entries(outfits[tabIndex])
           ?.filter(searchFilter)
           ?.map(outfitButton)}
       </Stack>);
