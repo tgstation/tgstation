@@ -59,16 +59,19 @@
 	var/list/entries = list()
 	for(var/path in L)
 		var/datum/outfit/O = path
-		entries[path] = initial(O.name)
-	return sortAssocList(entries)
+		entries += list(list(path, initial(O.name))) //list(list()) because just list() makes byond concatenate the lists instead
+	return sortTim(entries.Copy(), cmp = .proc/cmp_entries)
 
 //GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
 /datum/select_equipment/proc/make_custom_outfit_entries(list/L)
 	var/list/entries = list()
 	for(var/datum/outfit/O in L)
 		cached_custom_outfits[O.name] = O
-		entries[O.name] = O.name //it's either this or special handling on the UI side
-	return sortAssocList(entries)
+		entries += list(list(O.name, O.name)) //it's either this or special handling on the UI side
+	return sortTim(entries.Copy(), cmp = .proc/cmp_entries)
+
+/datum/select_equipment/proc/cmp_entries(list/a, list/b)
+	return sorttext(b[2], a[2])
 
 /datum/select_equipment/ui_data(mob/user)
 	var/list/data = list()
@@ -84,11 +87,11 @@
 	if(!cached_outfits)
 		//the assoc keys here will turn into Tabs in the UI, so make sure to name them well
 		cached_outfits = list()
-		cached_outfits["General"] = list(/datum/outfit = "Naked") + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
+		cached_outfits["General"] = list(list(/datum/outfit, "Naked")) + make_outfit_entries(subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits["Jobs"] = make_outfit_entries(typesof(/datum/outfit/job))
 		cached_outfits["Plasmamen Outfits"] = make_outfit_entries(typesof(/datum/outfit/plasmaman))
 
-	cached_outfits["Custom"] = list("Click confirm to open the outfit manager" = "Create a custom outfit...") + make_custom_outfit_entries(GLOB.custom_outfits)
+	cached_outfits["Custom"] = list(list("Click confirm to open the outfit manager", "Create a custom outfit...")) + make_custom_outfit_entries(GLOB.custom_outfits)
 
 	data["outfits"] = cached_outfits
 	data["name"] = target
