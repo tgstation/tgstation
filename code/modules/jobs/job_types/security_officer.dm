@@ -272,7 +272,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			grouped[preference] = list()
 		grouped[preference] += index
 
-		if (preference != SEC_DEPT_NONE && (isnull(biggest_group) || biggest_group.len < grouped[preference].len))
+		var/list/preferred_group = grouped[preference]
+
+		if (preference != SEC_DEPT_NONE && (isnull(biggest_group) || biggest_group.len < preferred_group.len))
 			biggest_group = grouped[preference]
 			biggest_preference = preference
 
@@ -289,7 +291,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 				preferences[leftover] = SEC_DEPT_NONE
 	else
 		var/needed = distribution[1] - biggest_group.len
-		if ((SEC_DEPT_NONE in grouped) && grouped[SEC_DEPT_NONE].len >= needed)
+		if (LAZYLEN(LAZYACCESS(grouped, SEC_DEPT_NONE)) >= needed)
 			for (var/candidate_index in biggest_group)
 				selection[candidate_index] = biggest_preference
 
