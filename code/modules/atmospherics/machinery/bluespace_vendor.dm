@@ -5,6 +5,7 @@
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
 
+///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
 #define BS_MODE_IDLE 2
 #define BS_MODE_PUMPING 3
@@ -13,26 +14,39 @@
 /obj/machinery/bluespace_vendor
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_off"
-
 	name = "Bluespace Gas Vendor"
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
+
+	///The bluespace sender that this vendor is connected to
 	var/obj/machinery/atmospherics/components/unary/bluespace_sender/connected_machine
+	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
+	///Reference to the current in use tank to be filled
 	var/obj/item/tank/internal_tank
+	///Path of the gas selected from the UI to be pumped inside the tanks
 	var/selected_gas
+	///Is the vendor trying to move gases from the network to the tanks?
 	var/pumping = FALSE
+	///Has the user prepared a tank to be filled with gases?
 	var/inserted_tank = FALSE
-	var/gas_transfer_rate = 0
+	///Amount of the tank already filled with gas (from 0 to 100)
+	var/tank_filling_amount = 0
+	///Base price of the tank
 	var/tank_cost = 10
+	///Stores the current price of the gases inside the tank
 	var/gas_price = 0
+	///Helper for mappers, will automatically connect to the sender (ensure to only place one sender per map)
 	var/map_spawned = TRUE
+	///Base icon name for updating the appearance
 	var/base_icon = "bluespace_vendor"
+	///Current operating mode of the vendor
 	var/mode = BS_MODE_OFF
 
+//The one that the players make
 /obj/machinery/bluespace_vendor/built
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
@@ -78,6 +92,10 @@
 			continue
 		register_machine(sender)
 
+/obj/machinery/bluespace_vendor/Destroy()
+	unregister_machine()
+	return ..()
+
 /obj/machinery/bluespace_vendor/update_icon_state()
 	switch(mode)
 		if(BS_MODE_OFF)
@@ -96,7 +114,7 @@
 	if(!selected_gas)
 		return
 	var/gas_path = gas_id2path(selected_gas)
-	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (gas_transfer_rate * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
+	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(istype(multitool))
@@ -137,6 +155,7 @@
 	else
 		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
 
+///Check what is the current operating mode
 /obj/machinery/bluespace_vendor/proc/check_mode()
 	if(panel_open)
 		mode = BS_MODE_OPEN
@@ -146,6 +165,7 @@
 		mode = BS_MODE_OFF
 	update_appearance()
 
+///Register the sender as the connected_machine
 /obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
 	LAZYADD(connected_machine.vendors, src)
@@ -153,6 +173,7 @@
 	mode = BS_MODE_IDLE
 	update_appearance()
 
+///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
 	LAZYREMOVE(connected_machine.vendors, src)
@@ -160,6 +181,7 @@
 	mode = BS_MODE_OFF
 	update_appearance()
 
+///Check the price of the current tank, if the user doesn't have the money the gas will be merged back into the network
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
 	for(var/gas_id in internal_tank.air_contents.gases)
@@ -205,7 +227,7 @@
 				)))
 	data["bluespace_network_gases"] = bluespace_gasdata
 	data["pumping"] = pumping
-	data["gas_transfer_rate"] = gas_transfer_rate
+	data["tank_filling_amount"] = tank_filling_amount
 	data["selected_gas"] = selected_gas
 	data["tank_amount"] = empty_tanks
 	data["inserted_tank"] = inserted_tank
@@ -239,7 +261,7 @@
 			update_appearance()
 			. = TRUE
 		if("pumping_rate")
-			gas_transfer_rate = clamp(params["rate"], 0, 100)
+			tank_filling_amount = clamp(params["rate"], 0, 100)
 			. = TRUE
 		if("tank_prepare")
 			inserted_tank = TRUE

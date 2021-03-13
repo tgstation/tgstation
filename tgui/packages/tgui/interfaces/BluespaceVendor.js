@@ -11,7 +11,7 @@ export const BluespaceVendor = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     on,
-    gas_transfer_rate,
+    tank_filling_amount,
     price_multiplier,
     pumping,
     selected_gas,
@@ -53,7 +53,7 @@ export const BluespaceVendor = (props, context) => {
                 <Stack.Item>
                   <NumberInput
                     animated
-                    value={gas_transfer_rate}
+                    value={tank_filling_amount}
                     width="63px"
                     unit="% tank filling goal"
                     minValue={0}

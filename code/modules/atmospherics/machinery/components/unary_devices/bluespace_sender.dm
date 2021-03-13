@@ -1,7 +1,6 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_sender_off"
-
 	name = "Bluespace Gas Sender"
 	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
 
@@ -10,13 +9,15 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/bluespace_sender
-
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
+	///Base icon name for updating the appearance
 	var/base_icon = "bluespace_sender"
-
+	///Gas mixture containing the inserted gases and that is connected to the vendors
 	var/datum/gas_mixture/bluespace_network
+	///Rate of gas transfer inside the network (from 0 to 1)
 	var/gas_transfer_rate = 0.5
+	///A base price for each and every gases, in case you don't want to change them
 	var/list/base_prices = list(
 		/datum/gas/oxygen = 1,
 		/datum/gas/nitrogen = 1,
@@ -40,8 +41,9 @@
 		/datum/gas/antinoblium = 1,
 		/datum/gas/halon = 1
 	)
-
+	///List storing all the vendors connected to the machine
 	var/list/vendors
+	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize()
