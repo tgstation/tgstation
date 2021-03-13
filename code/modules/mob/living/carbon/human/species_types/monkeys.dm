@@ -92,7 +92,7 @@
 
 /datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/H)
 	. = ..()
-	if(H.radiation > RAD_MOB_MUTATE * 2 && prob(50))
+	if(H.radiation > RAD_MOB_MUTATE * 2 && prob(0.5))
 		H.gorillize()
 		return
 
