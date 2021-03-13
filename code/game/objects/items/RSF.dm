@@ -63,7 +63,10 @@ RSF
 		if(tempMatter > max_matter)
 			to_chat(user, "<span class='warning'>\The [src] can't hold any more [discriptor]!</span>")
 			return
-		qdel(W)
+		if(isstack(W))
+			W.use(1)
+		else
+			qdel(W)
 		matter = tempMatter //We add its value
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
