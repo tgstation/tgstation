@@ -27,13 +27,21 @@
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-/// The department distribution of the security officers.
+/**
+ * The department distribution of the security officers.
+ *
+ * Keys are refs of the security officer mobs. This is to preserve the list's structure even if the
+ * mob gets deleted. This is also safe, as mobs are guaranteed to have a unique ref, as per /mob/GenerateTag().
+ */
 GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 /datum/job/security_officer/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 
-	var/department = get_my_department(H)
+	var/department = get_my_department(H, M.client?.prefs?.prefered_security_department)
+
+	// In the event we're a latejoin, or otherwise aren't in the round-start distributions.
+	GLOB.security_officer_distribution[REF(H)] = department
 
 	var/ears = null
 	var/accessory = null
@@ -99,9 +107,18 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	else
 		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
-// TODO: Late joins
-/datum/job/security_officer/proc/get_my_department(mob/character)
-	return GLOB.security_officer_distribution[character]
+/datum/job/security_officer/proc/get_my_department(mob/character, preferred_department)
+	var/department = GLOB.security_officer_distribution[REF(character)]
+
+	// This passes when they are a round start security officer.
+	if (department)
+		return department
+
+	return get_new_officer_distribution_from_late_join(
+		preferred_department,
+		shuffle(GLOB.available_depts),
+		GLOB.security_officer_distribution,
+	)
 
 /datum/outfit/job/security
 	name = "Security Officer"
@@ -144,7 +161,6 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 /obj/item/radio/headset/headset_sec/alt/department/supply
 	keyslot = new /obj/item/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/encryptionkey/headset_cargo
-
 /obj/item/radio/headset/headset_sec/alt/department/med
 	keyslot = new /obj/item/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/encryptionkey/headset_med
@@ -318,3 +334,53 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		distribution[(index % departments) + 1] += 1
 
 	return distribution
+
+/proc/get_new_officer_distribution_from_late_join(
+	preference,
+	list/departments,
+	list/distribution,
+)
+	/**
+	 * For late joiners, we're forced to put them in an alone department at some point.
+	 *
+	 * This is because reusing the round-start algorithm would force existing officers into
+	 * a different department in order to preserve having partners at all times.
+	 *
+	 * This would mean retroactively updating their access as well, which is too much
+	 * of a headache for me to want to bother.
+	 *
+	 * So, here's the method. If any department currently has 1 officer, they are forced into
+	 * that.
+	 *
+	 * Otherwise, the department with the least officers in it is chosen.
+	 * Preference takes priority, meaning that if both medical and engineering have zero officers,
+	 * and the preference is medical, then medical is what will be chosen.
+	 *
+	 * Just like `get_officer_departments`, this function is deterministic.
+	 * Randomness should instead be handled in the shuffling of the `departments` argument.
+	 */
+	var/list/amount_in_departments = list()
+
+	for (var/department in departments)
+		amount_in_departments[department] = 0
+
+	for (var/officer in distribution)
+		var/department = distribution[officer]
+		if (!isnull(department))
+			amount_in_departments[department] += 1
+
+	var/list/lowest_departments = list(departments[1])
+	var/lowest_amount = INFINITY
+
+	for (var/department in amount_in_departments)
+		var/amount = amount_in_departments[department]
+
+		if (amount == 1)
+			return department
+		else if (lowest_amount > amount)
+			lowest_departments = list(department)
+			lowest_amount = amount
+		else if (lowest_amount == amount)
+			lowest_departments += department
+
+	return (preference in lowest_departments) ? preference : lowest_departments[1]

@@ -463,7 +463,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/output = list()
 
 	for (var/index in 1 to officer_mobs.len)
-		output[officer_mobs[index]] = distribution[index]
+		output[REF(officer_mobs[index])] = distribution[index]
 
 	return output
 
