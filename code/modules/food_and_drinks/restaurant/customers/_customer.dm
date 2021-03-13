@@ -19,6 +19,15 @@
 	var/list/leave_happy_lines = list("Leaving with food")
 	///Lines the robot says when leaving waiting for food
 	var/list/wait_for_food_lines = list("I'm still waiting for food")
+	///Line when pulled by a friendly venue owner
+	var/friendly_pull_line = "Where are we going?"
+	///Line when harrased by someone for the first time
+	var/first_warning_line = "Don't touch me!"
+	///Line when harrased by someone for the second time
+	var/second_warning_line = "This is your last warning!"
+	///Line when harrased by someone for the last time
+	var/self_defense_line = "Omae wa mo, shinderou."
+
 	///Clothing sets to pick from when dressing the robot.
 	var/list/clothing_sets = list("amerifat_clothes")
 	///List of prefixes for our robots name
@@ -49,6 +58,10 @@
 	leave_mad_lines = list("NO TIP FOR YOU. GOODBYE!", "At least at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager!", "I'll be sure to leave a bad Yelp review.")
 	leave_happy_lines = list("An extra tip for you my friend.", "Thanks for the great food!", "Diabetes is a myth anyway!")
 	wait_for_food_lines = list("Listen buddy, I'm getting real impatient over here!", "I've been waiting for ages...")
+	friendly_pull_line = "Where are you taking me? Not to medbay I hope, I don't have insurance."
+	first_warning_line = "Don't tread on me!"
+	second_warning_line = "Last chance buddy! Don't tread on me!"
+	self_defense_line = "CASTLE DOCTRINE ACTIVATED!"
 
 
 /datum/customer_data/italian
@@ -62,6 +75,10 @@
 	leave_mad_lines = list("I have-a not seen-a this much disrespect in years!", "What-a horrendous establishment!")
 	leave_happy_lines = list("That's amoreee!", "Just like momma used to make it!")
 	wait_for_food_lines = list("I'ma so hungry...")
+	friendly_pull_line = "No-a I'm a hungry! I don't want to go anywhere."
+	first_warning_line = "Do not-a touch me!"
+	second_warning_line = "Last warning! Do not touch my spaghet."
+	self_defense_line = "I'm going to knead you like mama kneaded her delicious meatballs!"
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 20, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 3, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5))
@@ -77,6 +94,10 @@
 	leave_mad_lines = list("Sacre bleu!", "Merde! This place is shittier than the Rhine!")
 	leave_happy_lines = list("Hon hon hon.", "A good effort.")
 	wait_for_food_lines = list("Hon hon hon")
+	friendly_pull_line = "Your filthy hands on my outfit? Yegh, fine."
+	first_warning_line = "Get your hands off of me!"
+	second_warning_line = "Do not touch me you filthy animal, last warning!"
+	self_defense_line = "I will break you like a baguette!"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
@@ -101,6 +122,10 @@
 	leave_mad_lines = list("I can't believe you did this! WAAAAAAAAAAAAAH!!", "I-It's not like I ever wanted your food! B-baka...", "I was gonna give you my tip!")
 	leave_happy_lines = list("Oh NOURISHMENT PROVIDER! This is the happiest day of my life. I love you!", "I take a potato chip.... AND EAT IT!", "Itadakimasuuu~", "Gochisousama desu!")
 	wait_for_food_lines = list("No food yet? I guess it can't be helped.", "I can't wait to finally meet you burger-sama...", "Give me my food, you meanie!")
+	friendly_pull_line = "O-oh, where are you taking me?"
+	first_warning_line = "Don't touch me you pervert!"
+	second_warning_line = "I'm going to go super saiyan if you touch me again! Last warning!"
+	self_defense_line = "OMAE WA MO, SHINDEROU!"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/breadslice/plain = 5, /obj/item/food/soup/milo = 10, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/muffin/berry = 2, /obj/item/food/beef_stroganoff = 2),
@@ -121,6 +146,10 @@
 	leave_mad_lines = list("This place is just downright shameful, and I'm telling my coworkers.", "What a waste of my time.", "I hope you don't take pride in the operation you run here.")
 	leave_happy_lines = list("Thank you for the hospitality.", "Otsukaresama deshita.", "Business calls.")
 	wait_for_food_lines = list("Zzzzzzzzzz...", "Dame da ne~", "Dame yo dame na no yo~")
+	friendly_pull_line = "Are we going on a business trip?"
+	first_warning_line = "Hey, only my employer gets to mess with me like that."
+	second_warning_line = "Leave me be, I'm trying to focus. Last warning!"
+	self_defense_line = "I didn't want it to end up like this."
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/soup/milo = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/meatbun = 4, /obj/item/food/beef_stroganoff = 2),
@@ -142,3 +171,7 @@
 	leave_mad_lines = list("Aye dios mio, I'm out of here.", "Esto es ridículo! I'm leaving!", "I've seen better cooking at taco campana!", "I though this was a restaurant, pero es porquería!")
 	leave_happy_lines = list("Amigo, era delicio. Thank you!", "Yo tuve el mono, and you friend? You hit the spot.", "Just the right amount of spicy!")
 	wait_for_food_lines = list("Ay ay ay, what's taking so long...", "Are you ready yet, amigo?")
+	friendly_pull_line = "Amigo, where are we headed?"
+	first_warning_line = "Amigo! Don't touch me like that."
+	second_warning_line = "Compadre, enough is enough! Last warning!"
+	self_defense_line = "Time for you to find out what kind of robot I am, eh?"

@@ -67,6 +67,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -671,13 +672,45 @@
  */
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny
 	name = "scrawny spider"
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	health = 60
 	maxHealth = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
 	menu_description = "Fast spider variant specializing in catching running prey, but has less damage than a normal hunter spider at the cost of more health. Toxin injection of 10u per bite."
+
+/**
+ * # Scrawny Tarantula
+ *
+ * A weaker version of the Tarantula, unable to smash enviroments.
+ *
+ * Mainly used as a moderately strong but slow threat in abandoned places, such as areas in maintenance or a ruin.
+ */
+/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/scrawny
+	name = "scrawny tarantula"
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	health = 150
+	maxHealth = 150
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes, and looks abnormally thin and frail."
+	menu_description = "A weaker variant of the tarantula with reduced amount of health and damage, very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
+
+/**
+ * # Scrawny Nurse Spider
+ *
+ * A weaker version of the nurse spider with reduced health, unable to smash enviroments.
+ *
+ * Mainly used as a weak threat in abandoned places, such as areas in maintenance or a ruin.
+ */
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/scrawny
+	name = "scrawny nurse spider"
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	health = 30
+	maxHealth = 30
+	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes, and looks abnormally thin and frail."
+	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 
 /**
  * # Flesh Spider

@@ -154,12 +154,6 @@
 	database_id = MEDAL_TOOLBOX_SOUL
 	icon = "toolbox_soul"
 
-/datum/award/achievement/misc/chemistry_tut
-	name = "Perfect chemistry blossom"
-	desc = "Passed the chemistry tutorial with perfect purity!"
-	database_id = MEDAL_CHEM_TUT
-	icon = "chem_tut"
-
 /datum/award/achievement/misc/hot_damn
 	name = "Hot Damn!"
 	desc = "Sometimes you need to make some noise to make a point."
@@ -171,3 +165,9 @@
 	desc = "You can rest well now."
 	database_id = MEDAL_CAYENNE_DISK
 	icon = "cayenne_disk"
+
+/datum/award/achievement/misc/tram_surfer
+	name = "Tram Surfer"
+	desc = "Lights out, guerilla radio!"
+	database_id = MEDAL_TRAM_SURFER
+	icon = "tram_surfer"

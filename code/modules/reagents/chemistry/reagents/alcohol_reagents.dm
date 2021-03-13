@@ -93,6 +93,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 25
 	taste_description = "piss water"
+	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 	ph = 4
@@ -961,7 +962,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manhattan_proj
 	name = "Manhattan Project"
 	description = "A scientist's drink of choice, for pondering ways to blow up the station."
-	color = "##ff3300" // rgb: 255,51,0
+	color = COLOR_MOSTLY_PURE_RED
 	boozepwr = 45
 	quality = DRINK_VERYGOOD
 	taste_description = "death, the destroyer of worlds"
@@ -1703,7 +1704,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		M.adjustBruteLoss(-2 * REM * delta_time, 0)
 		. = TRUE
 	return ..()
 
@@ -1724,10 +1724,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time, 2 * REM * delta_time)
-		M.adjustBruteLoss(-5 * REM * delta_time, 0)
-		M.adjustOxyLoss(-5 * REM * delta_time, 0)
-		M.adjustFireLoss(-5 * REM * delta_time, 0)
-		M.adjustToxLoss(-5 * REM * delta_time, 0)
 		. = TRUE
 	return ..()
 

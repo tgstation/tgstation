@@ -16,11 +16,13 @@ export const PaintingMachine = (props, context) => {
 
   const [
     selectedPDA,
-  ] = useSharedState(context, "pdaSelection");
+  ] = useSharedState(context, "pdaSelection", pdaTypes[Object.keys(pdaTypes)[0]]);
 
   const [
     selectedTrim,
-  ] = useSharedState(context, "trimSelection");
+  ] = useSharedState(context, "trimSelection", cardTrims[Object.keys(cardTrims)[0]]);
+
+
 
   return (
     <Window

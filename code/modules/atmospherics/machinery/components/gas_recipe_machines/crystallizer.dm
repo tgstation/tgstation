@@ -151,7 +151,7 @@
 
 	var/median_temperature = (selected_recipe.max_temp - selected_recipe.min_temp) * 0.5
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 5.5, 100)
+		quality_loss = max(quality_loss - 5.5, -100)
 
 	if(selected_recipe.reaction_type == "endothermic")
 		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
@@ -262,7 +262,7 @@
 	if(selected_recipe)
 		data["selected"] = selected_recipe.id
 	else
-		data["selected"] = null
+		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
 	if(internal.total_moles())
@@ -319,7 +319,7 @@
 				dump_gases()
 			quality_loss = 0
 			progress_bar = 0
-			if(recipe)
+			if(recipe && recipe.id != "")
 				selected_recipe = recipe
 				recipe_name = recipe.name
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating

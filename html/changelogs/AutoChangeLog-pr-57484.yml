@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "Reaction chambers properly cool/heat during reacting"
-  - bugfix: "Reaction chambers properly add buffers during reacting"
