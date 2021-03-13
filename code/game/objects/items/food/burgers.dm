@@ -90,7 +90,7 @@
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/nanomachines = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/cyborg_mutation_nanomachines = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_EXOTIC
@@ -100,7 +100,7 @@
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
 	max_volume = 120
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/nanomachines = 80, /datum/reagent/consumable/nutriment/vitamin = 15)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/cyborg_mutation_nanomachines = 80, /datum/reagent/consumable/nutriment/vitamin = 15)
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 	foodtypes = GRAIN | TOXIC
 

@@ -49,7 +49,7 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 15
 	show_in_report = TRUE
-	report_message = "Something seems to be wrong with the PDAs issues to you all this shift. Nothing too bad though."
+	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
 	trait_to_give = STATION_TRAIT_PDA_GLITCHED
 
 /datum/station_trait/announcement_intern
@@ -58,7 +58,20 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Please be nice to him."
+	blacklist = list(/datum/station_trait/announcement_medbot)
 
 /datum/station_trait/announcement_intern/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/intern
+
+/datum/station_trait/announcement_medbot
+	name = "Announcement \"System\""
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = TRUE
+	report_message = "Our announcement system is under scheduled maintanance at the moment. Thankfully, we have a backup."
+	blacklist = list(/datum/station_trait/announcement_intern)
+
+/datum/station_trait/announcement_medbot/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/medbot

@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - balance: "The Cook's CQC is now set on a per-map basis, with their CQC covering their own private workplace (the kitchen and freezer) as well as the area where their tourist bots spawn. These changes also give cooks the ability to CQC a restricted area directly outside of their public service tables on Icebox, where the tourist bots spawn."
