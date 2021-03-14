@@ -131,7 +131,6 @@ const taskDm = (...injectedDefines) => {
         ...((process.env.DM_EXE && process.env.DM_EXE.split(',')) || []),
         'C:\\Program Files\\BYOND\\bin\\dm.exe',
         'C:\\Program Files (x86)\\BYOND\\bin\\dm.exe',
-        `C:\\byond\\bin\\dm.exe`, //Windows CI Build default path
         ['reg', 'HKLM\\Software\\Dantom\\BYOND', 'installpath'],
         ['reg', 'HKLM\\SOFTWARE\\WOW6432Node\\Dantom\\BYOND', 'installpath'],
       ];
