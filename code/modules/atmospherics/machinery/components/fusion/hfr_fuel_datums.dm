@@ -28,11 +28,11 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	var/gas_production_multiplier = 1
 
 	var/temperature_change_multiplier = 1
-	///Only 2 gases
+	///These are the main fuels, only 2 gases that are the ones being consumed by the fusion reaction (eg. H2 and trit)
 	var/requirements = list()
 	///Gases that gets produced directly in the internal gasmix
 	var/primary_products = list()
-	///Gases that gets produced in the moderator gasmix or directly ejected (must be 6 gases)
+	///Gases that gets produced in the moderator gasmix or directly ejected (must be 6 gases), the order indicate at what power level the gases are going to be made (from power level 1 to 6)
 	var/secondary_products = list()
 
 /datum/hfr_fuel/hydrogen_tritium_fuel
