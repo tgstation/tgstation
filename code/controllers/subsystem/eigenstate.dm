@@ -67,9 +67,11 @@ SUBSYSTEM_DEF(eigenstates)
 	var/id = eigen_id[entry]
 	eigen_targets[id] -= entry
 	eigen_id -= entry
-	UnregisterSignal(entry, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(entry, COMSIG_CLOSET_INSERT)
-	UnregisterSignal(entry, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
+	UnregisterSignal(entry, list(
+		COMSIG_PARENT_QDELETING,
+		COMSIG_CLOSET_INSERT,
+		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
+	))
 	if(!length(eigen_targets))//If we're empty - delete the entry
 		eigen_targets -= eigen_targets[id]
 
@@ -78,12 +80,12 @@ SUBSYSTEM_DEF(eigenstates)
 /datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
 	var/id = eigen_id[object_sent_from]
 	if(!id)
-		stack_trace("[object_sent_from] Attempted to eigenlink to something that didn't have a valid id!")
+		stack_trace("[object_sent_from] attempted to eigenlink to something that didn't have a valid id!")
 		return FALSE
 	var/list/items = eigen_targets[id]
 	var/index = (items.Find(object_sent_from))+1 //index + 1
 	if(!index)
-		stack_trace("[object_sent_from] Attempted to eigenlink to something that didn't contain it!")
+		stack_trace("[object_sent_from] attempted to eigenlink to something that didn't contain it!")
 		return FALSE
 	if(index > length(eigen_targets[id]))//If we're at the end of the list (or we're 1 length long)
 		index = 1
@@ -93,7 +95,7 @@ SUBSYSTEM_DEF(eigenstates)
 		return FALSE
 	thing_to_send.forceMove(get_turf(eigen_target))
 	//Create ONE set of sparks for ALL times in iteration
-	if(!(spark_time == world.time))
+	if(spark_time != world.time)
 		do_sparks(5, FALSE, eigen_target)
 		do_sparks(5, FALSE, object_sent_from)
 	spark_time = world.time
@@ -105,5 +107,5 @@ SUBSYSTEM_DEF(eigenstates)
 
 ///Prevents tool use on the item
 /datum/controller/subsystem/eigenstates/proc/tool_interact(atom/source, mob/user, obj/item/item)
-	to_chat(user, "<span class='notice'>The unstable nature of \the [source] makes it impossible to use the [item] on it!</span>")
+	to_chat(user, "<span class='notice'>The unstable nature of [source] makes it impossible to use [item] on [source.p_them()]!</span>")
 	return COMPONENT_BLOCK_TOOL_ATTACK

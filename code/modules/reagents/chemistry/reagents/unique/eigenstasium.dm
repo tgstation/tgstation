@@ -49,13 +49,13 @@
 /datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
 	//make hologram at return point
 	eigenstate = new (living_mob.loc)
-	eigenstate.appearance = creator ? creator.appearance : living_mob.appearance //Blood lets you set your eigenstate icon
+	eigenstate.appearance = creator?.appearance || living_mob.appearance //Blood lets you set your eigenstate icon
 	eigenstate.alpha = 170
 	eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	eigenstate.anchored = 1//So space wind cannot drag it.
-	eigenstate.name = "[creator ? creator.appearance : living_mob.appearance]'s' eigenstate"//If someone decides to right click.
+	eigenstate.name = "[eigenstate.appearance]'s eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
 	location_return = get_turf(living_mob)	//sets up return point

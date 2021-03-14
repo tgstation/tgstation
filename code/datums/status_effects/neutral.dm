@@ -378,11 +378,11 @@
 		block_effects = TRUE
 	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
 	if(eigen)
-		if(!eigen.overdosed)
+		if(eigen.overdosed)
+			block_effects = FALSE
+		else
 			current_cycle = max(-250, (current_cycle - 10))
 			block_effects = TRUE
-		else
-			block_effects = FALSE
 
 	if(!QDELETED(alt_clone)) //catch any stragglers
 		do_sparks(5, FALSE, alt_clone)
@@ -391,7 +391,7 @@
 
 	if(block_effects)
 		if(!stable_message)
-			owner.visible_message("You feel stable... For now.")
+			owner.visible_message("You feel stable...for now.")
 			stable_message = TRUE
 		return
 	stable_message = FALSE
