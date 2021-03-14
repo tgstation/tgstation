@@ -14,8 +14,13 @@
 	var/mob/living/carbon/human/dummy/dummy
 
 	var/static/list/cached_outfits
+	//get rid of this if GLOB.custom_outfits ever becomes a keyed list
 	var/static/list/cached_custom_outfits = list()
+
+	//normally a path; an initialized outfit object if it's a custom outfit
 	var/datum/outfit/selected_outfit = /datum/outfit
+	//used to keep track of which outfit the UI has selected
+	var/selected_name = "/datum/outfit"
 
 /datum/select_equipment/New(usr, mob/M)
 	user = CLIENT_FROM_VAR(usr)
@@ -96,7 +101,7 @@
 	var/list/custom
 	custom += make_custom_outfit_entries(GLOB.custom_outfits)
 	data["custom_outfits"] = custom
-	data["current_outfit"] = selected_outfit
+	data["current_outfit"] = selected_name
 	return data
 
 
@@ -117,7 +122,7 @@
 	var/path = text2path(text)
 
 	if(ispath(path, /datum/outfit))
-		return new path
+		return path
 
 	else //don't bail yet - could be a custom outfit
 		var/datum/outfit/custom_outfit = cached_custom_outfits[text]
@@ -132,12 +137,23 @@
 	switch(action)
 		if("preview")
 			var/datum/outfit/O = resolve_outfit(params["path"])
-			if(!istype(O))
+
+			if(ispath(O)) //got a typepath - that means we're dealing with a normal outfit
+				selected_name = O //these are keyed by type
+				//by the way, no, they can't be keyed by name because many of them have duplicate names
+
+			else if(istype(O)) //got an initialized object - means it's a custom outfit
+				selected_name = O.name //and the outfit will be keyed by its name (cause its type will always be /datum/outfit)
+
+			else //we got nothing and should bail
 				return
-			selected_outfit = O.type //the typepath - not the object
+
+			selected_outfit = O
 
 		if("applyoutfit")
 			var/datum/outfit/O = resolve_outfit(params["path"])
+			if(O && ispath(O)) //initialize it
+				O = new O
 			if(!istype(O))
 				return
 			user.admin_apply_outfit(target, O)

@@ -1,14 +1,10 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
+import { Box, Button, Tabs, Section, Input, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { filter, map, sortBy, uniq } from 'common/collections';
+import { filter, sortBy, uniq } from 'common/collections';
 
-
-const useSelectedOutfit = context => {
-  return useLocalState(context, 'selected-outfit', "/datum/outfit");
-};
 
 const CurrentlySelectedDisplay = (props, context) => {
   const { act, data } = useBackend(context);
@@ -42,7 +38,6 @@ const useOutfitTabs = (context, outfitCategories) => {
 };
 
 const DisplayTabs = (props, context) => {
-  const { act, data } = useBackend(context);
   const { categories } = props;
 
   const [tabIndex, setTabIndex] = useOutfitTabs(context, categories);
@@ -143,6 +138,7 @@ export const SelectEquipment = (props, context) => {
                 </Section>
               </Stack.Item>
             </Stack>
+
           </Stack.Item>
 
 
