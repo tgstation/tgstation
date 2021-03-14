@@ -68,6 +68,7 @@ SUBSYSTEM_DEF(eigenstates)
 	UnregisterSignal(entry, list(
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CLOSET_INSERT,
+		COMSIG_EIGENSTATE_ACTIVATE,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
 	///Remove the current entry if we're empty
@@ -98,10 +99,8 @@ SUBSYSTEM_DEF(eigenstates)
 		do_sparks(5, FALSE, eigen_target)
 		do_sparks(5, FALSE, object_sent_from)
 	spark_time = world.time
-	//locker snowflake code so people don't get stuck in them
-	if(istype(eigen_target, /obj/structure/closet))
-		var/obj/structure/closet/closet = eigen_target
-		closet.bust_open()
+	//Calls a special proc for the atom if needed (closets use bust_open())
+	SEND_SIGNAL(eigen_target, COMSIG_EIGENSTATE_ACTIVATE)
 	return COMPONENT_CLOSET_INSERT_INTERRUPT
 
 ///Prevents tool use on the item

@@ -99,6 +99,7 @@
 	var/list/lockers = list()
 	for(var/obj/structure/closet/closet in exposed_turf.contents)
 		lockers += closet
+		RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, target.bust_open)
 	if(!length(lockers))
 		return
 	SSeigenstates.create_new_link(lockers)

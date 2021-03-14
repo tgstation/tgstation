@@ -708,6 +708,10 @@
 	///used to interrupt insertion
 	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
 
+///Eigenstasium
+///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
+#define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
+
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
 #define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
