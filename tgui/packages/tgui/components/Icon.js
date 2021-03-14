@@ -28,14 +28,15 @@ export const Icon = props => {
   if (typeof rotation === 'number') {
     style['transform'] = `rotate(${rotation}deg)`;
   }
+  let iconClass = "";
   if (name.startsWith("tg-")) {
     // tgfont icon
-    const iconClass = name.replace("tg-", "tgicon-");
+    iconClass = name.replace("tg-", "tgicon-");
   } else {
     // font awesome icon
     const faRegular = FA_OUTLINE_REGEX.test(name);
     const faName = name.replace(FA_OUTLINE_REGEX, '');
-    const iconClass = (faRegular ? 'far ' : 'fas ') + 'fa-'+ faName + (spin ? "fa-spin" : "");
+    iconClass = (faRegular ? 'far ' : 'fas ') + 'fa-'+ faName + (spin ? "fa-spin" : "");
   }
   return (
     <Box
