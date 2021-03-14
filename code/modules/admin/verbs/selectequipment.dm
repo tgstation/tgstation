@@ -1,9 +1,9 @@
-/client/proc/cmd_select_equipment(mob/M in GLOB.mob_list)
+/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
 	set category = "Admin.Events"
 	set name = "Select equipment but better"
 
 
-	var/datum/select_equipment/ui  = new(usr, M)
+	var/datum/select_equipment/ui = new(usr, target)
 	ui.ui_interact(usr)
 
 /datum/select_equipment
@@ -20,13 +20,13 @@
 	//used to keep track of which outfit the UI has selected
 	var/selected_name = "/datum/outfit"
 
-/datum/select_equipment/New(usr, mob/M)
-	user = CLIENT_FROM_VAR(usr)
+/datum/select_equipment/New(user, mob/target)
+	user = CLIENT_FROM_VAR(user)
 
-	if(!(ishuman(M) || isobserver(M)))
+	if(!ishuman(target) || !isobserver(target))
 		alert("Invalid mob")
 		return
-	target = M
+	target = target
 
 /datum/select_equipment/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -50,9 +50,9 @@
 /datum/select_equipment/proc/init_dummy()
 	dummy_key = "selectequipmentUI_[target]"
 	dummy = generate_or_wait_for_human_dummy(dummy_key)
-	var/mob/living/carbon/C = target
-	if(istype(C))
-		C.dna.transfer_identity(dummy)
+	var/mob/living/carbon/carbon_target = target
+	if(istype(carbon_target))
+		carbon_target.dna.transfer_identity(dummy)
 		dummy.updateappearance()
 
 	unset_busy_human_dummy(dummy_key)
@@ -64,27 +64,29 @@
  * name (string) - Will be the text on the button
  * priority (int) - default 0, 1 for favorites, 2 for priority buttons
 */
-#define OUTFIT_ENTRY(category, path, name, priority) list("category" = category, "path" = path, "name" = name, "priority" = priority)
+/datum/select_equipment/proc/outfit_entry(category, path, name, priority)
+	return list("category" = category, "path" = path, "name" = name, "priority" = priority)
 //passes a ref instead of path, every entry needs some sort of unique identifier
 //and GLOB.custom_outfits allows duplicate names
-#define OUTFIT_CUSTOM_ENTRY(category, ref, name, priority) list("category" = category, "ref" = ref, "name" = name, "priority" = priority)
+/datum/select_equipment/proc/outfit_custom_entry(category, ref, name, priority)
+	return list("category" = category, "ref" = ref, "name" = name, "priority" = priority)
 
-/datum/select_equipment/proc/make_outfit_entries(category="General", list/L)
+/datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
-	for(var/path in L)
+	for(var/path as anything in outfit_list)
 		var/datum/outfit/O = path
 		var/priority = 0
 		if(path == /datum/outfit/job/roboticist) //dummy check here until I get favorites working
 			priority = 1
-		entries += list(OUTFIT_ENTRY(category, path, initial(O.name), priority))
+		entries += list(outfit_entry(category, path, initial(O.name), priority))
 	return entries
 
 
 //GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
-/datum/select_equipment/proc/make_custom_outfit_entries(list/L)
+/datum/select_equipment/proc/make_custom_outfit_entries(list/outfit_list)
 	var/list/entries = list()
-	for(var/datum/outfit/O in L)
-		entries += list(OUTFIT_CUSTOM_ENTRY("Custom", REF(O), O.name, 0)) //it's either this or special handling on the UI side
+	for(var/datum/outfit/O as anything in outfit_list)
+		entries += list(outfit_custom_entry("Custom", REF(O), O.name, 0)) //it's either this or special handling on the UI side
 	return entries
 
 /datum/select_equipment/ui_data(mob/user)
@@ -92,9 +94,7 @@
 	if(!dummy)
 		init_dummy()
 
-	var/datum/preferences/prefs
-	if(target.client)
-		prefs = target.client.prefs
+	var/datum/preferences/prefs = target?.client?.prefs
 	var/icon/dummysprite = get_flat_human_icon(null, prefs=prefs, dummy_key = dummy_key, outfit_override = selected_outfit)
 	data["icon64"] = icon2base64(dummysprite)
 	data["name"] = target
@@ -110,7 +110,7 @@
 	var/list/data = list()
 	if(!cached_outfits)
 		cached_outfits = list()
-		cached_outfits += list(OUTFIT_ENTRY("General", /datum/outfit, "Naked", 2))
+		cached_outfits += list(outfit_entry("General", /datum/outfit, "Naked", 2))
 		cached_outfits += make_outfit_entries("General", subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits += make_outfit_entries("Jobs", typesof(/datum/outfit/job))
 		cached_outfits += make_outfit_entries("Plasmamen Outfits", typesof(/datum/outfit/plasmaman))
@@ -137,34 +137,34 @@
 	. = TRUE
 	switch(action)
 		if("preview")
-			var/datum/outfit/O = resolve_outfit(params["path"])
+			var/datum/outfit/new_outfit = resolve_outfit(params["path"])
 
-			if(ispath(O)) //got a typepath - that means we're dealing with a normal outfit
-				selected_name = O //these are keyed by type
+			if(ispath(new_outfit)) //got a typepath - that means we're dealing with a normal outfit
+				selected_name = new_outfit //these are keyed by type
 				//by the way, no, they can't be keyed by name because many of them have duplicate names
 
-			else if(istype(O)) //got an initialized object - means it's a custom outfit
-				selected_name = REF(O) //and the outfit will be keyed by its ref (cause its type will always be /datum/outfit)
+			else if(istype(new_outfit)) //got an initialized object - means it's a custom outfit
+				selected_name = REF(new_outfit) //and the outfit will be keyed by its ref (cause its type will always be /datum/outfit)
 
 			else //we got nothing and should bail
 				return
 
-			selected_outfit = O
+			selected_outfit = new_outfit
 
 		if("applyoutfit")
-			var/datum/outfit/O = resolve_outfit(params["path"])
-			if(O && ispath(O)) //initialize it
-				O = new O
-			if(!istype(O))
+			var/datum/outfit/new_outfit = resolve_outfit(params["path"])
+			if(new_outfit && ispath(new_outfit)) //initialize it
+				new_outfit = new new_outfit
+			if(!istype(new_outfit))
 				return
-			user.admin_apply_outfit(target, O)
+			user.admin_apply_outfit(target, new_outfit)
 
 		if("customoutfit")
 			user.outfit_manager()
 
 
-/client/proc/admin_apply_outfit(mob/M, dresscode)
-	if(!(ishuman(M) || isobserver(M)))
+/client/proc/admin_apply_outfit(mob/target, dresscode)
+	if(!ishuman(target) || !isobserver(target))
 		alert("Invalid mob")
 		return
 
@@ -172,26 +172,24 @@
 		return
 
 	var/delete_pocket
-	var/mob/living/carbon/human/H
-	if(isobserver(M))
-		H = M.change_mob_type(/mob/living/carbon/human, null, null, TRUE)
+	var/mob/living/carbon/human/human_target
+	if(isobserver(target))
+		human_target = target.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
 	else
-		H = M
-		if(H.l_store || H.r_store || H.s_store) //saves a lot of time for admins and coders alike
+		human_target = target
+		if(human_target.l_store || human_target.r_store || human_target.s_store) //saves a lot of time for admins and coders alike
 			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
 				delete_pocket = TRUE
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in H.get_equipped_items(delete_pocket))
-		qdel(I)
+	for(var/obj/item/item in human_target.get_equipped_items(delete_pocket))
+		qdel(item)
 	if(dresscode != "Naked")
-		H.equipOutfit(dresscode)
+		human_target.equipOutfit(dresscode)
 
-	H.regenerate_icons()
+	human_target.regenerate_icons()
 
-	log_admin("[key_name(usr)] changed the equipment of [key_name(H)] to [dresscode].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(H)] to [dresscode].</span>")
+	log_admin("[key_name(usr)] changed the equipment of [key_name(human_target)] to [dresscode].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(human_target)] to [dresscode].</span>")
 
 	return dresscode
-
-#undef OUTFIT_ENTRY

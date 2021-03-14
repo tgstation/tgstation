@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Tabs, Section, Input, Stack } from '../components';
+import { Box, Button, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 import { filter, sortBy, uniq } from 'common/collections';
