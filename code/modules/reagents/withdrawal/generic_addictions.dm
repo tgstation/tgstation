@@ -248,6 +248,12 @@
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(15 * delta_time)
+	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_moderate", /datum/mood_event/nicotine_withdrawal_moderate)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "nicotine_withdrawal_severe", /datum/mood_event/nicotine_withdrawal_severe)
 	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")
+
+/datum/addiction/nicotine/addiction_satiated_enter(mob/living/carbon/affected_carbon)
+	. = ..()
+	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_moderate", /datum/mood_event/nicotine_withdrawal_moderate)
+	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_severe", /datum/mood_event/nicotine_withdrawal_severe)

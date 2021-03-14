@@ -43,6 +43,12 @@
 /datum/mood_event/withdrawal_critical/add_effects(drug_name)
 	description = "<span class='boldwarning'>[drug_name]! [drug_name]! [drug_name]!</span>\n"
 
+/datum/mood_event/addiction_satiated
+	mood_change = 1
+	timeout = 1 MINUTES
+
+/datum/mood_event/addiction_satiated/add_effects(drug_name)
+	description = "<span class='nicegreen'>I've had some [drug_name] recently!</span>\n"
 /datum/mood_event/happiness_drug
 	description = "<span class='nicegreen'>Can't feel a thing...</span>\n"
 	mood_change = 50

@@ -102,8 +102,6 @@
 ////Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
 #define END_REACTION "end_reaction"
 
-///Minimum requirement for addiction buzz to be met
-#define MIN_ADDICTION_REAGENT_AMOUNT 2
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends
