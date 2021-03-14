@@ -14,8 +14,6 @@
 	var/mob/living/carbon/human/dummy/dummy
 
 	var/static/list/cached_outfits
-	//get rid of this if GLOB.custom_outfits ever becomes a keyed list
-	var/static/list/cached_custom_outfits = list()
 
 	//normally a path; an initialized outfit object if it's a custom outfit
 	var/datum/outfit/selected_outfit = /datum/outfit
@@ -67,12 +65,16 @@
  * priority (int) - default 0, 1 for favorites, 2 for priority buttons
 */
 #define OUTFIT_ENTRY(category, path, name, priority) list("category" = category, "path" = path, "name" = name, "priority" = priority)
+//passes a ref instead of path, every entry needs some sort of unique identifier
+//and GLOB.custom_outfits allows duplicate names
+#define OUTFIT_CUSTOM_ENTRY(category, ref, name, priority) list("category" = category, "ref" = ref, "name" = name, "priority" = priority)
+
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/L)
 	var/list/entries = list()
 	for(var/path in L)
 		var/datum/outfit/O = path
 		var/priority = 0
-		if(path == /datum/outfit/job/roboticist)
+		if(path == /datum/outfit/job/roboticist) //dummy check here until I get favorites working
 			priority = 1
 		entries += list(OUTFIT_ENTRY(category, path, initial(O.name), priority))
 	return entries
@@ -82,8 +84,7 @@
 /datum/select_equipment/proc/make_custom_outfit_entries(list/L)
 	var/list/entries = list()
 	for(var/datum/outfit/O in L)
-		cached_custom_outfits[O.name] = O
-		entries += list(OUTFIT_ENTRY("Custom", O.name, O.name, 0)) //it's either this or special handling on the UI side
+		entries += list(OUTFIT_CUSTOM_ENTRY("Custom", REF(O), O.name, 0)) //it's either this or special handling on the UI side
 	return entries
 
 /datum/select_equipment/ui_data(mob/user)
@@ -119,13 +120,13 @@
 
 
 /datum/select_equipment/proc/resolve_outfit(text)
-	var/path = text2path(text)
 
+	var/path = text2path(text)
 	if(ispath(path, /datum/outfit))
 		return path
 
 	else //don't bail yet - could be a custom outfit
-		var/datum/outfit/custom_outfit = cached_custom_outfits[text]
+		var/datum/outfit/custom_outfit = locate(text)
 		if(istype(custom_outfit))
 			return custom_outfit
 
@@ -143,7 +144,7 @@
 				//by the way, no, they can't be keyed by name because many of them have duplicate names
 
 			else if(istype(O)) //got an initialized object - means it's a custom outfit
-				selected_name = O.name //and the outfit will be keyed by its name (cause its type will always be /datum/outfit)
+				selected_name = REF(O) //and the outfit will be keyed by its ref (cause its type will always be /datum/outfit)
 
 			else //we got nothing and should bail
 				return

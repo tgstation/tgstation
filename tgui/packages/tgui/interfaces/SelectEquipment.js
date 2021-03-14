@@ -5,10 +5,21 @@ import { Window } from '../layouts';
 import { flow } from 'common/fp';
 import { filter, sortBy, uniq } from 'common/collections';
 
+// custom outfits give a ref keyword instead of path
+const getOutfitKey = outfit => outfit.path || outfit.ref;
 
 const CurrentlySelectedDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const { current_outfit } = data;
+
+  const outfits = [
+    ...data.outfits,
+    ...data.custom_outfits,
+  ];
+
+  const currentOutfitEntry = outfits.find(outfit =>
+    getOutfitKey(outfit) === current_outfit);
+
   return (
     <Stack align="center">
       <Stack.Item basis={0} grow={1}>
@@ -16,13 +27,13 @@ const CurrentlySelectedDisplay = (props, context) => {
           Currently selected:
         </Box>
         <Box
-          title={current_outfit}
+          title={currentOutfitEntry?.path}
           style={{
             'overflow': 'hidden',
             'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
           }}>
-          {current_outfit}
+          {currentOutfitEntry?.name}
         </Box>
       </Stack.Item>
       <Stack.Item>
@@ -32,6 +43,7 @@ const CurrentlySelectedDisplay = (props, context) => {
     </Stack>
   );
 };
+
 
 const useOutfitTabs = (context, outfitCategories) => {
   return useLocalState(context, 'selected-tab', outfitCategories[0]);
@@ -55,6 +67,7 @@ const DisplayTabs = (props, context) => {
   );
 };
 
+
 export const SelectEquipment = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -71,8 +84,8 @@ export const SelectEquipment = (props, context) => {
   // even if no custom outfits were sent, we still want to make sure there's
   // at least a 'Custom' tab so the button to create a new one pops up
   const outfitCategories = uniq([...outfits.map(entry => entry.category), 'Custom']);
+  const [tabIndex, setTabIndex] = useOutfitTabs(context, outfitCategories);
 
-  // search bar
   const [
     searchText,
     setSearchText,
@@ -80,9 +93,6 @@ export const SelectEquipment = (props, context) => {
   const searchFilter = createSearch(searchText, entry =>
     (entry.name + entry.path)
   );
-
-  const [tabIndex, setTabIndex] = useOutfitTabs(context, outfitCategories);
-
 
   const entries = flow([
     filter(entry => entry.category === tabIndex),
@@ -119,15 +129,15 @@ export const SelectEquipment = (props, context) => {
                 <Section fill scrollable>
                   {entries.map(entry => (
                     <Button
-                      key={entry.name}
+                      key={getOutfitKey(entry)}
                       fluid
                       ellipsis
                       content={entry.name}
-                      title={entry.path}
-                      selected={entry.path === current_outfit}
-                      onClick={() => act("preview", { path: entry.path })} />
+                      title={entry.path||entry.name}
+                      selected={getOutfitKey(entry) === current_outfit}
+                      onClick={() => act("preview", { path: getOutfitKey(entry) })} />
                   ))}
-                  {tabIndex === "Custom" &&(
+                  {tabIndex === "Custom" && (
                     <Button
                       color="transparent"
                       icon="plus"
