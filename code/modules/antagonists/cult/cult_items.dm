@@ -286,17 +286,21 @@
 	breakouttime = 60
 	knockdown = 30
 
+#define CULT_BOLA_PICKUP_STUN 6 SECONDS
 /obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
-	var/stun = 6 SECONDS
+
 	if(!iscultist(user))
-		if(user.num_legs < 2 || user.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
-			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-			user.dropItemToGround(src, TRUE)
-			user.Paralyze(stun)
-		else
-			to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
-			ensnare(user)
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(user.num_legs < 2 || C.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
+				to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+				user.dropItemToGround(src, TRUE)
+				user.Paralyze(CULT_BOLA_PICKUP_STUN)
+			else
+				to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
+				ensnare(user)
+#undef CULT_BOLA_PICKUP_STUN
 
 
 /obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
