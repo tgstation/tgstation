@@ -43,7 +43,7 @@
 	var/lings_aboard = 0
 	//if the game should pretend there are lings on board.
 	var/lings_suspected = FALSE
-	var/spaceport_raided = 0
+	var/spaceport_raided = FALSE
 	var/gameStatus = ORION_STATUS_START
 
 	var/obj/item/radio/Radio
@@ -95,10 +95,11 @@
 	event = null
 	gameStatus = ORION_STATUS_NORMAL
 	lings_aboard = 0
+	lings_suspected = FALSE
 	killed_crew = 0
 
 	//spaceport junk
-	spaceport_raided = 0
+	spaceport_raided = FALSE
 
 /obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
 	if(gamers[gamer] == -2)
@@ -254,7 +255,6 @@
 		if("random_kill")
 			execute_crewmember(gamer)
 		if("target_kill")
-			to_chat(world, params["who"])
 			execute_crewmember(gamer, params["who"])
 		//Spaceport specific interactions
 		if("buycrew") //buy a crewmember
@@ -274,7 +274,7 @@
 				food += 7
 		if("leave_spaceport")
 			gameStatus = ORION_STATUS_NORMAL
-			spaceport_raided = 0
+			spaceport_raided = FALSE
 		if("raid_spaceport")
 			spaceport_raided = TRUE
 			encounter_event(/datum/orion_event/space_port_raid, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
@@ -380,20 +380,13 @@
 
 //Remove Random/Specific crewmember
 /obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "", update = TRUE)
-	to_chat(world, specific)
-	to_chat(world, dont_remove)
-	to_chat(world, "----")
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)
 		safe2remove -= dont_remove
 	if(specific && specific != dont_remove)
 		safe2remove = list(specific)
-	else
-		removed = pick(safe2remove)
-
-	to_chat(world, safe2remove)
-	to_chat(world, removed)
+	removed = pick(safe2remove)
 
 	if(removed)
 		if(lings_aboard && prob(40*lings_aboard)) //if there are 2 lings you're twice as likely to get one, obviously

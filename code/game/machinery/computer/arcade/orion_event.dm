@@ -72,6 +72,7 @@
 	event_responses = list()
 
 /datum/orion_event/engine_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+	..()
 	if(game.engine >= 1)
 		event_responses += "Fix Engine"
 	event_responses += "Wait"
@@ -96,7 +97,7 @@
 
 /datum/orion_event/electronic_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
 	..()
-	if(game.engine >= 1)
+	if(game.electronics >= 1)
 		event_responses += "Repair Electronics"
 	event_responses += "Wait"
 
@@ -404,8 +405,8 @@
 
 /datum/orion_event/black_hole_death/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
 	. = ..()
-	for(var/value in game.settlermoods)
-		value = 1
+	for(var/list_position in 1 to game.settlermoods.len)
+		game.settlermoods[list_position] = 1
 
 /datum/orion_event/black_hole_death/response(choice)
 	game.set_game_over(usr, "You were swept away into the black hole.")

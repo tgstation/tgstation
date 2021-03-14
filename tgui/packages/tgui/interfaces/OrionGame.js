@@ -96,6 +96,7 @@ const AdventureStatus = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     lings_suspected,
+    eventname,
     settlers,
     settlermoods,
     hull,
@@ -109,7 +110,7 @@ const AdventureStatus = (props, context) => {
       title="Adventure Status"
       fill
       buttons={(
-        lings_suspected && (
+        !!lings_suspected && (
           <Button
             fluid
             color="black"
@@ -133,7 +134,7 @@ const AdventureStatus = (props, context) => {
                   textAlign="center"
                   icon="skull"
                   content="KILL"
-                  disabled={lings_suspected}
+                  disabled={lings_suspected || eventname}
                   onClick={() => act('target_kill', {
                     who: settler,
                   })} />
@@ -482,8 +483,8 @@ const ORION_STATUS_MARKET = (props, context) => {
                     to dock again would be certain death.
                   </Box>
                 ) || (
-                  "&quot;Hello, Pioneer! We have supplies for you to help \
-                  you reach Orion. They aren&apos;t free, though!&quot;"
+                  "Hello, Pioneer! We have supplies for you to help \
+                  you reach Orion. They aren't free, though!"
                 )}
 
               </Box>
