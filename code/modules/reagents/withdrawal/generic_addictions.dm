@@ -3,6 +3,10 @@
 	name = "opiod"
 	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some pain relief...", "It aches all over...I need some opiods!")
 
+/datum/addiction/opiods/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
+	. = ..()
+	lose_addiction(affected_carbon.mind)
+
 /datum/addiction/opiods/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	if(DT_PROB(10, delta_time))
@@ -30,8 +34,7 @@
 
 /datum/addiction/stimulants/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.remove_actionspeed_modifier(/datum/actionspeed_modifier/stimulants)
-	affected_carbon.remove_movespeed_modifier(/datum/movespeed_modifier/stimulants)
+	lose_addiction(affected_carbon.mind)
 
 /datum/addiction/stimulants/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -77,6 +80,10 @@
 	name = "hallucinogen"
 	withdrawal_stage_messages = list("I feel so empty...", "I wonder what the machine elves are up to?..", "I need to see the beautiful colors again!!")
 
+/datum/addiction/hallucinogens/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
+	. = ..()
+	lose_addiction(affected_carbon.mind)
+
 /datum/addiction/hallucinogens/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -97,6 +104,10 @@
 
 /datum/addiction/maintenance_drugs
 	name = "maintenance drug"
+
+/datum/addiction/maintenance_drugs/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
+	. = ..()
+	lose_addiction(affected_carbon.mind)
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -166,6 +177,10 @@
 	withdrawal_stage_messages = list("", "", "")
 	var/datum/hallucination/fake_alert/hallucination
 	var/datum/hallucination/fake_health_doll/hallucination2
+
+/datum/addiction/medicine/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
+	. = ..()
+	lose_addiction(affected_carbon.mind)
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -239,6 +254,10 @@
 	name = "nicotine"
 	withdrawal_stage_messages = list("Feel like having a smoke...", "Getting antsy. Really need a smoke now.", "I can't take it! Need a smoke NOW!")
 
+/datum/addiction/nicotine/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
+	. = ..()
+	lose_addiction(affected_carbon.mind)
+
 /datum/addiction/nicotine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	if(DT_PROB(5, delta_time))
@@ -259,7 +278,8 @@
 	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")
 
-/datum/addiction/nicotine/addiction_satiated_enter(mob/living/carbon/affected_carbon)
+/datum/addiction/nicotine/lose_addiction(datum/mind/victim_mind)
 	. = ..()
+	var/mob/living/carbon/human/affected_carbon = victim_mind.current
 	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_moderate", /datum/mood_event/nicotine_withdrawal_moderate)
 	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_severe", /datum/mood_event/nicotine_withdrawal_severe)
