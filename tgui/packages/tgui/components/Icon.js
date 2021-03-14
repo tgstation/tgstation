@@ -31,7 +31,7 @@ export const Icon = props => {
   let iconClass = "";
   if (name.startsWith("tg-")) {
     // tgfont icon
-    iconClass = name.replace("tg-", "tgicon-");
+    iconClass = name
   } else {
     // font awesome icon
     const faRegular = FA_OUTLINE_REGEX.test(name);
