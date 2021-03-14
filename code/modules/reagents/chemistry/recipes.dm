@@ -430,7 +430,7 @@
 	if(fire_range == 0)
 		new /obj/effect/hotspot(location)
 		return
-	for(var/turf/turf as anything in range(fire_range, location))
+	for(var/turf/turf as anything in RANGE_TURFS(fire_range, location))
 		new /obj/effect/hotspot(turf)
 
 ///////////END FIRE BASED EXPLOSIONS

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the E/W sprites for durathread golems' legs being a couple pixels off."

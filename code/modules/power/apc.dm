@@ -48,7 +48,7 @@
 /// The APCs external powernet has enough power to charge the APC.
 #define APC_HAS_POWER 2
 
-// Etherials:
+// Ethereals:
 /// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
 #define APC_DRAIN_TIME (7.5 SECONDS)
 /// How much power ethereals gain/drain from APCs.
@@ -839,46 +839,47 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		if(H.combat_mode && E.drain_time < world.time)
-			if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Disarm
-				if(cell.charge == cell.maxcharge)
-					to_chat(H, "<span class='warning'>The APC is full!</span>")
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if((E.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK) && stomach)
+			if(H.combat_mode)
+				if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
+					to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
 					return
-				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-				if(stomach.crystal_charge < 10)
+				if(stomach.crystal_charge > charge_limit)
+					to_chat(H, "<span class='warning'>Your charge is full!</span>")
+					return
+				E.drain_time = world.time + APC_DRAIN_TIME
+				to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
+				if(do_after(user, APC_DRAIN_TIME, target = src))
+					if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
+						return
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
+						stomach.adjust_charge(APC_POWER_GAIN)
+						cell.charge -= APC_POWER_GAIN
+					else
+						to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
+				return
+			else
+				if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
+					to_chat(H, "<span class='warning'>The APC can't receive anymore power!</span>")
+					return
+				if(stomach.crystal_charge < APC_POWER_GAIN)
 					to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 					return
 				E.drain_time = world.time + APC_DRAIN_TIME
 				to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
 				if(do_after(user, APC_DRAIN_TIME, target = src))
-					if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+					if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
+						to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 						return
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
-						stomach.adjust_charge(-10)
-						cell.charge += 10
+						stomach.adjust_charge(-APC_POWER_GAIN)
+						cell.charge += APC_POWER_GAIN
 					else
 						to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 				return
-			if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-				to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
-				return
-			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge > charge_limit)
-				to_chat(H, "<span class='warning'>Your charge is full!</span>")
-				return
-			E.drain_time = world.time + APC_DRAIN_TIME
-			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
-			if(do_after(user, APC_DRAIN_TIME, target = src))
-				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
-					return
-				if(istype(stomach))
-					to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
-					stomach.adjust_charge(APC_POWER_GAIN)
-					cell.charge -= APC_POWER_GAIN
-				else
-					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
-			return
 
 	if(opened && (!issilicon(user)))
 		if(cell)

@@ -21,7 +21,6 @@
 	else
 		qdel(ninja_star)
 		to_chat(ninja, "<span class='notice'>You can't create a throwing star, your hands are full!</span>")
-	ninja.throw_mode_on() //So they can quickly throw it.
 
 /**
  * # Ninja Throwing Star

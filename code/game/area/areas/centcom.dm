@@ -11,7 +11,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
@@ -123,7 +123,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	network_root_id = "MAGIC_NET"
 
@@ -132,7 +132,7 @@
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = FALSE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	network_root_id = "ALIENS"
@@ -143,7 +143,7 @@
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_DANGER
 	network_root_id = SYNDICATE_NETWORK_ROOT

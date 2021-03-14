@@ -1,7 +1,11 @@
+
 /////RESTAURANT/////
 /datum/venue/restaurant
 	name = "restaurant"
 	req_access = ACCESS_KITCHEN
+	min_time_between_visitor = 80 SECONDS
+	max_time_between_visitor = 100 SECONDS
+
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering
@@ -36,9 +40,12 @@
 
 /datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	. = ..()
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [order_item] into their mouth-shaped hole!</span>", "<span class='danger'>You push [order_item] into your mouth-shaped hole.</span>")
+	var/obj/item/food/ordered_food = order_item
+	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	qdel(order_item)
+	total_income += ordered_food.venue_value
+	customers_served += 1
+	qdel(ordered_food)
 
 /obj/machinery/restaurant_portal/restaurant
 	linked_venue = /datum/venue/restaurant
@@ -90,15 +97,16 @@
 	return "I'll take a glass of [initial(order.name)]"
 
 /datum/venue/bar/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	var/datum/reagent/ordered_reagent_type = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+	var/datum/reagent/consumable/ordered_reagent_type = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
 
 	for(var/datum/reagent/reagent as anything in order_item.reagents.reagent_list)
 		if(reagent.type != ordered_reagent_type)
 			continue
-		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
+	customers_served += 1
 	order_item.reagents.clear_reagents()
 
 

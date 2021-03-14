@@ -91,3 +91,10 @@
 		description = "<span class='warning'>I swapped places with an alternate reality version of myself! I want to go home!</span>\n"
 	else
 		description = "<span class='nicegreen'>I swapped places with an alternate reality version of myself! Though, this place is much better than my old life.</span>\n"
+/datum/mood_event/nicotine_withdrawal_moderate
+	description = "<span class='warning'>Haven't had a smoke in a while. Feeling a little on edge... </span>\n"
+	mood_change = -5
+
+/datum/mood_event/nicotine_withdrawal_severe
+	description = "<span class='boldwarning'>Head pounding. Cold sweating. Feeling anxious. Need a smoke to calm down!</span>\n"
+	mood_change = -8

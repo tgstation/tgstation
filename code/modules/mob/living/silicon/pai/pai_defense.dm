@@ -15,13 +15,13 @@
 	//Ask and you shall receive
 	switch(rand(1, 3))
 		if(1)
-			stuttering = 1
+			stuttering += 30/severity //temporary, clears in a few ticks after silent is over.
 			to_chat(src, "<span class='danger'>Warning: Feedback loop detected in speech module.</span>")
 		if(2)
-			slurring = 1
+			slurring = INFINITY // permanent until speech is fixed through the pAI card UI by someone else.
 			to_chat(src, "<span class='danger'>Warning: Audio synthesizer CPU stuck.</span>")
 		if(3)
-			derpspeech = 1
+			derpspeech = 1 // Ditto.
 			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
 	if(prob(40))
 		mind.language_holder.selected_language = get_random_spoken_language()
