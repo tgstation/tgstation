@@ -188,7 +188,7 @@
 	name = "Infective Exo-Locomotion"
 	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
 			resulting in an extremely infective strain of nanites."
-	use_rate = 1.50
+	use_rate = 5.50
 	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
 	var/spread_cooldown = 0
 
