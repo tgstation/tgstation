@@ -94,8 +94,8 @@
 		return ..()
 
 	var/obj/item/stock_parts/newstockpart = I
-	var/type_to_check
 	for(var/obj/item/stock_parts/oldstockpart in contents)
+		var/type_to_check
 		for(var/pathtypes in required_parts)
 			if(ispath(oldstockpart.type, pathtypes))
 				type_to_check = oldstockpart.type
