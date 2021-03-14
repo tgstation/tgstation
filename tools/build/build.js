@@ -26,7 +26,7 @@ const TGS_BUILD = "TGS Build"
 const ALL_MAPS_BUILD = "CI All Maps Build"
 const TEST_RUN_BUILD = "CI Integration Tests Build"
 
-let BUILD_MODE = STANDARD_BUILD;
+let BUILD_MODE = TEST_RUN_BUILD;//STANDARD_BUILD;
 if(process.env.CBT_BUILD_MODE != undefined){
   BUILD_MODE = process.env.CBT_BUILD_MODE
 }
@@ -35,6 +35,8 @@ if (process.env.TG_BUILD_TGS_MODE) {
 }
 console.log(`Starting CBT in ${BUILD_MODE} mode.`)
 
+const DME_NAME = 'tgstation'
+
 // Main
 // --------------------------------------------------------
 
@@ -42,6 +44,7 @@ const { resolveGlob, stat } = require('./cbt/fs');
 const { exec } = require('./cbt/process');
 const { Task, runTasks } = require('./cbt/task');
 const { regQuery } = require('./cbt/winreg');
+const fs = require('fs');
 
 /// Installs all tgui dependencies
 const taskYarn = new Task('yarn')
@@ -98,7 +101,7 @@ const taskTgui = new Task('tgui')
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
 
-const taskDm = (...InjectedDefines) => {
+const taskDm = (...injectedDefines) => {
    return new Task('dm')
   .depends('_maps/map_files/generic/**')
   .depends('code/**')
@@ -108,9 +111,9 @@ const taskDm = (...InjectedDefines) => {
   .depends('interface/**')
   .depends('tgui/public/tgui.html')
   .depends('tgui/public/*.bundle.*')
-  .depends('tgstation.dme')
-  .provides('tgstation.dmb')
-  .provides('tgstation.rsc')
+  .depends(`${DME_NAME}.dme`)
+  .provides(`${DME_NAME}.dmb`)
+  .provides(`${DME_NAME}.rsc`)
   .build(async () => {
     const dmPath = await (async () => {
       // Search in array of paths
@@ -155,12 +158,25 @@ const taskDm = (...InjectedDefines) => {
         || 'DreamMaker'
       );
     })();
-    /// Create mdme file
-    /// Modify mdme
-    /// #define ARG foreach InjectedDefines
-    /// Technically dme should be parametrized too
-    await exec(dmPath, ['tgstation.dme']);
-    /// Copy results over to orignal name dmb/rsc's
+    if(injectedDefines.length){
+        const injectedContent = injectedDefines.map(x => `#define ${x}\n`).join("")
+        /// Create mdme file
+        fs.writeFileSync(`${DME_NAME}.mdme`,injectedContent)
+        /// Add the actual dme content
+        const dme_content = fs.readFileSync(`${DME_NAME}.dme`)
+        fs.appendFileSync(`${DME_NAME}.mdme`,dme_content)
+
+        await exec(dmPath, [`${DME_NAME}.mdme`]);
+        //Rename dmb
+        fs.renameSync(`${DME_NAME}.mdme.dmb`,`${DME_NAME}.dmb`)
+        //Rename rsc
+        fs.renameSync(`${DME_NAME}.mdme.rsc`,`${DME_NAME}.rsc`)
+        //Remove mdme
+        fs.rmSync(`${DME_NAME}.mdme`)
+    }
+    else{
+      await exec(dmPath, [`${DME_NAME}.dme`]);
+    }
   });
 }
 
@@ -188,7 +204,7 @@ switch (BUILD_MODE) {
       taskTgfont,
       taskTgui,
       taskDm('CIBUILDING','CITESTING','ALL_MAPS')
-    ]
+    ];
     break;
   case TEST_RUN_BUILD:
     tasksToRun = [
@@ -196,7 +212,8 @@ switch (BUILD_MODE) {
       taskTgfont,
       taskTgui,
       taskDm('CIBUILDING')
-    ]
+    ];
+    break;
   default:
     console.error(`Unknown build mode : ${BUILD_MODE}`)
     break;

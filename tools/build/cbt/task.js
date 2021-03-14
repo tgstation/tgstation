@@ -13,7 +13,6 @@ class Task {
     this.targets = [];
     this.script = null;
   }
-
   depends(path) {
     if (path.includes('*')) {
       this.sources.push(new Glob(path));
