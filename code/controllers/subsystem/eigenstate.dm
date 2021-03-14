@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(eigenstates)
 	return ..()
 
 ///removes an object reference from the master list
-/datum/controller/subsystem/eigenstates/proc/remove_eigen_entry(entry)
+/datum/controller/subsystem/eigenstates/proc/remove_eigen_entry(atom/entry)
 	var/id = eigen_id[entry]
 	eigen_targets[id] -= entry
 	eigen_id -= entry
