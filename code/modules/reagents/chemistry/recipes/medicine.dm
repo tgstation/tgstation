@@ -272,8 +272,15 @@
 	thermic_constant = -1
 	H_ion_release = 0.02
 	rate_up_lim = 7.5
-	purity_min = 0
-	clear_conversion = REACTION_CLEAR_INVERSE
+	purity_min = 0.15
+	reaction_flags = REACTION_CLEAR_INVERSE
+
+/datum/chemical_reaction/medicine/antihol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	explode_smoke(holder, equilibrium)
+
+/datum/chemical_reaction/medicine/antihol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	explode_smoke(holder, equilibrium)
+
 
 /datum/chemical_reaction/medicine/cryoxadone
 	results = list(/datum/reagent/medicine/cryoxadone = 3)

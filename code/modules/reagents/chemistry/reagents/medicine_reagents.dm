@@ -634,7 +634,6 @@
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/owner)
 	delta_light = creation_purity*20
 	owner.lighting_alpha -= delta_light
-	cached_seerange = owner.see_in_dark
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
@@ -653,7 +652,7 @@
 			owner.cure_blind(EYE_DAMAGE)
 			owner.cure_nearsighted(EYE_DAMAGE)
 			owner.blur_eyes(35)
-	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
+	else if(HAS_TRAIT_FROM(owner, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(owner, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		owner.cure_nearsighted(EYE_DAMAGE)
 		owner.blur_eyes(10)
@@ -679,12 +678,13 @@
 		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 
 //Lets us hear whispers from far away!
-/datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	if(!isliving(reagents.my_atom))
+/datum/reagent/medicine/inacusiate/proc/owner_hear(datum/source, message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+	if(!isliving(holder.my_atom))
 		return
-	var/living/owner = reagents.my_atom
+	var/mob/living/owner = holder.my_atom
+	var/atom/movable/composer = holder.my_atom
 	if(message_mods[WHISPER_MODE])
-		message = compose_message(owner, message_language, message, , spans, message_mods)
+		message = composer.compose_message(owner, message_language, message, , spans, message_mods)
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
@@ -883,23 +883,23 @@
 	if(creation_purity >= 1)
 		initial_bdamage = carbon.getOrganLoss(ORGAN_SLOT_BRAIN)
 
-/datum/reagent/medicine/neurine/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/neurine/on_mob_delete(mob/living/owner)
 	. = ..()
-	REMOVE_TRAIT(L, TRAIT_ANTICONVULSANT, name)
+	REMOVE_TRAIT(owner, TRAIT_ANTICONVULSANT, name)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon = owner
 	if(initial_bdamage < carbon.getOrganLoss(ORGAN_SLOT_BRAIN))
 		carbon.setOrganLoss(ORGAN_SLOT_BRAIN, initial_bdamage)
 
-/datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+/datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
 		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5 * REM * delta_time * normalise_creation_purity())
 	if(DT_PROB(8 * normalise_creation_purity(), delta_time))
-		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+		owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
 
-/datum/reagent/medicine/neurine/on_mob_dead(mob/living/carbon/C)
+/datum/reagent/medicine/neurine/on_mob_dead(mob/living/carbon/owner, delta_time)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM * delta_time * normalise_creation_purity())
 	..()
 

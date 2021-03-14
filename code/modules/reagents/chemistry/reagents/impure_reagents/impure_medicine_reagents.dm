@@ -452,7 +452,7 @@
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 
-/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner)
+/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner, delta_time)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
@@ -529,27 +529,32 @@
 	description = "Gives the patient a speech impediment."
 	color = "#CDCDFF"
 	addiction_types = list(/datum/addiction/medicine = 5)
-	pH = 12.4
+	ph = 12.4
 	///The speech we're forcing on the owner
 	var/speech_option
 
 /datum/reagent/impurity/mannitol/on_mob_add(mob/living/owner, amount)
 	. = ..()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon = owner
 	speech_option = pick(list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE))
-	owner.dna?.activate_mutation(speech_option)
+	carbon.dna?.activate_mutation(speech_option)
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
 	. = ..()
-	owner.dna?.remove_mutation(speech_option)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon = owner
+	carbon.dna?.remove_mutation(speech_option)
 
 /datum/reagent/inverse/neurine
 	name = "Neruwhine"
 	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
 	color = "#DCDCAA"
-	pH = 13.4
+	ph = 13.4
 	addiction_types = list(/datum/addiction/medicine = 8)
 	metabolization_rate = 0.05 * REM
-	metastress = 0.5
 	//The temporary trauma passed to the owner
 	var/datum/brain_trauma/temp_trauma
 
@@ -557,7 +562,7 @@
 	.=..()
 	if(temp_trauma)
 		return
-	if(!(prob(cached_purity)*10))
+	if(!(prob(creation_purity)*10))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
@@ -581,10 +586,9 @@
 	description = "Interferes with the body's natural pacemaker, forcing the patient to manually beat their heart."
 	color = "#5F5F5F"
 	self_consuming = TRUE
-	pH = 13.5
+	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 2.5)
 	metabolization_rate = 0.075 * REM
-	metastress = 0.2
 	///The old heart we're swapping for
 	var/obj/item/organ/heart/original_heart
 	///The new heart that's temp added
@@ -604,14 +608,15 @@
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(carbon_mob, special = TRUE)
 	//these last so instert doesn't call them
-	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	..()
 
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
-/datum/reagent/inverse/corazone/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
-	if(!istype(organ, obj/item/organ/heart))
+/datum/reagent/inverse/corazone/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
+	if(!istype(organ, /obj/item/organ/heart))
 		return
+	var/mob/living/carbon/carbon_mob = owner
 	original_heart = organ
 	original_heart.Remove(carbon_mob, special = TRUE)
 	original_heart.forceMove(manual_heart)
@@ -630,10 +635,10 @@
 	qdel(organ)
 
 ///We're done - remove the curse and restore the old one
-/datum/reagent/inverse/corazone/on_mob_delete(mob/living/L)
+/datum/reagent/inverse/corazone/on_mob_delete(mob/living/owner)
 	//Do these first so Insert doesn't call them
-	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
+	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_mob = owner
@@ -665,10 +670,10 @@
 	metabolization_rate = 0.1 * REM
 	addiction_types = list(/datum/addiction/medicine = 3)
 	taste_description = "funky toxin"
-	pH = 13
+	ph = 13
 
 /datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/C)
-	if(prob(100*(1-cached_purity)))
+	if(prob(100*(1-creation_purity)))
 		C.become_blind("oculine_impure")
 	..()
 
@@ -683,7 +688,7 @@
 	addiction_types = list(/datum/addiction/medicine = 5.6)
 	color = "#DDDDFF"
 	taste_description = "the heat evaporating from your mouth."
-	pH = 1
+	ph = 1
 	var/randomSpan
 
 /datum/reagent/impurity/inacusiate/on_mob_add(mob/living/owner)

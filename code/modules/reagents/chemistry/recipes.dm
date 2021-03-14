@@ -338,7 +338,7 @@
  */
 /datum/chemical_reaction/proc/explode_flash(datum/reagents/holder, datum/equilibrium/equilibrium, range = 2, length = 25)
 	var/turf/location = get_turf(holder.my_atom)
-	for(var/mob/living_mob in viewers(flash, location))
+	for(var/mob/living/living_mob in viewers(range, location))
 		living_mob.flash_act(length = length)
 	holder.my_atom.visible_message("The [holder.my_atom] suddenly lets out a bright flash!")
 
