@@ -1148,13 +1148,13 @@
 
 ///fetches pressure of the gas mixture we are using
 /obj/vehicle/sealed/mecha/proc/return_pressure()
-	var/datum/gas_mixture/t_air = return_air()
-	return t_air?.return_pressure()
+	var/datum/gas_mixture/air = return_air()
+	return air?.return_pressure()
 
 ///fetches temp of the gas mixture we are using
 /obj/vehicle/sealed/mecha/return_temperature()
-	var/datum/gas_mixture/t_air = return_air()
-	return t_air?.return_temperature()
+	var/datum/gas_mixture/air = return_air()
+	return air?.return_temperature()
 
 
 
