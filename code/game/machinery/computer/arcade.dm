@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
+		/obj/item/storage/hairdye = 2,
 		/obj/item/toy/spinningtoy = 2,
 		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/prize/ripley = 1,

@@ -132,3 +132,4 @@
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
 	value = FOOD_RARE		//No that's wrong ninja what the hell ~ArcaneMusic 2k20
+

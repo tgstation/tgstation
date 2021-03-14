@@ -43,6 +43,11 @@
 	inhand_icon_state = "bl_suit"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 40)
 
+/obj/item/clothing/under/syndicate/tacticool/medical
+	name = "medical turtleneck"
+	desc = "Just like the ones you get from the arcade, but someone loosely sewed a suit sensor into the waist with miscolored thread."
+	has_sensor = HAS_SENSORS
+
 /obj/item/clothing/under/syndicate/tacticool/skirt
 	name = "tacticool skirtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."

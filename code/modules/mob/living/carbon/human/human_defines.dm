@@ -17,10 +17,12 @@
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hairstyle = "Bald"
+	var/haircolor_origin = "000" //Used for hairdye
 
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
 	var/facial_hairstyle = "Shaved"
+	var/beardcolor_origin = "000" //Used for hairdye
 
 	//Eye colour
 	var/eye_color = "000"
@@ -70,3 +72,5 @@
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
 
+	/// Has this mob had its hair dyed?
+	var/hair_dyed = FALSE

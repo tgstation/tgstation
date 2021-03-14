@@ -119,3 +119,5 @@ config/title_music/sounds/Stranded.ogg
 config/title_music/sounds/Renai Circulation.ogg
 config/title_music/sounds/Hat Kid's Spaceship.ogg
 config/title_music/sounds/In The Garden.ogg
+config/title_music/sounds/Icarus.ogg
+config/title_music/sounds/Title1 (Flip-Flap).ogg
