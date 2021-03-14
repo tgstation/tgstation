@@ -292,8 +292,8 @@
 
 	if(!iscultist(user))
 		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			if(user.num_legs < 2 || C.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
+			var/mob/living/carbon/carbon_user = user
+			if(user.num_legs < 2 || carbon_user.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
 				to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 				user.dropItemToGround(src, TRUE)
 				user.Paralyze(CULT_BOLA_PICKUP_STUN)
