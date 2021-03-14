@@ -40,6 +40,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
 	footstep_type = FOOTSTEP_MOB_SHOE

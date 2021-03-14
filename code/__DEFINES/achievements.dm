@@ -34,6 +34,7 @@
 #define MEDAL_CHEM_TUT          "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
+#define MEDAL_TRAM_SURFER "Tram Surfer"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
@@ -111,3 +112,16 @@
 
 // DB ID for intento score
 #define INTENTO_SCORE "Intento Score"
+
+// Tourist related achievements and scores
+
+//centcom grades (achievement)
+
+#define MEDAL_BAD_SERVICE "Bad Service"
+#define MEDAL_OKAY_SERVICE "Okay Service"
+#define MEDAL_GOOD_SERVICE "Good Service"
+
+//scores
+
+#define CHEF_TOURISTS_SERVED "Tourists Served As Chef"
+#define BARTENDER_TOURISTS_SERVED "Tourists Served As Bartender"

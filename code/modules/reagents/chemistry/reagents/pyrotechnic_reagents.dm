@@ -67,7 +67,7 @@
 		else if(prob(reac_volume))
 			target_floor.burn_tile()
 		if(isfloorturf(target_floor))
-			for(var/turf/nearby_turf in range(1, target_floor))
+			for(var/turf/nearby_turf in RANGE_TURFS(1, target_floor))
 				if(!locate(/obj/effect/hotspot) in nearby_turf)
 					new /obj/effect/hotspot(nearby_turf)
 

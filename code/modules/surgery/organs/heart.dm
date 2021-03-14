@@ -283,9 +283,10 @@
 	. = ..()
 	RegisterSignal(M, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
 	RegisterSignal(M, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
+	RegisterSignal(M, COMSIG_PARENT_PREQDELETED, .proc/owner_deleted)
 
 /obj/item/organ/heart/ethereal/Remove(mob/living/carbon/M, special = 0)
-	UnregisterSignal(M, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL))
+	UnregisterSignal(M, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_PREQDELETED))
 	REMOVE_TRAIT(M, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(M)
 	QDEL_NULL(current_crystal)
@@ -359,20 +360,29 @@
 		return //Should probably not happen, but lets be safe.
 	COOLDOWN_START(src, crystalize_cooldown, INFINITY) //Prevent cheeky double-healing until we get out, this is against stupid admemery
 	current_crystal = new(get_turf(ethereal), src)
-	stop_crystalization_process(ethereal)
+	stop_crystalization_process(ethereal, TRUE)
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
-/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal)
+/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMGE)
 
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 
+	if(!succesful)
+		REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+		QDEL_NULL(current_crystal)
+
 	if(crystalize_timer_id)
 		deltimer(crystalize_timer_id)
 		crystalize_timer_id = null
 
+/obj/item/organ/heart/ethereal/proc/owner_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	stop_crystalization_process(owner)
+	return
 
 ///Lets you stop the process with enough brute damage
 /obj/item/organ/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone)

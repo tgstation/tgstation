@@ -5,14 +5,29 @@
  * @license MIT
  */
 
-const { resolve: resolvePath } = require('path');
+// Change working directory to project root
+process.chdir(require('path').resolve(__dirname, '../../'));
+
+// Validate NodeJS version
+const NODE_VERSION = parseInt(process.versions.node.match(/(\d+)/)[1]);
+const NODE_VERSION_TARGET = parseInt(require('fs')
+  .readFileSync('dependencies.sh', 'utf-8')
+  .match(/NODE_VERSION=(\d+)/)[1]);
+if (NODE_VERSION < NODE_VERSION_TARGET) {
+  console.error('Your current Node.js version is out of date.');
+  console.error('You have two options:');
+  console.error('  a) Go to https://nodejs.org/ and install the latest LTS release of Node.js');
+  console.error('  b) Uninstall Node.js (our build system automatically downloads one)');
+  process.exit(1);
+}
+
+// Main
+// --------------------------------------------------------
+
 const { resolveGlob, stat } = require('./cbt/fs');
 const { exec } = require('./cbt/process');
 const { Task, runTasks } = require('./cbt/task');
 const { regQuery } = require('./cbt/winreg');
-
-// Change working directory to project root
-process.chdir(resolvePath(__dirname, '../../'));
 
 const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/releases/*')
