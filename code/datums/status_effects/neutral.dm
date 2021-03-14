@@ -365,8 +365,9 @@
 	var/stable_message = FALSE
 
 /datum/status_effect/eigenstasium/Destroy()
-	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
-	QDEL_NULL(alt_clone)
+	if(alt_clone)
+		UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
+		QDEL_NULL(alt_clone)
 	return ..()
 
 /datum/status_effect/eigenstasium/tick()
