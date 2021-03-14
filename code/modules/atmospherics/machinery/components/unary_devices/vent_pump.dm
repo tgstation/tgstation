@@ -33,8 +33,9 @@
 	var/radio_filter_in
 
 	pipe_state = "uvent"
+	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
+/obj/machinery/atmospherics/components/unary/passive_vent/New()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
@@ -285,9 +286,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	. = ..()
 	update_icon_nopipes()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
-	return !welded
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
 	if(!welded || !(do_after(user, 20, target = src)))
