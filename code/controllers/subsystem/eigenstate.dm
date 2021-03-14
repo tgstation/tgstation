@@ -68,9 +68,9 @@ SUBSYSTEM_DEF(eigenstates)
 	UnregisterSignal(entry, list(
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CLOSET_INSERT,
-		COMSIG_EIGENSTATE_ACTIVATE,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
+	entry.UnregisterSignal(entry, COMSIG_EIGENSTATE_ACTIVATE) //This is a signal on the object itself so we have to call it from that
 	///Remove the current entry if we're empty
 	for(var/targets in eigen_targets)
 		if(!length(eigen_targets[targets]))
