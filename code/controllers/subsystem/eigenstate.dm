@@ -40,6 +40,7 @@ SUBSYSTEM_DEF(eigenstates)
 		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
 		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
+		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
 		var/obj/item = target
 		if(item)
 			item.color = COLOR_EIGENSTATE //Tint the locker slightly.
@@ -65,6 +66,8 @@ SUBSYSTEM_DEF(eigenstates)
 	var/id = eigen_id[entry]
 	eigen_targets[id] -= entry
 	eigen_id -= entry
+	entry.color = COLOR_WHITE
+	entry.alpha = 255
 	UnregisterSignal(entry, list(
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CLOSET_INSERT,
