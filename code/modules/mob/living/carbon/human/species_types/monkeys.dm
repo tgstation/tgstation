@@ -92,8 +92,8 @@
 
 /datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
 	. = ..()
-	if(H.radiation > RAD_MOB_MUTATE * 2 && prob(0.5))
-		H.gorillize()
+	if(source.radiation > RAD_MOB_MUTATE * 2 && DT_PROB(0.25, delta_time))
+		source.gorillize()
 		return
 
 /datum/species/monkey/check_roundstart_eligible()
