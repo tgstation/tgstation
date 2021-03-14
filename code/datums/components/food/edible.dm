@@ -139,6 +139,9 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
+	if(microwaved_type)
+		examine_list += "[parent] could be <b>microwaved</b> into [microwaved_type]!"
+
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch (bitecount)
 			if (0)
