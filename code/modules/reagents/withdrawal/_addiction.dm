@@ -93,7 +93,6 @@
 			withdrawal_enters_stage_1(affected_carbon)
 		if(WITHDRAWAL_STAGE2_START_CYCLE)
 			withdrawal_enters_stage_2(affected_carbon)
-			addiction_satiated = FALSE //reset so they can get the addiction satiation enter after getting their fix
 		if(WITHDRAWAL_STAGE3_START_CYCLE)
 			withdrawal_enters_stage_3(affected_carbon)
 
@@ -124,6 +123,7 @@
 /// Called when addiction enters stage 2
 /datum/addiction/proc/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_medium, name)
+	addiction_satiated = FALSE //reset so they can get the addiction satiation enter after getting their fix
 
 /// Called when addiction enters stage 3
 /datum/addiction/proc/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
