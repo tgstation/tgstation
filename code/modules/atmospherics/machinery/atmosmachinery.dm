@@ -452,9 +452,7 @@
 			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 				user.last_played_vent = world.time
 				playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
-		if (prob(10))
-			visible_message("<span class='notice'>You hear something moving through the ventilation ducts!</span>")
-	
+
 	//Would be great if this could be implemented when someone alt-clicks the image.
 	if (target_move.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		user.handle_ventcrawl(target_move)
