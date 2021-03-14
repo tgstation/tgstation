@@ -436,6 +436,14 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"akE" = (
+/obj/structure/table/wood,
+/obj/item/storage/hairdye{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/theatre)
 "akG" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
@@ -86864,7 +86872,7 @@ mOJ
 iVS
 xYG
 qOW
-fma
+akE
 oEz
 usf
 hcL

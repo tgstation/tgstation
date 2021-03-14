@@ -123,6 +123,14 @@
 	reagents.expose(A, TOUCH)
 	if(isliving(A))
 		check_heat(A)
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			if(H.hair_dyed)
+				H.hair_color = H.haircolor_origin
+				H.facial_hair_color = H.beardcolor_origin
+				H.update_hair()
+				H.regenerate_icons()
+				H.hair_dyed = FALSE
 
 /obj/machinery/shower/process()
 	if(on && reagents.total_volume >= 5)

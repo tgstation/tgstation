@@ -267,6 +267,10 @@
 	name = "Cornrow Tail"
 	icon_state = "hair_cornrowtail"
 
+/datum/sprite_accessory/hair/corritrice
+	name = "Corritrice"
+	icon_state = "hair_corritrice"
+
 /datum/sprite_accessory/hair/crew
 	name = "Crewcut"
 	icon_state = "hair_crewcut"
@@ -610,6 +614,10 @@
 /datum/sprite_accessory/hair/ponytailmessy
 	name = "Ponytail (Messy)"
 	icon_state = "hair_ponytailmessy"
+
+/datum/sprite_accessory/hair/mullettail
+	name = "Ponytail (Mullet)"
+	icon_state = "hair_venom"
 
 /datum/sprite_accessory/hair/sidetail
 	name = "Ponytail (Side)"

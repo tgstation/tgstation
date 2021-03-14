@@ -313,6 +313,7 @@
 	name = "Faux Mask"
 	desc = "For the sake of RP, please do not use this trait. Thank you for understanding."
 	value = 0
+	mob_trait = TRAIT_FAUX
 
 /datum/quirk/faux/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -322,6 +323,8 @@
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
 	H.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
+
 
 /datum/quirk/unholy
 	name = "Dead Man Walking"

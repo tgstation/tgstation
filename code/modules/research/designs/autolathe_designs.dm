@@ -935,6 +935,24 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/hairdye
+	name = "Universal Hairdye"
+	id = "hairdye"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	build_path = /obj/item/toy/hairdye
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/razor
+	name = "Electric Razor"
+	id = "razor"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 750, /datum/material/glass = 125)
+	build_path = /obj/item/razor
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/desttagger
 	name = "Destination Tagger"
 	id = "desttagger"

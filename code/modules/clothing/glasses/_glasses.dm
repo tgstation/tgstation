@@ -533,17 +533,16 @@
 		H.update_sight()
 
 /obj/item/clothing/glasses/fox
-	name = "fox mask"
-	desc = "A mask made of soft vinyl and an unknown fibre, representing the head of a fox. It glows in your hands."
-	icon_state = "fox"
-	inhand_icon_state = "fox"
-	var/handled = FALSE
-	strip_delay = 100
+	name = "red glasses"
+	desc = "Glasses with a red tint, they cover the wearer's eyes from view with their almost shimmering lenses."
+	icon_state = "red_glasses"
+	inhand_icon_state = "red_glasses"
+
+	var/handled = TRUE
+	strip_delay = 200
 	darkness_view = 5
 	var/old_hair
 	var/old_beard
-	var/old_beard_color
-	var/old_hair_color
 
 
 /obj/item/clothing/glasses/fox/equipped(mob/user, slot)
@@ -553,19 +552,16 @@
 	if(ishuman(user) && user.gender == FEMALE)
 		old_hair = H.hairstyle
 		old_beard = H.facial_hairstyle
-		old_hair_color = H.hair_color
-		old_beard_color = H.facial_hair_color
 		user.gender = MALE
 		handled = TRUE
-		H.hairstyle = "Business Hair 2"
+		H.hairstyle = "Ponytail (Mullet)"
 		H.facial_hairstyle = "Beard (Seven o Clock Shadow)"
-		H.hair_color = sanitize_hexcolor("#1E1D27")
-		H.facial_hair_color = sanitize_hexcolor("#1E1D27")
 		user.update_hair()
 		user.set_species(/datum/species/ethereal)
 		icon_state = "red_glasses"
 		inhand_icon_state = "red_glasses"
 		name = "red glasses"
+		desc = "Glasses with a red tint, they cover the wearer's eyes from view with their almost shimmering lenses."
 		user.regenerate_icons()
 
 		to_chat(user, "<span class='notice'>Your disguise is set.</span.?>")
@@ -577,18 +573,21 @@
 		if(isethereal(user))
 			H.set_species(/datum/species/human)
 			user.gender = FEMALE
-			handled = FALSE
 			user.visible_message("<span class='boldnotice'>In a flash of light, the façade is broken!</span>", "<span class='boldwarning'>Your disguise has been revealed!</span>")
-			H.hairstyle = old_hair
-			H.facial_hairstyle = old_beard
-			H.hair_color = old_hair_color
-			H.facial_hair_color = old_beard_color
-			H.update_hair()
+			if(HAS_TRAIT(H, TRAIT_FAUX))
+				H.hairstyle = "Corritrice"
+				H.facial_hairstyle = "Shaved"
+			else
+				H.hairstyle = old_hair
+				H.facial_hairstyle = old_beard
 
+			H.update_hair()
 			playsound(T, 'sound/effects/phasein.ogg', 40, TRUE)
 			for(var/mob/living/carbon/C in viewers(T, null))
 				C.flash_act()
+			name = "fox mask"
+			desc = "A mask made of soft vinyl and an unknown fibre, representing the head of a fox. It shimmers strangely."
 			icon_state = "fox"
 			inhand_icon_state = "fox"
-			name = "Fox Mask"
 			user.regenerate_icons()
+		handled = FALSE

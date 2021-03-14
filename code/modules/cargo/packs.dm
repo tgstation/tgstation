@@ -2440,6 +2440,17 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/stylistsupply
+	name = "Barber's Supply"
+	desc = "Pretty yourself up with two universal hairdyes, a hairdye box, and a razor!"
+	cost = 1000
+	contains = list(/obj/item/storage/hairdye,
+					/obj/item/toy/hairdye,
+					/obj/item/toy/hairdye,
+					/obj/item/razor)
+	crate_name = "barber's crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."

@@ -191,8 +191,8 @@
 	icon_state = "balancedegg"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 108, /datum/reagent/consumable/nutriment/vitamin = 36)
-	w_class = WEIGHT_CLASS_NORMAL
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 12, /datum/reagent/consumable/nutriment/vitamin = 3)
+	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("egg" = 1, "protein" = 1, "gains" = 3)
 	foodtype = MEAT | BREAKFAST | DAIRY
 	value = FOOD_RARE
