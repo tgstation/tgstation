@@ -56,12 +56,12 @@
 	return
 
 /*
-category (string) - The tab it will be under
-path (typepath or string) - This will sent this back to ui_act to preview or spawn in an outfit
-name (string) - Will be the text on the button
-priority (int) - default 0, 1 for favorites, 2 for priority buttons
+ * category (string) - The tab it will be under
+ * path (typepath or string) - This will sent this back to ui_act to preview or spawn in an outfit
+ * name (string) - Will be the text on the button
+ * priority (int) - default 0, 1 for favorites, 2 for priority buttons
 */
-#define OUTFIT_ENTRY(category, path, name, priority) list(list("category" = category, "path" = path, "name" = name, "priority" = priority))
+#define OUTFIT_ENTRY(category, path, name, priority) list("category" = category, "path" = path, "name" = name, "priority" = priority)
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/L)
 	var/list/entries = list()
 	for(var/path in L)
@@ -69,7 +69,7 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 		var/priority = 0
 		if(path == /datum/outfit/job/roboticist)
 			priority = 1
-		entries += OUTFIT_ENTRY(category, path, initial(O.name), priority)
+		entries += list(OUTFIT_ENTRY(category, path, initial(O.name), priority))
 	return entries
 
 
@@ -78,7 +78,7 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 	var/list/entries = list()
 	for(var/datum/outfit/O in L)
 		cached_custom_outfits[O.name] = O
-		entries += OUTFIT_ENTRY("Custom", O.name, O.name, 2) //it's either this or special handling on the UI side
+		entries += list(OUTFIT_ENTRY("Custom", O.name, O.name, 0)) //it's either this or special handling on the UI side
 	return entries
 
 /datum/select_equipment/ui_data(mob/user)
@@ -104,7 +104,7 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 	var/list/data = list()
 	if(!cached_outfits)
 		cached_outfits = list()
-		cached_outfits += OUTFIT_ENTRY("General", /datum/outfit, "Naked", 2)
+		cached_outfits += list(OUTFIT_ENTRY("General", /datum/outfit, "Naked", 2))
 		cached_outfits += make_outfit_entries("General", subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits += make_outfit_entries("Jobs", typesof(/datum/outfit/job))
 		cached_outfits += make_outfit_entries("Plasmamen Outfits", typesof(/datum/outfit/plasmaman))
