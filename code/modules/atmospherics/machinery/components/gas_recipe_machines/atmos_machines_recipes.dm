@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	min_temp = 50000
 	max_temp = 150000
 	reaction_type = ENDOTHERMIC_REACTION
-	energy_release = 25000
+	energy_release = 2500000
 	requirements = list(/datum/gas/hydrogen = 300, /datum/gas/bz = 50)
 	products = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 1)
 
@@ -75,8 +75,8 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 35
 	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 3000000
-	requirements = list(/datum/gas/freon = 20, /datum/gas/plasma = 160, /datum/gas/oxygen = 30)
-	products = list(/obj/item/stack/sheet/hot_ice = 2)
+	requirements = list(/datum/gas/freon = 60, /datum/gas/plasma = 160, /datum/gas/oxygen = 80)
+	products = list(/obj/item/stack/sheet/hot_ice = 1)
 
 /datum/gas_recipe/crystallizer/ammonia_crystal
 	id = "ammonia_crystal"
