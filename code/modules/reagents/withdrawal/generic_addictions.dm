@@ -5,7 +5,7 @@
 
 /datum/addiction/opiods/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	lose_addiction(affected_carbon.mind)
+	affected_carbon.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
 
 /datum/addiction/opiods/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -34,7 +34,9 @@
 
 /datum/addiction/stimulants/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	lose_addiction(affected_carbon.mind)
+	affected_carbon.remove_actionspeed_modifier(ACTIONSPEED_ID_STIMULANTS)
+	affected_carbon.remove_status_effect(STATUS_EFFECT_WOOZY)
+	affected_carbon.remove_movespeed_modifier(MOVESPEED_ID_STIMULANTS)
 
 /datum/addiction/stimulants/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -82,7 +84,10 @@
 
 /datum/addiction/hallucinogens/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	lose_addiction(affected_carbon.mind)
+	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("hallucinogen_blur")
+	game_plane_master_controller.remove_filter("hallucinogen_wave")
+	affected_carbon.remove_status_effect(/datum/status_effect/trance, 40 SECONDS, TRUE)
 
 /datum/addiction/hallucinogens/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -107,7 +112,16 @@
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	lose_addiction(affected_carbon.mind)
+	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
+	if(!ishuman(affected_carbon))
+		return
+	var/mob/living/carbon/human/affected_human = affected_carbon
+	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
+	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
+	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
+	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
+	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
+	eyes.refresh()
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -180,7 +194,9 @@
 
 /datum/addiction/medicine/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	lose_addiction(affected_carbon.mind)
+	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
+	hallucination.cleanup()
+	QDEL_NULL(hallucination2)
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -256,7 +272,8 @@
 
 /datum/addiction/nicotine/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
 	. = ..()
-	lose_addiction(affected_carbon.mind)
+	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_moderate", /datum/mood_event/nicotine_withdrawal_moderate)
+	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "nicotine_withdrawal_severe", /datum/mood_event/nicotine_withdrawal_severe)
 
 /datum/addiction/nicotine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
