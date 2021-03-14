@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fixed delta station atmos from power failing in 5 minutes from roundstart"
