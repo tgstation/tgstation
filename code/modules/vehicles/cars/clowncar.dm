@@ -26,10 +26,8 @@
 	START_PROCESSING(SSobj,src)
 
 /obj/vehicle/sealed/car/clowncar/process()
-	if(light_on && obj_flags & EMAGGED )
+	if(light_on && (obj_flags & EMAGGED))
 		set_light_color(pick(headlight_colors))
-	else
-		return
 
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
