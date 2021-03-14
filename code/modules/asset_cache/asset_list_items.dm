@@ -541,7 +541,7 @@
 		iconinserted++
 	..()
 
-/datum/asset/spritesheet/moods/ModifyInserted(icon/I)
+/datum/asset/spritesheet/moods/ModifyInserted(icon/pre_asset)
 	var/blended_color
 	switch(iconinserted)
 		if(1)
@@ -556,5 +556,5 @@
 			blended_color = "#86d656"
 		else
 			blended_color = "#2eeb9a"
-	I.Blend(blended_color, ICON_MULTIPLY)
-	return I
+	pre_asset.Blend(blended_color, ICON_MULTIPLY)
+	return pre_asset

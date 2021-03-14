@@ -32,7 +32,18 @@ const variousButtonIcons = {
   "Repair Electronics": "server",
   "Wait": "clock",
   "Continue": "arrow-right",
-
+  "Explore Ship": "door-open",
+  "Leave the Derelict": "arrow-right",
+  "Welcome aboard.": "user-plus",
+  "Where did you go?!": "user-minus",
+  "A good find.": "box-open",
+  "Continue travels.": "arrow-right",
+  "Keep Speed": "tachometer-alt",
+  "Slow Down": "arrow-left",
+  "Speed Past": "tachometer-alt",
+  "Go Around": "redo",
+  "Oh...": "circle",
+  "Dock": "dollar-sign",
 };
 
 const STATUS2COMPONENT = [

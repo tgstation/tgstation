@@ -13,28 +13,29 @@
 	///our game
 	var/obj/machinery/computer/arcade/orion_trail/game
 	///gaming skill level of the player
-	var/gamerSkillLevel = 0
+	var/gamer_skill_level = 0
 	///gaming skill of the player
-	var/gamerSkill = 0
+	var/gamer_skill = 0
 	///some other metric that makes it easier to do randoms with skill testing, god really 3 vars guys
-	var/gamerSkillRands = 0
+	var/gamer_skill_rands = 0
 
-/datum/orion_event/New(_game)
+/datum/orion_event/New(game)
 	. = ..()
-	game = _game
+	src.game = game
 
 /**
  * What happens when this event is selected to trigger, sets vars. also can set some event pre-encounter randomization
  *
  * Arguments:
- * * _gamerSkill: gaming skill of the player
- * * _gamerSkillLevel: gaming skill level of the player
+ * * gamer_skill: gaming skill of the player
+ * * gamer_skill_level: gaming skill level of the player
+ * * gamer_skill_rands: See above but it's another metric, you can just look at gaming skill to see how it chalks that up
  */
-/datum/orion_event/proc/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
+/datum/orion_event/proc/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	SHOULD_CALL_PARENT(TRUE)
-	gamerSkillLevel = _gamerSkillLevel
-	gamerSkill = _gamerSkill
-	gamerSkillRands = _gamerSkillRands
+	src.gamer_skill_level = gamer_skill_level
+	src.gamer_skill = gamer_skill
+	src.gamer_skill_rands = gamer_skill_rands
 
 /**
  * What happens when you respond to this event by choosing one of the buttons
@@ -51,14 +52,17 @@
  * By default, it just sends an audible message and a sound, both vars on the orion datum
  * Arguments:
  * * gamer: victim to apply effects to
- * * gamerSkill: skill of the gamer, because gamers gods can lessen the effects of the emagged machine
- * * gamerSkillLevel: skill level of the gamer, another way to measure emag downside avoidance
+ * * gamer_skill: skill of the gamer, because gamers gods can lessen the effects of the emagged machine
+ * * gamer_skill_level: skill level of the gamer, another way to measure emag downside avoidance
  */
 /datum/orion_event/proc/emag_effect(mob/living/carbon/gamer)
 	if(emag_message)
 		game.audible_message(emag_message)
 	if(emag_sound)
 		playsound(game, emag_sound, 100, TRUE)
+
+#define BUTTON_FIX_ENGINE "Fix Engine"
+#define BUTTON_WAIT "Wait"
 
 ///Engine Breakdown - spend one engine part or wait 3 days (harmless emag effect)
 /datum/orion_event/engine_part
@@ -71,19 +75,21 @@
 	weight = 2
 	event_responses = list()
 
-/datum/orion_event/engine_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/engine_part/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	..()
 	if(game.engine >= 1)
-		event_responses += "Fix Engine"
-	event_responses += "Wait"
+		event_responses += BUTTON_FIX_ENGINE
+	event_responses += BUTTON_WAIT
 
 /datum/orion_event/engine_part/response(choice)
-	if(choice == "Fix Engine")
+	if(choice == BUTTON_FIX_ENGINE)
 		game.engine = max(0, --game.engine)
 	else
-		game.food -= ((game.alive + game.lings_aboard)*2)*3
+		game.food -= (game.alive + game.lings_aboard) * ORION_LONG_DELAY
 	event_responses.Cut()
 	..()
+
+#define BUTTON_REPAIR_ELECTRONICS "Repair Electronics"
 
 ///Malfunction - spend one engine part or wait 3 days (emag effect randomizes some stats)
 /datum/orion_event/electronic_part
@@ -95,17 +101,17 @@
 	//set by select
 	event_responses = list()
 
-/datum/orion_event/electronic_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/electronic_part/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	..()
 	if(game.electronics >= 1)
-		event_responses += "Repair Electronics"
-	event_responses += "Wait"
+		event_responses += BUTTON_REPAIR_ELECTRONICS
+	event_responses += BUTTON_WAIT
 
 /datum/orion_event/electronic_part/response(choice)
-	if(choice == "Repair Electronics")
-		game.electronics = max(0, --game.electronics)
+	if(choice == BUTTON_REPAIR_ELECTRONICS)
+		game.electronics = max(0, game.electronics - 1)
 	else
-		game.food -= ((game.alive + game.lings_aboard)*2)*3
+		game.food -= (game.alive + game.lings_aboard) * ORION_LONG_DELAY
 	event_responses.Cut()
 	..()
 
@@ -117,14 +123,18 @@
 	game.food = rand(10,80) / rand(1,2)
 	game.fuel = rand(10,60) / rand(1,2)
 	if(game.electronics)
-		sleep(10)
-		if(oldfuel > game.fuel && oldfood > game.food)
-			game.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
-		else if(oldfuel < game.fuel || oldfood < game.food)
-			game.audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
-		game.food = oldfood
-		game.fuel = oldfuel
-		playsound(game, 'sound/machines/chime.ogg', 50, TRUE)
+		addtimer(CALLBACK(game, .proc/revert_random, oldfood, oldfuel), 1 SECONDS)
+
+/datum/orion_event/electronic_part/proc/revert_random(oldfood, oldfuel)
+	if(oldfuel > game.fuel && oldfood > game.food)
+		game.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
+	else if(oldfuel < game.fuel || oldfood < game.food)
+		game.audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
+	game.food = oldfood
+	game.fuel = oldfuel
+	playsound(game, 'sound/machines/chime.ogg', 50, TRUE)
+
+#define BUTTON_RESTORE_HULL "Restore Hull"
 
 ///Collision - spend one engine part or wait 3 days (has a nasty emag effect)
 /datum/orion_event/hull_part
@@ -135,52 +145,60 @@
 	weight = 2
 	event_responses = list()
 
-/datum/orion_event/hull_part/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/hull_part/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	..()
 	if(game.hull >= 1)
-		event_responses += "Restore Hull"
-	event_responses += "Wait"
+		event_responses += BUTTON_RESTORE_HULL
+	event_responses += BUTTON_WAIT
 
 /datum/orion_event/hull_part/response(choice)
-	if(choice == "Restore Hull")
-		game.hull = max(0, --game.hull)
+	if(choice == BUTTON_RESTORE_HULL)
+		game.hull = max(0, game.hull - 1)
 	else
-		game.food -= ((game.alive + game.lings_aboard)*2)*3
+		game.food -= (game.alive + game.lings_aboard) * ORION_LONG_DELAY
 	event_responses.Cut()
 	..()
 
 /datum/orion_event/hull_part/emag_effect(mob/living/carbon/gamer)
-	if(prob(10+gamerSkill))
+	if(prob(10+gamer_skill))
 		game.say("Something slams into the floor around [src] - luckily, it didn't get through!")
 		playsound(game, 'sound/effects/bang.ogg', 50, TRUE)
 		return
 	playsound(game, 'sound/effects/bang.ogg', 100, TRUE)
-	var/turf/open/floor/F
-	for(F in orange(1, src))
-		F.ScrapeAway()
+	for(var/turf/open/floor/smashed in orange(1, src))
+		smashed.ScrapeAway()
 	game.say("Something slams into the floor around [src], exposing it to space!")
 	if(game.hull)
-		sleep(10)
-		game.say("A new floor suddenly appears around [src]. What the hell?")
-		playsound(game, 'sound/weapons/genhit.ogg', 100, TRUE)
-		var/turf/open/space/T
-		for(T in orange(1, src))
-			T.PlaceOnTop(/turf/open/floor/plating)
+		addtimer(CALLBACK(game, .proc/fix_floor), 1 SECONDS)
+
+/datum/orion_event/hull_part/proc/fix_floor()
+	game.say("A new floor suddenly appears around [src]. What the hell?")
+	playsound(game, 'sound/weapons/genhit.ogg', 100, TRUE)
+	for(var/turf/open/space/fixed in orange(1, src))
+		fixed.PlaceOnTop(/turf/open/floor/plating)
+
+#define BUTTON_EXPLORE_SHIP "Explore Ship"
+#define BUTTON_LEAVE_THE_DERELICT "Leave the Derelict"
 
 /datum/orion_event/old_ship
 	name = "Derelict Ship"
 	text = "Your crew spots an old ship floating through space. \
 	It might have some supplies, but then again it looks rather unsafe."
 	weight = 2
-	event_responses = list("Explore Ship", "Leave the Derelict")
+	event_responses = list(BUTTON_EXPLORE_SHIP, BUTTON_LEAVE_THE_DERELICT)
 
 /datum/orion_event/old_ship/response(choice)
-	if(choice == "Leave the Derelict")
+	if(choice == BUTTON_LEAVE_THE_DERELICT)
 		return ..()
 	game.encounter_event(/datum/orion_event/exploring_derelict)
 
 /datum/orion_event/old_ship/emag_effect(mob/living/carbon/gamer)
 	return //do nothing because this leads into an event where we actually will do something.
+
+#define BUTTON_WELCOME_ABOARD "Welcome aboard."
+#define BUTTON_WHERE_DID_YOU_GO "Where did you go?!"
+#define BUTTON_A_GOOD_FIND "A good find."
+#define BUTTON_CONTINUE_TRAVELS "Continue travels."
 
 /datum/orion_event/exploring_derelict
 	name = "Derelict Exploration"
@@ -188,7 +206,7 @@
 	//set by on_select
 	event_responses = list()
 
-/datum/orion_event/exploring_derelict/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/exploring_derelict/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	..()
 	switch(rand(100))
 		if(0 to 14)
@@ -199,33 +217,35 @@
 			game.fuel += oldfuel
 			text = "As you look through it you find some supplies and a living person! \
 			[rescued] was rescued from the abandoned ship! You also found [oldfood] Food and [oldfuel] Fuel."
-			event_responses += "Welcome aboard."
+			event_responses += BUTTON_WELCOME_ABOARD
 		if(15 to 35)
 			var/lostfuel = rand(4,7)
 			var/deadname = game.remove_crewmember()
 			game.fuel -= lostfuel
 			text = "[deadname] was lost deep in the wreckage, and your own vessel lost [lostfuel] Fuel maneuvering to the the abandoned ship."
-			event_responses += "Where did you go?!"
+			event_responses += BUTTON_WHERE_DID_YOU_GO
 		if(36 to 65)
 			var/oldfood = rand(5,11)
 			game.food += oldfood
 			game.engine++
 			text = "You found [oldfood] Food and some parts amongst the wreck."
-			event_responses += "A good find."
+			event_responses += BUTTON_A_GOOD_FIND
 		else
 			text = "As you look through the wreck you cannot find much of use."
-			event_responses += "Continue travels."
+			event_responses += BUTTON_CONTINUE_TRAVELS
 
 /datum/orion_event/exploring_derelict/response(choice)
 	event_responses.Cut() //so they don't pile up between games
 	..()
 
+#define BUTTON_CONTINUE "Continue"
+
 /datum/orion_event/raiders
 	name = "Raiders"
 	weight = 3
-	event_responses = list("Continue")
+	event_responses = list(BUTTON_CONTINUE)
 
-/datum/orion_event/raiders/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/raiders/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	..()
 	text = "Raiders have come aboard your ship! "
 	if(prob(50))
@@ -241,7 +261,7 @@
 		text += "Fortunately, you fended them off without any trouble."
 
 /datum/orion_event/raiders/emag_effect(mob/living/carbon/gamer)
-	if(prob(50-gamerSkill))
+	if(prob(50-gamer_skill))
 		to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 		gamer.hallucination += 30
 	else
@@ -253,16 +273,16 @@
 	name = "Space Illness"
 	//needs to specify who died, set by select
 	weight = 3
-	event_responses = list("Continue")
+	event_responses = list(BUTTON_CONTINUE)
 
-/datum/orion_event/illness/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/illness/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	..()
 	var/deadname = game.remove_crewmember()
 	text = "A deadly illness has been contracted! [deadname] was killed by the disease."
 
 /datum/orion_event/illness/emag_effect(mob/living/carbon/gamer)
 	var/maxSeverity = 3
-	if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
+	if(gamer_skill_level >= SKILL_LEVEL_EXPERT)
 		maxSeverity = 2 //part of gitting gud is rng mitigation
 	var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 	if(severity == 1)
@@ -277,25 +297,28 @@
 		gamer.adjust_disgust(150) //max this bitch out so they barf a lot
 		gamer.Stun(100)
 
+#define BUTTON_KEEP_SPEED "Keep Speed"
+#define BUTTON_SLOW_DOWN "Slow Down"
+
 /datum/orion_event/flux
 	name = "Flux"
 	text = "This region of space is highly turbulent. If we go \
 	slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
 	weight = 1
-	event_responses = list("Keep Speed","Slow Down")
+	event_responses = list(BUTTON_KEEP_SPEED, BUTTON_SLOW_DOWN)
 
 /datum/orion_event/flux/response(choice)
-	if(choice == "Keep Speed")
+	if(choice == BUTTON_KEEP_SPEED)
 		if(prob(25))
 			return ..()
 		game.encounter_event(/datum/orion_event/engine_part)
 	else //Slow Down response
-		game.food -= (game.alive+game.lings_aboard)*2
+		game.food -= (game.alive+game.lings_aboard) * ORION_SHORT_DELAY
 		game.fuel -= 5
 		..()
 
 /datum/orion_event/flux/emag_effect(mob/living/carbon/gamer)
-	if(prob(25 + gamerSkill))//withstand the wind with your GAMER SKILL
+	if(prob(25 + gamer_skill))//withstand the wind with your GAMER SKILL
 		to_chat(gamer, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 		return
 	gamer.Paralyze(60)
@@ -306,9 +329,9 @@
 /datum/orion_event/changeling_infiltration
 	name = "Changeling Infiltration"
 	weight = 3
-	event_responses = list("Continue")
+	event_responses = list(BUTTON_CONTINUE)
 
-/datum/orion_event/changeling_infiltration/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/changeling_infiltration/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	. = ..()
 	text = "Strange reports warn of changelings infiltrating crews on trips to Orion..."
 	if(game.settlers.len <= 2)
@@ -327,9 +350,9 @@
 
 /datum/orion_event/changeling_attack
 	name = "Changeling Attack"
-	event_responses = list("Continue")
+	event_responses = list(BUTTON_CONTINUE)
 
-/datum/orion_event/changeling_attack/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/changeling_attack/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	. = ..()
 	text = ""
 	if(game.lings_aboard <= 0) //shouldn't trigger, but hey.
@@ -351,7 +374,7 @@
 		if(ling2)
 			game.lings_aboard = max(0,game.lings_aboard-2)
 		else
-			game.lings_aboard = max(0,--game.lings_aboard)
+			game.lings_aboard = max(0,game.lings_aboard - 2)
 		return
 
 	var/chancetokill = 30*game.lings_aboard-(5*game.alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
@@ -366,12 +389,15 @@
 		text += " You valiantly fight off the changeling[ling2 ? "s":""]!"
 		if(ling2)
 			game.food += 30
-			game.lings_aboard = max(0, game.lings_aboard-2)
+			game.lings_aboard = max(0, game.lings_aboard - 2)
 		else
 			game.food += 15
-			game.lings_aboard = max(0, --game.lings_aboard)
+			game.lings_aboard = max(0, game.lings_aboard - 1)
 		text += " Well, it's perfectly good food... \
 			You cut the changeling[ling2 ? "s" : ""] into meat, gaining [ling2 ? "30" : "15"] Food!"
+
+#define BUTTON_SPEED_PAST "Speed Past"
+#define BUTTON_GO_AROUND "Go Around"
 
 ///Black Hole - final  (emag can spawn singulo, see death event)
 /datum/orion_event/black_hole
@@ -380,19 +406,21 @@
 	affecting the region of space we were headed through. We could stay \
 	of course, but risk of being overcome by its gravity, or we could \
 	change course to go around, which will take longer."
-	event_responses = list("Speed Past","Go Around")
+	event_responses = list(BUTTON_SPEED_PAST, BUTTON_GO_AROUND)
 
 /datum/orion_event/black_hole/response(choice)
-	if(choice == "Go Around")
-		game.food -= ((game.alive + game.lings_aboard)*2)*3
+	if(choice == BUTTON_GO_AROUND)
+		game.food -= (game.alive + game.lings_aboard) * ORION_LONG_DELAY
 		game.fuel -= 15
 		game.turns += 1
 		return ..()
-	if(prob(75-gamerSkill))
+	if(prob(75-gamer_skill))
 		game.encounter_event(/datum/orion_event/black_hole_death)
 		return
 	game.turns += 1
 	..()
+
+#define BUTTON_OH "Oh..."
 
 ///You died to a black hole, have some fluff text
 /datum/orion_event/black_hole_death
@@ -401,9 +429,9 @@
 	pull of the black hole. Try as you may, you cannot escape its stellar force. \
 	It isn't long before you pass the event horizon, and you close your eyes, readying \
 	to be torn apart as your ship begins to buckle under the pull."
-	event_responses = list("Oh...")
+	event_responses = list(BUTTON_OH)
 
-/datum/orion_event/black_hole_death/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
+/datum/orion_event/black_hole_death/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	. = ..()
 	for(var/list_position in 1 to game.settlermoods.len)
 		game.settlermoods[list_position] = 1
@@ -421,6 +449,8 @@
 		addtimer(CALLBACK(game, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
 		QDEL_IN(S, 5 SECONDS)
 
+#define BUTTON_DOCK "Dock"
+
 ///You found a space port!
 /datum/orion_event/space_port
 	name = "Space Port"
@@ -428,9 +458,9 @@
 	along the Orion Trail. A friendly hailing from the nearby space port \
 	assures that you can dock to rest and prepare for the travels ahead."
 	weight = 2
-	event_responses = list("Dock")
+	event_responses = list(BUTTON_DOCK)
 
-/datum/orion_event/space_port/on_select(_gamerSkill, _gamerSkillLevel, _gamerSkillRands)
+/datum/orion_event/space_port/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	. = ..()
 	//If your crew is pathetic you can get freebies (provided you haven't already gotten one from this port)
 	if(game.fuel > 20 && game.food > 20) //but you don't need one
@@ -472,18 +502,18 @@
 /datum/orion_event/space_port_raid
 	name = "Space Port Raid"
 
-	event_responses = list("Continue")
+	event_responses = list(BUTTON_CONTINUE)
 
-/datum/orion_event/space_port_raid/on_select(_gamerSkill, _gamerSkillLevel, gamerSkillRands)
+/datum/orion_event/space_port_raid/on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	. = ..()
-	var/success = min(15 * game.alive + gamerSkill,100) //default crew (4) have a 60% chance
+	var/success = min(15 * game.alive + gamer_skill,100) //default crew (4) have a 60% chance
 	game.spaceport_raided = TRUE
 
 	var/fuel = 0
 	var/food = 0
 	if(prob(success))
-		fuel = rand(5 + gamerSkillRands,15 + gamerSkillRands)
-		food = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+		fuel = rand(5 + gamer_skill_rands,15 + gamer_skill_rands)
+		food = rand(5 + gamer_skill_rands,15 + gamer_skill_rands)
 		text = "You successfully raided the spaceport! You gained [fuel] Fuel and [food] Food! (+[fuel] fuel, +[food] food)"
 		usr?.mind?.adjust_experience(/datum/skill/gaming, 10)
 	else
@@ -503,8 +533,8 @@
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i, i<=3, i++)
-					var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
-					O.target = usr
+					var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(src))
+					spaceport_security.target = usr
 	game.fuel += fuel
 	game.food += food
 

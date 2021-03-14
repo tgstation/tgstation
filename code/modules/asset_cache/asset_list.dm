@@ -193,8 +193,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
  * Arguments:
  * * I: icon being turned into an asset
  */
-/datum/asset/spritesheet/proc/ModifyInserted(icon/I)
-	return I
+/datum/asset/spritesheet/proc/ModifyInserted(icon/pre_asset)
+	return pre_asset
 
 /datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
 	if (length(prefix))

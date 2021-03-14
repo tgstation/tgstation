@@ -16,7 +16,7 @@
 	var/food = 80
 	var/fuel = 60
 	var/turns = 4
-	var/alive = 4
+	var/alive = ORION_STARTING_CREW_COUNT
 	var/datum/orion_event/event = null
 	var/reason
 	var/list/settlers = list("Harry","Larry","Bob")
@@ -37,7 +37,7 @@
 		/datum/orion_event/changeling_attack,
 		/datum/orion_event/space_port,
 		/datum/orion_event/space_port/tau_ceti,
-		/datum/orion_event/space_port_raid
+		/datum/orion_event/space_port_raid,
 	)
 	//actual amount of lings on board
 	var/lings_aboard = 0
@@ -46,22 +46,22 @@
 	var/spaceport_raided = FALSE
 	var/gameStatus = ORION_STATUS_START
 
-	var/obj/item/radio/Radio
+	var/obj/item/radio/radio
 	var/list/gamers = list()
 	var/killed_crew = 0
 
 
 /obj/machinery/computer/arcade/orion_trail/Initialize()
 	. = ..()
-	Radio = new /obj/item/radio(src)
-	Radio.listening = 0
+	radio = new /obj/item/radio(src)
+	radio.listening = 0
 	for(var/path in events)
 		var/datum/orion_event/new_event = new path(src)
 		events[new_event] = new_event.weight
 		popleft(events) //remove the old path
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
-	QDEL_NULL(Radio)
+	QDEL_NULL(radio)
 	for(var/datum/orion_event/dat_to_del as anything in events)
 		dat_to_del.game = null
 		qdel(dat_to_del)
@@ -81,16 +81,16 @@
 	var/mob/living/carbon/player = usr
 	var/player_crew_name = player.first_name()
 	settlers = list()
-	for(var/i = 1; i <= 3; i++)
+	for(var/i in 1 to ORION_STARTING_CREW_COUNT - 1) //one reserved to be YOU
 		add_crewmember(update = FALSE)
-	add_crewmember("[player_crew_name]") //final crewmember is you, so DO update the settler moods now
+	add_crewmember("[player_crew_name]")
 	// Re-set items to defaults
 	engine = 1
 	hull = 1
 	electronics = 1
 	food = 80
 	fuel = 60
-	alive = 4
+	alive = ORION_STARTING_CREW_COUNT
 	turns = 1
 	event = null
 	gameStatus = ORION_STATUS_NORMAL
@@ -102,10 +102,10 @@
 	spaceport_raided = FALSE
 
 /obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
-	if(gamers[gamer] == -2)
+	if(gamers[gamer] == ORION_GAMER_GIVE_UP)
 		return // enough harassing them
 
-	if(gamers[gamer] == -1)
+	if(gamers[gamer] == ORION_GAMER_PAMPHLET)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
 		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
@@ -116,23 +116,23 @@
 
 	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
 
-	if(gamers[gamer] > 2 && prob(20 * gamers[gamer]))
+	if(gamers[gamer] > ORION_GAMER_REPORT_THRESHOLD && prob(20 * gamers[gamer]))
 
-		Radio.set_frequency(FREQ_SECURITY)
-		Radio.talk_into(src, "SECURITY ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
+		radio.set_frequency(FREQ_SECURITY)
+		radio.talk_into(src, "SECURITY ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
 
-		Radio.set_frequency(FREQ_MEDICAL)
-		Radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+		radio.set_frequency(FREQ_MEDICAL)
+		radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
 
-		gamers[gamer] = -1
+		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
 		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
 
 		if(!isnull(GLOB.data_core.general))
-			for(var/datum/data/record/R in GLOB.data_core.general)
-				if(R.fields["name"] == gamer.name)
-					R.fields["m_stat"] = "*Unstable*"
+			for(var/datum/data/record/insanity_records in GLOB.data_core.general)
+				if(insanity_records.fields["name"] == gamer.name)
+					insanity_records.fields["m_stat"] = "*Unstable*"
 					return
 
 /obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user, datum/tgui/ui)
@@ -188,14 +188,14 @@
 
 	var/mob/living/carbon/gamer = usr
 
-	var/gamerSkillLevel = 0
-	var/gamerSkill = 0
-	var/gamerSkillRands = 0
+	var/gamer_skill_level = 0
+	var/gamer_skill = 0
+	var/gamer_skill_rands = 0
 
 	if(gamer?.mind)
-		gamerSkillLevel = gamer.mind.get_skill_level(/datum/skill/gaming)
-		gamerSkill = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
-		gamerSkillRands = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+		gamer_skill_level = gamer.mind.get_skill_level(/datum/skill/gaming)
+		gamer_skill = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+		gamer_skill_rands = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 
 	var/xp_gained = 0
 
@@ -236,22 +236,22 @@
 			//out of supplies, die
 			if(food <= 0 || fuel <= 0)
 				set_game_over(gamer)
-			if(turns == 2 && prob(30-gamerSkill)) //asteroids part of the trip
-				encounter_event(/datum/orion_event/hull_part, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+			if(turns == 2 && prob(30-gamer_skill)) //asteroids part of the trip
+				encounter_event(/datum/orion_event/hull_part, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 				return
 			if(turns == 4) //halfway mark
-				encounter_event(/datum/orion_event/space_port/tau_ceti, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+				encounter_event(/datum/orion_event/space_port/tau_ceti, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 				return
 			if(turns == 7) //black hole part of the trip
-				encounter_event(/datum/orion_event/black_hole, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+				encounter_event(/datum/orion_event/black_hole, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 				return
 			//an uneventful (get it) turn
-			if(prob(25 + gamerSkill))
+			if(prob(25 + gamer_skill))
 				return
-			encounter_event(null, gamer, gamerSkill, gamerSkillLevel)
-			if(lings_aboard && (istype(event, /datum/orion_event/changeling_infiltration) || prob(45 + gamerSkill)))
+			encounter_event(null, gamer, gamer_skill, gamer_skill_level)
+			if(lings_aboard && (istype(event, /datum/orion_event/changeling_infiltration) || prob(45 + gamer_skill)))
 				//upgrade infiltration/whatever else we got to attack right away
-				encounter_event(/datum/orion_event/changeling_attack, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+				encounter_event(/datum/orion_event/changeling_attack, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 		if("random_kill")
 			execute_crewmember(gamer)
 		if("target_kill")
@@ -264,41 +264,41 @@
 					add_crewmember(pick(GLOB.commando_names + GLOB.nightmare_names + GLOB.ai_names + GLOB.clown_names + GLOB.mime_names + GLOB.plasmaman_names + GLOB.ethereal_names + GLOB.carp_names))
 				else
 					add_crewmember()
-				fuel -= 10
-				food -= 10
+				fuel -= ORION_BUY_CREW_PRICE
+				food -= ORION_BUY_CREW_PRICE
 				killed_crew-- // I mean not really but you know
 		if("sellcrew") //sell a crewmember
 			if(!spaceport_raided && settlers.len > 1)
 				remove_crewmember()
-				fuel += 7
-				food += 7
+				fuel += ORION_SELL_CREW_PRICE
+				food += ORION_SELL_CREW_PRICE
 		if("leave_spaceport")
 			gameStatus = ORION_STATUS_NORMAL
 			spaceport_raided = FALSE
 		if("raid_spaceport")
 			spaceport_raided = TRUE
-			encounter_event(/datum/orion_event/space_port_raid, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+			encounter_event(/datum/orion_event/space_port_raid, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 		if("buyparts")
-			if(!spaceport_raided && fuel > 5)
+			if(!spaceport_raided && fuel > ORION_TRADE_RATE)
 				switch(params["part"])
-					if(1) //Engine Parts
+					if(ORION_BUY_ENGINE_PARTS)
 						engine++
-					if(2) //Hull Plates
+					if(ORION_BUY_ELECTRONICS)
 						hull++
-					if(3) //Spare Electronics
+					if(ORION_BUY_HULL_PARTS)
 						electronics++
-				fuel -= 5 //they all cost 5
+				fuel -= ORION_TRADE_RATE
 		if("trade")
 			if(!spaceport_raided)
 				switch(params["what"])
-					if(1) //Fuel
-						if(fuel > 5)
-							fuel -= 5
-							food += 5
-					if(2) //Food
-						if(food > 5)
-							fuel += 5
-							food -= 5
+					if(ORION_I_WANT_FUEL)
+						if(fuel > ORION_TRADE_RATE)
+							fuel -= ORION_TRADE_RATE
+							food += ORION_TRADE_RATE
+					if(ORION_I_WANT_FOOD)
+						if(food > ORION_TRADE_RATE)
+							fuel += ORION_TRADE_RATE
+							food -= ORION_TRADE_RATE
 	add_fingerprint(gamer)
 
 /**
@@ -307,8 +307,12 @@
  * giving a path argument will instead find that instanced datum instead of pickweighting. Used in events that follow from events.
  * Arguments:
  * * path: if we want a specific event, this is the path of the wanted one
+ * * gamer: person using the arcade, used in emag effects
+ * * gamer_skill: gaming skill of the player
+ * * gamer_skill_level: gaming skill level of the player
+ * * gamer_skill_rands: See above but for random chances, you can just look at gaming skill to see how it chalks that up
  */
-/obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamerSkill, gamerSkillLevel, gamerSkillRands)
+/obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 	if(!path)
 		event = pickweightAllowZero(events)
 	else
@@ -318,13 +322,9 @@
 				break
 	if(!event)
 		CRASH("Woah, hey! we could not find the specified event \"[path]\"! Add it to the events list, numb nuts!")
-	event.on_select(gamerSkill, gamerSkillLevel, gamerSkillRands)
+	event.on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
 	if(obj_flags & EMAGGED)
 		event.emag_effect(gamer)
-
-/obj/machinery/computer/arcade/orion_trail/proc/lose_condition_met()
-
-		return TRUE
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
 	gameStatus = ORION_STATUS_GAMEOVER
@@ -380,13 +380,13 @@
 
 //Remove Random/Specific crewmember
 /obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "", update = TRUE)
-	var/list/safe2remove = settlers
+	var/list/safe_to_remove = settlers
 	var/removed = ""
 	if(dont_remove)
-		safe2remove -= dont_remove
+		safe_to_remove -= dont_remove
 	if(specific && specific != dont_remove)
-		safe2remove = list(specific)
-	removed = pick(safe2remove)
+		safe_to_remove = list(specific)
+	removed = pick(safe_to_remove)
 
 	if(removed)
 		if(lings_aboard && prob(40*lings_aboard)) //if there are 2 lings you're twice as likely to get one, obviously
@@ -415,7 +415,7 @@
 		if(obj_flags & EMAGGED)
 			gamer.death()
 		set_game_over(gamer, "Your last pioneer committed suicide.")
-		if(killed_crew >= 4)
+		if(killed_crew >= ORION_STARTING_CREW_COUNT)
 			gamer.mind?.adjust_experience(/datum/skill/gaming, -15)//no cheating by spamming game overs
 			report_player(gamer)
 	else if(obj_flags & EMAGGED)
@@ -449,7 +449,7 @@
 		var/changing_mood = 0
 		if(prob(60)) //sometimes they just feel better or worse
 			changing_mood = rand(-1,1)
-		settlermoods[settlers[i]] +=  max(settlers.len + food_mood + supply_mood + changing_mood, 1)
+		settlermoods[settlers[i]] += max(settlers.len + food_mood + supply_mood + changing_mood, 1)
 		if(lings_suspected) //lings ruin any good mood
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 4)
 
