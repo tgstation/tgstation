@@ -32,10 +32,10 @@
 
 			if(isfloorturf(T))
 				var/turf/open/floor/TF = T
-				if(!(TF.burnt))
-					floor += 2
-				else
+				if(TF.burnt)
 					floor += 1
+				else
+					floor += 2
 
 			if(iswallturf(T))
 				var/turf/closed/wall/TW = T
