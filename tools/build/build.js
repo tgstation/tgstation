@@ -35,13 +35,13 @@ if(process.env.CBT_BUILD_MODE != undefined){
     case "TEST_RUN":
       BUILD_MODE = TEST_RUN_BUILD
       break;
+    case "TGS":
+      BUILD_MODE = TGS_BUILD
+      break;
     default:
       BUILD_MODE = process.env.CBT_BUILD_MODE
       break;
   }
-}
-if (process.env.TG_BUILD_TGS_MODE) {
-  BUILD_MODE = TGS_BUILD
 }
 console.log(`Starting CBT in ${BUILD_MODE} mode.`)
 
