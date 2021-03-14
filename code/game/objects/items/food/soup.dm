@@ -154,7 +154,7 @@
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "misosoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("miso" = 1) // There used to be comments here but mothblocks made me remove them
+	tastes = list("miso" = 1)
 	foodtypes = VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 
