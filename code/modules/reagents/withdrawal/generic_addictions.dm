@@ -28,6 +28,11 @@
 	name = "stimulant"
 	withdrawal_stage_messages = list("You feel a bit tired...You could really use a pick me up.", "You are getting a bit woozy...", "So...Tired...")
 
+/datum/addiction/stimulants/withdrawal_enters_stage_0(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.remove_actionspeed_modifier(/datum/actionspeed_modifier/stimulants)
+	affected_carbon.remove_movespeed_modifier(/datum/movespeed_modifier/stimulants)
+
 /datum/addiction/stimulants/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.add_actionspeed_modifier(/datum/actionspeed_modifier/stimulants)
@@ -234,9 +239,10 @@
 	name = "nicotine"
 	withdrawal_stage_messages = list("Feel like having a smoke...", "Getting antsy. Really need a smoke now.", "I can't take it! Need a smoke NOW!")
 
-/datum/addiction/nicotine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon, delta_time)
+/datum/addiction/nicotine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	affected_carbon.Jitter(5 * delta_time)
+	if(DT_PROB(5, delta_time))
+		affected_carbon.Jitter(5 * delta_time)
 
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
