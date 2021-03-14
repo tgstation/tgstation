@@ -35,13 +35,22 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
  */
 GLOBAL_LIST_EMPTY(security_officer_distribution)
 
-/datum/job/security_officer/after_spawn(mob/living/carbon/human/H, mob/M)
+/datum/job/security_officer/after_spawn(mob/living/carbon/human/H, mob/M, latejoin = FALSE)
 	. = ..()
 
-	var/department = get_my_department(H, M.client?.prefs?.prefered_security_department)
+	var/department
 
-	// In the event we're a latejoin, or otherwise aren't in the round-start distributions.
-	GLOB.security_officer_distribution[REF(H)] = department
+	var/prefered_department = M.client?.prefs?.prefered_security_department
+	if (!isnull(prefered_department))
+		department = get_my_department(H, prefered_department)
+
+		if (latejoin)
+			announce_latejoin(H, department, GLOB.security_officer_distribution)
+
+		// In the event we're a latejoin, or otherwise aren't in the round-start distributions.
+		// This is outside the latejoin check because this should theoretically still run if
+		// a player isn't in the distributions, but isn't a late join.
+		GLOB.security_officer_distribution[REF(H)] = department
 
 	var/ears = null
 	var/accessory = null
@@ -106,6 +115,41 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		to_chat(M, "<b>You have been assigned to [department]!</b>")
 	else
 		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
+
+/datum/job/security_officer/proc/announce_latejoin(
+	mob/officer,
+	department,
+	distribution,
+)
+	var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
+	if (isnull(announcement_system))
+		return
+
+	announcement_system.announce_officer(officer, department)
+
+	var/list/targets = list()
+
+	var/list/partners = list()
+	for (var/officer_ref in distribution)
+		var/mob/partner = locate(officer_ref)
+		if (!istype(partner))
+			continue
+		partners += partner.real_name
+
+	if (partners.len)
+		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
+			if (pda.owner in partners)
+				targets += "[pda.owner] ([pda.ownjob])"
+
+	var/datum/signal/subspace/messaging/pda/signal = new(announcement_system, list(
+		"name" = "Security Department Update",
+		"job" = "Automated Announcement System",
+		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
+		"targets" = targets,
+		"automated" = TRUE,
+	))
+
+	signal.send_to_receivers()
 
 /datum/job/security_officer/proc/get_my_department(mob/character, preferred_department)
 	var/department = GLOB.security_officer_distribution[REF(character)]
