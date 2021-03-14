@@ -53,7 +53,6 @@
 /datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time, times_fired)
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type) //If this is null, we're not addicted
 	var/on_drug_of_this_addiction = FALSE
-	message_admins("[time_since_dose_began]")
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
 			if(addiction == type && possible_drug.volume > 0) //If addiction drug is in system
