@@ -28,17 +28,31 @@ export const Icon = props => {
   if (typeof rotation === 'number') {
     style['transform'] = `rotate(${rotation}deg)`;
   }
-  const faRegular = FA_OUTLINE_REGEX.test(name);
-  const faName = name.replace(FA_OUTLINE_REGEX, '');
+  const icon_set = name.startsWith("tg-") ? "tg" : "fa"
+  let fontSetClasses = []
+  switch (icon_set) {
+    case "fa":
+      const faRegular = FA_OUTLINE_REGEX.test(name);
+      const faName = name.replace(FA_OUTLINE_REGEX, '');
+      fontSetClasses = [
+        faRegular ? 'far' : 'fas',
+        'fa-' + faName,
+        spin && 'fa-spin']
+      break;
+    case "tg":
+      fontSetClasses = [
+        name.replace("tg-","tgicon-")
+      ]
+    default:
+      break;
+  }
   return (
     <Box
       as="i"
       className={classes([
         'Icon',
         className,
-        faRegular ? 'far' : 'fas',
-        'fa-' + faName,
-        spin && 'fa-spin',
+        ...fontSetClasses,
       ])}
       style={style}
       {...rest} />

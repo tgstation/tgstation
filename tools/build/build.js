@@ -29,10 +29,43 @@ const { exec } = require('./cbt/process');
 const { Task, runTasks } = require('./cbt/task');
 const { regQuery } = require('./cbt/winreg');
 
-const taskTgui = new Task('tgui')
+/// Installs all tgui dependencies
+const taskYarnInstall = new Task('yarn install')
   .depends('tgui/.yarn/releases/*')
-  .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/yarn.lock')
+  .depends('tgui/.yarn/install-state.gz')
+  .depends('tgui/**/package.json')
+  .provides('tgui/.yarn/install-state.gz')
+  .build(async () => {
+    const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
+      .replace('/tgui/', '/');
+    const yarn = args => exec('node', [yarnPath, ...args], {
+      cwd: './tgui',
+    });
+    await yarn(['install']);
+  });
+
+/// Builds svg fonts
+const taskTgfont = new Task('tg svg font')
+  .depends('tgui/.yarn/install-state.gz')
+  .depends('tgui/packages/tgfont/**/*.svg')
+  .depends('tgui/packages/tgfont/config.json')
+  .depends('tgui/packages/tgfont/package.json')
+  .provides('tgui/packages/tgfont/dist/tgfont.css')
+  .provides('tgui/packages/tgfont/dist/tgfont.eot')
+  .provides('tgui/packages/tgfont/dist/tgfont.woff2')
+  .build(async () => {
+    const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
+      .replace('/tgui/', '/');
+    const yarn = args => exec('node', [yarnPath, ...args], {
+      cwd: './tgui',
+    });
+    await yarn(['workspace', 'tgfont', 'build']);
+  });
+
+/// Builds tgui
+const taskTgui = new Task('tgui')
+  .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
   .depends('tgui/packages/**/*.+(js|jsx|ts|tsx|cjs|mjs|scss)')
@@ -42,8 +75,6 @@ const taskTgui = new Task('tgui')
   .provides('tgui/public/tgui-panel.bundle.css')
   .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
-    // Instead of calling `tgui/bin/tgui`, we reproduce the whole pipeline
-    // here for maximum compilation speed.
     const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
       .replace('/tgui/', '/');
     const yarn = args => exec('node', [yarnPath, ...args], {
@@ -114,6 +145,8 @@ const taskDm = new Task('dm')
 
 // Frontend
 const tasksToRun = [
+  taskYarnInstall,
+  taskTgfont,
   taskTgui,
   taskDm,
 ];
