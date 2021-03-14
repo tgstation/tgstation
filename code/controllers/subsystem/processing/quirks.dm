@@ -1,4 +1,6 @@
 #define EXP_ASSIGN_WAYFINDER 1200
+#define RANDOM_QUIRK_BONUS 3
+#define MINIMUM_RANDOM_QUIRKS 3
 //Used to process and handle roundstart quirks
 // - Quirk strings are used for faster checking in code
 // - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string
@@ -66,63 +68,55 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/needswayfinder))
 		user.add_quirk(/datum/quirk/needswayfinder, TRUE)
 
-/datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user, bonus_points = 0)
-	var/bonus_quirks = max((length(user.roundstart_quirks) + rand(-3,3)), 3)
+/*
+ *Randomises the quirks for a specified mob
+ */
+/datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user)
+	var/bonus_quirks = max((length(user.roundstart_quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
-	var/loop_preventer = 10 // Makes sure we don't get stuck
 	var/good_count = 0 //Maximum of 6 good perks
 	var/score //What point score we're at
+	///Cached list of possible quirks
+	var/list/possible_quirks = quirks.Copy()
 	//Create a random list of stuff to start with
 	while(bonus_quirks > added_quirk_count)
-		if(!loop_preventer)//Lets not get stuck
-			break
-		var/quirk = pick(quirks) //quirk is a string
-		if((quirk in quirk_blacklist) && (quirk in quirks_to_add)) //prevent blacklisted
-			loop_preventer--
-			continue
-		if(quirk in quirks_to_add)
-			loop_preventer--
+		var/quirk = pick(possible_quirks) //quirk is a string
+		if(quirk in quirk_blacklist) //prevent blacklisted
+			possible_quirks -= qurik
 			continue
 		if(quirk_points[quirk] > 0)
 			good_count++
 		score += quirk_points[quirk]
 		quirks_to_add += quirk
+		possible_quirks -= quirk
 		added_quirk_count++
 
 	//But lets make sure we're balanced
-	loop_preventer = 10
 	while(score > 0)
-		if(!loop_preventer)//Lets not get stuck
+		if(!length(possible_quirks))//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
-		if((quirk in quirk_blacklist) && (quirk in quirks_to_add)) //prevent blacklisted
-			loop_preventer--
-			continue
-		if(quirk in quirks_to_add)
-			loop_preventer--
+		if(quirk in quirk_blacklist) //prevent blacklisted
+			possible_quirks -= qurik
 			continue
 		if(!quirk_points[quirk] < 0)//negative only
-			loop_preventer--
+			possible_quirks -= qurik
 			continue
 		good_count++
 		score += quirk_points[quirk]
 		quirks_to_add += quirk
 
 	//And have benefits too
-	loop_preventer = 10
-	while(score < 0 && good_count <= 6)
-		if(!loop_preventer)//Lets not get stuck
+	while(score < 0 && good_count <= MAX_QUIRKS)
+		if(!length(possible_quirks))//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
-		if((quirk in quirk_blacklist) && (quirk in quirks_to_add)) //prevent blacklisted
-			loop_preventer--
-			continue
-		if(quirk in quirks_to_add)
-			loop_preventer--
+		if(quirk in quirk_blacklist) //prevent blacklisted
+			possible_quirks -= qurik
 			continue
 		if(!quirk_points[quirk] > 0) //positive only
-			loop_preventer--
+			possible_quirks -= qurik
 			continue
 		good_count++
 		score += quirk_points[quirk]
@@ -135,4 +129,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		user.remove_quirk(quirk.type) //these quirks are objects
 
 	for(var/datum/quirk/quirk as anything in quirks_to_add)
-		user.add_quirk(quirks[quirk], TRUE)//these are typepaths converted from string
+		user.add_quirk(quirks[quirk], spawn_effects = TRUE)//these are typepaths converted from string
+
+#undef RANDOM_QUIRK_BONUS
+#undef MINIMUM_RANDOM_QUIRKS

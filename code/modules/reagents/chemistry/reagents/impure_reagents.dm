@@ -72,7 +72,7 @@
 			index = 1
 		if(!thing)
 			continue
-		carbon_mob.put_in_hand(thing, index, TRUE, TRUE)
+		carbon_mob.put_in_hand(thing, index, forced = TRUE, ignore_anim = TRUE)
 		playsound(carbon_mob, 'sound/effects/phasein.ogg', 20, TRUE)
 /*
 * Freezes the player in a block of ice, 1s = 1u

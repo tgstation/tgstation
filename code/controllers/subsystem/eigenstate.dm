@@ -42,21 +42,19 @@ SUBSYSTEM_DEF(eigenstates)
 		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
 		var/obj/item = target
 		if(item)
-			item.color = "#9999FF" //Tint the locker slightly.
+			item.color = COLOR_EIGENSTATE //Tint the locker slightly.
 			item.alpha = 200
 			do_sparks(3, FALSE, item)
 
-	visible_atom.visible_message("The items' eigenstates spilt and merge, linking each of them together.")
+	visible_atom.visible_message("The items' shimmer and fizzle, turning a shade of violet blue.")
 	id_counter++
 	return TRUE
 
 ///reverts everything back to start
 /datum/controller/subsystem/eigenstates/Destroy()
-	var/index = 1
-	while(index < id_counter)
+	for(index in 1 to id_counter)
 		for(var/entry in eigen_targets["[index]"])
 			remove_eigen_entry(entry)
-		index++
 	eigen_targets = null
 	eigen_id = null
 	id_counter = 1
@@ -72,9 +70,6 @@ SUBSYSTEM_DEF(eigenstates)
 		COMSIG_CLOSET_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
-	if(!length(eigen_targets))//If we're empty - delete the entry
-		eigen_targets -= eigen_targets[id]
-
 
 ///Finds the object within the master list, then sends the thing to the object's location
 /datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)

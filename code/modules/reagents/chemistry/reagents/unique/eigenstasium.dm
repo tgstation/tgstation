@@ -1,15 +1,14 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//										EIGENSTASIUM
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//eigenstate Chem
-//Teleports you to the creation location and back
-//OD teleports you randomly around the Station and gives you a status effect
-//The status effect slowly send you on a wild ride and replaces you with an alternative reality version of yourself unless you consume eigenstasium/bluespace dust.
-//During the process you get really hungry, then some of your items slowly start teleport around you,
-//then alternative versions of yourself are brought in from a different universe and they yell at you.
-//and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative
-//Spraying this on lockers allows you to create eigenlinked lockers - see the eigenstate subsystem for using this to create your own links
 
+/*eigenstate themed Chem
+ *Teleports you to the creation location on consumption and back when the reagent is removed from you
+ *OD teleports you randomly around the Station and gives you a status effect
+ *The status effect slowly send you on a wild ride and replaces you with an alternative reality version of yourself unless you consume eigenstasium/bluespace dust/stabilising agent.
+ *During the process you get really hungry,
+ *Then some of your items slowly start teleport around you,
+ *then alternative versions of yourself are brought in from a different universe and they yell at you.
+ *and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative
+ *Spraying this on lockers allows you to create eigenlinked lockers - see the eigenstate subsystem for using this to create your own links
+*/
 /datum/reagent/eigenstate
 	name = "Eigenstasium"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
@@ -22,11 +21,9 @@
 	inverse_chem = null
 	failed_chem = /datum/reagent/bluespace //crashes out
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
-	data = list("location_created" = null, "creator" = null)//So we retain the target location and creator between reagent instances
+	data = list("location_created" = null)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
 	var/turf/location_created
-	///The mob that initial teleport is linked to
-	var/mob/living/carbon/creator
 	///The return point indicator
 	var/obj/effect/overlay/holo_pad_hologram/eigenstate
 	///The point you're returning to after the reagent is removed
@@ -34,7 +31,6 @@
 
 /datum/reagent/eigenstate/on_new(list/data)
 	location_created = data["location_created"]
-	creator = data["creator"]
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
@@ -49,7 +45,7 @@
 /datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
 	//make hologram at return point
 	eigenstate = new (living_mob.loc)
-	eigenstate.appearance = creator?.appearance || living_mob.appearance //Blood lets you set your eigenstate icon
+	eigenstate.appearance = living_mob.appearance
 	eigenstate.alpha = 170
 	eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
@@ -93,7 +89,7 @@
 	do_sparks(5, FALSE, living_mob)
 	return ..()
 
-//FOR ADDICTION EFFECTS, SEE datum/status_effect/eigenstasium
+//FOR ADDICTION-LIKE EFFECTS, SEE datum/status_effect/eigenstasium
 
 ///Lets you link lockers together
 /datum/reagent/eigenstate/expose_turf(turf/exposed_turf, reac_volume)
@@ -106,5 +102,3 @@
 	if(!length(lockers))
 		return
 	SSeigenstates.create_new_link(lockers)
-
-//eigenstate END

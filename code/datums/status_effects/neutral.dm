@@ -343,13 +343,20 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
+#define EIGENSTASIUM_MAX_BUFFER 250
+#define EIGENSTASIUM_STABILISATION_RATE 5
+#define EIGENSTASIUM_PHASE_1_END 50
+#define EIGENSTASIUM_PHASE_2_END 80
+#define EIGENSTASIUM_PHASE_3_START 100
+#define EIGENSTASIUM_PHASE_3_END 150
+
 /datum/status_effect/eigenstasium
 	id = "eigenstasium"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	///So we know what cycle we're in during the status
-	var/current_cycle = -250 //Consider it your stability
+	var/current_cycle = -EIGENSTATIUM_MAX_BUFFER //Consider it your stability
 	///The addiction looper for addiction stage 3
 	var/phase_3_cycle = -0 //start off delayed
 	///Your clone from another reality
@@ -371,17 +378,17 @@
 	//If we have a reagent that blocks the effects
 	var/block_effects = FALSE
 	if(owner.has_reagent(/datum/reagent/bluespace))
-		current_cycle = max(-250, (current_cycle - 7.5)) //cap to -250
+		current_cycle = max(-EIGENSTATIUM_MAX_BUFFER, (current_cycle - (EIGENSTASIUM_STABILISATION_RATE * 1.5))) //cap to -250
 		block_effects = TRUE
 	if(owner.has_reagent(/datum/reagent/stabilizing_agent))
-		current_cycle = max(-250, (current_cycle - 5))
+		current_cycle = max(-EIGENSTATIUM_MAX_BUFFER, (current_cycle - EIGENSTASIUM_STABILISATION_RATE))
 		block_effects = TRUE
 	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
 	if(eigen)
 		if(eigen.overdosed)
 			block_effects = FALSE
 		else
-			current_cycle = max(-250, (current_cycle - 10))
+			current_cycle = max(-EIGENSTATIUM_MAX_BUFFER, (current_cycle - (EIGENSTASIUM_STABILISATION_RATE * 2)))
 			block_effects = TRUE
 
 	if(!QDELETED(alt_clone)) //catch any stragglers
@@ -402,12 +409,12 @@
 			to_chat(owner, "<span class='userdanger'>You feel like you're being pulled across to somewhere else. You feel empty inside.</span>")
 
 		//phase 1
-		if(1 to 50)
+		if(1 to EIGENSTASIUM_PHASE_1_END)
 			owner.Jitter(2)
 			owner.adjust_nutrition(-4)
 
 		//phase 2
-		if(50 to 80)
+		if(EIGENSTASIUM_PHASE_1_END to EIGENSTASIUM_PHASE_2_END)
 			if(current_cycle == 51)
 				to_chat(owner, "<span class='userdanger'>You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!</span>")
 				owner.Jitter(200)
@@ -422,7 +429,7 @@
 			do_sparks(5,FALSE,item)
 
 		//phase 3 - little break to get your items
-		if(100 to 150)
+		if(EIGENSTASIUM_PHASE_3_START to EIGENSTASIUM_PHASE_3_END)
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
@@ -434,7 +441,7 @@
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
 					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, .proc/remove_clone_from_var)
-					owner.visible_message("[owner] collapses in from an alternative reality!")
+					owner.visible_message("[owner] splits into seemingly two versions of themselves!")
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
 					alt_clone.emote("spin")
@@ -483,7 +490,7 @@
 			do_sparks(5, FALSE, owner)
 
 		//phase 4
-		if(151 to INFINITY)
+		if(EIGENSTASIUM_PHASE_3_END to INFINITY)
 			//clean up and remove status
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "Eigenstasium wild rides ridden")
 			do_sparks(5, FALSE, owner)
@@ -522,6 +529,13 @@
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers
 		do_sparks(5, FALSE, alt_clone)
-		owner.visible_message("[owner] is snapped across to a different alternative reality!")
+		owner.visible_message("One of the [owner]s suddenly phases out of reality infront of you!")
 		QDEL_NULL(alt_clone)
 	return ..()
+
+#undef EIGENSTASIUM_MAX_BUFFER
+#undef EIGENSTASIUM_STABILISATION_RATE
+#undef EIGENSTASIUM_PHASE_1_END
+#undef EIGENSTASIUM_PHASE_2_END
+#undef EIGENSTASIUM_PHASE_3_START
+#undef EIGENSTASIUM_PHASE_3_END
