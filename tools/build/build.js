@@ -21,6 +21,20 @@ if (NODE_VERSION < NODE_VERSION_TARGET) {
   process.exit(1);
 }
 
+const STANDARD_BUILD = "Standard Build"
+const TGS_BUILD = "TGS Build"
+const ALL_MAPS_BUILD = "CI All Maps Build"
+const TEST_RUN_BUILD = "CI Integration Tests Build"
+
+let BUILD_MODE = STANDARD_BUILD;
+if(process.env.CBT_BUILD_MODE != undefined){
+  BUILD_MODE = process.env.CBT_BUILD_MODE
+}
+if (process.env.TG_BUILD_TGS_MODE) {
+  BUILD_MODE = TGS_BUILD
+}
+console.log(`Starting CBT in ${BUILD_MODE} mode.`)
+
 // Main
 // --------------------------------------------------------
 
@@ -84,7 +98,8 @@ const taskTgui = new Task('tgui')
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
 
-const taskDm = new Task('dm')
+const taskDm = (...InjectedDefines) => {
+   return new Task('dm')
   .depends('_maps/map_files/generic/**')
   .depends('code/**')
   .depends('goon/**')
@@ -140,19 +155,51 @@ const taskDm = new Task('dm')
         || 'DreamMaker'
       );
     })();
+    /// Create mdme file
+    /// Modify mdme
+    /// #define ARG foreach InjectedDefines
+    /// Technically dme should be parametrized too
     await exec(dmPath, ['tgstation.dme']);
+    /// Copy results over to orignal name dmb/rsc's
   });
+}
 
 // Frontend
-const tasksToRun = [
-  taskYarn,
-  taskTgfont,
-  taskTgui,
-  taskDm,
-];
-
-if (process.env.TG_BUILD_TGS_MODE) {
-  tasksToRun.pop();
+let tasksToRun = [];
+switch (BUILD_MODE) {
+  case STANDARD_BUILD:
+    tasksToRun = [
+      taskYarn,
+      taskTgfont,
+      taskTgui,
+      taskDm(),
+    ]
+    break;
+  case TGS_BUILD:
+    tasksToRun = [
+      taskYarn,
+      taskTgfont,
+      taskTgui
+    ]
+    break;
+  case ALL_MAPS_BUILD:
+    tasksToRun = [
+      taskYarn,
+      taskTgfont,
+      taskTgui,
+      taskDm('CIBUILDING','CITESTING','ALL_MAPS')
+    ]
+    break;
+  case TEST_RUN_BUILD:
+    tasksToRun = [
+      taskYarn,
+      taskTgfont,
+      taskTgui,
+      taskDm('CIBUILDING')
+    ]
+  default:
+    console.error(`Unknown build mode : ${BUILD_MODE}`)
+    break;
 }
 
 runTasks(tasksToRun);
