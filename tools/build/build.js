@@ -30,7 +30,7 @@ const { Task, runTasks } = require('./cbt/task');
 const { regQuery } = require('./cbt/winreg');
 
 /// Installs all tgui dependencies
-const taskYarnInstall = new Task('yarn install')
+const taskYarn = new Task('yarn')
   .depends('tgui/.yarn/releases/*')
   .depends('tgui/yarn.lock')
   .depends('tgui/.yarn/install-state.gz')
@@ -145,7 +145,7 @@ const taskDm = new Task('dm')
 
 // Frontend
 const tasksToRun = [
-  taskYarnInstall,
+  taskYarn,
   taskTgfont,
   taskTgui,
   taskDm,
