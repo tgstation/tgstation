@@ -83,7 +83,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	while(bonus_quirks > added_quirk_count)
 		var/quirk = pick(possible_quirks) //quirk is a string
 		if(quirk in quirk_blacklist) //prevent blacklisted
-			possible_quirks -= qurik
+			possible_quirks -= quirk
 			continue
 		if(quirk_points[quirk] > 0)
 			good_count++
@@ -98,10 +98,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			break
 		var/quirk = pick(quirks)
 		if(quirk in quirk_blacklist) //prevent blacklisted
-			possible_quirks -= qurik
+			possible_quirks -= quirk
 			continue
 		if(!quirk_points[quirk] < 0)//negative only
-			possible_quirks -= qurik
+			possible_quirks -= quirk
 			continue
 		good_count++
 		score += quirk_points[quirk]
@@ -113,10 +113,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			break
 		var/quirk = pick(quirks)
 		if(quirk in quirk_blacklist) //prevent blacklisted
-			possible_quirks -= qurik
+			possible_quirks -= quirk
 			continue
 		if(!quirk_points[quirk] > 0) //positive only
-			possible_quirks -= qurik
+			possible_quirks -= quirk
 			continue
 		good_count++
 		score += quirk_points[quirk]

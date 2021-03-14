@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(eigenstates)
 
 ///reverts everything back to start
 /datum/controller/subsystem/eigenstates/Destroy()
-	for(index in 1 to id_counter)
+	for(var/index in 1 to id_counter)
 		for(var/entry in eigen_targets["[index]"])
 			remove_eigen_entry(entry)
 	eigen_targets = null
@@ -70,6 +70,8 @@ SUBSYSTEM_DEF(eigenstates)
 		COMSIG_CLOSET_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
+	if(!eigen_targets[id].len)
+    	eigen_targets -= eigen_targets[id]
 
 ///Finds the object within the master list, then sends the thing to the object's location
 /datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)

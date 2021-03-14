@@ -343,7 +343,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
-#define EIGENSTASIUM_MAX_BUFFER 250
+#define EIGENSTASIUM_MAX_BUFFER -250
 #define EIGENSTASIUM_STABILISATION_RATE 5
 #define EIGENSTASIUM_PHASE_1_END 50
 #define EIGENSTASIUM_PHASE_2_END 80
@@ -356,7 +356,7 @@
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	///So we know what cycle we're in during the status
-	var/current_cycle = -EIGENSTATIUM_MAX_BUFFER //Consider it your stability
+	var/current_cycle = EIGENSTASIUM_MAX_BUFFER //Consider it your stability
 	///The addiction looper for addiction stage 3
 	var/phase_3_cycle = -0 //start off delayed
 	///Your clone from another reality
@@ -378,17 +378,17 @@
 	//If we have a reagent that blocks the effects
 	var/block_effects = FALSE
 	if(owner.has_reagent(/datum/reagent/bluespace))
-		current_cycle = max(-EIGENSTATIUM_MAX_BUFFER, (current_cycle - (EIGENSTASIUM_STABILISATION_RATE * 1.5))) //cap to -250
+		current_cycle = max(EIGENSTASIUM_MAX_BUFFER, (current_cycle - (EIGENSTASIUM_STABILISATION_RATE * 1.5))) //cap to -250
 		block_effects = TRUE
 	if(owner.has_reagent(/datum/reagent/stabilizing_agent))
-		current_cycle = max(-EIGENSTATIUM_MAX_BUFFER, (current_cycle - EIGENSTASIUM_STABILISATION_RATE))
+		current_cycle = max(EIGENSTASIUM_MAX_BUFFER, (current_cycle - EIGENSTASIUM_STABILISATION_RATE))
 		block_effects = TRUE
 	var/datum/reagent/eigen = owner.has_reagent(/datum/reagent/eigenstate)
 	if(eigen)
 		if(eigen.overdosed)
 			block_effects = FALSE
 		else
-			current_cycle = max(-EIGENSTATIUM_MAX_BUFFER, (current_cycle - (EIGENSTASIUM_STABILISATION_RATE * 2)))
+			current_cycle = max(EIGENSTASIUM_MAX_BUFFER, (current_cycle - (EIGENSTASIUM_STABILISATION_RATE * 2)))
 			block_effects = TRUE
 
 	if(!QDELETED(alt_clone)) //catch any stragglers
