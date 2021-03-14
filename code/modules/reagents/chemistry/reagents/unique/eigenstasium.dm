@@ -51,7 +51,7 @@
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	eigenstate.anchored = 1//So space wind cannot drag it.
-	eigenstate.name = "[eigenstate.appearance]'s eigenstate"//If someone decides to right click.
+	eigenstate.name = "[living_mob.name]'s eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
 	location_return = get_turf(living_mob)	//sets up return point
