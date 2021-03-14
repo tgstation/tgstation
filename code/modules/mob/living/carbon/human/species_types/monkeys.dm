@@ -3,6 +3,7 @@
 	id = "monkey"
 	say_mod = "chimpers"
 	attack_verb = "bite"
+	attack_effect = ATTACK_EFFECT_BITE
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/bite.ogg'
 	mutant_organs = list(/obj/item/organ/tail/monkey)
@@ -89,10 +90,10 @@
 	target.attack_paw(user, modifiers)
 	return TRUE
 
-/datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/H)
+/datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
 	. = ..()
-	if(H.radiation > RAD_MOB_MUTATE * 2 && prob(50)) 
-		H.gorillize() 
+	if(source.radiation > RAD_MOB_MUTATE * 2 && DT_PROB(0.25, delta_time))
+		source.gorillize()
 		return
 
 /datum/species/monkey/check_roundstart_eligible()

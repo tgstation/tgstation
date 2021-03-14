@@ -457,7 +457,7 @@
 	. = ..()
 	if(!has_fire_ring)
 		return
-	for(var/turf/T in range(1,current_user))
+	for(var/turf/T in RANGE_TURFS(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
