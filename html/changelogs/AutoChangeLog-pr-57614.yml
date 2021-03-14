@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Paramedics now have access to Cargo Office on Ice Box, lost access to Delivery Office on MetaStation."

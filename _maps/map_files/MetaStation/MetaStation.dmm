@@ -47526,7 +47526,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/mining{
 	name = "Deliveries";
-	req_one_access_txt = "31;48"
+	req_one_access_txt = "50"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -74017,7 +74017,7 @@
 "uHh" = (
 /obj/machinery/door/airlock/mining{
 	name = "Deliveries";
-	req_one_access_txt = "31;48"
+	req_one_access_txt = "50"
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
