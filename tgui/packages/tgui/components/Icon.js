@@ -36,7 +36,7 @@ export const Icon = props => {
     // font awesome icon
     const faRegular = FA_OUTLINE_REGEX.test(name);
     const faName = name.replace(FA_OUTLINE_REGEX, '');
-    iconClass = (faRegular ? 'far ' : 'fas ') + 'fa-'+ faName + (spin ? "fa-spin" : "");
+    iconClass = (faRegular ? 'far ' : 'fas ') + 'fa-'+ faName + (spin ? " fa-spin" : "");
   }
   return (
     <Box
