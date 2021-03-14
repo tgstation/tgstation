@@ -14,7 +14,9 @@
 	liver_damage = 0
 
 /datum/reagent/impurity/ipecax/on_mob_add(mob/living/carbon/owner)
-	owner.adjust_disgust(60)
+	if(owner.disgust >= DISGUST_LEVEL_GROSS)
+		return ..()
+	owner.adjust_disgust(50)
 	..()
 
 
