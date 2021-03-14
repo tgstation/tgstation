@@ -78,3 +78,11 @@
 	description = "<span class='nicegreen'>Eh ah AAAAH! HA HA HA HA HAA! Uuuh.</span>\n"
 	mood_change = 6
 	timeout = 3 MINUTES
+
+/datum/mood_event/nicotine_withdrawal_moderate
+	description = "<span class='warning'>Haven't had a smoke in a while. Feeling a little on edge... </span>\n"
+	mood_change = -5
+
+/datum/mood_event/nicotine_withdrawal_severe
+	description = "<span class='boldwarning'>Head pounding. Cold sweating. Feeling anxious. Need a smoke to calm down!</span>\n"
+	mood_change = -8

@@ -19,7 +19,7 @@
 	var/base_icon = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
-	///Var that controls how much gas gets injected in moles/S
+	///Var that controls how much gas gets injected in moles per tick
 	var/gas_input = 0
 	///Saves the progress during the processing of the items
 	var/progress_bar = 0
@@ -115,10 +115,10 @@
 	return FALSE
 
 ///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
-/obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases(delta_time)
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
-		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * (gas_input  * delta_time)))
+		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * gas_input))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
@@ -151,7 +151,7 @@
 
 	var/median_temperature = (selected_recipe.max_temp - selected_recipe.min_temp) * 0.5
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 5.5, 100)
+		quality_loss = max(quality_loss - 5.5, -100)
 
 	if(selected_recipe.reaction_type == "endothermic")
 		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
@@ -171,14 +171,14 @@
 	airs[2].merge(remove)
 	internal.garbage_collect()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/process_atmos(delta_time)
+/obj/machinery/atmospherics/components/binary/crystallizer/process_atmos()
 	if(!on || !is_operational || selected_recipe == null)
 		return
 
 	if(!check_gas_requirements())
 		return
 
-	inject_gases(delta_time)
+	inject_gases()
 
 	if(!internal.total_moles())
 		update_parents()
@@ -262,7 +262,7 @@
 	if(selected_recipe)
 		data["selected"] = selected_recipe.id
 	else
-		data["selected"] = null
+		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
 	if(internal.total_moles())
@@ -319,7 +319,7 @@
 				dump_gases()
 			quality_loss = 0
 			progress_bar = 0
-			if(recipe)
+			if(recipe && recipe.id != "")
 				selected_recipe = recipe
 				recipe_name = recipe.name
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
@@ -328,7 +328,7 @@
 			. = TRUE
 		if("gas_input")
 			var/_gas_input = params["gas_input"]
-			gas_input = clamp(_gas_input, 0, 500)
+			gas_input = clamp(_gas_input, 0, 250)
 	update_icon()
 
 #undef MIN_PROGRESS_AMOUNT

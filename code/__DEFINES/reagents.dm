@@ -45,6 +45,9 @@
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
+/// the default temperature at which chemicals are added to reagent holders at
+#define DEFAULT_REAGENT_TEMPERATURE 300
+
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 ///stops floating point errors causing issues with checking reagent amounts
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001

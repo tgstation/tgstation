@@ -5,7 +5,7 @@
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
-	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2)
+	var/list/customer_types = list(/datum/customer_data/american = 5, /datum/customer_data/italian = 3, /datum/customer_data/french = 3, /datum/customer_data/japanese = 3, /datum/customer_data/japanese/salaryman = 2, /datum/customer_data/mexican = 3)
 	///Is the venue open at the moment?
 	var/open
 	///Portal linked to this venue at the moment
@@ -20,13 +20,21 @@
 	var/max_time_between_visitor = 90 SECONDS
 	///Required access to mess with the venue
 	var/req_access = ACCESS_KITCHEN
+	///how many robots got their wanted thing
+	var/customers_served = 0
+	///Total income of those venue
+	var/total_income = 0
+	///Blacklist for idiots that attack bots. Key is the mob that did it, and the value is the amount of warnings they've received.
+	var/list/mob_blacklist = list()
+	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
+	var/list/linked_seats = list()
 
 
 /datum/venue/process(delta_time)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))
 		return
 	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
-	if(current_visitors.len < max_guests)
+	if(current_visitors.len < max_guests && current_visitors.len < linked_seats.len + 1) //Not above max guests, and not more than one waiting customer.
 		create_new_customer()
 
 ///Spawns a new customer at the portal
@@ -47,7 +55,7 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
@@ -59,7 +67,7 @@
 /datum/venue/proc/open()
 	open = TRUE
 	restaurant_portal.update_icon()
-	COOLDOWN_START(src, visit_cooldown, 10 SECONDS) //First one comes faster
+	COOLDOWN_START(src, visit_cooldown, 4 SECONDS) //First one comes faster
 	START_PROCESSING(SSobj, src)
 
 /datum/venue/proc/close()
@@ -159,6 +167,7 @@
 
 /obj/item/holosign_creator/robot_seat
 	name = "seating indicator placer"
+	icon_state = "signmaker_service"
 	creation_time = 1 SECONDS
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
@@ -178,11 +187,16 @@
 /obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
+	linked_venue.linked_seats[src] += null
 
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
 /obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(I.type == projector?.type && !SSrestaurant.claimed_seats[src])
+	if(I.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
+
+/obj/structure/holosign/robot_seat/Destroy()
+	linked_venue.linked_seats -= src
+	return ..()
