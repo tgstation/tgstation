@@ -81,7 +81,6 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 		entries += OUTFIT_ENTRY("Custom", O.name, O.name, 2) //it's either this or special handling on the UI side
 	return entries
 
-
 /datum/select_equipment/ui_data(mob/user)
 	var/list/data = list()
 	if(!dummy)
@@ -95,10 +94,9 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 	data["name"] = target
 
 	var/list/custom
-	custom += OUTFIT_ENTRY("Custom", "Click confirm to open the outfit manager", "Create a custom outfit...", 2)
 	custom += make_custom_outfit_entries(GLOB.custom_outfits)
 	data["custom_outfits"] = custom
-
+	data["current_outfit"] = selected_outfit
 	return data
 
 
@@ -121,7 +119,7 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 	if(ispath(path, /datum/outfit))
 		return new path
 
-	else //don't bail yet - could be a special option or custom outfit
+	else //don't bail yet - could be a custom outfit
 		var/datum/outfit/custom_outfit = cached_custom_outfits[text]
 		if(istype(custom_outfit))
 			return custom_outfit
@@ -130,26 +128,22 @@ priority (int) - default 0, 1 for favorites, 2 for priority buttons
 /datum/select_equipment/ui_act(action, params)
 	if(..())
 		return
-
+	. = TRUE
 	switch(action)
 		if("preview")
 			var/datum/outfit/O = resolve_outfit(params["path"])
 			if(!istype(O))
 				return
 			selected_outfit = O.type //the typepath - not the object
-			return TRUE
 
 		if("applyoutfit")
-			var/text = params["path"]
-			if(text == "Click confirm to open the outfit manager")
-				user.outfit_manager()
-				return
-
-			var/datum/outfit/O = resolve_outfit(text)
+			var/datum/outfit/O = resolve_outfit(params["path"])
 			if(!istype(O))
 				return
 			user.admin_apply_outfit(target, O)
-			return TRUE
+
+		if("customoutfit")
+			user.outfit_manager()
 
 
 /client/proc/admin_apply_outfit(mob/M, dresscode)

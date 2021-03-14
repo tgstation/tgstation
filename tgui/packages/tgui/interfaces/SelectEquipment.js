@@ -3,19 +3,79 @@ import { createSearch } from 'common/string';
 import { Box, Button, Tabs, Section, Input, Stack, Flex, Divider } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { filter, map, sortBy, uniqBy } from 'common/collections';
+import { filter, map, sortBy, uniq } from 'common/collections';
+
+
+const useSelectedOutfit = context => {
+  return useLocalState(context, 'selected-outfit', "/datum/outfit");
+};
+
+const CurrentlySelectedDisplay = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { current_outfit } = data;
+  return (
+    <Stack align="center">
+      <Stack.Item basis={0} grow={1}>
+        <Box color="label">
+          Currently selected:
+        </Box>
+        <Box
+          title={current_outfit}
+          style={{
+            'overflow': 'hidden',
+            'white-space': 'nowrap',
+            'text-overflow': 'ellipsis',
+          }}>
+          {current_outfit}
+        </Box>
+      </Stack.Item>
+      <Stack.Item>
+        <Button lineHeight={2} selected content="Confirm"
+          onClick={() => act("applyoutfit", { path: current_outfit })} />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const useOutfitTabs = (context, outfitCategories) => {
+  return useLocalState(context, 'selected-tab', outfitCategories[0]);
+};
+
+const DisplayTabs = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { categories } = props;
+
+  const [tabIndex, setTabIndex] = useOutfitTabs(context, categories);
+  return (
+    <Tabs textAlign="center">
+      {categories.map(cat => (
+        <Tabs.Tab
+          key={cat}
+          selected={tabIndex === cat}
+          onClick={() => setTabIndex(cat)}>
+          {cat}
+        </Tabs.Tab>
+      ))}
+    </Tabs>
+  );
+};
 
 export const SelectEquipment = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     name,
     icon64,
+    current_outfit,
   } = data;
 
   const outfits = [
     ...data.outfits,
     ...data.custom_outfits,
   ];
+
+  // even if no custom outfits were sent, we still want to make sure there's
+  // at least a 'Custom' tab so the button to create a new one pops up
+  const outfitCategories = uniq([...outfits.map(entry => entry.category), 'Custom']);
 
   // search bar
   const [
@@ -25,99 +85,14 @@ export const SelectEquipment = (props, context) => {
   const searchFilter = createSearch(searchText, entry =>
     (entry.name + entry.path)
   );
-  const searchBar
-    = (<Input
-      fluid
-      autoFocus
-      placeholder="Search"
-      value={searchText}
-      onInput={(e, value) => setSearchText(value)}
-      mb={1} />);
 
+  const [tabIndex, setTabIndex] = useOutfitTabs(context, outfitCategories);
 
-  // outfit tabs; mapped and named from the data sent by ui_static_data
-  const [
-    tabIndex,
-    setTabIndex,
-  ] = useLocalState(context, 'tab-index', "General");
-
-  const OutfitTab = props => {
-    const { name, ...rest } = props;
-    return (
-      <Tabs.Tab
-        selected={tabIndex === name}
-        onClick={() => setTabIndex(name)}
-        {...rest}>
-        {name}
-      </Tabs.Tab>
-    );
-  };
-
-  const outfitCategories = uniqBy(x => x)(outfits.map(entry => entry.category));
-
-  const DisplayTabs = (props, context) => {
-    return (
-      <Tabs textAlign="center">
-
-        {outfitCategories.map(cat => { return (
-          <OutfitTab key={cat} name={cat} />
-        ); })}
-
-      </Tabs>
-    );
-  };
-
-
-  // outfit selection
-  const selectOutfit = outfitPath => {
-    setSelectedOutfit(outfitPath);
-    act("preview", { path: outfitPath });
-  };
-
-  const [
-    selectedOutfit,
-    setSelectedOutfit,
-  ] = useLocalState(context, 'selected-outfit', "/datum/outfit");
-
-  const CurrentlySelectedDisplay = (props, context) => {
-    return (
-      <Flex direction="column" textAlign="center" align="center">
-        Currently selected:<br />{selectedOutfit}
-        <Flex.Item>
-          <Button selected content="Confirm"
-            onClick={() => act("applyoutfit", { path: selectedOutfit })} />
-        </Flex.Item>
-      </Flex>
-    );
-  };
-
-  const outfitButton = outfit => {
-    return (
-      <Stack.Item>
-        <Button
-          fluid
-          ellipsis
-          content={outfit.name}
-          title={outfit.path}
-          selected={outfit.path===selectedOutfit}
-          onClick={() => selectOutfit(outfit.path)} />
-      </Stack.Item>
-    );
-  };
-
-  const DisplayedOutfits = (props, context) => {
-    return (
-      <Stack vertical direction="column">
-        {entries}
-      </Stack>);
-  };
 
   const entries = flow([
     filter(entry => entry.category === tabIndex),
     filter(searchFilter),
-    sortBy(entry => entry.name),
-    sortBy(entry => -entry.priority),
-    map(outfitButton),
+    sortBy(entry => -entry.priority, entry => entry.name),
   ])(outfits);
 
   return (
@@ -125,37 +100,67 @@ export const SelectEquipment = (props, context) => {
       width={950}
       height={660}>
       <Window.Content>
-        <Flex height="100%">
+        <Stack fill>
+          <Stack.Item>
 
-          <Flex.Item grow={1} basis={0}>
-            <Section height="15%" mb={0}>
-              <DisplayTabs />
-              <CurrentlySelectedDisplay />
-              <Divider />
-            </Section>
-            <Section height="85%" fill scrollable>
-              {searchBar}
-              <DisplayedOutfits />
-            </Section>
-          </Flex.Item>
+            <Stack fill vertical>
+              <Stack.Item>
+                <DisplayTabs categories={outfitCategories} />
+              </Stack.Item>
+              <Stack.Item>
+                <Section>
+                  <CurrentlySelectedDisplay />
+                </Section>
+              </Stack.Item>
+              <Stack.Item height="20px">
+                <Input
+                  fluid
+                  autoFocus
+                  placeholder="Search"
+                  value={searchText}
+                  onInput={(e, value) => setSearchText(value)} />
+              </Stack.Item>
+              <Stack.Item grow={1} basis={0}>
+                <Section fill scrollable>
+                  {entries.map(entry => (
+                    <Button
+                      key={entry.name}
+                      fluid
+                      ellipsis
+                      content={entry.name}
+                      title={entry.path}
+                      selected={entry.path === current_outfit}
+                      onClick={() => act("preview", { path: entry.path })} />
+                  ))}
+                  {tabIndex === "Custom" &&(
+                    <Button
+                      color="transparent"
+                      icon="plus"
+                      fluid
+                      onClick={() => act("customoutfit")}>
+                      Create a custom outfit...
+                    </Button>)}
+                </Section>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
 
 
-          <Flex.Item grow={2} basis={0}>
+          <Stack.Item grow={2} basis={0}>
             <Section fill
               title={name}
               textAlign="center">
               <Box as="img"
-                m={1}
+                m={0}
                 src={`data:image/jpeg;base64,${icon64}`}
                 height="100%"
-                width="100%"
                 style={{
                   '-ms-interpolation-mode': 'nearest-neighbor',
                 }} />
             </Section>
-          </Flex.Item>
+          </Stack.Item>
 
-        </Flex>
+        </Stack>
       </Window.Content>
     </Window>
   );
