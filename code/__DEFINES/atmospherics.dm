@@ -537,3 +537,8 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 #define EUPHORIA_INACTIVE 0
 #define EUPHORIA_ACTIVE 1
 #define EUPHORIA_LAST_FLAG 2
+
+// Ventcrawling bitflags
+#define VENTCRAWL_ALLOWED 					(1<<0)
+#define VENTCRAWL_ENTRANCE_ALLOWED 			(1<<1)
+#define VENTCRAWL_CAN_SEE	 				(1<<2)
