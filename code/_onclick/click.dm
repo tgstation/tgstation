@@ -337,18 +337,25 @@
 	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
 		user_living.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
+
 	return ..()
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
-			return FALSE
-		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.mind.martial_art)
+
+	if(!ishuman(user) ||!Adjacent(user) || user.incapacitated())
+		return ..()
+
+	if(world.time < user.next_move)
+		return ..()
+
+	var/mob/living/carbon/human/H = user
+	if(H.dna.species.grab(H, src, H.mind.martial_art))
 		H.changeNext_move(CLICK_CD_MELEE)
-	else
-		..()
+		return TRUE
+
+	return ..()
+
 /**
  * Alt click
  * Unused except for AI
