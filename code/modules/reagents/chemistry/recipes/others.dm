@@ -797,14 +797,10 @@
 	var/datum/reagent/eigenstate/eigen = holder.has_reagent(/datum/reagent/eigenstate)
 	if(!eigen)
 		return
-
 	if(location)
 		eigen.location_created = location
 		eigen.data["location_created"] = location
-	var/datum/reagent/blood = holder.has_reagent(/datum/reagent/blood)
-	if(blood)
-		eigen.creator = blood.data["donor"]
-		eigen.data["creator"] = eigen.creator
+
 	do_sparks(5,FALSE,location)
 	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
 
