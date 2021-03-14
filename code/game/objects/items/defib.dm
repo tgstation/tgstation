@@ -19,6 +19,7 @@
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
+	var/safetyexistence = TRUE //if defib can be emagged/emp'd
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
@@ -139,12 +140,13 @@
 		return ..()
 
 /obj/item/defibrillator/emag_act(mob/user)
-	if(safety)
-		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.</span>")
-	else
-		safety = TRUE
-		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
+	if(safetyexistence)
+		if(safety)
+			safety = FALSE
+			to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.</span>")
+		else
+			safety = TRUE
+			to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
 
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
@@ -152,14 +154,15 @@
 		deductcharge(1000 / severity)
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(safety)
-		safety = FALSE
-		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
-		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
-	else
-		safety = TRUE
-		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
-		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, FALSE)
+	if(safetyexistence)
+		if(safety)
+			safety = FALSE
+			visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
+			playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
+		else
+			safety = TRUE
+			visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
+			playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, FALSE)
 	update_power()
 
 /obj/item/defibrillator/proc/toggle_paddles()
@@ -261,6 +264,7 @@
 	worn_icon_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
+	safetyexistence = FALSE
 	cooldown_duration = 2.5 SECONDS
 	paddle_type = /obj/item/shockpaddles/syndicate
 
@@ -280,6 +284,7 @@
 	icon_state = "defibnt" //needs defib inhand sprites
 	inhand_icon_state = "defibnt"
 	worn_icon_state = "defibnt"
+	safetyexistence = TRUE
 	paddle_type = /obj/item/shockpaddles/syndicate/nanotrasen
 
 //paddles
