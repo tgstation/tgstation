@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(eigenstates)
 		return FALSE
 	if(index > length(eigen_targets[id]))//If we're at the end of the list (or we're 1 length long)
 		index = 1
-	var/eigen_target = eigen_targets[id][index]
+	var/atom/eigen_target = eigen_targets[id][index]
 	if(!eigen_target)
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
