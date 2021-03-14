@@ -1,7 +1,7 @@
 
 /datum/chemical_reaction/formaldehyde
 	results = list(/datum/reagent/toxin/formaldehyde = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/mercury = 1)
 	required_temp = 420
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_CHEMICAL | REACTION_TAG_BRUTE | REACTION_TAG_TOXIN
 
