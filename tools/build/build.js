@@ -26,9 +26,19 @@ const TGS_BUILD = "TGS Build"
 const ALL_MAPS_BUILD = "CI All Maps Build"
 const TEST_RUN_BUILD = "CI Integration Tests Build"
 
-let BUILD_MODE = TEST_RUN_BUILD;//STANDARD_BUILD;
+let BUILD_MODE = STANDARD_BUILD;
 if(process.env.CBT_BUILD_MODE != undefined){
-  BUILD_MODE = process.env.CBT_BUILD_MODE
+  switch (process.env.CBT_BUILD_MODE) {
+    case "ALL_MAPS":
+      BUILD_MODE = ALL_MAPS_BUILD
+      break;
+    case "TEST_RUN":
+      BUILD_MODE = TEST_RUN_BUILD
+      break;
+    default:
+      BUILD_MODE = process.env.CBT_BUILD_MODE
+      break;
+  }
 }
 if (process.env.TG_BUILD_TGS_MODE) {
   BUILD_MODE = TGS_BUILD
