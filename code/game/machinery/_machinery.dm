@@ -333,7 +333,6 @@
 
 
 /obj/machinery/can_interact(mob/user)
-	var/dextrous_cache = FALSE
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
@@ -346,12 +345,13 @@
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
 
-	if(istype(user, /mob/living/simple_animal))
-		var/mob/living/simple_animal/SA = user
-		if (SA.dextrous)
-			dextrous_cache = TRUE
+	var/is_dextrous = FALSE
+	if(isanimal(user))
+		var/mob/living/simple_animal/user_as_animal = user
+		if (user_as_animal.dextrous)
+			is_dextrous = TRUE
 
-	if(dextrous_cache || user.can_hold_items()) // If we are a living mob with hand slots or a dextrous simple animal.
+	if(is_dextrous || user.can_hold_items()) // If we are a living mob with hand slots or a dextrous simple animal.
 		var/mob/living/L = user
 
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
