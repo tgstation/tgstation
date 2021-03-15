@@ -2,7 +2,7 @@
 #define SWEETENER_PER_SCOOP 10
 #define EXTRA_MAX_VOLUME_PER_SCOOP 20
 
-/// Ice Cream Holder: Allows the edible parent object to be used as an ice cream cone (or cup... in the future).
+/// Ice Cream Holder: Allows the edible parent object to be used as an ice cream cone (or cup... in a next future).
 /datum/component/ice_cream_holder
 	/// List of servings of ice cream it is holding at the moment.
 	var/list/scoops
@@ -40,7 +40,8 @@
 											change_desc = FALSE,
 											x_offset = 0,
 											y_offset = 0,
-											datum/reagent/sweetener = /datum/reagent/consumable/sugar)
+											datum/reagent/sweetener = /datum/reagent/consumable/sugar,
+											list/prefill_flavours)
 	if(!IS_EDIBLE(parent)) /// There is no easy way to add servings to those non-item edibles, but I won't stop you.
 		return COMPONENT_INCOMPATIBLE
 
@@ -54,20 +55,20 @@
 	src.y_offset = y_offset
 	src.sweetener = sweetener
 
-	var/update_flags = NONE
 	RegisterSignal(owner, COMSIG_ITEM_ATTACK_OBJ, .proc/on_item_attack_obj)
-	RegisterSignal(owner, COMSIG_ICE_CREAM_ADD_SERVING, .proc/add_serving)
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	if(change_name)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, .proc/on_update_name)
-		update_flags |= UPDATE_NAME
 	if(!change_desc)
 		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/on_examine_more)
 	else
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_DESC, .proc/on_update_desc)
-		update_flags |= UPDATE_DESC
-	if(update_flags)
-		owner.update_appearance(update_flags)
+
+	if(prefill_flavours)
+		for(var/entry in prefill_flavours)
+			var/list/flavour_args = list(src) + prefill_flavours[entry]
+			var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[entry]
+			flavour?.add_flavour(arglist(flavour_args))
 
 /datum/component/ice_cream_holder/proc/on_update_name(atom/source, updates)
 	var/obj/obj = source
@@ -144,11 +145,6 @@
 		to_chat(user, "<span class='warning'>[source] can't hold anymore ice cream!</span>")
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// Adds more ice cream.
-/datum/component/ice_cream_holder/proc/add_serving(atom/source, flavour_name, list/reagents, custom_name, forced = FALSE)
-	var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[flavour_name]
-	return (forced || length(scoops) < max_scoops) && flavour.add_flavour(src, reagents, custom_name)
-
 /////ICE CREAM FLAVOUR DATUM STUFF
 
 GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cream_flavours())
@@ -160,7 +156,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 		.[flavour.name] = flavour
 
 /*
- * The ice cream flavour datums. What makes these digital frozen snacks so yummy.
+ * The ice cream flavour datum. What makes these digital, frozen snacks so yummy.
  * They are singletons, so please bear with me if they feel a little tortous to use at time.
  */
 /datum/ice_cream_flavour
@@ -169,31 +165,31 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	/// The icon state of the flavour, overlay or not.
 	var/icon_state = "icecream_vanilla"
 	/*
-	 * The fluff text sent to the examiner when the snack has only one flavour of ice cream. Make sure your new subtypes have one.
-	 * $CONE_NAME and $CUSTOM_NAME are both placeholder names for the cone and the custom ice cream name respectively.
+	 * The fluff text sent to the examiner when the snack has only one flavour of ice cream.
+	 * $CONE_NAME and $CUSTOM_NAME are both placeholders for the cone and the custom ice cream name respectively.
 	 */
 	var/desc = ""
 	/*
-	 * Depending on [/datum/component/ice_cream/var/change_desc] bool value, 'desc' may effectively be the description or shown
-	 * on [/atom/proc/examine_more]. In the former case, the desc is joined with prefix.
+	 * Depending on the value of the [/datum/component/ice_cream/var/change_desc] bool, 'desc' may effectively be the description
+	 * or a text string shown on [/atom/proc/examine_more]. In the former case, the desc is joined with this prefix.
 	 */
 	var/desc_prefix = "A delicious $CONE_NAME"
-	/// The ingredients required to produce a unit, these are multiplied by 3.
+	/// The ingredients required to produce a unit with the ice cream vat, these are multiplied by 3.
 	var/list/ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
-	/// The same as above, but in a readable text generated on spawn that can also contain extra ingredients such as "lot of love" or "optional flavorings".
+	/// The same as above, but in a readable text generated on New() that can also contain fluff ingredients such as "lot of love" or "optional flavorings".
 	var/ingredients_text = ""
-	/// reagent added in 'add_flavour'
+	/// the reagent added in 'add_flavour()'
 	var/reagent_type
-	/// the amount of reagent added in 'add_flavour'
+	/// the amount of reagent added in 'add_flavour()'
 	var/reagent_amount = 3
-	/// Is this shown on the ice cream vat menu or not?
+	/// Is this flavour shown in the ice cream vat menu or not?
 	var/hidden = FALSE
 
 /datum/ice_cream_flavour/New()
 	if(ingredients)
 		ingredients_text = "(Ingredients: [reagent_paths_list_to_text(ingredients, ingredients_text)])"
 
-///Adds a new flavour to the ice cream cone.
+/// Adds a new flavour to the ice cream cone.
 /datum/ice_cream_flavour/proc/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
 	var/atom/owner = target.parent
 	LAZYADD(target.scoops, custom_name || name)
@@ -216,7 +212,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	owner.update_appearance(update_flags)
 	return TRUE
 
-///// OUR TYPES OF ICE CREAM
+///// OUR TYPES OF ICE CREAM, COME GET SOME.
 
 /datum/ice_cream_flavour/vanilla
 	name = ICE_CREAM_VANILLA

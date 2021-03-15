@@ -130,7 +130,7 @@
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["select"]]
 		if(!flavour || flavour.hidden) //Nice try, tex.
 			return
-		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [href_list["select"]] flavoured ice cream.</span>")
+		visible_message("<span class='notice'>[usr] sets [src] to dispense [href_list["select"]] flavoured ice cream.</span>")
 		selected_flavour = flavour.name
 
 	if(href_list["cone"])

@@ -393,8 +393,7 @@
 		if(DISPENSE_LOLLIPOP_MODE)
 			food_item = new /obj/item/food/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
-			food_item = new /obj/item/food/icecream(T)
-			SEND_SIGNAL(food_item, COMSIG_ICE_CREAM_ADD_SERVING, ICE_CREAM_VANILLA)
+			food_item = new /obj/item/food/icecream(T, list(ICE_CREAM_VANILLA))
 			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE

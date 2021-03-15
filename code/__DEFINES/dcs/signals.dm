@@ -1003,10 +1003,6 @@
 ///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
 
-// /datum/component/ice_cream_holder signals.
-/// Adds a serving of ice cream to the object. Bool. Refer to __DEFINES/food.dm for flavour defines: (flavour, reagents, custom_name, forced)
-#define COMSIG_ICE_CREAM_ADD_SERVING "ice_cream_add_serving"
-
 // /datum/element/movetype_handler signals
 /// Called when the floating anim has to be temporarily stopped and restarted later: (timer)
 #define COMSIG_PAUSE_FLOATING_ANIM "pause_floating_anim"

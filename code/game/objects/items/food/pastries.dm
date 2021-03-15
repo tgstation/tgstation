@@ -876,10 +876,21 @@
 	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
 	var/list/ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar)
 	var/ingredients_text
+	/*
+	 * Assoc list var used to prefill the cone with ice cream.
+	 * Key is the flavour's name (use text defines; see __DEFINES/food.dm or ice_cream_holder.dm),
+	 * assoc is the list of args that is going to be used in [flavour/add_flavour()]. Can as well be null for simple flavours.
+	 */
+	var/list/prefill_flavours
+
+/obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
+	if(prefill_flavours)
+		src.prefill_flavours = prefill_flavours
+	return ..()
 
 /obj/item/food/icecream/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/ice_cream_holder, DEFAULT_MAX_ICE_CREAM_SCOOPS, TRUE, "ice cream", TRUE)
+	AddComponent(/datum/component/ice_cream_holder, filld_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
 
 /obj/item/food/icecream/chocolate
 	name = "chocolate cone"
