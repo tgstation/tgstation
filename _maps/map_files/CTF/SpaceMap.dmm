@@ -124,7 +124,7 @@
 /obj/effect/mob_spawn/human/abductor,
 /obj/structure/table/optable/abductor,
 /turf/open/floor/plating/abductor2,
-/area/ctf)
+/area/centcom)
 "me" = (
 /turf/open/floor/mineral/plastitanium,
 /area/ctf)
@@ -204,7 +204,7 @@
 /area/ctf)
 "zx" = (
 /turf/open/floor/plating/abductor2,
-/area/ctf)
+/area/centcom)
 "Cq" = (
 /obj/effect/powerup/ammo,
 /turf/open/floor/circuit,
@@ -231,7 +231,7 @@
 /area/ctf)
 "Gx" = (
 /turf/open/floor/plating/abductor,
-/area/ctf)
+/area/centcom)
 "HZ" = (
 /obj/effect/powerup/speed{
 	respawn_time = 600
@@ -2070,13 +2070,13 @@ Qt
 Qt
 Qt
 Qt
-lS
-fU
-fU
-fU
-fU
 fU
 lS
+fU
+fU
+fU
+lS
+fU
 Qt
 jq
 Qt
@@ -2290,7 +2290,7 @@ fU
 Qt
 Qt
 Qt
-fU
+lS
 mr
 mr
 OX
@@ -2334,13 +2334,13 @@ Qt
 Qt
 Qt
 Qt
-lS
-fU
-fU
-fU
-fU
 fU
 lS
+fU
+fU
+fU
+lS
+fU
 Qt
 jq
 Qt

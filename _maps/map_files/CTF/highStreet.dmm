@@ -6,6 +6,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"ag" = (
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/red,
+/area/ctf)
 "aq" = (
 /obj/structure/fluff/bus/passable/seat{
 	resistance_flags = 64
@@ -21,7 +27,7 @@
 	name = "Warehouse";
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "aM" = (
 /obj/effect/turf_decal/tile/blue{
@@ -55,6 +61,15 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"bF" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/space/beret{
+	name = "red beret"
+	},
+/turf/open/floor/carpet/red,
 /area/ctf)
 "bH" = (
 /obj/effect/turf_decal/siding/yellow/corner,
@@ -124,6 +139,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"dm" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/redtaghelm,
+/turf/open/floor/carpet/red,
+/area/ctf)
 "du" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -170,6 +192,12 @@
 "en" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
+/area/ctf)
+"ey" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/blue,
 /area/ctf)
 "ez" = (
 /obj/effect/turf_decal/siding/white{
@@ -239,7 +267,8 @@
 	resistance_flags = 64
 	},
 /obj/structure/disposalpipe/trunk{
-	dir = 8
+	dir = 8;
+	resistance_flags = 64
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
@@ -259,6 +288,19 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"gn" = (
+/obj/machinery/computer{
+	icon_keyboard = "rd_key";
+	icon_screen = "teleport";
+	name = "checkout computer";
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/blue,
+/area/ctf)
+"gv" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
 /area/ctf)
 "gJ" = (
 /obj/effect/turf_decal/trimline/blue/corner{
@@ -299,6 +341,13 @@
 	name = "bus"
 	},
 /area/ctf)
+"hb" = (
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
+/area/ctf)
 "hl" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 10
@@ -314,6 +363,14 @@
 /obj/effect/turf_decal/siding/white/corner,
 /turf/open/floor/iron/dark,
 /area/ctf)
+"hy" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
+/area/ctf)
 "hF" = (
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/decal/cleanable/oil,
@@ -321,7 +378,8 @@
 /area/ctf)
 "hK" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	resistance_flags = 64
 	},
 /turf/closed/wall/mineral/iron,
 /area/ctf)
@@ -369,6 +427,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
+/area/ctf)
+"iz" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/knight/red,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
 /area/ctf)
 "iD" = (
 /obj/structure/barricade/security/ctf,
@@ -435,6 +501,13 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark,
 /area/ctf)
+"jw" = (
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/structure/barricade/sandbags{
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "jC" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -471,6 +544,13 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
+/area/ctf)
+"kh" = (
+/obj/machinery/door/airlock/command{
+	name = "Warehouse";
+	resistance_flags = 64
+	},
+/turf/open/floor/plating,
 /area/ctf)
 "kj" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -519,10 +599,6 @@
 	name = "bus"
 	},
 /area/ctf)
-"kT" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/ctf)
 "kV" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/blue,
@@ -535,7 +611,7 @@
 /obj/structure/closet/crate/trashcart{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "ll" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -552,9 +628,25 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/dark,
 /area/ctf)
+"lC" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/soft/red,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
+/area/ctf)
 "lK" = (
 /obj/item/ctf/blue,
 /turf/open/floor/circuit/green/anim,
+/area/ctf)
+"lT" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/space/syndicate/blue,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/blue,
 /area/ctf)
 "lW" = (
 /obj/effect/turf_decal/trimline/blue/line,
@@ -658,6 +750,26 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"oC" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/space/plasmaman/captain{
+	name = "blue plasma envirosuit helmet"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/blue,
+/area/ctf)
+"oG" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/space/plasmaman/security{
+	name = "red plasma envirosuit helmet"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/red,
+/area/ctf)
 "oH" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/tile/red,
@@ -716,7 +828,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "pQ" = (
 /obj/effect/turf_decal/tile/green,
@@ -762,11 +874,10 @@
 /turf/open/floor/iron,
 /area/ctf)
 "rk" = (
-/obj/machinery/door/airlock/command{
-	name = "Warehouse";
-	resistance_flags = 64
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/carpet/blue,
 /area/ctf)
 "rl" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -798,6 +909,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"rS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
 /area/ctf)
 "rT" = (
 /obj/structure/chair{
@@ -885,6 +1003,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ctf)
+"us" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/bluetaghelm,
+/turf/open/floor/carpet/blue,
+/area/ctf)
 "uA" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/tile/red,
@@ -915,11 +1040,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"vo" = (
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/blue,
+/area/ctf)
 "vJ" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "vS" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -969,6 +1101,16 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/ctf)
+"wU" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/fedora/white{
+	color = "#FF3333";
+	name = "red fedora"
+	},
+/turf/open/floor/carpet/red,
 /area/ctf)
 "wY" = (
 /obj/structure/barricade/security/ctf,
@@ -1062,10 +1204,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "xs" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "xw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1171,6 +1310,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"zv" = (
+/obj/machinery/computer{
+	icon_keyboard = "syndie_key";
+	icon_screen = "tcboss";
+	name = "checkout computer";
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/red,
+/area/ctf)
 "zA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1216,7 +1364,7 @@
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced/ctf,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "Ao" = (
 /obj/effect/decal/cleanable/shreds,
@@ -1293,10 +1441,7 @@
 /area/ctf)
 "BH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "BL" = (
 /obj/structure/chair{
@@ -1321,7 +1466,8 @@
 /area/ctf)
 "BV" = (
 /obj/structure/disposalpipe/trunk{
-	dir = 8
+	dir = 8;
+	resistance_flags = 64
 	},
 /obj/structure/disposaloutlet{
 	dir = 4;
@@ -1411,9 +1557,10 @@
 /area/ctf)
 "CR" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "CT" = (
 /obj/effect/turf_decal/tile/red{
@@ -1427,12 +1574,16 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"Da" = (
+/turf/open/floor/carpet/blue,
+/area/ctf)
 "Dd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "De" = (
 /obj/effect/turf_decal/siding/white,
@@ -1483,7 +1634,7 @@
 "El" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/ctf,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "Es" = (
 /obj/effect/turf_decal/trimline/blue/corner{
@@ -1524,6 +1675,15 @@
 	},
 /turf/open/floor/wood,
 /area/ctf)
+"Fm" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/hardhat/dblue{
+	name = "blue hardhat"
+	},
+/turf/open/floor/carpet/blue,
+/area/ctf)
 "Fr" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
@@ -1533,9 +1693,26 @@
 /area/ctf)
 "Fs" = (
 /obj/machinery/door/airlock/public/glass{
+	name = "hat store";
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"Fw" = (
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/carpet/blue,
+/area/ctf)
+"FW" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/fedora/white{
+	color = "#3333AA";
+	name = "blue fedora"
+	},
+/turf/open/floor/carpet/blue,
 /area/ctf)
 "Ga" = (
 /obj/structure/flora/ausbushes/ywflowers,
@@ -1553,7 +1730,7 @@
 /area/ctf)
 "GB" = (
 /obj/structure/table/reinforced/ctf,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "GE" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -1616,7 +1793,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "Ie" = (
 /turf/open/floor/wood{
@@ -1697,6 +1874,21 @@
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/iron,
 /area/ctf)
+"Jg" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/helmet/knight/blue,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/blue,
+/area/ctf)
+"Jo" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/hardhat/red,
+/turf/open/floor/carpet/red,
+/area/ctf)
 "JM" = (
 /obj/structure/fluff/bus/passable/seat{
 	pixel_y = 15;
@@ -1753,7 +1945,8 @@
 /area/ctf)
 "Kl" = (
 /obj/structure/disposalpipe/trunk{
-	dir = 4
+	dir = 4;
+	resistance_flags = 64
 	},
 /obj/structure/disposaloutlet{
 	dir = 8;
@@ -1804,6 +1997,7 @@
 /area/ctf)
 "Ll" = (
 /obj/machinery/door/airlock{
+	name = "hat store";
 	resistance_flags = 64
 	},
 /turf/open/floor/iron/dark,
@@ -1827,7 +2021,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "LK" = (
 /obj/structure/fluff/bus/dense{
@@ -1886,6 +2080,12 @@
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
 /area/ctf)
+"MU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/ctf)
 "Nj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1904,6 +2104,12 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"Nm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/red,
 /area/ctf)
 "Ny" = (
 /obj/effect/turf_decal/siding/white{
@@ -2040,7 +2246,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "Qr" = (
 /obj/effect/turf_decal/bot,
@@ -2146,6 +2352,10 @@
 	},
 /turf/open/floor/wood,
 /area/ctf)
+"Sg" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/blue,
+/area/ctf)
 "Sp" = (
 /obj/structure/trap/ctf/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2153,12 +2363,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"SQ" = (
+/turf/open/floor/carpet/red,
+/area/ctf)
 "SU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/trashcart{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "Tb" = (
 /obj/effect/turf_decal/siding/white,
@@ -2274,6 +2487,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"Vw" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/beret/sec/navywarden{
+	name = "blue beret"
+	},
+/turf/open/floor/carpet/blue,
+/area/ctf)
 "VD" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Bar";
@@ -2335,7 +2557,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ctf)
 "WS" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -2371,6 +2593,14 @@
 /area/ctf)
 "Xj" = (
 /turf/open/floor/iron/dark,
+/area/ctf)
+"Xm" = (
+/obj/structure/rack{
+	resistance_flags = 64
+	},
+/obj/item/clothing/head/soft/blue,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/carpet/blue,
 /area/ctf)
 "Xp" = (
 /obj/structure/trap/ctf/blue,
@@ -2476,7 +2706,8 @@
 	resistance_flags = 64
 	},
 /obj/structure/disposalpipe/trunk{
-	dir = 4
+	dir = 4;
+	resistance_flags = 64
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark,
@@ -2497,6 +2728,15 @@
 "ZN" = (
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/iron/dark,
+/area/ctf)
+"ZO" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags{
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
 /area/ctf)
 "ZP" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2896,14 +3136,14 @@ td
 Te
 Te
 td
-Xj
-kT
-kT
-kT
+xs
+BH
+BH
+BH
 El
 GB
 El
-kT
+BH
 Ad
 GJ
 jC
@@ -2914,17 +3154,17 @@ NH
 De
 mB
 TD
-Xj
-Xj
+xs
+xs
 Dd
-kT
-kT
-kT
-Xj
-kT
-kT
-kT
-kT
+BH
+BH
+BH
+xs
+BH
+BH
+BH
+BH
 SU
 td
 Te
@@ -2934,14 +3174,14 @@ Te
 Te
 Te
 td
-kT
-kT
-kT
-kT
-Xj
-kT
-kT
-kT
+BH
+BH
+BH
+BH
+xs
+BH
+BH
+BH
 Ad
 TD
 jC
@@ -2952,18 +3192,18 @@ Xj
 De
 mB
 TD
-kT
-kT
-Dd
-kT
-kT
-Xj
-kT
-kT
 BH
-kT
-kT
-kT
+BH
+Dd
+BH
+BH
+xs
+rS
+BH
+BH
+BH
+BH
+BH
 td
 Te
 Te
@@ -2973,14 +3213,14 @@ Te
 Te
 td
 Qb
-Xj
+xs
 td
 Ll
 td
 td
 td
 td
-Ad
+iZ
 TD
 jC
 NH
@@ -2989,7 +3229,7 @@ Pi
 Xj
 De
 mB
-TD
+jw
 td
 td
 hK
@@ -2997,11 +3237,11 @@ td
 td
 td
 td
+Lr
+kh
 td
-td
-td
-kT
-kT
+BH
+BH
 td
 Te
 Te
@@ -3010,8 +3250,8 @@ Te
 Te
 Te
 td
-kT
-Xj
+BH
+xs
 td
 ql
 ql
@@ -3039,7 +3279,7 @@ LP
 rZ
 td
 El
-kT
+BH
 td
 Te
 Te
@@ -3049,11 +3289,11 @@ Te
 Te
 td
 El
-Xj
+xs
 td
-ql
-ql
-ql
+rk
+rk
+ey
 ql
 Lr
 Ad
@@ -3077,7 +3317,7 @@ jS
 MO
 td
 El
-kT
+BH
 td
 Te
 Te
@@ -3087,11 +3327,11 @@ Te
 Te
 td
 El
-kT
+BH
 td
-ql
-ql
-ql
+us
+Da
+Xm
 ql
 Lr
 Ad
@@ -3114,8 +3354,8 @@ Qr
 jS
 kV
 td
-kT
-kT
+BH
+BH
 td
 Te
 Te
@@ -3125,11 +3365,11 @@ Te
 Te
 td
 El
-kT
-td
-ql
-ql
-ql
+BH
+Lr
+Fm
+Da
+lT
 ql
 td
 Ad
@@ -3152,7 +3392,7 @@ Qr
 jS
 kV
 td
-Xj
+xs
 El
 td
 Te
@@ -3163,11 +3403,11 @@ Te
 Te
 td
 El
-kT
-td
-ql
-ql
-ql
+BH
+Lr
+FW
+Da
+oC
 ql
 Fs
 Ad
@@ -3190,8 +3430,8 @@ Qr
 jS
 kV
 td
-kT
-kT
+BH
+BH
 td
 Te
 Te
@@ -3201,11 +3441,11 @@ Te
 Te
 td
 El
-kT
-td
-ql
-ql
-ql
+BH
+Lr
+Vw
+Da
+Jg
 ql
 td
 BO
@@ -3218,7 +3458,7 @@ NH
 YD
 Ad
 xq
-td
+Lr
 LP
 jS
 jS
@@ -3229,7 +3469,7 @@ jS
 MO
 td
 El
-kT
+BH
 td
 Te
 Te
@@ -3238,12 +3478,12 @@ Te
 td
 td
 td
-kT
-kT
+BH
+BH
 td
-ql
-ql
-ql
+Da
+Da
+Sg
 ql
 Lr
 Ad
@@ -3267,7 +3507,7 @@ MO
 MO
 td
 El
-Xj
+xs
 td
 Te
 Te
@@ -3275,13 +3515,13 @@ Te
 (21,1,1) = {"
 td
 LJ
-kT
-kT
-Xj
+BH
+BH
+xs
 td
-ql
-ql
-ql
+Fw
+Fw
+vo
 ql
 Lr
 Ad
@@ -3302,24 +3542,24 @@ td
 td
 td
 td
-rk
 td
-Xj
-kT
+td
+xs
+BH
 td
 Te
 Te
 "}
 (22,1,1) = {"
 td
-Xj
-kT
-kT
+xs
+BH
+BH
 lk
 td
-ql
-ql
-ql
+gn
+Da
+Sg
 ql
 td
 Ad
@@ -3332,17 +3572,17 @@ NH
 De
 Ad
 TD
-Xj
-kT
+xs
+BH
 El
 El
 GB
 El
 El
-kT
-kT
-kT
-kT
+BH
+BH
+BH
+BH
 WN
 td
 Te
@@ -3350,8 +3590,8 @@ Te
 "}
 (23,1,1) = {"
 td
-Xj
-kT
+xs
+BH
 td
 td
 td
@@ -3370,26 +3610,26 @@ xh
 De
 Ad
 It
-kT
-kT
-Xj
-kT
-kT
-kT
-kT
-kT
-kT
-Xj
-Xj
-kT
+BH
+BH
+xs
+BH
+BH
+BH
+BH
+BH
+BH
+xs
+xs
+BH
 td
 Te
 Te
 "}
 (24,1,1) = {"
 td
-kT
-kT
+BH
+BH
 GT
 OA
 cp
@@ -3416,8 +3656,8 @@ td
 td
 td
 td
-kT
-Xj
+BH
+xs
 td
 td
 td
@@ -3427,9 +3667,9 @@ Te
 (25,1,1) = {"
 td
 El
-Xj
+xs
 td
-Ug
+Bh
 ql
 fJ
 ql
@@ -3454,7 +3694,7 @@ Yj
 Yj
 cx
 td
-kT
+BH
 El
 td
 Te
@@ -3465,7 +3705,7 @@ Te
 (26,1,1) = {"
 td
 Ag
-kT
+BH
 td
 Bh
 mf
@@ -3492,7 +3732,7 @@ Kd
 mj
 TD
 td
-Xj
+xs
 El
 td
 Te
@@ -3503,9 +3743,9 @@ Te
 (27,1,1) = {"
 td
 El
-kT
-td
-Bh
+BH
+Lr
+Ug
 fJ
 ql
 fJ
@@ -3530,7 +3770,7 @@ jT
 mj
 TD
 td
-Xj
+xs
 El
 td
 Te
@@ -3540,9 +3780,9 @@ Te
 "}
 (28,1,1) = {"
 td
-kT
-kT
-td
+BH
+BH
+Lr
 Ug
 ql
 ql
@@ -3568,7 +3808,7 @@ mj
 Kd
 TD
 td
-kT
+BH
 El
 td
 Te
@@ -3578,10 +3818,10 @@ Te
 "}
 (29,1,1) = {"
 td
-Xj
-kT
-td
-Bh
+xs
+BH
+Lr
+Ug
 ql
 fJ
 ql
@@ -3605,9 +3845,9 @@ jS
 jS
 jS
 TD
-td
-kT
-kT
+Lr
+BH
+BH
 td
 Te
 Te
@@ -3616,10 +3856,10 @@ Te
 "}
 (30,1,1) = {"
 td
-Xj
-kT
+xs
+BH
 td
-Ug
+Bh
 mf
 yi
 mf
@@ -3643,9 +3883,9 @@ Av
 Av
 mC
 TD
-td
-kT
-kT
+Lr
+BH
+BH
 td
 Te
 Te
@@ -3654,7 +3894,7 @@ Te
 "}
 (31,1,1) = {"
 td
-kT
+BH
 El
 td
 mP
@@ -3683,7 +3923,7 @@ xK
 TD
 td
 El
-Xj
+xs
 td
 Te
 Te
@@ -3692,7 +3932,7 @@ Te
 "}
 (32,1,1) = {"
 td
-kT
+BH
 El
 td
 pm
@@ -3721,7 +3961,7 @@ xK
 TD
 td
 El
-kT
+BH
 td
 Te
 Te
@@ -3768,16 +4008,16 @@ Te
 "}
 (34,1,1) = {"
 td
-Xj
-kT
-kT
-kT
-Xj
-Xj
-kT
-kT
+xs
+BH
+BH
+BH
+xs
+xs
+BH
+BH
 LJ
-kT
+BH
 Ad
 Uf
 JM
@@ -3795,9 +4035,9 @@ UQ
 xk
 xK
 TD
-td
-kT
-kT
+Lr
+BH
+BH
 td
 Te
 Te
@@ -3806,16 +4046,16 @@ Te
 "}
 (35,1,1) = {"
 td
-Xj
-kT
-kT
-Xj
-Xj
-kT
+xs
+BH
+BH
+xs
+xs
+BH
 pI
-kT
-kT
-kT
+BH
+BH
+BH
 Kh
 jH
 CC
@@ -3833,9 +4073,9 @@ Wk
 st
 xK
 da
-td
-kT
-kT
+Lr
+BH
+BH
 td
 Te
 Te
@@ -3844,7 +4084,7 @@ Te
 "}
 (36,1,1) = {"
 td
-kT
+BH
 El
 td
 td
@@ -3873,7 +4113,7 @@ xK
 da
 td
 GB
-kT
+BH
 td
 Te
 Te
@@ -3882,7 +4122,7 @@ Te
 "}
 (37,1,1) = {"
 td
-kT
+BH
 El
 td
 DE
@@ -3911,7 +4151,7 @@ xK
 da
 td
 GB
-kT
+BH
 td
 Te
 Te
@@ -3920,7 +4160,7 @@ Te
 "}
 (38,1,1) = {"
 td
-kT
+BH
 El
 td
 Ek
@@ -3949,7 +4189,7 @@ xK
 da
 td
 GB
-kT
+BH
 td
 Te
 Te
@@ -3958,8 +4198,8 @@ Te
 "}
 (39,1,1) = {"
 td
-kT
-kT
+BH
+WN
 td
 vX
 dO
@@ -3985,9 +4225,9 @@ jX
 jX
 AW
 da
-td
-kT
-kT
+Lr
+BH
+BH
 td
 Te
 Te
@@ -3996,9 +4236,9 @@ Te
 "}
 (40,1,1) = {"
 td
-kT
+BH
 xs
-td
+Lr
 Ux
 dO
 sZ
@@ -4023,9 +4263,9 @@ jS
 jS
 jS
 da
-td
-kT
-Xj
+Lr
+BH
+xs
 td
 Te
 Te
@@ -4034,9 +4274,9 @@ Te
 "}
 (41,1,1) = {"
 td
-kT
-kT
-td
+BH
+BH
+Lr
 nT
 dO
 bd
@@ -4073,8 +4313,8 @@ Te
 (42,1,1) = {"
 td
 El
-kT
-td
+BH
+Lr
 nT
 dO
 sZ
@@ -4100,7 +4340,7 @@ jT
 mj
 da
 td
-kT
+BH
 El
 td
 Te
@@ -4111,7 +4351,7 @@ Te
 (43,1,1) = {"
 td
 El
-kT
+BH
 td
 nT
 dO
@@ -4138,7 +4378,7 @@ Ga
 mj
 da
 td
-kT
+BH
 El
 td
 Te
@@ -4176,7 +4416,7 @@ AR
 AR
 RN
 td
-Xj
+xs
 El
 td
 Te
@@ -4186,8 +4426,8 @@ Te
 "}
 (45,1,1) = {"
 td
-kT
-kT
+BH
+BH
 xf
 Bx
 KN
@@ -4214,8 +4454,8 @@ td
 td
 td
 td
-Xj
-kT
+xs
+BH
 td
 td
 td
@@ -4224,8 +4464,8 @@ Te
 "}
 (46,1,1) = {"
 td
-kT
-Xj
+BH
+xs
 td
 td
 td
@@ -4244,17 +4484,17 @@ NH
 De
 Kh
 da
-Xj
-kT
-kT
-Xj
-kT
-kT
-kT
-Xj
-Xj
-kT
-kT
+xs
+BH
+BH
+xs
+BH
+BH
+BH
+xs
+xs
+BH
+BH
 LJ
 td
 Te
@@ -4263,13 +4503,13 @@ Te
 (47,1,1) = {"
 td
 Qb
-Xj
-Xj
+xs
+xs
 SU
 td
-ql
-ql
-ql
+zv
+SQ
+gv
 ql
 td
 Kh
@@ -4282,32 +4522,32 @@ NH
 De
 vS
 da
-kT
-kT
+BH
+BH
 El
 El
 El
 El
 GB
-kT
-kT
-kT
-kT
-kT
+BH
+BH
+BH
+BH
+BH
 td
 Te
 Te
 "}
 (48,1,1) = {"
 td
-kT
-kT
-kT
+BH
+BH
+BH
 WN
 td
-ql
-ql
-ql
+ag
+ag
+hb
 ql
 Lr
 vS
@@ -4330,8 +4570,8 @@ td
 td
 td
 td
-kT
-Xj
+BH
+xs
 td
 Te
 Te
@@ -4340,12 +4580,12 @@ Te
 td
 td
 td
-Xj
-kT
+xs
+BH
 td
-ql
-ql
-ql
+SQ
+SQ
+gv
 ql
 Lr
 vS
@@ -4369,7 +4609,7 @@ NS
 NS
 td
 El
-Xj
+xs
 td
 Te
 Te
@@ -4379,11 +4619,11 @@ Te
 Te
 td
 El
-kT
-td
-ql
-ql
-ql
+BH
+Lr
+bF
+SQ
+iz
 ql
 td
 vS
@@ -4396,7 +4636,7 @@ NH
 De
 vS
 da
-td
+Lr
 Pc
 jS
 jS
@@ -4407,7 +4647,7 @@ jS
 NS
 td
 El
-kT
+BH
 td
 Te
 Te
@@ -4417,11 +4657,11 @@ Te
 Te
 td
 El
-kT
-td
-ql
-ql
-ql
+BH
+Lr
+wU
+SQ
+oG
 ql
 Fs
 vS
@@ -4444,8 +4684,8 @@ Qr
 jS
 IS
 td
-kT
-kT
+BH
+BH
 td
 Te
 Te
@@ -4455,11 +4695,11 @@ Te
 Te
 td
 El
-kT
-td
-ql
-ql
-ql
+BH
+Lr
+Jo
+SQ
+hy
 ql
 td
 vS
@@ -4482,7 +4722,7 @@ Qr
 jS
 IS
 td
-kT
+BH
 El
 td
 Te
@@ -4493,11 +4733,11 @@ Te
 Te
 td
 El
-kT
+BH
 td
-ql
-ql
-ql
+dm
+SQ
+lC
 ql
 Lr
 vS
@@ -4520,8 +4760,8 @@ Qr
 jS
 IS
 td
-Xj
-kT
+xs
+BH
 td
 Te
 Te
@@ -4533,9 +4773,9 @@ td
 GB
 WN
 td
-ql
-ql
-ql
+MU
+MU
+Nm
 ql
 Lr
 jQ
@@ -4559,7 +4799,7 @@ jS
 NS
 td
 Ag
-kT
+BH
 td
 Te
 Te
@@ -4568,8 +4808,8 @@ Te
 Te
 Te
 td
-kT
-kT
+BH
+BH
 td
 ql
 ql
@@ -4597,7 +4837,7 @@ Pc
 cJ
 td
 El
-Xj
+xs
 td
 Te
 Te
@@ -4607,14 +4847,14 @@ Te
 Te
 td
 Qb
-Xj
+xs
 td
 Ll
 td
 td
 td
 td
-Kh
+ZO
 da
 jC
 NH
@@ -4623,7 +4863,7 @@ Pi
 Xj
 De
 Kh
-da
+RO
 td
 td
 hK
@@ -4631,11 +4871,11 @@ td
 td
 td
 td
-td
+Lr
 ar
 td
-kT
-kT
+BH
+BH
 td
 Te
 Te
@@ -4644,14 +4884,14 @@ Te
 Te
 Te
 td
-kT
-Xj
-Xj
-kT
-kT
-Xj
-kT
-kT
+BH
+xs
+xs
+BH
+BH
+xs
+BH
+BH
 Kh
 da
 jC
@@ -4662,18 +4902,18 @@ Xj
 De
 Kh
 BC
-Xj
-kT
+xs
+BH
 Dd
-kT
-Xj
+BH
+xs
 HF
-kT
-kT
-kT
-Xj
-Xj
-kT
+BH
+BH
+BH
+xs
+xs
+BH
 td
 Te
 Te
@@ -4682,14 +4922,14 @@ Te
 Te
 Te
 td
-kT
-kT
-kT
-kT
+BH
+BH
+BH
+BH
 El
 El
 El
-kT
+BH
 Kh
 da
 jC
@@ -4700,17 +4940,17 @@ NH
 De
 Kh
 BC
-kT
-kT
+BH
+BH
 CR
-kT
-kT
-kT
-Xj
-Xj
-kT
-kT
-kT
+BH
+BH
+BH
+xs
+xs
+BH
+BH
+BH
 SU
 td
 Te
