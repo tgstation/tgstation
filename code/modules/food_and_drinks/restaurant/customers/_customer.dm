@@ -54,7 +54,7 @@
 /// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
 /// If the list of orders are static, just modify orderable_objects.
 /datum/customer_data/proc/get_order(datum/venue/venue)
-	return pickweight(orderable_objects[venue.type])
+	return pickweight(orderable_objects[venue.orderable_objects_access_type])
 
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return

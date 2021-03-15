@@ -28,6 +28,13 @@
 	var/list/mob_blacklist = list()
 	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
 	var/list/linked_seats = list()
+	///Defines what 'type' to access the available orders from, if set to null defaults to type
+	var/orderable_objects_access_type = null
+
+/datum/venue/New()
+	. = ..()
+	if(isnull(orderable_objects_access_type))
+		orderable_objects_access_type = type
 
 /datum/venue/process(delta_time)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))

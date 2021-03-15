@@ -39,8 +39,9 @@
 	assignedrole = "Interstellar Barman"
 
 /obj/effect/mob_spawn/human/interstellar_barman/special(mob/M)
-	. = .()
 	M.faction += "interstellar_motel"
+	var/obj/item/card/id/W = H.wear_id
+	W.registered_account = new /datum/bank_account(H.name)
 
 /datum/outfit/galactic_bartender
 	name = "Galactic Bartender"
@@ -56,6 +57,7 @@
 
 /datum/venue/bar/space
 	req_access = ACCESS_SPACE_MOTEL
+	orderable_objects_access_type = /datum/venue/bar
 
 /obj/machinery/restaurant_portal/spacebar
 	linked_venue = /datum/venue/bar/space
@@ -67,3 +69,8 @@
 /obj/structure/holosign/robot_seat/spacebar
 	name = "bar seating"
 	linked_venue = /datum/venue/bar/space
+
+/obj/machinery/vending/boozeomat/spacemotel
+	name = "Defunct Booze-o-mat"
+	req_access = list(ACCESS_SPACE_MOTEL)
+

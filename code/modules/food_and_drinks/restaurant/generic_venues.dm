@@ -84,7 +84,7 @@
 	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[/datum/venue/bar])
+	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[orderable_objects_access_type])
 
 	var/glass_visual
 
