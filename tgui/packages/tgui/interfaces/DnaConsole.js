@@ -1190,6 +1190,7 @@ const GeneticMakeupBuffers = (props, context) => {
     isViableSubject,
     makeupCapacity = 3,
     makeupStorage,
+    geneticMakeupCooldown,
   } = data;
   const elements = [];
   for (let i = 1; i <= makeupCapacity; i++) {
@@ -1235,6 +1236,19 @@ const GeneticMakeupBuffers = (props, context) => {
   }
   return (
     <Section title="Genetic Makeup Buffers">
+      {!!geneticMakeupCooldown && (
+        <Dimmer
+          fontSize="14px"
+          textAlign="center">
+          <Icon
+            mr={1}
+            name="spinner"
+            spin />
+          Genetic makeup transfer ready in...
+          <Box mt={1} />
+          {geneticMakeupCooldown}s
+        </Dimmer>
+      )}
       {elements}
     </Section>
   );
