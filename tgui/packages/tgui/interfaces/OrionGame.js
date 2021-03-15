@@ -1,4 +1,3 @@
-
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
@@ -47,21 +46,11 @@ const variousButtonIcons = {
 };
 
 const STATUS2COMPONENT = [
-  {
-    component: () => ORION_STATUS_START,
-  },
-  {
-    component: () => ORION_STATUS_INSTRUCTIONS,
-  },
-  {
-    component: () => ORION_STATUS_NORMAL,
-  },
-  {
-    component: () => ORION_STATUS_GAMEOVER,
-  },
-  {
-    component: () => ORION_STATUS_MARKET,
-  },
+  { component: () => ORION_STATUS_START },
+  { component: () => ORION_STATUS_INSTRUCTIONS },
+  { component: () => ORION_STATUS_NORMAL },
+  { component: () => ORION_STATUS_GAMEOVER },
+  { component: () => ORION_STATUS_MARKET },
 ];
 
 const locationInfo = [
@@ -200,7 +189,6 @@ const AdventureStatus = (props, context) => {
     </Section>
   );
 };
-
 
 const ORION_STATUS_START = (props, context) => {
   const { data, act } = useBackend(context);
@@ -497,7 +485,6 @@ const ORION_STATUS_MARKET = (props, context) => {
                   "Hello, Pioneer! We have supplies for you to help \
                   you reach Orion. They aren't free, though!"
                 )}
-
               </Box>
             </Stack.Item>
             {spaceport_raided && (
