@@ -127,6 +127,8 @@
 
 	moveToNullspace()
 
+	vis_contents.Cut()
+
 
 /atom/movable/proc/update_emissive_block()
 	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
