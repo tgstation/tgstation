@@ -46,7 +46,7 @@
 
 /mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
 	. = FALSE
-	if(!skip_throw_mode_check && !in_throw_mode)
+	if(!skip_throw_mode_check && !throw_mode)
 		return
 	if(get_active_held_item())
 		return
@@ -61,7 +61,7 @@
 		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
 			visible_message("<span class='warning'>[src] catches [I]!</span>", \
 							"<span class='userdanger'>You catch [I] in mid-air!</span>")
-			throw_mode_off()
+			throw_mode_off(THROW_MODE_TOGGLE)
 			return TRUE
 	return ..()
 

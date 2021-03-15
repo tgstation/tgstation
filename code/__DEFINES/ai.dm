@@ -68,7 +68,7 @@
 #define BB_CUSTOMER_EATING "BB_customer_eating"
 #define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
 #define BB_CUSTOMER_LEAVING "BB_customer_leaving"
-
+#define BB_CUSTOMER_CURRENT_TARGET "BB_customer_current_target"
 
 ///Dog AI controller blackboard keys
 

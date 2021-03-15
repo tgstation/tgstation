@@ -55,7 +55,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	density = TRUE
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	generic_canpass = FALSE
 	movement_type = PHASING | FLYING
 	var/mob/living/wizard
 	var/z_original = 0
