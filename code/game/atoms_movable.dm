@@ -120,6 +120,9 @@
 
 	. = ..()
 
+	//We add ourselves to this list, best to clear it out
+	LAZYCLEARLIST(area_sensitive_contents)
+
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
