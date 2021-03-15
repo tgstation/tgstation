@@ -1,12 +1,12 @@
 // VENTCRAWLING
 // Handles the entrance and exit on ventcrawling
-/mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/components/A)
+/mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/components/ventcrawl_target)
 	// Being able to always ventcrawl trumps being only able to ventcrawl when wearing nothing
 	var/required_nudity = HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS)
 	// Cache the vent_movement bitflag var from atmos machineries
-	var/vent_movement = A.vent_movement
+	var/vent_movement = ventcrawl_target.vent_movement
 
-	if(!Adjacent(A))
+	if(!Adjacent(ventcrawl_target))
 		return
 	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
 		return
@@ -29,7 +29,7 @@
 		if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
 			to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 			return
-	if(A.welded)
+	if(ventcrawl_target.welded)
 		to_chat(src, "<span class='warning'>You can't crawl around a welded vent!</span>")
 		return	
 
@@ -40,20 +40,21 @@
 			if(!client)
 				return
 			visible_message("<span class='notice'>[src] scrambles out from the ventilation ducts!</span>","<span class='notice'>You out from the ventilation ducts.</span>")
-			forceMove(A.loc)
+			forceMove(ventcrawl_target.loc)
 			REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 			update_pipe_vision()
+
 		//Entrance here
 		else
-			var/datum/pipeline/vent_parent = A.parents[1]
+			var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
 			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmosmch))
 				visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
-				if(!do_after(src, 2.5 SECONDS, target = A))
+				if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target))
 					return
 				if(!client)
 					return
 				visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
-				forceMove(A)
+				forceMove(ventcrawl_target)
 				ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 				update_pipe_vision()
 			else
@@ -87,13 +88,16 @@
 		if(client)
 			for(var/obj/machinery/atmospherics/pipenet_part in total_members)
 				// If the machinery is not in view or is not meant to be seen, continue
-				if(!(in_view_range(client.mob, pipenet_part)) || !(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
+				if(!in_view_range(client.mob, pipenet_part))
 					continue
-					if(!pipenet_part.pipe_vision_img)
-						pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, layer = ABOVE_HUD_LAYER, dir = pipenet_part.dir)
-						pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
-					client.images += pipenet_part.pipe_vision_img
-					pipes_shown += pipenet_part.pipe_vision_img
+				if(!pipenet_part.vent_movement & VENTCRAWL_CAN_SEE)
+					continue
+
+				if(!pipenet_part.pipe_vision_img)
+					pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, layer = ABOVE_HUD_LAYER, dir = pipenet_part.dir)
+					pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
+				client.images += pipenet_part.pipe_vision_img
+				pipes_shown += pipenet_part.pipe_vision_img
 	
 	// Take the pipe images from the client
 	else if (!isnull(client))
