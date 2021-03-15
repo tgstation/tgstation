@@ -131,3 +131,5 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(70)			///obj/structure/industrial_lift
 
 #define MAX_S_OBJ SMOOTH_GROUP_INDUSTRIAL_LIFT //Always match this value with the one above it.
+
+#define SMOOTH_GROUP_GRILLE S_OBJ(71)					//obj/structure/grille

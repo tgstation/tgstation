@@ -1,8 +1,9 @@
 /obj/structure/grille
 	desc = "A flimsy framework of metal rods."
 	name = "grille"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/smooth_structures/grille.dmi'
 	icon_state = "grille"
+	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
@@ -16,6 +17,9 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_GRILLE)
+	canSmoothWith = list(SMOOTH_GROUP_GRILLE)
 
 /obj/structure/grille/ComponentInitialize()
 	. = ..()
@@ -34,14 +38,14 @@
 		return
 
 	var/ratio = obj_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
+
+	if(ratio <= 0.5)
+		base_icon_state = "grille-d50"
+	else
+		base_icon_state = "grille"
 
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
-
-	if(ratio > 50)
-		return
-	icon_state = "grille50_[rand(0,3)]"
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
@@ -275,7 +279,7 @@
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
-	icon_state = "brokengrille"
+	icon_state = "grille-broken"
 	density = FALSE
 	obj_integrity = 20
 	broken = TRUE
@@ -283,3 +287,4 @@
 	rods_broken = FALSE
 	grille_type = /obj/structure/grille
 	broken_type = null
+	smoothing_flags = null
