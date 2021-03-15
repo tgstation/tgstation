@@ -578,6 +578,19 @@
 "Gx" = (
 /turf/open/floor/plating/abductor,
 /area/space/nearstation)
+"GF" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "GH" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -1012,7 +1025,6 @@ hc
 hc
 hc
 hc
-hc
 fU
 fU
 fU
@@ -1044,7 +1056,8 @@ fU
 fU
 fU
 fU
-hc
+fU
+fU
 hc
 hc
 hc
@@ -1057,18 +1070,6 @@ hc
 hc
 hc
 fU
-fU
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-MC
 Db
 Db
 Db
@@ -1087,7 +1088,19 @@ Db
 Db
 Db
 Db
-fU
+Db
+MC
+Db
+Db
+Db
+MC
+Db
+Db
+Db
+Db
+Db
+Db
+Db
 fU
 hc
 hc
@@ -4665,7 +4678,7 @@ hc
 hc
 hc
 fU
-fU
+GF
 lY
 lY
 lY
@@ -4695,7 +4708,7 @@ lY
 lY
 lY
 lY
-fU
+lY
 fU
 hc
 hc
@@ -4708,7 +4721,6 @@ hc
 hc
 hc
 hc
-hc
 fU
 fU
 fU
@@ -4740,7 +4752,8 @@ fU
 fU
 fU
 fU
-hc
+fU
+fU
 hc
 hc
 hc
