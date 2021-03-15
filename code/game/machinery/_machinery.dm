@@ -344,9 +344,6 @@
 
 	var/mob/living/L = user
 
-	if(L.incapacitated())
-		return FALSE
-
 	var/is_dextrous = FALSE
 	if(isanimal(user))
 		var/mob/living/simple_animal/user_as_animal = user
@@ -355,11 +352,6 @@
 
 	if(!(issilicon(user) || is_dextrous || user.can_hold_items()))
 		return FALSE //spiders gtfo
-
-	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT)
-		if(user.is_blind())
-			to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
-			return FALSE
 	
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
@@ -369,6 +361,14 @@
 			return FALSE
 
 		return TRUE //silicons don't care about petty mortal concerns like needing to be next to a machine to use it
+
+	if(L.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
+		return FALSE
+
+	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT)
+		if(user.is_blind())
+			to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
+			return FALSE
 
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		return FALSE
