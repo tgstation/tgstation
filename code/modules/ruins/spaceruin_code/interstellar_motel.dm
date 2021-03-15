@@ -40,8 +40,9 @@
 
 /obj/effect/mob_spawn/human/interstellar_barman/special(mob/M)
 	M.faction += "interstellar_motel"
-	var/obj/item/card/id/W = H.wear_id
-	W.registered_account = new /datum/bank_account(H.name)
+	var/mob/living/carbon/human/humie = M
+	var/obj/item/card/id/W = humie.wear_id
+	W.registered_account = new /datum/bank_account(humie.name)
 
 /datum/outfit/galactic_bartender
 	name = "Galactic Bartender"
