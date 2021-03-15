@@ -79,7 +79,7 @@ export const SelectEquipment = (props, context) => {
                   onInput={(e, value) => setSearchText(value)} />
               </Stack.Item>
               <Stack.Item>
-                <DisplayTabs categories={outfitCategories} />
+                <DisplayTabs categories={categories} />
               </Stack.Item>
               <Stack.Item mt={0} grow={1} basis={0}>
                 <OutfitDisplay
