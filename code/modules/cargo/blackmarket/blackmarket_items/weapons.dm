@@ -36,7 +36,7 @@
 
 /datum/blackmarket_item/weapon/chainsaw
 	name = "Chainsaw"
-	desc = "A lumberjack's best friend, perfect for cutting trees efficiently, or limbs."
+	desc = "A lumberjack's best friend, perfect for cutting trees or limbs efficiently."
 	item = /obj/item/chainsaw
 
 	price_min = 350
