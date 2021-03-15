@@ -64,7 +64,7 @@
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
-	if(src.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED && isliving(user))
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
@@ -459,7 +459,7 @@
 	//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(!src.vent_movement & VENTCRAWL_ALLOWED)
+	if(!(vent_movement & VENTCRAWL_ALLOWED)) // Early return for machines which does not allow ventcrawling at all.
 		return
 	if(istype(L))
 		L.handle_ventcrawl(src)

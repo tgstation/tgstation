@@ -35,7 +35,7 @@
 
 	if(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		//Handle the exit here
-		if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(src.loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
+		if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
 			visible_message("<span class='notice'>[src] begins climbing out from the ventilation system...</span>" ,"<span class='notice'>You begin climbing out from the ventilation system...</span>")
 			if(!client)
 				return
@@ -66,27 +66,33 @@
 		return
 	return ..()
 
-/mob/living/proc/update_pipe_vision()
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(src.loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-		var/list/totalMembers = list()
-		var/obj/machinery/atmospherics/current_location = src.loc
+/** Everything related to pipe vision on ventcrawling is handled by update_pipe_vision(). Called on exit, entrance, and pipenet differences.
+ One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics */
+/mob/living/proc/update_pipe_vision() 
+	// Give the pipe images
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
+		var/list/total_members = list()
+		var/obj/machinery/atmospherics/current_location = loc
 		for(var/datum/pipeline/P in current_location.returnPipenets())
-			totalMembers += P.members
-			totalMembers += P.other_atmosmch
+			total_members += P.members
+			total_members += P.other_atmosmch
 
-		if(!totalMembers.len)
+		if(!total_members.len)
 			return
 
 		if(client)
-			for(var/obj/machinery/atmospherics/A in totalMembers)
-				if(A.vent_movement & VENTCRAWL_CAN_SEE && in_view_range(client.mob, A))
-					if(!A.pipe_vision_img)
-						A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
-						A.pipe_vision_img.plane = ABOVE_HUD_PLANE
-					client.images += A.pipe_vision_img
-					pipes_shown += A.pipe_vision_img
-	else
-		if(client)
-			for(var/image/current_image in pipes_shown)
-				client.images -= current_image
-			pipes_shown.len = 0
+			for(var/obj/machinery/atmospherics/pipenet_part in total_members)
+				// If the machinery is not in view or is not meant to be seen, continue
+				if(!(in_view_range(client.mob, pipenet_part)) || !(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
+					continue
+					if(!pipenet_part.pipe_vision_img)
+						pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, layer = ABOVE_HUD_LAYER, dir = pipenet_part.dir)
+						pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
+					client.images += pipenet_part.pipe_vision_img
+					pipes_shown += pipenet_part.pipe_vision_img
+	
+	// Take the pipe images
+	else if (!isnull(client))
+		for(var/image/current_image in pipes_shown)
+			client.images -= current_image
+		pipes_shown.len = 0
