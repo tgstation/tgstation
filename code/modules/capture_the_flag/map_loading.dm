@@ -35,7 +35,17 @@
 	description = "A CTF map created to demonstrate 4 team CTF, features a single centred flag rather than one per team."
 	mappath = "_maps/map_files/CTF/fourSide.dmm"
 
-/datum/map_template/ctf/highStreet
-	name = "High Street"
+/datum/map_template/ctf/downtown
+	name = "Downtown"
 	description = "A CTF map that takes place in a terrestrial city."
-	mappath = "_maps/map_files/CTF/highStreet.dmm"
+	mappath = "_maps/map_files/CTF/downtown.dmm"
+
+/datum/map_template/ctf/limbo
+	name = "Limbo"
+	description = "A KOTH map that takes place in a wizard den with looping hallways"
+	mappath = "_maps/map_files/CTF/limbo.dmm"
+
+/datum/map_template/ctf/cruiser
+	name = "Crusier"
+	description = "A CTF map that takes place across multiple space ships, one carring a powerful device that can accelerate those who obtain it"
+	mappath = "_maps/map_files/CTF/cruiser.dmm"
