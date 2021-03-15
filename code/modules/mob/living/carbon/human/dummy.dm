@@ -57,9 +57,9 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	if(!slotkey)
 		return
 
-	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
+	var/mob/living/carbon/human/dummy/dummy = GLOB.human_dummy_list[slotkey]
 
 	GLOB.human_dummy_list -= slotkey
-	if(istype(D))
-		GLOB.dummy_mob_list -= D
-		qdel(D)
+	if(istype(dummy))
+		GLOB.dummy_mob_list -= dummy
+		qdel(dummy)
