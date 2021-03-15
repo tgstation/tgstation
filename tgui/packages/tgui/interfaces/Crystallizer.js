@@ -4,6 +4,8 @@ import { getGasColor, getGasLabel } from '../constants';
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
 
+const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
+
 export const Crystallizer = (props, context) => {
   const { act, data } = useBackend(context);
   const selectedRecipes = data.selected_recipes || [];
@@ -71,6 +73,20 @@ export const Crystallizer = (props, context) => {
               }}>
                 {requirements}
               </Box>
+            </LabeledList.Item>
+            <LabeledList.Item label="Temperature">
+              <ProgressBar
+                value={logScale(internal_temperature)}
+                minValue={0}
+                maxValue={logScale(10000)}
+                ranges={{
+                  teal: [-Infinity, logScale(80)],
+                  good: [logScale(80), logScale(600)],
+                  average: [logScale(600), logScale(5000)],
+                  bad: [logScale(5000), Infinity],
+                }}>
+                {toFixed(internal_temperature) + ' K'}
+              </ProgressBar>
             </LabeledList.Item>
           </LabeledList>
         </Section>
