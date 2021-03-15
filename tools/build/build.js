@@ -56,13 +56,16 @@ const { Task, runTasks } = require('./cbt/task');
 const { regQuery } = require('./cbt/winreg');
 const fs = require('fs');
 
+const yarn = args => {
+  const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
+    .replace('/tgui/', '/');
+  return exec('node', [yarnPath, ...args], {
+    cwd: './tgui',
+  });
+};
+
 /// Installs all tgui dependencies
 const taskYarn = new Task('yarn')
-  .depends('tgui/.yarn/releases/*')
-  .depends('tgui/yarn.lock')
-  .depends('tgui/.yarn/install-state.gz')
-  .depends('tgui/**/package.json')
-  .provides('tgui/.yarn/install-state.gz')
   .build(async () => {
     const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
       .replace('/tgui/', '/');
@@ -73,20 +76,14 @@ const taskYarn = new Task('yarn')
   });
 
 /// Builds svg fonts
-const taskTgfont = new Task('tg svg font')
+const taskTgfont = new Task('tgfont')
   .depends('tgui/.yarn/install-state.gz')
-  .depends('tgui/packages/tgfont/**/*.svg')
-  .depends('tgui/packages/tgfont/config.json')
+  .depends('tgui/packages/tgfont/**/*.+(js|cjs|svg)')
   .depends('tgui/packages/tgfont/package.json')
   .provides('tgui/packages/tgfont/dist/tgfont.css')
   .provides('tgui/packages/tgfont/dist/tgfont.eot')
   .provides('tgui/packages/tgfont/dist/tgfont.woff2')
   .build(async () => {
-    const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
-      .replace('/tgui/', '/');
-    const yarn = args => exec('node', [yarnPath, ...args], {
-      cwd: './tgui',
-    });
     await yarn(['workspace', 'tgfont', 'build']);
   });
 
@@ -95,18 +92,13 @@ const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
-  .depends('tgui/packages/**/*.+(js|jsx|ts|tsx|cjs|mjs|scss)')
+  .depends('tgui/packages/**/*.+(js|jsx|ts|tsx|cjs|scss)')
   .provides('tgui/public/tgui.bundle.css')
   .provides('tgui/public/tgui.bundle.js')
   .provides('tgui/public/tgui-common.bundle.js')
   .provides('tgui/public/tgui-panel.bundle.css')
   .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
-    const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
-      .replace('/tgui/', '/');
-    const yarn = args => exec('node', [yarnPath, ...args], {
-      cwd: './tgui',
-    });
     await yarn(['install']);
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
@@ -168,23 +160,25 @@ const taskDm = (...injectedDefines) => {
         || 'DreamMaker'
       );
     })();
-    if(injectedDefines.length){
-        const injectedContent = injectedDefines.map(x => `#define ${x}\n`).join("")
-        /// Create mdme file
-        fs.writeFileSync(`${DME_NAME}.mdme`,injectedContent)
-        /// Add the actual dme content
+    if (injectedDefines.length) {
+        const injectedContent = injectedDefines
+          .map(x => `#define ${x}\n`)
+          .join('')
+        // Create mdme file
+        fs.writeFileSync(`${DME_NAME}.mdme`, injectedContent)
+        // Add the actual dme content
         const dme_content = fs.readFileSync(`${DME_NAME}.dme`)
-        fs.appendFileSync(`${DME_NAME}.mdme`,dme_content)
+        fs.appendFileSync(`${DME_NAME}.mdme`, dme_content)
 
         await exec(dmPath, [`${DME_NAME}.mdme`]);
-        //Rename dmb
-        fs.renameSync(`${DME_NAME}.mdme.dmb`,`${DME_NAME}.dmb`)
-        //Rename rsc
-        fs.renameSync(`${DME_NAME}.mdme.rsc`,`${DME_NAME}.rsc`)
-        //Remove mdme
+        // Rename dmb
+        fs.renameSync(`${DME_NAME}.mdme.dmb`, `${DME_NAME}.dmb`)
+        // Rename rsc
+        fs.renameSync(`${DME_NAME}.mdme.rsc`, `${DME_NAME}.rsc`)
+        // Remove mdme
         fs.rmSync(`${DME_NAME}.mdme`)
     }
-    else{
+    else {
       await exec(dmPath, [`${DME_NAME}.dme`]);
     }
   });

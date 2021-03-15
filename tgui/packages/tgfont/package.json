@@ -6,6 +6,6 @@
     "fantasticon": "^1.1.1"
   },
   "scripts": {
-    "build": "fantasticon --config config.json"
+    "build": "node mkdist.cjs && fantasticon --config config.cjs"
   }
 }
