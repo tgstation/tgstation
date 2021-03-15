@@ -181,12 +181,14 @@
 	. = ..()
 	if(.)
 		return
-	if(!iscarbon(usr))
+
+	var/mob/living/carbon/gamer = usr
+	if(!istype(gamer))
 		return
 
 	. = TRUE
 
-	var/mob/living/carbon/gamer = usr
+
 
 	var/gamer_skill_level = 0
 	var/gamer_skill = 0
@@ -226,10 +228,10 @@
 				settlers = list("Harry","Larry","Bob")
 		if("continue")
 			if(turns >= ORION_TRAIL_WINTURN)
-				win(usr)
+				win(gamer)
 				xp_gained += 34
 				return
-			usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
+			gamer.mind.adjust_experience(/datum/skill/gaming, xp_gained+1)
 			food -= (alive+lings_aboard)*2
 			fuel -= 5
 			turns += 1
