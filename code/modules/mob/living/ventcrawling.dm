@@ -48,7 +48,7 @@
 			var/datum/pipeline/vent_parent = A.parents[1]
 			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmosmch))
 				visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
-				if(!do_after(src, 25, target = A))
+				if(!do_after(src, 2.5 SECONDS, target = A))
 					return
 				if(!client)
 					return
@@ -73,13 +73,13 @@
  * We move first and then call update. Dont flip this around
  */
 /mob/living/proc/update_pipe_vision() 
-	// Give the pipe images
+	// Give the pipe images to the client
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
 		var/list/total_members = list()
 		var/obj/machinery/atmospherics/current_location = loc
-		for(var/datum/pipeline/P in current_location.returnPipenets())
-			total_members += P.members
-			total_members += P.other_atmosmch
+		for(var/datum/pipeline/location_pipeline in current_location.returnPipenets())
+			total_members += location_pipeline.members
+			total_members += location_pipeline.other_atmosmch
 
 		if(!total_members.len)
 			return
@@ -95,7 +95,7 @@
 					client.images += pipenet_part.pipe_vision_img
 					pipes_shown += pipenet_part.pipe_vision_img
 	
-	// Take the pipe images
+	// Take the pipe images from the client
 	else if (!isnull(client))
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
