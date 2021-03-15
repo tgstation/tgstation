@@ -351,7 +351,7 @@
 		if (SA.dextrous)
 			dextrous_cache = TRUE
 
-	else if(user.can_hold_items() || dextrous_cache) // If we are a living mob with hand slots or a dextrous simple animal.
+	if(dextrous_cache || user.can_hold_items()) // If we are a living mob with hand slots or a dextrous simple animal.
 		var/mob/living/L = user
 
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
