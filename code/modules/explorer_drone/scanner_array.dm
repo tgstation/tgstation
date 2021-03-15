@@ -18,9 +18,9 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 #define BASE_POINT_SCAN_TIME 5*60*10
 #define BASE_DEEP_SCAN_TIME 5*60*10
 
-// todo could be subtyped for wide/point//band instead of flat
 /// Represents scan in progress, only one globally for now, todo later split per z or allow partial dish swarm usage
 /datum/exoscan
+	/// Scan type wide/point/deep
 	var/scan_type
 	/// The scan power this scan was started with, if scanner swarm power falls below this value it will be interrupted
 	var/scan_power = 0
@@ -63,6 +63,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 			target.reveal()
 			target.point_scan_complete = TRUE
 		if(EXOSCAN_DEEP)
+			target.reveal()
 			target.deep_scan_complete = TRUE
 	qdel(src)
 
@@ -78,6 +79,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	name = "Scanner Array Control Console"
 	/// If scan was interrupted show a popup until dismissed.
 	var/failed_popup = FALSE
+	/// Site we're configuring targeted scans for.
 	var/datum/exploration_site/selected_site
 
 /obj/machinery/computer/exoscanner_control/ui_interact(mob/user, datum/tgui/ui)
@@ -112,12 +114,6 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		.["scan_time"] = timeleft(GLOB.exoscanner_controller.current_scan.scan_timer)
 		.["current_scan_power"] = GLOB.exoscanner_controller.current_scan.scan_power
 		.["scan_description"] = GLOB.exoscanner_controller.current_scan.ui_description()
-
-//Todo remove this
-/proc/build_exploration_site_ui_data()
-	. = list()
-	for(var/datum/exploration_site/site in GLOB.exploration_sites)
-		. += list(site.site_data())
 
 /obj/machinery/computer/exoscanner_control/ui_static_data(mob/user)
 	. = ..()
@@ -183,6 +179,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		RegisterSignal(scan,COMSIG_EXOSCAN_INTERRUPTED, .proc/scan_failed)
 
 /obj/machinery/computer/exoscanner_control/proc/scan_failed()
+	SIGNAL_HANDLER
 	failed_popup = TRUE
 	SStgui.update_uis(src)
 
@@ -202,13 +199,21 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "scanner_off"
 	desc = "Sophisticated scanning array. Easily influenced by enviroment."
-	/// Is something (usually another scanner too close) is interfering with work of this scanner. Set on scanner swarm power recalculation
-	var/interference = FALSE
+	idle_power_usage = 0
+	active_power_usage = 500
 
 /obj/machinery/exoscanner/Initialize()
 	. = ..()
-	RegisterSignal(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED),/atom/proc/update_icon_state)
+	RegisterSignal(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED),.proc/scan_change)
 	update_readiness()
+
+/obj/machinery/exoscanner/proc/scan_change()
+	SIGNAL_HANDLER
+	if(GLOB.exoscanner_controller.current_scan)
+		use_power = ACTIVE_POWER_USE
+	else
+		use_power = IDLE_POWER_USE
+	update_icon_state()
 
 /obj/machinery/exoscanner/Destroy()
 	. = ..()
@@ -234,11 +239,6 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	else
 		icon_state = "scanner_off"
 
-/obj/machinery/exoscanner/update_overlays()
-	. = ..()
-	if(interference)
-		. += "scanner_interference"
-
 /obj/machinery/exoscanner/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I, 10)
@@ -252,7 +252,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	. = ..()
 	update_readiness()
 
-///Helper datum to calculate and store scanning power
+///Helper datum to calculate and store scanning power and track in progress scans
 /datum/scanner_controller
 	/// List of dishes in working condition.
 	var/list/tracked_dishes = list()
@@ -260,7 +260,6 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	var/datum/exoscan/current_scan
 	/// Band for the next wide scan. Increased after successful completion of wide scan.
 	var/wide_scan_band = 1
-
 	/// Current scan power keyed by site
 	var/list/scan_power_cache = list()
 

@@ -1,7 +1,9 @@
+/// How many lines of log we keep
 #define EXODRONE_LOG_SIZE 15
-
+/// Size of drone storage shared between loot and tools.
 #define EXODRONE_CARGO_SLOTS 6
 
+// Fuel types and travel time per unit of distance on that fuel.
 #define FUEL_BASIC "basic"
 #define BASIC_FUEL_TIME_COST 300
 
@@ -11,16 +13,10 @@
 #define FUEL_EXOTIC "exotic"
 #define EXOTIC_FUEL_TIME_COST 100
 
+/// All exodrones.
 GLOBAL_LIST_EMPTY(exodrones)
+/// All exodrone launchers.
 GLOBAL_LIST_EMPTY(exodrone_launchers)
-/// Tool to fa icon name
-GLOBAL_LIST_INIT(all_exodrone_tools,list(
-	EXODRONE_TOOL_WELDER = "burn",
-	EXODRONE_TOOL_TRANSLATOR = "language",
-	EXODRONE_TOOL_LASER = "bolt",
-	EXODRONE_TOOL_MULTITOOL = "broadcast-tower",
-	EXODRONE_TOOL_DRILL = "screwdriver",
-))
 
 /// Exploration drone
 /obj/item/exodrone
@@ -30,19 +26,18 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	icon_state = "drone"
 	w_class = WEIGHT_CLASS_BULKY
 
-	/// Current drone status
+	/// Current drone status, see code\__DEFINES\adventure.dm
 	var/drone_status = EXODRONE_IDLE
-	/// Are we currently controlled by remote terminal
+	/// Are we currently controlled by remote terminal, blocks other terminals from interacting with this drone.
 	var/controlled = FALSE
 	/// Site we're currently at, null means station.
 	var/datum/exploration_site/location
 	/// Site we're currently travelling to, null means going back to station - check drone status if you want to check if traveling or idle
 	var/datum/exploration_site/travel_target
-	/// Full travel time in ds to our current target
+	/// Total travel time to our current target
 	var/travel_time
 	/// Id of travel timer
 	var/travel_timer_id
-
 	/// Message that will show up on busy screen
 	var/busy_message = "Doing something..."
 	/// When we entered busy state
@@ -51,20 +46,20 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	var/busy_duration
 	// Our current adventure if any.
 	var/datum/adventure/current_adventure
-	// Our current simple event data if any
+	// Our current simple event ui data if any
 	var/list/current_event_ui_data
 	/// Pad we've launched from, we'll try to land on this one first when coming back if it still exists.
 	var/datum/weakref/last_pad
 	/// Log of recent events
 	var/list/drone_log = list()
-
 	/// List of tools, EXODRONE_TOOL_WELDER etc
 	var/list/tools = list()
-
-	// Cost per 1 distance in deciseconds
+	// Current travel cost per 1 distance in deciseconds
 	var/travel_cost_coeff = BASIC_FUEL_TIME_COST
 	/// Repeated drone name counter
 	var/static/name_counter = list()
+	/// Used to provide source to the regex replacement function. DO NOT MODIFY DIRECTLY
+	var/static/obj/item/exodrone/_regex_context
 
 /obj/item/exodrone/Initialize()
 	. = ..()
@@ -89,7 +84,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	if(location)
 		switch(drone_status)
 			if(EXODRONE_TRAVEL)
-				return "Traveling back to station"
+				return "Traveling back to station."
 			else
 				return "Exploring [location.display_name()]"
 	else
@@ -97,19 +92,19 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 			if(EXODRONE_TRAVEL)
 				return "Traveling to exploration site."
 			else
-				return "Idle"
-				//If loc == launch_pad : "Docked at Launch pad X"
+				return "Idle."
 
 /// Is the drone ready to start traveling for exploration site
 /obj/item/exodrone/proc/ready_to_launch()
 	var/obj/machinery/exodrone_launcher/pad = locate() in loc
-	return pad && pad.fuel_canister != null
+	return pad && pad.fuel_canister != null && pad.fuel_canister.uses > 0 //On pad and pad is fueled
 
 /// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)
 	if(!location) //We're launching from station, fuel up
 		var/obj/machinery/exodrone_launcher/pad = locate() in loc
 		pad.fuel_up(src)
+		pad.launch_effect()
 		last_pad = WEAKREF(pad)
 		drone_log("Launched from [pad.name] and set course for [target_site.display_name()]")
 	else
@@ -132,7 +127,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 		location.on_drone_arrival(src)
 		set_status(EXODRONE_EXPLORATION)
 	else
-		var/obj/machinery/exodrone_launcher = find_unused_pad()
+		var/obj/machinery/exodrone_launcher = find_landing_pad()
 		if(exodrone_launcher)
 			forceMove(get_turf(exodrone_launcher))
 			drone_log("Arrived at [station_name()]. Landing at [exodrone_launcher].")
@@ -149,11 +144,13 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 /obj/item/exodrone/proc/space_left()
 	return EXODRONE_CARGO_SLOTS - length(contents) - length(tools)
 
+/// Adds drone tool and resizes storage.
 /obj/item/exodrone/proc/add_tool(tool_type)
-	if(space_left() > 0 && (tool_type in GLOB.all_exodrone_tools))
+	if(space_left() > 0 && (tool_type in GLOB.exodrone_tool_metadata))
 		tools += tool_type
 		update_storage_size()
 
+/// Removes drone tool and resizes storage.
 /obj/item/exodrone/proc/remove_tool(tool_type)
 	tools -= tool_type
 	update_storage_size()
@@ -163,12 +160,13 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage/concrete)
 	storage.max_items = EXODRONE_CARGO_SLOTS - length(tools)
 
+/// Builds ui data for drone storage.
 /obj/item/exodrone/proc/get_cargo_data()
 	. = list()
 	for(var/tool in tools)
 		. += list(list("type"="tool","name"=tool))
 	for(var/obj/cargo in contents)
-		. += list(list("type"="cargo","name"=cargo.name))
+		. += list(list("type"="cargo","name"=cargo.name, "ref"=ref(cargo)))
 	for(var/_ in 1 to space_left())
 		. += list(list("type"="empty","name"="Free space"))
 
@@ -182,6 +180,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 		if(delete_on_failure)
 			qdel(loot)
 
+/// Crashes the drone somewhere random if there's no launchpad to be found.
 /obj/item/exodrone/proc/drop_somewhere_on_station()
 	var/turf/random_spot = get_safe_random_station_turf()
 	var/obj/structure/closet/supplypod/pod = new
@@ -189,13 +188,15 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	new /obj/effect/pod_landingzone(random_spot, pod, src)
 	return random_spot
 
-/obj/item/exodrone/proc/find_unused_pad()
+/// Tries to find landing pad, starting with the one we launched from.
+/obj/item/exodrone/proc/find_landing_pad()
 	var/obj/machinery/exodrone_launcher/landing_pad = last_pad?.resolve()
 	if(landing_pad)
 		return landing_pad
 	for(var/obj/machinery/exodrone_launcher/other_pad in GLOB.exodrone_launchers)
 		return other_pad
 
+/// Ecounters random or specificed event for the current site.
 /obj/item/exodrone/proc/explore_site(datum/exploration_event/specific_event)
 	if(!specific_event) //Ecounter random event
 		var/list/events_to_ecounter = list()
@@ -212,7 +213,27 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 		specific_event.ecounter(src)
 
 /obj/item/exodrone/proc/get_adventure_data()
-	return current_adventure?.ui_data()
+	var/list/data = current_adventure?.ui_data()
+	data["description"] = updateKeywords(data["description"])
+	return data
+
+///Replaces $$SITE_NAME with site name and $$QualityName with quality values
+/obj/item/exodrone/proc/updateKeywords(description)
+	_regex_context = src
+	var/static/regex/keywordRegex = regex(@"\$\$(\S*)","g")
+	. = keywordRegex.Replace(description,/obj/item/exodrone/proc/replace_keyword)
+	_regex_context = null
+
+/// This is called with src = regex datum, so don't try to access any instance variables directly here.
+/obj/item/exodrone/proc/replace_keyword(match,g1)
+	switch(g1)
+		if("SITE_NAME")
+			return _regex_context.location.display_name()
+		else
+			if(_regex_context.current_adventure.qualities[g1])
+				return "[_regex_context.current_adventure.qualities[g1]]"
+			else
+				return ""
 
 /obj/item/exodrone/proc/start_adventure(datum/adventure/adventure)
 	current_adventure = adventure
@@ -263,8 +284,10 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	set_busy(delay_message,delay_time)
 
 /obj/item/exodrone/proc/adventure_delay_end(datum/source)
+	SIGNAL_HANDLER
 	unset_busy(EXODRONE_ADVENTURE)
 
+/// Enters busy mode for a given duration.
 /obj/item/exodrone/proc/set_busy(message,duration)
 	if(message)
 		busy_message = message
@@ -272,6 +295,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	busy_duration = duration
 	set_status(EXODRONE_BUSY)
 
+/// Resets busy status
 /obj/item/exodrone/proc/unset_busy(new_status)
 	busy_message = initial(busy_message)
 	busy_start_time = null
@@ -286,7 +310,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	/// We're home and on ready pad or exploring and out of any events/adventures
 	return (drone_status == EXODRONE_IDLE && ready_to_launch()) || (drone_status == EXODRONE_EXPLORATION && current_event_ui_data == null)
 
-/// Deal damage in adventures/events
+/// Deals damage in adventures/events.
 /obj/item/exodrone/proc/damage(amount)
 	take_damage(amount)
 	drone_log("Sustained [amount] damage.")
@@ -299,11 +323,12 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 /obj/item/exodrone/proc/has_tool(tool_type)
 	return tools.Find(tool_type)
 
+/// Exploration drone launcher
 /obj/machinery/exodrone_launcher
 	name = "exploration drone launcher"
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "launcher"
-
+	/// Loaded fuel pellet.
 	var/obj/item/fuel_pellet/fuel_canister
 
 /obj/machinery/exodrone_launcher/Initialize()
@@ -338,7 +363,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 
 /obj/machinery/exodrone_launcher/update_overlays()
 	. = ..()
-	if(fuel_canister)
+	if(fuel_canister && fuel_canister.uses > 0)
 		switch(fuel_canister.fuel_type)
 			if(FUEL_BASIC)
 				. += "launchpad_fuel_basic"
@@ -361,6 +386,10 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 /obj/machinery/exodrone_launcher/proc/fuel_up(obj/item/exodrone/drone)
 	drone.travel_cost_coeff = get_fuel_coefficent()
 	fuel_canister.use()
+
+/obj/machinery/exodrone_launcher/proc/launch_effect()
+	playsound(src,'sound/effects/podwoosh.ogg',50, FALSE)
+	do_smoke(1,get_turf(src))
 
 /obj/machinery/exodrone_launcher/handle_atom_del(atom/A)
 	if(A == fuel_canister)

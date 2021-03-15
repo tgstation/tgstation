@@ -124,4 +124,3 @@
 	card.icon_state = pick(possible_card_states)
 	card.update_icon() //Refresh cached helper image
 	drone.drone_log("Let artisan work on [card.name].")
-

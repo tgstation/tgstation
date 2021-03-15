@@ -1,9 +1,14 @@
 #define ADVENTURE_DIR "[global.config.directory]/adventures/"
 
 //Special preset nodes
+
+/// Victory node - Get loot and exit
 #define WIN_NODE "WIN"
+/// Failure node - No loot, get damaged and exit.
 #define FAIL_NODE "FAIL"
+/// Failure node - No loot and drone blown up.
 #define FAIL_DEATH_NODE "FAIL_DEATH"
+/// Return node - navigates to previous adventure node.
 #define GO_BACK_NODE "GO BACK"
 
 //Adventure results
@@ -38,14 +43,13 @@
 #define EXODRONE_TOOL_MULTITOOL "multitool"
 #define EXODRONE_TOOL_DRILL "drill"
 
-GLOBAL_LIST_INIT(exodrone_tool_descriptions,list(
-	EXODRONE_TOOL_WELDER = "A heavy duty welder.",
-	EXODRONE_TOOL_TRANSLATOR = "Powerful translation and data recording software.",
-	EXODRONE_TOOL_LASER = "Multipurpose tool suitable for combat and precision cutting.",
-	EXODRONE_TOOL_MULTITOOL = "Multipurpose tool for electronics manipulation. Comes with suite of radiation and radiowave sensors.",
-	EXODRONE_TOOL_DRILL = "Heavy duty drill useful for mining."
+GLOBAL_LIST_INIT(exodrone_tool_metadata,list(
+	EXODRONE_TOOL_WELDER = list("description"="A heavy duty welder.","icon"="burn"),
+	EXODRONE_TOOL_TRANSLATOR = list("description"="Powerful translation and data recording software.","icon"="language"),
+	EXODRONE_TOOL_LASER = list("description"="Multipurpose tool suitable for combat and precision cutting.","icon"="bolt"),
+	EXODRONE_TOOL_MULTITOOL = list("description"="Multipurpose tool for electronics manipulation. Comes with suite of radiation and radiowave sensors.","icon"="broadcast-tower"),
+	EXODRONE_TOOL_DRILL = list("description"="Heavy duty drill useful for mining.","icon"="screwdriver")
 ))
-
 
 // Site traits
 

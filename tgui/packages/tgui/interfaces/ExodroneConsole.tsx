@@ -100,8 +100,13 @@ type ExodroneConsoleData = {
   event?: FullEventData,
   adventure_data?: AdventureData,
   // ui_static_data
-  all_tools: Record<string, string>,
+  all_tools: Record<string, ToolData>,
   all_bands: Record<string, string>
+}
+
+type ToolData = {
+  description: string,
+  icon: string
 }
 
 export const ExodroneConsole = (props, context) => {
@@ -205,16 +210,20 @@ const ToolSelectionModal = (props, context) => {
           <Stack textAlign="center">
             {!!Object.keys(all_tools) && Object.keys(all_tools).map(tool_name => (
               <Stack.Item key={tool_name}>
-                <Button onClick={() => {
-                  setChoosingTools(false);
-                  act("add_tool", { tool_type: tool_name });
-                }} width={6} height={6}>
+                <Button
+                  onClick={() => {
+                    setChoosingTools(false);
+                    act("add_tool", { tool_type: tool_name });
+                  }}
+                  width={6}
+                  height={6}
+                  tooltip={all_tools[tool_name].description}>
                   <Stack vertical>
                     <Stack.Item>
                       {capitalize(tool_name)}
                     </Stack.Item>
                     <Stack.Item ml={2.5}>
-                      <Icon name={all_tools[tool_name]} size={3} />
+                      <Icon name={all_tools[tool_name].icon} size={3} />
                     </Stack.Item>
                   </Stack>
                 </Button>
@@ -252,7 +261,7 @@ const EquipmentBox = (props, context) => {
                 color="transparent">
                 <Icon
                   color="white"
-                  name={all_tools[cargo.name]}
+                  name={all_tools[cargo.name].icon}
                   size={3}
                   pl={1.5}
                   pt={2} />
@@ -580,8 +589,7 @@ const ExplorationScreen = (props, context) => {
     setTravelDimmerShown,
   ] = useLocalState(context, 'TravelDimmerShown', false);
 
-  if (TravelDimmerShown)
-  { return (<TravelTargetSelectionScreen showCancelButton />); }
+  if (TravelDimmerShown) { return (<TravelTargetSelectionScreen showCancelButton />); }
   // List of repeatables, Explore button. Last found event popup and continue exploring. Return home button.
   return (
     <Section
@@ -737,10 +745,8 @@ const DroneScreen = (props, context) => {
     case "adventure":
       return (<AdventureScreen />);
     case "exploration":
-      if (event)
-      { return (<EventScreen />); }
-      else
-      { return (<ExplorationScreen />); }
+      if (event) { return (<EventScreen />); }
+      else { return (<ExplorationScreen />); }
   }
 };
 
@@ -752,8 +758,7 @@ const ExodroneConsoleContent = (props, context) => {
     drone_log,
   } = data;
 
-  if (!drone)
-  { return (<DroneSelectionSection />); }
+  if (!drone) { return (<DroneSelectionSection />); }
 
   return (
     <Stack fill vertical>
@@ -775,7 +780,7 @@ const ExodroneConsoleContent = (props, context) => {
         <Section title="Drone Log" fill scrollable>
           <LabeledList>
             {drone_log.map((log_line, ix) => (
-              <LabeledList.Item key={log_line} label={`Entry ${ix+1 }`}>
+              <LabeledList.Item key={log_line} label={`Entry ${ix + 1}`}>
                 {log_line}
               </LabeledList.Item>))}
           </LabeledList>

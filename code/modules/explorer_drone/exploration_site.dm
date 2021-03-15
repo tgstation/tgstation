@@ -52,13 +52,30 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	if(adventure)
 		add_event(adventure)
 	/// Fill other events
-	for(var/i in 1 to rand(1,3))
-		var/datum/exploration_event/event = generate_event(site_traits)
+	/// Baseline weights for each event root type
+	var/static/list/base_weights = list(
+		/datum/exploration_event/fluff = 2,
+		/datum/exploration_event/simple/danger = 2,
+		/datum/exploration_event/simple/trader = 1,
+		/datum/exploration_event/simple/resource = 1
+	)
+	/// Weight mods scaled by distance, resources are more easily found on farther sites
+	var/static/list/distance_modifiers  = list(
+		/datum/exploration_event/simple/trader = 0.3,
+		/datum/exploration_event/simple/resource = 0.3
+	)
+	var/list/category_weights = base_weights.Copy()
+	for(var/modifier in distance_modifiers)
+		category_weights[modifier] += distance*distance_modifiers[modifier]
+	var/min_events_amount = CEILING(0.4*distance+0.2,1)
+	for(var/i in 1 to rand(min_events_amount,min_events_amount+2))
+		var/chosen_category = pickweight(category_weights)
+		var/datum/exploration_event/event = generate_event(site_traits,chosen_category)
 		if(event)
 			add_event(event)
 
 /datum/exploration_site/proc/generate_scan_conditions()
-	var/condition_count = pick(4;0,2;1,1;2) //scale this with distance maybe ?
+	var/condition_count = pick(3;0,2;1,1;2) //scale this with distance maybe ?
 	var/list/possible_conditions = GLOB.scan_conditions.Copy()
 	for(var/i in 1 to condition_count)
 		LAZYADD(scan_conditions,pick_n_take(possible_conditions))
@@ -78,7 +95,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	adventure_event.band_values = chosen_adventure.band_modifiers
 	return adventure_event
 
-/datum/exploration_site/proc/generate_event(site_traits)
+/datum/exploration_site/proc/generate_event(site_traits,event_root_type)
 	/// List of exploration event requirements indexed by type, .[/datum/exploration_site/a] = list("required"=list(trait),"blacklisted"=list(other_trait))
 	var/static/exploration_event_requirements_cache = list()
 	if(!length(exploration_event_requirements_cache))
@@ -87,6 +104,8 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	for(var/event_type in exploration_event_requirements_cache)
 		var/list/required_traits = exploration_event_requirements_cache[event_type]["required"]
 		var/list/blacklisted_traits = exploration_event_requirements_cache[event_type]["blacklisted"]
+		if(!ispath(event_type,event_root_type))
+			continue
 		if(required_traits && length(required_traits - site_traits) != 0)
 			continue
 		if(blacklisted_traits && length(required_traits & blacklisted_traits) != 0)
@@ -160,6 +179,12 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 			if(event.visited && event.is_targetable())
 				event_data += list(list("name"=event.name,"ref"=ref(event)))
 		.["events"] = event_data
+
+/// Helper proc for exploration site listings in ui.
+/proc/build_exploration_site_ui_data()
+	. = list()
+	for(var/datum/exploration_site/site in GLOB.exploration_sites)
+		. += list(site.site_data())
 
 /// Sites
 

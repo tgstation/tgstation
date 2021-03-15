@@ -1,14 +1,45 @@
+// json field definitions bit verbose but i've had it with the typos
 #define ADVENTURE_NAME_FIELD "adventure_name"
-#define STARTING_NODE_FIELD "starting_node"
-#define REQUIRED_SITE_TRAITS_FIELD "required_site_traits"
-#define SCAN_BAND_MODS_FIELD "scan_band_mods"
-#define LOOT_FIELD "loot_categories"
-#define STARTING_QUALITIES_FIELD "starting_qualities"
+#define ADVENTURE_STARTING_NODE_FIELD "starting_node"
+#define ADVENTURE_REQUIRED_SITE_TRAITS_FIELD "required_site_traits"
+#define ADVENTURE_SCAN_BAND_MODS_FIELD "scan_band_mods"
+#define ADVENTURE_LOOT_FIELD "loot_categories"
+#define ADVENTURE_STARTING_QUALITIES_FIELD "starting_qualities"
+#define ADVENTURE_DEEP_SCAN_DESCRIPTION "deep_scan_description"
+#define ADVENTURE_NODES_FIELD "nodes"
+#define ADVENTURE_TRIGGERS_FIELD "triggers"
 
+#define NODE_NAME_FIELD "name"
+#define NODE_DESCRIPTION_FIELD "description"
+#define NODE_IMAGE_FIELD "image"
+#define NODE_RAW_IMAGE_FIELD "raw_image"
+#define NODE_CHOICES_FIELD "choices"
+#define NODE_ON_ENTER_EFFECTS_FIELD "on_enter_effects"
+#define NODE_ON_EXIT_EFFECTS_FIELD "on_exit_effects"
+
+#define CHOICE_KEY_FIELD "key"
+#define CHOICE_NAME_FIELD "name"
 #define CHOICE_ON_SELECTION_EFFECT_FIELD "on_selection_effects"
 #define CHOICE_REQUIREMENTS_FIELD "requirements"
-#define EXIT_NODE_FIELD "exit_node"
+#define CHOICE_EXIT_NODE_FIELD "exit_node"
+#define CHOICE_DELAY_FIELD "delay"
+#define CHOICE_DELAY_MESSAGE_FIELD "delay_message"
 
+#define EFFECT_TYPE_FIELD "effect_type"
+#define EFFECT_QUALITY_FIELD "quality"
+#define EFFECT_VALUE_FIELD "value"
+#define EFFECT_VALUE_VALUE_TYPE_FIELD "value_type"
+#define TRIGGER_NAME_FIELD "name"
+#define TRIGGER_REQUIREMENTS_FIELD "requirements"
+#define TRIGGER_ON_TRIGGER_EFFECTS_FIELD "on_trigger_effects"
+#define TRIGGER_TARGET_NODE_FIELD "target_node"
+
+#define REQ_GROUP_REQUIREMENTS_FIELD "requirements"
+#define REQ_GROUP_GROUP_TYPE_FIELD "group_type"
+
+#define REQ_QUALITY_FIELD "quality"
+#define REQ_VALUE_FIELD "value"
+#define REQ_OPERATOR_FIELD "operator"
 
 GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 
@@ -24,29 +55,29 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	var/list/json_data = json_load(ADVENTURE_DIR+filename)
 	if(!islist(json_data))
 		CRASH("Invalid JSON in adventure file [replacetext(filename,ADVENTURE_DIR,"")]")
-	//Basic validation of required fields
-	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,STARTING_NODE_FIELD)
+	//Basic validation of required fields, don't even bother loading if they are missing.
+	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
 	for(var/field in required_fields)
 		if(!json_data[field])
 			CRASH("Adventure file [replacetext(filename,ADVENTURE_DIR,"")] missing [field] value")
 
 	var/datum/adventure/loaded_adventure = new
 	//load properties
-	loaded_adventure.starting_node = json_data[STARTING_NODE_FIELD]
+	loaded_adventure.starting_node = json_data[ADVENTURE_STARTING_NODE_FIELD]
 	loaded_adventure.name = json_data[ADVENTURE_NAME_FIELD]
-	loaded_adventure.required_site_traits = json_data[REQUIRED_SITE_TRAITS_FIELD]
-	loaded_adventure.band_modifiers = json_data[SCAN_BAND_MODS_FIELD]
-	loaded_adventure.loot_categories = json_data[LOOT_FIELD]
-	loaded_adventure.starting_qualities = json_data[STARTING_QUALITIES_FIELD]
-	loaded_adventure.deep_scan_description = json_data["deep_scan_description"]
+	loaded_adventure.required_site_traits = json_data[ADVENTURE_REQUIRED_SITE_TRAITS_FIELD]
+	loaded_adventure.band_modifiers = json_data[ADVENTURE_SCAN_BAND_MODS_FIELD]
+	loaded_adventure.loot_categories = json_data[ADVENTURE_LOOT_FIELD]
+	loaded_adventure.starting_qualities = json_data[ADVENTURE_STARTING_QUALITIES_FIELD]
+	loaded_adventure.deep_scan_description = json_data[ADVENTURE_DEEP_SCAN_DESCRIPTION]
 
-	for(var/list/node_data in json_data["nodes"])
+	for(var/list/node_data in json_data[ADVENTURE_NODES_FIELD])
 		var/datum/adventure_node/node = try_loading_node(node_data)
 		if(node)
 			if(loaded_adventure.nodes[node.id])
 				CRASH("Duplicate [node.id] node in [replacetext(filename,ADVENTURE_DIR,"")] adventure")
 			loaded_adventure.nodes[node.id] = node
-	loaded_adventure.triggers = json_data["triggers"]
+	loaded_adventure.triggers = json_data[ADVENTURE_TRIGGERS_FIELD]
 	if(!loaded_adventure.validate())
 		CRASH("Validation failed for [replacetext(filename,ADVENTURE_DIR,"")] adventure")
 	return loaded_adventure
@@ -55,15 +86,15 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	if(!islist(node_data))
 		CRASH("Invalid adventure node data")
 	var/datum/adventure_node/fresh_node = new
-	fresh_node.id = node_data["name"]
-	fresh_node.description = node_data["description"]
-	fresh_node.image_name = node_data["image"]
-	fresh_node.raw_image = node_data["raw_image"]
+	fresh_node.id = node_data[NODE_NAME_FIELD]
+	fresh_node.description = node_data[NODE_DESCRIPTION_FIELD]
+	fresh_node.image_name = node_data[NODE_IMAGE_FIELD]
+	fresh_node.raw_image = node_data[NODE_RAW_IMAGE_FIELD]
 	fresh_node.choices = list()
-	for(var/list/choice_data in node_data["choices"])
-		fresh_node.choices[choice_data["key"]] = choice_data
-	fresh_node.on_enter_effects = node_data["on_enter_effects"]
-	fresh_node.on_exit_effects = node_data["on_exit_effects"]
+	for(var/list/choice_data in node_data[NODE_CHOICES_FIELD])
+		fresh_node.choices[choice_data[CHOICE_KEY_FIELD]] = choice_data
+	fresh_node.on_enter_effects = node_data[NODE_ON_ENTER_EFFECTS_FIELD]
+	fresh_node.on_exit_effects = node_data[NODE_ON_EXIT_EFFECTS_FIELD]
 	return fresh_node
 
 /datum/adventure
@@ -157,6 +188,8 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 		else
 			return FALSE
 
+
+
 /datum/adventure/proc/select_choice(choice_id)
 	if(!current_node || !islist(current_node.choices[choice_id]))
 		return
@@ -166,12 +199,12 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	if(choice_data[CHOICE_ON_SELECTION_EFFECT_FIELD])
 		if(apply_adventure_effect(choice_data[CHOICE_ON_SELECTION_EFFECT_FIELD],src))
 			return //Trigger forced node change.
-	var/exit_id = choice_data[EXIT_NODE_FIELD]
+	var/exit_id = choice_data[CHOICE_EXIT_NODE_FIELD]
 	if(!exit_id)
 		CRASH("No exit node for choice [choice_id] in adventure [name]")
-	if(choice_data["delay"])
-		var/delay_message = choice_data["delay_message"]
-		var/delay_time = choice_data["delay"]
+	if(choice_data[CHOICE_DELAY_FIELD])
+		var/delay_message = choice_data[CHOICE_DELAY_MESSAGE_FIELD]
+		var/delay_time = choice_data[CHOICE_DELAY_FIELD]
 		if(!isnum(delay_time))
 			CRASH("Invalid delay in adventure [name]")
 		SEND_SIGNAL(src,COMSIG_ADVENTURE_DELAY_START,delay_time,delay_message)
@@ -228,19 +261,17 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	. = list()
 	for(var/choice_key in choices)
 		var/list/choice_data = choices[choice_key]
-		if(context.check_requirements(choice_data["requirements"]))
-			. += list(list("key" = choice_key,"text" = choice_data["name"]))
-
-
+		if(context.check_requirements(choice_data[CHOICE_REQUIREMENTS_FIELD]))
+			. += list(list("key" = choice_key,"text" = choice_data[CHOICE_NAME_FIELD]))
 
 ///Applies changes encoded in effect data and processes triggers, returns TRUE if the change forced node change.
 /datum/adventure/proc/apply_adventure_effect(list/effect_data,process_triggers=TRUE)
 	if(!islist(effect_data))
 		CRASH("Invalid effect data [json_encode(effect_data)] in adventure [name]")
 	for(var/list/effect_group in effect_data)
-		var/effect_keyword = effect_group["effect_type"]
-		var/list/quality_name = effect_group["quality"]
-		var/value = process_adventure_value(effect_group["value"])
+		var/effect_keyword = effect_group[EFFECT_TYPE_FIELD]
+		var/list/quality_name = effect_group[EFFECT_QUALITY_FIELD]
+		var/value = process_adventure_value(effect_group[EFFECT_VALUE_FIELD])
 		switch(effect_keyword)
 			if(ADVENTURE_EFFECT_TYPE_REMOVE) //remove quality doesn't care about value for now
 				qualities -= quality_name
@@ -257,16 +288,16 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	///Check Triggers
 	if(process_triggers)
 		for(var/list/trigger_data in triggers)
-			if(!check_requirements(trigger_data["requirements"]))
+			if(!check_requirements(trigger_data[TRIGGER_REQUIREMENTS_FIELD]))
 				continue
-			if(LAZYACCESS(trigger_loop_safety,trigger_data["name"]))
+			if(LAZYACCESS(trigger_loop_safety,trigger_data[TRIGGER_NAME_FIELD]))
 				stack_trace("Loop in trigger processing detected in adventure [name]")
 				continue
-			LAZYADD(trigger_loop_safety,trigger_data["name"])
-			if(trigger_data["on_trigger_effects"])
-				apply_adventure_effect(trigger_data["on_trigger_effects"],FALSE) //Let's keep this simple
-			if(trigger_data["target_node"])
-				navigate_to_node(trigger_data["target_node"])
+			LAZYADD(trigger_loop_safety,trigger_data[TRIGGER_NAME_FIELD])
+			if(trigger_data[TRIGGER_ON_TRIGGER_EFFECTS_FIELD])
+				apply_adventure_effect(trigger_data[TRIGGER_ON_TRIGGER_EFFECTS_FIELD],FALSE) //Let's keep this simple
+			if(trigger_data[TRIGGER_TARGET_NODE_FIELD])
+				navigate_to_node(trigger_data[TRIGGER_TARGET_NODE_FIELD])
 				return TRUE
 	//We're out of trigger processing
 	LAZYCLEARLIST(trigger_loop_safety)
@@ -276,7 +307,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 /datum/adventure/proc/process_adventure_value(raw_value)
 	if(islist(raw_value))
 		var/list/value_as_list = raw_value
-		switch(value_as_list["value_type"])
+		switch(value_as_list[EFFECT_VALUE_VALUE_TYPE_FIELD])
 			if(ADVENTURE_QUALITY_TYPE_RANDOM)
 				return rand(value_as_list[ADVENTURE_RANDOM_QUALITY_LOW_FIELD],value_as_list[ADVENTURE_RANDOM_QUALITY_HIGH_FIELD])
 			else
@@ -291,7 +322,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	var/list/req_groups = raw_requirements
 	// Top level list - can contain either req groups or single requirements and is AND type group
 	for(var/list/group_data in req_groups)
-		if(group_data["requirements"]) //It's a group
+		if(group_data[REQ_GROUP_REQUIREMENTS_FIELD]) //It's a group
 			if(!check_requirement_group(group_data))
 				return FALSE
 		else //It's a single requirement
@@ -304,12 +335,12 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	if(!islist(raw_group_data))
 		CRASH("Invalid group requirement in adventure [name]")
 	var/list/group_data = raw_group_data
-	var/group_type = group_data["group_type"]
-	var/list/group_elements = group_data["requirements"]
+	var/group_type = group_data[REQ_GROUP_GROUP_TYPE_FIELD]
+	var/list/group_elements = group_data[REQ_GROUP_REQUIREMENTS_FIELD]
 	switch(group_type)
 		if("OR") //Just one out of subgroups/reqs need to be true for this to return true
 			for(var/list/subgroup_data in group_elements)
-				if(subgroup_data["requirements"]) //It's a group
+				if(subgroup_data[REQ_GROUP_REQUIREMENTS_FIELD]) //It's a group
 					if(check_requirement_group(subgroup_data))
 						return TRUE
 				else //It's a single requirement
@@ -318,7 +349,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 			return FALSE
 		if("AND") //All subgroups/reqs need to be true for this to return true
 			for(var/list/subgroup_data in group_elements)
-				if(subgroup_data["requirements"]) //It's a group
+				if(subgroup_data[REQ_GROUP_REQUIREMENTS_FIELD]) //It's a group
 					if(!check_requirement_group(subgroup_data))
 						return FALSE
 				else //It's a single requirement
@@ -328,12 +359,11 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 		else
 			CRASH("Invalid requirement group in adventure [name]")
 
-
-//Checks unit requirement {"quality": "a","op": "==","value": "something"},
+//Checks if unit requirement {"quality": "a","op": "==","value": "something"} is met.
 /datum/adventure/proc/check_single_requirement(raw_requirement)
-	var/qkey = raw_requirement["quality"]
-	var/qval = raw_requirement["value"]
-	switch(raw_requirement["operator"])
+	var/qkey = raw_requirement[REQ_QUALITY_FIELD]
+	var/qval = raw_requirement[REQ_VALUE_FIELD]
+	switch(raw_requirement[REQ_OPERATOR_FIELD])
 		if("==")
 			return qualities[qkey] == qval
 		if("!=")
@@ -350,12 +380,43 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 			return qkey in qualities
 
 #undef ADVENTURE_NAME_FIELD
-#undef STARTING_NODE_FIELD
-#undef REQUIRED_SITE_TRAITS_FIELD
-#undef SCAN_BAND_MODS_FIELD
-#undef LOOT_FIELD
-#undef STARTING_QUALITIES_FIELD
+#undef ADVENTURE_STARTING_NODE_FIELD
+#undef ADVENTURE_REQUIRED_SITE_TRAITS_FIELD
+#undef ADVENTURE_SCAN_BAND_MODS_FIELD
+#undef ADVENTURE_LOOT_FIELD
+#undef ADVENTURE_STARTING_QUALITIES_FIELD
+#undef ADVENTURE_DEEP_SCAN_DESCRIPTION
+#undef ADVENTURE_NODES_FIELD
+#undef ADVENTURE_TRIGGERS_FIELD
 
+#undef NODE_NAME_FIELD
+#undef NODE_DESCRIPTION_FIELD
+#undef NODE_IMAGE_FIELD
+#undef NODE_RAW_IMAGE_FIELD
+#undef NODE_CHOICES_FIELD
+#undef NODE_ON_ENTER_EFFECTS_FIELD
+#undef NODE_ON_EXIT_EFFECTS_FIELD
+
+#undef CHOICE_KEY_FIELD
+#undef CHOICE_NAME_FIELD
 #undef CHOICE_ON_SELECTION_EFFECT_FIELD
 #undef CHOICE_REQUIREMENTS_FIELD
-#undef EXIT_NODE_FIELD
+#undef CHOICE_EXIT_NODE_FIELD
+#undef CHOICE_DELAY_FIELD
+#undef CHOICE_DELAY_MESSAGE_FIELD
+
+#undef EFFECT_TYPE_FIELD
+#undef EFFECT_QUALITY_FIELD
+#undef EFFECT_VALUE_FIELD
+#undef EFFECT_VALUE_VALUE_TYPE_FIELD
+#undef TRIGGER_NAME_FIELD
+#undef TRIGGER_REQUIREMENTS_FIELD
+#undef TRIGGER_ON_TRIGGER_EFFECTS_FIELD
+#undef TRIGGER_TARGET_NODE_FIELD
+
+#undef REQ_GROUP_REQUIREMENTS_FIELD
+#undef REQ_GROUP_GROUP_TYPE_FIELD
+
+#undef REQ_QUALITY_FIELD
+#undef REQ_VALUE_FIELD
+#undef REQ_OPERATOR_FIELD
