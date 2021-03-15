@@ -98,7 +98,7 @@
 		if(!flavour?.desc) //I scream.
 			source.desc = initial(source.desc)
 		else
-			source.desc = replacetext(replacetext(flavour.desc, "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
+			source.desc = replacetext(replacetext("[flavour.desc_prefix] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
 		source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
 
@@ -242,6 +242,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 
 /datum/ice_cream_flavour/mob
 	name = ICE_CREAM_MOB
+	icon_state = "icecream_mob"
 	desc = "filled with bright red ice cream. That's probably not strawberry..."
 	desc_prefix = "A suspicious $CONE_NAME"
 	reagent_type = /datum/reagent/liquidgibs
