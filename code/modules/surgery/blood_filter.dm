@@ -24,8 +24,8 @@
 
 /datum/surgery_step/filter_blood/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin filtering [target]'s blood...</span>",
-		"<span class='notice'>[user] uses \the [tool] to filtering your blood.</span>",
-		"<span class='notice'>[user] uses \the [tool] on [target]'s chest.</span>")
+		"<span class='notice'>[user] uses [tool] to filtering your blood.</span>",
+		"<span class='notice'>[user] uses [tool] on [target]'s chest.</span>")
 
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(target.reagents?.total_volume)
