@@ -13,7 +13,7 @@
 
 /datum/blackmarket_item/misc/Extra_Bright_Lantern
 	name = "Suspicious Lantern"
-	desc = "Found in a box labeled "Danger: Radioactive". Probably safe."
+	desc = "Found in a box labeled 'Danger: Radioactive'. Probably safe."
 	item = /obj/item/flashlight/lantern/syndicate
 
 	price_min = 300
