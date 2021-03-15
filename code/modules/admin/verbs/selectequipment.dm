@@ -77,35 +77,29 @@
  *
  * Args:
  * * category (string) - The tab it will be under
+ *
  * * identifier (typepath or ref) - This will sent this back to ui_act to preview or spawn in an outfit.
- * *								Must be unique between all entries.
+ * * Must be unique between all entries.
+ *
  * * name (string) - Will be the text on the button
- * * priority (int)(optional) - Default SE_PRIORITY_DEFAULT, SE_PRIORITY_FAVORITE for favorites,
- * *							SE_PRIORITY_TOP for buttons that should always be on the top of the list
+ *
+ * * priority (bool)(optional) - If True, the UI will sort the entry to the top, right below favorites.
+ *
  * * custom_entry (bool)(optional) - Send the identifier with a "ref" keyword instead of "path",
- * *								 for the UI to tell apart custom outfits from normal ones.
+ * * for the UI to tell apart custom outfits from normal ones.
+ *
  * Returns (list) An outfit entry
  */
 
-#define SE_PRIORITY_DEFAULT 0
-#define SE_PRIORITY_FAVORITE 1
-#define SE_PRIORITY_TOP 2
-
-/datum/select_equipment/proc/outfit_entry(category, identifier, name, priority=SE_PRIORITY_DEFAULT, custom_entry=FALSE)
-	if(custom_entry)
-		return list("category" = category, "ref" = identifier, "name" = name, "priority" = priority)
-	return list("category" = category, "path" = identifier, "name" = name, "priority" = priority)
+/datum/select_equipment/proc/outfit_entry(category, identifier, name, priority=FALSE, custom_entry=FALSE)
+	return list("category" = category, custom_entry?"ref":"path" = identifier, "name" = name, "priority" = priority)
 
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
 	for(var/path as anything in outfit_list)
 		var/datum/outfit/O = path
-		var/priority = SE_PRIORITY_DEFAULT
-		if(path == /datum/outfit/job/roboticist) //dummy check here until I get favorites working
-			priority = SE_PRIORITY_FAVORITE
-		entries += list(outfit_entry(category, path, initial(O.name), priority))
+		entries += list(outfit_entry(category, path, initial(O.name)))
 	return entries
-
 
 //GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
 /datum/select_equipment/proc/make_custom_outfit_entries(list/outfit_list)
@@ -124,6 +118,10 @@
 	data["icon64"] = icon2base64(dummysprite)
 	data["name"] = target_mob
 
+	data["favorites"] = list()
+	if(prefs)
+		data["favorites"] = prefs.favorite_outfits
+
 	var/list/custom
 	custom += make_custom_outfit_entries(GLOB.custom_outfits)
 	data["custom_outfits"] = custom
@@ -135,7 +133,7 @@
 	var/list/data = list()
 	if(!cached_outfits)
 		cached_outfits = list()
-		cached_outfits += list(outfit_entry("General", /datum/outfit, "Naked", SE_PRIORITY_TOP))
+		cached_outfits += list(outfit_entry("General", /datum/outfit, "Naked", TRUE))
 		cached_outfits += make_outfit_entries("General", subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits += make_outfit_entries("Jobs", typesof(/datum/outfit/job))
 		cached_outfits += make_outfit_entries("Plasmamen Outfits", typesof(/datum/outfit/plasmaman))
@@ -187,6 +185,16 @@
 		if("customoutfit")
 			user.outfit_manager()
 
+		if("togglefavorite")
+			var/datum/outfit/outfit_path = resolve_outfit(params["path"])
+			if(!ispath(outfit_path)) //we do *not* want custom outfits (i.e objects) here, they're not even persistent
+				return
+
+			if(user.prefs.favorite_outfits.Find(outfit_path)) //already there, remove it
+				user.prefs.favorite_outfits -= outfit_path
+			else //not there, add it
+				user.prefs.favorite_outfits += outfit_path
+			user.prefs.save_preferences()
 
 /client/proc/admin_apply_outfit(mob/target, dresscode)
 	if(!(ishuman(target) || isobserver(target)))
@@ -218,7 +226,3 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(human_target)] to [dresscode].</span>")
 
 	return dresscode
-
-#undef SE_PRIORITY_DEFAULT
-#undef SE_PRIORITY_FAVORITE
-#undef SE_PRIORITY_TOP

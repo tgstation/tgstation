@@ -5,20 +5,17 @@ import { Window } from '../layouts';
 import { flow } from 'common/fp';
 import { filter, sortBy, uniq } from 'common/collections';
 
+// here's an important mental define:
 // custom outfits give a ref keyword instead of path
 const getOutfitKey = outfit => outfit.path || outfit.ref;
+
+const getOutfitEntry = (current_outfit, outfits) => outfits.find(outfit =>
+  getOutfitKey(outfit) === current_outfit);
 
 const CurrentlySelectedDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const { current_outfit } = data;
-
-  const outfits = [
-    ...data.outfits,
-    ...data.custom_outfits,
-  ];
-
-  const currentOutfitEntry = outfits.find(outfit =>
-    getOutfitKey(outfit) === current_outfit);
+  const { entry } = props;
 
   return (
     <Stack align="center">
@@ -27,13 +24,13 @@ const CurrentlySelectedDisplay = (props, context) => {
           Currently selected:
         </Box>
         <Box
-          title={currentOutfitEntry?.path}
+          title={entry?.path}
           style={{
             'overflow': 'hidden',
             'white-space': 'nowrap',
             'text-overflow': 'ellipsis',
           }}>
-          {currentOutfitEntry?.name}
+          {entry?.name}
         </Box>
       </Stack.Item>
       <Stack.Item>
@@ -74,6 +71,7 @@ export const SelectEquipment = (props, context) => {
     name,
     icon64,
     current_outfit,
+    favorites,
   } = data;
 
   const outfits = [
@@ -94,11 +92,20 @@ export const SelectEquipment = (props, context) => {
     (entry.name + entry.path)
   );
 
+  const isFavorited = entry => favorites?.find(
+    favPath => favPath === entry.path);
+
   const entries = flow([
     filter(entry => entry.category === tabIndex),
     filter(searchFilter),
-    sortBy(entry => -entry.priority, entry => entry.name),
+    sortBy(
+      entry => isFavorited(entry)?0:1,
+      entry => !entry.priority,
+      entry => entry.name
+    ),
   ])(outfits);
+
+  const currentOutfitEntry = getOutfitEntry(current_outfit, outfits);
 
   return (
     <Window
@@ -114,7 +121,7 @@ export const SelectEquipment = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Section>
-                  <CurrentlySelectedDisplay />
+                  <CurrentlySelectedDisplay entry={currentOutfitEntry} />
                 </Section>
               </Stack.Item>
               <Stack.Item height="20px">
@@ -131,6 +138,7 @@ export const SelectEquipment = (props, context) => {
                     <Button
                       key={getOutfitKey(entry)}
                       fluid
+                      icon={isFavorited(entry)?"star":""}
                       ellipsis
                       content={entry.name}
                       title={entry.path||entry.name}
@@ -155,7 +163,19 @@ export const SelectEquipment = (props, context) => {
           <Stack.Item grow={2} basis={0}>
             <Section fill
               title={name}
-              textAlign="center">
+              textAlign="center"
+              buttons={
+                currentOutfitEntry.path && (
+                  // custom outfits aren't even persistent between rounds,
+                  // so no favorites for these
+                  <Button
+                    icon="star"
+                    selected={isFavorited(currentOutfitEntry)}
+                    onClick={() => act("togglefavorite",
+                      { path: currentOutfitEntry.path })} />)
+              }
+            >
+
               <Box as="img"
                 m={0}
                 src={`data:image/jpeg;base64,${icon64}`}
