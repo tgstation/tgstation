@@ -51,11 +51,6 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "emoting.dm"
 #include "food_edibility_check.dm"
-
-#ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on
-#include "harddels.dm"
-#endif
-
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
@@ -88,6 +83,10 @@
 #include "teleporters.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
+
+#ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
+#include "find_reference_sanity.dm"
+#endif
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

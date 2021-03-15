@@ -34,7 +34,7 @@
 
 	var/starting_time = world.time
 
-	DoSearchVar(GLOB) //globals
+	DoSearchVar(GLOB, "GLOB") //globals
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 
