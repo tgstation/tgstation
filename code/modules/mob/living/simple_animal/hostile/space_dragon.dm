@@ -35,6 +35,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	deathsound = 'sound/magic/demon_dies.ogg'
 	icon = 'icons/mob/spacedragon.dmi'
 	icon_state = "spacedragon"

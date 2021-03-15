@@ -104,6 +104,15 @@
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
 
+///Main colors for UI themes
+#define COLOR_THEME_MIDNIGHT "#6086A0"
+#define COLOR_THEME_PLASMAFIRE "#FFB200"
+#define COLOR_THEME_RETRO "#24CA00"
+#define COLOR_THEME_SLIMECORE "#4FB259"
+#define COLOR_THEME_OPERATIVE "#B8221F"
+#define COLOR_THEME_GLASS "#75A4C4"
+#define COLOR_THEME_CLOCKWORK "#CFBA47"
+
 /**
  * Some defines to generalise colours used in lighting.
  *

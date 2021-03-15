@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fix bug that prevented admins toggling playtime exempt status on accounts."

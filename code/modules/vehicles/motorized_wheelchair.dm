@@ -3,20 +3,28 @@
 	desc = "A chair with big wheels. It seems to have a motor in it."
 	foldabletype = null
 	max_integrity = 150
+	///How "fast" the wheelchair goes only affects ramming
 	var/speed = 2
+	///Self explanatory, ratio of how much power we use
 	var/power_efficiency = 1
+	///How much power we use
 	var/power_usage = 100
+	///whether the panel is open so a user can take out the cell
 	var/panel_open = FALSE
-	var/list/required_parts = list(/obj/item/stock_parts/manipulator,
-							/obj/item/stock_parts/manipulator,
-							/obj/item/stock_parts/capacitor)
+	///Parts used in building the wheelchair
+	var/list/required_parts = list(
+		/obj/item/stock_parts/manipulator,
+		/obj/item/stock_parts/manipulator,
+		/obj/item/stock_parts/capacitor,
+	)
+	///power cell we draw power from
 	var/obj/item/stock_parts/cell/power_cell
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
-	..()
+	. = ..()
 	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
@@ -31,8 +39,7 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
-	for(var/c in contents)
-		var/atom/movable/thing = c
+	for(var/atom/movable/thing as anything in contents)
 		thing.forceMove(T)
 	return ..()
 
@@ -83,35 +90,35 @@
 			to_chat(user, "<span class='notice'>You install the [I].</span>")
 		refresh_parts()
 		return
-	if(istype(I, /obj/item/stock_parts))
-		var/obj/item/stock_parts/B = I
-		var/P
-		for(var/obj/item/stock_parts/A in contents)
-			for(var/D in required_parts)
-				if(ispath(A.type, D))
-					P = D
-					break
-			if(istype(B, P) && istype(A, P))
-				if(B.get_part_rating() > A.get_part_rating())
-					B.forceMove(src)
-					user.put_in_hands(A)
-					user.visible_message("<span class='notice'>[user] replaces [A] with [B] in [src].</span>", "<span class='notice'>You replace [A] with [B].</span>")
-					break
-		refresh_parts()
-		return
-	return ..()
+	if(!istype(I, /obj/item/stock_parts))
+		return ..()
+
+	var/obj/item/stock_parts/newstockpart = I
+	for(var/obj/item/stock_parts/oldstockpart in contents)
+		var/type_to_check
+		for(var/pathtypes in required_parts)
+			if(ispath(oldstockpart.type, pathtypes))
+				type_to_check = oldstockpart.type
+				break
+		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
+			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())
+				newstockpart.forceMove(src)
+				user.put_in_hands(oldstockpart)
+				user.visible_message("<span class='notice'>[user] replaces [oldstockpart] with [newstockpart] in [src].</span>", "<span class='notice'>You replace [oldstockpart] with [newstockpart].</span>")
+				break
+	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")
-	if(I.use_tool(src, user, 40, volume=50))
-		to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
-		new /obj/item/stack/rods(drop_location(), 8)
-		new /obj/item/stack/sheet/iron(drop_location(), 10)
-		var/turf/T = get_turf(src)
-		for(var/c in contents)
-			var/atom/movable/thing = c
-			thing.forceMove(T)
-		qdel(src)
+	if(!I.use_tool(src, user, 40, volume=50))
+		return TRUE
+	to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
+	new /obj/item/stack/rods(drop_location(), 8)
+	new /obj/item/stack/sheet/iron(drop_location(), 10)
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/thing as anything in contents)
+		thing.forceMove(T)
+	qdel(src)
 	return TRUE
 
 /obj/vehicle/ridden/wheelchair/motorized/examine(mob/user)
@@ -134,21 +141,21 @@
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(A.density && speed > delay_multiplier && has_buckled_mobs())
-		var/mob/living/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-		unbuckle_mob(H)
-		H.throw_at(throw_target, 2, 3)
-		H.Knockdown(100)
-		H.adjustStaminaLoss(40)
+		var/mob/living/disabled = buckled_mobs[1]
+		var/atom/throw_target = get_edge_target_turf(disabled, pick(GLOB.cardinals))
+		unbuckle_mob(disabled)
+		disabled.throw_at(throw_target, 2, 3)
+		disabled.Knockdown(100)
+		disabled.adjustStaminaLoss(40)
 		if(isliving(A))
-			var/mob/living/D = A
-			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
-			D.throw_at(throw_target, 2, 3)
-			D.Knockdown(80)
-			D.adjustStaminaLoss(35)
-			visible_message("<span class='danger'>[src] crashes into [A], sending [H] and [D] flying!</span>")
+			var/mob/living/ramtarget = A
+			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
+			ramtarget.throw_at(throw_target, 2, 3)
+			ramtarget.Knockdown(80)
+			ramtarget.adjustStaminaLoss(35)
+			visible_message("<span class='danger'>[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!</span>")
 		else
-			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+			visible_message("<span class='danger'>[src] crashes into [A], sending [disabled] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)

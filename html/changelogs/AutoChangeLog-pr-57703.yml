@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "The admin button to change everyone's species no longer makes everyone a traitor"

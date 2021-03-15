@@ -141,7 +141,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(FALSE, TRUE))
+		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && throw_mode && !incapacitated(FALSE, TRUE))
 			return TRUE
 	return FALSE
 
@@ -219,6 +219,9 @@
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 
+	var/martial_result = user.apply_martial_art(src, modifiers)
+	if (martial_result != MARTIAL_ATTACK_INVALID)
+		return martial_result
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()

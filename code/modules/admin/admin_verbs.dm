@@ -158,6 +158,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
 	/client/proc/outfit_manager,
+	/client/proc/generate_wikichem_list,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
@@ -610,42 +611,58 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Debug"
 	printAllCards()
 
-/client/proc/give_spell(mob/T in GLOB.mob_list)
+/client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 
 	var/list/spell_list = list()
 	var/type_length = length_char("/obj/effect/proc_holder/spell") + 2
-	for(var/A in GLOB.spells)
-		spell_list[copytext_char("[A]", type_length)] = A
-	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in sortList(spell_list)
-	if(!S)
+	for(var/spell in GLOB.spells)
+		spell_list[copytext_char("[spell]", type_length)] = spell
+	var/spell_desc = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in sortList(spell_list)
+	if(!spell_desc)
+		return
+
+	var/robeless = (alert(usr, "Would you like to force this spell to be robeless?", "Robeless Casting?", "Force Robeless", "Use Spell Setting") == "Force Robeless")
+
+	if(QDELETED(spell_recipient))
+		to_chat(usr, "<span class='warning'>The intended spell recipient no longer exists.</span>")
 		return
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name_admin(T)] the spell [S].</span>")
+	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [spell_desc][robeless ? " (Forced robeless)" : ""].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [spell_desc][spell_desc][robeless ? " (Forced robeless)" : ""].</span>")
 
-	S = spell_list[S]
-	if(T.mind)
-		T.mind.AddSpell(new S)
+	var/spell_path = spell_list[spell_desc]
+	var/obj/effect/proc_holder/spell/new_spell = new spell_path()
+
+	if(robeless)
+		new_spell.clothes_req = FALSE
+		new_spell.cult_req = FALSE
+
+	if(spell_recipient.mind)
+		spell_recipient.mind.AddSpell(new_spell)
 	else
-		T.AddSpell(new S)
+		spell_recipient.AddSpell(new_spell)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
-/client/proc/remove_spell(mob/T in GLOB.mob_list)
+/client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Remove Spell"
 	set desc = "Remove a spell from the selected mob."
 
-	if(T?.mind)
-		var/obj/effect/proc_holder/spell/S = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in sortList(T.mind.spell_list)
-		if(S)
-			T.mind.RemoveSpell(S)
-			log_admin("[key_name(usr)] removed the spell [S] from [key_name(T)].")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name_admin(T)].</span>")
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/target_spell_list = length(removal_target?.mind?.spell_list) ? removal_target.mind.spell_list : removal_target.mob_spell_list
+
+	if(!length(target_spell_list))
+		return
+
+	var/obj/effect/proc_holder/spell/removed_spell = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in sortList(target_spell_list)
+	if(removed_spell)
+		removal_target.mind.RemoveSpell(removed_spell)
+		log_admin("[key_name(usr)] removed the spell [removed_spell] from [key_name(removal_target)].")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [removed_spell] from [key_name_admin(removal_target)].</span>")
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
 	set category = "Admin.Fun"
