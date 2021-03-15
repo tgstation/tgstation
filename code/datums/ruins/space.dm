@@ -299,3 +299,9 @@
 	suffix = "hellfactory.dmm"
 	name = "Heck Brewery"
 	description = "An abandoned warehouse and brewing facility, which has been recently rediscovered. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."
+
+/datum/map_template/ruin/space/spacemotel
+	id = "spacemotel"
+	suffix = "spacebar.dmm"
+	name = "INTER STELLAR MOTEL"
+	description = "Forgotten motel on the edge of the galaxy, it has seen better days."

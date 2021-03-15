@@ -45,6 +45,12 @@
 /datum/id_trim/lifeguard
 	assignment = "Lifeguard"
 
+/// Trim for interstellar bartenders
+/datum/id_trim/interstellar_bartender
+	assignment = "interstellar Bartender"
+	trim_state = "trim_bartender"
+	access = list(ACCESS_SPACE_MOTEL)
+
 /// Trim for beach bum bartenders.
 /datum/id_trim/space_bartender
 	assignment = "Space Bartender"

@@ -1,0 +1,2054 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ax" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"aE" = (
+/obj/structure/holobubble/motel,
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"aJ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"aY" = (
+/turf/open/floor/plating/beach/water,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ba" = (
+/obj/machinery/restaurant_portal/spacebar,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"bc" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"bA" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"bO" = (
+/obj/structure/table/wood,
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"bW" = (
+/turf/closed/mineral,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"cr" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/obj/item/storage/box/ingredients/grains,
+/obj/item/storage/box/ingredients/fiesta,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"cE" = (
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"cL" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"cN" = (
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"dc" = (
+/obj/structure/flora/junglebush/b,
+/obj/structure/flora/rock/jungle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"dp" = (
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"dr" = (
+/obj/structure/holobubble/motel,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/template_noop)
+"dD" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"dF" = (
+/obj/effect/spawner/bundle/costume/maid,
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"dT" = (
+/obj/structure/holobubble/motel,
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"dY" = (
+/obj/machinery/grill,
+/obj/item/stack/sheet/mineral/coal/five,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ed" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ev" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"eF" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"fb" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"fi" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/ashplanet/rocky/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"fZ" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"gk" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/reagentgrinder,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"gX" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"hn" = (
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"hF" = (
+/obj/structure/holohoop,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"iS" = (
+/obj/structure/chair/stool,
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jg" = (
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jp" = (
+/obj/item/instrument/guitar,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jr" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/obj/item/trash/can,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jv" = (
+/obj/item/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/structure/rack,
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jx" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jy" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"jR" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/storage/firstaid/fire{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/o2{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"kc" = (
+/obj/structure/table/wood/bar,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"kI" = (
+/obj/structure/chair/stool,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"mb" = (
+/turf/open/floor/plating/ashplanet/rocky/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"mk" = (
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"mE" = (
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"nc" = (
+/obj/structure/holobubble/motel,
+/turf/open/floor/plating/ashplanet/rocky/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"nk" = (
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"nU" = (
+/obj/structure/holobubble/motel,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"nX" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"oC" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"oH" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/ashplanet/rocky/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ph" = (
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"pv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"px" = (
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"pJ" = (
+/turf/open/space/basic,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qb" = (
+/obj/machinery/biogenerator,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qn" = (
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qy" = (
+/obj/structure/flora/grass/brown,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qC" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qH" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qU" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"qX" = (
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"rd" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ri" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"rK" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"rS" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"sI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"tx" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"tA" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"uh" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"uN" = (
+/obj/structure/table/wood/bar,
+/obj/item/storage/box/ingredients/random,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"uV" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/storage/bag/tray,
+/obj/item/storage/bag/tray,
+/obj/item/storage/bag/tray,
+/obj/item/storage/bag/tray,
+/obj/item/storage/box/ingredients/random,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"va" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/door/window/westright{
+	req_one_access_txt = "209"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"vc" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 8;
+	name = "old sink";
+	pixel_x = 12
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"vq" = (
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"vE" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"vK" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"wb" = (
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"wf" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"wp" = (
+/obj/structure/chair/sofa/corp/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ws" = (
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"wB" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"xq" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/machinery/light/floor,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"yc" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"yq" = (
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/glass/rag,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"yC" = (
+/obj/structure/table/wood/bar,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"yH" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"yO" = (
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"za" = (
+/obj/structure/chair/sofa/corp{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"zn" = (
+/obj/structure/bed,
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"zZ" = (
+/obj/structure/table/wood/bar,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
+/obj/item/pen{
+	pixel_x = -3
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ah" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Al" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars{
+	pixel_y = 9
+	},
+/obj/item/holosign_creator/robot_seat/spacebar,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ap" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"AJ" = (
+/obj/effect/interstellar_sign,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"AL" = (
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"AT" = (
+/obj/structure/holobubble/motel,
+/obj/structure/fence,
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Bt" = (
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"BH" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/closed/mineral/random/high_chance,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"BI" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"BT" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Cd" = (
+/obj/structure/table/wood/bar,
+/obj/item/coin/silver,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Cr" = (
+/turf/template_noop,
+/area/template_noop)
+"Cx" = (
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"CD" = (
+/obj/effect/mob_spawn/human/interstellar_barman,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Dp" = (
+/obj/item/toy/beach_ball,
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"DH" = (
+/obj/structure/table/wood,
+/obj/item/seeds/tower,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"DM" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"DY" = (
+/obj/structure/flora/grass/brown,
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ee" = (
+/obj/machinery/door/window/westright{
+	req_one_access_txt = 209
+	},
+/turf/open/floor/iron/stairs/old{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"EC" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"EG" = (
+/obj/item/pickaxe/improvised,
+/turf/open/floor/plating/ashplanet/rocky/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Fi" = (
+/obj/structure/chair/stool,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Fj" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Fu" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/food/plant_smudge,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"FB" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"FD" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"FH" = (
+/obj/structure/chair/stool,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"FL" = (
+/obj/structure/window/spawner/west,
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ge" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Gs" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Hk" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Io" = (
+/obj/structure/flora/junglebush/c,
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"IQ" = (
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Jw" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"JH" = (
+/obj/structure/sink{
+	pixel_y = 15
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ke" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Kh" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/structure/curtain/cloth,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"KJ" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"KL" = (
+/obj/structure/table/wood/bar,
+/obj/item/coin/gold,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"KX" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/microwave{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Le" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/pill_bottle/dice,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Lh" = (
+/obj/structure/table/wood/bar,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_x = 3
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ly" = (
+/obj/structure/chair/stool,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"LE" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Mv" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"MX" = (
+/obj/structure/flora/junglebush,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Nd" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Nj" = (
+/obj/structure/table/wood/bar,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Nt" = (
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Nw" = (
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"NM" = (
+/obj/structure/flora/rock,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"NS" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"NZ" = (
+/obj/structure/holobubble/motel,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ok" = (
+/obj/structure/musician/piano{
+	icon_state = "piano"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Oo" = (
+/obj/structure/chair/stool,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ov" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"OE" = (
+/obj/structure/closet/crate/freezer{
+	name = "Cooler"
+	},
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/food/drinks/colocup,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"OF" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/plating/ashplanet/rocky/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"OG" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Pc" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/closed/mineral,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Pr" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_x = 3
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Pv" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/box/beanbag,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"PU" = (
+/obj/structure/window/spawner/west,
+/turf/open/floor/carpet/red,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Qo" = (
+/obj/machinery/door/airlock/wood/glass{
+	req_access_txt = "209"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"QC" = (
+/obj/effect/spawner/bundle/costume/holiday_priest,
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"QR" = (
+/obj/structure/table/wood,
+/obj/item/cultivator/rake,
+/obj/item/hatchet/wooden,
+/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/item/shovel,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"RA" = (
+/obj/item/toy/beach_ball/holoball,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"RT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"SA" = (
+/obj/structure/table/wood/bar,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/obj/item/kitchen/knife/butcher,
+/obj/item/kitchen/rollingpin,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"SC" = (
+/obj/structure/table/wood/bar,
+/obj/item/lighter,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ta" = (
+/obj/item/reagent_containers/food/drinks/beer,
+/turf/open/floor/plating/beach/coastline_t,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Tk" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Tx" = (
+/turf/open/floor/plating/beach/coastline_t,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Us" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/bundle/costume/nyangirl,
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Uz" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/ashplanet/safe,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"UK" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"VL" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Wp" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Ww" = (
+/obj/structure/flora/junglebush/b,
+/obj/structure/flora/rock,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/grass,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Xk" = (
+/obj/structure/toilet{
+	dir = 8;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Xm" = (
+/turf/closed/mineral/random,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Xn" = (
+/obj/structure/holobubble/motel,
+/turf/open/floor/plating/ashplanet/safe,
+/area/template_noop)
+"XC" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"XS" = (
+/obj/structure/holobubble/motel,
+/obj/structure/fence/corner{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"XZ" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Yt" = (
+/obj/item/soap/homemade{
+	pixel_x = -14;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"YW" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Zr" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"Zy" = (
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 5
+	},
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ZB" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ZG" = (
+/obj/structure/fluff/beach_umbrella/science,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+"ZO" = (
+/obj/structure/rack,
+/obj/item/toy/beach_ball,
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/powered/interstellar_motel)
+
+(1,1,1) = {"
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+nU
+nU
+nU
+nU
+nU
+dr
+Cr
+Cr
+Cr
+Cr
+"}
+(2,1,1) = {"
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+NZ
+nU
+jv
+tx
+qC
+ZO
+nU
+Cr
+Cr
+Cr
+Cr
+"}
+(3,1,1) = {"
+Cr
+nc
+dT
+AT
+AT
+AT
+AT
+AT
+AT
+AT
+XS
+NZ
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+NZ
+NZ
+fZ
+mk
+mk
+mk
+mk
+nU
+nc
+nc
+Cr
+Cr
+"}
+(4,1,1) = {"
+nc
+NZ
+gX
+yc
+mE
+Bt
+bc
+bc
+bc
+bc
+gX
+NZ
+NZ
+NZ
+NZ
+Cr
+Cr
+Cr
+Cr
+Cr
+NZ
+wb
+ri
+hn
+qX
+Dp
+qX
+FD
+mb
+NZ
+nc
+Cr
+"}
+(5,1,1) = {"
+nc
+wb
+gX
+IQ
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+gX
+Tk
+mb
+mb
+nc
+NZ
+NZ
+Cr
+Cr
+NZ
+NZ
+wb
+ZG
+Tx
+aY
+aY
+aY
+Zy
+dp
+mb
+NZ
+Cr
+"}
+(6,1,1) = {"
+nc
+mb
+gX
+Wp
+Bt
+Bt
+Bt
+Bt
+mE
+Bt
+gX
+oH
+mb
+NS
+wb
+mb
+nc
+NZ
+NZ
+nc
+mb
+OE
+Bt
+Tx
+aY
+aY
+aY
+aY
+jg
+Bt
+nc
+Cr
+"}
+(7,1,1) = {"
+nc
+bW
+gX
+qb
+mE
+mE
+QR
+DH
+DH
+rd
+fZ
+Gs
+fZ
+EG
+mb
+wb
+BI
+mb
+wb
+wb
+wb
+uh
+jp
+Ta
+aY
+aY
+aY
+aY
+jg
+Ap
+nc
+Cr
+"}
+(8,1,1) = {"
+NZ
+Ke
+fZ
+fZ
+Qo
+fZ
+fZ
+fZ
+fZ
+fZ
+fZ
+ba
+fZ
+fZ
+fZ
+fZ
+fZ
+fZ
+mb
+wb
+mb
+Bt
+AL
+Tx
+aY
+aY
+aY
+aY
+jg
+NZ
+nc
+Cr
+"}
+(9,1,1) = {"
+nc
+bW
+fZ
+px
+qn
+Pv
+fZ
+Kh
+fZ
+Ah
+XC
+qn
+kI
+qn
+oC
+Nt
+wp
+fZ
+wb
+mb
+OF
+mb
+Bt
+nk
+cN
+cN
+cN
+cN
+aE
+NZ
+Cr
+Cr
+"}
+(10,1,1) = {"
+nc
+mb
+Gs
+bO
+FB
+CD
+fZ
+Yt
+fZ
+jx
+qn
+wf
+BT
+vq
+ev
+VL
+za
+fZ
+mb
+mb
+mb
+mb
+Uz
+wb
+Ap
+Bt
+Bt
+wb
+NZ
+Cr
+Cr
+Cr
+"}
+(11,1,1) = {"
+nc
+wb
+Gs
+Al
+qn
+qn
+fZ
+JH
+vK
+qn
+nX
+vq
+Fi
+tA
+VL
+Le
+eF
+fZ
+fi
+wb
+AJ
+wb
+mb
+wb
+wb
+wb
+mb
+NZ
+NZ
+Cr
+Cr
+Cr
+"}
+(12,1,1) = {"
+NZ
+NM
+fZ
+cL
+qn
+qn
+fZ
+Xk
+fZ
+rS
+af
+nX
+FB
+qn
+qn
+pv
+Jw
+fZ
+wb
+wb
+vE
+wb
+wb
+vE
+wb
+mb
+vE
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(13,1,1) = {"
+nc
+Ke
+fZ
+fZ
+fZ
+Qo
+fZ
+fZ
+fZ
+qn
+qn
+qn
+qn
+wf
+Oo
+qn
+qn
+qU
+Bt
+Bt
+mb
+Bt
+Bt
+mb
+Bt
+mb
+Bt
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(14,1,1) = {"
+NZ
+bW
+fZ
+KX
+uN
+FB
+FB
+qn
+fZ
+va
+cE
+Nj
+YW
+vq
+jy
+qn
+qn
+qU
+Bt
+Bt
+Bt
+wb
+Bt
+wb
+Bt
+Bt
+Bt
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(15,1,1) = {"
+NZ
+Uz
+Gs
+Ov
+Zr
+qn
+kc
+qn
+Qo
+qn
+FB
+KL
+qn
+vq
+Fi
+qn
+wB
+fZ
+wb
+wb
+Nd
+mb
+mb
+vE
+wb
+mb
+vE
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(16,1,1) = {"
+NZ
+mb
+Gs
+Ge
+qn
+FB
+Fu
+qn
+DM
+qn
+qn
+ph
+ax
+vq
+vq
+Ly
+dD
+Gs
+Bt
+Bt
+Bt
+Bt
+mb
+wb
+wb
+wb
+wb
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(17,1,1) = {"
+nc
+bW
+fZ
+SA
+qn
+qn
+rK
+qn
+yC
+qn
+FB
+zZ
+jr
+vq
+vq
+qn
+dD
+Gs
+mb
+dY
+Bt
+ZB
+Bt
+wb
+wb
+wb
+NS
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(18,1,1) = {"
+NZ
+bW
+fZ
+uV
+cr
+vc
+qn
+qn
+ws
+qn
+FB
+SC
+qn
+wf
+Fi
+nX
+dD
+Gs
+Bt
+Bt
+Bt
+xq
+yH
+wb
+wb
+wb
+wb
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(19,1,1) = {"
+NZ
+NZ
+fZ
+fZ
+fZ
+fZ
+fZ
+fZ
+fZ
+RT
+qn
+yq
+ax
+vq
+KJ
+qn
+Pr
+Gs
+mb
+aJ
+Bt
+Hk
+wb
+mb
+mb
+wb
+wb
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(20,1,1) = {"
+Cr
+nc
+mb
+Gs
+DY
+Mv
+dc
+Gs
+UK
+qn
+pv
+Lh
+qn
+EC
+Fi
+qn
+iS
+fZ
+fZ
+fZ
+fZ
+fZ
+wb
+wb
+RA
+wb
+wb
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(21,1,1) = {"
+Cr
+NZ
+mb
+Gs
+MX
+Io
+ed
+Gs
+LE
+qn
+qn
+Cd
+ax
+qn
+qn
+qn
+qn
+qn
+vK
+Fj
+qH
+fZ
+hF
+wb
+wb
+wb
+wb
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(22,1,1) = {"
+Cr
+NZ
+wb
+Gs
+Mv
+Ww
+qy
+Gs
+gk
+qn
+qn
+kc
+ax
+qn
+qn
+qn
+qn
+qn
+fZ
+FB
+zn
+fZ
+OG
+wb
+wb
+wb
+Uz
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(23,1,1) = {"
+Cr
+NZ
+Pc
+fZ
+fZ
+fZ
+fZ
+fZ
+fZ
+FL
+PU
+PU
+PU
+PU
+PU
+Ee
+fZ
+vK
+fZ
+fZ
+fZ
+fZ
+bW
+bW
+wb
+wb
+wb
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(24,1,1) = {"
+Cr
+NZ
+Ke
+fZ
+jR
+qn
+qn
+qn
+Qo
+yO
+yO
+sI
+Ok
+Cx
+yO
+fb
+fZ
+qn
+qn
+fZ
+bW
+bW
+Ke
+bW
+bW
+wb
+NZ
+NZ
+Cr
+Cr
+Cr
+Cr
+"}
+(25,1,1) = {"
+Cr
+NZ
+NZ
+fZ
+QC
+Nw
+Us
+dF
+fZ
+bA
+yO
+yO
+FH
+yO
+yO
+bA
+fZ
+XZ
+zn
+fZ
+bW
+Ke
+bW
+Ke
+Ke
+bW
+NZ
+pJ
+Cr
+Cr
+Cr
+Cr
+"}
+(26,1,1) = {"
+Cr
+Cr
+NZ
+fZ
+Gs
+Gs
+Gs
+fZ
+fZ
+fZ
+Gs
+Gs
+Gs
+Gs
+Gs
+fZ
+fZ
+fZ
+fZ
+fZ
+Ke
+Ke
+Ke
+Ke
+bW
+NZ
+NZ
+pJ
+NZ
+NZ
+NZ
+Xn
+"}
+(27,1,1) = {"
+Cr
+Cr
+NZ
+NZ
+wb
+wb
+wb
+bW
+Ke
+bW
+wb
+wb
+wb
+mb
+mb
+bW
+bW
+Ke
+bW
+Pc
+bW
+Ke
+bW
+bW
+NZ
+NZ
+pJ
+pJ
+NZ
+Ke
+Ke
+NZ
+"}
+(28,1,1) = {"
+Cr
+Cr
+Cr
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+wb
+wb
+wb
+Ke
+Ke
+Ke
+bW
+bW
+Ke
+bW
+bW
+NZ
+NZ
+NZ
+pJ
+pJ
+NZ
+NZ
+Xm
+BH
+NZ
+"}
+(29,1,1) = {"
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+Cr
+pJ
+pJ
+NZ
+NZ
+Xm
+Ke
+bW
+NZ
+"}
+(30,1,1) = {"
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+NZ
+BH
+Ke
+bW
+NZ
+NZ
+"}
+(31,1,1) = {"
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+NZ
+NZ
+NZ
+NZ
+NZ
+Cr
+"}
+(32,1,1) = {"
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+Cr
+"}

@@ -131,6 +131,8 @@
 #define ACCESS_AWAY_GENERIC2 206
 #define ACCESS_AWAY_GENERIC3 207
 #define ACCESS_AWAY_GENERIC4 208
+///Space motel
+#define ACCESS_SPACE_MOTEL 209
 
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT 250
