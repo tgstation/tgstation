@@ -226,6 +226,13 @@
 <div id="under_menu"></div>
 <div id="statcontent"></div>
 <script>
+var roundRestarting = false;
+
+function round_is_restarting() {
+	roundRestarting = true;
+}
+
+
 // Polyfills and compatibility ------------------------------------------------
 var decoder = decodeURIComponent || unescape;
 var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
@@ -304,7 +311,8 @@ if (window.location) {
 				var y = event.y || event.clientY;
 				if(x || y ) // if either of these exist this is happening after a click
 					return;
-				window.location.href = "byond://winset?command=keyDown " + e.key;
+				if (!roundRestarting)
+					window.location.href = "byond://winset?command=keyDown " + e.key;
 			}
 		}
 	});
@@ -321,7 +329,8 @@ if (window.location) {
 			if( x || y ) // if either of these exist this is happening after a click
 				return;
 
-			window.location.href = "byond://winset?command=keyUp " + e.key;
+			if (!roundRestarting)
+				window.location.href = "byond://winset?command=keyUp " + e.key;
 		}
 	});
 }
@@ -556,11 +565,13 @@ function SendTabsToByond(){
 }
 
 function SendTabToByond(tab) {
+	if (roundRestarting) return;
 	window.location.href = "byond://winset?command=Send-Tabs " + tab;
 }
 
 //Byond can't have this tab anymore since we're removing it
 function TakeTabFromByond(tab) {
+	if (roundRestarting) return;
 	window.location.href = "byond://winset?command=Remove-Tabs " + tab;
 }
 
@@ -674,10 +685,12 @@ function tab_change(tab) {
 	} else {
 		statcontentdiv[textContentKey] = "Loading...";
 	}
+	if (roundRestarting) return;
 	window.location.href = "byond://winset?statbrowser.is-visible=true";
 }
 
 function set_byond_tab(tab){
+	if (roundRestarting) return;
 	window.location.href = "byond://winset?command=Set-Tab " + tab;
 }
 function draw_debug() {
@@ -755,6 +768,7 @@ function draw_status() {
 	}
 	if(verb_tabs.length == 0 || !verbs)
 	{
+		if (roundRestarting) return;
 		window.location.href = "byond://winset?command=Fix-Stat-Panel";
 	}
 }
@@ -1138,6 +1152,7 @@ function set_style_sheet(sheet) {
 }
 
 document[addEventListenerKey]("click", function(e) {
+	if (roundRestarting) return;
 	window.location.href = "byond://winset?map.focus=true";
 });
 
@@ -1151,6 +1166,7 @@ window.onload = function() {
 };
 
 function NotifyByondOnload() {
+	if (roundRestarting) return;
 	window.location.href = "byond://winset?command=Panel-Ready";
 }
 
