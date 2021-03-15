@@ -51,6 +51,11 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "emoting.dm"
 #include "food_edibility_check.dm"
+
+#ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on
+#include "harddels.dm"
+#endif
+
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
