@@ -35,7 +35,7 @@
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
-/obj/machinery/atmospherics/components/unary/passive_vent/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
