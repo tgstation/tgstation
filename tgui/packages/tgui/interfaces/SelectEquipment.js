@@ -17,22 +17,23 @@ const CurrentlySelectedDisplay = (props, context) => {
 
   return (
     <Stack align="center">
+      { entry?.path && (
+        <Stack.Item>
+          <Icon
+            size={1.6}
+            name={entry.favorite?"star":"star-o"}
+            color="gold"
+            style={{ cursor: 'pointer' }}
+            onClick={() => act("togglefavorite",
+              { path: entry.path })} />
+        </Stack.Item>)}
+
       <Stack.Item basis={0} grow={1}>
         <Box color="label">
           Currently selected:
         </Box>
         <Stack>
-          { entry?.path && (
-            <Stack.Item>
-              <Icon
-                size={1.1}
-                name={entry.favorite?"star":"star-o"}
-                color="gold"
-                style={{ cursor: 'pointer' }}
-                onClick={() => act("togglefavorite",
-                  { path: entry.path })} />
-            </Stack.Item>)}
-          <Stack.Item ml={0.5}>
+          <Stack.Item>
             <Box
               title={entry?.path}
               style={{
@@ -45,10 +46,12 @@ const CurrentlySelectedDisplay = (props, context) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
+
       <Stack.Item>
-        <Button lineHeight={2} selected content="Confirm"
+        <Button lineHeight={2} mr={0.8} selected content="Confirm"
           onClick={() => act("applyoutfit", { path: current_outfit })} />
       </Stack.Item>
+
     </Stack>
   );
 };
@@ -84,27 +87,16 @@ const OutfitDisplay = (props, context) => {
   return (
     <Section fill scrollable>
       {entries.map(entry => (
-        <Stack mb={0.5} align="center" key={getOutfitKey(entry)}>
-          <Stack.Item grow={1} basis={0}>
-            <Button
-              fluid
-              ellipsis
-              content={entry.name}
-              title={entry.path||entry.name}
-              selected={getOutfitKey(entry) === current_outfit}
-              onClick={() => act("preview", { path: getOutfitKey(entry) })} />
-          </Stack.Item>
-          {entry.path && (
-            <Stack.Item>
-              <Icon
-                size={1.1}
-                name={entry.favorite?"star":"star-o"}
-                color="gold"
-                style={{ cursor: 'pointer' }}
-                onClick={() => act("togglefavorite",
-                  { path: entry.path })} />
-            </Stack.Item>)}
-        </Stack>
+        <Button
+          key={getOutfitKey(entry)}
+          fluid
+          ellipsis
+          icon={entry.favorite && "star"}
+          iconColor="gold"
+          content={entry.name}
+          title={entry.path||entry.name}
+          selected={getOutfitKey(entry) === current_outfit}
+          onClick={() => act("preview", { path: getOutfitKey(entry) })} />
       ))}
       {currentTab === "Custom" && (
         <Button
@@ -176,14 +168,6 @@ export const SelectEquipment = (props, context) => {
           <Stack.Item>
             <Stack fill vertical>
               <Stack.Item>
-                <DisplayTabs categories={outfitCategories} />
-              </Stack.Item>
-              <Stack.Item>
-                <Section>
-                  <CurrentlySelectedDisplay entry={currentOutfitEntry} />
-                </Section>
-              </Stack.Item>
-              <Stack.Item height="20px">
                 <Input
                   fluid
                   autoFocus
@@ -191,7 +175,10 @@ export const SelectEquipment = (props, context) => {
                   value={searchText}
                   onInput={(e, value) => setSearchText(value)} />
               </Stack.Item>
-              <Stack.Item grow={1} basis={0}>
+              <Stack.Item>
+                <DisplayTabs categories={outfitCategories} />
+              </Stack.Item>
+              <Stack.Item mt={0} grow={1} basis={0}>
                 <OutfitDisplay
                   entries={visibleOutfits}
                   currentTab={tabIndex} />
@@ -201,18 +188,28 @@ export const SelectEquipment = (props, context) => {
 
 
           <Stack.Item grow={2} basis={0}>
-            <Section fill
-              title={name}
-              textAlign="center">
+            <Stack fill vertical>
+              <Stack.Item>
+                <Section>
+                  <CurrentlySelectedDisplay entry={currentOutfitEntry} />
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                <Section
+                  fill
+                  title={name}
+                  textAlign="center">
 
-              <Box as="img"
-                m={0}
-                src={`data:image/jpeg;base64,${icon64}`}
-                height="100%"
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }} />
-            </Section>
+                  <Box as="img"
+                    m={0}
+                    src={`data:image/jpeg;base64,${icon64}`}
+                    height="100%"
+                    style={{
+                      '-ms-interpolation-mode': 'nearest-neighbor',
+                    }} />
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
 
         </Stack>
