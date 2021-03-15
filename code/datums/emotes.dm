@@ -73,7 +73,7 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional) && user.check_audio_cooldown(user, intentional))
+	if(tmp_sound && (!only_forced_audio || !intentional) && check_audio_cooldown(user, intentional))
 		playsound(user, tmp_sound, 50, vary)
 
 	for(var/mob/M in GLOB.dead_mob_list)
