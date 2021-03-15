@@ -1,6 +1,6 @@
 /client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
 	set category = "Admin.Events"
-	set name = "Select equipment but better"
+	set name = "Select equipment"
 
 
 	var/datum/select_equipment/ui = new(usr, target)
