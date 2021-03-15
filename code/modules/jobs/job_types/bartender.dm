@@ -30,7 +30,6 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	id_trim = /datum/id_trim/job/bartender
 
-
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 
