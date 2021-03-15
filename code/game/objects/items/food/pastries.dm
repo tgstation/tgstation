@@ -890,7 +890,7 @@
 
 /obj/item/food/icecream/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/ice_cream_holder, filld_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
+	AddComponent(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
 
 /obj/item/food/icecream/chocolate
 	name = "chocolate cone"
