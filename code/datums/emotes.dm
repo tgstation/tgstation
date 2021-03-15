@@ -40,16 +40,6 @@
 		mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
-	
-/datum/emote/proc/check_audio_cooldown(mob/user, intentional)
-	if(!intentional)
-		return TRUE
-	if(user.emotes_used && user.emotes_used[src] + audio_cooldown > world.time)
-		return FALSE
-	if(!user.emotes_used)
-		user.emotes_used = list() //add it to the same area as the rest of the emotes, they did emote after all.
-	user.emotes_used[src] = world.time
-	return TRUE
 
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
 	. = TRUE
@@ -104,6 +94,16 @@
 
 /datum/emote/proc/get_sound(mob/living/user)
 	return sound //by default just return this var.
+	
+/datum/emote/proc/check_audio_cooldown(mob/user, intentional)
+	if(!intentional)
+		return TRUE
+	if(user.audio_emotes_used && user.audio_emotes_used[src] + audio_cooldown > world.time)
+		return FALSE
+	if(!user.audio_emotes_used)
+		user.audio_emotes_used = list() //add it to the same area as the rest of the emotes, they did emote after all.
+	user.audio_emotes_used[src] = world.time
+	return TRUE
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
