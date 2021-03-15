@@ -1,4 +1,36 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ctf)
+"av" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ctf)
+"bh" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"bN" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ctf)
+"cb" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
 "ck" = (
 /turf/closed/indestructible/syndicate,
 /area/ctf)
@@ -20,6 +52,10 @@
 /obj/machinery/computer{
 	dir = 8;
 	resistance_flags = 64
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
 /turf/open/floor/pod/light,
 /area/ctf)
@@ -48,12 +84,49 @@
 	},
 /turf/open/floor/plating,
 /area/ctf)
+"ds" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"dt" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/ctf)
 "dS" = (
 /obj/machinery/computer{
 	dir = 4;
 	resistance_flags = 64
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
 /turf/open/floor/pod/light,
+/area/ctf)
+"es" = (
+/obj/machinery/computer{
+	dir = 4;
+	resistance_flags = 64
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
+"eM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	resistance_flags = 64
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/ctf)
 "fa" = (
 /obj/structure/shuttle/engine/huge,
@@ -73,6 +146,12 @@
 "fU" = (
 /turf/closed/indestructible/riveted/plastinum,
 /area/ctf)
+"gr" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ctf)
 "gw" = (
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/mineral/titanium/tiled,
@@ -87,12 +166,19 @@
 "ho" = (
 /turf/open/floor/circuit/off,
 /area/ctf)
+"hQ" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ctf)
 "hW" = (
 /turf/open/floor/plating/airless,
 /area/ctf)
 "jq" = (
 /obj/structure/barricade/security/ctf,
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/blue,
 /area/ctf)
 "jR" = (
 /obj/machinery/door/poddoor/shutters/radiation{
@@ -100,11 +186,25 @@
 	name = "secure containment vault";
 	resistance_flags = 64
 	},
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/engine,
+/area/ctf)
+"kr" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ctf)
 "kU" = (
 /obj/effect/powerup/ammo,
 /turf/open/floor/circuit/red/anim,
+/area/ctf)
+"lB" = (
+/obj/effect/turf_decal/siding/white/corner{
+	color = "#121212";
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
 /area/ctf)
 "lI" = (
 /obj/structure/window/reinforced{
@@ -114,17 +214,41 @@
 /obj/structure/shuttle/engine/heater,
 /turf/closed/indestructible/syndicate,
 /area/ctf)
+"lL" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
 "lS" = (
 /obj/structure/sign/warning/radiation/rad_area{
 	resistance_flags = 64
 	},
 /turf/closed/indestructible/riveted/plastinum,
 /area/ctf)
+"lY" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "mb" = (
 /obj/effect/mob_spawn/human/abductor,
 /obj/structure/table/optable/abductor,
 /turf/open/floor/plating/abductor2,
-/area/centcom)
+/area/space/nearstation)
 "me" = (
 /turf/open/floor/mineral/plastitanium,
 /area/ctf)
@@ -137,6 +261,13 @@
 "nj" = (
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/pod/light,
+/area/ctf)
+"nx" = (
+/obj/machinery/computer{
+	dir = 8;
+	resistance_flags = 64
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/ctf)
 "nT" = (
 /obj/structure/window/reinforced{
@@ -151,6 +282,12 @@
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/ctf)
+"ot" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
 "oL" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -162,6 +299,13 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/red,
 /area/ctf)
+"rB" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	resistance_flags = 64
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
 "rI" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
@@ -172,8 +316,32 @@
 /obj/structure/shuttle/engine/large,
 /turf/open/floor/plating/airless,
 /area/ctf)
+"sc" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/pod/light,
+/area/ctf)
 "sz" = (
 /turf/open/floor/mineral/titanium/purple,
+/area/ctf)
+"tM" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"tN" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ctf)
 "tW" = (
 /obj/machinery/button/door{
@@ -184,6 +352,12 @@
 	},
 /turf/open/floor/engine,
 /area/ctf)
+"uo" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
 "uz" = (
 /obj/structure/table/reinforced/ctf,
 /obj/machinery/button/door{
@@ -191,10 +365,70 @@
 	name = "Vault Access";
 	resistance_flags = 64
 	},
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
+"uA" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"vy" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"vL" = (
+/obj/effect/turf_decal/siding/white{
+	color = "#121212";
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"vN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ctf)
+"vY" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "wO" = (
 /turf/open/floor/pod/dark,
+/area/ctf)
+"xl" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"xS" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "xU" = (
 /obj/machinery/computer{
@@ -202,9 +436,83 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ctf)
+"yc" = (
+/obj/effect/turf_decal/siding/white/corner{
+	color = "#121212";
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"yn" = (
+/obj/effect/turf_decal/siding/white/corner{
+	color = "#121212"
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"yw" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ctf)
+"zg" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/pod/dark,
+/area/ctf)
+"zs" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "zx" = (
 /turf/open/floor/plating/abductor2,
-/area/centcom)
+/area/space/nearstation)
+"zF" = (
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ctf)
+"AN" = (
+/obj/effect/turf_decal/siding/white/corner{
+	color = "#121212";
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"Bh" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
+"Bi" = (
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ctf)
+"Cb" = (
+/turf/open/floor/glass/reinforced,
+/area/ctf)
+"Ce" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
 "Cq" = (
 /obj/effect/powerup/ammo,
 /turf/open/floor/circuit,
@@ -217,7 +525,30 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/ctf)
 "Db" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/iron,
+/area/ctf)
+"Fc" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ctf)
+"FM" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "FP" = (
 /obj/structure/window/reinforced{
@@ -229,14 +560,128 @@
 	},
 /turf/closed/indestructible/syndicate,
 /area/ctf)
+"FZ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"Gi" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ctf)
 "Gx" = (
 /turf/open/floor/plating/abductor,
-/area/centcom)
+/area/space/nearstation)
+"GH" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/grass,
+/area/ctf)
+"Hy" = (
+/obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron,
+/area/ctf)
+"HM" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"HN" = (
+/obj/structure/window/reinforced{
+	dir = 8;
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/grass,
+/area/ctf)
 "HZ" = (
 /obj/effect/powerup/speed{
 	respawn_time = 600
 	},
 /turf/open/floor/circuit,
+/area/ctf)
+"Iq" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"ID" = (
+/obj/effect/turf_decal/siding/white{
+	color = "#121212";
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"IN" = (
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ctf)
+"IQ" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"Jr" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
 /area/ctf)
 "Jt" = (
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -244,8 +689,28 @@
 "Ju" = (
 /turf/open/floor/circuit/red/anim,
 /area/ctf)
+"JL" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
 "JO" = (
 /turf/open/floor/circuit/green,
+/area/ctf)
+"JP" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	resistance_flags = 64
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
+"KF" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "KO" = (
 /obj/structure/shuttle/engine/heater,
@@ -267,10 +732,49 @@
 /area/ctf)
 "MC" = (
 /obj/structure/barricade/security/ctf,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/iron,
+/area/ctf)
+"MH" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "Na" = (
 /turf/closed/indestructible/opsglass,
+/area/ctf)
+"NA" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ctf)
+"NQ" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "OQ" = (
 /obj/structure/barricade/security/ctf,
@@ -285,22 +789,132 @@
 	},
 /turf/open/floor/engine,
 /area/ctf)
+"Pm" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
 "Pn" = (
 /obj/structure/trap/ctf/green,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
 /turf/open/floor/iron,
+/area/ctf)
+"PU" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/ctf)
 "Qe" = (
 /turf/template_noop,
 /area/ctf)
 "Qt" = (
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/blue,
+/area/ctf)
+"QE" = (
+/obj/effect/turf_decal/siding/white/corner,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ctf)
+"QT" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ctf)
+"Rc" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
 /area/ctf)
 "Ri" = (
 /obj/structure/trap/ctf/red,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/iron,
+/area/ctf)
+"Rl" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ctf)
+"Rz" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/pod/dark,
+/area/ctf)
+"RE" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"RH" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"RT" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
 /area/ctf)
 "RV" = (
 /turf/open/floor/mineral/titanium/tiled,
+/area/ctf)
+"Ss" = (
+/turf/open/floor/mineral/titanium/yellow,
 /area/ctf)
 "SS" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -311,10 +925,46 @@
 /area/ctf)
 "Tb" = (
 /obj/structure/table/reinforced/ctf,
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/blue,
 /area/ctf)
 "Us" = (
 /turf/open/floor/pod/light,
+/area/ctf)
+"Ut" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/ctf)
+"Vl" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/mineral/titanium/purple,
+/area/ctf)
+"VL" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron,
+/area/ctf)
+"VR" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ctf)
 "Wd" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -324,13 +974,37 @@
 /area/ctf)
 "Wt" = (
 /obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ctf)
+"WB" = (
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ctf)
+"YB" = (
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ctf)
+"Zf" = (
+/obj/effect/turf_decal/tile/green,
 /turf/open/floor/pod/light,
 /area/ctf)
 "Zk" = (
 /obj/machinery/computer{
 	resistance_flags = 64
 	},
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/titanium/blue,
 /area/ctf)
 
 (1,1,1) = {"
@@ -647,11 +1321,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
+VL
+VL
+VL
+VL
+VL
 fU
 hc
 hc
@@ -691,11 +1365,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
+VL
+VL
+Hy
+VL
+VL
 fU
 hc
 hc
@@ -735,11 +1409,11 @@ hc
 hc
 hc
 fU
-Db
-MC
-MC
-MC
-Db
+VL
+Hy
+Hy
+Hy
+VL
 fU
 hc
 hc
@@ -779,11 +1453,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
+VL
+VL
+Hy
+VL
+VL
 fU
 hc
 hc
@@ -823,11 +1497,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
+VL
+VL
+VL
+VL
+VL
 fU
 hc
 hc
@@ -868,9 +1542,9 @@ hc
 hc
 fU
 ck
-Us
-Us
-Us
+FZ
+FZ
+FZ
 ck
 ck
 ck
@@ -880,11 +1554,11 @@ ck
 ck
 ck
 ck
-Us
-Us
+RE
+uo
 ho
-Us
-Us
+ds
+vY
 ck
 ck
 ck
@@ -894,9 +1568,9 @@ ck
 ck
 ck
 ck
-Us
-Us
-Us
+Rc
+Rc
+Rc
 ck
 fU
 hc
@@ -915,29 +1589,29 @@ ck
 wO
 wO
 wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-Us
+FZ
+FZ
+FZ
+Rz
+Rz
+Rz
+tM
+tM
+Rz
+RH
 Us
 nj
 Us
-Us
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
+FM
+Iq
+Iq
+Iq
+Iq
+Iq
+Iq
+Rc
+Rc
+Rc
 wO
 wO
 wO
@@ -965,17 +1639,17 @@ wO
 wO
 wO
 wO
-wO
-wO
-wO
-Us
+FZ
+FZ
+FZ
+RH
 nj
 nj
 nj
-Us
-wO
-wO
-wO
+FM
+FZ
+FZ
+FZ
 wO
 wO
 wO
@@ -1004,19 +1678,19 @@ ck
 ck
 ck
 wO
+yn
+ID
+ID
+ID
+yc
 wO
 wO
 wO
-wO
-wO
-wO
-wO
-wO
-Us
+RH
 Us
 nj
 Us
-Us
+FM
 wO
 wO
 wO
@@ -1024,10 +1698,10 @@ wO
 wO
 wO
 wO
-wO
-Us
-Us
-Us
+yn
+ID
+ID
+ID
 ck
 ck
 hc
@@ -1049,18 +1723,18 @@ hc
 ck
 ck
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 wO
 wO
 ck
+RH
 Us
 Us
 Us
-Us
-Us
+FM
 wO
 wO
 wO
@@ -1069,9 +1743,9 @@ wO
 wO
 ck
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -1093,18 +1767,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 wO
 wO
 ck
+RH
 Us
 Us
 Us
-Us
-Us
+FM
 ck
 wO
 wO
@@ -1113,9 +1787,9 @@ ck
 ck
 ck
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -1137,18 +1811,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 ck
 ck
 ck
-Us
+RH
 OQ
 Ju
 OQ
-Us
+FM
 ck
 ck
 ck
@@ -1157,9 +1831,9 @@ hc
 hc
 hc
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -1181,18 +1855,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
-Us
+RH
 Ju
 LS
 Ju
-Us
+FM
 ck
 hc
 hc
@@ -1201,9 +1875,9 @@ hc
 hc
 hc
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -1225,18 +1899,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
-Us
+RH
 OQ
 Ju
 OQ
-Us
+FM
 ck
 hc
 hc
@@ -1245,9 +1919,9 @@ fU
 cK
 cK
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 cK
 cK
@@ -1269,18 +1943,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
+vy
+KF
 Us
-Us
-Us
-Us
-Us
+sc
+Pm
 ck
 hc
 hc
@@ -1288,11 +1962,11 @@ fU
 fU
 RV
 RV
-sz
-sz
-sz
-sz
-sz
+Gi
+vN
+vN
+vN
+VR
 RV
 RV
 fU
@@ -1313,9 +1987,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1323,7 +1997,7 @@ ck
 Na
 Wt
 cy
-Wt
+lL
 Na
 ck
 hc
@@ -1357,9 +2031,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1401,9 +2075,9 @@ ck
 ck
 ck
 ck
-wO
-wO
-wO
+Cb
+Cb
+Cb
 ck
 ck
 ck
@@ -1444,11 +2118,11 @@ Na
 Jt
 Jt
 Jt
-Jt
-Jt
-Jt
-Jt
-Jt
+PU
+QT
+QT
+QT
+Rl
 lI
 SS
 hc
@@ -1484,15 +2158,15 @@ hc
 hc
 hc
 Na
-gC
-me
-me
-me
-me
-me
-me
-me
-me
+hQ
+Bi
+Bi
+Bi
+Bi
+Bi
+Bi
+Bi
+Bi
 lI
 SS
 hc
@@ -1572,15 +2246,15 @@ hc
 hc
 hc
 Na
-gC
-me
-me
-me
-me
-me
-me
-me
-me
+kr
+IN
+IN
+IN
+IN
+IN
+IN
+IN
+IN
 lI
 SS
 hc
@@ -1617,10 +2291,10 @@ hc
 hc
 Na
 Na
-Jt
-Jt
-Jt
-Jt
+NA
+NA
+NA
+yw
 Jt
 Jt
 Jt
@@ -1661,9 +2335,9 @@ hc
 hc
 hc
 Na
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 ck
 ck
@@ -1705,9 +2379,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1728,11 +2402,11 @@ fU
 fU
 RV
 RV
-sz
-sz
-sz
-sz
-sz
+Vl
+gr
+gr
+gr
+bN
 RV
 RV
 fU
@@ -1749,9 +2423,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1773,9 +2447,9 @@ fU
 cK
 cK
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 cK
 cK
@@ -1793,9 +2467,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1817,9 +2491,9 @@ hc
 hc
 hc
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -1837,9 +2511,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1861,9 +2535,9 @@ hc
 hc
 fU
 fU
-Qt
-Qt
-Qt
+at
+at
+at
 fU
 fU
 fU
@@ -1881,9 +2555,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -1894,23 +2568,23 @@ cK
 cK
 cK
 fU
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+rB
+rB
+rB
+rB
+rB
+rB
 fU
 fU
 fU
 fU
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 fU
 fU
@@ -1925,14 +2599,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 cK
 cK
 cK
 fU
+rB
+rB
+rB
+rB
 Qt
 Qt
 Qt
@@ -1943,18 +2621,14 @@ Qt
 Qt
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -1969,10 +2643,13 @@ hc
 hc
 hc
 fU
-Qt
-Qt
-Qt
+Bh
+Bh
+Bh
 fU
+rB
+rB
+rB
 Qt
 Qt
 Qt
@@ -1987,18 +2664,15 @@ Qt
 Qt
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2033,16 +2707,16 @@ Tb
 Tb
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
-jq
-Qt
-jq
+av
+Ss
+av
 fU
 KO
 hW
@@ -2053,7 +2727,7 @@ Qe
 cK
 cK
 fU
-Tb
+es
 fU
 Qt
 Qt
@@ -2077,16 +2751,16 @@ fU
 fU
 lS
 fU
-Qt
-jq
-Qt
-Qt
-jq
-Qt
+Ss
+av
+Ss
+Ss
+av
+Ss
 fU
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2097,7 +2771,7 @@ hc
 cK
 Tb
 Tb
-Qt
+rB
 fU
 Qt
 Qt
@@ -2121,16 +2795,16 @@ tW
 mr
 mr
 fU
-Qt
-jq
-Qt
-Qt
-jq
-Qt
+Ss
+av
+Ss
+Ss
+av
+Ss
 fU
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2146,14 +2820,14 @@ Qt
 Qt
 Qt
 Qt
-Tb
+HN
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+rB
+rB
+rB
+rB
+rB
 fU
 Qt
 Qt
@@ -2165,16 +2839,16 @@ mW
 OQ
 mr
 jR
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
-Qt
+Ss
 ho
-Qt
+Ss
 fU
 KO
 hW
@@ -2184,13 +2858,13 @@ fa
 (43,1,1) = {"
 cK
 uz
+eM
 Qt
 Qt
 Qt
 Qt
 Qt
-Qt
-Tb
+dt
 Qt
 Qt
 fU
@@ -2209,12 +2883,12 @@ HZ
 mW
 mr
 jR
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 ho
 Cq
@@ -2234,14 +2908,14 @@ Qt
 Qt
 Qt
 Qt
-Tb
+GH
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+JP
+JP
+JP
+JP
+JP
 fU
 Qt
 Qt
@@ -2253,16 +2927,16 @@ mW
 OQ
 mr
 jR
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
-Qt
+Ss
 ho
-Qt
+Ss
 fU
 KO
 hW
@@ -2273,7 +2947,7 @@ Qe
 cK
 Tb
 Tb
-Qt
+JP
 fU
 Qt
 Qt
@@ -2297,16 +2971,16 @@ OX
 mr
 mr
 fU
-Qt
-jq
-Qt
-Qt
-jq
-Qt
+Ss
+av
+Ss
+Ss
+av
+Ss
 fU
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2317,7 +2991,7 @@ hc
 cK
 cK
 fU
-Tb
+nx
 fU
 Qt
 Qt
@@ -2341,16 +3015,16 @@ fU
 fU
 lS
 fU
-Qt
-jq
-Qt
-Qt
-jq
-Qt
+Ss
+av
+Ss
+Ss
+av
+Ss
 fU
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2385,16 +3059,16 @@ Tb
 Tb
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
-jq
-Qt
-jq
+av
+Ss
+av
 fU
 KO
 hW
@@ -2409,10 +3083,13 @@ hc
 hc
 hc
 fU
-Qt
-Qt
-Qt
+Ce
+Ce
+Ce
 fU
+JP
+JP
+JP
 Qt
 Qt
 Qt
@@ -2427,18 +3104,15 @@ Qt
 Qt
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2453,14 +3127,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 cK
 cK
 cK
 fU
+JP
+JP
+JP
+JP
 Qt
 Qt
 Qt
@@ -2471,18 +3149,14 @@ Qt
 Qt
 Qt
 Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 KO
 hW
@@ -2497,9 +3171,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -2510,23 +3184,23 @@ cK
 cK
 cK
 fU
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+JP
+JP
+JP
+JP
+JP
+JP
 fU
 fU
 fU
 fU
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
-Qt
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
+Ss
 fU
 fU
 fU
@@ -2541,9 +3215,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -2565,9 +3239,9 @@ hc
 hc
 fU
 fU
-Qt
-Qt
-Qt
+Fc
+Fc
+Fc
 fU
 fU
 fU
@@ -2585,9 +3259,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -2609,9 +3283,9 @@ hc
 hc
 hc
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -2629,9 +3303,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -2653,9 +3327,9 @@ fU
 cK
 cK
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 cK
 cK
@@ -2673,9 +3347,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -2696,11 +3370,11 @@ fU
 fU
 RV
 RV
-sz
-sz
-sz
-sz
-sz
+Gi
+vN
+vN
+vN
+VR
 RV
 RV
 fU
@@ -2717,9 +3391,9 @@ hc
 hc
 hc
 Na
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 ck
 ck
@@ -2761,10 +3435,10 @@ hc
 hc
 Na
 Na
-Jt
-Jt
-Jt
-Jt
+QT
+QT
+QT
+Rl
 Jt
 Jt
 Jt
@@ -2804,15 +3478,15 @@ hc
 hc
 hc
 Na
-gC
-me
-me
-me
-me
-me
-me
-me
-me
+YB
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
 lI
 SS
 hc
@@ -2892,15 +3566,15 @@ hc
 hc
 hc
 Na
-gC
-me
-me
-me
-me
-me
-me
-me
-me
+tN
+WB
+WB
+WB
+WB
+WB
+WB
+WB
+WB
 lI
 SS
 hc
@@ -2940,11 +3614,11 @@ Na
 Jt
 Jt
 Jt
-Jt
-Jt
-Jt
-Jt
-Jt
+QE
+NA
+NA
+NA
+yw
 lI
 SS
 hc
@@ -2985,9 +3659,9 @@ ck
 ck
 ck
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 ck
 ck
@@ -3029,9 +3703,9 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
@@ -3073,17 +3747,17 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
 Na
-Wt
+MH
 dS
-Wt
+uA
 Na
 ck
 hc
@@ -3117,18 +3791,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
+RT
+bh
 Us
-Us
-Us
-Us
-Us
+IQ
+HM
 ck
 hc
 hc
@@ -3136,11 +3810,11 @@ fU
 fU
 RV
 RV
-sz
-sz
-sz
-sz
-sz
+Vl
+gr
+gr
+gr
+bN
 RV
 RV
 fU
@@ -3161,18 +3835,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
-Us
+xl
 OQ
 LQ
 OQ
-Us
+xS
 ck
 hc
 hc
@@ -3181,9 +3855,9 @@ fU
 cK
 cK
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 cK
 cK
@@ -3205,18 +3879,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 hc
 hc
 ck
-Us
+xl
 LQ
 cO
 LQ
-Us
+xS
 ck
 hc
 hc
@@ -3225,9 +3899,9 @@ hc
 hc
 hc
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -3249,18 +3923,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 ck
 ck
 ck
-Us
+xl
 OQ
 LQ
 OQ
-Us
+xS
 ck
 ck
 ck
@@ -3269,9 +3943,9 @@ hc
 hc
 hc
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -3293,18 +3967,18 @@ hc
 hc
 hc
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 wO
 wO
 ck
+xl
 Us
 Us
 Us
-Us
-Us
+xS
 wO
 wO
 wO
@@ -3313,9 +3987,9 @@ ck
 ck
 ck
 fU
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -3337,18 +4011,18 @@ hc
 ck
 ck
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 ck
 wO
 wO
 ck
+xl
 Us
 Us
 Us
-Us
-Us
+xS
 wO
 wO
 wO
@@ -3357,9 +4031,9 @@ wO
 wO
 ck
 ck
-Us
-Us
-Us
+Cb
+Cb
+Cb
 fU
 hc
 hc
@@ -3380,19 +4054,19 @@ ck
 ck
 ck
 wO
+AN
+vL
+vL
+vL
+lB
 wO
 wO
 wO
-wO
-wO
-wO
-wO
-wO
-Us
+xl
 Us
 nj
 Us
-Us
+xS
 wO
 wO
 wO
@@ -3400,10 +4074,10 @@ wO
 wO
 wO
 wO
-wO
-Us
-Us
-Us
+AN
+vL
+vL
+vL
 ck
 ck
 hc
@@ -3429,17 +4103,17 @@ wO
 wO
 wO
 wO
-wO
-wO
-wO
-Us
+zg
+zg
+zg
+xl
 nj
 nj
 nj
-Us
-wO
-wO
-wO
+xS
+JL
+JL
+JL
 wO
 wO
 wO
@@ -3467,29 +4141,29 @@ ck
 wO
 wO
 wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-Us
+zg
+zg
+zg
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+xl
 Us
 nj
 Us
-Us
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
-wO
+xS
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
+zg
+zg
+zg
 wO
 wO
 wO
@@ -3508,9 +4182,9 @@ hc
 hc
 fU
 ck
-Us
-Us
-Us
+zg
+zg
+zg
 ck
 ck
 ck
@@ -3520,11 +4194,11 @@ ck
 ck
 ck
 ck
-Us
-Us
+NQ
+ot
 ho
-Us
-Us
+Zf
+cb
 ck
 ck
 ck
@@ -3534,9 +4208,9 @@ ck
 ck
 ck
 ck
-Us
-Us
-Us
+zg
+zg
+zg
 ck
 fU
 hc
@@ -3551,11 +4225,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+lY
+lY
+lY
 fU
 hc
 hc
@@ -3577,11 +4251,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+lY
+lY
+lY
 fU
 hc
 hc
@@ -3595,11 +4269,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
+lY
+lY
+zs
+lY
+lY
 fU
 hc
 hc
@@ -3621,11 +4295,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
+lY
+lY
+zs
+lY
+lY
 fU
 hc
 hc
@@ -3639,11 +4313,11 @@ hc
 hc
 hc
 fU
-Db
-MC
-MC
-MC
-Db
+lY
+zs
+zs
+zs
+lY
 fU
 hc
 hc
@@ -3665,11 +4339,11 @@ hc
 hc
 hc
 fU
-Db
-MC
-MC
-MC
-Db
+lY
+zs
+zs
+zs
+lY
 fU
 hc
 hc
@@ -3683,11 +4357,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
+lY
+lY
+zs
+lY
+lY
 fU
 hc
 hc
@@ -3709,11 +4383,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
+lY
+lY
+zs
+lY
+lY
 fU
 hc
 hc
@@ -3727,11 +4401,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+lY
+lY
+lY
 fU
 hc
 hc
@@ -3753,11 +4427,11 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+lY
+lY
+lY
 fU
 hc
 hc
@@ -3815,37 +4489,37 @@ hc
 hc
 hc
 fU
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+lY
+lY
+lY
+lY
 fU
 hc
 hc
@@ -3859,37 +4533,37 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+zs
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
 ho
 JO
 ho
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+lY
+lY
 fU
 hc
 hc
@@ -3903,37 +4577,37 @@ hc
 hc
 hc
 fU
-Db
-MC
-MC
-MC
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
+lY
+zs
+zs
+zs
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
 JO
 cu
 JO
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-MC
-MC
-Db
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+zs
+zs
+lY
 fU
 hc
 hc
@@ -3947,37 +4621,37 @@ hc
 hc
 hc
 fU
-Db
-Db
-MC
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+zs
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
 ho
 JO
 ho
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+lY
+lY
 fU
 hc
 hc
@@ -3992,35 +4666,35 @@ hc
 hc
 fU
 fU
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-Db
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-MC
-Db
-Db
-Db
-Db
-Db
-Db
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+lY
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+zs
+lY
+lY
+lY
+lY
+lY
+lY
 fU
 fU
 hc
