@@ -9,8 +9,6 @@ import { filter, map, sortBy, uniq } from 'common/collections';
 // custom outfits give a ref keyword instead of path
 const getOutfitKey = outfit => outfit.path || outfit.ref;
 
-const getOutfitEntry = (current_outfit, outfits) => outfits.find(outfit =>
-  getOutfitKey(outfit) === current_outfit);
 
 const CurrentlySelectedDisplay = (props, context) => {
   const { act, data } = useBackend(context);
@@ -24,16 +22,17 @@ const CurrentlySelectedDisplay = (props, context) => {
           Currently selected:
         </Box>
         <Stack>
-          <Stack.Item>
-            <Icon
-              size={1.1}
-              name={entry.favorite?"star":"star-o"}
-              color="gold"
-              style={{ cursor: 'pointer' }}
-              onClick={() => act("togglefavorite",
-                { path: entry.path })} />
-          </Stack.Item>
-          <Stack.Item>
+          { entry?.path && (
+            <Stack.Item>
+              <Icon
+                size={1.1}
+                name={entry.favorite?"star":"star-o"}
+                color="gold"
+                style={{ cursor: 'pointer' }}
+                onClick={() => act("togglefavorite",
+                  { path: entry.path })} />
+            </Stack.Item>)}
+          <Stack.Item ml={0.5}>
             <Box
               title={entry?.path}
               style={{
@@ -128,10 +127,16 @@ export const SelectEquipment = (props, context) => {
     favorites,
   } = data;
 
+  const isFavorited = entry => favorites?.includes(entry.path);
+
   const outfits = [
     ...data.outfits,
     ...data.custom_outfits,
-  ];
+  ].map(entry => ({
+    ...entry,
+    favorite: isFavorited(entry),
+  }));
+
 
   // even if no custom outfits were sent, we still want to make sure there's
   // at least a 'Custom' tab so the button to create a new one pops up
@@ -146,15 +151,9 @@ export const SelectEquipment = (props, context) => {
     entry.name + entry.path
   ));
 
-  const isFavorited = entry => favorites?.includes(entry.path);
-
-  const entries = flow([
+  const visibleOutfits = flow([
     filter(entry => entry.category === tabIndex),
     filter(searchFilter),
-    map(entry => ({
-      ...entry,
-      favorite: isFavorited(entry),
-    })),
     sortBy(
       entry => !entry.favorite,
       entry => !entry.priority,
@@ -162,16 +161,19 @@ export const SelectEquipment = (props, context) => {
     ),
   ])(outfits);
 
-  const currentOutfitEntry = getOutfitEntry(current_outfit, outfits);
+  const getOutfitEntry = current_outfit => outfits.find(outfit =>
+    getOutfitKey(outfit) === current_outfit);
+
+  const currentOutfitEntry = getOutfitEntry(current_outfit);
 
   return (
     <Window
-      width={950}
-      height={660}>
+      width={650}
+      height={415}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item>
 
+          <Stack.Item>
             <Stack fill vertical>
               <Stack.Item>
                 <DisplayTabs categories={outfitCategories} />
@@ -191,11 +193,10 @@ export const SelectEquipment = (props, context) => {
               </Stack.Item>
               <Stack.Item grow={1} basis={0}>
                 <OutfitDisplay
-                  entries={entries}
+                  entries={visibleOutfits}
                   currentTab={tabIndex} />
               </Stack.Item>
             </Stack>
-
           </Stack.Item>
 
 
