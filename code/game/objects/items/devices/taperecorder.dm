@@ -39,6 +39,12 @@
 	soundloop = new(list(src))
 	update_appearance()
 
+/obj/item/taperecorder/Destroy()
+	QDEL_NULL(soundloop)
+	if(mytape)
+		QDEL_NULL(mytape)
+	. = ..()
+
 /obj/item/taperecorder/proc/readout()
 	if(mytape)
 		if(playing)
