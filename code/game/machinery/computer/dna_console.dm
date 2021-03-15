@@ -209,6 +209,7 @@
 	injectorready = world.time + INJECTOR_TIMEOUT
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	jokerready = world.time + JOKER_TIMEOUT
+	COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 
 	// Set the default tgui state
 	set_default_state()
