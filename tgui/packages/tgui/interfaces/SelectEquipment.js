@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { filter, sortBy, uniq } from 'common/collections';
+import { filter, map, sortBy, uniq } from 'common/collections';
 
 // here's an important mental define:
 // custom outfits give a ref keyword instead of path
@@ -23,15 +23,28 @@ const CurrentlySelectedDisplay = (props, context) => {
         <Box color="label">
           Currently selected:
         </Box>
-        <Box
-          title={entry?.path}
-          style={{
-            'overflow': 'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
-          }}>
-          {entry?.name}
-        </Box>
+        <Stack>
+          <Stack.Item>
+            <Icon
+              size={1.1}
+              name={entry.favorite?"star":"star-o"}
+              color="gold"
+              style={{ cursor: 'pointer' }}
+              onClick={() => act("togglefavorite",
+                { path: entry.path })} />
+          </Stack.Item>
+          <Stack.Item>
+            <Box
+              title={entry?.path}
+              style={{
+                'overflow': 'hidden',
+                'white-space': 'nowrap',
+                'text-overflow': 'ellipsis',
+              }}>
+              {entry?.name}
+            </Box>
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
       <Stack.Item>
         <Button lineHeight={2} selected content="Confirm"
@@ -62,6 +75,47 @@ const DisplayTabs = (props, context) => {
       ))}
     </Tabs>
   );
+};
+
+const OutfitDisplay = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { current_outfit } = data;
+  const { entries, currentTab } = props;
+
+  return (
+    <Section fill scrollable>
+      {entries.map(entry => (
+        <Stack mb={0.5} align="center" key={getOutfitKey(entry)}>
+          <Stack.Item grow={1} basis={0}>
+            <Button
+              fluid
+              ellipsis
+              content={entry.name}
+              title={entry.path||entry.name}
+              selected={getOutfitKey(entry) === current_outfit}
+              onClick={() => act("preview", { path: getOutfitKey(entry) })} />
+          </Stack.Item>
+          {entry.path && (
+            <Stack.Item>
+              <Icon
+                size={1.1}
+                name={entry.favorite?"star":"star-o"}
+                color="gold"
+                style={{ cursor: 'pointer' }}
+                onClick={() => act("togglefavorite",
+                  { path: entry.path })} />
+            </Stack.Item>)}
+        </Stack>
+      ))}
+      {currentTab === "Custom" && (
+        <Button
+          color="transparent"
+          icon="plus"
+          fluid
+          onClick={() => act("customoutfit")}>
+          Create a custom outfit...
+        </Button>)}
+    </Section>);
 };
 
 
@@ -97,8 +151,12 @@ export const SelectEquipment = (props, context) => {
   const entries = flow([
     filter(entry => entry.category === tabIndex),
     filter(searchFilter),
+    map(entry => ({
+      ...entry,
+      favorite: isFavorited(entry),
+    })),
     sortBy(
-      entry => isFavorited(entry)?0:1,
+      entry => !entry.favorite,
       entry => !entry.priority,
       entry => entry.name
     ),
@@ -132,39 +190,9 @@ export const SelectEquipment = (props, context) => {
                   onInput={(e, value) => setSearchText(value)} />
               </Stack.Item>
               <Stack.Item grow={1} basis={0}>
-                <Section fill scrollable>
-                  {entries.map(entry => (
-                    <Stack mb={0.5} align="center" key={getOutfitKey(entry)}>
-                      <Stack.Item grow={1}>
-                        <Button
-                          fluid
-                          ellipsis
-                          content={entry.name}
-                          title={entry.path||entry.name}
-                          selected={getOutfitKey(entry) === current_outfit}
-                          onClick={() => act("preview", { path: getOutfitKey(entry) })} />
-                      </Stack.Item>
-                      {entry.path && (
-                        <Stack.Item>
-                          <Icon
-                            size={1.1}
-                            name={isFavorited(entry)?"star":"star-o"}
-                            color="gold"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => act("togglefavorite",
-                              { path: entry.path })} />
-                        </Stack.Item>)}
-                    </Stack>
-                  ))}
-                  {tabIndex === "Custom" && (
-                    <Button
-                      color="transparent"
-                      icon="plus"
-                      fluid
-                      onClick={() => act("customoutfit")}>
-                      Create a custom outfit...
-                    </Button>)}
-                </Section>
+                <OutfitDisplay
+                  entries={entries}
+                  currentTab={tabIndex} />
               </Stack.Item>
             </Stack>
 
@@ -174,19 +202,7 @@ export const SelectEquipment = (props, context) => {
           <Stack.Item grow={2} basis={0}>
             <Section fill
               title={name}
-              textAlign="center"
-              buttons={
-                currentOutfitEntry.path && (
-                  // custom outfits aren't even persistent between rounds,
-                  // so no favorites for these
-                  <Icon
-                    name={isFavorited(currentOutfitEntry)?"star":"star-o"}
-                    color="gold"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => act("togglefavorite",
-                      { path: currentOutfitEntry.path })} />)
-              }
-            >
+              textAlign="center">
 
               <Box as="img"
                 m={0}
