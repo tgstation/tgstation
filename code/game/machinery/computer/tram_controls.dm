@@ -6,6 +6,7 @@
 	icon_screen = "tram"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/tram_controls
+	///extra safety check for tram movement
 	var/travelling = FALSE
 
 	var/obj/structure/industrial_lift/tram/tram_part
@@ -21,6 +22,13 @@
 		tram_finder.console = null
 	return ..()
 
+/**
+ * Finds the tram to set the console to
+ *
+ * Locates tram parts in the lift global list and links the console var
+ * on the tram parts to the console itself. Essentially just another
+ * safety measure against bad tram movement.
+ */
 /obj/machinery/computer/tram_controls/proc/find_tram()
 	var/obj/structure/industrial_lift/tram/central/tram_loc = locate(/obj/structure/industrial_lift/tram/central) in GLOB.lifts
 	tram_part = tram_loc //possibly setting to something null, that's fine, but
@@ -55,6 +63,13 @@
 	data["destinations"] = get_destinations()
 	return data
 
+/**
+ * Finds the destinations for the tram console gui
+ *
+ * Pulls tram landmarks from the landmark gobal list 
+ * and uses those to show the proper icons and destination
+ * names for the tram console gui.
+ */
 /obj/machinery/computer/tram_controls/proc/get_destinations()
 	. = list()
 	for(var/obj/effect/landmark/tram/destination in GLOB.landmarks_list)
