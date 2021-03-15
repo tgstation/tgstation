@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Input, Section, Stack, Tabs } from '../components';
+import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 import { filter, sortBy, uniq } from 'common/collections';
@@ -88,12 +88,11 @@ export const SelectEquipment = (props, context) => {
     searchText,
     setSearchText,
   ] = useLocalState(context, 'searchText', '');
-  const searchFilter = createSearch(searchText, entry =>
-    (entry.name + entry.path)
-  );
+  const searchFilter = createSearch(searchText, entry => (
+    entry.name + entry.path
+  ));
 
-  const isFavorited = entry => favorites?.find(
-    favPath => favPath === entry.path);
+  const isFavorited = entry => favorites?.includes(entry.path);
 
   const entries = flow([
     filter(entry => entry.category === tabIndex),
@@ -135,15 +134,27 @@ export const SelectEquipment = (props, context) => {
               <Stack.Item grow={1} basis={0}>
                 <Section fill scrollable>
                   {entries.map(entry => (
-                    <Button
-                      key={getOutfitKey(entry)}
-                      fluid
-                      icon={isFavorited(entry)?"star":""}
-                      ellipsis
-                      content={entry.name}
-                      title={entry.path||entry.name}
-                      selected={getOutfitKey(entry) === current_outfit}
-                      onClick={() => act("preview", { path: getOutfitKey(entry) })} />
+                    <Stack mb={0.5} align="center" key={getOutfitKey(entry)}>
+                      <Stack.Item grow={1}>
+                        <Button
+                          fluid
+                          ellipsis
+                          content={entry.name}
+                          title={entry.path||entry.name}
+                          selected={getOutfitKey(entry) === current_outfit}
+                          onClick={() => act("preview", { path: getOutfitKey(entry) })} />
+                      </Stack.Item>
+                      {entry.path && (
+                        <Stack.Item>
+                          <Icon
+                            size={1.1}
+                            name={isFavorited(entry)?"star":"star-o"}
+                            color="gold"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => act("togglefavorite",
+                              { path: entry.path })} />
+                        </Stack.Item>)}
+                    </Stack>
                   ))}
                   {tabIndex === "Custom" && (
                     <Button
@@ -168,9 +179,10 @@ export const SelectEquipment = (props, context) => {
                 currentOutfitEntry.path && (
                   // custom outfits aren't even persistent between rounds,
                   // so no favorites for these
-                  <Button
-                    icon="star"
-                    selected={isFavorited(currentOutfitEntry)}
+                  <Icon
+                    name={isFavorited(currentOutfitEntry)?"star":"star-o"}
+                    color="gold"
+                    style={{ cursor: 'pointer' }}
                     onClick={() => act("togglefavorite",
                       { path: currentOutfitEntry.path })} />)
               }

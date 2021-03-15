@@ -92,7 +92,9 @@
  */
 
 /datum/select_equipment/proc/outfit_entry(category, identifier, name, priority=FALSE, custom_entry=FALSE)
-	return list("category" = category, custom_entry?"ref":"path" = identifier, "name" = name, "priority" = priority)
+	if(custom_entry)
+		return list("category" = category, "ref" = identifier, "name" = name, "priority" = priority)
+	return list("category" = category, "path" = identifier, "name" = name, "priority" = priority)
 
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
