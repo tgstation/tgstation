@@ -20,7 +20,7 @@
 
 	if(!name)
 		name = "light switch ([area.name])"
-
+	AddElement(/datum/element/wall_mount)
 	update_icon()
 
 /obj/machinery/light_switch/update_icon_state()
