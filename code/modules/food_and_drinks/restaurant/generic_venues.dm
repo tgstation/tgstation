@@ -13,6 +13,7 @@
 		/datum/customer_data/japanese = 30,
 		/datum/customer_data/japanese/salaryman = 20,
 		/datum/customer_data/moth = 1,
+		/datum/customer_data/malfunction = 1,
 	)
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
@@ -81,6 +82,7 @@
 		/datum/customer_data/mexican = 30,
 		/datum/customer_data/japanese = 30,
 		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/malfunction = 1,
 	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)

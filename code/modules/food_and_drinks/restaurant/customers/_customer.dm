@@ -293,7 +293,8 @@
 	base_icon = "defect"
 	prefix_file = "strings/names/malf_prefix.txt"
 	speech_sound = 'sound/effects/clang.ogg'
-	clothing_sets = list("wires", "bad_takes")
+	clothing_sets = list("defect_wires", "defect_bad_takes")
+	is_unique = TRUE
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/toy/crayon/red = 1, /obj/item/toy/crayon/orange = 1, /obj/item/toy/crayon/yellow = 1, /obj/item/toy/crayon/green = 1, /obj/item/toy/crayon/blue = 1, /obj/item/toy/crayon/purple = 1),
 	/datum/venue/bar = list(/datum/reagent/consumable/failed_reaction = 1, /datum/reagent/spraytan = 1, /datum/reagent/reaction_agent/basic_buffer = 1, /datum/reagent/reaction_agent/acidic_buffer = 1))
@@ -309,12 +310,3 @@
 	self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
 
 
-/* uncomment when mothblocks moth nationality merged, also mothblocks is tweaking venue customer pickweights and i don't wanna mess with that
-/datum/customer_data/malfunction/chosen(datum/venue/venue)
-	. = ..()
-
-	// Only show up once, again for the purposes of keeping the comedic value.
-	// Also prevents the unlikely, but otherwise possible, scenario that you keep
-	// getting the extremely easy to satisy malfunctioning bots, which isn't as fun as completing real orders.
-	venue.customer_types[type] = 0
-*/
