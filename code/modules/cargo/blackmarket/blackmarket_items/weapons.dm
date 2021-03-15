@@ -54,16 +54,6 @@
 	stock_max = 3
 	availability_prob = 45
 
-/datum/blackmarket_item/weapon/telebaton
-	name = "Telescopic Baton"
-	desc = "Taken from a dead captain after a successful revolution. Lightly used"
-	item = /obj/item/melee/classic_baton/telescopic
-
-	price_min = 550
-	price_max = 750
-	stock_max = 1
-	availability_prob = 30
-
 /datum/blackmarket_item/weapon/emp_grenade
 	name = "EMP Grenade"
 	desc = "Use this grenade for SHOCKING results!"
