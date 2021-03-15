@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Non-admin observers can now use emoji that start with d or p at the beginning of a deadchat message without admin command warnings."
