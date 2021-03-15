@@ -304,7 +304,7 @@
 	leave_mad_lines = list("Runtime in robot_customer_controller.dm, line 28: undefined type path /datum/ai_behavior/leave_venue.", "IF YOU GUYS STILL HAD HARM INTENT I WOULD'VE HIT YOU!", "I'm telling the gods about this.")
 	leave_happy_lines = list("No! I don't wanna go downstream! Please! It's so nice here! HELP!!")
 	wait_for_food_lines = list("TODO: write some food waiting lines", "If I only had a brain...", "request_for_food.dmb - 0 errors, 12 warnings", "How do I eat food, again?")
-	friendly_pull_line = "Chelp. Chelp. I am being dragged, but I am not supposed to break this person's spine."
+	friendly_pull_line = "Chelp."
 	first_warning_line = "You'd fit in well where I'm from. But you better stop."
 	second_warning_line = "Breaking-you-so-bad-you'll-reminisce-the-days-before-I-made-you-crooked.exe: booting..."
 	self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
