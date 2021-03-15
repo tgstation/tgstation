@@ -67,11 +67,6 @@ const yarn = args => {
 /// Installs all tgui dependencies
 const taskYarn = new Task('yarn')
   .build(async () => {
-    const yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
-      .replace('/tgui/', '/');
-    const yarn = args => exec('node', [yarnPath, ...args], {
-      cwd: './tgui',
-    });
     await yarn(['install']);
   });
 
