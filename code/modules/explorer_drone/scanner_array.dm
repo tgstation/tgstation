@@ -3,6 +3,7 @@
 GLOBAL_DATUM_INIT(exoscanner_controller,/datum/scanner_controller,new)
 /// List of scanned distances
 GLOBAL_LIST_INIT(exoscanner_bands,list(EXOSCANNER_BAND_PLASMA=0,EXOSCANNER_BAND_LIFE=0,EXOSCANNER_BAND_TECH=0,EXOSCANNER_BAND_RADIATION=0,EXOSCANNER_BAND_DENSITY=0))
+/// Scan condition instances
 GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 

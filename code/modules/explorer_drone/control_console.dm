@@ -122,11 +122,12 @@
 			return TRUE
 		if("start_travel")
 			if(controlled_drone && controlled_drone.can_travel())
+				var/datum/exploration_site/target_site
 				if(params["target_site"])
-					var/datum/exploration_site/target_site = locate(params["target_site"]) in GLOB.exploration_sites
-					controlled_drone.launch_for(target_site)
-				else
-					controlled_drone.go_home()
+					target_site = locate(params["target_site"]) in GLOB.exploration_sites
+					if(!target_site)
+						return TRUE
+				controlled_drone.launch_for(target_site)
 			return TRUE
 		if("explore")
 			if(controlled_drone && controlled_drone.drone_status == EXODRONE_EXPLORATION)

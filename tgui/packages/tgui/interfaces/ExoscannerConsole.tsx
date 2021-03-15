@@ -104,7 +104,7 @@ const ScanInProgressModal = (props, context) => {
   } = data;
 
   return (
-    <Modal>
+    <Modal ml={1}>
       <NoticeBox>Scan in Progress!</NoticeBox>
       <Box color="danger" />
       <LabeledList>
@@ -120,8 +120,15 @@ const ScanInProgressModal = (props, context) => {
           label="Scanning array power">
           {scan_power}
         </LabeledList.Item>
+        <LabeledList.Item
+          label="Emergency Stop">
+          <Button.Confirm
+            content="STOP SCAN"
+            color="red"
+            icon="times"
+            onClick={() => act("stop_scan")} />
+        </LabeledList.Item>
       </LabeledList>
-      <Button.Confirm content="STOP SCAN" onClick={() => act("stop_scan")} />
     </Modal>);
 };
 
@@ -152,24 +159,7 @@ export const ExoscannerConsole = (props, context) => {
 
   const MainContent = selected_site ? (<ScanSelectionSection site_ref={selected_site} />) : (
     <>
-      <Section title="Configure Wide Scan">
-        <Stack>
-          <Stack.Item>
-            <BlockQuote>Broad spectrum scan looking for anything not matching known start charts.</BlockQuote>
-          </Stack.Item>
-          <Stack.Item>
-            Cost estimate: {scan_power > 0 ? formatTime(wide_scan_eta, "short") : "∞ minutes"}
-          </Stack.Item>
-          <Stack.Item>
-            <Button disabled={!can_start_wide_scan} onClick={() => act("start_wide_scan")}>Scan</Button>
-          </Stack.Item>
-        </Stack>
-      </Section>
-      <Section title="Configure Targeted Scans" buttons={<Button onClick={() => act("open_experiments")} icon="tasks">View Experiments</Button>}>
-        <Stack vertical>
-          {possible_sites.map(site => (<Stack.Item key={site.ref}><Button onClick={() => act("select_site", { "site_ref": site.ref })}>{site.name}</Button></Stack.Item>))}
-        </Stack>
-      </Section>
+
     </>);
 
   return (
@@ -177,13 +167,69 @@ export const ExoscannerConsole = (props, context) => {
       {!!scan_in_progress && (<ScanInProgressModal />)}
       {!!failed && (<ScanFailedModal />)}
       <Window.Content>
-        <Section title="Available array power">
-          {scan_conditions && scan_conditions.map(condition => <NoticeBox key={condition} warning>{condition}</NoticeBox>)}
-          <Box>
-            {scan_power > 0 ? Array(scan_power).fill((<Icon name="satellite-dish" size={3} />)) : "No properly configured scanner arrays detected."}
-          </Box>
-        </Section>
-        {MainContent}
+        <Stack vertical fill>
+          <Stack.Item>
+            <Section fill title="Available array power">
+              <Stack fill>
+                {scan_conditions && scan_conditions.map(condition => <NoticeBox key={condition} warning>{condition}</NoticeBox>)}
+                <Stack.Item grow>
+                  {scan_power > 0 && (
+                    Array(scan_power).fill((
+                      <Icon
+                        name="satellite-dish"
+                        size={3} />
+                    ))
+                  ) || (
+                    "No properly configured scanner arrays detected."
+                  )}
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section fill title="Configure Wide Scan">
+              <Stack>
+                <Stack.Item>
+                  <BlockQuote>
+                    Broad spectrum scan looking for anything not matching known start charts.
+                  </BlockQuote>
+                </Stack.Item>
+                <Stack.Item>
+                  Cost estimate: {scan_power > 0 ? formatTime(wide_scan_eta, "short") : "∞ minutes"}
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    mt={2}
+                    content="Scan"
+                    disabled={!can_start_wide_scan}
+                    onClick={() => act("start_wide_scan")} />
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section
+              fill
+              title="Configure Targeted Scans"
+              scrollable
+              buttons={
+                <Button
+                  content="View Experiments"
+                  onClick={() => act("open_experiments")}
+                  icon="tasks" />
+              }>
+              <Stack vertical>
+                {possible_sites.map(site => (
+                  <Stack.Item key={site.ref}>
+                    <Button
+                      content={site.name}
+                      onClick={() => act("select_site", { "site_ref": site.ref })} />
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>);
 };

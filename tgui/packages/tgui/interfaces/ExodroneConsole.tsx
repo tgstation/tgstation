@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Stack, Tooltip } from '../components';
+import { BlockQuote, Box, Button, Dimmer, Divider, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
+import { capitalize } from 'common/string';
 import { map, toKeyedArray } from '../../common/collections';
 import { IconStack } from '../components/Icon';
 import nt_logo from '../assets/bg-nanotrasen.svg';
@@ -41,6 +42,7 @@ type SiteData = {
   name: string,
   ref: string,
   description: string,
+  coordinates: string,
   distance: number,
   band_info: Record<string, number>,
   revealed: boolean,
@@ -102,8 +104,6 @@ type ExodroneConsoleData = {
   all_bands: Record<string, string>
 }
 
-
-
 export const ExodroneConsole = (props, context) => {
   const { data } = useBackend<ExodroneConsoleData>(context);
   const {
@@ -149,22 +149,35 @@ const DroneSelectionSection = (props, context) => {
   } = data;
 
   return (
-    <Section title="Exploration Drone Listing">
+    <Section scrollable fill title="Exploration Drone Listing">
       <Stack vertical>
         {all_drones.map(drone => (
-          <Stack.Item key={drone.ref}>
-            <Section title={drone.name}>
-              <Stack vertical>
-                <Stack.Item>
-                  {drone.description}
+          <>
+            <Stack.Item grow key={drone.ref}>
+              <Stack fill>
+                <Stack.Item basis={10} fontFamily="monospace" fontSize="18px">
+                  {drone.name}
                 </Stack.Item>
                 <Stack.Divider />
-                <Stack.Item>
-                  {drone.controlled ? "Controlled by another console." : <Button onClick={() => act("select_drone", { "drone_ref": drone.ref })}>Assume Control</Button>}
+                <Stack.Item fontFamily="monospace" mt={0.8}>
+                  {drone.description}
+                </Stack.Item>
+                <Stack.Item grow />
+                <Stack.Divider mr={1} />
+                <Stack.Item ml={0}>
+                  {drone.controlled && (
+                    "Controlled by another console."
+                  ) || (
+                    <Button
+                      content="Assume Control"
+                      icon="plug"
+                      onClick={() => act("select_drone", { "drone_ref": drone.ref })} />
+                  )}
                 </Stack.Item>
               </Stack>
-            </Section>
-          </Stack.Item>
+            </Stack.Item>
+            <Stack.Divider />
+          </>
         ))}
       </Stack>
     </Section>);
@@ -184,13 +197,13 @@ const ToolSelectionModal = (props, context) => {
 
   return (
     <Modal>
-      <Stack vertical pr={2}>
+      <Stack fill vertical pr={2}>
         <Stack.Item>
           Select Tool:
         </Stack.Item>
         <Stack.Item>
           <Stack textAlign="center">
-            {Object.keys(all_tools).map(tool_name => (
+            {!!Object.keys(all_tools) && Object.keys(all_tools).map(tool_name => (
               <Stack.Item key={tool_name}>
                 <Button onClick={() => {
                   setChoosingTools(false);
@@ -198,15 +211,20 @@ const ToolSelectionModal = (props, context) => {
                 }} width={6} height={6}>
                   <Stack vertical>
                     <Stack.Item>
-                      {tool_name}
+                      {capitalize(tool_name)}
                     </Stack.Item>
-                    <Stack.Item textAlign="right">
+                    <Stack.Item ml={2.5}>
                       <Icon name={all_tools[tool_name]} size={3} />
                     </Stack.Item>
                   </Stack>
                 </Button>
               </Stack.Item>
-            ))}
+            )) || (
+              <Stack.Item>
+                <Button
+                  content="Back" />
+              </Stack.Item>
+            )}
           </Stack>
         </Stack.Item>
       </Stack>
@@ -224,28 +242,60 @@ const EquipmentBox = (props, context) => {
     switch (cargo.type) {
       case "tool": // Tool icon+Remove button if configurable
         return (
-          <Flex direction="column">
+          <Stack direction="column">
+            <Stack.Item grow>
+              <Button
+                height={4.7}
+                width={4.7}
+                tooltip={capitalize(cargo.name)}
+                tooltipPosition="right"
+                color="transparent">
+                <Icon
+                  color="white"
+                  name={all_tools[cargo.name]}
+                  size={3}
+                  pl={1.5}
+                  pt={2} />
+              </Button>
+            </Stack.Item>
             {!!configurable && (
-              <Flex.Item textAlign="right">
-                <Button onClick={() => act("remove_tool", { tool_type: cargo.name })} color="danger" tooltip="Remove Tool">-</Button>
-              </Flex.Item>)}
-            <Flex.Item grow>
-              <Icon
-                name={all_tools[cargo.name]}
-                size={3}
-                pt={configurable ? 0 : 2} />
-            </Flex.Item>
-          </Flex>);
+              <Stack.Item mt={-9.4} textAlign="right">
+                <Button
+                  onClick={() => act("remove_tool", { tool_type: cargo.name })}
+                  color="danger"
+                  icon="minus"
+                  tooltipPosition="right"
+                  tooltip="Remove Tool" />
+              </Stack.Item>)}
+          </Stack>);
       case "cargo":// Jettison button.
         return (
-          <Flex direction="column">
-            <Flex.Item textAlign="right">
-              <Button onClick={() => act("jettison", { target_ref: cargo.ref })} color="danger" tooltip={`Jettison ${cargo.name}`}>-</Button>
-            </Flex.Item>
-            <Flex.Item>
-              <Icon name="box" size={3} />
-            </Flex.Item>
-          </Flex>);
+          <Stack direction="column">
+            <Stack.Item>
+              <Button
+                mt={0}
+                height={4.7}
+                width={4.7}
+                tooltip={capitalize(cargo.name)}
+                tooltipPosition="right"
+                color="transparent">
+                <Icon
+                  color="white"
+                  name="box"
+                  size={3}
+                  pl={2.2}
+                  pt={2} />
+              </Button>
+            </Stack.Item>
+            <Stack.Item mt={-9.4} textAlign="right">
+              <Button
+                onClick={() => act("jettison", { target_ref: cargo.ref })}
+                color="danger"
+                icon="minus"
+                tooltipPosition="right"
+                tooltip={`Jettison ${cargo.name}`} />
+            </Stack.Item>
+          </Stack>);
       case "empty":
         return "";
     }
@@ -253,8 +303,7 @@ const EquipmentBox = (props, context) => {
   return (<Box width={5} height={5} style={{ border: '2px solid black' }} textAlign="center">{boxContents(cargo)}</Box>);
 };
 
-
-const EquipementGrid = (props, context) => {
+const EquipmentGrid = (props, context) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     cargo,
@@ -265,20 +314,50 @@ const EquipementGrid = (props, context) => {
     setChoosingTools,
   ] = useLocalState(context, 'choosingTools', false);
   return (
-    <Section title="Cargo">
-      <Stack.Item>
-        {!!configurable && (
-          <Button onClick={() => { setChoosingTools(true); }} fluid>
-            Install Tool
-          </Button>)}
+    <Stack vertical fill>
+      <Stack.Item grow>
+        <Section fill title="Controls">
+          <Stack vertical textAlign="center">
+            <Stack.Item >
+              <Button
+                fluid
+                icon="plug"
+                content="Disconnect"
+                onClick={() => act('end_control')} />
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item>
+              <Button.Confirm
+                fluid
+                icon="bomb"
+                content="Self-Destruct"
+                color="bad"
+                onClick={() => act('self_destruct')} />
+            </Stack.Item>
+          </Stack>
+        </Section>
       </Stack.Item>
       <Stack.Item>
-        <Flex wrap="wrap" width={10}>
-          {cargo.map(cargo_element =>
-            (<EquipmentBox key={cargo_element.name} cargo={cargo_element} />))}
-        </Flex>
+        <Section title="Cargo">
+          <Stack.Item>
+            {!!configurable && (
+              <Button
+                fluid
+                color="average"
+                icon="wrench"
+                content="Install Tool"
+                onClick={() => { setChoosingTools(true); }} />
+            )}
+          </Stack.Item>
+          <Stack.Item>
+            <Stack wrap="wrap" width={10}>
+              {cargo.map(cargo_element =>
+                (<EquipmentBox key={cargo_element.name} cargo={cargo_element} />))}
+            </Stack>
+          </Stack.Item>
+        </Section>
       </Stack.Item>
-    </Section>
+    </Stack>
   );
 };
 
@@ -290,18 +369,44 @@ const DroneStatus = (props, context) => {
   } = data;
 
   return (
-    <Stack>
-      <Stack.Item>Integrity:</Stack.Item>
-      <Stack.Item grow><ProgressBar
-        ranges={{
-          good: [0.7 * drone_max_integrity, drone_max_integrity],
-          average: [0.4 * drone_max_integrity, 0.7 * drone_max_integrity],
-          bad: [-Infinity, 0.4 * drone_max_integrity],
-        }}
-        value={drone_integrity}
-        maxValue={drone_max_integrity} />
+    <Stack ml={-40}>
+      <Stack.Item color="label" mt={0.2}>
+        Integrity:
+      </Stack.Item>
+      <Stack.Item grow>
+        <ProgressBar
+          width="200px"
+          ranges={{
+            good: [0.7 * drone_max_integrity, drone_max_integrity],
+            average: [0.4 * drone_max_integrity, 0.7 * drone_max_integrity],
+            bad: [-Infinity, 0.4 * drone_max_integrity],
+          }}
+          value={drone_integrity}
+          maxValue={drone_max_integrity} />
       </Stack.Item>
     </Stack>);
+};
+
+const NoSiteDimmer = () => {
+  return (
+    <Dimmer>
+      <Stack textAlign="center" vertical>
+        <Stack.Item>
+          <Icon
+            color="red"
+            name="map"
+            size={10}
+          />
+        </Stack.Item>
+        <Stack.Item fontSize="18px" color="red">
+          No Destinations.
+        </Stack.Item>
+        <Stack.Item basis={0} color="red">
+          (Use the Scanner Array Console to find new locations.)
+        </Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
 };
 
 const TravelTargetSelectionScreen = (props, context) => {
@@ -313,6 +418,7 @@ const TravelTargetSelectionScreen = (props, context) => {
     can_travel,
     drone_travel_coefficent,
     all_bands,
+    drone_status,
   } = data;
 
   const travel_cost = target_site => {
@@ -323,50 +429,116 @@ const TravelTargetSelectionScreen = (props, context) => {
       return target_site.distance * drone_travel_coefficent;
     }
   };
-
   const [
-    travelScreenShown,
-    setTravelScreenShown,
-  ] = useLocalState(context, 'travelScreenShown', false);
+    choosingTools,
+    setChoosingTools,
+  ] = useLocalState(context, 'choosingTools', false);
+  const [
+    TravelDimmerShown,
+    setTravelDimmerShown,
+  ] = useLocalState(context, 'TravelDimmerShown', false);
 
   const travel_to = ref => {
-    setTravelScreenShown(false);
+    setTravelDimmerShown(false);
     act("start_travel", { "target_site": ref });
   };
 
   return (
-    <Section title="Travel Destinations" fill scrollable buttons={props.showCancelButton ? (<Button onClick={() => setTravelScreenShown(false)}>Cancel</Button>) : ""}>
-      {site && (<Section title="Home" buttons={
-        <Box><Button onClick={() => travel_to(null)} disabled={!can_travel}>Launch!</Button> ETA: {formatTime(site.distance * drone_travel_coefficent, "short")}</Box>
-      } />)}
-      {sites.filter(destination => !site || destination.ref !== site.ref).map(destination => (
-        <Section key={destination.ref} title={destination.name} buttons={
-          <Box><Button onClick={() => travel_to(destination.ref)} disabled={!can_travel}>Launch!</Button> ETA: {formatTime(travel_cost(destination), "short")}</Box>
+    drone_status === "travel" && (
+      <TravelDimmer />
+    ) || (
+      <Section
+        title="Travel Destinations"
+        fill
+        scrollable
+        buttons={
+          <>
+            {props.showCancelButton && (
+              <Button
+                ml={5}
+                mr={0}
+                content="Cancel"
+                onClick={() => setTravelDimmerShown(false)} />
+            )}
+            <Box mt={props.showCancelButton && -3.5}>
+              <DroneStatus />
+            </Box>
+          </>
         }>
-          <LabeledList>
-            <LabeledList.Item label="Description">{destination.description}</LabeledList.Item>
-            <LabeledList.Divider />
-            {Object.keys(all_bands).filter(band => (destination.band_info[band] !== undefined && destination.band_info[band] !== 0)).map(band => (<LabeledList.Item key={band} label={band}>{destination.band_info[band]}</LabeledList.Item>))}
-          </LabeledList>
-        </Section>
-      ))}
-    </Section>
+        {((sites && !sites.length) && !choosingTools) && (
+          <NoSiteDimmer />
+        )}
+        {site && (
+          <Section
+            mt={1}
+            title="Home"
+            buttons={
+              <Box>
+                <Button
+                  mr={1}
+                  content="Launch!"
+                  onClick={() => travel_to(null)}
+                  disabled={!can_travel} />
+                ETA: {formatTime(site.distance * drone_travel_coefficent, "short")}
+              </Box>
+            }
+          />
+        )}
+        {sites.filter(destination => !site || destination.ref !== site.ref).map(destination => (
+          <Section
+            key={destination.ref}
+            title={destination.name}
+            buttons={
+              <>
+                <Button
+                  mr={1}
+                  content="Launch!"
+                  onClick={() => travel_to(destination.ref)}
+                  disabled={!can_travel} />
+                ETA: {formatTime(travel_cost(destination), "short")}
+              </>
+            }>
+            <LabeledList>
+              <LabeledList.Item label="Location">
+                {destination.coordinates}
+              </LabeledList.Item>
+              <LabeledList.Item label="Description">
+                {destination.description}
+              </LabeledList.Item>
+              <LabeledList.Divider />
+              {Object.keys(all_bands).filter(band => (destination.band_info[band] !== undefined && destination.band_info[band] !== 0)).map(band => (<LabeledList.Item key={band} label={band}>{destination.band_info[band]}</LabeledList.Item>))}
+            </LabeledList>
+          </Section>
+        ))}
+      </Section>
+    )
   );
 };
 
-const TravelScreen = (props, context) => {
+const TravelDimmer = (props, context) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     travel_time,
     travel_time_left,
   } = data;
   return (
-    <Section fill title="Travel">
-      <Stack vertical fill textAlign="center" justify="center">
-        <Stack.Item>Traveling</Stack.Item>
-        <Stack.Item>ETA: {formatTime(travel_time_left)}</Stack.Item>
-      </Stack>
-    </Section>);
+    <Section fill>
+      <Dimmer>
+        <Stack textAlign="center" vertical>
+          <Stack.Item>
+            <Icon
+              color="yellow"
+              name="route"
+              size={10}
+            />
+          </Stack.Item>
+          <Stack.Item fontSize="18px" color="yellow">
+            Travel Time: {formatTime(travel_time_left)}
+          </Stack.Item>
+        </Stack>
+      </Dimmer>
+    </Section>
+  );
 };
 
 const TimeoutScreen = (props, context) => {
@@ -376,12 +548,23 @@ const TimeoutScreen = (props, context) => {
     wait_message,
   } = data;
   return (
-    <Section fill title="Exploration">
-      <Stack vertical fill justify="center" textAlign="center">
-        <Stack.Item>{wait_message}</Stack.Item>
-        <Stack.Item>ETA: {formatTime(wait_time_left)}</Stack.Item>
-      </Stack>
-    </Section>);
+    <Section fill>
+      <Dimmer>
+        <Stack textAlign="center" vertical>
+          <Stack.Item>
+            <Icon
+              color="green"
+              name="cog"
+              size={10}
+            />
+          </Stack.Item>
+          <Stack.Item fontSize="18px" color="green">
+            {wait_message} ({formatTime(wait_time_left)})
+          </Stack.Item>
+        </Stack>
+      </Dimmer>
+    </Section>
+  );
 };
 
 const ExplorationScreen = (props, context) => {
@@ -393,31 +576,46 @@ const ExplorationScreen = (props, context) => {
   } = data;
 
   const [
-    travelScreenShown,
-    setTravelScreenShown,
-  ] = useLocalState(context, 'travelScreenShown', false);
+    TravelDimmerShown,
+    setTravelDimmerShown,
+  ] = useLocalState(context, 'TravelDimmerShown', false);
 
-  if (travelScreenShown)
+  if (TravelDimmerShown)
   { return (<TravelTargetSelectionScreen showCancelButton />); }
   // List of repeatables, Explore button. Last found event popup and continue exploring. Return home button.
   return (
-    <Section fill title="Exploration">
+    <Section
+      fill
+      title="Exploration"
+      buttons={
+        <DroneStatus />
+      }>
       <Stack vertical fill>
-        <Stack.Item>
+        <Stack.Item grow>
           <LabeledList>
             <LabeledList.Item label="Site">{site.name}</LabeledList.Item>
+            <LabeledList.Item label="Location">{site.coordinates}</LabeledList.Item>
             <LabeledList.Item label="Description">{site.description}</LabeledList.Item>
           </LabeledList>
         </Stack.Item>
-        <Stack.Item>
-          <Button onClick={() => act("explore")}>Explore!</Button>
+        <Stack.Item align="center" grow>
+          <Button
+            content="Explore!"
+            onClick={() => act("explore")} />
         </Stack.Item>
         {site.events.map(e => (
-          <Stack.Item key={site.ref}>
-            <Button onClick={() => act("explore_event", { target_event: e.ref })}>{e.name}</Button>
+          <Stack.Item
+            align="center"
+            key={site.ref}
+            grow>
+            <Button
+              content={capitalize(e.name)}
+              onClick={() => act("explore_event", { target_event: e.ref })} />
           </Stack.Item>))}
-        <Stack.Item>
-          <Button onClick={() => setTravelScreenShown(true)}>Travel</Button>
+        <Stack.Item align="center" grow>
+          <Button
+            content="Travel"
+            onClick={() => setTravelDimmerShown(true)} />
         </Stack.Item>
       </Stack>
     </Section>);
@@ -426,29 +624,56 @@ const ExplorationScreen = (props, context) => {
 const EventScreen = (props, context) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
+    drone_status,
     event,
   } = data;
   return (
-    <Section fill title="Exploration">
+    <Section
+      fill
+      title="Exploration"
+      buttons={
+        <DroneStatus />
+      }>
+      {(drone_status && drone_status === "busy") && (
+        <TimeoutScreen />
+      )}
       <Stack vertical fill textAlign="center">
         <Stack.Item>
-          <img src={resolveAsset(event.image)}
-            height="100px"
-            width="200px"
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-            }} />
-        </Stack.Item>
-        <Stack.Item>
-          <BlockQuote style={{ "white-space": "pre-wrap" }}>{event.description}</BlockQuote>
+          <Stack fill>
+            <Stack.Item>
+              <img src={resolveAsset(event.image)}
+                height="125px"
+                width="250px"
+                style={{
+                  '-ms-interpolation-mode': 'nearest-neighbor',
+                }} />
+            </Stack.Item>
+            <Stack.Item >
+              <BlockQuote
+                style={{ "white-space": "pre-wrap" }}>
+                {event.description}
+              </BlockQuote>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item>
-          <Stack vertical>
-            <Stack.Item>
-              <Button disabled={!event.action_enabled} onClick={() => act("start_event")}>{event.action_text}</Button>
+        <Stack.Item grow>
+          <Stack vertical fill >
+            <Stack.Item grow />
+            <Stack.Item grow>
+              <Button
+                content={event.action_text}
+                disabled={!event.action_enabled}
+                onClick={() => act("start_event")} />
             </Stack.Item>
-            {!!event.skippable && (<Stack.Item><Button onClick={() => act("skip_event")}>{event.ignore_text}</Button></Stack.Item>)}
+            {!!event.skippable && (
+              <Stack.Item mt={2}>
+                <Button
+                  content={event.ignore_text}
+                  onClick={() => act("skip_event")} />
+              </Stack.Item>
+            )}
+            <Stack.Item grow />
           </Stack>
         </Stack.Item>
       </Stack>
@@ -461,29 +686,36 @@ const AdventureScreen = (props, context) => {
     adventure_data,
   } = data;
   return (
-    <Section fill title="Exploration">
-      <Stack vertical fill textAlign="center">
+    <Section
+      fill
+      title="Exploration"
+      buttons={<DroneStatus />}>
+      <Stack>
         <Stack.Item>
-          <img src={adventure_data.raw_image ? adventure_data.raw_image : resolveAsset(adventure_data.image)}
+          <BlockQuote style={{ "white-space": "pre-wrap" }}>{adventure_data.description}</BlockQuote>
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <img
+            src={adventure_data.raw_image ? adventure_data.raw_image : resolveAsset(adventure_data.image)}
             height="100px"
             width="200px"
             style={{
               '-ms-interpolation-mode': 'nearest-neighbor',
             }} />
-        </Stack.Item>
-        <Stack.Item>
-          <BlockQuote style={{ "white-space": "pre-wrap" }}>{adventure_data.description}</BlockQuote>
-        </Stack.Item>
-        <Stack.Item>
           <Stack vertical>
             <Stack.Divider />
+            <Stack.Item grow />
             {!!adventure_data.choices && adventure_data.choices.map(choice => (
-              <Stack.Item key={choice.key}><Button
-                content={choice.text}
-                textAlign="center"
-                onClick={() => act('adventure_choice', { choice: choice.key })}
-              />
-              </Stack.Item>))}
+              <Stack.Item key={choice.key}>
+                <Button
+                  fluid
+                  content={choice.text}
+                  textAlign="center"
+                  onClick={() => act('adventure_choice', { choice: choice.key })} />
+              </Stack.Item>
+            ))}
+            <Stack.Item grow />
           </Stack>
         </Stack.Item>
       </Stack>
@@ -497,10 +729,11 @@ const DroneScreen = (props, context) => {
     event,
   } = data;
   switch (drone_status) {
+    case "busy":
+      return (<TimeoutScreen />);
     case "idle":
-      return (<TravelTargetSelectionScreen />);
     case "travel":
-      return (<TravelScreen />);
+      return (<TravelTargetSelectionScreen />);
     case "adventure":
       return (<AdventureScreen />);
     case "exploration":
@@ -508,8 +741,6 @@ const DroneScreen = (props, context) => {
       { return (<EventScreen />); }
       else
       { return (<ExplorationScreen />); }
-    case "busy":
-      return (<TimeoutScreen />);
   }
 };
 
@@ -526,33 +757,12 @@ const ExodroneConsoleContent = (props, context) => {
 
   return (
     <Stack fill vertical>
-      <Stack.Item>
-        <Section fill title={`${drone_name} Feed`} buttons={
-          <Stack>
-            <Stack.Item>
-              <Button.Confirm
-                icon="bomb"
-                content="Self-Destruct"
-                color="bad"
-                onClick={() => act('self_destruct')} />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="plug"
-                content="Disconnect"
-                onClick={() => act('end_control')} />
-            </Stack.Item>
-          </Stack>
-        }>
-          <DroneStatus />
-        </Section>
-      </Stack.Item>
       <Stack.Item grow>
         <Stack vertical fill grow={2}>
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item>
-                <EquipementGrid />
+                <EquipmentGrid />
               </Stack.Item>
               <Stack.Item grow basis={0}>
                 <DroneScreen />
@@ -561,7 +771,7 @@ const ExodroneConsoleContent = (props, context) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item grow={1}>
+      <Stack.Item height={10}>
         <Section title="Drone Log" fill scrollable>
           <LabeledList>
             {drone_log.map((log_line, ix) => (

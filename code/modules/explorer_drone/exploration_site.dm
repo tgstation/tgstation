@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	var/datum/exploration_event/adventure = generate_adventure(site_traits)
 	if(adventure)
 		add_event(adventure)
-	/// Fill other sites
+	/// Fill other events
 	for(var/i in 1 to rand(1,3))
 		var/datum/exploration_event/event = generate_event(site_traits)
 		if(event)
@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	revealed = TRUE
 
 /datum/exploration_site/proc/display_name()
-	return revealed ? "[name] at [coordinates]" : "Anomaly at [coordinates]"
+	return revealed ? "[name]" : "Anomaly"
 
 /datum/exploration_site/proc/display_description()
 	if(!revealed)
@@ -147,6 +147,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	. = list()
 	.["ref"] = ref(src)
 	.["name"] = display_name()
+	.["coordinates"] = coordinates
 	.["description"] = display_description()
 	.["distance"] = distance
 	.["revealed"] = revealed

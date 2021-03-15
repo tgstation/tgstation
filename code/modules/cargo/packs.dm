@@ -2457,6 +2457,13 @@
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/exploration_drone
+	name = "Exploration Drone"
+	desc = "A replacement long-range exploration drone."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/exodrone)
+	crate_name = "exodrone crate"
+
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
 	desc = "High stacks of papers on your desk Are a big problem - make it Pea-sized with these bureaucratic supplies! Contains six pens, some camera film, hand labeler supplies, a paper bin, a carbon paper bin, three folders, a laser pointer, two clipboards and two stamps."//that was too forced

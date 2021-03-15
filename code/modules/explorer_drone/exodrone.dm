@@ -30,10 +30,11 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	icon_state = "drone"
 	w_class = WEIGHT_CLASS_BULKY
 
+	/// Current drone status
 	var/drone_status = EXODRONE_IDLE
 	/// Are we currently controlled by remote terminal
 	var/controlled = FALSE
-	/// Site we're currently at or traveling from, null means station.
+	/// Site we're currently at, null means station.
 	var/datum/exploration_site/location
 	/// Site we're currently travelling to, null means going back to station - check drone status if you want to check if traveling or idle
 	var/datum/exploration_site/travel_target
@@ -57,12 +58,12 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	/// Log of recent events
 	var/list/drone_log = list()
 
-	/// List of tools
+	/// List of tools, EXODRONE_TOOL_WELDER etc
 	var/list/tools = list()
 
 	// Cost per 1 distance in deciseconds
 	var/travel_cost_coeff = BASIC_FUEL_TIME_COST
-	/// Name counter
+	/// Repeated drone name counter
 	var/static/name_counter = list()
 
 /obj/item/exodrone/Initialize()
@@ -104,6 +105,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	var/obj/machinery/exodrone_launcher/pad = locate() in loc
 	return pad && pad.fuel_canister != null
 
+/// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)
 	if(!location) //We're launching from station, fuel up
 		var/obj/machinery/exodrone_launcher/pad = locate() in loc
@@ -111,13 +113,39 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 		last_pad = WEAKREF(pad)
 		drone_log("Launched from [pad.name] and set course for [target_site.display_name()]")
 	else
-		drone_log("Launched from [location.display_name()] and set course for [target_site.display_name()]")
-	start_travel(target_site)
+		drone_log("Launched from [location.display_name()] and set course for [target_site ? target_site.display_name() : station_name()]")
+	set_status(EXODRONE_TRAVEL)
+	moveToNullspace()
+	var/distance_to_travel = target_site ? target_site.distance : location.distance //If we're going home distance is distance of our current location
+	if(location && target_site) //Traveling site to site is faster (don't think too hard on 3d space logistics here)
+		distance_to_travel = max(abs(target_site.distance - location.distance),1)
+	travel_target = target_site
+	travel_time = travel_cost_coeff*distance_to_travel
+	travel_timer_id = addtimer(CALLBACK(src,.proc/finish_travel),travel_time,TIMER_STOPPABLE)
+
+/// Travel cleanup
+/obj/item/exodrone/proc/finish_travel()
+	location = travel_target
+	travel_timer_id = null
+	travel_time = null
+	if(location)//We're arriving at exploration site
+		location.on_drone_arrival(src)
+		set_status(EXODRONE_EXPLORATION)
+	else
+		var/obj/machinery/exodrone_launcher = find_unused_pad()
+		if(exodrone_launcher)
+			forceMove(get_turf(exodrone_launcher))
+			drone_log("Arrived at [station_name()]. Landing at [exodrone_launcher].")
+		else
+			var/turf/drop_zone = drop_somewhere_on_station()
+			drone_log("Arrived at [station_name()]. Emergency landing at [drop_zone.loc.name].")
+		set_status(EXODRONE_IDLE)
 
 /obj/item/exodrone/proc/set_status(new_status)
 	SEND_SIGNAL(src,COMSIG_EXODRONE_STATUS_CHANGED)
 	drone_status = new_status
 
+/// Cargo space left
 /obj/item/exodrone/proc/space_left()
 	return EXODRONE_CARGO_SLOTS - length(contents) - length(tools)
 
@@ -130,6 +158,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	tools -= tool_type
 	update_storage_size()
 
+/// Resizes storage component depending on slots used by tools.
 /obj/item/exodrone/proc/update_storage_size()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage/concrete)
 	storage.max_items = EXODRONE_CARGO_SLOTS - length(tools)
@@ -143,7 +172,7 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	for(var/_ in 1 to space_left())
 		. += list(list("type"="empty","name"="Free space"))
 
-/// Tries to add loot to drone cargo respecting space left
+/// Tries to add loot to drone cargo while respecting space left
 /obj/item/exodrone/proc/try_transfer(obj/loot, delete_on_failure=TRUE)
 	if(space_left() > 1)
 		loot.forceMove(src)
@@ -153,40 +182,10 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 		if(delete_on_failure)
 			qdel(loot)
 
-/obj/item/exodrone/proc/get_possible_tools()
-	return list(null,EXODRONE_TOOL_WELDER,EXODRONE_TOOL_LASER,EXODRONE_TOOL_TRANSLATOR,EXODRONE_TOOL_DRILL,EXODRONE_TOOL_MULTITOOL)
-
-/// Starts travel mode for the given target
-/obj/item/exodrone/proc/start_travel(datum/exploration_site/target_site)
-	set_status(EXODRONE_TRAVEL)
-	moveToNullspace()
-	var/distance_to_travel = target_site ? target_site.distance : location.distance //If we're going home distance is distance of our current location
-	if(location && target_site) //Traveling site to site is faster (don't think too hard on 3d space logistics here)
-		distance_to_travel = max(abs(target_site.distance - location.distance),1)
-	travel_target = target_site
-	travel_time = travel_cost_coeff*distance_to_travel
-	travel_timer_id = addtimer(CALLBACK(src,.proc/finish_travel),travel_time,TIMER_STOPPABLE)
-
-/obj/item/exodrone/proc/finish_travel()
-	location = travel_target
-	travel_timer_id = null
-	travel_time = null
-	if(location)//We're arriving at exploration site
-		location.on_drone_arrival(src)
-		set_status(EXODRONE_EXPLORATION)
-	else
-		var/obj/machinery/exodrone_launcher = find_unused_pad()
-		if(exodrone_launcher)
-			forceMove(get_turf(exodrone_launcher))
-			drone_log("Arrived at [station_name()]. Landing at [exodrone_launcher]")
-		else
-			var/turf/drop_zone = drop_somewhere_on_station()
-			drone_log("Arrived at [station_name()]. Emergency landing at [drop_zone.loc.name]")
-		set_status(EXODRONE_IDLE)
-
 /obj/item/exodrone/proc/drop_somewhere_on_station()
 	var/turf/random_spot = get_safe_random_station_turf()
 	var/obj/structure/closet/supplypod/pod = new
+	pod.bluespace = TRUE
 	new /obj/effect/pod_landingzone(random_spot, pod, src)
 	return random_spot
 
@@ -287,10 +286,6 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	/// We're home and on ready pad or exploring and out of any events/adventures
 	return (drone_status == EXODRONE_IDLE && ready_to_launch()) || (drone_status == EXODRONE_EXPLORATION && current_event_ui_data == null)
 
-/obj/item/exodrone/proc/go_home()
-	start_travel(null)
-	drone_log("Caculated and executed course for [station_name()].")
-
 /// Deal damage in adventures/events
 /obj/item/exodrone/proc/damage(amount)
 	take_damage(amount)
@@ -310,9 +305,6 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 	icon_state = "launcher"
 
 	var/obj/item/fuel_pellet/fuel_canister
-
-	///Our turf, drones entering it will use our fuel type
-	var/turf/tracked_turf
 
 /obj/machinery/exodrone_launcher/Initialize()
 	. = ..()
@@ -386,15 +378,6 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 		else
 			return travel_cost_coeff
 
-/*
-	TODO crystalizer recipes for these, suggessted:
-	o2/plasma = basic
-	trit/h2 = medium
-	hypernob/stim = advanced
-	stim/helium = exotic
-	hypernob/antinob = ultimate
-*/
-
 /obj/item/fuel_pellet
 	name = "standard fuel pellet"
 	desc = "compressed fuel pellet for long-distance flight"
@@ -415,10 +398,3 @@ GLOBAL_LIST_INIT(all_exodrone_tools,list(
 /obj/item/fuel_pellet/exotic
 	fuel_type = FUEL_EXOTIC
 	icon_state = "fuel_exotic"
-
-/datum/supply_pack/misc/exploration_drone
-	name = "Exploration Drone"
-	desc = "A replacement long-range exploration drone."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/exodrone)
-	crate_name = "exodrone crate"
