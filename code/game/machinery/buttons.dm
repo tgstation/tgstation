@@ -50,13 +50,12 @@
 		icon_state = "[skin]-p"
 	else
 		icon_state = skin
+		SSvis_overlays.add_vis_overlay(src, icon, "[skin]-light-mask", 0, EMISSIVE_PLANE, dir, alpha)
 
 /obj/machinery/button/update_overlays()
 	. = ..()
 	if(!panel_open)
 		return
-	if(device)
-		. += "button-device"
 	if(board)
 		. += "button-board"
 
@@ -172,13 +171,12 @@
 		return
 
 	use_power(5)
-	icon_state = "[skin]1"
+	flick("[icon_state]1", src)
 
 	if(device)
 		device.pulsed()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 15)
 
 /obj/machinery/button/door
 	name = "door button"
