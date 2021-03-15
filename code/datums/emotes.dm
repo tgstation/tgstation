@@ -25,6 +25,7 @@
 	var/vary = FALSE //used for the honk borg emote
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 	var/cooldown = 0.8 SECONDS
+	var/audio_cooldown = 0.8 SECONDS
 
 /datum/emote/New()
 	if (ispath(mob_type_allowed_typecache))
@@ -39,6 +40,16 @@
 		mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
+	
+/datum/emote/proc/check_audio_cooldown(mob/user, intentional)
+	if(!intentional)
+		return TRUE
+	if(user.emotes_used && user.emotes_used[src] + audio_cooldown > world.time)
+		return FALSE
+	if(!user.emotes_used)
+		user.emotes_used = list() //add it to the same area as the rest of the emotes, they did emote after all.
+	user.emotes_used[src] = world.time
+	return TRUE
 
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
 	. = TRUE
@@ -62,7 +73,7 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional))
+	if(tmp_sound && (!only_forced_audio || !intentional) && user.check_audio_cooldown(user, intentional))
 		playsound(user, tmp_sound, 50, vary)
 
 	for(var/mob/M in GLOB.dead_mob_list)
