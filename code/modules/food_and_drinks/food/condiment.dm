@@ -201,9 +201,9 @@
 	var/datum/chemical_reaction/recipe_cakebatter = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
 	var/dough_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
 	var/dough_water_required = recipe_dough.required_reagents[/datum/reagent/water]
-	var/cakebatter_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
-	var/cakebatter_eggyolk_required = recipe_dough.required_reagents[/datum/reagent/consumable/eggyolk]
-	var/cakebatter_sugar_required = recipe_dough.required_reagents[/datum/reagent/consumable/sugar]
+	var/cakebatter_flour_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/flour]
+	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
 	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
 	. += "<span class='notice'>[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.</span>"
 	. += "<span class='notice'>[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
