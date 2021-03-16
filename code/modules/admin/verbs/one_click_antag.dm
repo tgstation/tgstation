@@ -473,7 +473,7 @@
 	if(teamsize <= 0)
 		return FALSE
 
-	candidates = pollGhostCandidates("Do you wish to be considered for a non emergency response drone?", "Drone")
+	candidates = pollGhostCandidates("Do you wish to be considered for a nanotrasen emergency response drone?", "Drone")
 
 	if(length(candidates) == 0
 		return FALSE
@@ -483,7 +483,7 @@
 		candidates -= chosen_candidate
 		nerd = new /mob/living/simple_animal/drone(spawnpoint)
 		nerd.key = chosen_candidate.key
-		log_game("[key_name(nerd)] has been selected as a non emergency response drone")
+		log_game("[key_name(nerd)] has been selected as a nanotrasen emergency response drone")
 		teamsize--
 
 	return TRUE
