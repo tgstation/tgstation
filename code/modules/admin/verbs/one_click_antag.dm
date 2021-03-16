@@ -475,7 +475,7 @@
 
 	candidates = pollGhostCandidates("Do you wish to be considered for a nanotrasen emergency response drone?", "Drone")
 
-	if(length(candidates) == 0
+	if(length(candidates) == 0)
 		return FALSE
 
 	while(length(candidates) && teamsize)
