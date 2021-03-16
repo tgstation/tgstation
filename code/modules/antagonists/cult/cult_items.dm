@@ -423,6 +423,10 @@
 	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize()
+	. = ..()
+	AddComponent(/datum/component/shielded, last_hit_recharge_delay = 0) // these charges don't regenerate
+
 /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 	name = "empowered cultist helmet"
 	desc = "Empowered helmet which creates a powerful shield around the user."
