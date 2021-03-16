@@ -66,9 +66,7 @@ const yarn = args => {
 
 /// Installs all tgui dependencies
 const taskYarn = new Task('yarn')
-  .build(async () => {
-    await yarn(['install']);
-  });
+  .build(() => yarn(['install']));
 
 /// Builds svg fonts
 const taskTgfont = new Task('tgfont')
