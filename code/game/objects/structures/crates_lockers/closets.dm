@@ -442,6 +442,7 @@
 			to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
 
 /obj/structure/closet/proc/bust_open()
+	SIGNAL_HANDLER
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
