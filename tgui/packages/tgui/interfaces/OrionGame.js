@@ -117,6 +117,7 @@ const AdventureStatus = (props, context) => {
             textAlign="center"
             icon="skull"
             content="RANDOM KILL"
+            disabled={eventname}
             onClick={() => act('random_kill')} />
         )
       )} >

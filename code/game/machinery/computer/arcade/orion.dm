@@ -4,6 +4,15 @@
 
 //defines in machines.dm
 
+///assoc list, [datum singleton] = weight
+GLOBAL_LIST_INIT(orion_events, generate_orion_events())
+
+/proc/generate_orion_events()
+	. = list()
+	for(var/path in subtypesof(/datum/orion_event))
+		var/datum/orion_event/new_event = new path(src)
+		.[new_event] = new_event.weight
+
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -21,24 +30,7 @@
 	var/reason
 	var/list/settlers = list("Harry","Larry","Bob")
 	var/list/settlermoods = list()
-	//list of paths, turns into list of singletons after init
-	var/list/events = list(
-		/datum/orion_event/engine_part,
-		/datum/orion_event/electronic_part,
-		/datum/orion_event/hull_part,
-		/datum/orion_event/old_ship,
-		/datum/orion_event/exploring_derelict,
-		/datum/orion_event/raiders,
-		/datum/orion_event/illness,
-		/datum/orion_event/flux,
-		/datum/orion_event/black_hole,
-		/datum/orion_event/black_hole_death,
-		/datum/orion_event/changeling_infiltration,
-		/datum/orion_event/changeling_attack,
-		/datum/orion_event/space_port,
-		/datum/orion_event/space_port/tau_ceti,
-		/datum/orion_event/space_port_raid,
-	)
+	var/list/events
 	//actual amount of lings on board
 	var/lings_aboard = 0
 	//if the game should pretend there are lings on board.
@@ -50,21 +42,18 @@
 	var/list/gamers = list()
 	var/killed_crew = 0
 
-
 /obj/machinery/computer/arcade/orion_trail/Initialize()
 	. = ..()
 	radio = new /obj/item/radio(src)
 	radio.listening = 0
-	for(var/path in events)
-		var/datum/orion_event/new_event = new path(src)
-		events[new_event] = new_event.weight
-		popleft(events) //remove the old path
+	setup_events()
+
+/obj/machinery/computer/arcade/orion_trail/proc/setup_events()
+	events = GLOB.orion_events
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
 	QDEL_NULL(radio)
-	for(var/datum/orion_event/dat_to_del as anything in events)
-		dat_to_del.game = null
-		qdel(dat_to_del)
+	events = null
 	return ..()
 
 /obj/machinery/computer/arcade/orion_trail/kobayashi
@@ -72,9 +61,28 @@
 	desc = "A test for cadets."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
+	//kobatashi has a smaller list of events, so we copy from the global list and cut whatever isn't here
+	var/list/event_whitelist = list(
+	/datum/orion_event/raiders,
+	/datum/orion_event/flux,
+	/datum/orion_event/illness,
+	/datum/orion_event/engine_part,
+	/datum/orion_event/electronic_part,
+	/datum/orion_event/hull_part,
+	/datum/orion_event/space_port,
+	/datum/orion_event/space_port/tau_ceti,
+	/datum/orion_event/space_port_raid,
+	/datum/orion_event/black_hole,
+	/datum/orion_event/black_hole_death,
+	)
 	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
 	settlers = list("Kirk","Worf","Gene")
+
+/obj/machinery/computer/arcade/orion_trail/kobayashi/setup_events()
+	events = GLOB.orion_events.Copy()
+	for(var/datum/orion_event/event as anything in events)
+		if(!(event.type in event_whitelist))
+			events.Remove(event)
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
@@ -202,7 +210,7 @@
 	var/xp_gained = 0
 
 	if(event)
-		event.response(action)
+		event.response(src, action)
 		if(!settlers.len || food <= 0 || fuel <= 0)
 			set_game_over(gamer)
 			return
@@ -324,9 +332,9 @@
 				break
 	if(!event)
 		CRASH("Woah, hey! we could not find the specified event \"[path]\"! Add it to the events list, numb nuts!")
-	event.on_select(gamer_skill, gamer_skill_level, gamer_skill_rands)
+	event.on_select(src, gamer_skill, gamer_skill_level, gamer_skill_rands)
 	if(obj_flags & EMAGGED)
-		event.emag_effect(gamer)
+		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
 	gameStatus = ORION_STATUS_GAMEOVER
@@ -440,20 +448,19 @@
 	settlermoods.Cut()
 	for(var/i in 1 to settlers.len)
 		var/food_mood = food >= 15
-		var/supply_mood = -1
+		var/supply_mood = -2
 		if(hull)
 			supply_mood++
 		if(electronics)
 			supply_mood++
 		if(engine)
 			supply_mood++
-		supply_mood = min(supply_mood, 1) //they expect multiple things stocked
 		var/changing_mood = 0
 		if(prob(60)) //sometimes they just feel better or worse
 			changing_mood = rand(-1,1)
 		settlermoods[settlers[i]] += max(settlers.len + food_mood + supply_mood + changing_mood, 1)
 		if(lings_suspected) //lings ruin any good mood
-			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 4)
+			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	gameStatus = ORION_STATUS_START
@@ -465,8 +472,8 @@
 	else
 		prizevend(user)
 	obj_flags &= ~EMAGGED
-	name = "The Orion Trail"
-	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+	name = initial(name)
+	desc = initial(desc)
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
