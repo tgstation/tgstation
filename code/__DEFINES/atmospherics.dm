@@ -544,3 +544,11 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 #define EUPHORIA_INACTIVE 0
 #define EUPHORIA_ACTIVE 1
 #define EUPHORIA_LAST_FLAG 2
+
+// Ventcrawling bitflags, handled in var/vent_movement
+///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
+#define VENTCRAWL_ALLOWED	(1<<0)
+///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
+#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
+///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
+#define VENTCRAWL_CAN_SEE	(1<<2)

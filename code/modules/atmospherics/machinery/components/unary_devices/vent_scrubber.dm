@@ -28,6 +28,7 @@
 	var/radio_filter_in
 
 	pipe_state = "scrubber"
+	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	if(!id_tag)
@@ -294,9 +295,6 @@
 	. = ..()
 	if(welded)
 		. += "It seems welded shut."
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
-	return !welded
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user, list/modifiers)
 	if(!welded || !(do_after(user, 20, target = src)))
