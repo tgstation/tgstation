@@ -5,10 +5,18 @@
 	req_access = ACCESS_KITCHEN
 	min_time_between_visitor = 80 SECONDS
 	max_time_between_visitor = 100 SECONDS
-
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/moth = 1,
+	)
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering
+	var/obj/item/object_to_order = customer_data.get_order(src)
 
 	. = object_to_order
 
@@ -66,6 +74,14 @@
 	req_access = ACCESS_BAR
 	min_time_between_visitor = 40 SECONDS
 	max_time_between_visitor = 60 SECONDS
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])
@@ -102,11 +118,10 @@
 	for(var/datum/reagent/reagent as anything in order_item.reagents.reagent_list)
 		if(reagent.type != ordered_reagent_type)
 			continue
-		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
-	total_income += ordered_reagent_type.glass_price
 	customers_served += 1
 	order_item.reagents.clear_reagents()
 

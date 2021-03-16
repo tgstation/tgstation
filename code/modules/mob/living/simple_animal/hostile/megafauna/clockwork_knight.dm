@@ -7,7 +7,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 */
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender
-	name = "the clockwork defender"
+	name = "clockwork defender"
 	desc = "A traitorous clockwork knight who lived on, despite its creators destruction."
 	health = 300
 	maxHealth = 300

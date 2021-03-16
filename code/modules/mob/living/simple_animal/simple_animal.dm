@@ -278,11 +278,6 @@
 			set_stat(CONSCIOUS)
 	med_hud_set_status()
 
-/mob/living/simple_animal/handle_status_effects(delta_time, times_fired)
-	..()
-	if(stuttering)
-		stuttering = 0
-
 /**
  * Updates the simple mob's stamina loss.
  *

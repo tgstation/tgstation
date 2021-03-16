@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Admins lacking +BUILDMODE privs can no longer launch buildmode from the supplypod panel"
