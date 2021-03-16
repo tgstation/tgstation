@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - code_imp: "rsf can now have a custom icon, no longer deletes stacks instantly"
