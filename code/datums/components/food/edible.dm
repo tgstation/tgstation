@@ -140,7 +140,7 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 
 	if(microwaved_type)
-		examine_list += "[parent] could be <b>microwaved</b> into [microwaved_type]!"
+		examine_list += "[parent] could be <b>microwaved</b> into [initial(microwaved_type.name)]!"
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch (bitecount)

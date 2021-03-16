@@ -227,3 +227,46 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
+
+/proc/tool_behaviour_name(tool_behaviour)
+	switch(tool_behaviour)
+		if(TOOL_CROWBAR)
+			return "a crowbar"
+		if(TOOL_MULTITOOL)
+			return "a multitool"
+		if(TOOL_SCREWDRIVER)
+			return "a screwdriver"
+		if(TOOL_WIRECUTTER)
+			return "a pair of wirecutters"
+		if(TOOL_WRENCH)
+			return "a wrench"
+		if(TOOL_WELDER)
+			return "a welder"
+		if(TOOL_ANALYZER)
+			return "an analyzer tool"
+		if(TOOL_MINING)
+			return "a mining implement"
+		if(TOOL_SHOVEL)
+			return "a digging tool"
+		if(TOOL_RETRACTOR)
+			return "a retractor"
+		if(TOOL_HEMOSTAT)
+			return "something to clamp bleeding"
+		if(TOOL_CAUTERY)
+			return "a cautery"
+		if(TOOL_DRILL)
+			return "a drilling tool"
+		if(TOOL_SCALPEL)
+			return "a fine cutting tool"
+		if(TOOL_SAW)
+			return "a saw"
+		if(TOOL_BONESET)
+			return "a bone setter"
+		if(TOOL_KNIFE)
+			return "a cutting tool"
+		if(TOOL_BLOODFILTER)
+			return "a blood filter"
+		if(TOOL_ROLLINGPIN)
+			return "a rolling pin"
+		else
+			return "uuuh... something? you should tell people why you can't figure out why the fuck you can't think of the tool needed for this task"

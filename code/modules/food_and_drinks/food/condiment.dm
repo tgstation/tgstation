@@ -179,8 +179,11 @@
 
 /obj/item/reagent_containers/food/condiment/milk/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>40 Milk, 5 Enzyme and you got cheese.</span>"
-	. += "<span class='warning'>Remember, the Enzyme isn't used up, so return it to the bottle, dingus!</span>"
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
+	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
+	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
+	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
 
 /obj/item/reagent_containers/food/condiment/flour
 	name = "flour sack"
@@ -194,9 +197,17 @@
 
 /obj/item/reagent_containers/food/condiment/flour/examine(mob/user)
 	. = ..()
+	var/datum/chemical_reaction/recipe_dough = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/dough]
+	var/datum/chemical_reaction/recipe_cakebatter = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/dough_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
+	var/dough_water_required = recipe_dough.required_reagents[/datum/reagent/water]
+	var/cakebatter_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
+	var/cakebatter_eggyolk_required = recipe_dough.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/cakebatter_sugar_required = recipe_dough.required_reagents[/datum/reagent/consumable/sugar]
+	var/enzyme_required = recipe.required_reagents[/datum/reagent/consumable/enzyme]
 	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
-	. += "<span class='notice'>15 Flour, 10 Water makes normal dough. You can make flat dough from it.</span>"
-	. += "<span class='notice'>15 Flour, 15 Egg Yolk (Or soy milk), 5 sugar makes cake dough. You can make pie dough from it.</span>"
+	. += "<span class='notice'>[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.</span>"
+	. += "<span class='notice'>[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg Yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/soymilk
 	name = "soy milk"
