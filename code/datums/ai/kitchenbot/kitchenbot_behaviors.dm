@@ -40,37 +40,17 @@
 
 //GRIDDLING
 
-/datum/ai_behavior/find_and_set/find_griddle
-	locate_path = /obj/machinery/griddle
-	bb_key_to_set = BB_KITCHENBOT_CHOSEN_GRIDDLE
-
-/datum/ai_behavior/find_and_set/find_griddle/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
-	if(succeeded)
-		var/BB_text = controller.blackboard[BB_KITCHENBOT_TASK_TEXT]
-		var/BB_sound = controller.blackboard[BB_KITCHENBOT_TASK_SOUND]
-		controller.pawn.audible_message("<span class='hear'>[controller.pawn] [BB_text]! It must have located a griddle.</span>")
-		playsound(controller.pawn, BB_sound, 50, FALSE)
-
-/datum/ai_behavior/find_and_set/find_stockpile
-	locate_path = /obj/structure/holosign/kitchenbot_stockpile
-	bb_key_to_set = BB_KITCHENBOT_CHOSEN_STOCKPILE
-
-/datum/ai_behavior/find_and_set/find_stockpile/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
-	if(succeeded)
-		var/BB_text = controller.blackboard[BB_KITCHENBOT_TASK_TEXT]
-		var/BB_sound = controller.blackboard[BB_KITCHENBOT_TASK_SOUND]
-		controller.pawn.audible_message("<span class='hear'>[controller.pawn] [BB_text]! It must have located a stockpile.</span>")
-		playsound(controller.pawn, BB_sound, 50, FALSE)
-
 //kitchenbot exclusive
 /datum/ai_behavior/find_and_set/find_stockpile_target
+	action_cooldown = 5 SECONDS
 	bb_key_to_set = BB_KITCHENBOT_TARGET_IN_STOCKPILE
 
 /datum/ai_behavior/find_and_set/find_stockpile_target/search_tactic(datum/ai_controller/controller)
 	var/datum/ai_controller/kitchenbot/kitchenbot_controller = controller
-	var/obj/stockpile = kitchenbot_controller.blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE]
+	var/obj/stockpile = locate(/obj/structure/holosign/kitchenbot_stockpile) in oview(7, controller.pawn)
+	if(!stockpile)
+		finish_action(controller, FALSE)
+		return
 	var/turf/stockpile_turf = get_turf(stockpile)
 	if(!stockpile_turf)
 		return
@@ -91,6 +71,7 @@
 
 
 /datum/ai_behavior/put_on_grill
+	action_cooldown = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 1
 
@@ -98,23 +79,22 @@
 	. = ..()
 
 	var/obj/machinery/griddle/griddle = controller.blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE]
-	var/obj/item/grillable = controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
 
+
+	var/obj/item/grillable = controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
 	grillable.forceMove(griddle)
 	griddle.AddToGrill(grillable, controller.pawn)
 	if(!griddle.on)
-		controller.pawn.visible_message("<span class='notice'>[controller.pawn] turns on [griddle].</span>")
-		griddle.on = TRUE
-		griddle.begin_processing()
-		griddle.update_appearance()
-		griddle.update_grill_audio()
+		griddle.TurnOnGrill(controller.pawn)
 	controller.blackboard[BB_KITCHENBOT_ITEMS_WATCHED] += grillable
 	controller.RegisterSignal(grillable, COMSIG_MOVABLE_MOVED, /datum/ai_controller/kitchenbot.proc/DidNotGrill)
 	controller.RegisterSignal(grillable, COMSIG_PARENT_QDELETING, /datum/ai_controller/kitchenbot.proc/DidNotGrill)
 	controller.RegisterSignal(grillable, COMSIG_GRILL_COMPLETED, /datum/ai_controller/kitchenbot.proc/GrillCompleted)
-	controller.blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE] = null
 	finish_action(controller, TRUE)
 
+/datum/ai_behavior/put_on_grill/finish_action(datum/ai_controller/controller, succeeded)
+	controller.blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = null
+	. = ..()
 
 /datum/ai_behavior/take_off_grill
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
@@ -134,6 +114,7 @@
 
 /datum/ai_behavior/take_off_grill/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	controller.blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = null
 	var/BB_text = controller.blackboard[BB_KITCHENBOT_TASK_TEXT]
 	var/BB_sound = controller.blackboard[BB_KITCHENBOT_TASK_SOUND]
 	controller.pawn.audible_message("<span class='hear'>[controller.pawn] [BB_text]!</span>")

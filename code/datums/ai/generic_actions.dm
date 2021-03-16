@@ -59,6 +59,7 @@
 	var/obj/item/grabbed_item = controller.blackboard[bb_key_target]
 	if(!grabbed_item)
 		finish_action(controller, FALSE)
+		return
 	grabbed_item.do_pickup_animation(controller.pawn)
 	controller.pawn.visible_message("<span class='notice'>[controller.pawn] [grab_verb] [grabbed_item]!</span>")
 	grabbed_item.forceMove(controller.pawn)

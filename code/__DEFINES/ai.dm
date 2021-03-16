@@ -100,7 +100,6 @@
 #define BB_KITCHENBOT_TARGET_DISPOSAL "BB_kitchenbot_target_disposal"
 //griddle mode vars
 #define BB_KITCHENBOT_CHOSEN_GRIDDLE "BB_kitchenbot_chosen_griddle"
-#define BB_KITCHENBOT_CHOSEN_STOCKPILE "BB_kitchenbot_chosen_stockpile"
 #define BB_KITCHENBOT_ITEMS_WATCHED "BB_kitchenbot_items_watched" //currently griddling
 #define BB_KITCHENBOT_ITEMS_BANNED "BB_kitchenbot_items_banned" //items that we know won't grill
 #define BB_KITCHENBOT_TAKE_OFF_GRILL "BB_kitchenbot_take_off_grill" //done griddling, high priority to take off grill so it doesnt burn

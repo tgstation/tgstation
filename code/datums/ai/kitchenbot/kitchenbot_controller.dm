@@ -9,10 +9,9 @@
 	BB_KITCHENBOT_MODE = KITCHENBOT_MODE_IDLE,
 	BB_KITCHENBOT_REFUSE_LIST = list(),
 	BB_KITCHENBOT_TARGET_TO_DISPOSE = null,
-	BB_KITCHENBOT_CHOSEN_GRIDDLE = null,
-	BB_KITCHENBOT_CHOSEN_STOCKPILE = null,
 	BB_KITCHENBOT_ITEMS_WATCHED = list(),
 	BB_KITCHENBOT_ITEMS_BANNED = list(),
+	BB_KITCHENBOT_CHOSEN_GRIDDLE = null,
 	BB_KITCHENBOT_TAKE_OFF_GRILL = list(),
 	BB_KITCHENBOT_TARGET_IN_STOCKPILE = null,
 	BB_KITCHENBOT_CUSTOMERS_NOTED = list(),
@@ -64,19 +63,16 @@
 				blackboard[BB_KITCHENBOT_TARGET_DISPOSAL] = disposal
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposals_item/dump_refuse)
 		if(KITCHENBOT_MODE_THE_GRIDDLER)
-			var/obj/machinery/griddle/griddle = blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE]
-			var/obj/stockpile = blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE]
 			var/list/take_off_grill = blackboard[BB_KITCHENBOT_TAKE_OFF_GRILL]
-			if(!griddle)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_griddle) //no return to search for stockpile at the same time
-			if(!stockpile)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_stockpile)
-				return
-			if(take_off_grill.len)
-				current_movement_target = griddle
+			var/obj/target = take_off_grill[1]
+			if(take_off_grill.len) //don't let ANYTHING burn or you'll be scrapped faster than a blood cult iteration
+				var/obj/machinery/griddle/possible_griddle = target.loc
+				if(!istype(possible_griddle)) //sanity
+					DidNotGrill(take_off_grill)
+					return
+				current_movement_target = possible_griddle
+				blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = current_movement_target
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/take_off_grill)
-				return
-			if(griddle.griddled_objects.len >= griddle.max_items)
 				return
 			if(!blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE])
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/find_stockpile_target)
@@ -85,6 +81,14 @@
 				current_movement_target = blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/forcemove_grab/grab_griddlable)
 				return
+			var/obj/machinery/griddle/griddle
+			for(var/obj/machinery/griddle/possible_griddle in oview(7, pawn))
+				if(possible_griddle.griddled_objects.len >= possible_griddle.max_items) //no room, this griddle won't do
+					continue
+				griddle = possible_griddle
+			if(!griddle)
+				return
+			blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = griddle
 			current_movement_target = griddle
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/put_on_grill)
 		if(KITCHENBOT_MODE_WAITER)
@@ -194,8 +198,6 @@
 	if(held_refuse && (held_refuse in src))
 		held_refuse.forceMove(pawn.drop_location())
 	blackboard[BB_KITCHENBOT_TARGET_TO_DISPOSE] = null
-	blackboard[BB_KITCHENBOT_CHOSEN_GRIDDLE] = null
-	blackboard[BB_KITCHENBOT_CHOSEN_STOCKPILE] = null
 	blackboard[BB_KITCHENBOT_ITEMS_WATCHED] = list()
 	var/obj/item/held_grillable = blackboard[BB_KITCHENBOT_TARGET_IN_STOCKPILE]
 	if(held_grillable && (held_grillable in src))

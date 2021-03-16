@@ -57,7 +57,6 @@
 	. = ..()
 	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
 
-
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	if(griddled_objects.len >= max_items)
 		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
@@ -78,14 +77,26 @@
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	on = !on
-	if(on)
-		begin_processing()
+	if(!on)
+		TurnOnGrill(user)
 	else
-		end_processing()
+		TurnOffGrill(user)
+
+/obj/machinery/griddle/proc/TurnOnGrill(mob/user)
+	on = TRUE
+	if(user)
+		user.visible_message("<span class='notice'>[user] turns on [src].</span>")
+	begin_processing()
 	update_appearance()
 	update_grill_audio()
 
+/obj/machinery/griddle/proc/TurnOffGrill(mob/user)
+	on = FALSE
+	if(user)
+		user.visible_message("<span class='notice'>[user] turns off [src].</span>")
+	end_processing()
+	update_appearance()
+	update_grill_audio()
 
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill
