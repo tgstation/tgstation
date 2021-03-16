@@ -37,7 +37,7 @@
 /datum/select_equipment/New(_user, mob/target)
 	user = CLIENT_FROM_VAR(_user)
 
-	if(!(ishuman(target) || isobserver(target)))
+	if(!ishuman(target) && !isobserver(target))
 		alert("Invalid mob")
 		return
 	target_mob = target
@@ -99,15 +99,15 @@
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
 	for(var/path as anything in outfit_list)
-		var/datum/outfit/O = path
-		entries += list(outfit_entry(category, path, initial(O.name)))
+		var/datum/outfit/outfit = path
+		entries += list(outfit_entry(category, path, initial(outfit.name)))
 	return entries
 
 //GLOB.custom_outfits lists outfit *objects* so we'll need to do some custom handling for it
 /datum/select_equipment/proc/make_custom_outfit_entries(list/outfit_list)
 	var/list/entries = list()
-	for(var/datum/outfit/O as anything in outfit_list)
-		entries += list(outfit_entry("Custom", REF(O), O.name, custom_entry=TRUE)) //it's either this or special handling on the UI side
+	for(var/datum/outfit/outfit as anything in outfit_list)
+		entries += list(outfit_entry("Custom", REF(outfit), outfit.name, custom_entry=TRUE)) //it's either this or special handling on the UI side
 	return entries
 
 /datum/select_equipment/ui_data(mob/user)
@@ -135,7 +135,7 @@
 	var/list/data = list()
 	if(!cached_outfits)
 		cached_outfits = list()
-		cached_outfits += list(outfit_entry("General", /datum/outfit, "Naked", TRUE))
+		cached_outfits += list(outfit_entry("General", /datum/outfit, "Naked", priority=TRUE))
 		cached_outfits += make_outfit_entries("General", subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman))
 		cached_outfits += make_outfit_entries("Jobs", typesof(/datum/outfit/job))
 		cached_outfits += make_outfit_entries("Plasmamen Outfits", typesof(/datum/outfit/plasmaman))
@@ -199,7 +199,7 @@
 			user.prefs.save_preferences()
 
 /client/proc/admin_apply_outfit(mob/target, dresscode)
-	if(!(ishuman(target) || isobserver(target)))
+	if(!ishuman(target) && !isobserver(target))
 		alert("Invalid mob")
 		return
 
