@@ -228,6 +228,11 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
 
+/**
+ * returns an ic name of the tool needed
+ * Arguments:
+ * * tool_behaviour: the tool described!
+ */
 /proc/tool_behaviour_name(tool_behaviour)
 	switch(tool_behaviour)
 		if(TOOL_CROWBAR)
