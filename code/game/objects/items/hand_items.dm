@@ -301,14 +301,18 @@
 		name = "[name] blown by [firer]"
 	return ..()
 
-/obj/projectile/kiss/Bump(atom/A)
-	if(!nodamage || !isliving(A))
+/obj/projectile/kiss/Impact(atom/A)
+	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
 	qdel(src)
-	return TRUE
+	return FALSE
 
+/** To get around shielded hardsuits & such being set off by kisses when they shouldn't, we take a page from hallucination projectiles
+  * and simply fake our on hit effects. This lets kisses remain incorporeal without having to make some new trait for this one niche situation.
+  * This fake hit only happens if we can deal damage and if we hit a living thing. Otherwise, we just do normal on hit effects.
+  */
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
 	playsound(get_turf(living_target), hitsound, 100, TRUE)
 	living_target.visible_message("<span class='danger'>[living_target] is hit by \a [src].</span>", "<span class='userdanger'>You're hit by \a [src]!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
@@ -316,29 +320,31 @@
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
 	// people with the social anxiety quirk can get flustered when hit by a kiss
-	if(HAS_TRAIT(living_target, TRAIT_ANXIOUS) && (living_target.stat > SOFT_CRIT))
-		if(prob(50) || HAS_TRAIT(living_target, TRAIT_FEARLESS)) // 50% chance for it to apply, also immune while on meds
-			return
-		var/other_msg
-		var/self_msg
-		var/roll = rand(1, 3)
-		switch(roll)
-			if(1)
-				other_msg = "stumbles slightly, turning a bright red!"
-				self_msg = "You lose control of your limbs for a moment as your blood rushes to your face, turning it bright red!"
-				living_target.add_confusion(rand(5, 10))
-			if(2)
-				other_msg = "stammers softly for a moment before choking on something!"
-				self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
-				addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
-				living_target.stuttering += rand(5, 15)
-			if(3)
-				other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
-				self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring [firer ? "at [firer]" : "the ceiling"] for what feels like an eternity!"
-				living_target.face_atom(firer)
-				living_target.Stun(rand(3 SECONDS, 8 SECONDS))
+	if(!HAS_TRAIT(living_target, TRAIT_ANXIOUS) || (living_target.stat > SOFT_CRIT))
+		return
+	if(HAS_TRAIT(living_target, TRAIT_FEARLESS) || prob(50)) // 50% chance for it to apply, also immune while on meds
+		return
 
-		living_target.visible_message("<b>[living_target]</b> [other_msg]", "<span class='userdanger'>Whoa! [self_msg]</span>")
+	var/other_msg
+	var/self_msg
+	var/roll = rand(1, 3)
+	switch(roll)
+		if(1)
+			other_msg = "stumbles slightly, turning a bright red!"
+			self_msg = "You lose control of your limbs for a moment as your blood rushes to your face, turning it bright red!"
+			living_target.add_confusion(rand(5, 10))
+		if(2)
+			other_msg = "stammers softly for a moment before choking on something!"
+			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
+			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
+			living_target.stuttering += rand(5, 15)
+		if(3)
+			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
+			self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring at [firer ? "[firer]" : "the ceiling"] for what feels like an eternity!"
+			living_target.face_atom(firer)
+			living_target.Stun(rand(3 SECONDS, 8 SECONDS))
+
+	living_target.visible_message("<b>[living_target]</b> [other_msg]", "<span class='userdanger'>Whoa! [self_msg]<span>")
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
 	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
