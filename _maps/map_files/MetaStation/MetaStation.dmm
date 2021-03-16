@@ -60768,7 +60768,7 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_x = -9
 	},
 /obj/item/storage/box/donkpockets{
@@ -79496,7 +79496,7 @@
 /area/science/research)
 "wQf" = (
 /obj/structure/table,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/item/candle,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio{
