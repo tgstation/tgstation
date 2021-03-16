@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/chemist
+	plasmaman_outfit = /datum/outfit/plasmaman/chemist
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
