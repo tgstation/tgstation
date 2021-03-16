@@ -27,7 +27,7 @@ const ALL_MAPS_BUILD = "CI All Maps Build"
 const TEST_RUN_BUILD = "CI Integration Tests Build"
 
 let BUILD_MODE = STANDARD_BUILD;
-if(process.env.CBT_BUILD_MODE != undefined){
+if (process.env.CBT_BUILD_MODE) {
   switch (process.env.CBT_BUILD_MODE) {
     case "ALL_MAPS":
       BUILD_MODE = ALL_MAPS_BUILD
