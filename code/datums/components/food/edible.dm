@@ -43,7 +43,7 @@ Behavior that's still missing from this component that original food items had t
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
 	///The type of atom this creates when the object is microwaved.
-	var/microwaved_type
+	var/atom/microwaved_type
 
 /datum/component/edible/Initialize(list/initial_reagents,
 								food_flags = NONE,
