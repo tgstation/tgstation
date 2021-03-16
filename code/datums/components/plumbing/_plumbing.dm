@@ -60,6 +60,7 @@
 /datum/component/plumbing/Destroy()
 	ducts = null
 	reagents = null
+	recipient_reagents_holder = null
 	return ..()
 
 /datum/component/plumbing/process()
