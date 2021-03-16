@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "rebalanced crystallizer recipes to a better use of the energy released to actually have an impact, healium crystal and proto nitrate crystal will create a bit more n2 on rupturing"
-  - balance: "tweaked the costs of some recipes of the crystallizer for more sane productions"
-  - qol: "changed the cooling and temperature control on the crystallizer and the UI now have the temperature bar"

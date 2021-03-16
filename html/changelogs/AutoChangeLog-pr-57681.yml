@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixed various issues with the cyborg beaker apparatus code. These fixes mean it should now properly update its own icon when reagents are transferred to any beaker it is holding."

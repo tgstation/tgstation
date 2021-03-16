@@ -1,3 +1,12 @@
+/**
+ * For counting up how much of the station exists at the start of the shift, and how much is left behind by the end of it.
+ *
+ * "For God's sake, please be careful with those fuel tanks, you're going to set them off and compromise the station's integrity."
+ * "Relax boss, everyone knows this station has no integrity."
+ * "Yeah, that's why we all like it so much!"
+ * * -Recovered engineering chatter from a destroyed NT station, 2557
+ */
+
 /datum/station_state
 	var/floor = 0
 	var/wall = 0
@@ -23,10 +32,10 @@
 
 			if(isfloorturf(T))
 				var/turf/open/floor/TF = T
-				if(!(TF.burnt))
-					floor += 12
-				else
+				if(TF.burnt)
 					floor += 1
+				else
+					floor += 2
 
 			if(iswallturf(T))
 				var/turf/closed/wall/TW = T
