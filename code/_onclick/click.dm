@@ -114,7 +114,7 @@
 		UnarmedAttack(A, FALSE, modifiers)
 		return
 
-	if(in_throw_mode)
+	if(throw_mode)
 		changeNext_move(CLICK_CD_THROW)
 		throw_item(A)
 		return
@@ -325,6 +325,18 @@
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+
+/mob/living/CtrlClick(mob/user)
+	if(isliving(user) && Adjacent(user) && !user.incapacitated())
+		if(world.time < user.next_move)
+			return FALSE
+		var/mob/living/user_living = user
+		if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
+			user_living.changeNext_move(CLICK_CD_MELEE)
+			return
+	else
+		..()
+
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user) && !user.incapacitated())

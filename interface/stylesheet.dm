@@ -105,6 +105,8 @@ h1.alert, h2.alert		{color: #000000;}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
 
+.sentientdisease		{color: #446600;}
+
 .deconversion_message	{color: #5000A0;	font-size: 3;	font-style: italic;}
 
 .ghostalert				{color: #5c00e6;	font-style: italic;	font-weight: bold;}

@@ -115,15 +115,15 @@
 	subcategory = CAT_SOUP
 
 
-/datum/crafting_recipe/food/milosoup
-	name = "Milo soup"
+/datum/crafting_recipe/food/misosoup
+	name = "Miso soup"
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/soydope = 2,
 		/obj/item/food/tofu = 2
 	)
-	result = /obj/item/food/soup/milo
+	result = /obj/item/food/soup/miso
 	subcategory = CAT_SOUP
 
 /datum/crafting_recipe/food/bloodsoup

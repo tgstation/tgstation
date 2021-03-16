@@ -1,0 +1,4 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - bugfix: "Gorillas (and dextrous holoparasites) can now SMASH walls, windows, tables, etc. while in combat mode, as they were intended be able to."

@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "The station integrity score no longer over-penalizes burnt or missing floor tiles in the shift-end report."

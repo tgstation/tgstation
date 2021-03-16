@@ -68,6 +68,7 @@
 #define BB_CUSTOMER_EATING "BB_customer_eating"
 #define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
 #define BB_CUSTOMER_LEAVING "BB_customer_leaving"
+#define BB_CUSTOMER_CURRENT_TARGET "BB_customer_current_target"
 
 ///Kitchenbot AI controller defines
 
@@ -110,7 +111,6 @@
 #define BB_KITCHENBOT_ORDERS_WANTED "BB_kitchenbot_orders_wanted"
 #define BB_KITCHENBOT_VENUE "BB_kitchenbot_venue"
 #define BB_KITCHENBOT_DISH_TO_SERVE "BB_kitchenbot_dish_to_serve"
-
 
 ///Dog AI controller blackboard keys
 

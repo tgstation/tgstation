@@ -34,6 +34,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("gnashes")
 
 	//Space carp aren't affected by cold.
@@ -244,13 +245,14 @@
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
 
 /mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
-	disky.forceMove(drop_location())
-	disky = null
+	if(disky)
+		disky.forceMove(drop_location())
+		disky = null
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
-	. = ..()
 	QDEL_NULL(disky)
+	return ..()
 
 /mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
 	. = ..()

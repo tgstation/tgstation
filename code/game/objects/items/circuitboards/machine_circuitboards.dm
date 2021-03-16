@@ -474,7 +474,7 @@
 /obj/item/circuitboard/machine/space_heater
 	name = "Space Heater (Machine Board)"
 	icon_state = "generic"
-	build_path = /obj/machinery/space_heater
+	build_path = /obj/machinery/space_heater/constructed
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/capacitor = 1,

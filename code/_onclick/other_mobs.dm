@@ -203,11 +203,11 @@
 /mob/living/simple_animal/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(!dextrous)
-		return ..()
-	if(!ismob(A))
+	if(dextrous && (isitem(A) || !combat_mode))
 		A.attack_hand(src, modifiers)
 		update_inv_hands()
+	else
+		return ..()
 
 
 /*
@@ -218,7 +218,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	target = A
-	if(dextrous && !ismob(A))
+	if(dextrous && (isitem(A) || !combat_mode))
 		..()
 	else
 		AttackingTarget(A)
