@@ -63,17 +63,17 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	icon_state = "control_boxp"
 	//kobatashi has a smaller list of events, so we copy from the global list and cut whatever isn't here
 	var/list/event_whitelist = list(
-	/datum/orion_event/raiders,
-	/datum/orion_event/flux,
-	/datum/orion_event/illness,
-	/datum/orion_event/engine_part,
-	/datum/orion_event/electronic_part,
-	/datum/orion_event/hull_part,
-	/datum/orion_event/space_port,
-	/datum/orion_event/space_port/tau_ceti,
-	/datum/orion_event/space_port_raid,
-	/datum/orion_event/black_hole,
-	/datum/orion_event/black_hole_death,
+		/datum/orion_event/raiders,
+		/datum/orion_event/flux,
+		/datum/orion_event/illness,
+		/datum/orion_event/engine_part,
+		/datum/orion_event/electronic_part,
+		/datum/orion_event/hull_part,
+		/datum/orion_event/space_port,
+		/datum/orion_event/space_port/tau_ceti,
+		/datum/orion_event/space_port_raid,
+		/datum/orion_event/black_hole,
+		/datum/orion_event/black_hole_death,
 	)
 	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
 	settlers = list("Kirk","Worf","Gene")
