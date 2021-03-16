@@ -183,7 +183,7 @@
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
 	var/powered = FALSE
-	var/zvalue = (banked_cash - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
+	var/zvalue = ((banking_amount + banked_cash) - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
 	var/std_success = 0
 	var/prob_success = 0
 	//Admittedly this is messy, but not nearly as messy as the alternative, which is jury-rigging an entire Z-table into the code, or making an adaptive z-table.

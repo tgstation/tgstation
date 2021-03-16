@@ -57,7 +57,7 @@ export const Bepis = (props, context) => {
                     color="bad">
                     {data.negative_cash_offset}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Deposit and Start">
+                  <LabeledList.Item label="Deposit Amount">
                     <NumberInput
                       value={amount}
                       unit="Credits"
@@ -71,6 +71,15 @@ export const Bepis = (props, context) => {
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
+              <Box>
+                <Button
+                  icon="donate"
+                  content="Deposit Credits and Start"
+                  disabled={data.manual_power === 1
+                    || data.silicon_check === 1}
+                  onClick={() => act('begin_experiment')}
+                />
+              </Box>
             </Grid.Column>
             <Grid.Column>
               <Section title="Market Data and Analysis">
