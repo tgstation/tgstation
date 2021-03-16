@@ -94,6 +94,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/burning_volume = 0.5
 	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
 	var/list/addiction_types = null
+	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
+	var/glass_price
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -101,6 +103,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	if(material)
 		material = GET_MATERIAL_REF(material)
+	if(glass_price)
+		AddElement(/datum/element/venue_price, glass_price)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
