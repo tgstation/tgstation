@@ -11,15 +11,15 @@
 	stock_max = 2
 	availability_prob = 50
 
-/datum/blackmarket_item/misc/Extra_Bright_Lantern
-	name = "Suspicious Lantern"
+/datum/blackmarket_item/misc/jade_Lantern
+	name = "Jade Lantern"
 	desc = "Found in a box labeled 'Danger: Radioactive'. Probably safe."
-	item = /obj/item/flashlight/lantern/syndicate
+	item = /obj/item/flashlight/lantern/jade
 
-	price_min = 300
-	price_max = 700
+	price_min = 150
+	price_max = 500
 	stock_max = 2
-	availability_prob = 25
+	availability_prob = 45
 
 /datum/blackmarket_item/misc/cap_gun
 	name = "Cap Gun"
