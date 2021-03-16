@@ -69,11 +69,17 @@
 
 /**
  * Everything related to pipe vision on ventcrawling is handled by update_pipe_vision(). 
- * Called on exit, entrance, and pipenet differences.
+ * Called on exit, entrance, and pipenet differences (e.g. moving to a new pipenet).
  * One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
  * We move first and then call update. Dont flip this around
  */
 /mob/living/proc/update_pipe_vision() 
+	// Take the pipe images from the client
+	if (!isnull(client))
+		for(var/image/current_image in pipes_shown)
+			client.images -= current_image
+		pipes_shown.len = 0
+
 	// Give the pipe images to the client
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
 		var/list/total_members = list()
@@ -98,9 +104,3 @@
 					pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
 				client.images += pipenet_part.pipe_vision_img
 				pipes_shown += pipenet_part.pipe_vision_img
-	
-	// Take the pipe images from the client
-	else if (!isnull(client))
-		for(var/image/current_image in pipes_shown)
-			client.images -= current_image
-		pipes_shown.len = 0
