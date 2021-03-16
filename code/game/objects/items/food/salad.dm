@@ -82,7 +82,7 @@
 	icon_state = "boiledrice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rice" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | BREAKFAST
 
 /obj/item/food/salad/ricepudding
 	name = "rice pudding"
