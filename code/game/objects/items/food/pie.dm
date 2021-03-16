@@ -1,6 +1,6 @@
 /obj/item/food/pie
 	icon = 'icons/obj/food/piecake.dmi'
-	trash_type = /obj/item/trash/plate
+
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
@@ -12,7 +12,7 @@
 /obj/item/food/pieslice
 	name = "pie slice"
 	icon = 'icons/obj/food/piecake.dmi'
-	trash_type = /obj/item/trash/plate
+
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "uncertainty" = 1)

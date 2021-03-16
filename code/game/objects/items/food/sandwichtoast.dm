@@ -3,7 +3,7 @@
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "sandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
 	microwaved_type = /obj/item/food/toastedsandwich
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
@@ -15,7 +15,7 @@
 	desc = "Now if you only had a pepper bar."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toastedsandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/carbon = 4)
 	tastes = list("toast" = 1)
 	foodtypes = GRAIN
@@ -26,7 +26,7 @@
 	desc = "Goes great with Tomato soup!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toastedsandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("toast" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
@@ -37,7 +37,7 @@
 	desc = "You wish you had some peanut butter to go with this..."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "jellysandwich"
-	trash_type = /obj/item/trash/plate
+
 	bite_consumption = 3
 	tastes = list("bread" = 1, "jelly" = 1)
 	foodtypes = GRAIN
@@ -56,7 +56,7 @@
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "notasandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("nothing suspicious" = 1)
 	foodtypes = GRAIN | GROSS
@@ -67,7 +67,7 @@
 	desc = "A slice of toast covered with delicious jam."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "jellytoast"
-	trash_type = /obj/item/trash/plate
+
 	bite_consumption = 3
 	tastes = list("toast" = 1, "jelly" = 1)
 	foodtypes = GRAIN | BREAKFAST
