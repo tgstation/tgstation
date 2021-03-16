@@ -61,8 +61,10 @@
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_MOB_BOT_PRESTEP, .proc/check_pre_step)
+	RegisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, .proc/check_pre_step)
+	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/check_pre_step)
 	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
+	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over)
 
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
@@ -112,7 +114,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
-	UnregisterSignal(src, COMSIG_MOB_BOT_PRESTEP, COMSIG_MOB_BOT_STEP)
+	UnregisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED, COMSIG_MOVABLE_CROSSED_OVER)
 	unload(0)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
@@ -530,9 +532,6 @@
 		start()
 
 /mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.
-	if(!has_power((client || paicard))) //turn off if we ran out of power.
-		turn_off()
-		return FALSE
 	if(!bloodiness) //important to check this first since Bump() is called in the Move() -> Entered() chain
 		return ..()
 	var/atom/oldLoc = loc
@@ -596,7 +595,7 @@
 					path -= next
 					return
 				if(isturf(next))
-					if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRESTEP) & COMPONENT_MOB_BOT_CANCELSTEP)
+					if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRE_STEP) & COMPONENT_MOB_BOT_BLOCK_PRE_STEP)
 						return
 					var/oldloc = loc
 					var/moved = step_towards(src, next) // attempt to move
@@ -844,11 +843,11 @@
 	SIGNAL_HANDLER
 
 	if(!on)
-		return COMPONENT_MOB_BOT_CANCELSTEP
+		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
-	if(cell?.charge < cell_move_power_usage)
+	if((cell && (cell.charge < cell_move_power_usage)) || !has_power((client || paicard)))
 		turn_off()
-		return COMPONENT_MOB_BOT_CANCELSTEP
+		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
 /// Uses power from the cell when the bot steps.
 /mob/living/simple_animal/bot/mulebot/proc/on_bot_step(datum/source)

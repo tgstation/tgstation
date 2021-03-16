@@ -538,7 +538,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!length(path))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRESTEP) & COMPONENT_MOB_BOT_CANCELSTEP)
+	if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRE_STEP) & COMPONENT_MOB_BOT_BLOCK_PRE_STEP)
 		return FALSE
 
 	if(!step_towards(src, path[1]))
