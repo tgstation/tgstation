@@ -76,9 +76,7 @@ const taskTgfont = new Task('tgfont')
   .provides('tgui/packages/tgfont/dist/tgfont.css')
   .provides('tgui/packages/tgfont/dist/tgfont.eot')
   .provides('tgui/packages/tgfont/dist/tgfont.woff2')
-  .build(async () => {
-    await yarn(['workspace', 'tgfont', 'build']);
-  });
+  .build(() => yarn(['workspace', 'tgfont', 'build']));
 
 /// Builds tgui
 const taskTgui = new Task('tgui')
