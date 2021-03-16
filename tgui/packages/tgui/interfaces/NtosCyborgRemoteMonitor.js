@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Fragment, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
+import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props, context) => {
@@ -50,13 +50,8 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
   }
 
   return (
-    <Stack
-      direction={"column"}
-      vertical
-      fill>
-      <Stack.Item
-        position="relative"
-        mb={1}>
+    <Stack fill vertical>
+      <Stack.Item>
         <Tabs>
           <Tabs.Tab
             icon="robot"
@@ -81,11 +76,8 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
               Certain features require an ID card login.
             </NoticeBox>
           )}
-          <Stack.Item
-            grow={1}>
-            <Section
-              fill
-              scrollable>
+          <Stack.Item grow={1}>
+            <Section fill scrollable>
               {cyborgs.map(cyborg => {
                 return (
                   <Section
@@ -158,7 +150,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
         </>
       )}
       {tab_main === 2 && (
-        <Fragment>
+        <>
           <Stack.Item>
             <Section>
               Scan a cyborg to download stored logs.
@@ -184,7 +176,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
               ))}
             </Section>
           </Stack.Item>
-        </Fragment>
+        </>
       )}
     </Stack>
   );
