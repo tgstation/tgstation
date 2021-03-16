@@ -9,7 +9,7 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/grilledcheesesandwich
+/obj/item/food/grilled_cheese_sandwich
 	name = "grilled cheese sandwich"
 	desc = "A warm, melty sandwich that goes perfectly with tomato soup."
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
-/obj/item/food/cheesesandwich
+/obj/item/food/cheese_sandwich
 	name = "cheese sandwich"
 	desc = "A light snack for a warm day. ...but what if you grilled it?"
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -32,8 +32,8 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cheesesandwich/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/grilledcheesesandwich, rand(30 SECONDS, 60 SECONDS), TRUE)
+/obj/item/food/cheese_sandwich/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese_sandwich, rand(30 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/jellysandwich
 	name = "jelly sandwich"
