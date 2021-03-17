@@ -47,7 +47,7 @@
 
 /// Global proc that sets up all MOD themes in a list and returns it.
 /proc/setup_mod_themes()
-	var/list/mod_theme_list = list()
+	. = list()
 	for(var/path in typesof(/datum/mod_theme))
-		mod_theme_list += new path()
-	return mod_theme_list
+		var/datum/mod_theme/new_theme = new path()
+		.[path] = new_theme

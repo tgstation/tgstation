@@ -76,7 +76,6 @@
 
 /obj/item/mod/control/Initialize()
 	. = ..()
-	START_PROCESSING(SSobj,src)
 	if(!ispath(theme))
 		CRASH("A MODsuit spawned without a proper theme.")
 	theme = GLOB.mod_themes[theme]
@@ -124,6 +123,7 @@
 			module = new module(src)
 			install(module, TRUE)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
+	START_PROCESSING(SSobj,src)
 
 
 /obj/item/mod/control/Destroy()
