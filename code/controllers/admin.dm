@@ -5,7 +5,7 @@
 
 INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
-/obj/effect/statclick/Initialize(mapload, text, target) //Don't port this to Initialize it's too critical //They did it anyway
+/obj/effect/statclick/Initialize(mapload, text, target)
 	. = ..()
 	name = text
 	src.target = target
@@ -14,7 +14,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 /obj/effect/statclick/Destroy()
 	target = null
-	. = ..()
+	return ..()
 
 /obj/effect/statclick/proc/cleanup()
 	SIGNAL_HANDLER

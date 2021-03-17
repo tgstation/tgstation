@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/Destroy()
 	QDEL_NULL(fry_loop)
-	. = ..()
+	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
 	var/oil_efficiency
