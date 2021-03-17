@@ -41,8 +41,7 @@
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
-	if(mytape)
-		QDEL_NULL(mytape)
+	QDEL_NULL(mytape)
 	. = ..()
 
 /obj/item/taperecorder/proc/readout()
