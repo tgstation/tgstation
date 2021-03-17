@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fixes oversight in DNA Consoles where doing a transfer from the Genetic Makeup tab had no cooldown and could be spammed to massively irradiate things."
