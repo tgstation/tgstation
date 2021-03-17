@@ -71,10 +71,6 @@
 
 	qdel_and_find_ref_if_fail(src, TRUE)
 
-#ifdef REFERENCE_TRACKING_DEBUG
-///Stores info about where refs are found, used for sanity checks
-/datum/var/list/found_refs
-#endif
 
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
 	#ifdef REFERENCE_TRACKING_DEBUG
