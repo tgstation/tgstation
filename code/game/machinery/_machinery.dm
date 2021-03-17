@@ -378,7 +378,7 @@
 
 	if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
 		var/mob/living/carbon/H = L
-		if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
+		if(!istype(H) || !H.has_dna() || !H.dna.check_mutation(TK))
 			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
