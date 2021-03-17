@@ -106,10 +106,10 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[varname] = TRUE
 				#endif
-				testing("Found [type] \ref[src] in [datum_container.type]'s [varname] var. [container_name]")
+				testing("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
 
 			else if(islist(variable))
-				DoSearchVar(variable, "[container_name] -> [varname] (list)", recursive_limit - 1, search_time)
+				DoSearchVar(variable, "[container_name] \ref[datum_container] -> [varname] (list)", recursive_limit - 1, search_time)
 
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
@@ -134,7 +134,7 @@
 
 			//Check assoc sublists
 			else if(element_in_list && !isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
-				DoSearchVar(potential_container[element_in_list], "[container_name] -> [potential_container[element_in_list]]\[[element_in_list]\] (list)", recursive_limit - 1, search_time)
+				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
 
 	#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
