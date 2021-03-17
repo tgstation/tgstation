@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the goof(s) made in another coder's anti-spider plasmaflooding PR that rendered silicons unable to interact with many machines."
+  - qol: "Admins with \"ai interact\" mode on can now interact with any machine that is powered and not broken, regardless of other conditions, provided that the default machine can_interact() proc hasn't been overwritten in a weird way for that machine."
+  - code_imp: "The structure of the default state of the can_interact() proc for machines has been reworked to be less awkward and painful to read than it was before."
