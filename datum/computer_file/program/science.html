@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;computer_file&#x2F;program&#x2F;science - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/computer_file/program/science.html#var">Var Details</a> - <a href="datum/computer_file/program/science.html#proc">Proc Details</a></header>
+<main>
+<h1>science <aside>/<a href="datum.html">datum</a>/<a href="datum/computer_file/program.html">computer_file/program</a>/<a href="datum/computer_file/program/science.html">science</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/techweb.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;techweb.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/computer_file/program/science.html#var/id_cache">id_cache</a></th><td>Used for compressing data sent to the UI via static_data as payload size is of concern</td></tr>
+            <tr><th><a href="datum/computer_file/program/science.html#var/id_cache_seq">id_cache_seq</a></th><td>Sequence var for the id cache</td></tr>
+            <tr><th><a href="datum/computer_file/program/science.html#var/locked">locked</a></th><td>Determines if the console is locked, and consequently if actions can be performed with it</td></tr>
+            <tr><th><a href="datum/computer_file/program/science.html#var/stored_research">stored_research</a></th><td>Reference to global science techweb</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/computer_file/program/science.html#proc/compress_id">compress_id</a></th><td>Compresses an ID to an integer representation using the id_cache, used for deduplication
+in sent JSON payloads</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/id_cache"><aside class="declaration">var </aside>id_cache
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/techweb.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;techweb.dm 17"/></a></h3>
+        <p>Used for compressing data sent to the UI via static_data as payload size is of concern</p><h3 id="var/id_cache_seq"><aside class="declaration">var </aside>id_cache_seq
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/techweb.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;techweb.dm 19"/></a></h3>
+        <p>Sequence var for the id cache</p><h3 id="var/locked"><aside class="declaration">var </aside>locked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/techweb.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;techweb.dm 15"/></a></h3>
+        <p>Determines if the console is locked, and consequently if actions can be performed with it</p><h3 id="var/stored_research"><aside class="declaration">var </aside>stored_research
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/techweb.html">techweb</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/techweb.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;techweb.dm 13"/></a></h3>
+        <p>Reference to global science techweb</p><h2 id="proc">Proc Details</h2><h3 id="proc/compress_id"><aside class="declaration">proc </aside>compress_id<aside>(id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/techweb.dm#L176">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;techweb.dm 176"/></a></aside>
+        </h3>
+        <p>Compresses an ID to an integer representation using the id_cache, used for deduplication
+in sent JSON payloads</p>
+<p>Arguments:</p>
+<ul>
+<li>id - the ID to compress</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

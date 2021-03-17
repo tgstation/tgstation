@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;status_effect&#x2F;high_fiving - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/status_effect/high_fiving.html#var">Var Details</a> - <a href="datum/status_effect/high_fiving.html#proc">Proc Details</a></header>
+<main>
+<h1>high_fiving <aside>/<a href="datum.html">datum</a>/<a href="datum/status_effect.html">status_effect</a>/<a href="datum/status_effect/high_fiving.html">high_fiving</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L154">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 154"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#var/possible_takers">possible_takers</a></th><td>The carbons who were offered the ability to partake in the high-five</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#var/slap_item">slap_item</a></th><td>The actual slapper item</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/check_fake_out">check_fake_out</a></th><td>If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/check_owner_in_range">check_owner_in_range</a></th><td>The propositioner moved, see if anyone is out of range now</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/check_taker_in_range">check_taker_in_range</a></th><td>One of our possible takers moved, see if they left us hanging</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/dropped_slap">dropped_slap</a></th><td>Something fishy is going on here...</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/fail">fail</a></th><td>We failed to high-five broh, either because there's no one viable next to us anymore, or we lost the slapper, or what</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/register_candidate">register_candidate</a></th><td>Hook up the specified carbon mob for possible high-fiving, give them the alert and signals and all</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/remove_candidate">remove_candidate</a></th><td>Remove the alert and signals for the specified carbon mob</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/too_slow_p1">too_slow_p1</a></th><td>If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/too_slow_p2">too_slow_p2</a></th><td>Part two of the ultimate prank</td></tr>
+            <tr><th><a href="datum/status_effect/high_fiving.html#proc/we_did_it">we_did_it</a></th><td>Yeah broh! This is where we do the high-fiving (or high-tenning :o)</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/possible_takers"><aside class="declaration">var </aside>possible_takers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 161"/></a></h3>
+        <p>The carbons who were offered the ability to partake in the high-five</p><h3 id="var/slap_item"><aside class="declaration">var </aside>slap_item
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/slapper.html">slapper</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 165"/></a></h3>
+        <p>The actual slapper item</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_fake_out"><aside class="declaration">proc </aside>check_fake_out<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/user, /list/examine_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L277">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 277"/></a></aside>
+        </h3>
+        <p>If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways</p><h3 id="proc/check_owner_in_range"><aside class="declaration">proc </aside>check_owner_in_range<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L295">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 295"/></a></aside>
+        </h3>
+        <p>The propositioner moved, see if anyone is out of range now</p><h3 id="proc/check_taker_in_range"><aside class="declaration">proc </aside>check_taker_in_range<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/taker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L284">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 284"/></a></aside>
+        </h3>
+        <p>One of our possible takers moved, see if they left us hanging</p><h3 id="proc/dropped_slap"><aside class="declaration">proc </aside>dropped_slap<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L307">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 307"/></a></aside>
+        </h3>
+        <p>Something fishy is going on here...</p><h3 id="proc/fail"><aside class="declaration">proc </aside>fail<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L214">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 214"/></a></aside>
+        </h3>
+        <p>We failed to high-five broh, either because there's no one viable next to us anymore, or we lost the slapper, or what</p><h3 id="proc/register_candidate"><aside class="declaration">proc </aside>register_candidate<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/possible_candidate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L199">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 199"/></a></aside>
+        </h3>
+        <p>Hook up the specified carbon mob for possible high-fiving, give them the alert and signals and all</p><h3 id="proc/remove_candidate"><aside class="declaration">proc </aside>remove_candidate<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/removed_candidate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L208">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 208"/></a></aside>
+        </h3>
+        <p>Remove the alert and signals for the specified carbon mob</p><h3 id="proc/too_slow_p1"><aside class="declaration">proc </aside>too_slow_p1<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/rube) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L257">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 257"/></a></aside>
+        </h3>
+        <p>If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them</p><h3 id="proc/too_slow_p2"><aside class="declaration">proc </aside>too_slow_p2<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/rube) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L263">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 263"/></a></aside>
+        </h3>
+        <p>Part two of the ultimate prank</p><h3 id="proc/we_did_it"><aside class="declaration">proc </aside>we_did_it<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/successful_taker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/status_effects/neutral.dm#L221">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;status_effects&#x2F;neutral.dm 221"/></a></aside>
+        </h3>
+        <p>Yeah broh! This is where we do the high-fiving (or high-tenning :o)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

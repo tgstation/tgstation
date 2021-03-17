@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;effect&#x2F;proc_holder&#x2F;spell&#x2F;pointed - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/effect/proc_holder/spell/pointed.html#var">Var Details</a> - <a href="obj/effect/proc_holder/spell/pointed.html#proc">Proc Details</a></header>
+<main>
+<h1>pointed <aside>/<a href="obj.html">obj</a>/<a href="obj/effect/proc_holder/spell.html">effect/proc_holder/spell</a>/<a href="obj/effect/proc_holder/spell/pointed.html">pointed</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#var/active_msg">active_msg</a></th><td>Message showing to the spell owner upon activating pointed spell.</td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#var/aim_assist">aim_assist</a></th><td>Variable dictating if the spell will use turf based aim assist</td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#var/deactive_msg">deactive_msg</a></th><td>Message showing to the spell owner upon deactivating pointed spell.</td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#var/self_castable">self_castable</a></th><td>Variable dictating if the user is allowed to cast a spell on himself.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#proc/intercept_check">intercept_check</a></th><td>intercept_check: Specific spell checks for InterceptClickOn() targets.</td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#proc/on_activation">on_activation</a></th><td>on_activation: What happens upon pointed spell activation.</td></tr>
+            <tr><th><a href="obj/effect/proc_holder/spell/pointed.html#proc/on_deactivation">on_deactivation</a></th><td>on_activation: What happens upon pointed spell deactivation.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active_msg"><aside class="declaration">var </aside>active_msg
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 8"/></a></h3>
+        <p>Message showing to the spell owner upon activating pointed spell.</p><h3 id="var/aim_assist"><aside class="declaration">var </aside>aim_assist
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 12"/></a></h3>
+        <p>Variable dictating if the spell will use turf based aim assist</p><h3 id="var/deactive_msg"><aside class="declaration">var </aside>deactive_msg
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 6"/></a></h3>
+        <p>Message showing to the spell owner upon deactivating pointed spell.</p><h3 id="var/self_castable"><aside class="declaration">var </aside>self_castable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 10"/></a></h3>
+        <p>Variable dictating if the user is allowed to cast a spell on himself.</p><h2 id="proc">Proc Details</h2><h3 id="proc/intercept_check"><aside class="declaration">proc </aside>intercept_check<aside>(/<a href="mob.html">mob</a>/user, /<a href="atom.html">atom</a>/target, silent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 93"/></a></aside>
+        </h3>
+        <p>intercept_check: Specific spell checks for InterceptClickOn() targets.</p>
+<p>Arguments:</p>
+<ul>
+<li>user The mob using the ranged spell via intercept.</li>
+<li>target The atom that is being targeted by the spell via intercept.</li>
+<li>silent If the checks should produce not any feedback messages for the user.</li>
+</ul><h3 id="proc/on_activation"><aside class="declaration">proc </aside>on_activation<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 47"/></a></aside>
+        </h3>
+        <p>on_activation: What happens upon pointed spell activation.</p>
+<p>Arguments:</p>
+<ul>
+<li>user The mob interacting owning the spell.</li>
+</ul><h3 id="proc/on_deactivation"><aside class="declaration">proc </aside>on_deactivation<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/spells/spell_types/pointed/pointed.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;spells&#x2F;spell_types&#x2F;pointed&#x2F;pointed.dm 56"/></a></aside>
+        </h3>
+        <p>on_activation: What happens upon pointed spell deactivation.</p>
+<p>Arguments:</p>
+<ul>
+<li>user The mob interacting owning the spell.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

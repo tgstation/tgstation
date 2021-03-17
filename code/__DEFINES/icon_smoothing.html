@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;icon_smoothing.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/icon_smoothing.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/icon_smoothing.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_CORNERS">SMOOTH_CORNERS</a></th><td>Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_BITMASK">SMOOTH_BITMASK</a></th><td>Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_DIAGONAL_CORNERS">SMOOTH_DIAGONAL_CORNERS</a></th><td>Atom has diagonal corners, with underlays under them.</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_BORDER">SMOOTH_BORDER</a></th><td>Atom will smooth with the borders of the map.</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_QUEUED">SMOOTH_QUEUED</a></th><td>Atom is currently queued to smooth.</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_OBJ">SMOOTH_OBJ</a></th><td>Smooths with objects, and will thus need to scan turfs for contents.</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/S_TURF">S_TURF</a></th><td>*SMOOTHING GROUPS</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_TURF_OPEN">SMOOTH_GROUP_TURF_OPEN</a></th><td>turf/open</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_TURF_CHASM">SMOOTH_GROUP_TURF_CHASM</a></th><td>turf/open/chasm, /turf/open/floor/fakepit</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_LAVA">SMOOTH_GROUP_FLOOR_LAVA</a></th><td>turf/open/lava/smooth</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS">SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS</a></th><td>turf/open/floor/glass</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_OPEN_FLOOR">SMOOTH_GROUP_OPEN_FLOOR</a></th><td>turf/open/floor</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_GRASS">SMOOTH_GROUP_FLOOR_GRASS</a></th><td>turf/open/floor/plating/grass</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_ASH">SMOOTH_GROUP_FLOOR_ASH</a></th><td>turf/open/floor/plating/ashplanet/ash</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_ASH_ROCKY">SMOOTH_GROUP_FLOOR_ASH_ROCKY</a></th><td>turf/open/floor/plating/ashplanet/rocky</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_ICE">SMOOTH_GROUP_FLOOR_ICE</a></th><td>turf/open/floor/plating/ice</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FLOOR_SNOWED">SMOOTH_GROUP_FLOOR_SNOWED</a></th><td>turf/open/floor/plating/snowed</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET">SMOOTH_GROUP_CARPET</a></th><td>turf/open/floor/carpet</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_BLACK">SMOOTH_GROUP_CARPET_BLACK</a></th><td>turf/open/floor/carpet/black</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_BLUE">SMOOTH_GROUP_CARPET_BLUE</a></th><td>turf/open/floor/carpet/blue</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_CYAN">SMOOTH_GROUP_CARPET_CYAN</a></th><td>turf/open/floor/carpet/cyan</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_GREEN">SMOOTH_GROUP_CARPET_GREEN</a></th><td>turf/open/floor/carpet/green</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_ORANGE">SMOOTH_GROUP_CARPET_ORANGE</a></th><td>turf/open/floor/carpet/orange</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_PURPLE">SMOOTH_GROUP_CARPET_PURPLE</a></th><td>turf/open/floor/carpet/purple</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_RED">SMOOTH_GROUP_CARPET_RED</a></th><td>turf/open/floor/carpet/red</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_ROYAL_BLACK">SMOOTH_GROUP_CARPET_ROYAL_BLACK</a></th><td>turf/open/floor/carpet/royalblack</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_ROYAL_BLUE">SMOOTH_GROUP_CARPET_ROYAL_BLUE</a></th><td>turf/open/floor/carpet/royalblue</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_EXECUTIVE">SMOOTH_GROUP_CARPET_EXECUTIVE</a></th><td>turf/open/floor/carpet/executive</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_STELLAR">SMOOTH_GROUP_CARPET_STELLAR</a></th><td>turf/open/floor/carpet/stellar</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CARPET_DONK">SMOOTH_GROUP_CARPET_DONK</a></th><td>turf/open/floor/carpet/donk</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CLOSED_TURFS">SMOOTH_GROUP_CLOSED_TURFS</a></th><td>turf/closed</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_MATERIAL_WALLS">SMOOTH_GROUP_MATERIAL_WALLS</a></th><td>turf/closed/wall/material</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SYNDICATE_WALLS">SMOOTH_GROUP_SYNDICATE_WALLS</a></th><td>turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_HOTEL_WALLS">SMOOTH_GROUP_HOTEL_WALLS</a></th><td>turf/closed/indestructible/hotelwall</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_MINERAL_WALLS">SMOOTH_GROUP_MINERAL_WALLS</a></th><td>turf/closed/mineral, /turf/closed/indestructible</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_BOSS_WALLS">SMOOTH_GROUP_BOSS_WALLS</a></th><td>turf/closed/indestructible/riveted/boss</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS">SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS</a></th><td>turf/closed/wall/mineral/titanium/survival</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WALLS">SMOOTH_GROUP_WALLS</a></th><td>turf/closed/wall, /obj/structure/falsewall</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_URANIUM_WALLS">SMOOTH_GROUP_URANIUM_WALLS</a></th><td>turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_GOLD_WALLS">SMOOTH_GROUP_GOLD_WALLS</a></th><td>turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SILVER_WALLS">SMOOTH_GROUP_SILVER_WALLS</a></th><td>turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_DIAMOND_WALLS">SMOOTH_GROUP_DIAMOND_WALLS</a></th><td>turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_PLASMA_WALLS">SMOOTH_GROUP_PLASMA_WALLS</a></th><td>turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_BANANIUM_WALLS">SMOOTH_GROUP_BANANIUM_WALLS</a></th><td>turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SANDSTONE_WALLS">SMOOTH_GROUP_SANDSTONE_WALLS</a></th><td>turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WOOD_WALLS">SMOOTH_GROUP_WOOD_WALLS</a></th><td>turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_IRON_WALLS">SMOOTH_GROUP_IRON_WALLS</a></th><td>turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_ABDUCTOR_WALLS">SMOOTH_GROUP_ABDUCTOR_WALLS</a></th><td>turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_TITANIUM_WALLS">SMOOTH_GROUP_TITANIUM_WALLS</a></th><td>turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_PLASTITANIUM_WALLS">SMOOTH_GROUP_PLASTITANIUM_WALLS</a></th><td>turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SURVIVAL_TIANIUM_POD">SMOOTH_GROUP_SURVIVAL_TIANIUM_POD</a></th><td>turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_HIERO_WALL">SMOOTH_GROUP_HIERO_WALL</a></th><td>obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_PAPERFRAME">SMOOTH_GROUP_PAPERFRAME</a></th><td>obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WINDOW_FULLTILE">SMOOTH_GROUP_WINDOW_FULLTILE</a></th><td>turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE">SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE</a></th><td>obj/structure/window/bronze/fulltile</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM">SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM</a></th><td>turf/closed/indestructible/opsglass, /obj/structure/window/plasma/reinforced/plastitanium</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE">SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE</a></th><td>obj/structure/window/shuttle</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_LATTICE">SMOOTH_GROUP_LATTICE</a></th><td>obj/structure/lattice</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CATWALK">SMOOTH_GROUP_CATWALK</a></th><td>obj/structure/lattice/catwalk</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_AIRLOCK">SMOOTH_GROUP_AIRLOCK</a></th><td>obj/machinery/door/airlock</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_TABLES">SMOOTH_GROUP_TABLES</a></th><td>obj/structure/table</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_WOOD_TABLES">SMOOTH_GROUP_WOOD_TABLES</a></th><td>obj/structure/table/wood</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_FANCY_WOOD_TABLES">SMOOTH_GROUP_FANCY_WOOD_TABLES</a></th><td>obj/structure/table/wood/fancy</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_BRONZE_TABLES">SMOOTH_GROUP_BRONZE_TABLES</a></th><td>obj/structure/table/bronze</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_ABDUCTOR_TABLES">SMOOTH_GROUP_ABDUCTOR_TABLES</a></th><td>obj/structure/table/abductor</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_GLASS_TABLES">SMOOTH_GROUP_GLASS_TABLES</a></th><td>obj/structure/table/glass</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_ALIEN_NEST">SMOOTH_GROUP_ALIEN_NEST</a></th><td>obj/structure/bed/nest</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_ALIEN_RESIN">SMOOTH_GROUP_ALIEN_RESIN</a></th><td>obj/structure/alien/resin</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_ALIEN_WALLS">SMOOTH_GROUP_ALIEN_WALLS</a></th><td>obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_ALIEN_WEEDS">SMOOTH_GROUP_ALIEN_WEEDS</a></th><td>obj/structure/alien/weeds</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SECURITY_BARRICADE">SMOOTH_GROUP_SECURITY_BARRICADE</a></th><td>obj/structure/barricade/security</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SANDBAGS">SMOOTH_GROUP_SANDBAGS</a></th><td>obj/structure/barricade/sandbags</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_HEDGE_FLUFF">SMOOTH_GROUP_HEDGE_FLUFF</a></th><td>obj/structure/fluff/hedge</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_SHUTTLE_PARTS">SMOOTH_GROUP_SHUTTLE_PARTS</a></th><td>obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_CLEANABLE_DIRT">SMOOTH_GROUP_CLEANABLE_DIRT</a></th><td>obj/effect/decal/cleanable/dirt</td></tr>
+        <tr><th><a href="code/__DEFINES/icon_smoothing.html#define/SMOOTH_GROUP_INDUSTRIAL_LIFT">SMOOTH_GROUP_INDUSTRIAL_LIFT</a></th><td>obj/structure/industrial_lift</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/SMOOTH_BITMASK"><aside class="declaration">#define </aside>SMOOTH_BITMASK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 5"/></a>
+    </h3>
+    <p>Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.</p><h3 id="define/SMOOTH_BORDER"><aside class="declaration">#define </aside>SMOOTH_BORDER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 9"/></a>
+    </h3>
+    <p>Atom will smooth with the borders of the map.</p><h3 id="define/SMOOTH_CORNERS"><aside class="declaration">#define </aside>SMOOTH_CORNERS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 3"/></a>
+    </h3>
+    <p>Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.</p><h3 id="define/SMOOTH_DIAGONAL_CORNERS"><aside class="declaration">#define </aside>SMOOTH_DIAGONAL_CORNERS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 7"/></a>
+    </h3>
+    <p>Atom has diagonal corners, with underlays under them.</p><h3 id="define/SMOOTH_GROUP_ABDUCTOR_TABLES"><aside class="declaration">#define </aside>SMOOTH_GROUP_ABDUCTOR_TABLES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 114"/></a>
+    </h3>
+    <p>obj/structure/table/abductor</p><h3 id="define/SMOOTH_GROUP_ABDUCTOR_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_ABDUCTOR_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 92"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor</p><h3 id="define/SMOOTH_GROUP_AIRLOCK"><aside class="declaration">#define </aside>SMOOTH_GROUP_AIRLOCK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 108"/></a>
+    </h3>
+    <p>obj/machinery/door/airlock</p><h3 id="define/SMOOTH_GROUP_ALIEN_NEST"><aside class="declaration">#define </aside>SMOOTH_GROUP_ALIEN_NEST
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 117"/></a>
+    </h3>
+    <p>obj/structure/bed/nest</p><h3 id="define/SMOOTH_GROUP_ALIEN_RESIN"><aside class="declaration">#define </aside>SMOOTH_GROUP_ALIEN_RESIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 118"/></a>
+    </h3>
+    <p>obj/structure/alien/resin</p><h3 id="define/SMOOTH_GROUP_ALIEN_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_ALIEN_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 119"/></a>
+    </h3>
+    <p>obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane</p><h3 id="define/SMOOTH_GROUP_ALIEN_WEEDS"><aside class="declaration">#define </aside>SMOOTH_GROUP_ALIEN_WEEDS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 120"/></a>
+    </h3>
+    <p>obj/structure/alien/weeds</p><h3 id="define/SMOOTH_GROUP_BANANIUM_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_BANANIUM_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 88"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium</p><h3 id="define/SMOOTH_GROUP_BOSS_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_BOSS_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 73"/></a>
+    </h3>
+    <p>turf/closed/indestructible/riveted/boss</p><h3 id="define/SMOOTH_GROUP_BRONZE_TABLES"><aside class="declaration">#define </aside>SMOOTH_GROUP_BRONZE_TABLES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 113"/></a>
+    </h3>
+    <p>obj/structure/table/bronze</p><h3 id="define/SMOOTH_GROUP_CARPET"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 54"/></a>
+    </h3>
+    <p>turf/open/floor/carpet</p><h3 id="define/SMOOTH_GROUP_CARPET_BLACK"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_BLACK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 55"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/black</p><h3 id="define/SMOOTH_GROUP_CARPET_BLUE"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_BLUE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 56"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/blue</p><h3 id="define/SMOOTH_GROUP_CARPET_CYAN"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_CYAN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 57"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/cyan</p><h3 id="define/SMOOTH_GROUP_CARPET_DONK"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_DONK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 66"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/donk</p><h3 id="define/SMOOTH_GROUP_CARPET_EXECUTIVE"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_EXECUTIVE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 64"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/executive</p><h3 id="define/SMOOTH_GROUP_CARPET_GREEN"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_GREEN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 58"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/green</p><h3 id="define/SMOOTH_GROUP_CARPET_ORANGE"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_ORANGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 59"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/orange</p><h3 id="define/SMOOTH_GROUP_CARPET_PURPLE"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_PURPLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 60"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/purple</p><h3 id="define/SMOOTH_GROUP_CARPET_RED"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_RED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 61"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/red</p><h3 id="define/SMOOTH_GROUP_CARPET_ROYAL_BLACK"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_ROYAL_BLACK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 62"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/royalblack</p><h3 id="define/SMOOTH_GROUP_CARPET_ROYAL_BLUE"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_ROYAL_BLUE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 63"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/royalblue</p><h3 id="define/SMOOTH_GROUP_CARPET_STELLAR"><aside class="declaration">#define </aside>SMOOTH_GROUP_CARPET_STELLAR
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 65"/></a>
+    </h3>
+    <p>turf/open/floor/carpet/stellar</p><h3 id="define/SMOOTH_GROUP_CATWALK"><aside class="declaration">#define </aside>SMOOTH_GROUP_CATWALK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 106"/></a>
+    </h3>
+    <p>obj/structure/lattice/catwalk</p><h3 id="define/SMOOTH_GROUP_CLEANABLE_DIRT"><aside class="declaration">#define </aside>SMOOTH_GROUP_CLEANABLE_DIRT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 129"/></a>
+    </h3>
+    <p>obj/effect/decal/cleanable/dirt</p><h3 id="define/SMOOTH_GROUP_CLOSED_TURFS"><aside class="declaration">#define </aside>SMOOTH_GROUP_CLOSED_TURFS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 68"/></a>
+    </h3>
+    <p>turf/closed</p><h3 id="define/SMOOTH_GROUP_DIAMOND_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_DIAMOND_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 86"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond</p><h3 id="define/SMOOTH_GROUP_FANCY_WOOD_TABLES"><aside class="declaration">#define </aside>SMOOTH_GROUP_FANCY_WOOD_TABLES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 112"/></a>
+    </h3>
+    <p>obj/structure/table/wood/fancy</p><h3 id="define/SMOOTH_GROUP_FLOOR_ASH"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_ASH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 49"/></a>
+    </h3>
+    <p>turf/open/floor/plating/ashplanet/ash</p><h3 id="define/SMOOTH_GROUP_FLOOR_ASH_ROCKY"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_ASH_ROCKY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 50"/></a>
+    </h3>
+    <p>turf/open/floor/plating/ashplanet/rocky</p><h3 id="define/SMOOTH_GROUP_FLOOR_GRASS"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_GRASS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 48"/></a>
+    </h3>
+    <p>turf/open/floor/plating/grass</p><h3 id="define/SMOOTH_GROUP_FLOOR_ICE"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_ICE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 51"/></a>
+    </h3>
+    <p>turf/open/floor/plating/ice</p><h3 id="define/SMOOTH_GROUP_FLOOR_LAVA"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_LAVA
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 43"/></a>
+    </h3>
+    <p>turf/open/lava/smooth</p><h3 id="define/SMOOTH_GROUP_FLOOR_SNOWED"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_SNOWED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 52"/></a>
+    </h3>
+    <p>turf/open/floor/plating/snowed</p><h3 id="define/SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS"><aside class="declaration">#define </aside>SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 44"/></a>
+    </h3>
+    <p>turf/open/floor/glass</p><h3 id="define/SMOOTH_GROUP_GLASS_TABLES"><aside class="declaration">#define </aside>SMOOTH_GROUP_GLASS_TABLES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 115"/></a>
+    </h3>
+    <p>obj/structure/table/glass</p><h3 id="define/SMOOTH_GROUP_GOLD_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_GOLD_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 84"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold</p><h3 id="define/SMOOTH_GROUP_HEDGE_FLUFF"><aside class="declaration">#define </aside>SMOOTH_GROUP_HEDGE_FLUFF
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 125"/></a>
+    </h3>
+    <p>obj/structure/fluff/hedge</p><h3 id="define/SMOOTH_GROUP_HIERO_WALL"><aside class="declaration">#define </aside>SMOOTH_GROUP_HIERO_WALL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 96"/></a>
+    </h3>
+    <p>obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall</p><h3 id="define/SMOOTH_GROUP_HOTEL_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_HOTEL_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 71"/></a>
+    </h3>
+    <p>turf/closed/indestructible/hotelwall</p><h3 id="define/SMOOTH_GROUP_INDUSTRIAL_LIFT"><aside class="declaration">#define </aside>SMOOTH_GROUP_INDUSTRIAL_LIFT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 131"/></a>
+    </h3>
+    <p>obj/structure/industrial_lift</p><h3 id="define/SMOOTH_GROUP_IRON_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_IRON_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 91"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron</p><h3 id="define/SMOOTH_GROUP_LATTICE"><aside class="declaration">#define </aside>SMOOTH_GROUP_LATTICE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 105"/></a>
+    </h3>
+    <p>obj/structure/lattice</p><h3 id="define/SMOOTH_GROUP_MATERIAL_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_MATERIAL_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 69"/></a>
+    </h3>
+    <p>turf/closed/wall/material</p><h3 id="define/SMOOTH_GROUP_MINERAL_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_MINERAL_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 72"/></a>
+    </h3>
+    <p>turf/closed/mineral, /turf/closed/indestructible</p><h3 id="define/SMOOTH_GROUP_OPEN_FLOOR"><aside class="declaration">#define </aside>SMOOTH_GROUP_OPEN_FLOOR
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 46"/></a>
+    </h3>
+    <p>turf/open/floor</p><h3 id="define/SMOOTH_GROUP_PAPERFRAME"><aside class="declaration">#define </aside>SMOOTH_GROUP_PAPERFRAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 98"/></a>
+    </h3>
+    <p>obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe</p><h3 id="define/SMOOTH_GROUP_PLASMA_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_PLASMA_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 87"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma</p><h3 id="define/SMOOTH_GROUP_PLASTITANIUM_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_PLASTITANIUM_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 94"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium</p><h3 id="define/SMOOTH_GROUP_SANDBAGS"><aside class="declaration">#define </aside>SMOOTH_GROUP_SANDBAGS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L123">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 123"/></a>
+    </h3>
+    <p>obj/structure/barricade/sandbags</p><h3 id="define/SMOOTH_GROUP_SANDSTONE_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_SANDSTONE_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 89"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone</p><h3 id="define/SMOOTH_GROUP_SECURITY_BARRICADE"><aside class="declaration">#define </aside>SMOOTH_GROUP_SECURITY_BARRICADE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 122"/></a>
+    </h3>
+    <p>obj/structure/barricade/security</p><h3 id="define/SMOOTH_GROUP_SHUTTLE_PARTS"><aside class="declaration">#define </aside>SMOOTH_GROUP_SHUTTLE_PARTS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 127"/></a>
+    </h3>
+    <p>obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle</p><h3 id="define/SMOOTH_GROUP_SILVER_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_SILVER_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 85"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver</p><h3 id="define/SMOOTH_GROUP_SURVIVAL_TIANIUM_POD"><aside class="declaration">#define </aside>SMOOTH_GROUP_SURVIVAL_TIANIUM_POD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 95"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod</p><h3 id="define/SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 74"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/titanium/survival</p><h3 id="define/SMOOTH_GROUP_SYNDICATE_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_SYNDICATE_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 70"/></a>
+    </h3>
+    <p>turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate</p><h3 id="define/SMOOTH_GROUP_TABLES"><aside class="declaration">#define </aside>SMOOTH_GROUP_TABLES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 110"/></a>
+    </h3>
+    <p>obj/structure/table</p><h3 id="define/SMOOTH_GROUP_TITANIUM_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_TITANIUM_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 93"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium</p><h3 id="define/SMOOTH_GROUP_TURF_CHASM"><aside class="declaration">#define </aside>SMOOTH_GROUP_TURF_CHASM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 42"/></a>
+    </h3>
+    <p>turf/open/chasm, /turf/open/floor/fakepit</p><h3 id="define/SMOOTH_GROUP_TURF_OPEN"><aside class="declaration">#define </aside>SMOOTH_GROUP_TURF_OPEN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 41"/></a>
+    </h3>
+    <p>turf/open</p><h3 id="define/SMOOTH_GROUP_URANIUM_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_URANIUM_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 83"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium</p><h3 id="define/SMOOTH_GROUP_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 82"/></a>
+    </h3>
+    <p>turf/closed/wall, /obj/structure/falsewall</p><h3 id="define/SMOOTH_GROUP_WINDOW_FULLTILE"><aside class="declaration">#define </aside>SMOOTH_GROUP_WINDOW_FULLTILE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 100"/></a>
+    </h3>
+    <p>turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile</p><h3 id="define/SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE"><aside class="declaration">#define </aside>SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 101"/></a>
+    </h3>
+    <p>obj/structure/window/bronze/fulltile</p><h3 id="define/SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM"><aside class="declaration">#define </aside>SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 102"/></a>
+    </h3>
+    <p>turf/closed/indestructible/opsglass, /obj/structure/window/plasma/reinforced/plastitanium</p><h3 id="define/SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE"><aside class="declaration">#define </aside>SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 103"/></a>
+    </h3>
+    <p>obj/structure/window/shuttle</p><h3 id="define/SMOOTH_GROUP_WOOD_TABLES"><aside class="declaration">#define </aside>SMOOTH_GROUP_WOOD_TABLES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 111"/></a>
+    </h3>
+    <p>obj/structure/table/wood</p><h3 id="define/SMOOTH_GROUP_WOOD_WALLS"><aside class="declaration">#define </aside>SMOOTH_GROUP_WOOD_WALLS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 90"/></a>
+    </h3>
+    <p>turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood</p><h3 id="define/SMOOTH_OBJ"><aside class="declaration">#define </aside>SMOOTH_OBJ
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 13"/></a>
+    </h3>
+    <p>Smooths with objects, and will thus need to scan turfs for contents.</p><h3 id="define/SMOOTH_QUEUED"><aside class="declaration">#define </aside>SMOOTH_QUEUED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 11"/></a>
+    </h3>
+    <p>Atom is currently queued to smooth.</p><h3 id="define/S_TURF"><aside class="declaration">#define </aside>S_TURF
+            <aside>(num)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/icon_smoothing.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;icon_smoothing.dm 38"/></a>
+    </h3>
+    <p>*SMOOTHING GROUPS</p>
+<ul>
+<li>Groups of things to smooth with.</li>
+<li>
+<ul>
+<li>Contained in the <code>list/smoothing_groups</code> variable.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Matched with the <code>list/canSmoothWith</code> variable to check whether smoothing is possible or not.</li>
+</ul>
+</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

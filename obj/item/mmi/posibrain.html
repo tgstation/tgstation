@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;mmi&#x2F;posibrain - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/mmi/posibrain.html#var">Var Details</a> - <a href="obj/item/mmi/posibrain.html#proc">Proc Details</a></header>
+<main>
+<h1>posibrain <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/mmi.html">mmi</a>/<a href="obj/item/mmi/posibrain.html">posibrain</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/askDelay">askDelay</a></th><td>World time tick when ghost polling will be available again</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/begin_activation_message">begin_activation_message</a></th><td>If it pings on creation immediately
+Message sent to the user when polling ghosts</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/dead_message">dead_message</a></th><td>Examine message when the posibrain has no mob</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/fail_message">fail_message</a></th><td>Message sent as a visible message on failure</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/new_mob_message">new_mob_message</a></th><td>Visible message sent when a player possesses the brain</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/new_role">new_role</a></th><td>Role assigned to the newly created mind</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/next_ask">next_ask</a></th><td>Can be set to tell ghosts what the brain will be used for</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/picked_name">picked_name</a></th><td>One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/recharge_message">recharge_message</a></th><td>Examine message when the posibrain cannot poll ghosts due to cooldown</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/searching">searching</a></th><td>Delay after polling ghosts</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#var/success_message">success_message</a></th><td>Message sent as a visible message on success</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#proc/Topic">Topic</a></th><td>Picked posibrain name</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#proc/activate">activate</a></th><td>Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#proc/attack_ghost">attack_ghost</a></th><td>ATTACK GHOST IGNORING PARENT RETURN VALUE</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#proc/ping_ghosts">ping_ghosts</a></th><td>Notify ghosts that the posibrain is up for grabs</td></tr>
+            <tr><th><a href="obj/item/mmi/posibrain.html#proc/transfer_personality">transfer_personality</a></th><td>Moves the candidate from the ghost to the posibrain</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/askDelay"><aside class="declaration">var </aside>askDelay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 12"/></a></h3>
+        <p>World time tick when ghost polling will be available again</p><h3 id="var/begin_activation_message"><aside class="declaration">var </aside>begin_activation_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 18"/></a></h3>
+        <p>If it pings on creation immediately
+Message sent to the user when polling ghosts</p><h3 id="var/dead_message"><aside class="declaration">var </aside>dead_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 28"/></a></h3>
+        <p>Examine message when the posibrain has no mob</p><h3 id="var/fail_message"><aside class="declaration">var </aside>fail_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 22"/></a></h3>
+        <p>Message sent as a visible message on failure</p><h3 id="var/new_mob_message"><aside class="declaration">var </aside>new_mob_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 26"/></a></h3>
+        <p>Visible message sent when a player possesses the brain</p><h3 id="var/new_role"><aside class="declaration">var </aside>new_role
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 24"/></a></h3>
+        <p>Role assigned to the newly created mind</p><h3 id="var/next_ask"><aside class="declaration">var </aside>next_ask
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 11"/></a></h3>
+        <p>Can be set to tell ghosts what the brain will be used for</p><h3 id="var/picked_name"><aside class="declaration">var </aside>picked_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 32"/></a></h3>
+        <p>One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names</p><h3 id="var/recharge_message"><aside class="declaration">var </aside>recharge_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 30"/></a></h3>
+        <p>Examine message when the posibrain cannot poll ghosts due to cooldown</p><h3 id="var/searching"><aside class="declaration">var </aside>searching
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 13"/></a></h3>
+        <p>Delay after polling ghosts</p><h3 id="var/success_message"><aside class="declaration">var </aside>success_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 20"/></a></h3>
+        <p>Message sent as a visible message on success</p><h2 id="proc">Proc Details</h2><h3 id="proc/Topic"><aside class="parent"><a title="/atom" href="atom.html#proc/Topic">&uarr;</a></aside>Topic<aside>(href, href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 34"/></a></aside>
+        </h3>
+        <p>Picked posibrain name</p><h3 id="proc/activate"><aside class="declaration">proc </aside>activate<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 102"/></a></aside>
+        </h3>
+        <p>Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.</p><h3 id="proc/attack_ghost">attack_ghost<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 89"/></a></aside>
+        </h3>
+        <p>ATTACK GHOST IGNORING PARENT RETURN VALUE</p><h3 id="proc/ping_ghosts"><aside class="declaration">proc </aside>ping_ghosts<aside>(msg, newlymade) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 41"/></a></aside>
+        </h3>
+        <p>Notify ghosts that the posibrain is up for grabs</p><h3 id="proc/transfer_personality"><aside class="declaration">proc </aside>transfer_personality<aside>(/<a href="mob.html">mob</a>/candidate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/posibrain.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;posibrain.dm 137"/></a></aside>
+        </h3>
+        <p>Moves the candidate from the ghost to the posibrain</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

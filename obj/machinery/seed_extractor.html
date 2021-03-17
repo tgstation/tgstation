@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;seed_extractor - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/seed_extractor.html#var">Var Details</a> - <a href="obj/machinery/seed_extractor.html#proc">Proc Details</a></header>
+<main>
+<h1>seed_extractor <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/seed_extractor.html">seed_extractor</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/hydroponics/seed_extractor.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;hydroponics&#x2F;seed_extractor.dm 57"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/seed_extractor.html#var/piles">piles</a></th><td>Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/seed_extractor.html#proc/add_seed">add_seed</a></th><td></td></tr>
+            <tr><th><a href="obj/machinery/seed_extractor.html#proc/generate_seed_string">generate_seed_string</a></th><td>Generate seed string</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/piles"><aside class="declaration">var </aside>piles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/hydroponics/seed_extractor.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;hydroponics&#x2F;seed_extractor.dm 66"/></a></h3>
+        <p>Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_seed"><aside class="declaration">proc </aside>add_seed<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/seeds.html">seeds</a>/O) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/hydroponics/seed_extractor.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;hydroponics&#x2F;seed_extractor.dm 142"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Add Seeds Proc.</p>
+</li>
+<li>
+<p>Adds the seeds to the contents and to an associated list that pregenerates the data</p>
+</li>
+<li>
+<p>needed to go to the ui handler</p>
+</li>
+</ul><h3 id="proc/generate_seed_string"><aside class="declaration">proc </aside>generate_seed_string<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/seeds.html">seeds</a>/O) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/hydroponics/seed_extractor.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;hydroponics&#x2F;seed_extractor.dm 132"/></a></aside>
+        </h3>
+        <p>Generate seed string</p>
+<p>Creates a string based of the traits of a seed.  We use this string as a bucket for all
+seeds that match as well as the key the ui uses to get the seed.  We also use the key
+for the data shown in the ui.  Javascript parses this string to display</p>
+<p>Arguments:</p>
+<ul>
+<li>O - seed to generate the string from</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

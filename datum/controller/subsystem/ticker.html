@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;ticker - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/ticker.html#var">Var Details</a> - <a href="datum/controller/subsystem/ticker.html#proc">Proc Details</a></header>
+<main>
+<h1>ticker <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/ticker.html">ticker</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ticker.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ticker.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#var/anonymousnames">anonymousnames</a></th><td>If set to an anonymous theme datum then people spawn with said themed anon name (see anonymousnames.dm)</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#var/emergency_reason">emergency_reason</a></th><td>Why an emergency shuttle was called</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#var/hearts">hearts</a></th><td>People who have been commended and will receive a heart</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#var/triai">triai</a></th><td>Boolean to see if the game needs to set up a triumvirate ai (see tripAI.dm)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/HandleRandomHardcoreScore">HandleRandomHardcoreScore</a></th><td>Handles random hardcore point rewarding if it applies.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/antag_report">antag_report</a></th><td>gotta escape nerd</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/award_service">award_service</a></th><td>total service income
+This is the richest account on station at roundend.
+This is the station's total wealth at the end of the round.
+How many players joined the round.
+Awards the service department an achievement and updates the chef and bartender's highscore for tourists served.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/declare_completion">declare_completion</a></th><td>no score no glory</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/handle_hearts">handle_hearts</a></th><td>Once the round is actually over, cycle through the ckeys in the hearts list and give them the hearted status</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/hardcore_random_report">hardcore_random_report</a></th><td>Generate a report for all players who made it out alive with a hardcore random character and prints their final score</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/is_mode">is_mode</a></th><td>Returns if either the master mode or the forced secret ruleset matches the mode name.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/log_roundend_report">log_roundend_report</a></th><td>Log the round-end report as an HTML file</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/market_report">market_report</a></th><td>Generate a report for how much money is on station, as well as the richest crewmember on the station.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/ticker.html#proc/poll_hearts">poll_hearts</a></th><td>Called when the shuttle starts launching back to centcom, polls a few random players who joined the round for commendations</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/anonymousnames"><aside class="declaration">var </aside>anonymousnames
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/anonymous_theme.html">anonymous_theme</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ticker.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ticker.dm 31"/></a></h3>
+        <p>If set to an anonymous theme datum then people spawn with said themed anon name (see anonymousnames.dm)</p><h3 id="var/emergency_reason"><aside class="declaration">var </aside>emergency_reason
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ticker.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ticker.dm 68"/></a></h3>
+        <p>Why an emergency shuttle was called</p><h3 id="var/hearts"><aside class="declaration">var </aside>hearts
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ticker.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ticker.dm 63"/></a></h3>
+        <p>People who have been commended and will receive a heart</p><h3 id="var/triai"><aside class="declaration">var </aside>triai
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ticker.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ticker.dm 33"/></a></h3>
+        <p>Boolean to see if the game needs to set up a triumvirate ai (see tripAI.dm)</p><h2 id="proc">Proc Details</h2><h3 id="proc/HandleRandomHardcoreScore"><aside class="declaration">proc </aside>HandleRandomHardcoreScore<aside>(/<a href="client.html">client</a>/player_client) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 183"/></a></aside>
+        </h3>
+        <p>Handles random hardcore point rewarding if it applies.</p><h3 id="proc/antag_report"><aside class="declaration">proc </aside>antag_report<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L607">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 607"/></a></aside>
+        </h3>
+        <p>gotta escape nerd</p><h3 id="proc/award_service"><aside class="declaration">proc </aside>award_service<aside>(award) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L550">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 550"/></a></aside>
+        </h3>
+        <p>total service income
+This is the richest account on station at roundend.
+This is the station's total wealth at the end of the round.
+How many players joined the round.
+Awards the service department an achievement and updates the chef and bartender's highscore for tourists served.</p>
+<p>Arguments:</p>
+<ul>
+<li>award: Achievement to give service department</li>
+</ul><h3 id="proc/declare_completion"><aside class="declaration">proc </aside>declare_completion<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L205">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 205"/></a></aside>
+        </h3>
+        <p>no score no glory</p><h3 id="proc/handle_hearts"><aside class="declaration">proc </aside>handle_hearts<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/hearted.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;hearted.dm 20"/></a></aside>
+        </h3>
+        <p>Once the round is actually over, cycle through the ckeys in the hearts list and give them the hearted status</p><h3 id="proc/hardcore_random_report"><aside class="declaration">proc </aside>hardcore_random_report<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L587">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 587"/></a></aside>
+        </h3>
+        <p>Generate a report for all players who made it out alive with a hardcore random character and prints their final score</p><h3 id="proc/is_mode"><aside class="declaration">proc </aside>is_mode<aside>(mode_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ticker.dm#L648">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ticker.dm 648"/></a></aside>
+        </h3>
+        <p>Returns if either the master mode or the forced secret ruleset matches the mode name.</p><h3 id="proc/log_roundend_report"><aside class="declaration">proc </aside>log_roundend_report<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L373">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 373"/></a></aside>
+        </h3>
+        <p>Log the round-end report as an HTML file</p>
+<p>Composits the roundend report, and saves it in two locations.
+The report is first saved along with the round's logs
+Then, the report is copied to a fixed directory specifically for
+housing the server's last roundend report. In this location,
+the file will be overwritten at the end of each shift.</p><h3 id="proc/market_report"><aside class="declaration">proc </aside>market_report<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/roundend.dm#L493">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;roundend.dm 493"/></a></aside>
+        </h3>
+        <p>Generate a report for how much money is on station, as well as the richest crewmember on the station.</p><h3 id="proc/poll_hearts"><aside class="declaration">proc </aside>poll_hearts<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/hearted.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;hearted.dm 2"/></a></aside>
+        </h3>
+        <p>Called when the shuttle starts launching back to centcom, polls a few random players who joined the round for commendations</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

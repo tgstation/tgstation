@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;construction&#x2F;plumbing - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/construction/plumbing.html#var">Var Details</a> - <a href="obj/item/construction/plumbing.html#proc">Proc Details</a></header>
+<main>
+<h1>plumbing <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/construction.html">construction</a>/<a href="obj/item/construction/plumbing.html">plumbing</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L972">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 972"/></a></h1>
+
+<p>The plumbing RCD. All the blueprints are located in _globalvars &gt; lists &gt; construction.dm</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#var/blueprint">blueprint</a></th><td>type of the plumbing machine</td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#var/choices">choices</a></th><td>index, used in the attack self to get the type. stored here since it doesnt change</td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#var/machinery_data">machinery_data</a></th><td>All info for construction</td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#var/name_to_type">name_to_type</a></th><td>index, used in the attack self to get the type. stored here since it doesnt change</td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#var/plumbing_design_types">plumbing_design_types</a></th><td>This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#proc/create_machine">create_machine</a></th><td>pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type</td></tr>
+            <tr><th><a href="obj/item/construction/plumbing.html#proc/set_plumbing_designs">set_plumbing_designs</a></th><td>Set the list of designs this plumbing rcd can make</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blueprint"><aside class="declaration">var </aside>blueprint
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L984">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 984"/></a></h3>
+        <p>type of the plumbing machine</p><h3 id="var/choices"><aside class="declaration">var </aside>choices
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L986">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 986"/></a></h3>
+        <p>index, used in the attack self to get the type. stored here since it doesnt change</p><h3 id="var/machinery_data"><aside class="declaration">var </aside>machinery_data
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L990">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 990"/></a></h3>
+        <p>All info for construction</p><h3 id="var/name_to_type"><aside class="declaration">var </aside>name_to_type
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L988">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 988"/></a></h3>
+        <p>index, used in the attack self to get the type. stored here since it doesnt change</p><h3 id="var/plumbing_design_types"><aside class="declaration">var </aside>plumbing_design_types
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L994">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 994"/></a></h3>
+        <p>This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.</p><h2 id="proc">Proc Details</h2><h3 id="proc/create_machine"><aside class="declaration">proc </aside>create_machine<aside>(/<a href="atom.html">atom</a>/A, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L1040">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 1040"/></a></aside>
+        </h3>
+        <p>pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type</p><h3 id="proc/set_plumbing_designs"><aside class="declaration">proc </aside>set_plumbing_designs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L1017">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 1017"/></a></aside>
+        </h3>
+        <p>Set the list of designs this plumbing rcd can make</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

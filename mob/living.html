@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living.html#var">Var Details</a> - <a href="mob/living.html#proc">Proc Details</a></header>
+<main>
+<h1>living <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 1"/></a></h1>
+
+<p>Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living.html#var/abilities">abilities</a></th><td>used for database logging</td></tr>
+            <tr><th><a href="mob/living.html#var/blood_volume">blood_volume</a></th><td>converted to a list of stun absorption sources this mob has when one is added</td></tr>
+            <tr><th><a href="mob/living.html#var/body_position">body_position</a></th><td>Variable to track the body position of a mob, regardgless of the actual angle of rotation (usually matching it, but not necessarily).</td></tr>
+            <tr><th><a href="mob/living.html#var/body_position_pixel_x_offset">body_position_pixel_x_offset</a></th><td>The y amount a mob's sprite should be offset due to the current position they're in (e.g. lying down moves your sprite down)</td></tr>
+            <tr><th><a href="mob/living.html#var/body_position_pixel_y_offset">body_position_pixel_y_offset</a></th><td>The x amount a mob's sprite should be offset due to the current position they're in</td></tr>
+            <tr><th><a href="mob/living.html#var/body_temp_changes">body_temp_changes</a></th><td>Whether the mob is slowed down when dragging another prone mob
+List of changes to body temperature, used by desease symtoms like fever</td></tr>
+            <tr><th><a href="mob/living.html#var/bubble_icon">bubble_icon</a></th><td>used to prevent spam with smoke reagent reaction on mob.</td></tr>
+            <tr><th><a href="mob/living.html#var/butcher_difficulty">butcher_difficulty</a></th><td>these will always be yielded from butchering</td></tr>
+            <tr><th><a href="mob/living.html#var/butcher_results">butcher_results</a></th><td>the id a mob gets when it's created</td></tr>
+            <tr><th><a href="mob/living.html#var/can_buckle_to">can_buckle_to</a></th><td>Is this mob allowed to be buckled/unbuckled to/from things?</td></tr>
+            <tr><th><a href="mob/living.html#var/cloneloss">cloneloss</a></th><td>Burn damage caused by being way too hot, too cold or burnt.</td></tr>
+            <tr><th><a href="mob/living.html#var/combat_mode">combat_mode</a></th><td>If combat mode is on or not</td></tr>
+            <tr><th><a href="mob/living.html#var/crit_threshold">crit_threshold</a></th><td>Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.</td></tr>
+            <tr><th><a href="mob/living.html#var/default_num_hands">default_num_hands</a></th><td>How many hands does this mob have by default. This shouldn't change at runtime.</td></tr>
+            <tr><th><a href="mob/living.html#var/default_num_legs">default_num_legs</a></th><td>does the mob have distinct limbs?(arms,legs, chest,head)
+How many legs does this mob have by default. This shouldn't change at runtime.</td></tr>
+            <tr><th><a href="mob/living.html#var/disease_resistances">disease_resistances</a></th><td>list of all diseases in a mob</td></tr>
+            <tr><th><a href="mob/living.html#var/druggy">druggy</a></th><td>a list of all status effects the mob has</td></tr>
+            <tr><th><a href="mob/living.html#var/fire_stacks">fire_stacks</a></th><td>The &quot;Are we on fire?&quot; var</td></tr>
+            <tr><th><a href="mob/living.html#var/fireloss">fireloss</a></th><td>Toxic damage caused by being poisoned or radiated</td></tr>
+            <tr><th><a href="mob/living.html#var/guaranteed_butcher_results">guaranteed_butcher_results</a></th><td>these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness</td></tr>
+            <tr><th><a href="mob/living.html#var/hardcrit_threshold">hardcrit_threshold</a></th><td>when the mob goes from &quot;normal&quot; to crit
+When the mob enters hard critical state and is fully incapacitated.</td></tr>
+            <tr><th><a href="mob/living.html#var/has_limbs">has_limbs</a></th><td>more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..</td></tr>
+            <tr><th><a href="mob/living.html#var/health">health</a></th><td>The mob's current health.</td></tr>
+            <tr><th><a href="mob/living.html#var/health_doll_icon">health_doll_icon</a></th><td>what icon the mob uses for speechbubbles</td></tr>
+            <tr><th><a href="mob/living.html#var/incorporeal_move">incorporeal_move</a></th><td>Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.</td></tr>
+            <tr><th><a href="mob/living.html#var/last_bumped">last_bumped</a></th><td>if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi</td></tr>
+            <tr><th><a href="mob/living.html#var/last_special">last_special</a></th><td>Directly affects how long a mob will hallucinate for</td></tr>
+            <tr><th><a href="mob/living.html#var/lastattacker">lastattacker</a></th><td>Badminnery resize</td></tr>
+            <tr><th><a href="mob/living.html#var/limb_destroyer">limb_destroyer</a></th><td>Tracks how many stacks of fire we have on, max is usually 20</td></tr>
+            <tr><th><a href="mob/living.html#var/living_flags">living_flags</a></th><td>Generic bitflags for boolean conditions at the <a href="mob/living.html" title="/mob/living">/mob/living</a> level. Keep this for inherent traits of living types, instead of runtime-changeable ones.</td></tr>
+            <tr><th><a href="mob/living.html#var/lying_angle">lying_angle</a></th><td>Number of degrees of rotation of a mob. 0 means no rotation, up-side facing NORTH. 90 means up-side rotated to face EAST, and so on.</td></tr>
+            <tr><th><a href="mob/living.html#var/lying_prev">lying_prev</a></th><td>Value of lying lying_angle before last change. TODO: Remove the need for this.</td></tr>
+            <tr><th><a href="mob/living.html#var/maxHealth">maxHealth</a></th><td>Maximum health that should be possible.</td></tr>
+            <tr><th><a href="mob/living.html#var/mob_surgery_speed_mod">mob_surgery_speed_mod</a></th><td>a list of surgery datums. generally empty, they're added when the player wants them.
+Mob specific surgery speed modifier</td></tr>
+            <tr><th><a href="mob/living.html#var/mobility_flags">mobility_flags</a></th><td>Flags that determine the potential of a mob to perform certain actions. Do not change this directly.</td></tr>
+            <tr><th><a href="mob/living.html#var/num_hands">num_hands</a></th><td>How many hands hands does this mob currently have. Should only be changed through set_num_hands()</td></tr>
+            <tr><th><a href="mob/living.html#var/num_legs">num_legs</a></th><td>How many legs does this mob currently have. Should only be changed through set_num_legs()</td></tr>
+            <tr><th><a href="mob/living.html#var/numba">numba</a></th><td>if a mob's name should be appended with an id when created e.g. Mob (666)</td></tr>
+            <tr><th><a href="mob/living.html#var/on_fire">on_fire</a></th><td>Time of death</td></tr>
+            <tr><th><a href="mob/living.html#var/oxyloss">oxyloss</a></th><td>Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)</td></tr>
+            <tr><th><a href="mob/living.html#var/ranged_ability">ranged_ability</a></th><td>how much blood the mob has</td></tr>
+            <tr><th><a href="mob/living.html#var/see_override">see_override</a></th><td>Any ranged ability the mob has, as a click override</td></tr>
+            <tr><th><a href="mob/living.html#var/staminaloss">staminaloss</a></th><td>Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims</td></tr>
+            <tr><th><a href="mob/living.html#var/status_effects">status_effects</a></th><td>0 for no override, sets see_invisible = see_override in silicon &amp; carbon life process via update_sight()</td></tr>
+            <tr><th><a href="mob/living.html#var/timeofdeath">timeofdeath</a></th><td>Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.</td></tr>
+            <tr><th><a href="mob/living.html#var/toxloss">toxloss</a></th><td>Oxygen depravation damage (no air in lungs)</td></tr>
+            <tr><th><a href="mob/living.html#var/usable_hands">usable_hands</a></th><td>How many usable hands does this mob currently have. Should only be changed through set_usable_hands()</td></tr>
+            <tr><th><a href="mob/living.html#var/usable_legs">usable_legs</a></th><td>How many usable legs this mob currently has. Should only be changed through set_usable_legs()</td></tr>
+            <tr><th><a href="mob/living.html#var/ventcrawl_layer">ventcrawl_layer</a></th><td>If the mob is irradiated.</td></tr>
+            <tr><th><a href="mob/living.html#var/weather_immunities">weather_immunities</a></th><td>effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living.html#proc/IsFrozen">IsFrozen</a></th><td>FROZEN</td></tr>
+            <tr><th><a href="mob/living.html#proc/IsImmobilized">IsImmobilized</a></th><td>IMMOBILIZED</td></tr>
+            <tr><th><a href="mob/living.html#proc/IsKnockdown">IsKnockdown</a></th><td>KNOCKDOWN</td></tr>
+            <tr><th><a href="mob/living.html#proc/IsParalyzed">IsParalyzed</a></th><td>PARALYZED</td></tr>
+            <tr><th><a href="mob/living.html#proc/IsSleeping">IsSleeping</a></th><td>SLEEPING</td></tr>
+            <tr><th><a href="mob/living.html#proc/IsStun">IsStun</a></th><td>STUN</td></tr>
+            <tr><th><a href="mob/living.html#proc/IsUnconscious">IsUnconscious</a></th><td>UNCONSCIOUS</td></tr>
+            <tr><th><a href="mob/living.html#proc/Life">Life</a></th><td>Handles the biological and general over-time processes of the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/PermaSleeping">PermaSleeping</a></th><td>Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)</td></tr>
+            <tr><th><a href="mob/living.html#proc/add_body_temperature_change">add_body_temperature_change</a></th><td>add_body_temperature_change Adds modifications to the body temperature</td></tr>
+            <tr><th><a href="mob/living.html#proc/add_confusion">add_confusion</a></th><td>Add confusion to the mob. Confusion will make the mob walk randomly.
+Shorthand for set_confusion(confusion + x).</td></tr>
+            <tr><th><a href="mob/living.html#proc/add_movespeed_mod_immunities">add_movespeed_mod_immunities</a></th><td>Ignores specific slowdowns. Accepts a list of slowdowns.</td></tr>
+            <tr><th><a href="mob/living.html#proc/add_quirk">add_quirk</a></th><td>DISABILITIES</td></tr>
+            <tr><th><a href="mob/living.html#proc/add_stun_absorption">add_stun_absorption</a></th><td>STUN ABSORPTION</td></tr>
+            <tr><th><a href="mob/living.html#proc/adjust_fire_stacks">adjust_fire_stacks</a></th><td>Adjust the amount of fire stacks on a mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/apply_damage">apply_damage</a></th><td>Applies damage to this mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/apply_damage_type">apply_damage_type</a></th><td>like <a href="mob/living.html#proc/apply_damage" title="/mob/living">apply_damage</a> except it always uses the damage procs</td></tr>
+            <tr><th><a href="mob/living.html#proc/apply_damages">apply_damages</a></th><td>applies multiple damages at once via <a href="mob/living.html#proc/apply_damage" title="/mob/living">/mob/living/proc/apply_damage</a></td></tr>
+            <tr><th><a href="mob/living.html#proc/apply_effect">apply_effect</a></th><td>applies various common status effects or common hardcoded mob effects</td></tr>
+            <tr><th><a href="mob/living.html#proc/apply_effects">apply_effects</a></th><td>applies multiple effects at once via <a href="mob/living.html#proc/apply_effect" title="/mob/living">/mob/living/proc/apply_effect</a></td></tr>
+            <tr><th><a href="mob/living.html#proc/apply_martial_art">apply_martial_art</a></th><td>Apply a martial art move from src to target.</td></tr>
+            <tr><th><a href="mob/living.html#proc/bleedDragAmount">bleedDragAmount</a></th><td>Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]</td></tr>
+            <tr><th><a href="mob/living.html#proc/can_inject">can_inject</a></th><td>Returns whether or not the mob can be injected. Should not perform any side effects.</td></tr>
+            <tr><th><a href="mob/living.html#proc/can_look_up">can_look_up</a></th><td>Checks if the user is incapacitated or on cooldown.</td></tr>
+            <tr><th><a href="mob/living.html#proc/canface">canface</a></th><td>Checks mobility move as well as parent checks</td></tr>
+            <tr><th><a href="mob/living.html#proc/cure_blind">cure_blind</a></th><td>TRAIT PROCS</td></tr>
+            <tr><th><a href="mob/living.html#proc/do_slap_animation">do_slap_animation</a></th><td>Does a slap animation on an atom</td></tr>
+            <tr><th><a href="mob/living.html#proc/dust">dust</a></th><td>This is the proc for turning a mob into ash.
+Dusting robots does not eject the MMI, so it's a bit more powerful than gib()</td></tr>
+            <tr><th><a href="mob/living.html#proc/electrocute_act">electrocute_act</a></th><td>As the name suggests, this should be called to apply electric shocks.</td></tr>
+            <tr><th><a href="mob/living.html#proc/expose_reagents">expose_reagents</a></th><td></td></tr>
+            <tr><th><a href="mob/living.html#proc/extinguish_mob">extinguish_mob</a></th><td>Extinguish all fire on the mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_attack_type">get_attack_type</a></th><td>Returns the attack damage type of a living mob such as <a href="code/__DEFINES/combat.html#define/BRUTE" title="BRUTE">BRUTE</a>.</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_blood_dna_list">get_blood_dna_list</a></th><td>returns the mob's dna info as a list, to be inserted in an object's blood_DNA list</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_body_temp_normal">get_body_temp_normal</a></th><td>get_body_temp_normal Returns the mobs normal body temperature with any modifications applied</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_body_temp_normal_change">get_body_temp_normal_change</a></th><td>get_body_temp_normal_change Returns the aggregate change to body temperature</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_confusion">get_confusion</a></th><td>Gets the amount of confusion on the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_damage_amount">get_damage_amount</a></th><td>return the damage amount for the type given</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_equipped_items">get_equipped_items</a></th><td>Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_fullness">get_fullness</a></th><td>Get the fullness of the mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_organic_health">get_organic_health</a></th><td>Returns the health of the mob while ignoring damage of non-organic (prosthetic) limbs
+Used by cryo cells to not permanently imprison those with damage from prosthetics,
+as they cannot be healed through chemicals.</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_quirk_string">get_quirk_string</a></th><td>get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria</td></tr>
+            <tr><th><a href="mob/living.html#proc/get_taste_sensitivity">get_taste_sensitivity</a></th><td>Gets taste sensitivity of given mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/gib">gib</a></th><td>Blow up the mob into giblets</td></tr>
+            <tr><th><a href="mob/living.html#proc/has_reagent">has_reagent</a></th><td>Check if the mob contains this reagent.</td></tr>
+            <tr><th><a href="mob/living.html#proc/hasparasites">hasparasites</a></th><td>parasite tracking/finding procs</td></tr>
+            <tr><th><a href="mob/living.html#proc/heal_bodypart_damage">heal_bodypart_damage</a></th><td>heal ONE external organ, organ gets randomly selected from damaged ones.</td></tr>
+            <tr><th><a href="mob/living.html#proc/heal_ordered_damage">heal_ordered_damage</a></th><td>heal up to amount damage, in a given order</td></tr>
+            <tr><th><a href="mob/living.html#proc/heal_overall_damage">heal_overall_damage</a></th><td>heal MANY bodyparts, in random order</td></tr>
+            <tr><th><a href="mob/living.html#proc/hud_set_nanite_indicator">hud_set_nanite_indicator</a></th><td>Diagnostic HUDs!</td></tr>
+            <tr><th><a href="mob/living.html#proc/ignore_slowdown">ignore_slowdown</a></th><td>Ignores all slowdowns that lack the IGNORE_NOSLOW flag.</td></tr>
+            <tr><th><a href="mob/living.html#proc/is_face_visible">is_face_visible</a></th><td>Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces</td></tr>
+            <tr><th><a href="mob/living.html#proc/look_down">look_down</a></th><td>look_down Changes the perspective of the mob to any openspace turf below the mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/look_up">look_up</a></th><td>look_up Changes the perspective of the mob to any openspace turf above the mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/lying_angle_on_movement">lying_angle_on_movement</a></th><td>Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_deathcoma_trait_gain">on_deathcoma_trait_gain</a></th><td>Called when [TRAIT_DEATHCOMA] is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_deathcoma_trait_loss">on_deathcoma_trait_loss</a></th><td>Called when [TRAIT_DEATHCOMA] is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_fall">on_fall</a></th><td>Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_floored_end">on_floored_end</a></th><td>Proc to append behavior to the condition of being floored. Called when the condition ends.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_floored_start">on_floored_start</a></th><td>Proc to append behavior to the condition of being floored. Called when the condition starts.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_floored_trait_gain">on_floored_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FLOORED" title="TRAIT_FLOORED">TRAIT_FLOORED</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_floored_trait_loss">on_floored_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FLOORED" title="TRAIT_FLOORED">TRAIT_FLOORED</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_forced_standing_trait_gain">on_forced_standing_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FORCED_STANDING" title="TRAIT_FORCED_STANDING">TRAIT_FORCED_STANDING</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_forced_standing_trait_loss">on_forced_standing_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FORCED_STANDING" title="TRAIT_FORCED_STANDING">TRAIT_FORCED_STANDING</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_handsblocked_end">on_handsblocked_end</a></th><td>Proc to append behavior to the condition of being handsblocked. Called when the condition ends.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_handsblocked_start">on_handsblocked_start</a></th><td>Proc to append behavior to the condition of being handsblocked. Called when the condition starts.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_handsblocked_trait_gain">on_handsblocked_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_HANDS_BLOCKED" title="TRAIT_HANDS_BLOCKED">TRAIT_HANDS_BLOCKED</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_handsblocked_trait_loss">on_handsblocked_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_HANDS_BLOCKED" title="TRAIT_HANDS_BLOCKED">TRAIT_HANDS_BLOCKED</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_immobilized_trait_gain">on_immobilized_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_IMMOBILIZED" title="TRAIT_IMMOBILIZED">TRAIT_IMMOBILIZED</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_immobilized_trait_loss">on_immobilized_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_IMMOBILIZED" title="TRAIT_IMMOBILIZED">TRAIT_IMMOBILIZED</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_incapacitated_trait_gain">on_incapacitated_trait_gain</a></th><td>Called when [TRAIT_INCAPACITATED] is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_incapacitated_trait_loss">on_incapacitated_trait_loss</a></th><td>Called when [TRAIT_INCAPACITATED] is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_knockedout_trait_gain">on_knockedout_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_KNOCKEDOUT" title="TRAIT_KNOCKEDOUT">TRAIT_KNOCKEDOUT</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_knockedout_trait_loss">on_knockedout_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_KNOCKEDOUT" title="TRAIT_KNOCKEDOUT">TRAIT_KNOCKEDOUT</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_lying_down">on_lying_down</a></th><td>Proc to append behavior related to lying down.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_movement_type_flag_disabled">on_movement_type_flag_disabled</a></th><td>From [element/movetype_handler/on_movement_type_trait_loss()]</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_movement_type_flag_enabled">on_movement_type_flag_enabled</a></th><td>From [element/movetype_handler/on_movement_type_trait_gain()]</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_pull_blocked_trait_gain">on_pull_blocked_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_PULL_BLOCKED" title="TRAIT_PULL_BLOCKED">TRAIT_PULL_BLOCKED</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_pull_blocked_trait_loss">on_pull_blocked_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_PULL_BLOCKED" title="TRAIT_PULL_BLOCKED">TRAIT_PULL_BLOCKED</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_restrained_trait_gain">on_restrained_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_RESTRAINED" title="TRAIT_RESTRAINED">TRAIT_RESTRAINED</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_restrained_trait_loss">on_restrained_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_RESTRAINED" title="TRAIT_RESTRAINED">TRAIT_RESTRAINED</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_skittish_trait_gain">on_skittish_trait_gain</a></th><td>Called when [TRAIT_SKITTISH] is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_skittish_trait_loss">on_skittish_trait_loss</a></th><td>Called when [TRAIT_SKITTISH] is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_standing_up">on_standing_up</a></th><td>Proc to append behavior related to lying down.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_ui_blocked_trait_gain">on_ui_blocked_trait_gain</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_UI_BLOCKED" title="TRAIT_UI_BLOCKED">TRAIT_UI_BLOCKED</a> is added to the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/on_ui_blocked_trait_loss">on_ui_blocked_trait_loss</a></th><td>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_UI_BLOCKED" title="TRAIT_UI_BLOCKED">TRAIT_UI_BLOCKED</a> is removed from the mob.</td></tr>
+            <tr><th><a href="mob/living.html#proc/register_init_signals">register_init_signals</a></th><td>Called on <a href="mob/living.html" title="/mob/living">/mob/living/Initialize()</a>, for the mob to register to relevant signals.</td></tr>
+            <tr><th><a href="mob/living.html#proc/remove_body_temperature_change">remove_body_temperature_change</a></th><td>remove_body_temperature_change Removes the modifications to the body temperature</td></tr>
+            <tr><th><a href="mob/living.html#proc/remove_movespeed_mod_immunities">remove_movespeed_mod_immunities</a></th><td>Unignores specific slowdowns. Accepts a list of slowdowns.</td></tr>
+            <tr><th><a href="mob/living.html#proc/resist_buckle">resist_buckle</a></th><td>see defines/combat.dm, this should be baseline 60%
+Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.</td></tr>
+            <tr><th><a href="mob/living.html#proc/setGrabState">setGrabState</a></th><td>Updates the grab state of the mob and updates movespeed</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_body_position">set_body_position</a></th><td>Changes the value of the [living/body_position] variable.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_buckled">set_buckled</a></th><td>Reports the event of the change in value of the buckled variable.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_confusion">set_confusion</a></th><td>Set the confusion of the mob. Confusion will make the mob walk randomly.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_fire_stacks">set_fire_stacks</a></th><td>Set the fire stacks on a mob</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_health">set_health</a></th><td>Sets the current mob's health value. Do not call directly if you don't know what you are doing, use the damage procs, instead.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_lying_angle">set_lying_angle</a></th><td>Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_lying_down">set_lying_down</a></th><td>Change the [body_position] to <a href="code/__DEFINES/mobs.html#define/LYING_DOWN" title="LYING_DOWN">LYING_DOWN</a> and update associated behavior.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_num_hands">set_num_hands</a></th><td>Proc to modify the value of num_hands and hook behavior associated to this event.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_num_legs">set_num_legs</a></th><td>Proc to modify the value of num_legs and hook behavior associated to this event.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_resting">set_resting</a></th><td>Proc to hook behavior to the change of value in the resting variable.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_safe_hunger_level">set_safe_hunger_level</a></th><td>Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_usable_hands">set_usable_hands</a></th><td>Proc to modify the value of usable_hands and hook behavior associated to this event.</td></tr>
+            <tr><th><a href="mob/living.html#proc/set_usable_legs">set_usable_legs</a></th><td>Proc to modify the value of usable_legs and hook behavior associated to this event.</td></tr>
+            <tr><th><a href="mob/living.html#proc/shared_living_ui_distance">shared_living_ui_distance</a></th><td>public</td></tr>
+            <tr><th><a href="mob/living.html#proc/singularity_act">singularity_act</a></th><td>Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.</td></tr>
+            <tr><th><a href="mob/living.html#proc/sleeping_carp_help">sleeping_carp_help</a></th><td>Verb added to humans who learn the art of the sleeping carp.</td></tr>
+            <tr><th><a href="mob/living.html#proc/take_bodypart_damage">take_bodypart_damage</a></th><td>damage ONE external organ, organ gets randomly selected from damaged ones.</td></tr>
+            <tr><th><a href="mob/living.html#proc/take_overall_damage">take_overall_damage</a></th><td>damage MANY bodyparts, in random order</td></tr>
+            <tr><th><a href="mob/living.html#proc/transfer_blood_to">transfer_blood_to</a></th><td>BLOOD TRANSFERS</td></tr>
+            <tr><th><a href="mob/living.html#proc/try_inject">try_inject</a></th><td>Like can_inject, but it can perform side effects.</td></tr>
+            <tr><th><a href="mob/living.html#proc/unignore_slowdown">unignore_slowdown</a></th><td>Unignores all slowdowns that lack the IGNORE_NOSLOW flag.</td></tr>
+            <tr><th><a href="mob/living.html#proc/update_pipe_vision">update_pipe_vision</a></th><td>Everything related to pipe vision on ventcrawling is handled by update_pipe_vision(). 
+Called on exit, entrance, and pipenet differences (e.g. moving to a new pipenet).
+One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
+We move first and then call update. Dont flip this around</td></tr>
+            <tr><th><a href="mob/living.html#proc/update_resting">update_resting</a></th><td>Proc to append and redefine behavior to the change of the [/mob/living/var/resting] variable.</td></tr>
+            <tr><th><a href="mob/living.html#proc/update_succumb_action">update_succumb_action</a></th><td>Called when traits that alter succumbing are added/removed.</td></tr>
+            <tr><th><a href="mob/living.html#proc/will_escape_storage">will_escape_storage</a></th><td>Whether or not this mob will escape from storages while being picked up/held.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/abilities"><aside class="declaration">var </aside>abilities
+            <aside>&ndash; /list/obj/effect/proc_holder</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 139"/></a></h3>
+        <p>used for database logging</p><h3 id="var/blood_volume"><aside class="declaration">var </aside>blood_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 121"/></a></h3>
+        <p>converted to a list of stun absorption sources this mob has when one is added</p><h3 id="var/body_position"><aside class="declaration">var </aside>body_position
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 46"/></a></h3>
+        <p>Variable to track the body position of a mob, regardgless of the actual angle of rotation (usually matching it, but not necessarily).</p><h3 id="var/body_position_pixel_x_offset"><aside class="declaration">var </aside>body_position_pixel_x_offset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 170"/></a></h3>
+        <p>The y amount a mob's sprite should be offset due to the current position they're in (e.g. lying down moves your sprite down)</p><h3 id="var/body_position_pixel_y_offset"><aside class="declaration">var </aside>body_position_pixel_y_offset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 172"/></a></h3>
+        <p>The x amount a mob's sprite should be offset due to the current position they're in</p><h3 id="var/body_temp_changes"><aside class="declaration">var </aside>body_temp_changes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 155"/></a></h3>
+        <p>Whether the mob is slowed down when dragging another prone mob
+List of changes to body temperature, used by desease symtoms like fever</p><h3 id="var/bubble_icon"><aside class="declaration">var </aside>bubble_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 106"/></a></h3>
+        <p>used to prevent spam with smoke reagent reaction on mob.</p><h3 id="var/butcher_difficulty"><aside class="declaration">var </aside>butcher_difficulty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 115"/></a></h3>
+        <p>these will always be yielded from butchering</p><h3 id="var/butcher_results"><aside class="declaration">var </aside>butcher_results
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 113"/></a></h3>
+        <p>the id a mob gets when it's created</p><h3 id="var/can_buckle_to"><aside class="declaration">var </aside>can_buckle_to
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 167"/></a></h3>
+        <p>Is this mob allowed to be buckled/unbuckled to/from things?</p><h3 id="var/cloneloss"><aside class="declaration">var </aside>cloneloss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 25"/></a></h3>
+        <p>Burn damage caused by being way too hot, too cold or burnt.</p><h3 id="var/combat_mode"><aside class="declaration">var </aside>combat_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 164"/></a></h3>
+        <p>If combat mode is on or not</p><h3 id="var/crit_threshold"><aside class="declaration">var </aside>crit_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 27"/></a></h3>
+        <p>Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.</p><h3 id="var/default_num_hands"><aside class="declaration">var </aside>default_num_hands
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 95"/></a></h3>
+        <p>How many hands does this mob have by default. This shouldn't change at runtime.</p><h3 id="var/default_num_legs"><aside class="declaration">var </aside>default_num_legs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 88"/></a></h3>
+        <p>does the mob have distinct limbs?(arms,legs, chest,head)
+How many legs does this mob have by default. This shouldn't change at runtime.</p><h3 id="var/disease_resistances"><aside class="declaration">var </aside>disease_resistances
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 150"/></a></h3>
+        <p>list of all diseases in a mob</p><h3 id="var/druggy"><aside class="declaration">var </aside>druggy
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 127"/></a></h3>
+        <p>a list of all status effects the mob has</p><h3 id="var/fire_stacks"><aside class="declaration">var </aside>fire_stacks
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 78"/></a></h3>
+        <p>The &quot;Are we on fire?&quot; var</p><h3 id="var/fireloss"><aside class="declaration">var </aside>fireloss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 24"/></a></h3>
+        <p>Toxic damage caused by being poisoned or radiated</p><h3 id="var/guaranteed_butcher_results"><aside class="declaration">var </aside>guaranteed_butcher_results
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 114"/></a></h3>
+        <p>these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness</p><h3 id="var/hardcrit_threshold"><aside class="declaration">var </aside>hardcrit_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 29"/></a></h3>
+        <p>when the mob goes from &quot;normal&quot; to crit
+When the mob enters hard critical state and is fully incapacitated.</p><h3 id="var/has_limbs"><aside class="declaration">var </aside>has_limbs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 85"/></a></h3>
+        <p>more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..</p><h3 id="var/health"><aside class="declaration">var </aside>health
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 18"/></a></h3>
+        <p>The mob's current health.</p><h3 id="var/health_doll_icon"><aside class="declaration">var </aside>health_doll_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 107"/></a></h3>
+        <p>what icon the mob uses for speechbubbles</p><h3 id="var/incorporeal_move"><aside class="declaration">var </aside>incorporeal_move
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 63"/></a></h3>
+        <p>Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.</p>
+<p>FALSE is off, <a href="code/__DEFINES/mobs.html#define/INCORPOREAL_MOVE_BASIC" title="INCORPOREAL_MOVE_BASIC">INCORPOREAL_MOVE_BASIC</a> is normal, <a href="code/__DEFINES/mobs.html#define/INCORPOREAL_MOVE_SHADOW" title="INCORPOREAL_MOVE_SHADOW">INCORPOREAL_MOVE_SHADOW</a> is for ninjas
+and <a href="code/__DEFINES/mobs.html#define/INCORPOREAL_MOVE_JAUNT" title="INCORPOREAL_MOVE_JAUNT">INCORPOREAL_MOVE_JAUNT</a> is blocked by holy water/salt</p><h3 id="var/last_bumped"><aside class="declaration">var </aside>last_bumped
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 109"/></a></h3>
+        <p>if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi</p><h3 id="var/last_special"><aside class="declaration">var </aside>last_special
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 54"/></a></h3>
+        <p>Directly affects how long a mob will hallucinate for</p><h3 id="var/lastattacker"><aside class="declaration">var </aside>lastattacker
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 11"/></a></h3>
+        <p>Badminnery resize</p><h3 id="var/limb_destroyer"><aside class="declaration">var </aside>limb_destroyer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 80"/></a></h3>
+        <p>Tracks how many stacks of fire we have on, max is usually 20</p><h3 id="var/living_flags"><aside class="declaration">var </aside>living_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 38"/></a></h3>
+        <p>Generic bitflags for boolean conditions at the <a href="mob/living.html" title="/mob/living">/mob/living</a> level. Keep this for inherent traits of living types, instead of runtime-changeable ones.</p><h3 id="var/lying_angle"><aside class="declaration">var </aside>lying_angle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 48"/></a></h3>
+        <p>Number of degrees of rotation of a mob. 0 means no rotation, up-side facing NORTH. 90 means up-side rotated to face EAST, and so on.</p><h3 id="var/lying_prev"><aside class="declaration">var </aside>lying_prev
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 50"/></a></h3>
+        <p>Value of lying lying_angle before last change. TODO: Remove the need for this.</p><h3 id="var/maxHealth"><aside class="declaration">var </aside>maxHealth
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 16"/></a></h3>
+        <p>Maximum health that should be possible.</p><h3 id="var/mob_surgery_speed_mod"><aside class="declaration">var </aside>mob_surgery_speed_mod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 69"/></a></h3>
+        <p>a list of surgery datums. generally empty, they're added when the player wants them.
+Mob specific surgery speed modifier</p><h3 id="var/mobility_flags"><aside class="declaration">var </aside>mobility_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 41"/></a></h3>
+        <p>Flags that determine the potential of a mob to perform certain actions. Do not change this directly.</p><h3 id="var/num_hands"><aside class="declaration">var </aside>num_hands
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 97"/></a></h3>
+        <p>How many hands hands does this mob currently have. Should only be changed through set_num_hands()</p><h3 id="var/num_legs"><aside class="declaration">var </aside>num_legs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 90"/></a></h3>
+        <p>How many legs does this mob currently have. Should only be changed through set_num_legs()</p><h3 id="var/numba"><aside class="declaration">var </aside>numba
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 111"/></a></h3>
+        <p>if a mob's name should be appended with an id when created e.g. Mob (666)</p><h3 id="var/on_fire"><aside class="declaration">var </aside>on_fire
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 77"/></a></h3>
+        <p>Time of death</p><h3 id="var/oxyloss"><aside class="declaration">var </aside>oxyloss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 22"/></a></h3>
+        <p>Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)</p><h3 id="var/ranged_ability"><aside class="declaration">var </aside>ranged_ability
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/proc_holder</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 122"/></a></h3>
+        <p>how much blood the mob has</p><h3 id="var/see_override"><aside class="declaration">var </aside>see_override
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 124"/></a></h3>
+        <p>Any ranged ability the mob has, as a click override</p><h3 id="var/staminaloss"><aside class="declaration">var </aside>staminaloss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 26"/></a></h3>
+        <p>Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims</p><h3 id="var/status_effects"><aside class="declaration">var </aside>status_effects
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 126"/></a></h3>
+        <p>0 for no override, sets see_invisible = see_override in silicon &amp; carbon life process via update_sight()</p><h3 id="var/timeofdeath"><aside class="declaration">var </aside>timeofdeath
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 55"/></a></h3>
+        <p>Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.</p><h3 id="var/toxloss"><aside class="declaration">var </aside>toxloss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 23"/></a></h3>
+        <p>Oxygen depravation damage (no air in lungs)</p><h3 id="var/usable_hands"><aside class="declaration">var </aside>usable_hands
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 99"/></a></h3>
+        <p>How many usable hands does this mob currently have. Should only be changed through set_usable_hands()</p><h3 id="var/usable_legs"><aside class="declaration">var </aside>usable_legs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 92"/></a></h3>
+        <p>How many usable legs this mob currently has. Should only be changed through set_usable_legs()</p><h3 id="var/ventcrawl_layer"><aside class="declaration">var </aside>ventcrawl_layer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 145"/></a></h3>
+        <p>If the mob is irradiated.</p><h3 id="var/weather_immunities"><aside class="declaration">var </aside>weather_immunities
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defines.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defines.dm 117"/></a></h3>
+        <p>effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier</p><h2 id="proc">Proc Details</h2><h3 id="proc/IsFrozen"><aside class="declaration">proc </aside>IsFrozen<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L384">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 384"/></a></aside>
+        </h3>
+        <p>FROZEN</p><h3 id="proc/IsImmobilized"><aside class="declaration">proc </aside>IsImmobilized<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 127"/></a></aside>
+        </h3>
+        <p>IMMOBILIZED</p><h3 id="proc/IsKnockdown"><aside class="declaration">proc </aside>IsKnockdown<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 68"/></a></aside>
+        </h3>
+        <p>KNOCKDOWN</p><h3 id="proc/IsParalyzed"><aside class="declaration">proc </aside>IsParalyzed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 186"/></a></aside>
+        </h3>
+        <p>PARALYZED</p><h3 id="proc/IsSleeping"><aside class="declaration">proc </aside>IsSleeping<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L320">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 320"/></a></aside>
+        </h3>
+        <p>SLEEPING</p><h3 id="proc/IsStun"><aside class="declaration">proc </aside>IsStun<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 8"/></a></aside>
+        </h3>
+        <p>STUN</p><h3 id="proc/IsUnconscious"><aside class="declaration">proc </aside>IsUnconscious<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L267">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 267"/></a></aside>
+        </h3>
+        <p>UNCONSCIOUS</p><h3 id="proc/Life"><aside class="declaration">proc </aside>Life<aside>(delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/life.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;life.dm 12"/></a></aside>
+        </h3>
+        <p>Handles the biological and general over-time processes of the mob.</p>
+<p>Arguments:</p>
+<ul>
+<li>delta_time: The amount of time that has elapsed since this last fired.</li>
+<li>times_fired: The number of times SSmobs has fired</li>
+</ul><h3 id="proc/PermaSleeping"><aside class="declaration">proc </aside>PermaSleeping<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L370">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 370"/></a></aside>
+        </h3>
+        <p>Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)</p><h3 id="proc/add_body_temperature_change"><aside class="declaration">proc </aside>add_body_temperature_change<aside>(key_name, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1543">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1543"/></a></aside>
+        </h3>
+        <p>add_body_temperature_change Adds modifications to the body temperature</p>
+<p>This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
+the aggrogate result is used to derive the new body temperature for the mob</p>
+<p>arguments:</p>
+<ul>
+<li>key_name (str) The unique key for this change, if it already exist it will be overridden</li>
+<li>amount (int) The amount of change from the base body temperature</li>
+</ul><h3 id="proc/add_confusion"><aside class="declaration">proc </aside>add_confusion<aside>(confusion_to_add) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L559">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 559"/></a></aside>
+        </h3>
+        <p>Add confusion to the mob. Confusion will make the mob walk randomly.
+Shorthand for set_confusion(confusion + x).</p><h3 id="proc/add_movespeed_mod_immunities"><aside class="declaration">proc </aside>add_movespeed_mod_immunities<aside>(source, slowdown_type, update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L515">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 515"/></a></aside>
+        </h3>
+        <p>Ignores specific slowdowns. Accepts a list of slowdowns.</p><h3 id="proc/add_quirk"><aside class="declaration">proc </aside>add_quirk<aside>(quirktype, spawn_effects) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L425">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 425"/></a></aside>
+        </h3>
+        <p>DISABILITIES</p><h3 id="proc/add_stun_absorption"><aside class="declaration">proc </aside>add_stun_absorption<aside>(key, duration, priority, message, self_message, examine_message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L389">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 389"/></a></aside>
+        </h3>
+        <p>STUN ABSORPTION</p><h3 id="proc/adjust_fire_stacks"><aside class="declaration">proc </aside>adjust_fire_stacks<aside>(add_fire_stacks) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1249">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1249"/></a></aside>
+        </h3>
+        <p>Adjust the amount of fire stacks on a mob</p>
+<p>This modifies the fire stacks on a mob.</p>
+<p>Vars:</p>
+<ul>
+<li>add_fire_stacks: int The amount to modify the fire stacks</li>
+</ul><h3 id="proc/apply_damage"><aside class="declaration">proc </aside>apply_damage<aside>(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 17"/></a></aside>
+        </h3>
+        <p>Applies damage to this mob</p>
+<p>Sends <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_MOB_APPLY_DAMGE" title="COMSIG_MOB_APPLY_DAMGE">COMSIG_MOB_APPLY_DAMGE</a></p>
+<p>Arguuments:</p>
+<ul>
+<li>damage - amount of damage</li>
+<li>damagetype - one of <a href="code/__DEFINES/combat.html#define/BRUTE" title="BRUTE">BRUTE</a>, <a href="code/__DEFINES/combat.html#define/BURN" title="BURN">BURN</a>, <a href="code/__DEFINES/combat.html#define/TOX" title="TOX">TOX</a>, <a href="code/__DEFINES/combat.html#define/OXY" title="OXY">OXY</a>, <a href="code/__DEFINES/combat.html#define/CLONE" title="CLONE">CLONE</a>, <a href="code/__DEFINES/combat.html#define/STAMINA" title="STAMINA">STAMINA</a></li>
+<li>def_zone - zone that is being hit if any</li>
+<li>blocked - armor value applied</li>
+<li>forced - bypass hit percentage</li>
+<li>spread_damage - used in overrides</li>
+</ul>
+<p>Returns TRUE if damage applied</p><h3 id="proc/apply_damage_type"><aside class="declaration">proc </aside>apply_damage_type<aside>(damage, damagetype) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 39"/></a></aside>
+        </h3>
+        <p>like <a href="mob/living.html#proc/apply_damage" title="/mob/living">apply_damage</a> except it always uses the damage procs</p><h3 id="proc/apply_damages"><aside class="declaration">proc </aside>apply_damages<aside>(brute, burn, tox, oxy, clone, def_zone, blocked, stamina, brain) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 71"/></a></aside>
+        </h3>
+        <p>applies multiple damages at once via <a href="mob/living.html#proc/apply_damage" title="/mob/living">/mob/living/proc/apply_damage</a></p><h3 id="proc/apply_effect"><aside class="declaration">proc </aside>apply_effect<aside>(effect, effecttype, blocked) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 92"/></a></aside>
+        </h3>
+        <p>applies various common status effects or common hardcoded mob effects</p><h3 id="proc/apply_effects"><aside class="declaration">proc </aside>apply_effects<aside>(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter, paralyze, immobilize) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 125"/></a></aside>
+        </h3>
+        <p>applies multiple effects at once via <a href="mob/living.html#proc/apply_effect" title="/mob/living">/mob/living/proc/apply_effect</a></p><h3 id="proc/apply_martial_art"><aside class="declaration">proc </aside>apply_martial_art<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/target, modifiers, is_grab) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1926">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1926"/></a></aside>
+        </h3>
+        <p>Apply a martial art move from src to target.</p>
+<p>This is used to process martial art attacks against nonhumans.
+It is also used to process martial art attacks by nonhumans, even against humans
+Human vs human attacks are handled in species code right now.</p><h3 id="proc/bleedDragAmount"><aside class="declaration">proc </aside>bleedDragAmount<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L842">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 842"/></a></aside>
+        </h3>
+        <p>Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]</p><h3 id="proc/can_inject"><aside class="declaration">proc </aside>can_inject<aside>(/<a href="mob.html">mob</a>/user, target_zone, injection_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L591">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 591"/></a></aside>
+        </h3>
+        <p>Returns whether or not the mob can be injected. Should not perform any side effects.</p>
+<p>Arguments:</p>
+<ul>
+<li>user - The user trying to inject the mob.</li>
+<li>target_zone - The zone being targeted.</li>
+<li>injection_flags - A bitflag for extra properties to check.
+Check _<em>DEFINES/injection.dm for more details, specifically the ones prefixed INJECT_CHECK</em>*.</li>
+</ul><h3 id="proc/can_look_up"><aside class="declaration">proc </aside>can_look_up<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1583">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1583"/></a></aside>
+        </h3>
+        <p>Checks if the user is incapacitated or on cooldown.</p><h3 id="proc/canface"><aside class="parent"><a title="/mob" href="mob.html#proc/canface">&uarr;</a></aside>canface<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L890">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 890"/></a></aside>
+        </h3>
+        <p>Checks mobility move as well as parent checks</p><h3 id="proc/cure_blind"><aside class="declaration">proc </aside>cure_blind<aside>(source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L450">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 450"/></a></aside>
+        </h3>
+        <p>TRAIT PROCS</p><h3 id="proc/do_slap_animation"><aside class="declaration">proc </aside>do_slap_animation<aside>(/<a href="atom.html">atom</a>/slapped) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defense.dm#L432">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defense.dm 432"/></a></aside>
+        </h3>
+        <p>Does a slap animation on an atom</p>
+<p>Uses do_attack_animation to animate the attacker attacking
+then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+Arguments:</p>
+<ul>
+<li>atom/A - atom being slapped</li>
+</ul><h3 id="proc/dust"><aside class="declaration">proc </aside>dust<aside>(just_ash, drop_items, force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/death.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;death.dm 46"/></a></aside>
+        </h3>
+        <p>This is the proc for turning a mob into ash.
+Dusting robots does not eject the MMI, so it's a bit more powerful than gib()</p>
+<p>Arguments:</p>
+<ul>
+<li>just_ash - If TRUE, ash will spawn where the mob was, as opposed to remains</li>
+<li>drop_items - Should the mob drop their items before dusting?</li>
+<li>force - Should this mob be FORCABLY dusted?</li>
+</ul><h3 id="proc/electrocute_act"><aside class="declaration">proc </aside>electrocute_act<aside>(shock_damage, source, siemens_coeff, flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defense.dm#L339">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defense.dm 339"/></a></aside>
+        </h3>
+        <p>As the name suggests, this should be called to apply electric shocks.</p><h3 id="proc/expose_reagents"><aside class="parent"><a title="/atom" href="atom.html#proc/expose_reagents">&uarr;</a></aside>expose_reagents<aside>(/list/reagents, /<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/source, methods, volume_modifier, show_message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defense.dm#L449">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defense.dm 449"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Handles exposing a mob to reagents.</p>
+</li>
+<li>
+<p>If the methods include INGEST the mob tastes the reagents.</p>
+</li>
+<li>
+<p>If the methods include VAPOR it incorporates permiability protection.</p>
+</li>
+</ul><h3 id="proc/extinguish_mob"><aside class="declaration">proc </aside>extinguish_mob<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1229">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1229"/></a></aside>
+        </h3>
+        <p>Extinguish all fire on the mob</p>
+<p>This removes all fire stacks, fire effects, alerts, and moods
+Signals the extinguishing.</p><h3 id="proc/get_attack_type"><aside class="declaration">proc </aside>get_attack_type<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1915">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1915"/></a></aside>
+        </h3>
+        <p>Returns the attack damage type of a living mob such as <a href="code/__DEFINES/combat.html#define/BRUTE" title="BRUTE">BRUTE</a>.</p><h3 id="proc/get_blood_dna_list"><aside class="declaration">proc </aside>get_blood_dna_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L804">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 804"/></a></aside>
+        </h3>
+        <p>returns the mob's dna info as a list, to be inserted in an object's blood_DNA list</p><h3 id="proc/get_body_temp_normal"><aside class="declaration">proc </aside>get_body_temp_normal<aside>(apply_change) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1577">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1577"/></a></aside>
+        </h3>
+        <p>get_body_temp_normal Returns the mobs normal body temperature with any modifications applied</p>
+<p>This applies the result from proc/get_body_temp_normal_change() against the BODYTEMP_NORMAL and returns the result</p>
+<p>arguments:</p>
+<ul>
+<li>apply_change (optional) Default True This applies the changes to body temperature normal</li>
+</ul><h3 id="proc/get_body_temp_normal_change"><aside class="declaration">proc </aside>get_body_temp_normal_change<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1562">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1562"/></a></aside>
+        </h3>
+        <p>get_body_temp_normal_change Returns the aggregate change to body temperature</p>
+<p>This aggregates all the changes in the body_temp_changes list and returns the result</p><h3 id="proc/get_confusion"><aside class="declaration">proc </aside>get_confusion<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L543">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 543"/></a></aside>
+        </h3>
+        <p>Gets the amount of confusion on the mob.</p><h3 id="proc/get_damage_amount"><aside class="declaration">proc </aside>get_damage_amount<aside>(damagetype) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 55"/></a></aside>
+        </h3>
+        <p>return the damage amount for the type given</p><h3 id="proc/get_equipped_items"><aside class="declaration">proc </aside>get_equipped_items<aside>(include_pockets) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/inventory.dm#L335">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;inventory.dm 335"/></a></aside>
+        </h3>
+        <p>Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)</p>
+<p>Argument(s):</p>
+<ul>
+<li>Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list</li>
+</ul><h3 id="proc/get_fullness"><aside class="declaration">proc </aside>get_fullness<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/life.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;life.dm 132"/></a></aside>
+        </h3>
+        <p>Get the fullness of the mob</p>
+<p>This returns a value form 0 upwards to represent how full the mob is.
+The value is a total amount of consumable reagents in the body combined
+with the total amount of nutrition they have.
+This does not have an upper limit.</p><h3 id="proc/get_organic_health"><aside class="declaration">proc </aside>get_organic_health<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L432">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 432"/></a></aside>
+        </h3>
+        <p>Returns the health of the mob while ignoring damage of non-organic (prosthetic) limbs
+Used by cryo cells to not permanently imprison those with damage from prosthetics,
+as they cannot be healed through chemicals.</p><h3 id="proc/get_quirk_string"><aside class="declaration">proc </aside>get_quirk_string<aside>(medical, category) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/quirks/_quirk.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;quirks&#x2F;_quirk.dm 94"/></a></aside>
+        </h3>
+        <p>get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria</p>
+<p>Arguments:</p>
+<ul>
+<li>Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name</li>
+<li>Category- Which types of quirks we want to print out. Defaults to everything</li>
+</ul><h3 id="proc/get_taste_sensitivity"><aside class="declaration">proc </aside>get_taste_sensitivity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/taste.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;taste.dm 13"/></a></aside>
+        </h3>
+        <p>Gets taste sensitivity of given mob</p>
+<p>This is used in calculating what flavours the mob can pick up,
+with a lower number being able to pick up more distinct flavours.</p><h3 id="proc/gib"><aside class="declaration">proc </aside>gib<aside>(no_brain, no_organs, no_bodyparts) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/death.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;death.dm 9"/></a></aside>
+        </h3>
+        <p>Blow up the mob into giblets</p>
+<p>Arguments:</p>
+<ul>
+<li>no_brain - Should the mob NOT drop a brain?</li>
+<li>no_organs - Should the mob NOT drop organs?</li>
+<li>no_bodyparts - Should the mob NOT drop bodyparts?</li>
+</ul><h3 id="proc/has_reagent"><aside class="declaration">proc </aside>has_reagent<aside>(reagent, amount, needs_metabolizing) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/life.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;life.dm 150"/></a></aside>
+        </h3>
+        <p>Check if the mob contains this reagent.</p>
+<p>This will validate the the reagent holder for the mob and any sub holders contain the requested reagent.
+Vars:</p>
+<ul>
+<li>reagent (typepath) takes a PATH to a reagent.</li>
+<li>amount (int) checks for having a specific amount of that chemical.</li>
+<li>needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.</li>
+</ul><h3 id="proc/hasparasites"><aside class="declaration">proc </aside>hasparasites<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/guardian/guardian.dm#L494">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;guardian&#x2F;guardian.dm 494"/></a></aside>
+        </h3>
+        <p>parasite tracking/finding procs</p><h3 id="proc/heal_bodypart_damage"><aside class="declaration">proc </aside>heal_bodypart_damage<aside>(brute, burn, stamina, updating_health, required_status) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L259">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 259"/></a></aside>
+        </h3>
+        <p>heal ONE external organ, organ gets randomly selected from damaged ones.</p>
+<p>needs to return amount healed in order to calculate things like tend wounds xp gain</p><h3 id="proc/heal_ordered_damage"><aside class="declaration">proc </aside>heal_ordered_damage<aside>(amount, /list/damage_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L293">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 293"/></a></aside>
+        </h3>
+        <p>heal up to amount damage, in a given order</p><h3 id="proc/heal_overall_damage"><aside class="declaration">proc </aside>heal_overall_damage<aside>(brute, burn, stamina, required_status, updating_health) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L275">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 275"/></a></aside>
+        </h3>
+        <p>heal MANY bodyparts, in random order</p><h3 id="proc/hud_set_nanite_indicator"><aside class="declaration">proc </aside>hud_set_nanite_indicator<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/data_huds.dm#L299">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;data_huds.dm 299"/></a></aside>
+        </h3>
+        <p>Diagnostic HUDs!</p><h3 id="proc/ignore_slowdown"><aside class="declaration">proc </aside>ignore_slowdown<aside>(source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L510">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 510"/></a></aside>
+        </h3>
+        <p>Ignores all slowdowns that lack the IGNORE_NOSLOW flag.</p><h3 id="proc/is_face_visible"><aside class="declaration">proc </aside>is_face_visible<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1791">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1791"/></a></aside>
+        </h3>
+        <p>Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces</p><h3 id="proc/look_down"><aside class="declaration">proc </aside>look_down<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1637">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1637"/></a></aside>
+        </h3>
+        <p>look_down Changes the perspective of the mob to any openspace turf below the mob</p>
+<p>This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up</p><h3 id="proc/look_up"><aside class="declaration">proc </aside>look_up<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1592">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1592"/></a></aside>
+        </h3>
+        <p>look_up Changes the perspective of the mob to any openspace turf above the mob</p>
+<p>This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up</p><h3 id="proc/lying_angle_on_movement"><aside class="declaration">proc </aside>lying_angle_on_movement<aside>(direct) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L793">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 793"/></a></aside>
+        </h3>
+        <p>Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.</p><h3 id="proc/on_deathcoma_trait_gain"><aside class="declaration">proc </aside>on_deathcoma_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 61"/></a></aside>
+        </h3>
+        <p>Called when [TRAIT_DEATHCOMA] is added to the mob.</p><h3 id="proc/on_deathcoma_trait_loss"><aside class="declaration">proc </aside>on_deathcoma_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 66"/></a></aside>
+        </h3>
+        <p>Called when [TRAIT_DEATHCOMA] is removed from the mob.</p><h3 id="proc/on_fall"><aside class="declaration">proc </aside>on_fall<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1307">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1307"/></a></aside>
+        </h3>
+        <p>Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.</p><h3 id="proc/on_floored_end"><aside class="declaration">proc </aside>on_floored_end<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1896">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1896"/></a></aside>
+        </h3>
+        <p>Proc to append behavior to the condition of being floored. Called when the condition ends.</p><h3 id="proc/on_floored_start"><aside class="declaration">proc </aside>on_floored_start<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1888">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1888"/></a></aside>
+        </h3>
+        <p>Proc to append behavior to the condition of being floored. Called when the condition starts.</p><h3 id="proc/on_floored_trait_gain"><aside class="declaration">proc </aside>on_floored_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 85"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FLOORED" title="TRAIT_FLOORED">TRAIT_FLOORED</a> is added to the mob.</p><h3 id="proc/on_floored_trait_loss"><aside class="declaration">proc </aside>on_floored_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 96"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FLOORED" title="TRAIT_FLOORED">TRAIT_FLOORED</a> is removed from the mob.</p><h3 id="proc/on_forced_standing_trait_gain"><aside class="declaration">proc </aside>on_forced_standing_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 102"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FORCED_STANDING" title="TRAIT_FORCED_STANDING">TRAIT_FORCED_STANDING</a> is added to the mob.</p><h3 id="proc/on_forced_standing_trait_loss"><aside class="declaration">proc </aside>on_forced_standing_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 107"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_FORCED_STANDING" title="TRAIT_FORCED_STANDING">TRAIT_FORCED_STANDING</a> is removed from the mob.</p><h3 id="proc/on_handsblocked_end"><aside class="declaration">proc </aside>on_handsblocked_end<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1909">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1909"/></a></aside>
+        </h3>
+        <p>Proc to append behavior to the condition of being handsblocked. Called when the condition ends.</p><h3 id="proc/on_handsblocked_start"><aside class="declaration">proc </aside>on_handsblocked_start<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1902">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1902"/></a></aside>
+        </h3>
+        <p>Proc to append behavior to the condition of being handsblocked. Called when the condition starts.</p><h3 id="proc/on_handsblocked_trait_gain"><aside class="declaration">proc </aside>on_handsblocked_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 112"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_HANDS_BLOCKED" title="TRAIT_HANDS_BLOCKED">TRAIT_HANDS_BLOCKED</a> is added to the mob.</p><h3 id="proc/on_handsblocked_trait_loss"><aside class="declaration">proc </aside>on_handsblocked_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 118"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_HANDS_BLOCKED" title="TRAIT_HANDS_BLOCKED">TRAIT_HANDS_BLOCKED</a> is removed from the mob.</p><h3 id="proc/on_immobilized_trait_gain"><aside class="declaration">proc </aside>on_immobilized_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 72"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_IMMOBILIZED" title="TRAIT_IMMOBILIZED">TRAIT_IMMOBILIZED</a> is added to the mob.</p><h3 id="proc/on_immobilized_trait_loss"><aside class="declaration">proc </aside>on_immobilized_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 79"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_IMMOBILIZED" title="TRAIT_IMMOBILIZED">TRAIT_IMMOBILIZED</a> is removed from the mob.</p><h3 id="proc/on_incapacitated_trait_gain"><aside class="declaration">proc </aside>on_incapacitated_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L152">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 152"/></a></aside>
+        </h3>
+        <p>Called when [TRAIT_INCAPACITATED] is added to the mob.</p><h3 id="proc/on_incapacitated_trait_loss"><aside class="declaration">proc </aside>on_incapacitated_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 159"/></a></aside>
+        </h3>
+        <p>Called when [TRAIT_INCAPACITATED] is removed from the mob.</p><h3 id="proc/on_knockedout_trait_gain"><aside class="declaration">proc </aside>on_knockedout_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 48"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_KNOCKEDOUT" title="TRAIT_KNOCKEDOUT">TRAIT_KNOCKEDOUT</a> is added to the mob.</p><h3 id="proc/on_knockedout_trait_loss"><aside class="declaration">proc </aside>on_knockedout_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 54"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_KNOCKEDOUT" title="TRAIT_KNOCKEDOUT">TRAIT_KNOCKEDOUT</a> is removed from the mob.</p><h3 id="proc/on_lying_down"><aside class="declaration">proc </aside>on_lying_down<aside>(new_lying_angle) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L549">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 549"/></a></aside>
+        </h3>
+        <p>Proc to append behavior related to lying down.</p><h3 id="proc/on_movement_type_flag_disabled"><aside class="declaration">proc </aside>on_movement_type_flag_disabled<aside>(/<a href="datum.html">datum</a>/source, trait) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L195">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 195"/></a></aside>
+        </h3>
+        <p>From [element/movetype_handler/on_movement_type_trait_loss()]</p><h3 id="proc/on_movement_type_flag_enabled"><aside class="declaration">proc </aside>on_movement_type_flag_enabled<aside>(/<a href="datum.html">datum</a>/source, trait) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 190"/></a></aside>
+        </h3>
+        <p>From [element/movetype_handler/on_movement_type_trait_gain()]</p><h3 id="proc/on_pull_blocked_trait_gain"><aside class="declaration">proc </aside>on_pull_blocked_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 139"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_PULL_BLOCKED" title="TRAIT_PULL_BLOCKED">TRAIT_PULL_BLOCKED</a> is added to the mob.</p><h3 id="proc/on_pull_blocked_trait_loss"><aside class="declaration">proc </aside>on_pull_blocked_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 146"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_PULL_BLOCKED" title="TRAIT_PULL_BLOCKED">TRAIT_PULL_BLOCKED</a> is removed from the mob.</p><h3 id="proc/on_restrained_trait_gain"><aside class="declaration">proc </aside>on_restrained_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 167"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_RESTRAINED" title="TRAIT_RESTRAINED">TRAIT_RESTRAINED</a> is added to the mob.</p><h3 id="proc/on_restrained_trait_loss"><aside class="declaration">proc </aside>on_restrained_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 172"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_RESTRAINED" title="TRAIT_RESTRAINED">TRAIT_RESTRAINED</a> is removed from the mob.</p><h3 id="proc/on_skittish_trait_gain"><aside class="declaration">proc </aside>on_skittish_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L201">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 201"/></a></aside>
+        </h3>
+        <p>Called when [TRAIT_SKITTISH] is added to the mob.</p><h3 id="proc/on_skittish_trait_loss"><aside class="declaration">proc </aside>on_skittish_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 206"/></a></aside>
+        </h3>
+        <p>Called when [TRAIT_SKITTISH] is removed from the mob.</p><h3 id="proc/on_standing_up"><aside class="declaration">proc </aside>on_standing_up<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L561">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 561"/></a></aside>
+        </h3>
+        <p>Proc to append behavior related to lying down.</p><h3 id="proc/on_ui_blocked_trait_gain"><aside class="declaration">proc </aside>on_ui_blocked_trait_gain<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 125"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_UI_BLOCKED" title="TRAIT_UI_BLOCKED">TRAIT_UI_BLOCKED</a> is added to the mob.</p><h3 id="proc/on_ui_blocked_trait_loss"><aside class="declaration">proc </aside>on_ui_blocked_trait_loss<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 132"/></a></aside>
+        </h3>
+        <p>Called when <a href="code/__DEFINES/traits.html#define/TRAIT_UI_BLOCKED" title="TRAIT_UI_BLOCKED">TRAIT_UI_BLOCKED</a> is removed from the mob.</p><h3 id="proc/register_init_signals"><aside class="declaration">proc </aside>register_init_signals<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 2"/></a></aside>
+        </h3>
+        <p>Called on <a href="mob/living.html" title="/mob/living">/mob/living/Initialize()</a>, for the mob to register to relevant signals.</p><h3 id="proc/remove_body_temperature_change"><aside class="declaration">proc </aside>remove_body_temperature_change<aside>(key_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1554">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1554"/></a></aside>
+        </h3>
+        <p>remove_body_temperature_change Removes the modifications to the body temperature</p>
+<p>This removes the recorded change to body temperature from the body_temp_changes list</p>
+<p>arguments:</p>
+<ul>
+<li>key_name (str) The unique key for this change that will be removed</li>
+</ul><h3 id="proc/remove_movespeed_mod_immunities"><aside class="declaration">proc </aside>remove_movespeed_mod_immunities<aside>(source, slowdown_type, update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L529">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 529"/></a></aside>
+        </h3>
+        <p>Unignores specific slowdowns. Accepts a list of slowdowns.</p><h3 id="proc/resist_buckle"><aside class="declaration">proc </aside>resist_buckle<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L950">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 950"/></a></aside>
+        </h3>
+        <p>see defines/combat.dm, this should be baseline 60%
+Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.</p><h3 id="proc/setGrabState"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#proc/setGrabState">&uarr;</a></aside>setGrabState<aside>(newstate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1777">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1777"/></a></aside>
+        </h3>
+        <p>Updates the grab state of the mob and updates movespeed</p><h3 id="proc/set_body_position"><aside class="declaration">proc </aside>set_body_position<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1875">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1875"/></a></aside>
+        </h3>
+        <p>Changes the value of the [living/body_position] variable.</p><h3 id="proc/set_buckled"><aside class="declaration">proc </aside>set_buckled<aside>(new_buckled) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1738">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1738"/></a></aside>
+        </h3>
+        <p>Reports the event of the change in value of the buckled variable.</p><h3 id="proc/set_confusion"><aside class="declaration">proc </aside>set_confusion<aside>(new_confusion) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L548">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 548"/></a></aside>
+        </h3>
+        <p>Set the confusion of the mob. Confusion will make the mob walk randomly.</p><h3 id="proc/set_fire_stacks"><aside class="declaration">proc </aside>set_fire_stacks<aside>(stacks) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1261">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1261"/></a></aside>
+        </h3>
+        <p>Set the fire stacks on a mob</p>
+<p>This sets the fire stacks on a mob, stacks are clamped between -20 and 20.
+If the fire stacks are reduced to 0 then we will extinguish the mob.</p>
+<p>Vars:</p>
+<ul>
+<li>stacks: int The amount to set fire_stacks to</li>
+</ul><h3 id="proc/set_health"><aside class="declaration">proc </aside>set_health<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L614">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 614"/></a></aside>
+        </h3>
+        <p>Sets the current mob's health value. Do not call directly if you don't know what you are doing, use the damage procs, instead.</p><h3 id="proc/set_lying_angle"><aside class="declaration">proc </aside>set_lying_angle<aside>(new_lying) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1523">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1523"/></a></aside>
+        </h3>
+        <p>Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.</p>
+<p>In BYOND-angles 0 is NORTH, 90 is EAST, 180 is SOUTH and 270 is WEST.
+This usually means that 0 is standing up, 90 and 270 are horizontal positions to right and left respectively, and 180 is upside-down.
+Mobs that do now follow these conventions due to unusual sprites should require a special handling or redefinition of this proc, due to the density and layer changes.
+The return of this proc is the previous value of the modified lying_angle if a change was successful (might include zero), or null if no change was made.</p><h3 id="proc/set_lying_down"><aside class="declaration">proc </aside>set_lying_down<aside>(new_lying_angle) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L544">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 544"/></a></aside>
+        </h3>
+        <p>Change the [body_position] to <a href="code/__DEFINES/mobs.html#define/LYING_DOWN" title="LYING_DOWN">LYING_DOWN</a> and update associated behavior.</p><h3 id="proc/set_num_hands"><aside class="declaration">proc </aside>set_num_hands<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1829">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1829"/></a></aside>
+        </h3>
+        <p>Proc to modify the value of num_hands and hook behavior associated to this event.</p><h3 id="proc/set_num_legs"><aside class="declaration">proc </aside>set_num_legs<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1796">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1796"/></a></aside>
+        </h3>
+        <p>Proc to modify the value of num_legs and hook behavior associated to this event.</p><h3 id="proc/set_resting"><aside class="declaration">proc </aside>set_resting<aside>(new_resting, silent, instant) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L489">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 489"/></a></aside>
+        </h3>
+        <p>Proc to hook behavior to the change of value in the resting variable.</p><h3 id="proc/set_safe_hunger_level"><aside class="declaration">proc </aside>set_safe_hunger_level<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1854">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1854"/></a></aside>
+        </h3>
+        <p>Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.</p><h3 id="proc/set_usable_hands"><aside class="declaration">proc </aside>set_usable_hands<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1837">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1837"/></a></aside>
+        </h3>
+        <p>Proc to modify the value of usable_hands and hook behavior associated to this event.</p><h3 id="proc/set_usable_legs"><aside class="declaration">proc </aside>set_usable_legs<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1804">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1804"/></a></aside>
+        </h3>
+        <p>Proc to modify the value of usable_legs and hook behavior associated to this event.</p><h3 id="proc/shared_living_ui_distance"><aside class="declaration">proc </aside>shared_living_ui_distance<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/src_object, viewcheck) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/states.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;states.dm 103"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Distance versus interaction check.</p>
+<p>required src_object atom/movable The object which owns the UI.</p>
+<p>return UI_state The state of the UI.</p><h3 id="proc/singularity_act"><aside class="parent"><a title="/atom" href="atom.html#proc/singularity_act">&uarr;</a></aside>singularity_act<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living_defense.dm#L367">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living_defense.dm 367"/></a></aside>
+        </h3>
+        <p>Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.</p><h3 id="proc/sleeping_carp_help"><aside class="declaration">proc </aside>sleeping_carp_help<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/martial/sleeping_carp.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;martial&#x2F;sleeping_carp.dm 139"/></a></aside>
+        </h3>
+        <p>Verb added to humans who learn the art of the sleeping carp.</p><h3 id="proc/take_bodypart_damage"><aside class="declaration">proc </aside>take_bodypart_damage<aside>(brute, burn, stamina, updating_health, required_status, check_armor, wound_bonus, bare_wound_bonus, sharpness) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L266">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 266"/></a></aside>
+        </h3>
+        <p>damage ONE external organ, organ gets randomly selected from damaged ones.</p><h3 id="proc/take_overall_damage"><aside class="declaration">proc </aside>take_overall_damage<aside>(brute, burn, stamina, updating_health, required_status) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/damage_procs.dm#L284">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;damage_procs.dm 284"/></a></aside>
+        </h3>
+        <p>damage MANY bodyparts, in random order</p><h3 id="proc/transfer_blood_to"><aside class="declaration">proc </aside>transfer_blood_to<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM, amount, forced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/blood.dm#L181">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;blood.dm 181"/></a></aside>
+        </h3>
+        <p>BLOOD TRANSFERS</p><h3 id="proc/try_inject"><aside class="declaration">proc </aside>try_inject<aside>(/<a href="mob.html">mob</a>/user, target_zone, injection_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L603">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 603"/></a></aside>
+        </h3>
+        <p>Like can_inject, but it can perform side effects.</p>
+<p>Arguments:</p>
+<ul>
+<li>user - The user trying to inject the mob.</li>
+<li>target_zone - The zone being targeted.</li>
+<li>injection_flags - A bitflag for extra properties to check. Check __DEFINES/injection.dm for more details.
+Check _<em>DEFINES/injection.dm for more details. Unlike can_inject, the INJECT_TRY</em>* defines will behave differently.</li>
+</ul><h3 id="proc/unignore_slowdown"><aside class="declaration">proc </aside>unignore_slowdown<aside>(source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/status_procs.dm#L505">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;status_procs.dm 505"/></a></aside>
+        </h3>
+        <p>Unignores all slowdowns that lack the IGNORE_NOSLOW flag.</p><h3 id="proc/update_pipe_vision"><aside class="declaration">proc </aside>update_pipe_vision<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/ventcrawling.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;ventcrawling.dm 76"/></a></aside>
+        </h3>
+        <p>Everything related to pipe vision on ventcrawling is handled by update_pipe_vision(). 
+Called on exit, entrance, and pipenet differences (e.g. moving to a new pipenet).
+One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
+We move first and then call update. Dont flip this around</p><h3 id="proc/update_resting"><aside class="declaration">proc </aside>update_resting<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L523">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 523"/></a></aside>
+        </h3>
+        <p>Proc to append and redefine behavior to the change of the [/mob/living/var/resting] variable.</p><h3 id="proc/update_succumb_action"><aside class="declaration">proc </aside>update_succumb_action<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/init_signals.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;init_signals.dm 182"/></a></aside>
+        </h3>
+        <p>Called when traits that alter succumbing are added/removed.</p>
+<p>Will show or hide the succumb alert prompt.</p><h3 id="proc/will_escape_storage"><aside class="declaration">proc </aside>will_escape_storage<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/living.dm#L1850">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;living.dm 1850"/></a></aside>
+        </h3>
+        <p>Whether or not this mob will escape from storages while being picked up/held.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

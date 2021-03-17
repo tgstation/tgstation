@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;processing&#x2F;station - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/processing/station.html#var">Var Details</a> - <a href="datum/controller/subsystem/processing/station.html#proc">Proc Details</a></header>
+<main>
+<h1>station <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/processing/station.html">processing/station</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/station.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;station.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/processing/station.html#var/announcer">announcer</a></th><td>Currently active announcer. Starts as a type but gets initialized after traits are selected</td></tr>
+            <tr><th><a href="datum/controller/subsystem/processing/station.html#var/selectable_traits_by_types">selectable_traits_by_types</a></th><td>Assoc list of trait type || assoc list of traits with weighted value. Used for picking traits from a specific category.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/processing/station.html#var/station_traits">station_traits</a></th><td>A list of currently active station traits</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/processing/station.html#proc/SetupTraits">SetupTraits</a></th><td>Rolls for the amount of traits and adds them to the traits list</td></tr>
+            <tr><th><a href="datum/controller/subsystem/processing/station.html#proc/pick_traits">pick_traits</a></th><td>Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them and adds them to the list of traits.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/announcer"><aside class="declaration">var </aside>announcer
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/centcom_announcer.html">centcom_announcer</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/station.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;station.dm 13"/></a></h3>
+        <p>Currently active announcer. Starts as a type but gets initialized after traits are selected</p><h3 id="var/selectable_traits_by_types"><aside class="declaration">var </aside>selectable_traits_by_types
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/station.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;station.dm 11"/></a></h3>
+        <p>Assoc list of trait type || assoc list of traits with weighted value. Used for picking traits from a specific category.</p><h3 id="var/station_traits"><aside class="declaration">var </aside>station_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/station.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;station.dm 9"/></a></h3>
+        <p>A list of currently active station traits</p><h2 id="proc">Proc Details</h2><h3 id="proc/SetupTraits"><aside class="declaration">proc </aside>SetupTraits<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/station.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;station.dm 27"/></a></aside>
+        </h3>
+        <p>Rolls for the amount of traits and adds them to the traits list</p><h3 id="proc/pick_traits"><aside class="declaration">proc </aside>pick_traits<aside>(trait_type, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/station.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;station.dm 43"/></a></aside>
+        </h3>
+        <p>Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them and adds them to the list of traits.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

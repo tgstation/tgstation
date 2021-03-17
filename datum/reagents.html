@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;reagents - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/reagents.html#var">Var Details</a> - <a href="datum/reagents.html#proc">Proc Details</a></header>
+<main>
+<h1>reagents <aside>/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 91"/></a></h1>
+
+<p>////////////////////////////Main reagents code/////////////////////////////////////////////
+Holder for a bunch of <a href="datum/reagent.html" title="/datum/reagent">/datum/reagent</a></p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/reagents.html#var/chem_temp">chem_temp</a></th><td>Current temp of the holder volume</td></tr>
+            <tr><th><a href="datum/reagents.html#var/failed_but_capable_reactions">failed_but_capable_reactions</a></th><td>If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.</td></tr>
+            <tr><th><a href="datum/reagents.html#var/flags">flags</a></th><td>various flags, see code__DEFINES\reagents.dm</td></tr>
+            <tr><th><a href="datum/reagents.html#var/is_reacting">is_reacting</a></th><td>Hard check to see if the reagents is presently reacting</td></tr>
+            <tr><th><a href="datum/reagents.html#var/last_tick">last_tick</a></th><td>unused</td></tr>
+            <tr><th><a href="datum/reagents.html#var/maximum_volume">maximum_volume</a></th><td>Max volume of this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#var/my_atom">my_atom</a></th><td>The atom this holder is attached to</td></tr>
+            <tr><th><a href="datum/reagents.html#var/ph">ph</a></th><td>pH of the whole system</td></tr>
+            <tr><th><a href="datum/reagents.html#var/previous_reagent_list">previous_reagent_list</a></th><td>cached list of reagents typepaths (not object references), this is a lazylist for optimisation</td></tr>
+            <tr><th><a href="datum/reagents.html#var/reaction_list">reaction_list</a></th><td>list of reactions currently on going, this is a lazylist for optimisation</td></tr>
+            <tr><th><a href="datum/reagents.html#var/reagent_list">reagent_list</a></th><td>The reagents being held</td></tr>
+            <tr><th><a href="datum/reagents.html#var/total_volume">total_volume</a></th><td>Current volume of all the reagents</td></tr>
+            <tr><th><a href="datum/reagents.html#var/ui_beaker_sync">ui_beaker_sync</a></th><td>If we're syncing with the beaker - so return reactions that are actively happening</td></tr>
+            <tr><th><a href="datum/reagents.html#var/ui_reaction_id">ui_reaction_id</a></th><td>UI lookup stuff
+Keeps the id of the reaction displayed in the ui</td></tr>
+            <tr><th><a href="datum/reagents.html#var/ui_reaction_index">ui_reaction_index</a></th><td>What index we're at if we have multiple reactions for a reagent product</td></tr>
+            <tr><th><a href="datum/reagents.html#var/ui_reagent_id">ui_reagent_id</a></th><td>Keeps the id of the reagent displayed in the ui</td></tr>
+            <tr><th><a href="datum/reagents.html#var/ui_tags_selected">ui_tags_selected</a></th><td>The bitflag of the currently selected tags in the ui</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/reagents.html#proc/add_reagent">add_reagent</a></th><td>Adds a reagent to this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/add_reagent_list">add_reagent_list</a></th><td>Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, &quot;beer&quot; = 15)</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/adjust_thermal_energy">adjust_thermal_energy</a></th><td></td></tr>
+            <tr><th><a href="datum/reagents.html#proc/clear_reagents">clear_reagents</a></th><td>Removes all reagents</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/conditional_update">conditional_update</a></th><td>Calls <a href="datum/reagent.html#proc/on_update" title="/datum/reagent">/datum/reagent/proc/on_update</a> on every reagent in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/conditional_update_move">conditional_update_move</a></th><td>Calls <a href="datum/reagent.html#proc/on_move" title="/datum/reagent">/datum/reagent/proc/on_move</a> on every reagent in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/copy_data">copy_data</a></th><td>Shallow copies (deep copy of viruses) data from the provided reagent into our copy of that reagent</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/copy_to">copy_to</a></th><td>Copies the reagents to the target object</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/del_reagent">del_reagent</a></th><td>Fuck this one reagent</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/determine_reaction_thermics">determine_reaction_thermics</a></th><td>Returns a string descriptor of a reactions themic_constant</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/end_metabolization">end_metabolization</a></th><td>Signals that metabolization has stopped, triggering the end of trait-based effects</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/expose">expose</a></th><td>Applies the relevant expose_ proc for every reagent in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/expose_single">expose_single</a></th><td>Same as <a href="datum/reagents.html#proc/expose" title="/datum/reagents">/datum/reagents/proc/expose</a> but only for one reagent</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/expose_temperature">expose_temperature</a></th><td>Applies heat to this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/generate_taste_message">generate_taste_message</a></th><td>Returns what this holder's reagents taste like</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/generate_thermodynamic_profile">generate_thermodynamic_profile</a></th><td>Generates a (rough) rate vs temperature graph profile</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_data">get_data</a></th><td>helper function to preserve data across reactions (needed for xenoarch)</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_master_reagent">get_master_reagent</a></th><td>Get a reference to the reagent there is the most of in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_master_reagent_id">get_master_reagent_id</a></th><td>Get the id of the reagent there is the most of in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_master_reagent_name">get_master_reagent_name</a></th><td>Get the name of the reagent there is the most of in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_priority_instant_reaction">get_priority_instant_reaction</a></th><td>Possibly remove - see if multiple instant reactions is okay (Though, this &quot;sorts&quot; reactions by temp decending)
+Presently unused</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_reagent">get_reagent</a></th><td>Get a reference to the reagent if it exists</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_reagent_amount">get_reagent_amount</a></th><td>Get the amount of this reagent</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_reagent_names">get_reagent_names</a></th><td>Get a comma separated string of every reagent name in this holder. UNUSED</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/get_reagent_purity">get_reagent_purity</a></th><td>Get the purity of this reagent</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/handle_reactions">handle_reactions</a></th><td>Handle any reactions possible in this holder
+Also UPDATES the reaction list
+High potential for infinite loopsa if you're editing this.</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/handle_stasis_chems">handle_stasis_chems</a></th><td>Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/has_changed_state">has_changed_state</a></th><td>Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
+Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/has_reagent">has_reagent</a></th><td>Check if this holder contains this reagent.
+Reagent takes a PATH to a reagent.
+Amount checks for having a specific amount of that chemical.
+Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/heat_capacity">heat_capacity</a></th><td>Returns the total heat capacity for all of the reagents currently in this holder.</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/holder_full">holder_full</a></th><td>Is this holder full or not</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/instant_react">instant_react</a></th><td>Old reaction mechanics, edited to work on one only
+This is changed from the old - purity of the reagents will affect yield</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/isolate_reagent">isolate_reagent</a></th><td>Remove every reagent except this one</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/log_list">log_list</a></th><td>Used in attack logs for reagents in pills and such</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/metabolize">metabolize</a></th><td>Triggers metabolizing for all the reagents in this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/multiply_reagents">multiply_reagents</a></th><td>Multiplies the reagents inside this holder by a specific amount</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/remove_all">remove_all</a></th><td>Removes all reagents from this holder</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/remove_all_type">remove_all_type</a></th><td>Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/remove_any">remove_any</a></th><td>Remove an amount of reagents without caring about what they are</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/remove_reagent">remove_reagent</a></th><td>Remove a specific reagent</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/set_data">set_data</a></th><td>helper function to preserve data across reactions (needed for xenoarch)</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/set_temperature">set_temperature</a></th><td></td></tr>
+            <tr><th><a href="datum/reagents.html#proc/trans_id_to">trans_id_to</a></th><td>Transfer a specific reagent id to the target object</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/trans_to">trans_to</a></th><td>Transfer some stuff from this holder to a target object</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/ui_interact">ui_interact</a></th><td>UI / REAGENTS LOOKUP CODE</td></tr>
+            <tr><th><a href="datum/reagents.html#proc/update_total">update_total</a></th><td>Updates <a href="datum/reagents.html#var/total_volume" title="/datum/reagents">/datum/reagents/var/total_volume</a></td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/chem_temp"><aside class="declaration">var </aside>chem_temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 101"/></a></h3>
+        <p>Current temp of the holder volume</p><h3 id="var/failed_but_capable_reactions"><aside class="declaration">var </aside>failed_but_capable_reactions
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 113"/></a></h3>
+        <p>If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.</p><h3 id="var/flags"><aside class="declaration">var </aside>flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 107"/></a></h3>
+        <p>various flags, see code__DEFINES\reagents.dm</p><h3 id="var/is_reacting"><aside class="declaration">var </aside>is_reacting
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 115"/></a></h3>
+        <p>Hard check to see if the reagents is presently reacting</p><h3 id="var/last_tick"><aside class="declaration">var </aside>last_tick
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 105"/></a></h3>
+        <p>unused</p><h3 id="var/maximum_volume"><aside class="declaration">var </aside>maximum_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 97"/></a></h3>
+        <p>Max volume of this holder</p><h3 id="var/my_atom"><aside class="declaration">var </aside>my_atom
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 99"/></a></h3>
+        <p>The atom this holder is attached to</p><h3 id="var/ph"><aside class="declaration">var </aside>ph
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 103"/></a></h3>
+        <p>pH of the whole system</p><h3 id="var/previous_reagent_list"><aside class="declaration">var </aside>previous_reagent_list
+            <aside>&ndash; /list/datum/reagent</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 111"/></a></h3>
+        <p>cached list of reagents typepaths (not object references), this is a lazylist for optimisation</p><h3 id="var/reaction_list"><aside class="declaration">var </aside>reaction_list
+            <aside>&ndash; /list/datum/equilibrium</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 109"/></a></h3>
+        <p>list of reactions currently on going, this is a lazylist for optimisation</p><h3 id="var/reagent_list"><aside class="declaration">var </aside>reagent_list
+            <aside>&ndash; /list/datum/reagent</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 93"/></a></h3>
+        <p>The reagents being held</p><h3 id="var/total_volume"><aside class="declaration">var </aside>total_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 95"/></a></h3>
+        <p>Current volume of all the reagents</p><h3 id="var/ui_beaker_sync"><aside class="declaration">var </aside>ui_beaker_sync
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 126"/></a></h3>
+        <p>If we're syncing with the beaker - so return reactions that are actively happening</p><h3 id="var/ui_reaction_id"><aside class="declaration">var </aside>ui_reaction_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 118"/></a></h3>
+        <p>UI lookup stuff
+Keeps the id of the reaction displayed in the ui</p><h3 id="var/ui_reaction_index"><aside class="declaration">var </aside>ui_reaction_index
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 124"/></a></h3>
+        <p>What index we're at if we have multiple reactions for a reagent product</p><h3 id="var/ui_reagent_id"><aside class="declaration">var </aside>ui_reagent_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 120"/></a></h3>
+        <p>Keeps the id of the reagent displayed in the ui</p><h3 id="var/ui_tags_selected"><aside class="declaration">var </aside>ui_tags_selected
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 122"/></a></h3>
+        <p>The bitflag of the currently selected tags in the ui</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_reagent"><aside class="declaration">proc </aside>add_reagent<aside>(reagent, amount, /list/data, reagtemp, added_purity, added_ph, no_react, override_base_ph) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 159"/></a></aside>
+        </h3>
+        <p>Adds a reagent to this holder</p>
+<p>Arguments:</p>
+<ul>
+<li>reagent - The reagent id to add</li>
+<li>amount - Amount to add</li>
+<li>list/data - Any reagent data for this reagent, used for transferring data with reagents</li>
+<li>reagtemp - Temperature of this reagent, will be equalized</li>
+<li>no_react - prevents reactions being triggered by this addition</li>
+<li>added_purity - override to force a purity when added</li>
+<li>added_ph - override to force a pH when added</li>
+<li>override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)</li>
+</ul><h3 id="proc/add_reagent_list"><aside class="declaration">proc </aside>add_reagent_list<aside>(/list/list_reagents, /list/data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L247">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 247"/></a></aside>
+        </h3>
+        <p>Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, &quot;beer&quot; = 15)</p><h3 id="proc/adjust_thermal_energy"><aside class="declaration">proc </aside>adjust_thermal_energy<aside>(delta_energy, min_temp, max_temp) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1336">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1336"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Adjusts the thermal energy of the reagents in this holder by an amount.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li>delta_energy: The amount to change the thermal energy by.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>min_temp: The minimum temperature that can be reached.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>max_temp: The maximum temperature that can be reached.</li>
+</ul>
+</li>
+</ul><h3 id="proc/clear_reagents"><aside class="declaration">proc </aside>clear_reagents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L379">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 379"/></a></aside>
+        </h3>
+        <p>Removes all reagents</p><h3 id="proc/conditional_update"><aside class="declaration">proc </aside>conditional_update<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L788">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 788"/></a></aside>
+        </h3>
+        <p>Calls <a href="datum/reagent.html#proc/on_update" title="/datum/reagent">/datum/reagent/proc/on_update</a> on every reagent in this holder</p>
+<p>Arguments:</p>
+<ul>
+<li>atom/A - passed to on_update</li>
+</ul><h3 id="proc/conditional_update_move"><aside class="declaration">proc </aside>conditional_update_move<aside>(/<a href="atom.html">atom</a>/A, Running) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L776">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 776"/></a></aside>
+        </h3>
+        <p>Calls <a href="datum/reagent.html#proc/on_move" title="/datum/reagent">/datum/reagent/proc/on_move</a> on every reagent in this holder</p>
+<p>Arguments:</p>
+<ul>
+<li>atom/A - passed to on_move</li>
+<li>Running - passed to on_move</li>
+</ul><h3 id="proc/copy_data"><aside class="declaration">proc </aside>copy_data<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/current_reagent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1254">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1254"/></a></aside>
+        </h3>
+        <p>Shallow copies (deep copy of viruses) data from the provided reagent into our copy of that reagent</p><h3 id="proc/copy_to"><aside class="declaration">proc </aside>copy_to<aside>(/<a href="obj.html">obj</a>/target, amount, multiplier, preserve_data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L558">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 558"/></a></aside>
+        </h3>
+        <p>Copies the reagents to the target object</p><h3 id="proc/del_reagent"><aside class="declaration">proc </aside>del_reagent<aside>(target_reagent_typepath) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L346">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 346"/></a></aside>
+        </h3>
+        <p>Fuck this one reagent</p><h3 id="proc/determine_reaction_thermics"><aside class="declaration">proc </aside>determine_reaction_thermics<aside>(/<a href="datum.html">datum</a>/<a href="datum/chemical_reaction.html">chemical_reaction</a>/reaction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1548">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1548"/></a></aside>
+        </h3>
+        <p>Returns a string descriptor of a reactions themic_constant</p><h3 id="proc/end_metabolization"><aside class="declaration">proc </aside>end_metabolization<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/C, keep_liverless) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L709">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 709"/></a></aside>
+        </h3>
+        <p>Signals that metabolization has stopped, triggering the end of trait-based effects</p><h3 id="proc/expose"><aside class="declaration">proc </aside>expose<aside>(/<a href="atom.html">atom</a>/A, methods, volume_modifier, show_message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1180"/></a></aside>
+        </h3>
+        <p>Applies the relevant expose_ proc for every reagent in this holder</p>
+<ul>
+<li><a href="datum/reagent.html#proc/expose_mob" title="/datum/reagent">/datum/reagent/proc/expose_mob</a></li>
+<li><a href="datum/reagent.html#proc/expose_turf" title="/datum/reagent">/datum/reagent/proc/expose_turf</a></li>
+<li><a href="datum/reagent.html#proc/expose_obj" title="/datum/reagent">/datum/reagent/proc/expose_obj</a></li>
+</ul>
+<p>Arguments</p>
+<ul>
+<li>Atom/A: What mob/turf/object is being exposed to reagents? This is your reaction target.</li>
+<li>Methods: What reaction type is the reagent itself going to call on the reaction target? Types are TOUCH, INGEST, VAPOR, PATCH, and INJECT.</li>
+<li>Volume_modifier: What is the reagent volume multiplied by when exposed? Note that this is called on the volume of EVERY reagent in the base body, so factor in your Maximum_Volume if necessary!</li>
+<li>Show_message: Whether to display anything to mobs when they are exposed.</li>
+</ul><h3 id="proc/expose_single"><aside class="declaration">proc </aside>expose_single<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/R, /<a href="atom.html">atom</a>/A, methods, volume_modifier, show_message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1196"/></a></aside>
+        </h3>
+        <p>Same as <a href="datum/reagents.html#proc/expose" title="/datum/reagents">/datum/reagents/proc/expose</a> but only for one reagent</p><h3 id="proc/expose_temperature"><aside class="declaration">proc </aside>expose_temperature<aside>(temperature, coeff) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1343">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1343"/></a></aside>
+        </h3>
+        <p>Applies heat to this holder</p><h3 id="proc/generate_taste_message"><aside class="declaration">proc </aside>generate_taste_message<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/taster, minimum_percent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1287">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1287"/></a></aside>
+        </h3>
+        <p>Returns what this holder's reagents taste like</p>
+<p>Arguments:</p>
+<ul>
+<li>mob/living/taster - who is doing the tasting. Some mobs can pick up specific flavours.</li>
+<li>minimum_percent - the lower the minimum percent, the more sensitive the message is.</li>
+</ul><h3 id="proc/generate_thermodynamic_profile"><aside class="declaration">proc </aside>generate_thermodynamic_profile<aside>(/<a href="datum.html">datum</a>/<a href="datum/chemical_reaction.html">chemical_reaction</a>/reaction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1499">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1499"/></a></aside>
+        </h3>
+        <p>Generates a (rough) rate vs temperature graph profile</p><h3 id="proc/get_data"><aside class="declaration">proc </aside>get_data<aside>(reagent_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1240"/></a></aside>
+        </h3>
+        <p>helper function to preserve data across reactions (needed for xenoarch)</p><h3 id="proc/get_master_reagent"><aside class="declaration">proc </aside>get_master_reagent<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L633">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 633"/></a></aside>
+        </h3>
+        <p>Get a reference to the reagent there is the most of in this holder</p><h3 id="proc/get_master_reagent_id"><aside class="declaration">proc </aside>get_master_reagent_id<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L621">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 621"/></a></aside>
+        </h3>
+        <p>Get the id of the reagent there is the most of in this holder</p><h3 id="proc/get_master_reagent_name"><aside class="declaration">proc </aside>get_master_reagent_name<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L609">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 609"/></a></aside>
+        </h3>
+        <p>Get the name of the reagent there is the most of in this holder</p><h3 id="proc/get_priority_instant_reaction"><aside class="declaration">proc </aside>get_priority_instant_reaction<aside>(/list/possible_reactions) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1141"/></a></aside>
+        </h3>
+        <p>Possibly remove - see if multiple instant reactions is okay (Though, this &quot;sorts&quot; reactions by temp decending)
+Presently unused</p><h3 id="proc/get_reagent"><aside class="declaration">proc </aside>get_reagent<aside>(type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1276">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1276"/></a></aside>
+        </h3>
+        <p>Get a reference to the reagent if it exists</p><h3 id="proc/get_reagent_amount"><aside class="declaration">proc </aside>get_reagent_amount<aside>(reagent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1215">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1215"/></a></aside>
+        </h3>
+        <p>Get the amount of this reagent</p><h3 id="proc/get_reagent_names"><aside class="declaration">proc </aside>get_reagent_names<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1231">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1231"/></a></aside>
+        </h3>
+        <p>Get a comma separated string of every reagent name in this holder. UNUSED</p><h3 id="proc/get_reagent_purity"><aside class="declaration">proc </aside>get_reagent_purity<aside>(reagent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1223">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1223"/></a></aside>
+        </h3>
+        <p>Get the purity of this reagent</p><h3 id="proc/handle_reactions"><aside class="declaration">proc </aside>handle_reactions<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L797">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 797"/></a></aside>
+        </h3>
+        <p>Handle any reactions possible in this holder
+Also UPDATES the reaction list
+High potential for infinite loopsa if you're editing this.</p><h3 id="proc/handle_stasis_chems"><aside class="declaration">proc </aside>handle_stasis_chems<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/owner, delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L758">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 758"/></a></aside>
+        </h3>
+        <p>Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY</p><h3 id="proc/has_changed_state"><aside class="declaration">proc </aside>has_changed_state<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1069">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1069"/></a></aside>
+        </h3>
+        <p>Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
+Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change</p><h3 id="proc/has_reagent"><aside class="declaration">proc </aside>has_reagent<aside>(reagent, amount, needs_metabolizing) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L392">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 392"/></a></aside>
+        </h3>
+        <p>Check if this holder contains this reagent.
+Reagent takes a PATH to a reagent.
+Amount checks for having a specific amount of that chemical.
+Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.</p><h3 id="proc/heat_capacity"><aside class="declaration">proc </aside>heat_capacity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1323">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1323"/></a></aside>
+        </h3>
+        <p>Returns the total heat capacity for all of the reagents currently in this holder.</p><h3 id="proc/holder_full"><aside class="declaration">proc </aside>holder_full<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1209">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1209"/></a></aside>
+        </h3>
+        <p>Is this holder full or not</p><h3 id="proc/instant_react"><aside class="declaration">proc </aside>instant_react<aside>(/<a href="datum.html">datum</a>/<a href="datum/chemical_reaction.html">chemical_reaction</a>/selected_reaction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1097">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1097"/></a></aside>
+        </h3>
+        <p>Old reaction mechanics, edited to work on one only
+This is changed from the old - purity of the reagents will affect yield</p><h3 id="proc/isolate_reagent"><aside class="declaration">proc </aside>isolate_reagent<aside>(reagent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L371">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 371"/></a></aside>
+        </h3>
+        <p>Remove every reagent except this one</p><h3 id="proc/log_list"><aside class="declaration">proc </aside>log_list<aside>(external_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1434">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1434"/></a></aside>
+        </h3>
+        <p>Used in attack logs for reagents in pills and such</p>
+<p>Arguments:</p>
+<ul>
+<li>external_list - list of reagent types = amounts</li>
+</ul><h3 id="proc/metabolize"><aside class="declaration">proc </aside>metabolize<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/owner, delta_time, times_fired, can_overdose, liverless) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L655">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 655"/></a></aside>
+        </h3>
+        <p>Triggers metabolizing for all the reagents in this holder</p>
+<p>Arguments:</p>
+<ul>
+<li>mob/living/carbon/carbon - The mob to metabolize in, if null it uses <a href="datum/reagents.html#var/my_atom" title="/datum/reagents">/datum/reagents/var/my_atom</a></li>
+<li>delta_time - the time in server seconds between proc calls (when performing normally it will be 2)</li>
+<li>times_fired - the number of times the owner's life() tick has been called aka The number of times SSmobs has fired</li>
+<li>can_overdose - Allows overdosing</li>
+<li>liverless - Stops reagents that aren't set as <a href="datum/reagent.html#var/self_consuming" title="/datum/reagent">/datum/reagent/var/self_consuming</a> from metabolizing</li>
+</ul><h3 id="proc/multiply_reagents"><aside class="declaration">proc </aside>multiply_reagents<aside>(multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L593">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 593"/></a></aside>
+        </h3>
+        <p>Multiplies the reagents inside this holder by a specific amount</p><h3 id="proc/remove_all"><aside class="declaration">proc </aside>remove_all<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L311">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 311"/></a></aside>
+        </h3>
+        <p>Removes all reagents from this holder</p><h3 id="proc/remove_all_type"><aside class="declaration">proc </aside>remove_all_type<aside>(reagent_type, amount, strict, safety) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L323">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 323"/></a></aside>
+        </h3>
+        <p>Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.</p><h3 id="proc/remove_any"><aside class="declaration">proc </aside>remove_any<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L281">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 281"/></a></aside>
+        </h3>
+        <p>Remove an amount of reagents without caring about what they are</p><h3 id="proc/remove_reagent"><aside class="declaration">proc </aside>remove_reagent<aside>(reagent, amount, safety) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L254">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 254"/></a></aside>
+        </h3>
+        <p>Remove a specific reagent</p><h3 id="proc/set_data"><aside class="declaration">proc </aside>set_data<aside>(reagent_id, new_data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1247">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1247"/></a></aside>
+        </h3>
+        <p>helper function to preserve data across reactions (needed for xenoarch)</p><h3 id="proc/set_temperature"><aside class="declaration">proc </aside>set_temperature<aside>(_temperature) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1363">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1363"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Sets the temperature of this reagent container to a new value.</p>
+</li>
+<li>
+<p>Handles setter signals.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li>_temperature: The new temperature value.</li>
+</ul>
+</li>
+</ul><h3 id="proc/trans_id_to"><aside class="declaration">proc </aside>trans_id_to<aside>(/<a href="obj.html">obj</a>/target, reagent, amount, preserve_data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L520">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 520"/></a></aside>
+        </h3>
+        <p>Transfer a specific reagent id to the target object</p><h3 id="proc/trans_to"><aside class="declaration">proc </aside>trans_to<aside>(/<a href="obj.html">obj</a>/target, amount, multiplier, preserve_data, no_react, /<a href="mob.html">mob</a>/transfered_by, remove_blacklisted, methods, show_message, round_robin, ignore_stomach) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L424">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 424"/></a></aside>
+        </h3>
+        <p>Transfer some stuff from this holder to a target object</p>
+<p>Arguments:</p>
+<ul>
+<li>obj/target - Target to attempt transfer to</li>
+<li>amount - amount of reagent volume to transfer</li>
+<li>multiplier - multiplies amount of each reagent by this number</li>
+<li>preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.</li>
+<li>no_react - passed through to <a href="datum/reagents.html#proc/add_reagent" title="/datum/reagents">/datum/reagents/proc/add_reagent</a></li>
+<li>mob/transfered_by - used for logging</li>
+<li>remove_blacklisted - skips transferring of reagents without REAGENT_CAN_BE_SYNTHESIZED in chemical_flags</li>
+<li>methods - passed through to <a href="datum/reagents.html#proc/expose_single" title="/datum/reagents">/datum/reagents/proc/expose_single</a> and <a href="datum/reagent.html#proc/on_transfer" title="/datum/reagent">/datum/reagent/proc/on_transfer</a></li>
+<li>show_message - passed through to <a href="datum/reagents.html#proc/expose_single" title="/datum/reagents">/datum/reagents/proc/expose_single</a></li>
+<li>round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors</li>
+<li>ignore_stomach - when using methods INGEST will not use the stomach as the target</li>
+</ul><h3 id="proc/ui_interact"><aside class="parent"><a title="/datum" href="datum.html#proc/ui_interact">&uarr;</a></aside>ui_interact<aside>(/<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/ui) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1454">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1454"/></a></aside>
+        </h3>
+        <p>UI / REAGENTS LOOKUP CODE</p><h3 id="proc/update_total"><aside class="declaration">proc </aside>update_total<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1156">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1156"/></a></aside>
+        </h3>
+        <p>Updates <a href="datum/reagents.html#var/total_volume" title="/datum/reagents">/datum/reagents/var/total_volume</a></p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

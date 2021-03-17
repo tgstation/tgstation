@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;_tick.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/_tick.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/_tick.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/_tick.html#define/MAPTICK_MC_MIN_RESERVE">MAPTICK_MC_MIN_RESERVE</a></th><td>Percentage of tick to leave for master controller to run</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/MAPTICK_LAST_INTERNAL_TICK_USAGE">MAPTICK_LAST_INTERNAL_TICK_USAGE</a></th><td>internal_tick_usage is updated every tick by extools</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_BYOND_RESERVE">TICK_BYOND_RESERVE</a></th><td>Tick limit while running normally</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_LIMIT_TO_RUN">TICK_LIMIT_TO_RUN</a></th><td>Tick limit used to resume things in stoplag</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_LIMIT_MC">TICK_LIMIT_MC</a></th><td>Tick limit for MC while running</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_LIMIT_MC_INIT_DEFAULT">TICK_LIMIT_MC_INIT_DEFAULT</a></th><td>Tick limit while initializing</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_USAGE">TICK_USAGE</a></th><td>for general usage of tick_usage</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_USAGE_REAL">TICK_USAGE_REAL</a></th><td>to be used where the result isn't checked</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_CHECK">TICK_CHECK</a></th><td>Returns true if tick_usage is above the limit</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/CHECK_TICK">CHECK_TICK</a></th><td>runs stoplag if tick_usage is above the limit</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/TICK_CHECK_HIGH_PRIORITY">TICK_CHECK_HIGH_PRIORITY</a></th><td>Returns true if tick usage is above 95, for high priority usage</td></tr>
+        <tr><th><a href="code/__DEFINES/_tick.html#define/CHECK_TICK_HIGH_PRIORITY">CHECK_TICK_HIGH_PRIORITY</a></th><td>runs stoplag if tick_usage is above 95, for high priority usage</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/CHECK_TICK"><aside class="declaration">#define </aside>CHECK_TICK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 27"/></a>
+    </h3>
+    <p>runs stoplag if tick_usage is above the limit</p><h3 id="define/CHECK_TICK_HIGH_PRIORITY"><aside class="declaration">#define </aside>CHECK_TICK_HIGH_PRIORITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 32"/></a>
+    </h3>
+    <p>runs stoplag if tick_usage is above 95, for high priority usage</p><h3 id="define/MAPTICK_LAST_INTERNAL_TICK_USAGE"><aside class="declaration">#define </aside>MAPTICK_LAST_INTERNAL_TICK_USAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 5"/></a>
+    </h3>
+    <p>internal_tick_usage is updated every tick by extools</p><h3 id="define/MAPTICK_MC_MIN_RESERVE"><aside class="declaration">#define </aside>MAPTICK_MC_MIN_RESERVE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 2"/></a>
+    </h3>
+    <p>Percentage of tick to leave for master controller to run</p><h3 id="define/TICK_BYOND_RESERVE"><aside class="declaration">#define </aside>TICK_BYOND_RESERVE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 10"/></a>
+    </h3>
+    <p>Tick limit while running normally</p><h3 id="define/TICK_CHECK"><aside class="declaration">#define </aside>TICK_CHECK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 25"/></a>
+    </h3>
+    <p>Returns true if tick_usage is above the limit</p><h3 id="define/TICK_CHECK_HIGH_PRIORITY"><aside class="declaration">#define </aside>TICK_CHECK_HIGH_PRIORITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 30"/></a>
+    </h3>
+    <p>Returns true if tick usage is above 95, for high priority usage</p><h3 id="define/TICK_LIMIT_MC"><aside class="declaration">#define </aside>TICK_LIMIT_MC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 15"/></a>
+    </h3>
+    <p>Tick limit for MC while running</p><h3 id="define/TICK_LIMIT_MC_INIT_DEFAULT"><aside class="declaration">#define </aside>TICK_LIMIT_MC_INIT_DEFAULT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 17"/></a>
+    </h3>
+    <p>Tick limit while initializing</p><h3 id="define/TICK_LIMIT_TO_RUN"><aside class="declaration">#define </aside>TICK_LIMIT_TO_RUN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 13"/></a>
+    </h3>
+    <p>Tick limit used to resume things in stoplag</p><h3 id="define/TICK_USAGE"><aside class="declaration">#define </aside>TICK_USAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 20"/></a>
+    </h3>
+    <p>for general usage of tick_usage</p><h3 id="define/TICK_USAGE_REAL"><aside class="declaration">#define </aside>TICK_USAGE_REAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_tick.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_tick.dm 22"/></a>
+    </h3>
+    <p>to be used where the result isn't checked</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

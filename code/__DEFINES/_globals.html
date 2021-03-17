@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;_globals.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/_globals.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/_globals.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_MANAGED">GLOBAL_MANAGED</a></th><td>Creates a global initializer with a given InitValue expression, do not use</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_UNMANAGED">GLOBAL_UNMANAGED</a></th><td>Creates an empty global initializer, do not use</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_PROTECT">GLOBAL_PROTECT</a></th><td>Prevents a given global from being VV'd</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_REAL_VAR">GLOBAL_REAL_VAR</a></th><td>Standard BYOND global, do not use</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_REAL">GLOBAL_REAL</a></th><td>Standard typed BYOND global, do not use</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_RAW">GLOBAL_RAW</a></th><td>Defines a global var on the controller, do not use</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_VAR_INIT">GLOBAL_VAR_INIT</a></th><td>Create an untyped global with an initializer expression</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_VAR_CONST">GLOBAL_VAR_CONST</a></th><td>Create a global const var, do not use</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_LIST_INIT">GLOBAL_LIST_INIT</a></th><td>Create a list global with an initializer expression</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_LIST_EMPTY">GLOBAL_LIST_EMPTY</a></th><td>Create a list global that is initialized as an empty list</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_LIST_INIT_TYPED">GLOBAL_LIST_INIT_TYPED</a></th><td>Create a typed list global with an initializer expression</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_LIST_EMPTY_TYPED">GLOBAL_LIST_EMPTY_TYPED</a></th><td>Create a typed list global that is initialized as an empty list</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_DATUM_INIT">GLOBAL_DATUM_INIT</a></th><td>Create a typed global with an initializer expression</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_VAR">GLOBAL_VAR</a></th><td>Create an untyped null global</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_LIST">GLOBAL_LIST</a></th><td>Create a null global list</td></tr>
+        <tr><th><a href="code/__DEFINES/_globals.html#define/GLOBAL_DATUM">GLOBAL_DATUM</a></th><td>Create a typed null global</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/GLOBAL_DATUM"><aside class="declaration">#define </aside>GLOBAL_DATUM
+            <aside>(X, Typepath)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 60"/></a>
+    </h3>
+    <p>Create a typed null global</p><h3 id="define/GLOBAL_DATUM_INIT"><aside class="declaration">#define </aside>GLOBAL_DATUM_INIT
+            <aside>(X, Typepath, InitValue)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 51"/></a>
+    </h3>
+    <p>Create a typed global with an initializer expression</p><h3 id="define/GLOBAL_LIST"><aside class="declaration">#define </aside>GLOBAL_LIST
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 57"/></a>
+    </h3>
+    <p>Create a null global list</p><h3 id="define/GLOBAL_LIST_EMPTY"><aside class="declaration">#define </aside>GLOBAL_LIST_EMPTY
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 42"/></a>
+    </h3>
+    <p>Create a list global that is initialized as an empty list</p><h3 id="define/GLOBAL_LIST_EMPTY_TYPED"><aside class="declaration">#define </aside>GLOBAL_LIST_EMPTY_TYPED
+            <aside>(X, Typepath)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 48"/></a>
+    </h3>
+    <p>Create a typed list global that is initialized as an empty list</p><h3 id="define/GLOBAL_LIST_INIT"><aside class="declaration">#define </aside>GLOBAL_LIST_INIT
+            <aside>(X, InitValue)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 39"/></a>
+    </h3>
+    <p>Create a list global with an initializer expression</p><h3 id="define/GLOBAL_LIST_INIT_TYPED"><aside class="declaration">#define </aside>GLOBAL_LIST_INIT_TYPED
+            <aside>(X, Typepath, InitValue)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 45"/></a>
+    </h3>
+    <p>Create a typed list global with an initializer expression</p><h3 id="define/GLOBAL_MANAGED"><aside class="declaration">#define </aside>GLOBAL_MANAGED
+            <aside>(X, InitValue)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 4"/></a>
+    </h3>
+    <p>Creates a global initializer with a given InitValue expression, do not use</p><h3 id="define/GLOBAL_PROTECT"><aside class="declaration">#define </aside>GLOBAL_PROTECT
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 14"/></a>
+    </h3>
+    <p>Prevents a given global from being VV'd</p><h3 id="define/GLOBAL_RAW"><aside class="declaration">#define </aside>GLOBAL_RAW
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 30"/></a>
+    </h3>
+    <p>Defines a global var on the controller, do not use</p><h3 id="define/GLOBAL_REAL"><aside class="declaration">#define </aside>GLOBAL_REAL
+            <aside>(X, Typepath)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 27"/></a>
+    </h3>
+    <p>Standard typed BYOND global, do not use</p><h3 id="define/GLOBAL_REAL_VAR"><aside class="declaration">#define </aside>GLOBAL_REAL_VAR
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 24"/></a>
+    </h3>
+    <p>Standard BYOND global, do not use</p><h3 id="define/GLOBAL_UNMANAGED"><aside class="declaration">#define </aside>GLOBAL_UNMANAGED
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 10"/></a>
+    </h3>
+    <p>Creates an empty global initializer, do not use</p><h3 id="define/GLOBAL_VAR"><aside class="declaration">#define </aside>GLOBAL_VAR
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 54"/></a>
+    </h3>
+    <p>Create an untyped null global</p><h3 id="define/GLOBAL_VAR_CONST"><aside class="declaration">#define </aside>GLOBAL_VAR_CONST
+            <aside>(X, InitValue)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 36"/></a>
+    </h3>
+    <p>Create a global const var, do not use</p><h3 id="define/GLOBAL_VAR_INIT"><aside class="declaration">#define </aside>GLOBAL_VAR_INIT
+            <aside>(X, InitValue)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/_globals.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_globals.dm 33"/></a>
+    </h3>
+    <p>Create an untyped global with an initializer expression</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

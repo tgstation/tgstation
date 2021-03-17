@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;projectile - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/projectile.html#var">Var Details</a> - <a href="obj/projectile.html#proc">Proc Details</a></header>
+<main>
+<h1>projectile <aside>/<a href="obj.html">obj</a>/<a href="obj/projectile.html">projectile</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 5"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/projectile.html#var/armour_penetration">armour_penetration</a></th><td>How much armor this projectile pierces.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/embed_falloff_tile">embed_falloff_tile</a></th><td>How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes</td></tr>
+            <tr><th><a href="obj/projectile.html#var/embedding">embedding</a></th><td>If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target</td></tr>
+            <tr><th><a href="obj/projectile.html#var/force_hit">force_hit</a></th><td>If the object being hit can pass ths damage on to something else, it should not do it for this bullet</td></tr>
+            <tr><th><a href="obj/projectile.html#var/hit_stunned_targets">hit_stunned_targets</a></th><td>If TRUE, hit mobs even if they're on the floor and not our target</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ignore_source_check">ignore_source_check</a></th><td>If TRUE, we can hit our firer.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/impacted">impacted</a></th><td>We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/last_angle_set_hitscan_store">last_angle_set_hitscan_store</a></th><td>Last turf an angle was changed in for hitscan projectiles.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/pass_flags">pass_flags</a></th><td></td></tr>
+            <tr><th><a href="obj/projectile.html#var/phasing_ignore_direct_target">phasing_ignore_direct_target</a></th><td>If FALSE, allow us to hit something directly targeted/clicked/whatnot even if we're able to phase through it</td></tr>
+            <tr><th><a href="obj/projectile.html#var/pierces">pierces</a></th><td>number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!</td></tr>
+            <tr><th><a href="obj/projectile.html#var/projectile_phasing">projectile_phasing</a></th><td>Bitflag for things the projectile should just phase through entirely - No hitting unless direct target and [phasing_ignore_direct_target] is FALSE. Uses pass_flags flags.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/projectile_piercing">projectile_piercing</a></th><td>Bitflag for things the projectile should hit, but pierce through without deleting itself. Defers to projectile_phasing. Uses pass_flags flags.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochet_auto_aim_angle">ricochet_auto_aim_angle</a></th><td>On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochet_auto_aim_range">ricochet_auto_aim_range</a></th><td>On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochet_chance">ricochet_chance</a></th><td>0-100 (or more, I guess), the base chance of ricocheting, before being modified by the atom we shoot and our chance decay</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochet_decay_chance">ricochet_decay_chance</a></th><td>0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochet_decay_damage">ricochet_decay_damage</a></th><td>0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochet_incidence_leeway">ricochet_incidence_leeway</a></th><td>the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochets">ricochets</a></th><td>how many times we've ricochet'd so far (instance variable, not a stat)</td></tr>
+            <tr><th><a href="obj/projectile.html#var/ricochets_max">ricochets_max</a></th><td>how many times we can ricochet max</td></tr>
+            <tr><th><a href="obj/projectile.html#var/sharpness">sharpness</a></th><td>For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/shrapnel_type">shrapnel_type</a></th><td>If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets</td></tr>
+            <tr><th><a href="obj/projectile.html#var/temporary_unstoppable_movement">temporary_unstoppable_movement</a></th><td>We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.</td></tr>
+            <tr><th><a href="obj/projectile.html#var/wound_falloff_tile">wound_falloff_tile</a></th><td>How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/projectile.html#proc/CanPassThrough">CanPassThrough</a></th><td>Projectile can pass through
+Used to not even attempt to Bump() or fail to Cross() anything we already hit.</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/Crossed">Crossed</a></th><td>Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/Impact">Impact</a></th><td>Called when the projectile hits something
+This can either be from it bumping something,
+or it passing over a turf/being crossed and scanning that there is infact
+a valid target it needs to hit.
+This target isn't however necessarily WHAT it hits
+that is determined by process_hit and select_target.</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/Moved">Moved</a></th><td>Projectile moved:</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/on_hit">on_hit</a></th><td>Called when the projectile hits something</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/prehit_pierce">prehit_pierce</a></th><td>Checks if we should pierce something.</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/process_hit">process_hit</a></th><td>The primary workhorse proc of projectile impacts.
+This is a RECURSIVE call - process_hit is called on the first selected target, and then repeatedly called if the projectile still hasn't been deleted.</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/scan_crossed_hit">scan_crossed_hit</a></th><td>Scan if we should hit something and hit it if we need to
+The difference between this and handling in Impact is
+In this we strictly check if we need to Impact() something in specific
+If we do, we do
+We don't even check if it got hit already - Impact() does that
+In impact there's more code for selecting WHAT to hit
+So this proc is more of checking if we should hit something at all BY having an atom cross us.</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/scan_moved_turf">scan_moved_turf</a></th><td>Scans if we should hit something on the turf we just moved to if we haven't already</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/select_target">select_target</a></th><td>Selects a target to hit from a turf</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/set_angle_centered">set_angle_centered</a></th><td>Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side</td></tr>
+            <tr><th><a href="obj/projectile.html#proc/updateEmbedding">updateEmbedding</a></th><td>Like <a href="obj/item.html#proc/updateEmbedding" title="/obj/item">/obj/item/proc/updateEmbedding</a> but for projectiles instead, call this when you want to add embedding or update the stats on the embedding element</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/armour_penetration"><aside class="declaration">var </aside>armour_penetration
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 131"/></a></h3>
+        <p>How much armor this projectile pierces.</p><h3 id="var/embed_falloff_tile"><aside class="declaration">var </aside>embed_falloff_tile
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 169"/></a></h3>
+        <p>How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes</p><h3 id="var/embedding"><aside class="declaration">var </aside>embedding
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 157"/></a></h3>
+        <p>If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target</p><h3 id="var/force_hit"><aside class="declaration">var </aside>force_hit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 93"/></a></h3>
+        <p>If the object being hit can pass ths damage on to something else, it should not do it for this bullet</p><h3 id="var/hit_stunned_targets"><aside class="declaration">var </aside>hit_stunned_targets
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 160"/></a></h3>
+        <p>If TRUE, hit mobs even if they're on the floor and not our target</p><h3 id="var/ignore_source_check"><aside class="declaration">var </aside>ignore_source_check
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 42"/></a></h3>
+        <p>If TRUE, we can hit our firer.</p><h3 id="var/impacted"><aside class="declaration">var </aside>impacted
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 40"/></a></h3>
+        <p>We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.</p><h3 id="var/last_angle_set_hitscan_store"><aside class="declaration">var </aside>last_angle_set_hitscan_store
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 99"/></a></h3>
+        <p>Last turf an angle was changed in for hitscan projectiles.</p><h3 id="var/pass_flags"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#var/pass_flags">&uarr;</a></aside>pass_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 59"/></a></h3>
+        <ul>
+<li>
+<p>PROJECTILE PIERCING
+* WARNING:
+* Projectile piercing MUST be done using these variables.
+* Ordinary passflags will result in can_hit_target being false unless directly clicked on - similar to projectile_phasing but without even going to process_hit.
+* The two flag variables below both use pass flags.
+* In the context of LETPASStHROW, it means the projectile will ignore things that are currently &quot;in the air&quot; from a throw.</p>
+<pre><code>* Also, projectiles sense hits using Bump(), and then pierce them if necessary.
+* They simply do not follow conventional movement rules.
+* NEVER flag a projectile as PHASING movement type.
+* If you so badly need to make one go through *everything*, override check_pierce() for your projectile to always return PROJECTILE_PIERCE_PHASE/HIT.
+</code></pre>
+</li>
+</ul>
+<p>The &quot;usual&quot; flags of pass_flags is used in that can_hit_target ignores these unless they're specifically targeted/clicked on. This behavior entirely bypasses process_hit if triggered, rather than phasing which uses prehit_pierce() to check.</p><h3 id="var/phasing_ignore_direct_target"><aside class="declaration">var </aside>phasing_ignore_direct_target
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 61"/></a></h3>
+        <p>If FALSE, allow us to hit something directly targeted/clicked/whatnot even if we're able to phase through it</p><h3 id="var/pierces"><aside class="declaration">var </aside>pierces
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 67"/></a></h3>
+        <p>number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!</p><h3 id="var/projectile_phasing"><aside class="declaration">var </aside>projectile_phasing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 63"/></a></h3>
+        <p>Bitflag for things the projectile should just phase through entirely - No hitting unless direct target and [phasing_ignore_direct_target] is FALSE. Uses pass_flags flags.</p><h3 id="var/projectile_piercing"><aside class="declaration">var </aside>projectile_piercing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 65"/></a></h3>
+        <p>Bitflag for things the projectile should hit, but pierce through without deleting itself. Defers to projectile_phasing. Uses pass_flags flags.</p><h3 id="var/ricochet_auto_aim_angle"><aside class="declaration">var </aside>ricochet_auto_aim_angle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 88"/></a></h3>
+        <p>On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim</p><h3 id="var/ricochet_auto_aim_range"><aside class="declaration">var </aside>ricochet_auto_aim_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 86"/></a></h3>
+        <p>On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle</p><h3 id="var/ricochet_chance"><aside class="declaration">var </aside>ricochet_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 80"/></a></h3>
+        <p>0-100 (or more, I guess), the base chance of ricocheting, before being modified by the atom we shoot and our chance decay</p><h3 id="var/ricochet_decay_chance"><aside class="declaration">var </aside>ricochet_decay_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 82"/></a></h3>
+        <p>0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet</p><h3 id="var/ricochet_decay_damage"><aside class="declaration">var </aside>ricochet_decay_damage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 84"/></a></h3>
+        <p>0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet</p><h3 id="var/ricochet_incidence_leeway"><aside class="declaration">var </aside>ricochet_incidence_leeway
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 90"/></a></h3>
+        <p>the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle</p><h3 id="var/ricochets"><aside class="declaration">var </aside>ricochets
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 76"/></a></h3>
+        <p>how many times we've ricochet'd so far (instance variable, not a stat)</p><h3 id="var/ricochets_max"><aside class="declaration">var </aside>ricochets_max
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 78"/></a></h3>
+        <p>how many times we can ricochet max</p><h3 id="var/sharpness"><aside class="declaration">var </aside>sharpness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L163">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 163"/></a></h3>
+        <p>For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.</p><h3 id="var/shrapnel_type"><aside class="declaration">var </aside>shrapnel_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 155"/></a></h3>
+        <p>If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets</p><h3 id="var/temporary_unstoppable_movement"><aside class="declaration">var </aside>temporary_unstoppable_movement
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 44"/></a></h3>
+        <p>We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.</p><h3 id="var/wound_falloff_tile"><aside class="declaration">var </aside>wound_falloff_tile
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 165"/></a></h3>
+        <p>How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes</p><h2 id="proc">Proc Details</h2><h3 id="proc/CanPassThrough"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#proc/CanPassThrough">&uarr;</a></aside>CanPassThrough<aside>(/<a href="atom.html">atom</a>/blocker, /<a href="turf.html">turf</a>/target, blocker_opinion) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L556">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 556"/></a></aside>
+        </h3>
+        <p>Projectile can pass through
+Used to not even attempt to Bump() or fail to Cross() anything we already hit.</p><h3 id="proc/Crossed">Crossed<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L548">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 548"/></a></aside>
+        </h3>
+        <p>Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.</p><h3 id="proc/Impact"><aside class="declaration">proc </aside>Impact<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L344">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 344"/></a></aside>
+        </h3>
+        <p>Called when the projectile hits something
+This can either be from it bumping something,
+or it passing over a turf/being crossed and scanning that there is infact
+a valid target it needs to hit.
+This target isn't however necessarily WHAT it hits
+that is determined by process_hit and select_target.</p>
+<p>Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
+Also, we select_target to find what to process_hit first.</p><h3 id="proc/Moved">Moved<aside>(/<a href="atom.html">atom</a>/OldLoc, Dir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L568">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 568"/></a></aside>
+        </h3>
+        <p>Projectile moved:</p>
+<p>If not fired yet, do not do anything. Else,</p>
+<p>If temporary unstoppable movement used for piercing through things we already hit (impacted list) is set, unset it.
+Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
+directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().</p><h3 id="proc/on_hit"><aside class="declaration">proc </aside>on_hit<aside>(/<a href="atom.html">atom</a>/target, blocked, pierce_hit) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L208">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 208"/></a></aside>
+        </h3>
+        <p>Called when the projectile hits something</p>
+<p>@params
+target - thing hit
+blocked - percentage of hit blocked
+pierce_hit - are we piercing through or regular hitting</p><h3 id="proc/prehit_pierce"><aside class="declaration">proc </aside>prehit_pierce<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L583">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 583"/></a></aside>
+        </h3>
+        <p>Checks if we should pierce something.</p>
+<p>NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
+Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!</p><h3 id="proc/process_hit"><aside class="declaration">proc </aside>process_hit<aside>(/<a href="turf.html">turf</a>/T, /<a href="atom.html">atom</a>/target, /<a href="atom.html">atom</a>/bumped, hit_something) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L394">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 394"/></a></aside>
+        </h3>
+        <p>The primary workhorse proc of projectile impacts.
+This is a RECURSIVE call - process_hit is called on the first selected target, and then repeatedly called if the projectile still hasn't been deleted.</p>
+<p>Order of operations:</p>
+<ol>
+<li>Checks if we are deleted, or if we're somehow trying to hit a null, in which case, bail out</li>
+<li>Adds the thing we're hitting to impacted so we can make sure we don't doublehit</li>
+<li>Checks piercing - stores this.
+Afterwards:
+Hit and delete, hit without deleting and pass through, pass through without hitting, or delete without hitting depending on result
+If we're going through without hitting, find something else to hit if possible and recurse, set unstoppable movement to true
+If we're deleting without hitting, delete and return
+Otherwise, send signal of COMSIG_PROJECTILE_PREHIT to target
+Then, hit, deleting ourselves if necessary.
+@params
+T - Turf we're on/supposedly hitting
+target - target we're hitting
+bumped - target we originally bumped. it's here to ensure that if something blocks our projectile by means of Cross() failure, we hit it
+even if it is not dense.
+hit_something - only should be set by recursive calling by this proc - tracks if we hit something already</li>
+</ol>
+<p>Returns if we hit something.</p><h3 id="proc/scan_crossed_hit"><aside class="declaration">proc </aside>scan_crossed_hit<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L520">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 520"/></a></aside>
+        </h3>
+        <p>Scan if we should hit something and hit it if we need to
+The difference between this and handling in Impact is
+In this we strictly check if we need to Impact() something in specific
+If we do, we do
+We don't even check if it got hit already - Impact() does that
+In impact there's more code for selecting WHAT to hit
+So this proc is more of checking if we should hit something at all BY having an atom cross us.</p><h3 id="proc/scan_moved_turf"><aside class="declaration">proc </aside>scan_moved_turf<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L529">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 529"/></a></aside>
+        </h3>
+        <p>Scans if we should hit something on the turf we just moved to if we haven't already</p>
+<p>This proc is a little high in overhead but allows us to not snowflake CanPass in living and other things.</p><h3 id="proc/select_target"><aside class="declaration">proc </aside>select_target<aside>(/<a href="turf.html">turf</a>/T, /<a href="atom.html">atom</a>/target, /<a href="atom.html">atom</a>/bumped) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L444">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 444"/></a></aside>
+        </h3>
+        <p>Selects a target to hit from a turf</p>
+<p>@params
+T - The turf
+target - The &quot;preferred&quot; atom to hit, usually what we Bumped() first.
+bumped - used to track if something is the reason we impacted in the first place.
+If set, this atom is always treated as dense by can_hit_target.</p>
+<p>Priority:
+0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
+Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be &quot;&quot;too&quot;&quot; bad and I frankly don't have a better <em>generic non snowflakey</em> way that I can think of right now at 3 AM.
+FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.</p>
+<ol>
+<li>The thing originally aimed at/clicked on</li>
+<li>Mobs - picks lowest buckled mob to prevent scarp piggybacking memes</li>
+<li>Objs</li>
+<li>Turf</li>
+<li>Nothing</li>
+</ol><h3 id="proc/set_angle_centered"><aside class="declaration">proc </aside>set_angle_centered<aside>(new_angle) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L711">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 711"/></a></aside>
+        </h3>
+        <p>Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side</p><h3 id="proc/updateEmbedding"><aside class="declaration">proc </aside>updateEmbedding<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/projectiles/projectile.dm#L965">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;projectiles&#x2F;projectile.dm 965"/></a></aside>
+        </h3>
+        <p>Like <a href="obj/item.html#proc/updateEmbedding" title="/obj/item">/obj/item/proc/updateEmbedding</a> but for projectiles instead, call this when you want to add embedding or update the stats on the embedding element</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

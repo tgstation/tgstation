@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;robot_model - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/robot_model.html#var">Var Details</a> - <a href="obj/item/robot_model.html#proc">Proc Details</a></header>
+<main>
+<h1>robot_model <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/robot_model.html">robot_model</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 8"/></a></h1>
+
+<p>Definition of /obj/item/robot_model, which defines behavior for each model.
+Further expanded on in <a href="obj/item/robot_model.html" title="/obj/item/robot_model">robot_modules.dm</a>.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/added_modules">added_modules</a></th><td>Modules not inherent to the robot configuration</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/breakable_modules">breakable_modules</a></th><td>Whether the borg loses tool slots with damage.</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/canDispose">canDispose</a></th><td>Whether the borg can stuff itself into disposals</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/cyborg_base_icon">cyborg_base_icon</a></th><td>Produces the icon for the borg and, if no special_light_key is set, the lights</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/locked_transform">locked_transform</a></th><td>Whether swapping to this configuration should lockcharge the borg</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/model_traits">model_traits</a></th><td>List of traits that will be applied to the mob if this model is used.</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/modules">modules</a></th><td>Holds all the usable modules (tools)</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/robot">robot</a></th><td>Host of this model</td></tr>
+            <tr><th><a href="obj/item/robot_model.html#var/special_light_key">special_light_key</a></th><td>If we want specific lights, use this instead of copying lights in the dmi</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/robot_model.html#proc/Initialize">Initialize</a></th><td></td></tr>
+            <tr><th><a href="obj/item/robot_model.html#proc/check_menu">check_menu</a></th><td>Checks if we are allowed to interact with a radial menu</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/added_modules"><aside class="declaration">var </aside>added_modules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 36"/></a></h3>
+        <p>Modules not inherent to the robot configuration</p><h3 id="var/breakable_modules"><aside class="declaration">var </aside>breakable_modules
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 48"/></a></h3>
+        <p>Whether the borg loses tool slots with damage.</p><h3 id="var/canDispose"><aside class="declaration">var </aside>canDispose
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 54"/></a></h3>
+        <p>Whether the borg can stuff itself into disposals</p><h3 id="var/cyborg_base_icon"><aside class="declaration">var </aside>cyborg_base_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 24"/></a></h3>
+        <p>Produces the icon for the borg and, if no special_light_key is set, the lights</p><h3 id="var/locked_transform"><aside class="declaration">var </aside>locked_transform
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 50"/></a></h3>
+        <p>Whether swapping to this configuration should lockcharge the borg</p><h3 id="var/model_traits"><aside class="declaration">var </aside>model_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 41"/></a></h3>
+        <p>List of traits that will be applied to the mob if this model is used.</p><h3 id="var/modules"><aside class="declaration">var </aside>modules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 30"/></a></h3>
+        <p>Holds all the usable modules (tools)</p><h3 id="var/robot"><aside class="declaration">var </aside>robot
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/silicon.html">silicon</a>/<a href="mob/living/silicon/robot.html">robot</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 19"/></a></h3>
+        <p>Host of this model</p><h3 id="var/special_light_key"><aside class="declaration">var </aside>special_light_key
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_model.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_model.dm 26"/></a></h3>
+        <p>If we want specific lights, use this instead of copying lights in the dmi</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/atom" href="atom.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_modules.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_modules.dm 9"/></a></aside>
+        </h3>
+        <h1 id="robot-modules">robot_modules</h1>
+<p>Deals with the creation and deletion of modules (tools).
+Assigns modules and traits to a borg with a specific model selected.</p><h3 id="proc/check_menu"><aside class="declaration">proc </aside>check_menu<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/silicon.html">silicon</a>/<a href="mob/living/silicon/robot.html">robot</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/robot_model.html">robot_model</a>/old_model) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/silicon/robot/robot_modules.dm#L191">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;silicon&#x2F;robot&#x2F;robot_modules.dm 191"/></a></aside>
+        </h3>
+        <p>Checks if we are allowed to interact with a radial menu</p>
+<p>Arguments:</p>
+<ul>
+<li>user The cyborg mob interacting with the menu</li>
+<li>old_model The old cyborg's model</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

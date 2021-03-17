@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;gang_handler - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/gang_handler.html#var">Var Details</a> - <a href="datum/gang_handler.html#proc">Proc Details</a></header>
+<main>
+<h1>Families gamemode &#x2F; dynamic ruleset handler <aside>/<a href="datum.html">datum</a>/<a href="datum/gang_handler.html">gang_handler</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 35"/></a></h1>
+
+<p>A special datum used by the families gamemode and dynamic rulesets to centralize code. &quot;Family&quot; and &quot;gang&quot; used interchangeably in code.</p>
+<p>This datum centralizes code used for the families gamemode / dynamic rulesets. Families incorporates a significant
+amount of unique processing; without this datum, that could would be duplicated. To ensure the maintainability
+of the families gamemode / rulesets, the code was moved to this datum. The gamemode / rulesets instance this
+datum, pass it lists (lists are passed by reference; removing candidates here removes candidates in the gamemode),
+and call its procs. Additionally, the families antagonist datum and families induction package also
+contain vars that reference this datum, allowing for new families / family members to add themselves
+to this datum's lists thereof (primarily used for point calculation). Despite this, the basic team mechanics
+themselves should function regardless of this datum's instantiation, should a player have the gang or cop
+antagonist datum added to them through methods external to the families gamemode / rulesets.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/antag_candidates">antag_candidates</a></th><td>List of all eligible starting family members / undercover cops. Set externally (passed by reference) by gamemode / ruleset; used internally. Note that dynamic uses a list of mobs to handle candidates while game_modes use lists of minds! Don't be fooled!</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/check_counter">check_counter</a></th><td>A counter used to minimize the overhead of computationally intensive, periodic family point gain checks. Used and set internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/cops_arrived">cops_arrived</a></th><td>Whether the space cops have arrived. Set internally; used internally, and for updating the wanted HUD.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/deaths_during_shift_at_beginning">deaths_during_shift_at_beginning</a></th><td>Keeps track of the amount of deaths since the calling of pre_setup_analogue() if this is a midround handler. Used to prevent a high wanted level due to a large amount of deaths during the shift prior to the activation of this handler / the midround ruleset.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/end_time">end_time</a></th><td>The time, in deciseconds, that the space cops will arrive at. Calculated based on wanted level and start_time. Used and set internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/gang_balance_cap">gang_balance_cap</a></th><td>The number of family members more that a family may have over other active families. Can be set externally; used internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/gangbangers">gangbangers</a></th><td>List of all family member minds. Used internally; added to internally, and externally by /obj/item/gang_induction_package when used to induct a new family member.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/gangs">gangs</a></th><td>List of all /datum/team/gang. Used internally; added to externally by /datum/antagonist/gang when it generates a new /datum/team/gang.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/gangs_to_generate">gangs_to_generate</a></th><td>The number of families (and 1:1 corresponding undercover cops) that should be generated. Can be set externally; used internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/midround_ruleset">midround_ruleset</a></th><td>Whether the handler corresponds to a ruleset that does not trigger at round start. Should be set externally only if applicable; used internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/restricted_jobs">restricted_jobs</a></th><td>List of jobs not eligible for starting family member / undercover cop. Set externally (passed by reference) by gamemode / ruleset; used internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/sent_announcement">sent_announcement</a></th><td>Whether the gamemode-announcing announcement has been sent. Used and set internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/sent_second_announcement">sent_second_announcement</a></th><td>Whether the &quot;5 minute warning&quot; announcement has been sent. Used and set internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/start_time">start_time</a></th><td>The time, in deciseconds, that the datum's pre_setup() occured at. Used in end_time. Used and set internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/undercover_cops">undercover_cops</a></th><td>List of all undercover cop minds. Used and set internally.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/use_dynamic_timing">use_dynamic_timing</a></th><td>Whether we want to use the 30 to 15 minute timer instead of the 60 to 30 minute timer, for Dynamic.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#var/wanted_level">wanted_level</a></th><td>The current wanted level. Set internally; used internally, and for updating the wanted HUD.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/New">New</a></th><td>Sets antag_candidates and restricted_jobs.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/announce_gang_locations">announce_gang_locations</a></th><td>Internal. Announces the presence of families to the entire station and sets sent_announcement to true to allow other checks to occur.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/check_gang_clothes">check_gang_clothes</a></th><td>Internal. Assigns points to families according to clothing of all currently living humans.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/check_rollin_with_crews">check_rollin_with_crews</a></th><td>Internal. Assigns points to families according to groups of nearby family members.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/check_tagged_turfs">check_tagged_turfs</a></th><td>Internal. Assigns points to families according to gang tags.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/check_wanted_level">check_wanted_level</a></th><td>Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/end_hostile_sit">end_hostile_sit</a></th><td>Internal. Clears the hostile environment, letting the shuttle leave.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/five_minute_warning">five_minute_warning</a></th><td>Internal. Announces that space cops will arrive in 5 minutes and sets sent_second_announcement to true to freeze</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/on_gain_wanted_level">on_gain_wanted_level</a></th><td>Internal. Updates the end_time and sends out an announcement if the wanted level has increased. Called by update_wanted_level().</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/on_lower_wanted_level">on_lower_wanted_level</a></th><td>Internal. Updates the end_time and sends out an announcement if the wanted level has decreased. Called by update_wanted_level().</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/post_setup_analogue">post_setup_analogue</a></th><td>post_setup() or execute() equivalent.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/pre_setup_analogue">pre_setup_analogue</a></th><td>pre_setup() or pre_execute() equivalent.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/process_analogue">process_analogue</a></th><td>process() or rule_process() equivalent.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/send_in_the_fuzz">send_in_the_fuzz</a></th><td>Internal. Polls ghosts and sends in a team of space cops according to the wanted level, accompanied by an announcement. Will let the shuttle leave 10 minutes after sending. Freezes the wanted level.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/set_round_result_analogue">set_round_result_analogue</a></th><td>set_round_result() or round_result() equivalent.</td></tr>
+            <tr><th><a href="datum/gang_handler.html#proc/update_wanted_level">update_wanted_level</a></th><td>Internal. Updates the icon states for everyone, and calls procs that send out announcements / change the end_time if the wanted level has changed.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/antag_candidates"><aside class="declaration">var </aside>antag_candidates
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 68"/></a></h3>
+        <p>List of all eligible starting family members / undercover cops. Set externally (passed by reference) by gamemode / ruleset; used internally. Note that dynamic uses a list of mobs to handle candidates while game_modes use lists of minds! Don't be fooled!</p><h3 id="var/check_counter"><aside class="declaration">var </aside>check_counter
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 37"/></a></h3>
+        <p>A counter used to minimize the overhead of computationally intensive, periodic family point gain checks. Used and set internally.</p><h3 id="var/cops_arrived"><aside class="declaration">var </aside>cops_arrived
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 47"/></a></h3>
+        <p>Whether the space cops have arrived. Set internally; used internally, and for updating the wanted HUD.</p><h3 id="var/deaths_during_shift_at_beginning"><aside class="declaration">var </aside>deaths_during_shift_at_beginning
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 65"/></a></h3>
+        <p>Keeps track of the amount of deaths since the calling of pre_setup_analogue() if this is a midround handler. Used to prevent a high wanted level due to a large amount of deaths during the shift prior to the activation of this handler / the midround ruleset.</p><h3 id="var/end_time"><aside class="declaration">var </aside>end_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 41"/></a></h3>
+        <p>The time, in deciseconds, that the space cops will arrive at. Calculated based on wanted level and start_time. Used and set internally.</p><h3 id="var/gang_balance_cap"><aside class="declaration">var </aside>gang_balance_cap
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 59"/></a></h3>
+        <p>The number of family members more that a family may have over other active families. Can be set externally; used internally.</p><h3 id="var/gangbangers"><aside class="declaration">var </aside>gangbangers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 53"/></a></h3>
+        <p>List of all family member minds. Used internally; added to internally, and externally by /obj/item/gang_induction_package when used to induct a new family member.</p><h3 id="var/gangs"><aside class="declaration">var </aside>gangs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 51"/></a></h3>
+        <p>List of all /datum/team/gang. Used internally; added to externally by /datum/antagonist/gang when it generates a new /datum/team/gang.</p><h3 id="var/gangs_to_generate"><aside class="declaration">var </aside>gangs_to_generate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 57"/></a></h3>
+        <p>The number of families (and 1:1 corresponding undercover cops) that should be generated. Can be set externally; used internally.</p><h3 id="var/midround_ruleset"><aside class="declaration">var </aside>midround_ruleset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 61"/></a></h3>
+        <p>Whether the handler corresponds to a ruleset that does not trigger at round start. Should be set externally only if applicable; used internally.</p><h3 id="var/restricted_jobs"><aside class="declaration">var </aside>restricted_jobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 72"/></a></h3>
+        <p>List of jobs not eligible for starting family member / undercover cop. Set externally (passed by reference) by gamemode / ruleset; used internally.</p><h3 id="var/sent_announcement"><aside class="declaration">var </aside>sent_announcement
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 43"/></a></h3>
+        <p>Whether the gamemode-announcing announcement has been sent. Used and set internally.</p><h3 id="var/sent_second_announcement"><aside class="declaration">var </aside>sent_second_announcement
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 45"/></a></h3>
+        <p>Whether the &quot;5 minute warning&quot; announcement has been sent. Used and set internally.</p><h3 id="var/start_time"><aside class="declaration">var </aside>start_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 39"/></a></h3>
+        <p>The time, in deciseconds, that the datum's pre_setup() occured at. Used in end_time. Used and set internally.</p><h3 id="var/undercover_cops"><aside class="declaration">var </aside>undercover_cops
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 55"/></a></h3>
+        <p>List of all undercover cop minds. Used and set internally.</p><h3 id="var/use_dynamic_timing"><aside class="declaration">var </aside>use_dynamic_timing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 63"/></a></h3>
+        <p>Whether we want to use the 30 to 15 minute timer instead of the 60 to 30 minute timer, for Dynamic.</p><h3 id="var/wanted_level"><aside class="declaration">var </aside>wanted_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 49"/></a></h3>
+        <p>The current wanted level. Set internally; used internally, and for updating the wanted HUD.</p><h2 id="proc">Proc Details</h2><h3 id="proc/New">New<aside>(/list/given_candidates, /list/revised_restricted) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 89"/></a></aside>
+        </h3>
+        <p>Sets antag_candidates and restricted_jobs.</p>
+<p>Sets the antag_candidates and restricted_jobs lists to the equivalent
+lists of its instantiating game_mode / dynamic_ruleset datum. As lists
+are passed by reference, the variable set in this datum and the passed list
+list used to set it are literally the same; changes to one affect the other.
+Like all New() procs, called when the datum is first instantiated.
+There's an annoying caveat here, though -- dynamic rulesets don't have
+lists of minds for candidates, they have lists of mobs. Ghost mobs, before
+the round has started. But we still want to preserve the structure of the candidates
+list by not duplicating it and making sure to remove the candidates as we use them.
+So there's a little bit of boilerplate throughout to preserve the sanctity of this reference.
+Arguments:</p>
+<ul>
+<li>given_candidates - The antag_candidates list or equivalent of the datum instantiating this one.</li>
+<li>revised_restricted - The restricted_jobs list or equivalent of the datum instantiating this one.</li>
+</ul><h3 id="proc/announce_gang_locations"><aside class="declaration">proc </aside>announce_gang_locations<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L286">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 286"/></a></aside>
+        </h3>
+        <p>Internal. Announces the presence of families to the entire station and sets sent_announcement to true to allow other checks to occur.</p><h3 id="proc/check_gang_clothes"><aside class="declaration">proc </aside>check_gang_clothes<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L514">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 514"/></a></aside>
+        </h3>
+        <p>Internal. Assigns points to families according to clothing of all currently living humans.</p><h3 id="proc/check_rollin_with_crews"><aside class="declaration">proc </aside>check_rollin_with_crews<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L532">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 532"/></a></aside>
+        </h3>
+        <p>Internal. Assigns points to families according to groups of nearby family members.</p><h3 id="proc/check_tagged_turfs"><aside class="declaration">proc </aside>check_tagged_turfs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L506">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 506"/></a></aside>
+        </h3>
+        <p>Internal. Assigns points to families according to gang tags.</p><h3 id="proc/check_wanted_level"><aside class="declaration">proc </aside>check_wanted_level<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L302">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 302"/></a></aside>
+        </h3>
+        <p>Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.</p><h3 id="proc/end_hostile_sit"><aside class="declaration">proc </aside>end_hostile_sit<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L502">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 502"/></a></aside>
+        </h3>
+        <p>Internal. Clears the hostile environment, letting the shuttle leave.</p><h3 id="proc/five_minute_warning"><aside class="declaration">proc </aside>five_minute_warning<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L297">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 297"/></a></aside>
+        </h3>
+        <p>Internal. Announces that space cops will arrive in 5 minutes and sets sent_second_announcement to true to freeze</p><h3 id="proc/on_gain_wanted_level"><aside class="declaration">proc </aside>on_gain_wanted_level<aside>(newlevel) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L352">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 352"/></a></aside>
+        </h3>
+        <p>Internal. Updates the end_time and sends out an announcement if the wanted level has increased. Called by update_wanted_level().</p><h3 id="proc/on_lower_wanted_level"><aside class="declaration">proc </aside>on_lower_wanted_level<aside>(newlevel) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L378">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 378"/></a></aside>
+        </h3>
+        <p>Internal. Updates the end_time and sends out an announcement if the wanted level has decreased. Called by update_wanted_level().</p><h3 id="proc/post_setup_analogue"><aside class="declaration">proc </aside>post_setup_analogue<aside>(return_if_no_gangs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 159"/></a></aside>
+        </h3>
+        <p>post_setup() or execute() equivalent.</p>
+<p>This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+This is done during the post_setup() or execute() phase, after the pre_setup() / pre_execute() phase.
+It is intended to take the place of the code that would normally occupy the pre_setup()
+or pre_execute() proc. As such, it ensures that all prospective starting family members /
+undercover cops are eligible, and picks replacements if there were ineligible cops / family members.
+It then assigns gear to the finalized family members and undercover cops, adding them to its lists,
+and sets the families announcement proc (that does the announcing) to trigger in five minutes.
+Additionally, if given the argument TRUE, it will return FALSE if there are no eligible starting family members.
+This is only to be done if the instantiating datum is a dynamic_ruleset, as these require returns
+while a game_mode is not expected to return early during this phase.
+Arguments:</p>
+<ul>
+<li>return_if_no_gangs - Boolean that determines if the proc should return FALSE should it find no eligible family members. Should be used for dynamic only.</li>
+</ul><h3 id="proc/pre_setup_analogue"><aside class="declaration">proc </aside>pre_setup_analogue<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 107"/></a></aside>
+        </h3>
+        <p>pre_setup() or pre_execute() equivalent.</p>
+<p>This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+This is done during the pre_setup() or pre_execute() phase, after first instantiation
+and the modification of gangs_to_generate, gang_balance_cap, and midround_ruleset.
+It is intended to take the place of the code that would normally occupy the pre_setup()
+or pre_execute() proc, were the code localized to the game_mode or dynamic_ruleset datum respectively
+as opposed to this handler. As such, it picks players to be chosen for starting familiy members
+or undercover cops prior to assignment to jobs. Sets start_time, default end_time,
+and the current value of deaths_during_shift, to ensure the wanted level only cares about
+the deaths since this proc has been called.
+Takes no arguments.</p><h3 id="proc/process_analogue"><aside class="declaration">proc </aside>process_analogue<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L237">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 237"/></a></aside>
+        </h3>
+        <p>process() or rule_process() equivalent.</p>
+<p>This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+This is done during the process() or rule_process() phase, after post_setup() or
+execute() and at regular intervals thereafter. process() and rule_process() are optional
+for a game_mode / dynamic_ruleset, but are important for this gamemode. It is of central
+importance to the gamemode's flow, calculating wanted level updates, family point gain,
+and announcing + executing the arrival of the space cops, achieved through calling internal procs.
+Takes no arguments.</p><h3 id="proc/send_in_the_fuzz"><aside class="declaration">proc </aside>send_in_the_fuzz<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L402">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 402"/></a></aside>
+        </h3>
+        <p>Internal. Polls ghosts and sends in a team of space cops according to the wanted level, accompanied by an announcement. Will let the shuttle leave 10 minutes after sending. Freezes the wanted level.</p><h3 id="proc/set_round_result_analogue"><aside class="declaration">proc </aside>set_round_result_analogue<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L260">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 260"/></a></aside>
+        </h3>
+        <p>set_round_result() or round_result() equivalent.</p>
+<p>This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+This is done by the set_round_result() or round_result() procs, at roundend.
+Sets the ticker subsystem to the correct result based off of the relative populations
+of space cops and family members.
+Takes no arguments.</p><h3 id="proc/update_wanted_level"><aside class="declaration">proc </aside>update_wanted_level<aside>(newlevel) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/gang/gang_handler.dm#L336">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;gang&#x2F;gang_handler.dm 336"/></a></aside>
+        </h3>
+        <p>Internal. Updates the icon states for everyone, and calls procs that send out announcements / change the end_time if the wanted level has changed.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

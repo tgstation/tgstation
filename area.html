@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;area - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="area.html#var">Var Details</a> - <a href="area.html#proc">Proc Details</a></header>
+<main>
+<h1>area <aside>/<a href="area.html">area</a></aside><aside> inherits /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 6"/></a></h1>
+
+<p>A grouping of tiles into a logical space, mostly used by map editors</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="area.html#var/airlock_wires">airlock_wires</a></th><td>Wire assignment for airlocks in this area</td></tr>
+            <tr><th><a href="area.html#var/always_unpowered">always_unpowered</a></th><td>This gets overridden to 1 for space in area/.</td></tr>
+            <tr><th><a href="area.html#var/area_limited_icon_smoothing">area_limited_icon_smoothing</a></th><td>Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.</td></tr>
+            <tr><th><a href="area.html#var/areasize">areasize</a></th><td>Size of the area in open turfs, only calculated for indoors areas.</td></tr>
+            <tr><th><a href="area.html#var/atmosalm">atmosalm</a></th><td>Whether there is an atmos alarm in this area</td></tr>
+            <tr><th><a href="area.html#var/beauty">beauty</a></th><td>Beauty average per open turf in the area</td></tr>
+            <tr><th><a href="area.html#var/beauty_threshold">beauty_threshold</a></th><td>If a room is too big it doesn't have beauty.</td></tr>
+            <tr><th><a href="area.html#var/fire">fire</a></th><td>Do we have an active fire alarm?</td></tr>
+            <tr><th><a href="area.html#var/map_generator">map_generator</a></th><td>This datum, if set, allows terrain generation behavior to be ran on Initialize()</td></tr>
+            <tr><th><a href="area.html#var/max_ambience_cooldown">max_ambience_cooldown</a></th><td>Used to decide what the maximum time between ambience is</td></tr>
+            <tr><th><a href="area.html#var/min_ambience_cooldown">min_ambience_cooldown</a></th><td>Used to decide what the minimum time between ambience is</td></tr>
+            <tr><th><a href="area.html#var/mood_bonus">mood_bonus</a></th><td>Bonus mood for being in this area</td></tr>
+            <tr><th><a href="area.html#var/mood_message">mood_message</a></th><td>Mood message for being here, only shows up if mood_bonus != 0</td></tr>
+            <tr><th><a href="area.html#var/mood_trait">mood_trait</a></th><td>Does the mood bonus require a trait?</td></tr>
+            <tr><th><a href="area.html#var/network_area_id">network_area_id</a></th><td>Area network id when you want to find all devices hooked up to this area</td></tr>
+            <tr><th><a href="area.html#var/network_root_id">network_root_id</a></th><td>Default network root for this area aka station, lavaland, etc</td></tr>
+            <tr><th><a href="area.html#var/outdoors">outdoors</a></th><td>For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)</td></tr>
+            <tr><th><a href="area.html#var/requires_power">requires_power</a></th><td>Will objects this area be needing power?</td></tr>
+            <tr><th><a href="area.html#var/sound_environment">sound_environment</a></th><td>Used to decide what kind of reverb the area makes sound have</td></tr>
+            <tr><th><a href="area.html#var/totalbeauty">totalbeauty</a></th><td>All beauty in this area combined, only includes indoor area.</td></tr>
+            <tr><th><a href="area.html#var/triggered_firealarms">triggered_firealarms</a></th><td>How many fire alarm sources do we have?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="area.html#proc/AllowDrop">AllowDrop</a></th><td>Causes a runtime error</td></tr>
+            <tr><th><a href="area.html#proc/Destroy">Destroy</a></th><td>Destroy an area and clean it up</td></tr>
+            <tr><th><a href="area.html#proc/Entered">Entered</a></th><td>Call back when an atom enters an area</td></tr>
+            <tr><th><a href="area.html#proc/Exited">Exited</a></th><td>Called when an atom exits an area</td></tr>
+            <tr><th><a href="area.html#proc/LateInitialize">LateInitialize</a></th><td>Sets machine power levels in the area</td></tr>
+            <tr><th><a href="area.html#proc/ModifyFiredoors">ModifyFiredoors</a></th><td>Try to close all the firedoors in the area</td></tr>
+            <tr><th><a href="area.html#proc/New">New</a></th><td>Called when an area loads</td></tr>
+            <tr><th><a href="area.html#proc/PlaceOnTopReact">PlaceOnTopReact</a></th><td>A hook so areas can modify the incoming args (of what??)</td></tr>
+            <tr><th><a href="area.html#proc/addStaticPower">addStaticPower</a></th><td>Add a static amount of power load to an area</td></tr>
+            <tr><th><a href="area.html#proc/atmosalert">atmosalert</a></th><td>Generate an atmospheric alert for this area</td></tr>
+            <tr><th><a href="area.html#proc/burglaralert">burglaralert</a></th><td>Raise a burglar alert for this area</td></tr>
+            <tr><th><a href="area.html#proc/clear_camera">clear_camera</a></th><td>Get rid of any dangling camera refs</td></tr>
+            <tr><th><a href="area.html#proc/clear_usage">clear_usage</a></th><td>Clear all power usage in area</td></tr>
+            <tr><th><a href="area.html#proc/close_and_lock_door">close_and_lock_door</a></th><td>Close and lock a door passed into this proc</td></tr>
+            <tr><th><a href="area.html#proc/drop_location">drop_location</a></th><td>Causes a runtime error</td></tr>
+            <tr><th><a href="area.html#proc/firealert">firealert</a></th><td>Generate a firealarm alert for this area</td></tr>
+            <tr><th><a href="area.html#proc/firereset">firereset</a></th><td>Reset the firealarm alert for this area</td></tr>
+            <tr><th><a href="area.html#proc/power_change">power_change</a></th><td>Called when the area power status changes</td></tr>
+            <tr><th><a href="area.html#proc/poweralert">poweralert</a></th><td>Generate a power alert for this area</td></tr>
+            <tr><th><a href="area.html#proc/powered">powered</a></th><td>Returns int 1 or 0 if the area has power for the given channel</td></tr>
+            <tr><th><a href="area.html#proc/process">process</a></th><td>If 100 ticks has elapsed, toggle all the firedoors closed again</td></tr>
+            <tr><th><a href="area.html#proc/reg_in_areas_in_z">reg_in_areas_in_z</a></th><td>Register this area as belonging to a z level</td></tr>
+            <tr><th><a href="area.html#proc/set_fire_alarm_effect">set_fire_alarm_effect</a></th><td>Trigger the fire alarm visual affects in an area</td></tr>
+            <tr><th><a href="area.html#proc/setup">setup</a></th><td>Setup an area (with the given name)</td></tr>
+            <tr><th><a href="area.html#proc/unset_fire_alarm_effects">unset_fire_alarm_effects</a></th><td>unset the fire alarm visual affects in an area</td></tr>
+            <tr><th><a href="area.html#proc/update_areasize">update_areasize</a></th><td>Set the area size of the area</td></tr>
+            <tr><th><a href="area.html#proc/update_beauty">update_beauty</a></th><td>Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.</td></tr>
+            <tr><th><a href="area.html#proc/update_icon_state">update_icon_state</a></th><td>Update the icon state of the area</td></tr>
+            <tr><th><a href="area.html#proc/use_power">use_power</a></th><td>Add a power value amount to the stored used_x variables</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/airlock_wires"><aside class="declaration">var </aside>airlock_wires
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 75"/></a></h3>
+        <p>Wire assignment for airlocks in this area</p><h3 id="var/always_unpowered"><aside class="declaration">var </aside>always_unpowered
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 50"/></a></h3>
+        <p>This gets overridden to 1 for space in area/.</p><h3 id="var/area_limited_icon_smoothing"><aside class="declaration">var </aside>area_limited_icon_smoothing
+            <aside>&ndash; /<a href="area.html">area</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 70"/></a></h3>
+        <p>Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.</p><h3 id="var/areasize"><aside class="declaration">var </aside>areasize
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 38"/></a></h3>
+        <p>Size of the area in open turfs, only calculated for indoors areas.</p><h3 id="var/atmosalm"><aside class="declaration">var </aside>atmosalm
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 23"/></a></h3>
+        <p>Whether there is an atmos alarm in this area</p><h3 id="var/beauty"><aside class="declaration">var </aside>beauty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 30"/></a></h3>
+        <p>Beauty average per open turf in the area</p><h3 id="var/beauty_threshold"><aside class="declaration">var </aside>beauty_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 32"/></a></h3>
+        <p>If a room is too big it doesn't have beauty.</p><h3 id="var/fire"><aside class="declaration">var </aside>fire
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 19"/></a></h3>
+        <p>Do we have an active fire alarm?</p><h3 id="var/map_generator"><aside class="declaration">var </aside>map_generator
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/map_generator.html">map_generator</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 78"/></a></h3>
+        <p>This datum, if set, allows terrain generation behavior to be ran on Initialize()</p><h3 id="var/max_ambience_cooldown"><aside class="declaration">var </aside>max_ambience_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 91"/></a></h3>
+        <p>Used to decide what the maximum time between ambience is</p><h3 id="var/min_ambience_cooldown"><aside class="declaration">var </aside>min_ambience_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 89"/></a></h3>
+        <p>Used to decide what the minimum time between ambience is</p><h3 id="var/mood_bonus"><aside class="declaration">var </aside>mood_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 41"/></a></h3>
+        <p>Bonus mood for being in this area</p><h3 id="var/mood_message"><aside class="declaration">var </aside>mood_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 43"/></a></h3>
+        <p>Mood message for being here, only shows up if mood_bonus != 0</p><h3 id="var/mood_trait"><aside class="declaration">var </aside>mood_trait
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 45"/></a></h3>
+        <p>Does the mood bonus require a trait?</p><h3 id="var/network_area_id"><aside class="declaration">var </aside>network_area_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 83"/></a></h3>
+        <p>Area network id when you want to find all devices hooked up to this area</p><h3 id="var/network_root_id"><aside class="declaration">var </aside>network_root_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 81"/></a></h3>
+        <p>Default network root for this area aka station, lavaland, etc</p><h3 id="var/outdoors"><aside class="declaration">var </aside>outdoors
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 35"/></a></h3>
+        <p>For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)</p><h3 id="var/requires_power"><aside class="declaration">var </aside>requires_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 48"/></a></h3>
+        <p>Will objects this area be needing power?</p><h3 id="var/sound_environment"><aside class="declaration">var </aside>sound_environment
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 86"/></a></h3>
+        <p>Used to decide what kind of reverb the area makes sound have</p><h3 id="var/totalbeauty"><aside class="declaration">var </aside>totalbeauty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 28"/></a></h3>
+        <p>All beauty in this area combined, only includes indoor area.</p><h3 id="var/triggered_firealarms"><aside class="declaration">var </aside>triggered_firealarms
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 21"/></a></h3>
+        <p>How many fire alarm sources do we have?</p><h2 id="proc">Proc Details</h2><h3 id="proc/AllowDrop"><aside class="parent"><a title="/atom" href="atom.html#proc/AllowDrop">&uarr;</a></aside>AllowDrop<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L665">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 665"/></a></aside>
+        </h3>
+        <p>Causes a runtime error</p><h3 id="proc/Destroy"><aside class="parent"><a title="/atom" href="atom.html#proc/Destroy">&uarr;</a></aside>Destroy<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L230">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 230"/></a></aside>
+        </h3>
+        <p>Destroy an area and clean it up</p>
+<p>Removes the area from GLOB.areas_by_type and also stops it processing on SSobj</p>
+<p>This is despite the fact that no code appears to put it on SSobj, but
+who am I to argue with old coders</p><h3 id="proc/Entered"><aside class="parent"><a title="/atom" href="atom.html#proc/Entered">&uarr;</a></aside>Entered<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L597">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 597"/></a></aside>
+        </h3>
+        <p>Call back when an atom enters an area</p>
+<p>Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to a list of atoms)</p>
+<p>If the area has ambience, then it plays some ambience music to the ambience channel</p><h3 id="proc/Exited"><aside class="parent"><a title="/atom" href="atom.html#proc/Exited">&uarr;</a></aside>Exited<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L629">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 629"/></a></aside>
+        </h3>
+        <p>Called when an atom exits an area</p>
+<p>Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)</p><h3 id="proc/LateInitialize"><aside class="parent"><a title="/atom" href="atom.html#proc/LateInitialize">&uarr;</a></aside>LateInitialize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 185"/></a></aside>
+        </h3>
+        <p>Sets machine power levels in the area</p><h3 id="proc/ModifyFiredoors"><aside class="declaration">proc </aside>ModifyFiredoors<aside>(opening) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L320">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 320"/></a></aside>
+        </h3>
+        <p>Try to close all the firedoors in the area</p><h3 id="proc/New"><aside class="parent"><a title="/atom" href="atom.html#proc/New">&uarr;</a></aside>New<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 130"/></a></aside>
+        </h3>
+        <p>Called when an area loads</p>
+<p>Adds the item to the GLOB.areas_by_type list based on area type</p><h3 id="proc/PlaceOnTopReact"><aside class="declaration">proc </aside>PlaceOnTopReact<aside>(/list/new_baseturfs, /<a href="turf.html">turf</a>/fake_turf_type, flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L675">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 675"/></a></aside>
+        </h3>
+        <p>A hook so areas can modify the incoming args (of what??)</p><h3 id="proc/addStaticPower"><aside class="declaration">proc </aside>addStaticPower<aside>(value, powerchannel) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L567">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 567"/></a></aside>
+        </h3>
+        <p>Add a static amount of power load to an area</p>
+<p>Possible channels
+*AREA_USAGE_STATIC_EQUIP
+*AREA_USAGE_STATIC_LIGHT
+*AREA_USAGE_STATIC_ENVIRON</p><h3 id="proc/atmosalert"><aside class="declaration">proc </aside>atmosalert<aside>(isdangerous, /<a href="obj.html">obj</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L280">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 280"/></a></aside>
+        </h3>
+        <p>Generate an atmospheric alert for this area</p>
+<p>Sends to all ai players, alert consoles, drones and alarm monitor programs in the world</p><h3 id="proc/burglaralert"><aside class="declaration">proc </aside>burglaralert<aside>(/<a href="obj.html">obj</a>/trigger) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L447">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 447"/></a></aside>
+        </h3>
+        <p>Raise a burglar alert for this area</p>
+<p>Close and locks all doors in the area and alerts silicon mobs of a break in</p>
+<p>Alarm auto resets after 600 ticks</p><h3 id="proc/clear_camera"><aside class="declaration">proc </aside>clear_camera<aside>(/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/camera/cam) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L409">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 409"/></a></aside>
+        </h3>
+        <p>Get rid of any dangling camera refs</p><h3 id="proc/clear_usage"><aside class="declaration">proc </aside>clear_usage<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L577">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 577"/></a></aside>
+        </h3>
+        <p>Clear all power usage in area</p>
+<p>Clears all power used for equipment, light and environment channels</p><h3 id="proc/close_and_lock_door"><aside class="declaration">proc </aside>close_and_lock_door<aside>(/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/door.html">door</a>/DOOR) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L434">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 434"/></a></aside>
+        </h3>
+        <p>Close and lock a door passed into this proc</p>
+<p>Does this need to exist on area? probably not</p><h3 id="proc/drop_location"><aside class="parent"><a title="/atom" href="atom.html#proc/drop_location">&uarr;</a></aside>drop_location<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L671">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 671"/></a></aside>
+        </h3>
+        <p>Causes a runtime error</p><h3 id="proc/firealert"><aside class="declaration">proc </aside>firealert<aside>(/<a href="obj.html">obj</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L345">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 345"/></a></aside>
+        </h3>
+        <p>Generate a firealarm alert for this area</p>
+<p>Sends to all ai players, alert consoles, drones and alarm monitor programs in the world</p>
+<p>Also starts the area processing on SSobj</p><h3 id="proc/firereset"><aside class="declaration">proc </aside>firereset<aside>(/<a href="obj.html">obj</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L375">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 375"/></a></aside>
+        </h3>
+        <p>Reset the firealarm alert for this area</p>
+<p>resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
+in the world</p>
+<p>Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ</p><h3 id="proc/power_change"><aside class="declaration">proc </aside>power_change<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L552">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 552"/></a></aside>
+        </h3>
+        <p>Called when the area power status changes</p>
+<p>Updates the area icon, calls power change on all machinees in the area, and sends the <code>COMSIG_AREA_POWER_CHANGE</code> signal.</p><h3 id="proc/poweralert"><aside class="declaration">proc </aside>poweralert<aside>(state, /<a href="obj.html">obj</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L242">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 242"/></a></aside>
+        </h3>
+        <p>Generate a power alert for this area</p>
+<p>Sends to all ai players, alert consoles, drones and alarm monitor programs in the world</p><h3 id="proc/powered"><aside class="declaration">proc </aside>powered<aside>(chan) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L525">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 525"/></a></aside>
+        </h3>
+        <p>Returns int 1 or 0 if the area has power for the given channel</p>
+<p>evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+per channel power_equip, power_light, power_environ</p><h3 id="proc/process"><aside class="parent"><a title="/datum" href="datum.html#proc/process">&uarr;</a></aside>process<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L423">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 423"/></a></aside>
+        </h3>
+        <p>If 100 ticks has elapsed, toggle all the firedoors closed again</p><h3 id="proc/reg_in_areas_in_z"><aside class="declaration">proc </aside>reg_in_areas_in_z<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L210">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 210"/></a></aside>
+        </h3>
+        <p>Register this area as belonging to a z level</p>
+<p>Ensures the item is added to the SSmapping.areas_in_z list for this z</p><h3 id="proc/set_fire_alarm_effect"><aside class="declaration">proc </aside>set_fire_alarm_effect<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L467">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 467"/></a></aside>
+        </h3>
+        <p>Trigger the fire alarm visual affects in an area</p>
+<p>Updates the fire light on fire alarms in the area and sets all lights to emergency mode</p><h3 id="proc/setup"><aside class="declaration">proc </aside>setup<aside>(a_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L640">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 640"/></a></aside>
+        </h3>
+        <p>Setup an area (with the given name)</p>
+<p>Sets the area name, sets all status var's to false and adds the area to the sorted area list</p><h3 id="proc/unset_fire_alarm_effects"><aside class="declaration">proc </aside>unset_fire_alarm_effects<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L483">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 483"/></a></aside>
+        </h3>
+        <p>unset the fire alarm visual affects in an area</p>
+<p>Updates the fire light on fire alarms in the area and sets all lights to emergency mode</p><h3 id="proc/update_areasize"><aside class="declaration">proc </aside>update_areasize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L655">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 655"/></a></aside>
+        </h3>
+        <p>Set the area size of the area</p>
+<p>This is the number of open turfs in the area contents, or FALSE if the outdoors var is set</p><h3 id="proc/update_beauty"><aside class="declaration">proc </aside>update_beauty<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L614">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 614"/></a></aside>
+        </h3>
+        <p>Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.</p><h3 id="proc/update_icon_state"><aside class="parent"><a title="/atom" href="atom.html#proc/update_icon_state">&uarr;</a></aside>update_icon_state<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L500">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 500"/></a></aside>
+        </h3>
+        <p>Update the icon state of the area</p>
+<p>Im not sure what the heck this does, somethign to do with weather being able to set icon
+states on areas?? where the heck would that even display?</p><h3 id="proc/use_power"><aside class="declaration">proc </aside>use_power<aside>(amount, chan) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L584">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 584"/></a></aside>
+        </h3>
+        <p>Add a power value amount to the stored used_x variables</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;element - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/element.html#var">Var Details</a> - <a href="datum/element.html#proc">Proc Details</a></header>
+<main>
+<h1>element <aside>/<a href="datum.html">datum</a>/<a href="datum/element.html">element</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 7"/></a></h1>
+
+<p>A holder for simple behaviour that can be attached to many different types</p>
+<p>Only one element of each type is instanced during game init.
+Otherwise acts basically like a lightweight component.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/element.html#var/element_flags">element_flags</a></th><td>Option flags for element behaviour</td></tr>
+            <tr><th><a href="datum/element.html#var/id_arg_index">id_arg_index</a></th><td>The index of the first attach argument to consider for duplicate elements</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/element.html#proc/Attach">Attach</a></th><td>Activates the functionality defined by the element on the given target datum</td></tr>
+            <tr><th><a href="datum/element.html#proc/Detach">Detach</a></th><td>Deactivates the functionality defines by the element on the given datum</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/element_flags"><aside class="declaration">var </aside>element_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 9"/></a></h3>
+        <p>Option flags for element behaviour</p><h3 id="var/id_arg_index"><aside class="declaration">var </aside>id_arg_index
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 17"/></a></h3>
+        <p>The index of the first attach argument to consider for duplicate elements</p>
+<p>Is only used when flags contains <a href="code/__DEFINES/dcs/flags.html#define/ELEMENT_BESPOKE" title="ELEMENT_BESPOKE">ELEMENT_BESPOKE</a></p>
+<p>This is infinity so you must explicitly set this</p><h2 id="proc">Proc Details</h2><h3 id="proc/Attach"><aside class="declaration">proc </aside>Attach<aside>(/<a href="datum.html">datum</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 20"/></a></aside>
+        </h3>
+        <p>Activates the functionality defined by the element on the given target datum</p><h3 id="proc/Detach"><aside class="declaration">proc </aside>Detach<aside>(/<a href="datum.html">datum</a>/source, force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 29"/></a></aside>
+        </h3>
+        <p>Deactivates the functionality defines by the element on the given datum</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

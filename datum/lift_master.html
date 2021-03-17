@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;lift_master - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/lift_master.html#proc">Proc Details</a></header>
+<main>
+<h1>lift_master <aside>/<a href="datum.html">datum</a>/<a href="datum/lift_master.html">lift_master</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/industrial_lift.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;industrial_lift.dm 7"/></a></h1>
+
+<p>Collect and command</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/lift_master.html#proc/Check_lift_move">Check_lift_move</a></th><td>Check destination turfs</td></tr>
+            <tr><th><a href="datum/lift_master.html#proc/MoveLift">MoveLift</a></th><td>Moves the lift UP or DOWN, this is what users invoke with their hand.
+This is a SAFE proc, ensuring every part of the lift moves SANELY.
+It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+Arguments:
+going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
+user - Whomever made the lift movement.</td></tr>
+            <tr><th><a href="datum/lift_master.html#proc/MoveLiftHorizontal">MoveLiftHorizontal</a></th><td>Moves the lift, this is what users invoke with their hand.
+This is a SAFE proc, ensuring every part of the lift moves SANELY.
+It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.</td></tr>
+            <tr><th><a href="datum/lift_master.html#proc/Rebuild_lift_plaform">Rebuild_lift_plaform</a></th><td>Collect all bordered platforms</td></tr>
+            <tr><th><a href="datum/lift_master.html#proc/set_controls">set_controls</a></th><td>Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/Check_lift_move"><aside class="declaration">proc </aside>Check_lift_move<aside>(check_dir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/industrial_lift.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;industrial_lift.dm 116"/></a></aside>
+        </h3>
+        <p>Check destination turfs</p><h3 id="proc/MoveLift"><aside class="declaration">proc </aside>MoveLift<aside>(going, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/industrial_lift.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;industrial_lift.dm 59"/></a></aside>
+        </h3>
+        <p>Moves the lift UP or DOWN, this is what users invoke with their hand.
+This is a SAFE proc, ensuring every part of the lift moves SANELY.
+It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+Arguments:
+going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
+user - Whomever made the lift movement.</p><h3 id="proc/MoveLiftHorizontal"><aside class="declaration">proc </aside>MoveLiftHorizontal<aside>(going, z) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/industrial_lift.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;industrial_lift.dm 71"/></a></aside>
+        </h3>
+        <p>Moves the lift, this is what users invoke with their hand.
+This is a SAFE proc, ensuring every part of the lift moves SANELY.
+It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.</p><h3 id="proc/Rebuild_lift_plaform"><aside class="declaration">proc </aside>Rebuild_lift_plaform<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure/industrial_lift.html">structure/industrial_lift</a>/base_lift_platform) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/industrial_lift.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;industrial_lift.dm 35"/></a></aside>
+        </h3>
+        <p>Collect all bordered platforms</p><h3 id="proc/set_controls"><aside class="declaration">proc </aside>set_controls<aside>(state) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/industrial_lift.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;industrial_lift.dm 129"/></a></aside>
+        </h3>
+        <p>Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

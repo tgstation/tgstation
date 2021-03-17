@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;station_trait - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/station_trait.html#var">Var Details</a> - <a href="datum/station_trait.html#proc">Proc Details</a></header>
+<main>
+<h1>station_trait <aside>/<a href="datum.html">datum</a>/<a href="datum/station_trait.html">station_trait</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 2"/></a></h1>
+
+<p>Base class of station traits. These are used to influence rounds in one way or the other by influencing the levers of the station.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/station_trait.html#var/blacklist">blacklist</a></th><td>What traits are incompatible with this one?</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/name">name</a></th><td>Name of the trait</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/report_message">report_message</a></th><td>What message to show in the centcom report?</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/show_in_report">show_in_report</a></th><td>Does this trait show in the centcom report?</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/trait_flags">trait_flags</a></th><td>Extra flags for station traits such as it being abstract</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/trait_processes">trait_processes</a></th><td>Whether or not this trait uses process()</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/trait_to_give">trait_to_give</a></th><td>What code-trait does this station trait give? gives none if null</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/trait_type">trait_type</a></th><td>The type of this trait. Used to classify how this trait influences the station</td></tr>
+            <tr><th><a href="datum/station_trait.html#var/weight">weight</a></th><td>Chance relative to other traits of its type to be picked</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/station_trait.html#proc/get_report">get_report</a></th><td>type of info the centcom report has on this trait, if any.</td></tr>
+            <tr><th><a href="datum/station_trait.html#proc/on_round_start">on_round_start</a></th><td>Proc ran when round starts. Use this for roundstart effects.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blacklist"><aside class="declaration">var </aside>blacklist
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 18"/></a></h3>
+        <p>What traits are incompatible with this one?</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 4"/></a></h3>
+        <p>Name of the trait</p><h3 id="var/report_message"><aside class="declaration">var </aside>report_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 14"/></a></h3>
+        <p>What message to show in the centcom report?</p><h3 id="var/show_in_report"><aside class="declaration">var </aside>show_in_report
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 12"/></a></h3>
+        <p>Does this trait show in the centcom report?</p><h3 id="var/trait_flags"><aside class="declaration">var </aside>trait_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 23"/></a></h3>
+        <p>Extra flags for station traits such as it being abstract</p><h3 id="var/trait_processes"><aside class="declaration">var </aside>trait_processes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 8"/></a></h3>
+        <p>Whether or not this trait uses process()</p><h3 id="var/trait_to_give"><aside class="declaration">var </aside>trait_to_give
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 16"/></a></h3>
+        <p>What code-trait does this station trait give? gives none if null</p><h3 id="var/trait_type"><aside class="declaration">var </aside>trait_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 6"/></a></h3>
+        <p>The type of this trait. Used to classify how this trait influences the station</p><h3 id="var/weight"><aside class="declaration">var </aside>weight
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 10"/></a></h3>
+        <p>Chance relative to other traits of its type to be picked</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_report"><aside class="declaration">proc </aside>get_report<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 36"/></a></aside>
+        </h3>
+        <p>type of info the centcom report has on this trait, if any.</p><h3 id="proc/on_round_start"><aside class="declaration">proc </aside>on_round_start<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/station_traits/_station_trait.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;station_traits&#x2F;_station_trait.dm 32"/></a></aside>
+        </h3>
+        <p>Proc ran when round starts. Use this for roundstart effects.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

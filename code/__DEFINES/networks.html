@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;networks.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/networks.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/networks.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/networks.html#define/NETWORK_NAME_COMBINE">NETWORK_NAME_COMBINE</a></th><td>To debug networks use this to check
+We do some macro magic to make sure the strings are created at compile time rather than runtime
+We do it this way so that if someone changes any of the names of networks we don't have to hunt down
+all the constants though all the files for them.  hurrah!
+Ugh, couldn't get recursive stringafy to work in byond for some reason</td></tr>
+        <tr><th><a href="code/__DEFINES/networks.html#define/__STATION_NETWORK_ROOT">__STATION_NETWORK_ROOT</a></th><td>Station network names.  Used as the root networks for main parts of the station</td></tr>
+        <tr><th><a href="code/__DEFINES/networks.html#define/__NETWORK_LIMBO">__NETWORK_LIMBO</a></th><td>various sub networks pieces</td></tr>
+        <tr><th><a href="code/__DEFINES/networks.html#define/NETWORK_DOOR_REMOTES">NETWORK_DOOR_REMOTES</a></th><td>Various combined subnetworks</td></tr>
+        <tr><th><a href="code/__DEFINES/networks.html#define/NETWORK_PORT_DISCONNECTED">NETWORK_PORT_DISCONNECTED</a></th><td>Port protocol.  A port is just a list with a few vars that are used to send signals
+that something is refreshed or updated.  These macros make it faster rather than
+calling procs</td></tr>
+        <tr><th><a href="code/__DEFINES/networks.html#define/NETWORK_ERROR_OK">NETWORK_ERROR_OK</a></th><td>Error codes</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/NETWORK_DOOR_REMOTES"><aside class="declaration">#define </aside>NETWORK_DOOR_REMOTES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 39"/></a>
+    </h3>
+    <p>Various combined subnetworks</p><h3 id="define/NETWORK_ERROR_OK"><aside class="declaration">#define </aside>NETWORK_ERROR_OK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 88"/></a>
+    </h3>
+    <p>Error codes</p><h3 id="define/NETWORK_NAME_COMBINE"><aside class="declaration">#define </aside>NETWORK_NAME_COMBINE
+            <aside>(L, R)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 14"/></a>
+    </h3>
+    <p>To debug networks use this to check
+We do some macro magic to make sure the strings are created at compile time rather than runtime
+We do it this way so that if someone changes any of the names of networks we don't have to hunt down
+all the constants though all the files for them.  hurrah!
+Ugh, couldn't get recursive stringafy to work in byond for some reason</p><h3 id="define/NETWORK_PORT_DISCONNECTED"><aside class="declaration">#define </aside>NETWORK_PORT_DISCONNECTED
+            <aside>(LIST)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 80"/></a>
+    </h3>
+    <p>Port protocol.  A port is just a list with a few vars that are used to send signals
+that something is refreshed or updated.  These macros make it faster rather than
+calling procs</p><h3 id="define/__NETWORK_LIMBO"><aside class="declaration">#define </aside>__NETWORK_LIMBO
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 23"/></a>
+    </h3>
+    <p>various sub networks pieces</p><h3 id="define/__STATION_NETWORK_ROOT"><aside class="declaration">#define </aside>__STATION_NETWORK_ROOT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 17"/></a>
+    </h3>
+    <p>Station network names.  Used as the root networks for main parts of the station</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;door - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/door.html#var">Var Details</a> - <a href="obj/machinery/door.html#proc">Proc Details</a></header>
+<main>
+<h1>door <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/door.html">door</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/door.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;door.dm 2"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/door.html#var/can_crush">can_crush</a></th><td>Whether or not the airlock can be opened with bare hands while unpowered</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/door.html#proc/examine">examine</a></th><td>Whether or not the door can crush mobs.</td></tr>
+            <tr><th><a href="obj/machinery/door.html#proc/try_remove_seal">try_remove_seal</a></th><td>Called when attempting to remove the seal from an airlock</td></tr>
+            <tr><th><a href="obj/machinery/door.html#proc/try_to_weld_secondary">try_to_weld_secondary</a></th><td>Called when the user right-clicks on the door with a welding tool.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_crush"><aside class="declaration">var </aside>can_crush
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/door.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;door.dm 44"/></a></h3>
+        <p>Whether or not the airlock can be opened with bare hands while unpowered</p><h2 id="proc">Proc Details</h2><h3 id="proc/examine"><aside class="parent"><a title="/atom" href="atom.html#proc/examine">&uarr;</a></aside>examine<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/door.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;door.dm 47"/></a></aside>
+        </h3>
+        <p>Whether or not the door can crush mobs.</p><h3 id="proc/try_remove_seal"><aside class="declaration">proc </aside>try_remove_seal<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/door.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;door.dm 112"/></a></aside>
+        </h3>
+        <p>Called when attempting to remove the seal from an airlock</p>
+<p>Here because we need to call it and return if there was a seal so we don't try to open the door
+or try its safety lock while it's sealed
+Arguments:</p>
+<ul>
+<li>user - the mob attempting to remove the seal</li>
+</ul><h3 id="proc/try_to_weld_secondary"><aside class="declaration">proc </aside>try_to_weld_secondary<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/weldingtool.html">weldingtool</a>/tool, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/door.dm#L219">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;door.dm 219"/></a></aside>
+        </h3>
+        <p>Called when the user right-clicks on the door with a welding tool.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

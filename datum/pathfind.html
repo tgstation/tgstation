@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;pathfind - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/pathfind.html#var">Var Details</a> - <a href="datum/pathfind.html#proc">Proc Details</a></header>
+<main>
+<h1>pathfind <aside>/<a href="datum.html">datum</a>/<a href="datum/pathfind.html">pathfind</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 92"/></a></h1>
+
+<p>The datum used to handle the JPS pathfinding, completely self-contained</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/pathfind.html#var/avoid">avoid</a></th><td>A specific turf we're avoiding, like if a mulebot is being blocked by someone t-posing in a doorway we're trying to get through</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/caller">caller</a></th><td>The thing that we're actually trying to path for</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/end">end</a></th><td>The turf we're trying to path to (note that this won't track a moving target)</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/id">id</a></th><td>An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/max_distance">max_distance</a></th><td>I don't know what this does vs , but they limit how far we can search before giving up on a path</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/mintargetdist">mintargetdist</a></th><td>How far away we have to get to the end target before we can call it quits</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/open">open</a></th><td>The open list/stack we pop nodes out from (TODO: make this a normal list and macro-ize the heap operations to reduce proc overhead)</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/path">path</a></th><td>The list we compile at the end if successful to pass back</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/simulated_only">simulated_only</a></th><td>Space is big and empty, if this is TRUE then we ignore pathing through unsimulated tiles</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/sources">sources</a></th><td>An assoc list that serves as the closed list &amp; tracks what turfs came from where. Key is the turf, and the value is what turf it came from</td></tr>
+            <tr><th><a href="datum/pathfind.html#var/start">start</a></th><td>The turf where we started at</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/pathfind.html#proc/diag_scan_spec">diag_scan_spec</a></th><td>For performing diagonal scans from a given starting turf.</td></tr>
+            <tr><th><a href="datum/pathfind.html#proc/lateral_scan_spec">lateral_scan_spec</a></th><td>For performing lateral scans from a given starting turf.</td></tr>
+            <tr><th><a href="datum/pathfind.html#proc/search">search</a></th><td>The proc you use to run the search, returns a list with the steps to the destination if one is available, or nothing if one couldn't be found</td></tr>
+            <tr><th><a href="datum/pathfind.html#proc/unwind_path">unwind_path</a></th><td>Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by <a href="datum/pathfind.html#proc/search" title="/datum/pathfind">datum/pathfind/proc/search</a></td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/avoid"><aside class="declaration">var </aside>avoid
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 118"/></a></h3>
+        <p>A specific turf we're avoiding, like if a mulebot is being blocked by someone t-posing in a doorway we're trying to get through</p><h3 id="var/caller"><aside class="declaration">var </aside>caller
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 94"/></a></h3>
+        <p>The thing that we're actually trying to path for</p><h3 id="var/end"><aside class="declaration">var </aside>end
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 98"/></a></h3>
+        <p>The turf we're trying to path to (note that this won't track a moving target)</p><h3 id="var/id"><aside class="declaration">var </aside>id
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/card/id.html">card/id</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 108"/></a></h3>
+        <p>An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant</p><h3 id="var/max_distance"><aside class="declaration">var </aside>max_distance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 112"/></a></h3>
+        <p>I don't know what this does vs , but they limit how far we can search before giving up on a path</p><h3 id="var/mintargetdist"><aside class="declaration">var </aside>mintargetdist
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 110"/></a></h3>
+        <p>How far away we have to get to the end target before we can call it quits</p><h3 id="var/open"><aside class="declaration">var </aside>open
+            <aside>&ndash; /<a href="datum.html">datum</a>/heap</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 100"/></a></h3>
+        <p>The open list/stack we pop nodes out from (TODO: make this a normal list and macro-ize the heap operations to reduce proc overhead)</p><h3 id="var/path"><aside class="declaration">var </aside>path
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 104"/></a></h3>
+        <p>The list we compile at the end if successful to pass back</p><h3 id="var/simulated_only"><aside class="declaration">var </aside>simulated_only
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 114"/></a></h3>
+        <p>Space is big and empty, if this is TRUE then we ignore pathing through unsimulated tiles</p><h3 id="var/sources"><aside class="declaration">var </aside>sources
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 102"/></a></h3>
+        <p>An assoc list that serves as the closed list &amp; tracks what turfs came from where. Key is the turf, and the value is what turf it came from</p><h3 id="var/start"><aside class="declaration">var </aside>start
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 96"/></a></h3>
+        <p>The turf where we started at</p><h2 id="proc">Proc Details</h2><h3 id="proc/diag_scan_spec"><aside class="declaration">proc </aside>diag_scan_spec<aside>(/<a href="turf.html">turf</a>/original_turf, heading, /<a href="datum.html">datum</a>/<a href="datum/jps_node.html">jps_node</a>/parent_node) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L258">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 258"/></a></aside>
+        </h3>
+        <p>For performing diagonal scans from a given starting turf.</p>
+<p>Unlike lateral scans, these only are called from the main search loop, so we don't need to worry about returning anything,
+though we do need to handle the return values of our lateral subscans of course.</p>
+<p>Arguments:</p>
+<ul>
+<li>original_turf: What turf did we start this scan at?</li>
+<li>heading: What direction are we going in? Obviously, should be diagonal</li>
+<li>parent_node: We should always have a parent node for diagonals</li>
+</ul><h3 id="proc/lateral_scan_spec"><aside class="declaration">proc </aside>lateral_scan_spec<aside>(/<a href="turf.html">turf</a>/original_turf, heading, /<a href="datum.html">datum</a>/<a href="datum/jps_node.html">jps_node</a>/parent_node) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 196"/></a></aside>
+        </h3>
+        <p>For performing lateral scans from a given starting turf.</p>
+<p>These scans are called from both the main search loop, as well as subscans for diagonal scans, and they treat finding interesting turfs slightly differently.
+If we're doing a normal lateral scan, we already have a parent node supplied, so we just create the new node and immediately insert it into the heap, ezpz.
+If we're part of a subscan, we still need for the diagonal scan to generate a parent node, so we return a node datum with just the turf and let the diag scan
+proc handle transferring the values and inserting them into the heap.</p>
+<p>Arguments:</p>
+<ul>
+<li>original_turf: What turf did we start this scan at?</li>
+<li>heading: What direction are we going in? Obviously, should be cardinal</li>
+<li>parent_node: Only given for normal lateral scans, if we don't have one, we're a diagonal subscan.</li>
+</ul><h3 id="proc/search"><aside class="declaration">proc </aside>search<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 130"/></a></aside>
+        </h3>
+        <p>The proc you use to run the search, returns a list with the steps to the destination if one is available, or nothing if one couldn't be found</p><h3 id="proc/unwind_path"><aside class="declaration">proc </aside>unwind_path<aside>(/<a href="datum.html">datum</a>/<a href="datum/jps_node.html">jps_node</a>/unwind_node) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L171">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 171"/></a></aside>
+        </h3>
+        <p>Called when we've hit the goal with the node that represents the last tile, then sets the path var to that path so it can be returned by <a href="datum/pathfind.html#proc/search" title="/datum/pathfind">datum/pathfind/proc/search</a></p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

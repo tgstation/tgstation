@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;chem_master - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/chem_master.html#var">Var Details</a> - <a href="obj/machinery/chem_master.html#proc">Proc Details</a></header>
+<main>
+<h1>chem_master <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/chem_master.html">chem_master</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 7"/></a></h1>
+
+<p>Machine that allows to identify and separate reagents in fitting container
+as well as to create new containers with separated reagents in it.</p>
+<p>Contains logic for both ChemMaster and CondiMaster, switched by &quot;condi&quot;.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/analyze_vars">analyze_vars</a></th><td>Info to display on 'analyze' screen</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/beaker">beaker</a></th><td>Input reagents container</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/bottle">bottle</a></th><td>Pill bottle for newly created pills</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/chosen_condi_style">chosen_condi_style</a></th><td>Currently selected condiment bottle style</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/chosen_pill_style">chosen_pill_style</a></th><td>Currently selected pill style</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/condi">condi</a></th><td>Decides what UI to show. If TRUE shows UI of CondiMaster, if FALSE - ChemMaster</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/condi_styles">condi_styles</a></th><td>List of available condibottle styles for UI</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/mode">mode</a></th><td>Whether separated reagents should be moved back to container or destroyed. 1 - move, 0 - destroy</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/pill_styles">pill_styles</a></th><td>List of available pill styles for UI</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#var/screen">screen</a></th><td>Current UI screen. On the moment of writing this comment there were two: 'home' - main screen, and 'analyze' - info about specific reagent</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#proc/apply_condi_style">apply_condi_style</a></th><td>Applies style to condiment bottle.</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#proc/get_condi_styles">get_condi_styles</a></th><td>Defines and provides list of available condiment bottle styles</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#proc/guess_condi_style">guess_condi_style</a></th><td>Provides condiment bottle style based on reagents.</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#proc/replace_beaker">replace_beaker</a></th><td>Handles process of moving input reagents containers in/from machine</td></tr>
+            <tr><th><a href="obj/machinery/chem_master.html#proc/strip_condi_styles_to_icons">strip_condi_styles_to_icons</a></th><td>Translates styles data into UI compatible format</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/analyze_vars"><aside class="declaration">var </aside>analyze_vars
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 35"/></a></h3>
+        <p>Info to display on 'analyze' screen</p><h3 id="var/beaker"><aside class="declaration">var </aside>beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 21"/></a></h3>
+        <p>Input reagents container</p><h3 id="var/bottle"><aside class="declaration">var </aside>bottle
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/storage/pill_bottle</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 23"/></a></h3>
+        <p>Pill bottle for newly created pills</p><h3 id="var/chosen_condi_style"><aside class="declaration">var </aside>chosen_condi_style
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 31"/></a></h3>
+        <p>Currently selected condiment bottle style</p><h3 id="var/chosen_pill_style"><aside class="declaration">var </aside>chosen_pill_style
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 29"/></a></h3>
+        <p>Currently selected pill style</p><h3 id="var/condi"><aside class="declaration">var </aside>condi
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 27"/></a></h3>
+        <p>Decides what UI to show. If TRUE shows UI of CondiMaster, if FALSE - ChemMaster</p><h3 id="var/condi_styles"><aside class="declaration">var </aside>condi_styles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 41"/></a></h3>
+        <p>List of available condibottle styles for UI</p><h3 id="var/mode"><aside class="declaration">var </aside>mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 25"/></a></h3>
+        <p>Whether separated reagents should be moved back to container or destroyed. 1 - move, 0 - destroy</p><h3 id="var/pill_styles"><aside class="declaration">var </aside>pill_styles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 37"/></a></h3>
+        <p>List of available pill styles for UI</p><h3 id="var/screen"><aside class="declaration">var </aside>screen
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 33"/></a></h3>
+        <p>Current UI screen. On the moment of writing this comment there were two: 'home' - main screen, and 'analyze' - info about specific reagent</p><h2 id="proc">Proc Details</h2><h3 id="proc/apply_condi_style"><aside class="declaration">proc </aside>apply_condi_style<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/<a href="obj/item/reagent_containers/food.html">food</a>/<a href="obj/item/reagent_containers/food/condiment.html">condiment</a>/container, /list/style) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L565">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 565"/></a></aside>
+        </h3>
+        <p>Applies style to condiment bottle.</p>
+<p>Applies props provided in &quot;style&quot; assuming that &quot;container&quot; is freshly created with no styles applied before.
+User specified name for bottle applied after this method during bottle creation,
+so container.name overwritten here for consistency rather than with some purpose in mind.</p>
+<p>Arguments:</p>
+<ul>
+<li>container - condiment bottle that gets style applied to it</li>
+<li>style - assoc list, must probably one from <a href="obj/machinery/chem_master.html#proc/get_condi_styles" title="/obj/machinery/chem_master">/obj/machinery/chem_master/proc/get_condi_styles</a></li>
+</ul><h3 id="proc/get_condi_styles"><aside class="declaration">proc </aside>get_condi_styles<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L501">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 501"/></a></aside>
+        </h3>
+        <p>Defines and provides list of available condiment bottle styles</p>
+<p>Uses typelist() for styles storage after initialization.
+For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
+Returns list(
+<key> = list(
+&quot;icon_state&quot; = <bottle icon_state>,
+&quot;name&quot; = <bottle name>,
+&quot;desc&quot; = <bottle desc>,
+?&quot;generate_name&quot; = &lt;if truthy, autogenerates default name from reagents instead of using &quot;name&quot;&gt;,
+?&quot;icon_empty&quot; = &lt;icon_state when empty&gt;,
+?&quot;fill_icon_thresholds&quot; = &lt;list of thresholds for reagentfillings, no tresholds if not provided or falsy&gt;,
+?&quot;inhand_icon_state&quot; = &lt;inhand icon_state, falsy - no icon, not provided - whatever is initial (currently &quot;beer&quot;)&gt;,
+?&quot;lefthand_file&quot; = &lt;file for inhand icon for left hand, ignored if &quot;inhand_icon_state&quot; not provided&gt;,
+?&quot;righthand_file&quot; = &lt;same as &quot;lefthand_file&quot; but for right hand&gt;,
+),
+..
+)</p><h3 id="proc/guess_condi_style"><aside class="declaration">proc </aside>guess_condi_style<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/reagents) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L543">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 543"/></a></aside>
+        </h3>
+        <p>Provides condiment bottle style based on reagents.</p>
+<p>Gets style from available by key, using last part of main reagent type (eg. &quot;rice&quot; for /datum/reagent/consumable/rice) as key.
+If not available returns fallback style, or null if no such thing.
+Returns list that is one of condibottle styles from <a href="obj/machinery/chem_master.html#proc/get_condi_styles" title="/obj/machinery/chem_master">/obj/machinery/chem_master/proc/get_condi_styles</a></p><h3 id="proc/replace_beaker"><aside class="declaration">proc </aside>replace_beaker<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/new_beaker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L163">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 163"/></a></aside>
+        </h3>
+        <p>Handles process of moving input reagents containers in/from machine</p>
+<p>When called checks for previously inserted beaker and gives it to user.
+Then, if new_beaker provided, places it into src.beaker.
+Returns <code>boolean</code>. TRUE if user provided (ignoring whether threre was any beaker change) and FALSE if not.</p>
+<p>Arguments:</p>
+<ul>
+<li>user - Mob that initialized replacement, gets previously inserted beaker if there's any</li>
+<li>new_beaker - New beaker to insert. Optional</li>
+</ul><h3 id="proc/strip_condi_styles_to_icons"><aside class="declaration">proc </aside>strip_condi_styles_to_icons<aside>(/list/styles) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_master.dm#L467">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_master.dm 467"/></a></aside>
+        </h3>
+        <p>Translates styles data into UI compatible format</p>
+<p>Expects to receive list of availables condiment styles in its complete format, and transforms them in simplified form with enough data to get UI going.
+Returns list(list(&quot;id&quot; = <key>, &quot;className&quot; = <icon class>, &quot;title&quot; = <name and desc>),..).</p>
+<p>Arguments:</p>
+<ul>
+<li>styles - List of styles for condiment bottles in internal format: <a href="obj/machinery/chem_master.html#proc/get_condi_styles" title="/obj/machinery/chem_master">/obj/machinery/chem_master/proc/get_condi_styles</a></li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

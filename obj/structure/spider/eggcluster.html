@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;spider&#x2F;eggcluster - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/spider/eggcluster.html#var">Var Details</a> - <a href="obj/structure/spider/eggcluster.html#proc">Proc Details</a></header>
+<main>
+<h1>eggcluster <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/spider/eggcluster.html">structure/spider/eggcluster</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 78"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/spider/eggcluster.html#var/amount_grown">amount_grown</a></th><td>The amount the egg cluster has grown.  Is able to produce a spider when it hits 100.</td></tr>
+            <tr><th><a href="obj/structure/spider/eggcluster.html#var/directive">directive</a></th><td>The mother's directive at the time the egg was produced.  Passed onto the child.</td></tr>
+            <tr><th><a href="obj/structure/spider/eggcluster.html#var/faction">faction</a></th><td>Which factions to give to the produced spider, inherited from the mother.</td></tr>
+            <tr><th><a href="obj/structure/spider/eggcluster.html#var/ghost_ready">ghost_ready</a></th><td>Whether or not a ghost can use the cluster to become a spider.</td></tr>
+            <tr><th><a href="obj/structure/spider/eggcluster.html#var/potentialspawns">potentialspawns</a></th><td>The types of spiders the egg sac could produce.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/spider/eggcluster.html#proc/make_spider">make_spider</a></th><td>Makes a ghost into a spider based on the type of egg cluster.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/amount_grown"><aside class="declaration">var </aside>amount_grown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 83"/></a></h3>
+        <p>The amount the egg cluster has grown.  Is able to produce a spider when it hits 100.</p><h3 id="var/directive"><aside class="declaration">var </aside>directive
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 85"/></a></h3>
+        <p>The mother's directive at the time the egg was produced.  Passed onto the child.</p><h3 id="var/faction"><aside class="declaration">var </aside>faction
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 87"/></a></h3>
+        <p>Which factions to give to the produced spider, inherited from the mother.</p><h3 id="var/ghost_ready"><aside class="declaration">var </aside>ghost_ready
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 89"/></a></h3>
+        <p>Whether or not a ghost can use the cluster to become a spider.</p><h3 id="var/potentialspawns"><aside class="declaration">var </aside>potentialspawns
+            <aside>&ndash; /list/mob/living</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 91"/></a></h3>
+        <p>The types of spiders the egg sac could produce.</p><h2 id="proc">Proc Details</h2><h3 id="proc/make_spider"><aside class="declaration">proc </aside>make_spider<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/effects/spiders.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;effects&#x2F;spiders.dm 130"/></a></aside>
+        </h3>
+        <p>Makes a ghost into a spider based on the type of egg cluster.</p>
+<p>Allows a ghost to get a prompt to use the egg cluster to become a spider.
+Arguments:</p>
+<ul>
+<li>user - The ghost attempting to become a spider.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

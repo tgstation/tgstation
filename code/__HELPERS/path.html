@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__HELPERS&#x2F;path.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__HELPERS/path.html#define">Define Details</a></header>
+<main>
+<h1>code/__HELPERS/path.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__HELPERS/path.html#define/CAN_STEP">CAN_STEP</a></th><td>A helper macro to see if it's possible to step from the first turf into the second one, minding things like door access and directional windows.
+Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum
+If you really want to optimize things, optimize this, cuz this gets called a lot</td></tr>
+        <tr><th><a href="code/__HELPERS/path.html#define/STEP_NOT_HERE_BUT_THERE">STEP_NOT_HERE_BUT_THERE</a></th><td>Another helper macro for JPS, for telling when a node has forced neighbors that need expanding</td></tr>
+        <tr><th><a href="datum&#x2F;jps_node.html">&#x2F;datum&#x2F;jps_node</a></th><td>The JPS Node datum represents a turf that we find interesting enough to add to the open list and possibly search for new tiles from</td></tr>
+        <tr><th><a href="datum&#x2F;pathfind.html">&#x2F;datum&#x2F;pathfind</a></th><td>The datum used to handle the JPS pathfinding, completely self-contained</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/CAN_STEP"><aside class="declaration">#define </aside>CAN_STEP
+            <aside>(cur_turf, next)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 41"/></a>
+    </h3>
+    <p>A helper macro to see if it's possible to step from the first turf into the second one, minding things like door access and directional windows.
+Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum
+If you really want to optimize things, optimize this, cuz this gets called a lot</p><h3 id="define/STEP_NOT_HERE_BUT_THERE"><aside class="declaration">#define </aside>STEP_NOT_HERE_BUT_THERE
+            <aside>(cur_turf, dirA, dirB)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 43"/></a>
+    </h3>
+    <p>Another helper macro for JPS, for telling when a node has forced neighbors that need expanding</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

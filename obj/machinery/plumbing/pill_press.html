@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;pill_press - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/pill_press.html#var">Var Details</a></header>
+<main>
+<h1>pill_press <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/pill_press.html">pill_press</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 2"/></a></h1>
+
+<p>We take a constant input of reagents, and produce a pill once a set volume is reached</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/current_volume">current_volume</a></th><td>selected size of the product</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/max_bottle_volume">max_bottle_volume</a></th><td>maximum size of a bottle</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/max_floor_products">max_floor_products</a></th><td>max amount of pills allowed on our tile before we start storing them instead</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/max_patch_volume">max_patch_volume</a></th><td>maximum size of a patch</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/max_pill_volume">max_pill_volume</a></th><td>maximum size of a pill</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/max_volume">max_volume</a></th><td>the maximum size a pill or patch can be</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/min_volume">min_volume</a></th><td>the minimum size a pill or patch can be</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/pill_number">pill_number</a></th><td>the icon_state number for the pill.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/pill_styles">pill_styles</a></th><td>list of id's and icons for the pill selection of the ui</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/product">product</a></th><td>current operating product (pills or patches)</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/product_name">product_name</a></th><td>prefix for the product name</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/stored_products">stored_products</a></th><td>list of products stored in the machine, so we dont have 610 pills on one tile</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_volume"><aside class="declaration">var </aside>current_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 20"/></a></h3>
+        <p>selected size of the product</p><h3 id="var/max_bottle_volume"><aside class="declaration">var </aside>max_bottle_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 12"/></a></h3>
+        <p>maximum size of a bottle</p><h3 id="var/max_floor_products"><aside class="declaration">var </aside>max_floor_products
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 30"/></a></h3>
+        <p>max amount of pills allowed on our tile before we start storing them instead</p><h3 id="var/max_patch_volume"><aside class="declaration">var </aside>max_patch_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 10"/></a></h3>
+        <p>maximum size of a patch</p><h3 id="var/max_pill_volume"><aside class="declaration">var </aside>max_pill_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 8"/></a></h3>
+        <p>maximum size of a pill</p><h3 id="var/max_volume"><aside class="declaration">var </aside>max_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 18"/></a></h3>
+        <p>the maximum size a pill or patch can be</p><h3 id="var/min_volume"><aside class="declaration">var </aside>min_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 16"/></a></h3>
+        <p>the minimum size a pill or patch can be</p><h3 id="var/pill_number"><aside class="declaration">var </aside>pill_number
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 24"/></a></h3>
+        <p>the icon_state number for the pill.</p><h3 id="var/pill_styles"><aside class="declaration">var </aside>pill_styles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 26"/></a></h3>
+        <p>list of id's and icons for the pill selection of the ui</p><h3 id="var/product"><aside class="declaration">var </aside>product
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 14"/></a></h3>
+        <p>current operating product (pills or patches)</p><h3 id="var/product_name"><aside class="declaration">var </aside>product_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 22"/></a></h3>
+        <p>prefix for the product name</p><h3 id="var/stored_products"><aside class="declaration">var </aside>stored_products
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/pill_press.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 28"/></a></h3>
+        <p>list of products stored in the machine, so we dont have 610 pills on one tile</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

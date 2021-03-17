@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;rust_g.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/rust_g.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/rust_g.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/rust_g.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;rust_g.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/rust_g.html#define/rustg_cnoise_generate">rustg_cnoise_generate</a></th><td>This proc generates a cellular automata noise grid which can be used in procedural generation methods.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/rustg_cnoise_generate"><aside class="declaration">#define </aside>rustg_cnoise_generate
+            <aside>(percentage, smoothing_iterations, birth_limit, death_limit, width, height)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/rust_g.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;rust_g.dm 54"/></a>
+    </h3>
+    <p>This proc generates a cellular automata noise grid which can be used in procedural generation methods.</p>
+<p>Returns a single string that goes row by row, with values of 1 representing an alive cell, and a value of 0 representing a dead cell.</p>
+<p>Arguments:</p>
+<ul>
+<li>percentage: The chance of a turf starting closed</li>
+<li>smoothing_iterations: The amount of iterations the cellular automata simulates before returning the results</li>
+<li>birth_limit: If the number of neighboring cells is higher than this amount, a cell is born</li>
+<li>death_limit: If the number of neighboring cells is lower than this amount, a cell dies</li>
+<li>width: The width of the grid.</li>
+<li>height: The height of the grid.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

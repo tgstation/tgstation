@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;wound&#x2F;blunt - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/wound/blunt.html#var">Var Details</a> - <a href="datum/wound/blunt.html#proc">Proc Details</a></header>
+<main>
+<h1>blunt <aside>/<a href="datum.html">datum</a>/<a href="datum/wound.html">wound</a>/<a href="datum/wound/blunt.html">blunt</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 7"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/active_trauma">active_trauma</a></th><td>If we suffer severe head booboos, we can get brain traumas tied to them</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/brain_trauma_group">brain_trauma_group</a></th><td>What brain trauma group, if any, we can draw from for head wounds</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/gelled">gelled</a></th><td>Have we been bone gel'd?</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/internal_bleeding_chance">internal_bleeding_chance</a></th><td>If this is a chest wound and this is set, we have this chance to cough up blood when hit in the chest</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/next_trauma_cycle">next_trauma_cycle</a></th><td>If we deal brain traumas, when is the next one due?</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/regen_ticks_current">regen_ticks_current</a></th><td>Our current counter for gel + surgical tape regeneration</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/regen_ticks_needed">regen_ticks_needed</a></th><td>If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/taped">taped</a></th><td>Have we been taped?</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#var/trauma_cycle_cooldown">trauma_cycle_cooldown</a></th><td>How long do we wait +/- 20% for the next trauma?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/wound/blunt.html#proc/attack_with_hurt_hand">attack_with_hurt_hand</a></th><td>If we're a human who's punching something with a broken arm, we might hurt ourselves doing so</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#proc/gel">gel</a></th><td>if someone is using bone gel on our wound</td></tr>
+            <tr><th><a href="datum/wound/blunt.html#proc/tape">tape</a></th><td>if someone is using surgical tape on our wound</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active_trauma"><aside class="declaration">var </aside>active_trauma
+            <aside>&ndash; /<a href="datum.html">datum</a>/brain_trauma</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 22"/></a></h3>
+        <p>If we suffer severe head booboos, we can get brain traumas tied to them</p><h3 id="var/brain_trauma_group"><aside class="declaration">var </aside>brain_trauma_group
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 24"/></a></h3>
+        <p>What brain trauma group, if any, we can draw from for head wounds</p><h3 id="var/gelled"><aside class="declaration">var </aside>gelled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 16"/></a></h3>
+        <p>Have we been bone gel'd?</p><h3 id="var/internal_bleeding_chance"><aside class="declaration">var </aside>internal_bleeding_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 30"/></a></h3>
+        <p>If this is a chest wound and this is set, we have this chance to cough up blood when hit in the chest</p><h3 id="var/next_trauma_cycle"><aside class="declaration">var </aside>next_trauma_cycle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 26"/></a></h3>
+        <p>If we deal brain traumas, when is the next one due?</p><h3 id="var/regen_ticks_current"><aside class="declaration">var </aside>regen_ticks_current
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 20"/></a></h3>
+        <p>Our current counter for gel + surgical tape regeneration</p><h3 id="var/regen_ticks_needed"><aside class="declaration">var </aside>regen_ticks_needed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 18"/></a></h3>
+        <p>If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default</p><h3 id="var/taped"><aside class="declaration">var </aside>taped
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 14"/></a></h3>
+        <p>Have we been taped?</p><h3 id="var/trauma_cycle_cooldown"><aside class="declaration">var </aside>trauma_cycle_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 28"/></a></h3>
+        <p>How long do we wait +/- 20% for the next trauma?</p><h2 id="proc">Proc Details</h2><h3 id="proc/attack_with_hurt_hand"><aside class="declaration">proc </aside>attack_with_hurt_hand<aside>(/<a href="mob.html">mob</a>/M, /<a href="atom.html">atom</a>/target, proximity) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 96"/></a></aside>
+        </h3>
+        <p>If we're a human who's punching something with a broken arm, we might hurt ourselves doing so</p><h3 id="proc/gel"><aside class="declaration">proc </aside>gel<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/<a href="obj/item/stack/medical.html">medical</a>/bone_gel/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L361">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 361"/></a></aside>
+        </h3>
+        <p>if someone is using bone gel on our wound</p><h3 id="proc/tape"><aside class="declaration">proc </aside>tape<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/sticky_tape/surgical/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/bones.dm#L400">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;bones.dm 400"/></a></aside>
+        </h3>
+        <p>if someone is using surgical tape on our wound</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

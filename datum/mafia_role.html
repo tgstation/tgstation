@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;mafia_role - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/mafia_role.html#var">Var Details</a> - <a href="datum/mafia_role.html#proc">Proc Details</a></header>
+<main>
+<h1>mafia_role <aside>/<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/actions">actions</a></th><td>action = uses</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/game_status">game_status</a></th><td>so mafia have to also kill them to have a majority</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/hud_icon">hud_icon</a></th><td>icon state in the mafia dmi of the hud of the role, used in the mafia ui</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/revealed_icon">revealed_icon</a></th><td>icon state in the mafia dmi of the hud of the role, used in the mafia ui</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/revealed_outfit">revealed_outfit</a></th><td>what they get equipped with when they are revealed</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/role_flags">role_flags</a></th><td>role flags (special status of roles like detection immune)</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/role_type">role_type</a></th><td>how the random setup chooses which roles get put in</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/special_theme">special_theme</a></th><td>set this to something cool for antagonists and their window will look different</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/vote_potential">vote_potential</a></th><td>how many votes your role COULD count for, now or later. used in checking victory</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/vote_power">vote_power</a></th><td>how many votes submitted when you vote. used in voting, but not victory</td></tr>
+            <tr><th><a href="datum/mafia_role.html#var/winner_award">winner_award</a></th><td>what the role gets when it wins a game</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/mafia_role.html#proc/can_action">can_action</a></th><td>Tests if a visitor can actually perform an action on this role. Verbose on purpose!</td></tr>
+            <tr><th><a href="datum/mafia_role.html#proc/kill">kill</a></th><td>Tests kill immunities, if nothing prevents the kill, kills this role.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/actions"><aside class="declaration">var </aside>actions
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 22"/></a></h3>
+        <p>action = uses</p><h3 id="var/game_status"><aside class="declaration">var </aside>game_status
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 28"/></a></h3>
+        <p>so mafia have to also kill them to have a majority</p><h3 id="var/hud_icon"><aside class="declaration">var </aside>hud_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 31"/></a></h3>
+        <p>icon state in the mafia dmi of the hud of the role, used in the mafia ui</p><h3 id="var/revealed_icon"><aside class="declaration">var </aside>revealed_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 33"/></a></h3>
+        <p>icon state in the mafia dmi of the hud of the role, used in the mafia ui</p><h3 id="var/revealed_outfit"><aside class="declaration">var </aside>revealed_outfit
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/outfit.html">outfit</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 20"/></a></h3>
+        <p>what they get equipped with when they are revealed</p><h3 id="var/role_flags"><aside class="declaration">var </aside>role_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 14"/></a></h3>
+        <p>role flags (special status of roles like detection immune)</p><h3 id="var/role_type"><aside class="declaration">var </aside>role_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 7"/></a></h3>
+        <p>how the random setup chooses which roles get put in</p><h3 id="var/special_theme"><aside class="declaration">var </aside>special_theme
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 35"/></a></h3>
+        <p>set this to something cool for antagonists and their window will look different</p><h3 id="var/vote_potential"><aside class="declaration">var </aside>vote_potential
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 18"/></a></h3>
+        <p>how many votes your role COULD count for, now or later. used in checking victory</p><h3 id="var/vote_power"><aside class="declaration">var </aside>vote_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 16"/></a></h3>
+        <p>how many votes submitted when you vote. used in voting, but not victory</p><h3 id="var/winner_award"><aside class="declaration">var </aside>winner_award
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 25"/></a></h3>
+        <p>what the role gets when it wins a game</p><h2 id="proc">Proc Details</h2><h3 id="proc/can_action"><aside class="declaration">proc </aside>can_action<aside>(/<a href="datum.html">datum</a>/<a href="datum/mafia_controller.html">mafia_controller</a>/game, /<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a>/visitor, action) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 48"/></a></aside>
+        </h3>
+        <p>Tests if a visitor can actually perform an action on this role. Verbose on purpose!</p>
+<p>Will return false if: Your visit is roleblocked, they have perished, or your visit was interrupted</p><h3 id="proc/kill"><aside class="declaration">proc </aside>kill<aside>(/<a href="datum.html">datum</a>/<a href="datum/mafia_controller.html">mafia_controller</a>/game, /<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a>/attacker, lynch) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/roles.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;roles.dm 65"/></a></aside>
+        </h3>
+        <p>Tests kill immunities, if nothing prevents the kill, kills this role.</p>
+<p>Does not count as visiting, see visit proc.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;acid - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/acid.html#var">Var Details</a> - <a href="datum/component/acid.html#proc">Proc Details</a></header>
+<main>
+<h1>acid <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/acid.html">acid</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 7"/></a></h1>
+
+<ul>
+<li>
+<p>Component representing acid applied to an object.</p>
+</li>
+<li>
+<p>Must be attached to an atom.</p>
+</li>
+<li>
+<p>Processes, repeatedly damaging whatever it is attached to.</p>
+</li>
+<li>
+<p>If the parent atom is a turf it applies acid to the contents of the turf.</p>
+</li>
+</ul><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/acid.html#var/acid_power">acid_power</a></th><td>The strength of the acid on the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#var/acid_volume">acid_volume</a></th><td>The volume of acid on the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#var/max_volume">max_volume</a></th><td>The maximum volume of acid on the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#var/parent_integrity">parent_integrity</a></th><td>Used exclusively for melting turfs. TODO: Move integrity to the atom level so that this can be dealt with there.</td></tr>
+            <tr><th><a href="datum/component/acid.html#var/process_effect">process_effect</a></th><td>The proc used to handle the parent <a href="atom.html" title="/atom">/atom</a> when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!</td></tr>
+            <tr><th><a href="datum/component/acid.html#var/sizzle">sizzle</a></th><td>The ambiant sound of acid eating away at the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#var/stage">stage</a></th><td>How far the acid melting of turfs has progressed</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/InheritComponent">InheritComponent</a></th><td>Averages corrosive power and sums volume.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/on_attack_hand">on_attack_hand</a></th><td>Handles searing the hand of anyone who tries to touch this without protection.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/on_clean">on_clean</a></th><td>Makes it possible to clean acid off of objects.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/on_crossed">on_crossed</a></th><td>Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/on_examine">on_examine</a></th><td>Alerts any examiners to the acid on the parent atom.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/on_expose_reagent">on_expose_reagent</a></th><td>Handles water diluting the acid on the object.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/on_update_overlays">on_update_overlays</a></th><td>Used to maintain the acid overlay on the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/process">process</a></th><td>Handles the slow corrosion of the parent <a href="atom.html" title="/atom">/atom</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/process_mob">process_mob</a></th><td>Handles processing on a <a href="mob/living.html" title="/mob/living">/mob/living</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/process_obj">process_obj</a></th><td>Handles processing on a <a href="obj.html" title="/obj">/obj</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/process_turf">process_turf</a></th><td>Handles processing on a <a href="turf.html" title="/turf">/turf</a>.</td></tr>
+            <tr><th><a href="datum/component/acid.html#proc/set_volume">set_volume</a></th><td>Sets the acid volume to a new value. Limits the acid volume by the amount allowed to exist on the parent atom.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/acid_power"><aside class="declaration">var </aside>acid_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 10"/></a></h3>
+        <p>The strength of the acid on the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="var/acid_volume"><aside class="declaration">var </aside>acid_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 12"/></a></h3>
+        <p>The volume of acid on the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="var/max_volume"><aside class="declaration">var </aside>max_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 14"/></a></h3>
+        <p>The maximum volume of acid on the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="var/parent_integrity"><aside class="declaration">var </aside>parent_integrity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 18"/></a></h3>
+        <p>Used exclusively for melting turfs. TODO: Move integrity to the atom level so that this can be dealt with there.</p><h3 id="var/process_effect"><aside class="declaration">var </aside>process_effect
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 24"/></a></h3>
+        <p>The proc used to handle the parent <a href="atom.html" title="/atom">/atom</a> when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!</p><h3 id="var/sizzle"><aside class="declaration">var </aside>sizzle
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/looping_sound.html">looping_sound</a>/acid</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 16"/></a></h3>
+        <p>The ambiant sound of acid eating away at the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="var/stage"><aside class="declaration">var </aside>stage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 20"/></a></h3>
+        <p>How far the acid melting of turfs has progressed</p><h2 id="proc">Proc Details</h2><h3 id="proc/InheritComponent"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/InheritComponent">&uarr;</a></aside>InheritComponent<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/C, i_am_original, _acid_power, _acid_volume) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 87"/></a></aside>
+        </h3>
+        <p>Averages corrosive power and sums volume.</p><h3 id="proc/on_attack_hand"><aside class="declaration">proc </aside>on_attack_hand<aside>(/<a href="atom.html">atom</a>/parent_atom, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 182"/></a></aside>
+        </h3>
+        <p>Handles searing the hand of anyone who tries to touch this without protection.</p><h3 id="proc/on_clean"><aside class="declaration">proc </aside>on_clean<aside>(/<a href="atom.html">atom</a>/A, clean_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 161"/></a></aside>
+        </h3>
+        <p>Makes it possible to clean acid off of objects.</p><h3 id="proc/on_crossed"><aside class="declaration">proc </aside>on_crossed<aside>(/<a href="atom.html">atom</a>/parent_atom, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/crosser) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L205">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 205"/></a></aside>
+        </h3>
+        <p>Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.</p><h3 id="proc/on_examine"><aside class="declaration">proc </aside>on_examine<aside>(/<a href="atom.html">atom</a>/A, /<a href="mob.html">mob</a>/user, /list/examine_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 155"/></a></aside>
+        </h3>
+        <p>Alerts any examiners to the acid on the parent atom.</p><h3 id="proc/on_expose_reagent"><aside class="declaration">proc </aside>on_expose_reagent<aside>(/<a href="atom.html">atom</a>/parent_atom, /<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/exposing_reagent, reac_volume) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 170"/></a></aside>
+        </h3>
+        <p>Handles water diluting the acid on the object.</p><h3 id="proc/on_update_overlays"><aside class="declaration">proc </aside>on_update_overlays<aside>(/<a href="atom.html">atom</a>/parent_atom, /list/overlays) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 149"/></a></aside>
+        </h3>
+        <p>Used to maintain the acid overlay on the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="proc/process"><aside class="parent"><a title="/datum" href="datum.html#proc/process">&uarr;</a></aside>process<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 99"/></a></aside>
+        </h3>
+        <p>Handles the slow corrosion of the parent <a href="atom.html" title="/atom">/atom</a>.</p><h3 id="proc/process_mob"><aside class="declaration">proc </aside>process_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/target, delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 112"/></a></aside>
+        </h3>
+        <p>Handles processing on a <a href="mob/living.html" title="/mob/living">/mob/living</a>.</p><h3 id="proc/process_obj"><aside class="declaration">proc </aside>process_obj<aside>(/<a href="obj.html">obj</a>/target, delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 106"/></a></aside>
+        </h3>
+        <p>Handles processing on a <a href="obj.html" title="/obj">/obj</a>.</p><h3 id="proc/process_turf"><aside class="declaration">proc </aside>process_turf<aside>(/<a href="turf.html">turf</a>/target_turf, delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 116"/></a></aside>
+        </h3>
+        <p>Handles processing on a <a href="turf.html" title="/turf">/turf</a>.</p><h3 id="proc/set_volume"><aside class="declaration">proc </aside>set_volume<aside>(new_volume) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/acid.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;acid.dm 92"/></a></aside>
+        </h3>
+        <p>Sets the acid volume to a new value. Limits the acid volume by the amount allowed to exist on the parent atom.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;techweb - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/techweb.html#var">Var Details</a> - <a href="datum/techweb.html#proc">Proc Details</a></header>
+<main>
+<h1>Techweb <aside>/<a href="datum.html">datum</a>/<a href="datum/techweb.html">techweb</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 9"/></a></h1>
+
+<p>A datum representing a research techweb</p>
+<p>Techweb datums are meant to store unlocked research, being able to be stored
+on research consoles, servers, and disks. They are NOT global.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/techweb.html#var/available_experiments">available_experiments</a></th><td>Available experiments</td></tr>
+            <tr><th><a href="datum/techweb.html#var/available_nodes">available_nodes</a></th><td>Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE</td></tr>
+            <tr><th><a href="datum/techweb.html#var/boosted_nodes">boosted_nodes</a></th><td>Already boosted nodes that can't be boosted again. node id = path of boost object.</td></tr>
+            <tr><th><a href="datum/techweb.html#var/completed_experiments">completed_experiments</a></th><td>Completed experiments</td></tr>
+            <tr><th><a href="datum/techweb.html#var/custom_designs">custom_designs</a></th><td>Custom inserted designs like from disks that should survive recalculation.</td></tr>
+            <tr><th><a href="datum/techweb.html#var/deconstructed_items">deconstructed_items</a></th><td>Items already deconstructed for a generic point boost, path = list(point_type = points)</td></tr>
+            <tr><th><a href="datum/techweb.html#var/discovered_mutations">discovered_mutations</a></th><td>Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console</td></tr>
+            <tr><th><a href="datum/techweb.html#var/hidden_nodes">hidden_nodes</a></th><td>Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.</td></tr>
+            <tr><th><a href="datum/techweb.html#var/last_bitcoins">last_bitcoins</a></th><td>Current per-second production, used for display only.</td></tr>
+            <tr><th><a href="datum/techweb.html#var/organization">organization</a></th><td>Organization name, used for display</td></tr>
+            <tr><th><a href="datum/techweb.html#var/research_logs">research_logs</a></th><td>IC logs</td></tr>
+            <tr><th><a href="datum/techweb.html#var/research_points">research_points</a></th><td>Available research points, type = number</td></tr>
+            <tr><th><a href="datum/techweb.html#var/researched_designs">researched_designs</a></th><td>Designs that are available for use. Assoc list, id = TRUE</td></tr>
+            <tr><th><a href="datum/techweb.html#var/researched_nodes">researched_nodes</a></th><td>Already unlocked and all designs are now available. Assoc list, id = TRUE</td></tr>
+            <tr><th><a href="datum/techweb.html#var/tiers">tiers</a></th><td>Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on</td></tr>
+            <tr><th><a href="datum/techweb.html#var/visible_nodes">visible_nodes</a></th><td>Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/techweb.html#proc/add_experiment">add_experiment</a></th><td>Adds an experiment to this techweb by its type, ensures that no duplicates are added.</td></tr>
+            <tr><th><a href="datum/techweb.html#proc/add_experiments">add_experiments</a></th><td>Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.</td></tr>
+            <tr><th><a href="datum/techweb.html#proc/can_unlock_node">can_unlock_node</a></th><td>Checks if a node can be unlocked on this techweb, having the required points and experiments</td></tr>
+            <tr><th><a href="datum/techweb.html#proc/complete_experiment">complete_experiment</a></th><td>Notifies the techweb that an experiment has been completed, updating internal state of the techweb to reflect this.</td></tr>
+            <tr><th><a href="datum/techweb.html#proc/have_experiments_for_node">have_experiments_for_node</a></th><td>Checks if all experiments have been completed for a given node on this techweb</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/available_experiments"><aside class="declaration">var </aside>available_experiments
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 42"/></a></h3>
+        <p>Available experiments</p><h3 id="var/available_nodes"><aside class="declaration">var </aside>available_nodes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 15"/></a></h3>
+        <p>Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE</p><h3 id="var/boosted_nodes"><aside class="declaration">var </aside>boosted_nodes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 21"/></a></h3>
+        <p>Already boosted nodes that can't be boosted again. node id = path of boost object.</p><h3 id="var/completed_experiments"><aside class="declaration">var </aside>completed_experiments
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 44"/></a></h3>
+        <p>Completed experiments</p><h3 id="var/custom_designs"><aside class="declaration">var </aside>custom_designs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 19"/></a></h3>
+        <p>Custom inserted designs like from disks that should survive recalculation.</p><h3 id="var/deconstructed_items"><aside class="declaration">var </aside>deconstructed_items
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 25"/></a></h3>
+        <p>Items already deconstructed for a generic point boost, path = list(point_type = points)</p><h3 id="var/discovered_mutations"><aside class="declaration">var </aside>discovered_mutations
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 38"/></a></h3>
+        <p>Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console</p><h3 id="var/hidden_nodes"><aside class="declaration">var </aside>hidden_nodes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 23"/></a></h3>
+        <p>Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.</p><h3 id="var/last_bitcoins"><aside class="declaration">var </aside>last_bitcoins
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 36"/></a></h3>
+        <p>Current per-second production, used for display only.</p><h3 id="var/organization"><aside class="declaration">var </aside>organization
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 34"/></a></h3>
+        <p>Organization name, used for display</p><h3 id="var/research_logs"><aside class="declaration">var </aside>research_logs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 31"/></a></h3>
+        <p>IC logs</p><h3 id="var/research_points"><aside class="declaration">var </aside>research_points
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 27"/></a></h3>
+        <p>Available research points, type = number</p><h3 id="var/researched_designs"><aside class="declaration">var </aside>researched_designs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 17"/></a></h3>
+        <p>Designs that are available for use. Assoc list, id = TRUE</p><h3 id="var/researched_nodes"><aside class="declaration">var </aside>researched_nodes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 11"/></a></h3>
+        <p>Already unlocked and all designs are now available. Assoc list, id = TRUE</p><h3 id="var/tiers"><aside class="declaration">var </aside>tiers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 40"/></a></h3>
+        <p>Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on</p><h3 id="var/visible_nodes"><aside class="declaration">var </aside>visible_nodes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 13"/></a></h3>
+        <p>Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_experiment"><aside class="declaration">proc </aside>add_experiment<aside>(experiment_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L256">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 256"/></a></aside>
+        </h3>
+        <p>Adds an experiment to this techweb by its type, ensures that no duplicates are added.</p>
+<p>Arguments:</p>
+<ul>
+<li>experiment_type - the type of the experiment to add</li>
+</ul><h3 id="proc/add_experiments"><aside class="declaration">proc </aside>add_experiments<aside>(/list/experiment_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L276">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 276"/></a></aside>
+        </h3>
+        <p>Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.</p>
+<p>Arguments:</p>
+<ul>
+<li>experiment_list - the list of types of experiments to add</li>
+</ul><h3 id="proc/can_unlock_node"><aside class="declaration">proc </aside>can_unlock_node<aside>(/<a href="datum.html">datum</a>/<a href="datum/techweb_node.html">techweb_node</a>/node) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L247">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 247"/></a></aside>
+        </h3>
+        <p>Checks if a node can be unlocked on this techweb, having the required points and experiments</p>
+<p>Arguments:</p>
+<ul>
+<li>node - the node to check</li>
+</ul><h3 id="proc/complete_experiment"><aside class="declaration">proc </aside>complete_experiment<aside>(/<a href="datum.html">datum</a>/<a href="datum/experiment.html">experiment</a>/completed_experiment) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L288">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 288"/></a></aside>
+        </h3>
+        <p>Notifies the techweb that an experiment has been completed, updating internal state of the techweb to reflect this.</p>
+<p>Arguments:</p>
+<ul>
+<li>completed_experiment - the experiment which was completed</li>
+</ul><h3 id="proc/have_experiments_for_node"><aside class="declaration">proc </aside>have_experiments_for_node<aside>(/<a href="datum.html">datum</a>/<a href="datum/techweb_node.html">techweb_node</a>/node) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/_techweb.dm#L235">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;_techweb.dm 235"/></a></aside>
+        </h3>
+        <p>Checks if all experiments have been completed for a given node on this techweb</p>
+<p>Arguments:</p>
+<ul>
+<li>node - the node to check</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;knockback - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/knockback.html#var">Var Details</a> - <a href="datum/component/knockback.html#proc">Proc Details</a></header>
+<main>
+<h1>knockback <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/knockback.html">knockback</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/knockback.html#var/throw_anchored">throw_anchored</a></th><td>whether this can throw anchored targets (tables, etc)</td></tr>
+            <tr><th><a href="datum/component/knockback.html#var/throw_distance">throw_distance</a></th><td>distance the atom will be thrown</td></tr>
+            <tr><th><a href="datum/component/knockback.html#var/throw_gentle">throw_gentle</a></th><td>whether this is a gentle throw (default false means people thrown into walls are stunned / take damage)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/knockback.html#proc/do_knockback">do_knockback</a></th><td>Throw a target in a direction</td></tr>
+            <tr><th><a href="datum/component/knockback.html#proc/hostile_attackingtarget">hostile_attackingtarget</a></th><td>triggered after a hostile simplemob attacks something</td></tr>
+            <tr><th><a href="datum/component/knockback.html#proc/item_afterattack">item_afterattack</a></th><td>triggered after an item attacks something</td></tr>
+            <tr><th><a href="datum/component/knockback.html#proc/projectile_hit">projectile_hit</a></th><td>triggered after a projectile hits something</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/throw_anchored"><aside class="declaration">var </aside>throw_anchored
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 5"/></a></h3>
+        <p>whether this can throw anchored targets (tables, etc)</p><h3 id="var/throw_distance"><aside class="declaration">var </aside>throw_distance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 3"/></a></h3>
+        <p>distance the atom will be thrown</p><h3 id="var/throw_gentle"><aside class="declaration">var </aside>throw_gentle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 9"/></a></h3>
+        <p>whether this is a gentle throw (default false means people thrown into walls are stunned / take damage)</p><h2 id="proc">Proc Details</h2><h3 id="proc/do_knockback"><aside class="declaration">proc </aside>do_knockback<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/thrower, throw_dir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 57"/></a></aside>
+        </h3>
+        <p>Throw a target in a direction</p>
+<p>Arguments:</p>
+<ul>
+<li>target - Target atom to throw</li>
+<li>thrower - Thing that caused this atom to be thrown</li>
+<li>throw_dir - Direction to throw the atom</li>
+</ul><h3 id="proc/hostile_attackingtarget"><aside class="declaration">proc </aside>hostile_attackingtarget<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/attacker, /<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 37"/></a></aside>
+        </h3>
+        <p>triggered after a hostile simplemob attacks something</p><h3 id="proc/item_afterattack"><aside class="declaration">proc </aside>item_afterattack<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/source, /<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, proximity_flag, click_parameters) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 29"/></a></aside>
+        </h3>
+        <p>triggered after an item attacks something</p><h3 id="proc/projectile_hit"><aside class="declaration">proc </aside>projectile_hit<aside>(/<a href="atom.html">atom</a>/fired_from, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/firer, /<a href="atom.html">atom</a>/target, Angle) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/knockback.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;knockback.dm 43"/></a></aside>
+        </h3>
+        <p>triggered after a projectile hits something</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

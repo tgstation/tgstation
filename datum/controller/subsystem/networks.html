@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;networks - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/networks.html#var">Var Details</a> - <a href="datum/controller/subsystem/networks.html#proc">Proc Details</a></header>
+<main>
+<h1>networks <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/networks.html">networks</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#var/area_network_lookup">area_network_lookup</a></th><td>Area to network, network to area list
+This is an associated list to quickly find an area using either its id or network
+Used mainly to make sure all area id's are unique even if a mapper uses the same
+area many times</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#var/interfaces_by_hardware_id">interfaces_by_hardware_id</a></th><td>all interfaces by their hardware address.
+Do NOT use to verify a reciver_id is valid, use the network.root_devices for that</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#var/networks">networks</a></th><td>List of networks using their fully qualified network name.  Used for quick lookups
+of networks for sending packets</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#var/root_networks">root_networks</a></th><td>List of the root networks starting at their root names.  Used to find and/or build
+network tress</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#var/station_network">station_network</a></th><td>Legacy ntnet lookup for software.  Should be changed latter so don't rely on this
+being here.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#var/used_names">used_names</a></th><td>Random name search to make sure we have unique names.
+DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOUR DOING</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/PreInit">PreInit</a></th><td>You shouldn't need to do this.  But mapping is async and there is no guarantee that Initialize
+will run before these networks are dynamically created.  So its here.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/_hard_create_network">_hard_create_network</a></th><td>Hard creates a network. Helper function for create_network_simple and create_network</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/add_log">add_log</a></th><td>Records a message into the station logging system for the network</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/assign_area_network_id">assign_area_network_id</a></th><td>Check if the area is valid and if it doesn't have a network root id.
+If we are a ruin or a shuttle, we get our own network
+if we have a template, try to get the network id from the template</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/assign_random_name">assign_random_name</a></th><td>Generate a name devices</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/create_network">create_network</a></th><td>Checks to make sure the network is valid.  We log BOTH to mapping and telecoms
+so if your checking for network errors you can find it in mapping to (because its their fault!)
+Creates or finds a network anywhere in the world using bits of text</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/create_network_simple">create_network_simple</a></th><td>Creates or finds a network anywhere in the world using a fully qualified name</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/fire">fire</a></th><td>Used only for sending NAK/ACK and error reply's
+Check if the network_id is valid and if not send an error and return
+Check if the receiver_id is in the network.  If not send an error and return</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/get_next_HID">get_next_HID</a></th><td>Generate a hardware id for devices.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/lookup_area_root_id">lookup_area_root_id</a></th><td>Gives an area a root and a network_area_id</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/network_list_to_string">network_list_to_string</a></th><td>Converts a list of string's into a full network_id</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/network_string_to_list">network_string_to_list</a></th><td>Converts string into a list of network branches</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/purge_logs">purge_logs</a></th><td>Removes all station logs for the current game</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/stat_entry">stat_entry</a></th><td>Limbo network needs to be made at boot up for all error devices
+As well as the station network incase something funny goes during startup</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/transmit">transmit</a></th><td>Check if we are a list.  If so process the list</td></tr>
+            <tr><th><a href="datum/controller/subsystem/networks.html#proc/update_max_log_count">update_max_log_count</a></th><td>Updates the maximum amount of logs and purges those that go beyond that number</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/area_network_lookup"><aside class="declaration">var </aside>area_network_lookup
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 21"/></a></h3>
+        <p>Area to network, network to area list
+This is an associated list to quickly find an area using either its id or network
+Used mainly to make sure all area id's are unique even if a mapper uses the same
+area many times</p><h3 id="var/interfaces_by_hardware_id"><aside class="declaration">var </aside>interfaces_by_hardware_id
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 16"/></a></h3>
+        <p>all interfaces by their hardware address.
+Do NOT use to verify a reciver_id is valid, use the network.root_devices for that</p><h3 id="var/networks"><aside class="declaration">var </aside>networks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 25"/></a></h3>
+        <p>List of networks using their fully qualified network name.  Used for quick lookups
+of networks for sending packets</p><h3 id="var/root_networks"><aside class="declaration">var </aside>root_networks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 28"/></a></h3>
+        <p>List of the root networks starting at their root names.  Used to find and/or build
+network tress</p><h3 id="var/station_network"><aside class="declaration">var </aside>station_network
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/ntnet.html">ntnet</a>/station_root</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 11"/></a></h3>
+        <p>Legacy ntnet lookup for software.  Should be changed latter so don't rely on this
+being here.</p><h3 id="var/used_names"><aside class="declaration">var </aside>used_names
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 48"/></a></h3>
+        <p>Random name search to make sure we have unique names.
+DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOUR DOING</p><h2 id="proc">Proc Details</h2><h3 id="proc/PreInit"><aside class="parent"><a title="/datum/controller/subsystem" href="datum/controller/subsystem.html#proc/PreInit">&uarr;</a></aside>PreInit<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 53"/></a></aside>
+        </h3>
+        <p>You shouldn't need to do this.  But mapping is async and there is no guarantee that Initialize
+will run before these networks are dynamically created.  So its here.</p><h3 id="proc/_hard_create_network"><aside class="declaration">proc </aside>_hard_create_network<aside>(/list/network_tree) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L386">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 386"/></a></aside>
+        </h3>
+        <p>Hard creates a network. Helper function for create_network_simple and create_network</p>
+<p>Hard creates a using a list of branches and returns.  No error checking as it should
+of been done before this call</p>
+<p>Arguments:</p>
+<ul>
+<li>network_tree - list,text List of branches of network</li>
+</ul><h3 id="proc/add_log"><aside class="declaration">proc </aside>add_log<aside>(log_string, network, hardware_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 217"/></a></aside>
+        </h3>
+        <p>Records a message into the station logging system for the network</p>
+<p>This CAN be read in station by personal so do not use it for game debugging
+during fire.  At this point data.receiver_id has already been converted if it was a broadcast but
+is undefined in this function.  It is also dumped to normal logs but remember players can read/intercept
+these messages
+Arguments:</p>
+<ul>
+<li>log_string - message to log</li>
+<li>network - optional, It can be a ntnet or just the text equivalent</li>
+<li>hardware_id = optional, text, will look it up and return with the parent.name as well</li>
+</ul><h3 id="proc/assign_area_network_id"><aside class="declaration">proc </aside>assign_area_network_id<aside>(/<a href="area.html">area</a>/A, /<a href="datum.html">datum</a>/<a href="datum/map_template.html">map_template</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L322">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 322"/></a></aside>
+        </h3>
+        <p>Check if the area is valid and if it doesn't have a network root id.
+If we are a ruin or a shuttle, we get our own network
+if we have a template, try to get the network id from the template</p><h3 id="proc/assign_random_name"><aside class="declaration">proc </aside>assign_random_name<aside>(len, prefix, postfix) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L509">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 509"/></a></aside>
+        </h3>
+        <p>Generate a name devices</p>
+<p>Creates a randomly generated tag or name for devices or anything really
+it keeps track of a special list that makes sure no name is used more than
+once</p>
+<p>args:</p>
+<ul>
+<li>len (int)(Optional) Default=5 The length of the name</li>
+<li>prefix (string)(Optional) static text in front of the random name</li>
+<li>postfix (string)(Optional) static text in back of the random name
+Returns (string) The generated name</li>
+</ul><h3 id="proc/create_network"><aside class="declaration">proc </aside>create_network<aside>(...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L460">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 460"/></a></aside>
+        </h3>
+        <p>Checks to make sure the network is valid.  We log BOTH to mapping and telecoms
+so if your checking for network errors you can find it in mapping to (because its their fault!)
+Creates or finds a network anywhere in the world using bits of text</p>
+<p>This works the same as create_network_simple however it allows the addition
+of qualified network names.  So you can call it with a root_id and a sub
+network.  However this function WILL return null if it cannot be created
+so it should be used with error checking is involved.</p>
+<p>ex. create_network(&quot;ROOT_NETWORK&quot;, &quot;ATMOS.SCRUBBERS&quot;) -&gt; ROOT_NETWORK.ATMOS.SCRUBBERS</p>
+<p>Arguments:</p>
+<ul>
+<li>tree - List of string</li>
+</ul><h3 id="proc/create_network_simple"><aside class="declaration">proc </aside>create_network_simple<aside>(network_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L419">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 419"/></a></aside>
+        </h3>
+        <p>Creates or finds a network anywhere in the world using a fully qualified name</p>
+<p>This is the simple case finding of a network in the world.  It must take a full
+qualified network name and it will either return an existing network or build
+a new one from scratch.  We must be able to create names on the fly as there is
+no way for the map loader to tell us ahead of time what networks to create or
+use for any maps or templates.  So this thing will throw silent mapping errors
+and log them, but will always return a network for something.</p>
+<p>Arguments:</p>
+<ul>
+<li>network_id - text, Fully qualified network name</li>
+</ul><h3 id="proc/fire">fire<aside>(resumed) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 135"/></a></aside>
+        </h3>
+        <p>Used only for sending NAK/ACK and error reply's
+Check if the network_id is valid and if not send an error and return
+Check if the receiver_id is in the network.  If not send an error and return</p><h3 id="proc/get_next_HID"><aside class="declaration">proc </aside>get_next_HID<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L487">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 487"/></a></aside>
+        </h3>
+        <p>Generate a hardware id for devices.</p>
+<p>Creates a 32 bit hardware id for network devices.  This is random so masking
+the number won't make routing &quot;easier&quot; (Think Ethernet)  It does check if
+an existing device has the number but will NOT assign it as thats
+up to the collar</p>
+<p>Returns (string) The generated name</p><h3 id="proc/lookup_area_root_id"><aside class="declaration">proc </aside>lookup_area_root_id<aside>(/<a href="area.html">area</a>/A, /<a href="datum.html">datum</a>/<a href="datum/map_template.html">map_template</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L294">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 294"/></a></aside>
+        </h3>
+        <p>Gives an area a root and a network_area_id</p>
+<p>When a device is added to the network on map load, it needs to know where it is.
+So that it is added to that ruins/base's network instead of the general station network
+This way people on the station cannot just hack Charlie's doors and visa versa.  All area's
+&quot;should&quot; have this information and if not one is created from existing map tags or
+ruin template id's.  This SHOULD run before the Initialize of a atom, or the root will not
+be put in the object.area</p>
+<p>An example on what the area.network_root_id does/
+Before Init: obj.network_id = &quot;ATMOS.SCRUBBER&quot;  area.network_root_id=&quot;SS13_STATION&quot; area.network_area_id = &quot;BRIDGE&quot;
+After Init: obj.network_id = &quot;SS13_STATION.ATMOS.SCRUBBER&quot; also obj.network_id = &quot;SS13_STATION.AREA.BRIDGE&quot;</p>
+<p>Arguments:</p>
+<ul>
+<li>area - Area to modify the root id.</li>
+<li>template - optional, map_template of that area</li>
+</ul><h3 id="proc/network_list_to_string"><aside class="declaration">proc </aside>network_list_to_string<aside>(/list/tree) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L349">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 349"/></a></aside>
+        </h3>
+        <p>Converts a list of string's into a full network_id</p>
+<p>Converts a list of individual branches into a proper network id.  Validates
+individual parts to make sure they are clean.</p>
+<p>ex. list(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;) -&gt; A.B.C</p>
+<p>Arguments:</p>
+<ul>
+<li>tree - List of strings</li>
+</ul><h3 id="proc/network_string_to_list"><aside class="declaration">proc </aside>network_string_to_list<aside>(name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L369">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 369"/></a></aside>
+        </h3>
+        <p>Converts string into a list of network branches</p>
+<p>Converts a a proper network id into a list of the individual branches</p>
+<p>ex.  A.B.C -&gt; list(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;)</p>
+<p>Arguments:</p>
+<ul>
+<li>tree - List of strings</li>
+</ul><h3 id="proc/purge_logs"><aside class="declaration">proc </aside>purge_logs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L253">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 253"/></a></aside>
+        </h3>
+        <p>Removes all station logs for the current game</p><h3 id="proc/stat_entry">stat_entry<aside>(msg) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 62"/></a></aside>
+        </h3>
+        <p>Limbo network needs to be made at boot up for all error devices
+As well as the station network incase something funny goes during startup</p><h3 id="proc/transmit"><aside class="declaration">proc </aside>transmit<aside>(/<a href="datum.html">datum</a>/netdata/data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L178">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 178"/></a></aside>
+        </h3>
+        <p>Check if we are a list.  If so process the list</p><h3 id="proc/update_max_log_count"><aside class="declaration">proc </aside>update_max_log_count<aside>(lognumber) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/networks.dm#L266">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;networks.dm 266"/></a></aside>
+        </h3>
+        <p>Updates the maximum amount of logs and purges those that go beyond that number</p>
+<p>Shouldn't been needed to be run by players but maybe admins need it?
+Arguments:</p>
+<ul>
+<li>lognumber - new setting_maxlogcount count</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

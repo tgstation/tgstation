@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;storage&#x2F;portable_chem_mixer - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/storage/portable_chem_mixer.html#var">Var Details</a> - <a href="obj/item/storage/portable_chem_mixer.html#proc">Proc Details</a></header>
+<main>
+<h1>portable_chem_mixer <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/storage/portable_chem_mixer.html">storage/portable_chem_mixer</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/portable_chem_mixer.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;portable_chem_mixer.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#var/amount">amount</a></th><td>Creating an empty slot for a beaker that can be added to dispense into</td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#var/dispensable_reagents">dispensable_reagents</a></th><td>The amount of reagent that is to be dispensed currently</td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#var/show_ph">show_ph</a></th><td>List in which all currently dispensable reagents go
+If the UI has the pH meter shown</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#proc/replace_beaker">replace_beaker</a></th><td>Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently</td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#proc/update_contents">update_contents</a></th><td>Updates the contents of the portable chemical mixer</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/amount"><aside class="declaration">var </aside>amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/portable_chem_mixer.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;portable_chem_mixer.dm 14"/></a></h3>
+        <p>Creating an empty slot for a beaker that can be added to dispense into</p><h3 id="var/dispensable_reagents"><aside class="declaration">var </aside>dispensable_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/portable_chem_mixer.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;portable_chem_mixer.dm 16"/></a></h3>
+        <p>The amount of reagent that is to be dispensed currently</p><h3 id="var/show_ph"><aside class="declaration">var </aside>show_ph
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/portable_chem_mixer.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;portable_chem_mixer.dm 19"/></a></h3>
+        <p>List in which all currently dispensable reagents go
+If the UI has the pH meter shown</p><h2 id="proc">Proc Details</h2><h3 id="proc/replace_beaker"><aside class="declaration">proc </aside>replace_beaker<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/new_beaker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/portable_chem_mixer.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;portable_chem_mixer.dm 111"/></a></aside>
+        </h3>
+        <p>Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently</p>
+<p>Checks if a valid user and a valid new beaker exist and attempts to replace the current beaker in the portable chemical mixer with the one in hand. Simply places the new beaker in if no beaker is currently loaded
+Arguments:</p>
+<ul>
+<li>mob/living/user - The user who is trying to exchange beakers</li>
+<li>obj/item/reagent_containers/new_beaker - The new beaker that the user wants to put into the device</li>
+</ul><h3 id="proc/update_contents"><aside class="declaration">proc </aside>update_contents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/portable_chem_mixer.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;portable_chem_mixer.dm 60"/></a></aside>
+        </h3>
+        <p>Updates the contents of the portable chemical mixer</p>
+<p>A list of dispensable reagents is created by iterating through each source beaker in the portable chemical beaker and reading its contents</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;power&#x2F;solar - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/power/solar.html#var">Var Details</a> - <a href="obj/machinery/power/solar.html#proc">Proc Details</a></header>
+<main>
+<h1>solar <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/power/solar.html">power/solar</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/power/solar.html#var/azimuth_current">azimuth_current</a></th><td><code>[0-360)</code> degrees, which direction are we facing?</td></tr>
+            <tr><th><a href="obj/machinery/power/solar.html#var/needs_to_turn">needs_to_turn</a></th><td>do we need to turn next tick?</td></tr>
+            <tr><th><a href="obj/machinery/power/solar.html#var/needs_to_update_solar_exposure">needs_to_update_solar_exposure</a></th><td>do we need to call update_solar_exposure() next tick?</td></tr>
+            <tr><th><a href="obj/machinery/power/solar.html#var/sunfrac">sunfrac</a></th><td><code>[0-1]</code> measure of obscuration -- multipllier against power generation</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/power/solar.html#proc/occlusion_setup">occlusion_setup</a></th><td>trace towards sun to see if we're in shadow</td></tr>
+            <tr><th><a href="obj/machinery/power/solar.html#proc/update_solar_exposure">update_solar_exposure</a></th><td>calculates the fraction of the sunlight that the panel receives</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/azimuth_current"><aside class="declaration">var </aside>azimuth_current
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 21"/></a></h3>
+        <p><code>[0-360)</code> degrees, which direction are we facing?</p><h3 id="var/needs_to_turn"><aside class="declaration">var </aside>needs_to_turn
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 25"/></a></h3>
+        <p>do we need to turn next tick?</p><h3 id="var/needs_to_update_solar_exposure"><aside class="declaration">var </aside>needs_to_update_solar_exposure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 27"/></a></h3>
+        <p>do we need to call update_solar_exposure() next tick?</p><h3 id="var/sunfrac"><aside class="declaration">var </aside>sunfrac
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 19"/></a></h3>
+        <p><code>[0-1]</code> measure of obscuration -- multipllier against power generation</p><h2 id="proc">Proc Details</h2><h3 id="proc/occlusion_setup"><aside class="declaration">proc </aside>occlusion_setup<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 137"/></a></aside>
+        </h3>
+        <p>trace towards sun to see if we're in shadow</p><h3 id="proc/update_solar_exposure"><aside class="declaration">proc </aside>update_solar_exposure<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/solar.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;solar.dm 158"/></a></aside>
+        </h3>
+        <p>calculates the fraction of the sunlight that the panel receives</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define">Define Details</a></header>
+<main>
+<h1>code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/FUSION_RAD_MAX">FUSION_RAD_MAX</a></th><td>Max amount of radiation that can be emitted per reaction cycle</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/FUSION_INSTABILITY_ENDOTHERMALITY">FUSION_INSTABILITY_ENDOTHERMALITY</a></th><td>Maximum instability before the reaction goes endothermic</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/FUSION_MAXIMUM_TEMPERATURE">FUSION_MAXIMUM_TEMPERATURE</a></th><td>Maximum reachable fusion temperature</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/LIGHT_SPEED">LIGHT_SPEED</a></th><td>Speed of light, in m/s</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/PLANCK_LIGHT_CONSTANT">PLANCK_LIGHT_CONSTANT</a></th><td>Calculation between the plank constant and the lambda of the lightwave</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/CALCULATED_H2RADIUS">CALCULATED_H2RADIUS</a></th><td>Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/CALCULATED_TRITRADIUS">CALCULATED_TRITRADIUS</a></th><td>Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/VOID_CONDUCTION">VOID_CONDUCTION</a></th><td>Power conduction in the void, used to calculate the efficiency of the reaction</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/MAX_FUSION_RESEARCH">MAX_FUSION_RESEARCH</a></th><td>Max reaction point per reaction cycle</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/MIN_HEAT_VARIATION">MIN_HEAT_VARIATION</a></th><td>Min amount of allowed heat change</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/MAX_HEAT_VARIATION">MAX_HEAT_VARIATION</a></th><td>Max amount of allowed heat change</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/MAX_FUEL_USAGE">MAX_FUEL_USAGE</a></th><td>Max mole consumption per reaction cycle</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/FUSION_MOLE_THRESHOLD">FUSION_MOLE_THRESHOLD</a></th><td>Mole count required (tritium/hydrogen) to start a fusion reaction</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/INSTABILITY_GAS_POWER_FACTOR">INSTABILITY_GAS_POWER_FACTOR</a></th><td>Used to reduce the gas_power to a more useful amount</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/TOROID_VOLUME_BREAKEVEN">TOROID_VOLUME_BREAKEVEN</a></th><td>Used to calculate the toroidal_size for the instability</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/PARTICLE_CHANCE_CONSTANT">PARTICLE_CHANCE_CONSTANT</a></th><td>Constant used when calculating the chance of emitting a radioactive particle</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/METALLIC_VOID_CONDUCTIVITY">METALLIC_VOID_CONDUCTIVITY</a></th><td>Conduction of heat inside the fusion reactor</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/HIGH_EFFICIENCY_CONDUCTIVITY">HIGH_EFFICIENCY_CONDUCTIVITY</a></th><td>Conduction of heat near the external cooling loop</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/MIN_POWER_USAGE">MIN_POWER_USAGE</a></th><td>Sets the minimum amount of power the machine uses</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/DAMAGE_CAP_MULTIPLIER">DAMAGE_CAP_MULTIPLIER</a></th><td>Sets the multiplier for the damage</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/HALLUCINATION_HFR">HALLUCINATION_HFR</a></th><td>Sets the range of the hallucinations</td></tr>
+        <tr><th><a href="code/modules/atmospherics/machinery/components/fusion/hfr_defines.html#define/HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN">HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN</a></th><td>to prevent accent sounds from layering</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/CALCULATED_H2RADIUS"><aside class="declaration">#define </aside>CALCULATED_H2RADIUS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 12"/></a>
+    </h3>
+    <p>Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)</p><h3 id="define/CALCULATED_TRITRADIUS"><aside class="declaration">#define </aside>CALCULATED_TRITRADIUS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 14"/></a>
+    </h3>
+    <p>Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)</p><h3 id="define/DAMAGE_CAP_MULTIPLIER"><aside class="declaration">#define </aside>DAMAGE_CAP_MULTIPLIER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 40"/></a>
+    </h3>
+    <p>Sets the multiplier for the damage</p><h3 id="define/FUSION_INSTABILITY_ENDOTHERMALITY"><aside class="declaration">#define </aside>FUSION_INSTABILITY_ENDOTHERMALITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 4"/></a>
+    </h3>
+    <p>Maximum instability before the reaction goes endothermic</p><h3 id="define/FUSION_MAXIMUM_TEMPERATURE"><aside class="declaration">#define </aside>FUSION_MAXIMUM_TEMPERATURE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 6"/></a>
+    </h3>
+    <p>Maximum reachable fusion temperature</p><h3 id="define/FUSION_MOLE_THRESHOLD"><aside class="declaration">#define </aside>FUSION_MOLE_THRESHOLD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 26"/></a>
+    </h3>
+    <p>Mole count required (tritium/hydrogen) to start a fusion reaction</p><h3 id="define/FUSION_RAD_MAX"><aside class="declaration">#define </aside>FUSION_RAD_MAX
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 2"/></a>
+    </h3>
+    <p>Max amount of radiation that can be emitted per reaction cycle</p><h3 id="define/HALLUCINATION_HFR"><aside class="declaration">#define </aside>HALLUCINATION_HFR
+            <aside>(P)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 42"/></a>
+    </h3>
+    <p>Sets the range of the hallucinations</p><h3 id="define/HIGH_EFFICIENCY_CONDUCTIVITY"><aside class="declaration">#define </aside>HIGH_EFFICIENCY_CONDUCTIVITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 36"/></a>
+    </h3>
+    <p>Conduction of heat near the external cooling loop</p><h3 id="define/HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN"><aside class="declaration">#define </aside>HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 52"/></a>
+    </h3>
+    <p>to prevent accent sounds from layering</p><h3 id="define/INSTABILITY_GAS_POWER_FACTOR"><aside class="declaration">#define </aside>INSTABILITY_GAS_POWER_FACTOR
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 28"/></a>
+    </h3>
+    <p>Used to reduce the gas_power to a more useful amount</p><h3 id="define/LIGHT_SPEED"><aside class="declaration">#define </aside>LIGHT_SPEED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 8"/></a>
+    </h3>
+    <p>Speed of light, in m/s</p><h3 id="define/MAX_FUEL_USAGE"><aside class="declaration">#define </aside>MAX_FUEL_USAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 24"/></a>
+    </h3>
+    <p>Max mole consumption per reaction cycle</p><h3 id="define/MAX_FUSION_RESEARCH"><aside class="declaration">#define </aside>MAX_FUSION_RESEARCH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 18"/></a>
+    </h3>
+    <p>Max reaction point per reaction cycle</p><h3 id="define/MAX_HEAT_VARIATION"><aside class="declaration">#define </aside>MAX_HEAT_VARIATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 22"/></a>
+    </h3>
+    <p>Max amount of allowed heat change</p><h3 id="define/METALLIC_VOID_CONDUCTIVITY"><aside class="declaration">#define </aside>METALLIC_VOID_CONDUCTIVITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 34"/></a>
+    </h3>
+    <p>Conduction of heat inside the fusion reactor</p><h3 id="define/MIN_HEAT_VARIATION"><aside class="declaration">#define </aside>MIN_HEAT_VARIATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 20"/></a>
+    </h3>
+    <p>Min amount of allowed heat change</p><h3 id="define/MIN_POWER_USAGE"><aside class="declaration">#define </aside>MIN_POWER_USAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 38"/></a>
+    </h3>
+    <p>Sets the minimum amount of power the machine uses</p><h3 id="define/PARTICLE_CHANCE_CONSTANT"><aside class="declaration">#define </aside>PARTICLE_CHANCE_CONSTANT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 32"/></a>
+    </h3>
+    <p>Constant used when calculating the chance of emitting a radioactive particle</p><h3 id="define/PLANCK_LIGHT_CONSTANT"><aside class="declaration">#define </aside>PLANCK_LIGHT_CONSTANT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 10"/></a>
+    </h3>
+    <p>Calculation between the plank constant and the lambda of the lightwave</p><h3 id="define/TOROID_VOLUME_BREAKEVEN"><aside class="declaration">#define </aside>TOROID_VOLUME_BREAKEVEN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 30"/></a>
+    </h3>
+    <p>Used to calculate the toroidal_size for the instability</p><h3 id="define/VOID_CONDUCTION"><aside class="declaration">#define </aside>VOID_CONDUCTION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/components/fusion/hfr_defines.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;components&#x2F;fusion&#x2F;hfr_defines.dm 16"/></a>
+    </h3>
+    <p>Power conduction in the void, used to calculate the efficiency of the reaction</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

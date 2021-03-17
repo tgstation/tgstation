@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;ai_controller&#x2F;dog - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/ai_controller/dog.html#proc">Proc Details</a></header>
+<main>
+<h1>dog <aside>/<a href="datum.html">datum</a>/<a href="datum/ai_controller.html">ai_controller</a>/<a href="datum/ai_controller/dog.html">dog</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/befriend">befriend</a></th><td>Someone is being nice to us, let's make them a friend!</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/check_altclicked">check_altclicked</a></th><td>Someone alt clicked us, see if they're someone we should show the radial command menu to</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/check_point">check_point</a></th><td>Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/check_verbal_command">check_verbal_command</a></th><td>One of our friends said something, see if it's a valid command, and if so, take action</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/command_radial">command_radial</a></th><td>Show the command radial menu</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/listen_throw_land">listen_throw_land</a></th><td>A throw we were listening to has finished, see if it's in range for us to try grabbing it</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/listened_throw">listened_throw</a></th><td>Someone has thrown something, see if it's someone we care about and start listening to the thrown item so we can see if we want to fetch it when it lands</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/on_attack_hand">on_attack_hand</a></th><td>Someone's interacting with us by hand, see if they're being nice or mean</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/on_death">on_death</a></th><td>If we died, drop anything we were carrying</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/on_examined">on_examined</a></th><td>Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/set_command_mode">set_command_mode</a></th><td>Whether we got here via radial menu or a verbal command, this is where we actually process what our new command will be</td></tr>
+            <tr><th><a href="datum/ai_controller/dog.html#proc/unfriend">unfriend</a></th><td>Someone is being mean to us, take them off our friends (add actual enemies behavior later)</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/befriend"><aside class="declaration">proc </aside>befriend<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/new_friend) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 165"/></a></aside>
+        </h3>
+        <p>Someone is being nice to us, let's make them a friend!</p><h3 id="proc/check_altclicked"><aside class="declaration">proc </aside>check_altclicked<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/clicker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 206"/></a></aside>
+        </h3>
+        <p>Someone alt clicked us, see if they're someone we should show the radial command menu to</p><h3 id="proc/check_point"><aside class="declaration">proc </aside>check_point<aside>(/<a href="mob.html">mob</a>/pointing_friend, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/pointed_movable) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L289">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 289"/></a></aside>
+        </h3>
+        <p>Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)</p><h3 id="proc/check_verbal_command"><aside class="declaration">proc </aside>check_verbal_command<aside>(/<a href="mob.html">mob</a>/speaker, speech_args) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L238">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 238"/></a></aside>
+        </h3>
+        <p>One of our friends said something, see if it's a valid command, and if so, take action</p><h3 id="proc/command_radial"><aside class="declaration">proc </aside>command_radial<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/clicker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 217"/></a></aside>
+        </h3>
+        <p>Show the command radial menu</p><h3 id="proc/listen_throw_land"><aside class="declaration">proc </aside>listen_throw_land<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/thrown_thing, /<a href="datum.html">datum</a>/<a href="datum/thrownthing.html">thrownthing</a>/throwing_datum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 134"/></a></aside>
+        </h3>
+        <p>A throw we were listening to has finished, see if it's in range for us to try grabbing it</p><h3 id="proc/listened_throw"><aside class="declaration">proc </aside>listened_throw<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/carbon_thrower) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 117"/></a></aside>
+        </h3>
+        <p>Someone has thrown something, see if it's someone we care about and start listening to the thrown item so we can see if we want to fetch it when it lands</p><h3 id="proc/on_attack_hand"><aside class="declaration">proc </aside>on_attack_hand<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 147"/></a></aside>
+        </h3>
+        <p>Someone's interacting with us by hand, see if they're being nice or mean</p><h3 id="proc/on_death"><aside class="declaration">proc </aside>on_death<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/ol_yeller) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 192"/></a></aside>
+        </h3>
+        <p>If we died, drop anything we were carrying</p><h3 id="proc/on_examined"><aside class="declaration">proc </aside>on_examined<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/user, /list/examine_text) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 182"/></a></aside>
+        </h3>
+        <p>Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend</p><h3 id="proc/set_command_mode"><aside class="declaration">proc </aside>set_command_mode<aside>(/<a href="mob.html">mob</a>/commander, command) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L265">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 265"/></a></aside>
+        </h3>
+        <p>Whether we got here via radial menu or a verbal command, this is where we actually process what our new command will be</p><h3 id="proc/unfriend"><aside class="declaration">proc </aside>unfriend<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/ex_friend) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/dog/dog_controller.dm#L176">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;dog&#x2F;dog_controller.dm 176"/></a></aside>
+        </h3>
+        <p>Someone is being mean to us, take them off our friends (add actual enemies behavior later)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;ductnet - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/ductnet.html#proc">Proc Details</a></header>
+<main>
+<h1>ductnet <aside>/<a href="datum.html">datum</a>/<a href="datum/ductnet.html">ductnet</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 2"/></a></h1>
+
+<p>We handle the unity part of plumbing. We track who is connected to who.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/ductnet.html#proc/add_duct">add_duct</a></th><td>Add a duct to our network</td></tr>
+            <tr><th><a href="datum/ductnet.html#proc/add_plumber">add_plumber</a></th><td>add a plumbing object to either demanders or suppliers</td></tr>
+            <tr><th><a href="datum/ductnet.html#proc/assimilate">assimilate</a></th><td>we combine ductnets. this occurs when someone connects to seperate sets of fluid ducts</td></tr>
+            <tr><th><a href="datum/ductnet.html#proc/destroy_network">destroy_network</a></th><td>destroy the network and tell all our ducts and plumbers we are gone</td></tr>
+            <tr><th><a href="datum/ductnet.html#proc/remove_duct">remove_duct</a></th><td>Remove a duct from our network and commit suicide, because this is probably easier than to check who that duct was connected to and what part of us was lost</td></tr>
+            <tr><th><a href="datum/ductnet.html#proc/remove_plumber">remove_plumber</a></th><td>remove a plumber. we dont delete ourselves because ductnets dont persist through plumbing objects</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/add_duct"><aside class="declaration">proc </aside>add_duct<aside>(/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/duct.html">duct</a>/D) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 9"/></a></aside>
+        </h3>
+        <p>Add a duct to our network</p><h3 id="proc/add_plumber"><aside class="declaration">proc </aside>add_plumber<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/plumbing.html">plumbing</a>/P, dir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 22"/></a></aside>
+        </h3>
+        <p>add a plumbing object to either demanders or suppliers</p><h3 id="proc/assimilate"><aside class="declaration">proc </aside>assimilate<aside>(/<a href="datum.html">datum</a>/<a href="datum/ductnet.html">ductnet</a>/D) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 42"/></a></aside>
+        </h3>
+        <p>we combine ductnets. this occurs when someone connects to seperate sets of fluid ducts</p><h3 id="proc/destroy_network"><aside class="declaration">proc </aside>destroy_network<aside>(delete) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 58"/></a></aside>
+        </h3>
+        <p>destroy the network and tell all our ducts and plumbers we are gone</p><h3 id="proc/remove_duct"><aside class="declaration">proc </aside>remove_duct<aside>(/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/duct.html">duct</a>/ducting) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 15"/></a></aside>
+        </h3>
+        <p>Remove a duct from our network and commit suicide, because this is probably easier than to check who that duct was connected to and what part of us was lost</p><h3 id="proc/remove_plumber"><aside class="declaration">proc </aside>remove_plumber<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/plumbing.html">plumbing</a>/P) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ductnet.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ductnet.dm 32"/></a></aside>
+        </h3>
+        <p>remove a plumber. we dont delete ourselves because ductnets dont persist through plumbing objects</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;materials.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/materials.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/materials.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/materials.html#define/MAT_CATEGORY_ORE">MAT_CATEGORY_ORE</a></th><td>Is the material from an ore? currently unused but exists atm for categorizations sake</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MAT_CATEGORY_RIGID">MAT_CATEGORY_RIGID</a></th><td>Hard materials, such as iron or silver</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MAT_CATEGORY_ITEM_MATERIAL">MAT_CATEGORY_ITEM_MATERIAL</a></th><td>Materials that can be used to craft items</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MAT_CATEGORY_BASE_RECIPES">MAT_CATEGORY_BASE_RECIPES</a></th><td>Use this flag on TRUE if you want the basic recipes</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATERIAL_INIT_MAPLOAD">MATERIAL_INIT_MAPLOAD</a></th><td>Used to make a material initialize at roundstart.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATERIAL_INIT_BESPOKE">MATERIAL_INIT_BESPOKE</a></th><td>Used to make a material type able to be instantiated on demand after roundstart.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATCONTAINER_EXAMINE">MATCONTAINER_EXAMINE</a></th><td>If the container shows the amount of contained materials on examine.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATCONTAINER_NO_INSERT">MATCONTAINER_NO_INSERT</a></th><td>If the container cannot have materials inserted through attackby().</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATCONTAINER_ANY_INTENT">MATCONTAINER_ANY_INTENT</a></th><td>if the user can insert mats into the container despite the intent.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATCONTAINER_SILENT">MATCONTAINER_SILENT</a></th><td>if the user won't receive a warning when attacking the container with an unallowed item.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_ALLOYS">BREAKDOWN_ALLOYS</a></th><td>Can reduce an alloy into its component materials.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_INCLUDE_ALCHEMY">BREAKDOWN_INCLUDE_ALCHEMY</a></th><td>Makes the material composition include transmuted materials objects</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_LATHE">BREAKDOWN_FLAGS_LATHE</a></th><td>Breakdown flags used by techfabs and circuit printers.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_ORM">BREAKDOWN_FLAGS_ORM</a></th><td>Breakdown flags used by the ORM.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_RECYCLER">BREAKDOWN_FLAGS_RECYCLER</a></th><td>Breakdown flags used by the recycler.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_SHEETIFIER">BREAKDOWN_FLAGS_SHEETIFIER</a></th><td>Breakdown flags used by the sheetifier.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_ORE_PROCESSOR">BREAKDOWN_FLAGS_ORE_PROCESSOR</a></th><td>Breakdown flags used by the ore processor.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_DRONE_DISPENSER">BREAKDOWN_FLAGS_DRONE_DISPENSER</a></th><td>Breakdown flags used by the drone dispenser.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/BREAKDOWN_FLAGS_EXPORT">BREAKDOWN_FLAGS_EXPORT</a></th><td>Breakdown flags used when exporting materials.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATERIAL_COLOR">MATERIAL_COLOR</a></th><td>Flag for atoms, this flag ensures it isn't re-colored by materials. Useful for snowflake icons such as default toolboxes.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/GET_MATERIAL_REF">GET_MATERIAL_REF</a></th><td>Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATERIAL_SLOWDOWN_PLASTEEL">MATERIAL_SLOWDOWN_PLASTEEL</a></th><td>The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of plasteel.</td></tr>
+        <tr><th><a href="code/__DEFINES/materials.html#define/MATERIAL_SLOWDOWN_ALIEN_ALLOY">MATERIAL_SLOWDOWN_ALIEN_ALLOY</a></th><td>The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of alien alloy.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BREAKDOWN_ALLOYS"><aside class="declaration">#define </aside>BREAKDOWN_ALLOYS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 30"/></a>
+    </h3>
+    <p>Can reduce an alloy into its component materials.</p><h3 id="define/BREAKDOWN_FLAGS_DRONE_DISPENSER"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_DRONE_DISPENSER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 44"/></a>
+    </h3>
+    <p>Breakdown flags used by the drone dispenser.</p><h3 id="define/BREAKDOWN_FLAGS_EXPORT"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_EXPORT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 46"/></a>
+    </h3>
+    <p>Breakdown flags used when exporting materials.</p><h3 id="define/BREAKDOWN_FLAGS_LATHE"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_LATHE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 34"/></a>
+    </h3>
+    <p>Breakdown flags used by techfabs and circuit printers.</p><h3 id="define/BREAKDOWN_FLAGS_ORE_PROCESSOR"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_ORE_PROCESSOR
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 42"/></a>
+    </h3>
+    <p>Breakdown flags used by the ore processor.</p><h3 id="define/BREAKDOWN_FLAGS_ORM"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_ORM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 36"/></a>
+    </h3>
+    <p>Breakdown flags used by the ORM.</p><h3 id="define/BREAKDOWN_FLAGS_RECYCLER"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_RECYCLER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 38"/></a>
+    </h3>
+    <p>Breakdown flags used by the recycler.</p><h3 id="define/BREAKDOWN_FLAGS_SHEETIFIER"><aside class="declaration">#define </aside>BREAKDOWN_FLAGS_SHEETIFIER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 40"/></a>
+    </h3>
+    <p>Breakdown flags used by the sheetifier.</p><h3 id="define/BREAKDOWN_INCLUDE_ALCHEMY"><aside class="declaration">#define </aside>BREAKDOWN_INCLUDE_ALCHEMY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 32"/></a>
+    </h3>
+    <p>Makes the material composition include transmuted materials objects</p><h3 id="define/GET_MATERIAL_REF"><aside class="declaration">#define </aside>GET_MATERIAL_REF
+            <aside>(arguments ...)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 55"/></a>
+    </h3>
+    <p>Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.</p><h3 id="define/MATCONTAINER_ANY_INTENT"><aside class="declaration">#define </aside>MATCONTAINER_ANY_INTENT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 24"/></a>
+    </h3>
+    <p>if the user can insert mats into the container despite the intent.</p><h3 id="define/MATCONTAINER_EXAMINE"><aside class="declaration">#define </aside>MATCONTAINER_EXAMINE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 20"/></a>
+    </h3>
+    <p>If the container shows the amount of contained materials on examine.</p><h3 id="define/MATCONTAINER_NO_INSERT"><aside class="declaration">#define </aside>MATCONTAINER_NO_INSERT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 22"/></a>
+    </h3>
+    <p>If the container cannot have materials inserted through attackby().</p><h3 id="define/MATCONTAINER_SILENT"><aside class="declaration">#define </aside>MATCONTAINER_SILENT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 26"/></a>
+    </h3>
+    <p>if the user won't receive a warning when attacking the container with an unallowed item.</p><h3 id="define/MATERIAL_COLOR"><aside class="declaration">#define </aside>MATERIAL_COLOR
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 49"/></a>
+    </h3>
+    <p>Flag for atoms, this flag ensures it isn't re-colored by materials. Useful for snowflake icons such as default toolboxes.</p><h3 id="define/MATERIAL_INIT_BESPOKE"><aside class="declaration">#define </aside>MATERIAL_INIT_BESPOKE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 16"/></a>
+    </h3>
+    <p>Used to make a material type able to be instantiated on demand after roundstart.</p><h3 id="define/MATERIAL_INIT_MAPLOAD"><aside class="declaration">#define </aside>MATERIAL_INIT_MAPLOAD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 14"/></a>
+    </h3>
+    <p>Used to make a material initialize at roundstart.</p><h3 id="define/MATERIAL_SLOWDOWN_ALIEN_ALLOY"><aside class="declaration">#define </aside>MATERIAL_SLOWDOWN_ALIEN_ALLOY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 65"/></a>
+    </h3>
+    <p>The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of alien alloy.</p><h3 id="define/MATERIAL_SLOWDOWN_PLASTEEL"><aside class="declaration">#define </aside>MATERIAL_SLOWDOWN_PLASTEEL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 63"/></a>
+    </h3>
+    <p>The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of plasteel.</p><h3 id="define/MAT_CATEGORY_BASE_RECIPES"><aside class="declaration">#define </aside>MAT_CATEGORY_BASE_RECIPES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 11"/></a>
+    </h3>
+    <p>Use this flag on TRUE if you want the basic recipes</p><h3 id="define/MAT_CATEGORY_ITEM_MATERIAL"><aside class="declaration">#define </aside>MAT_CATEGORY_ITEM_MATERIAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 8"/></a>
+    </h3>
+    <p>Materials that can be used to craft items</p><h3 id="define/MAT_CATEGORY_ORE"><aside class="declaration">#define </aside>MAT_CATEGORY_ORE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 2"/></a>
+    </h3>
+    <p>Is the material from an ore? currently unused but exists atm for categorizations sake</p><h3 id="define/MAT_CATEGORY_RIGID"><aside class="declaration">#define </aside>MAT_CATEGORY_RIGID
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/materials.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;materials.dm 5"/></a>
+    </h3>
+    <p>Hard materials, such as iron or silver</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

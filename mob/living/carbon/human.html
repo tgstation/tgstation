@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/carbon/human.html#var">Var Details</a> - <a href="mob/living/carbon/human.html#proc">Proc Details</a></header>
+<main>
+<h1>human <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defines.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 2"/></a></h1>
+
+<p>Any humanoid (non-Xeno) mob, such as humans, plasmamen, lizards.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/blood_in_hands">blood_in_hands</a></th><td>How many &quot;units of blood&quot; we have on our hands</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/body_type">body_type</a></th><td>For agendered spessmen, which body type to use</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/can_ride_typecache">can_ride_typecache</a></th><td>What types of mobs are allowed to ride/buckle to this mob</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/coretemperature">coretemperature</a></th><td>The core temperature of the human compaired to the skin temp of the body</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/hal_screwydoll">hal_screwydoll</a></th><td>human specific screwyhuds from hallucinations (define key (bodypart) to int value (severity)) - see /datum/hallucination/fake_health_doll</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#var/heat_exposure_stacks">heat_exposure_stacks</a></th><td>Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/adjust_coretemperature">adjust_coretemperature</a></th><td>Adjust the core temperature of a mob</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/apply_damage">apply_damage</a></th><td>depending on the species, it will run the corresponding apply_damage code there</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/canUseHUD">canUseHUD</a></th><td>HUDs</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/check_reflect">check_reflect</a></th><td>Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/clean_face">clean_face</a></th><td>Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/clean_lips">clean_lips</a></th><td>A wrapper for <a href="mob/living/carbon/human.html#proc/update_lips" title="/mob/living/carbon/human">mob/living/carbon/human/proc/update_lips</a> that tells us if there were lip styles to change</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/clothingonpart">clothingonpart</a></th><td>Get all the clothing on a specific body part</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/do_cpr">do_cpr</a></th><td>Performs CPR on the target after a delay.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/electrocute_act">electrocute_act</a></th><td>Calculates the siemens coeff based on clothing and species, can also restart hearts.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/fan_hud_set_fandom">fan_hud_set_fandom</a></th><td>FAN HUDs! For identifying other fans on-sight.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/format_scars">format_scars</a></th><td>For use formatting all of the scars this human has for saving for persistent scarring, returns a string with all current scars/missing limb amputation scars for saving or loading purposes</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/generate_death_examine_text">generate_death_examine_text</a></th><td>Returns death message for mob examine text</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/get_body_temp_normal">get_body_temp_normal</a></th><td>get_body_temperature Returns the body temperature with any modifications applied</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/get_equipped_items">get_equipped_items</a></th><td>Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/handle_blood">handle_blood</a></th><td>BLOOD SYSTEM</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/handle_environment">handle_environment</a></th><td>Environment handlers for species</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/handle_fire">handle_fire</a></th><td>FIRE CODE</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/increment_scar_slot">increment_scar_slot</a></th><td>When we're joining the game in [/mob/dead/new_player/proc/create_character], we increment our scar slot then store the slot in our mind datum.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/load_persistent_scars">load_persistent_scars</a></th><td>Read all the scars we have for the designated character/scar slots, verify they're good/dump them if they're old/wrong format, create them on the user, and write the scars that passed muster back to the file</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/load_scar">load_scar</a></th><td>Takes a single scar from the persistent scar loader and recreates it from the saved data</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/save_persistent_scars">save_persistent_scars</a></th><td>Save any scars we have to our designated slot, then write our current slot so that the next time we call <a href="mob/living/carbon/human.html#proc/increment_scar_slot" title="/mob/living/carbon/human">/mob/living/carbon/human/proc/increment_scar_slot</a> (the next round we join), we'll be there</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/sec_hud_set_ID">sec_hud_set_ID</a></th><td>Security HUDs! Basic mode shows only the job.</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/singularity_act">singularity_act</a></th><td>Overrides the point value that the mob is worth</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/smart_equip_targeted">smart_equip_targeted</a></th><td>take the most recent item out of a slot or place held item in a slot</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/something_horrible">something_horrible</a></th><td>DNA HELPER-PROCS</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/update_lips">update_lips</a></th><td>Used to update the makeup on a human and apply/remove lipstick traits, then store/unstore them on the head object in case it gets severed</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/wash">wash</a></th><td>Called when this human should be washed</td></tr>
+            <tr><th><a href="mob/living/carbon/human.html#proc/wash_hands">wash_hands</a></th><td>Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blood_in_hands"><aside class="declaration">var </aside>blood_in_hands
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defines.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 70"/></a></h3>
+        <p>How many &quot;units of blood&quot; we have on our hands</p><h3 id="var/body_type"><aside class="declaration">var </aside>body_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defines.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 67"/></a></h3>
+        <p>For agendered spessmen, which body type to use</p><h3 id="var/can_ride_typecache"><aside class="declaration">var </aside>can_ride_typecache
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defines.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 60"/></a></h3>
+        <p>What types of mobs are allowed to ride/buckle to this mob</p><h3 id="var/coretemperature"><aside class="declaration">var </aside>coretemperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defines.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 73"/></a></h3>
+        <p>The core temperature of the human compaired to the skin temp of the body</p><h3 id="var/hal_screwydoll"><aside class="declaration">var </aside>hal_screwydoll
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 2"/></a></h3>
+        <p>human specific screwyhuds from hallucinations (define key (bodypart) to int value (severity)) - see /datum/hallucination/fake_health_doll</p><h3 id="var/heat_exposure_stacks"><aside class="declaration">var </aside>heat_exposure_stacks
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defines.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defines.dm 76"/></a></h3>
+        <p>Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.</p><h2 id="proc">Proc Details</h2><h3 id="proc/adjust_coretemperature"><aside class="declaration">proc </aside>adjust_coretemperature<aside>(amount, min_temp, max_temp) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/life.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;life.dm 130"/></a></aside>
+        </h3>
+        <p>Adjust the core temperature of a mob</p>
+<p>vars:</p>
+<ul>
+<li>amount The amount of degrees to change body temperature by</li>
+<li>min_temp (optional) The minimum body temperature after adjustment</li>
+<li>max_temp (optional) The maximum body temperature after adjustment</li>
+</ul><h3 id="proc/apply_damage"><aside class="parent"><a title="/mob/living" href="mob/living.html#proc/apply_damage">&uarr;</a></aside>apply_damage<aside>(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/damage_procs.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;damage_procs.dm 3"/></a></aside>
+        </h3>
+        <p>depending on the species, it will run the corresponding apply_damage code there</p><h3 id="proc/canUseHUD"><aside class="declaration">proc </aside>canUseHUD<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L522">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 522"/></a></aside>
+        </h3>
+        <p>HUDs</p><h3 id="proc/check_reflect"><aside class="declaration">proc </aside>check_reflect<aside>(def_zone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defense.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defense.dm 104"/></a></aside>
+        </h3>
+        <p>Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object</p><h3 id="proc/clean_face"><aside class="declaration">proc </aside>clean_face<aside>(/<a href="datum.html">datum</a>/source, clean_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L761">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 761"/></a></aside>
+        </h3>
+        <p>Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal</p><h3 id="proc/clean_lips"><aside class="declaration">proc </aside>clean_lips<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L752">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 752"/></a></aside>
+        </h3>
+        <p>A wrapper for <a href="mob/living/carbon/human.html#proc/update_lips" title="/mob/living/carbon/human">mob/living/carbon/human/proc/update_lips</a> that tells us if there were lip styles to change</p><h3 id="proc/clothingonpart"><aside class="declaration">proc </aside>clothingonpart<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a>/def_zone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defense.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defense.dm 39"/></a></aside>
+        </h3>
+        <p>Get all the clothing on a specific body part</p><h3 id="proc/do_cpr"><aside class="declaration">proc </aside>do_cpr<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L641">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 641"/></a></aside>
+        </h3>
+        <p>Performs CPR on the target after a delay.</p><h3 id="proc/electrocute_act"><aside class="parent"><a title="/mob/living/carbon" href="mob/living/carbon.html#proc/electrocute_act">&uarr;</a></aside>electrocute_act<aside>(shock_damage, source, siemens_coeff, flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defense.dm#L458">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defense.dm 458"/></a></aside>
+        </h3>
+        <p>Calculates the siemens coeff based on clothing and species, can also restart hearts.</p><h3 id="proc/fan_hud_set_fandom"><aside class="declaration">proc </aside>fan_hud_set_fandom<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/data_huds.dm#L222">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;data_huds.dm 222"/></a></aside>
+        </h3>
+        <p>FAN HUDs! For identifying other fans on-sight.</p><h3 id="proc/format_scars"><aside class="declaration">proc </aside>format_scars<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 143"/></a></aside>
+        </h3>
+        <p>For use formatting all of the scars this human has for saving for persistent scarring, returns a string with all current scars/missing limb amputation scars for saving or loading purposes</p><h3 id="proc/generate_death_examine_text"><aside class="declaration">proc </aside>generate_death_examine_text<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L223">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 223"/></a></aside>
+        </h3>
+        <p>Returns death message for mob examine text</p><h3 id="proc/get_body_temp_normal"><aside class="parent"><a title="/mob/living" href="mob/living.html#proc/get_body_temp_normal">&uarr;</a></aside>get_body_temp_normal<aside>(apply_change) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/life.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;life.dm 142"/></a></aside>
+        </h3>
+        <p>get_body_temperature Returns the body temperature with any modifications applied</p>
+<p>This applies the result from proc/get_body_temp_normal_change() against the bodytemp_normal
+for the species and returns the result</p>
+<p>arguments:</p>
+<ul>
+<li>apply_change (optional) Default True This applies the changes to body temperature normal</li>
+</ul><h3 id="proc/get_equipped_items"><aside class="parent"><a title="/mob/living" href="mob/living.html#proc/get_equipped_items">&uarr;</a></aside>get_equipped_items<aside>(include_pockets) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/inventory.dm#L350">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;inventory.dm 350"/></a></aside>
+        </h3>
+        <p>Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)</p>
+<p>Argument(s):</p>
+<ul>
+<li>Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list</li>
+</ul><h3 id="proc/handle_blood">handle_blood<aside>(delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/blood.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;blood.dm 8"/></a></aside>
+        </h3>
+        <p>BLOOD SYSTEM</p><h3 id="proc/handle_environment"><aside class="parent"><a title="/mob/living/carbon" href="mob/living/carbon.html#proc/handle_environment">&uarr;</a></aside>handle_environment<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/environment, delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/life.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;life.dm 115"/></a></aside>
+        </h3>
+        <p>Environment handlers for species</p><h3 id="proc/handle_fire">handle_fire<aside>(delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/life.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;life.dm 148"/></a></aside>
+        </h3>
+        <p>FIRE CODE</p><h3 id="proc/increment_scar_slot"><aside class="declaration">proc </aside>increment_scar_slot<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 126"/></a></aside>
+        </h3>
+        <p>When we're joining the game in [/mob/dead/new_player/proc/create_character], we increment our scar slot then store the slot in our mind datum.</p><h3 id="proc/load_persistent_scars"><aside class="declaration">proc </aside>load_persistent_scars<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 172"/></a></aside>
+        </h3>
+        <p>Read all the scars we have for the designated character/scar slots, verify they're good/dump them if they're old/wrong format, create them on the user, and write the scars that passed muster back to the file</p><h3 id="proc/load_scar"><aside class="declaration">proc </aside>load_scar<aside>(scar_line, specified_char_index) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 158"/></a></aside>
+        </h3>
+        <p>Takes a single scar from the persistent scar loader and recreates it from the saved data</p><h3 id="proc/save_persistent_scars"><aside class="declaration">proc </aside>save_persistent_scars<aside>(nuke) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_helpers.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_helpers.dm 198"/></a></aside>
+        </h3>
+        <p>Save any scars we have to our designated slot, then write our current slot so that the next time we call <a href="mob/living/carbon/human.html#proc/increment_scar_slot" title="/mob/living/carbon/human">/mob/living/carbon/human/proc/increment_scar_slot</a> (the next round we join), we'll be there</p><h3 id="proc/sec_hud_set_ID"><aside class="declaration">proc </aside>sec_hud_set_ID<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/data_huds.dm#L240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;data_huds.dm 240"/></a></aside>
+        </h3>
+        <p>Security HUDs! Basic mode shows only the job.</p><h3 id="proc/singularity_act"><aside class="parent"><a title="/mob/living" href="mob/living.html#proc/singularity_act">&uarr;</a></aside>singularity_act<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human_defense.dm#L647">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human_defense.dm 647"/></a></aside>
+        </h3>
+        <p>Overrides the point value that the mob is worth</p><h3 id="proc/smart_equip_targeted"><aside class="declaration">proc </aside>smart_equip_targeted<aside>(slot_type, slot_item_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/inventory.dm#L312">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;inventory.dm 312"/></a></aside>
+        </h3>
+        <p>take the most recent item out of a slot or place held item in a slot</p><h3 id="proc/something_horrible"><aside class="declaration">proc </aside>something_horrible<aside>(ignore_stability) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/dna.dm#L585">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;dna.dm 585"/></a></aside>
+        </h3>
+        <p>DNA HELPER-PROCS</p><h3 id="proc/update_lips"><aside class="declaration">proc </aside>update_lips<aside>(new_style, new_colour, apply_trait) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L736">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 736"/></a></aside>
+        </h3>
+        <p>Used to update the makeup on a human and apply/remove lipstick traits, then store/unstore them on the head object in case it gets severed</p><h3 id="proc/wash"><aside class="parent"><a title="/atom" href="atom.html#proc/wash">&uarr;</a></aside>wash<aside>(clean_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L777">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 777"/></a></aside>
+        </h3>
+        <p>Called when this human should be washed</p><h3 id="proc/wash_hands"><aside class="declaration">proc </aside>wash_hands<aside>(clean_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/human.dm#L719">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;human.dm 719"/></a></aside>
+        </h3>
+        <p>Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.</p>
+<p>Returns false if we couldn't wash our hands due to them being obscured, otherwise true</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;atom&#x2F;movable - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="atom/movable.html#var">Var Details</a> - <a href="atom/movable.html#proc">Proc Details</a></header>
+<main>
+<h1>movable <aside>/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/(builtins)#L1">
+        <img src="git.png" width="16" height="16" title="(builtins) 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="atom/movable.html#var/affected_dynamic_lights">affected_dynamic_lights</a></th><td>Lazylist to keep track on the sources of illumination.</td></tr>
+            <tr><th><a href="atom/movable.html#var/affecting_dynamic_lumi">affecting_dynamic_lumi</a></th><td>Highest-intensity light affecting us, which determines our visibility.</td></tr>
+            <tr><th><a href="atom/movable.html#var/blocks_emissive">blocks_emissive</a></th><td>Either FALSE, <a href="code/__DEFINES/lighting.html#define/EMISSIVE_BLOCK_GENERIC" title="EMISSIVE_BLOCK_GENERIC">EMISSIVE_BLOCK_GENERIC</a>, or <a href="code/__DEFINES/lighting.html#define/EMISSIVE_BLOCK_UNIQUE" title="EMISSIVE_BLOCK_UNIQUE">EMISSIVE_BLOCK_UNIQUE</a></td></tr>
+            <tr><th><a href="atom/movable.html#var/buckle_lying">buckle_lying</a></th><td>Bed-like behaviour, forces mob.lying = buckle_lying if not set to <a href="code/__DEFINES/misc.html#define/NO_BUCKLE_LYING" title="NO_BUCKLE_LYING">NO_BUCKLE_LYING</a>.</td></tr>
+            <tr><th><a href="atom/movable.html#var/buckle_prevents_pull">buckle_prevents_pull</a></th><td>Whether things buckled to this atom can be pulled while they're buckled</td></tr>
+            <tr><th><a href="atom/movable.html#var/buckle_requires_restraints">buckle_requires_restraints</a></th><td>Require people to be handcuffed before being able to buckle. eg: pipes</td></tr>
+            <tr><th><a href="atom/movable.html#var/buckled_mobs">buckled_mobs</a></th><td>The mobs currently buckled to this atom</td></tr>
+            <tr><th><a href="atom/movable.html#var/can_be_unanchored">can_be_unanchored</a></th><td>Used for the calculate_adjacencies proc for icon smoothing.</td></tr>
+            <tr><th><a href="atom/movable.html#var/can_buckle">can_buckle</a></th><td>Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE</td></tr>
+            <tr><th><a href="atom/movable.html#var/demo_last_loc">demo_last_loc</a></th><td>Last location of the atom for demo recording purposes</td></tr>
+            <tr><th><a href="atom/movable.html#var/em_block">em_block</a></th><td>Internal holder for emissive blocker object, do not use directly use blocks_emissive</td></tr>
+            <tr><th><a href="atom/movable.html#var/generic_canpass">generic_canpass</a></th><td>If false makes <a href="atom.html#proc/CanPass" title="/atom">CanPass</a> call <a href="atom/movable.html#proc/CanPassThrough" title="/atom/movable">CanPassThrough</a> on this type instead of using default behaviour</td></tr>
+            <tr><th><a href="atom/movable.html#var/max_buckled_mobs">max_buckled_mobs</a></th><td>The maximum number of mob/livings allowed to be buckled to this atom at once</td></tr>
+            <tr><th><a href="atom/movable.html#var/movement_type">movement_type</a></th><td>In case you have multiple types, you automatically use the most useful one.
+IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.</td></tr>
+            <tr><th><a href="atom/movable.html#var/pass_flags">pass_flags</a></th><td>Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.</td></tr>
+            <tr><th><a href="atom/movable.html#var/set_dir_on_move">set_dir_on_move</a></th><td>Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.</td></tr>
+            <tr><th><a href="atom/movable.html#var/tk_throw_range">tk_throw_range</a></th><td>Max range this atom can be thrown via telekinesis</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="atom/movable.html#proc/CanPassThrough">CanPassThrough</a></th><td>Returns true or false to allow src to move through the blocker, mover has final say</td></tr>
+            <tr><th><a href="atom/movable.html#proc/CanReach">CanReach</a></th><td>A backwards depth-limited breadth-first-search to see if the target is
+logically &quot;in&quot; anything adjacent to us.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/Process_Spacemove">Process_Spacemove</a></th><td>Called whenever an object moves and by mobs when they attempt to move themselves through space
+And when an object or action applies a force on src, see <a href="atom/movable.html#proc/newtonian_move" title="/atom/movable">newtonian_move</a></td></tr>
+            <tr><th><a href="atom/movable.html#proc/add_blocked_language">add_blocked_language</a></th><td>Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/admin_teleport">admin_teleport</a></th><td>Proc to hook user-enacted teleporting behavior and keep logging of the event.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/attacked_by">attacked_by</a></th><td>Called from <a href="obj/item.html#proc/attack_obj" title="/obj/item">/obj/item/proc/attack_obj</a> and <a href="obj/item.html#proc/attack" title="/obj/item">/obj/item/proc/attack</a> if the attack succeeds</td></tr>
+            <tr><th><a href="atom/movable.html#proc/become_area_sensitive">become_area_sensitive</a></th><td>See traits.dm. Use this in place of ADD_TRAIT.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/buckle_mob">buckle_mob</a></th><td>Set a mob as buckled to src</td></tr>
+            <tr><th><a href="atom/movable.html#proc/can_speak_language">can_speak_language</a></th><td>Checks if atom can speak the language.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/copy_languages">copy_languages</a></th><td>Copies all languages into the supplied atom/language holder. Source should be overridden when you
+do not want the language overwritten by later atom updates or want to avoid blocked languages.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/could_speak_language">could_speak_language</a></th><td>Returns the result of tongue specific limitations on spoken languages.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/deadchat_plays">deadchat_plays</a></th><td>Adds the deadchat_plays component to this atom with simple movement commands.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/get_language_holder">get_language_holder</a></th><td>Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/get_random_spoken_language">get_random_spoken_language</a></th><td>Gets a random spoken language, useful for forced speech and such.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/get_random_understood_language">get_random_understood_language</a></th><td>Gets a random understood language, useful for hallucinations and such.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/get_selected_language">get_selected_language</a></th><td>Returns selected language, if it can be spoken, or finds, sets and returns a new selected language if possible.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/grant_all_languages">grant_all_languages</a></th><td>Grants every language.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/grant_language">grant_language</a></th><td>Grants the supplied language and sets omnitongue true.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/has_buckled_mobs">has_buckled_mobs</a></th><td>Returns TRUE if there are mobs buckled to this atom and FALSE otherwise</td></tr>
+            <tr><th><a href="atom/movable.html#proc/has_language">has_language</a></th><td>Checks if atom has the language. If spoken is true, only checks if atom can speak the language.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/is_buckle_possible">is_buckle_possible</a></th><td>Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/is_user_buckle_possible">is_user_buckle_possible</a></th><td>Simple helper proc that runs a suite of checks to test whether it is possible or not for user to buckle target mob to src.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/keybind_face_direction">keybind_face_direction</a></th><td>A wrapper for setDir that should only be able to fail by living mobs.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/mouse_buckle_handling">mouse_buckle_handling</a></th><td>Does some typechecks and then calls user_buckle_mob</td></tr>
+            <tr><th><a href="atom/movable.html#proc/newtonian_move">newtonian_move</a></th><td>Only moves the object if it's under no gravity</td></tr>
+            <tr><th><a href="atom/movable.html#proc/on_enter_storage">on_enter_storage</a></th><td>called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/on_exit_storage">on_exit_storage</a></th><td>called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/point_at">point_at</a></th><td>Point at an atom</td></tr>
+            <tr><th><a href="atom/movable.html#proc/relay_container_resist_act">relay_container_resist_act</a></th><td>called when a mob resists while inside a container that is itself inside something.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/remove_all_languages">remove_all_languages</a></th><td>Removes every language and sets omnitongue false.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/remove_blocked_language">remove_blocked_language</a></th><td>Removes a language from the blocked language list.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/remove_language">remove_language</a></th><td>Removes a single language.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/setGrabState">setGrabState</a></th><td>Updates the grab state of the movable</td></tr>
+            <tr><th><a href="atom/movable.html#proc/set_anchored">set_anchored</a></th><td>Sets the anchored var and returns if it was sucessfully changed or not.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/set_light_range_power_color">set_light_range_power_color</a></th><td>Helper to change several lighting overlay settings.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/set_pulledby">set_pulledby</a></th><td>Reports the event of the change in value of the pulledby variable.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/shuttleRotate">shuttleRotate</a></th><td>Base /atom/movable proc</td></tr>
+            <tr><th><a href="atom/movable.html#proc/throw_at">throw_at</a></th><td>If this returns FALSE then callback will not be called.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/unbuckle_all_mobs">unbuckle_all_mobs</a></th><td>Call <a href="atom/movable.html#proc/unbuckle_mob" title="/atom/movable">/atom/movable/proc/unbuckle_mob</a> for all buckled mobs</td></tr>
+            <tr><th><a href="atom/movable.html#proc/unbuckle_mob">unbuckle_mob</a></th><td>Set a mob as unbuckled from src</td></tr>
+            <tr><th><a href="atom/movable.html#proc/update_atom_languages">update_atom_languages</a></th><td>Empties out the atom specific languages and updates them according to the current atoms language holder.
+As a side effect, it also creates missing language holders in the process.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/update_dynamic_luminosity">update_dynamic_luminosity</a></th><td>Keeps track of the sources of dynamic luminosity and updates our visibility with the highest.</td></tr>
+            <tr><th><a href="atom/movable.html#proc/user_buckle_mob">user_buckle_mob</a></th><td>Handles a mob buckling another mob to src and sends a visible_message</td></tr>
+            <tr><th><a href="atom/movable.html#proc/user_unbuckle_mob">user_unbuckle_mob</a></th><td>Handles a user unbuckling a mob from src and sends a visible_message</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/affected_dynamic_lights"><aside class="declaration">var </aside>affected_dynamic_lights
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 69"/></a></h3>
+        <p>Lazylist to keep track on the sources of illumination.</p><h3 id="var/affecting_dynamic_lumi"><aside class="declaration">var </aside>affecting_dynamic_lumi
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 71"/></a></h3>
+        <p>Highest-intensity light affecting us, which determines our visibility.</p><h3 id="var/blocks_emissive"><aside class="declaration">var </aside>blocks_emissive
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 61"/></a></h3>
+        <p>Either FALSE, <a href="code/__DEFINES/lighting.html#define/EMISSIVE_BLOCK_GENERIC" title="EMISSIVE_BLOCK_GENERIC">EMISSIVE_BLOCK_GENERIC</a>, or <a href="code/__DEFINES/lighting.html#define/EMISSIVE_BLOCK_UNIQUE" title="EMISSIVE_BLOCK_UNIQUE">EMISSIVE_BLOCK_UNIQUE</a></p><h3 id="var/buckle_lying"><aside class="declaration">var </aside>buckle_lying
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 5"/></a></h3>
+        <p>Bed-like behaviour, forces mob.lying = buckle_lying if not set to <a href="code/__DEFINES/misc.html#define/NO_BUCKLE_LYING" title="NO_BUCKLE_LYING">NO_BUCKLE_LYING</a>.</p><h3 id="var/buckle_prevents_pull"><aside class="declaration">var </aside>buckle_prevents_pull
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 13"/></a></h3>
+        <p>Whether things buckled to this atom can be pulled while they're buckled</p><h3 id="var/buckle_requires_restraints"><aside class="declaration">var </aside>buckle_requires_restraints
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 7"/></a></h3>
+        <p>Require people to be handcuffed before being able to buckle. eg: pipes</p><h3 id="var/buckled_mobs"><aside class="declaration">var </aside>buckled_mobs
+            <aside>&ndash; /list/mob/living</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 9"/></a></h3>
+        <p>The mobs currently buckled to this atom</p><h3 id="var/can_be_unanchored"><aside class="declaration">var </aside>can_be_unanchored
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 66"/></a></h3>
+        <p>Used for the calculate_adjacencies proc for icon smoothing.</p><h3 id="var/can_buckle"><aside class="declaration">var </aside>can_buckle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 3"/></a></h3>
+        <p>Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE</p><h3 id="var/demo_last_loc"><aside class="declaration">var </aside>demo_last_loc
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 58"/></a></h3>
+        <p>Last location of the atom for demo recording purposes</p><h3 id="var/em_block"><aside class="declaration">var </aside>em_block
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/emissive_blocker.html">emissive_blocker</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 63"/></a></h3>
+        <p>Internal holder for emissive blocker object, do not use directly use blocks_emissive</p><h3 id="var/generic_canpass"><aside class="declaration">var </aside>generic_canpass
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 34"/></a></h3>
+        <p>If false makes <a href="atom.html#proc/CanPass" title="/atom">CanPass</a> call <a href="atom/movable.html#proc/CanPassThrough" title="/atom/movable">CanPassThrough</a> on this type instead of using default behaviour</p><h3 id="var/max_buckled_mobs"><aside class="declaration">var </aside>max_buckled_mobs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 11"/></a></h3>
+        <p>The maximum number of mob/livings allowed to be buckled to this atom at once</p><h3 id="var/movement_type"><aside class="declaration">var </aside>movement_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 47"/></a></h3>
+        <p>In case you have multiple types, you automatically use the most useful one.
+IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.</p><h3 id="var/pass_flags"><aside class="declaration">var </aside>pass_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 32"/></a></h3>
+        <p>Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.</p><h3 id="var/set_dir_on_move"><aside class="declaration">var </aside>set_dir_on_move
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 74"/></a></h3>
+        <p>Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.</p><h3 id="var/tk_throw_range"><aside class="declaration">var </aside>tk_throw_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 15"/></a></h3>
+        <p>Max range this atom can be thrown via telekinesis</p><h2 id="proc">Proc Details</h2><h3 id="proc/CanPassThrough"><aside class="declaration">proc </aside>CanPassThrough<aside>(/<a href="atom.html">atom</a>/blocker, /<a href="turf.html">turf</a>/target, blocker_opinion) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L828">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 828"/></a></aside>
+        </h3>
+        <p>Returns true or false to allow src to move through the blocker, mover has final say</p><h3 id="proc/CanReach"><aside class="declaration">proc </aside>CanReach<aside>(/<a href="atom.html">atom</a>/ultimate_target, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/tool, view_only) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L188">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 188"/></a></aside>
+        </h3>
+        <p>A backwards depth-limited breadth-first-search to see if the target is
+logically &quot;in&quot; anything adjacent to us.</p><h3 id="proc/Process_Spacemove"><aside class="declaration">proc </aside>Process_Spacemove<aside>(movement_dir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L656">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 656"/></a></aside>
+        </h3>
+        <p>Called whenever an object moves and by mobs when they attempt to move themselves through space
+And when an object or action applies a force on src, see <a href="atom/movable.html#proc/newtonian_move" title="/atom/movable">newtonian_move</a></p>
+<p>Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting</p>
+<p>Mobs should return 1 if they should be able to move of their own volition, see <a href="client.html#proc/Move" title="/client">/client/proc/Move</a></p>
+<p>Arguments:</p>
+<ul>
+<li>movement_dir - 0 when stopping or any dir when trying to move</li>
+</ul><h3 id="proc/add_blocked_language"><aside class="declaration">proc </aside>add_blocked_language<aside>(language, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L977">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 977"/></a></aside>
+        </h3>
+        <p>Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.</p><h3 id="proc/admin_teleport"><aside class="declaration">proc </aside>admin_teleport<aside>(/<a href="atom.html">atom</a>/new_location) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/adminjump.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;adminjump.dm 113"/></a></aside>
+        </h3>
+        <p>Proc to hook user-enacted teleporting behavior and keep logging of the event.</p><h3 id="proc/attacked_by"><aside class="declaration">proc </aside>attacked_by<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/item_attack.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;item_attack.dm 206"/></a></aside>
+        </h3>
+        <p>Called from <a href="obj/item.html#proc/attack_obj" title="/obj/item">/obj/item/proc/attack_obj</a> and <a href="obj/item.html#proc/attack" title="/obj/item">/obj/item/proc/attack</a> if the attack succeeds</p><h3 id="proc/become_area_sensitive"><aside class="declaration">proc </aside>become_area_sensitive<aside>(trait_source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L557">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 557"/></a></aside>
+        </h3>
+        <p>See traits.dm. Use this in place of ADD_TRAIT.</p><h3 id="proc/buckle_mob"><aside class="declaration">proc </aside>buckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M, force, check_loc, buckle_mob_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 87"/></a></aside>
+        </h3>
+        <p>Set a mob as buckled to src</p>
+<p>If you want to have a mob buckling another mob to something, or you want a chat message sent, use user_buckle_mob instead.
+Arguments:
+M - The mob to be buckled to src
+force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
+check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
+buckle_mob_flags- Used for riding cyborgs and humans if we need to reserve an arm or two on either the rider or the ridden mob.</p><h3 id="proc/can_speak_language"><aside class="declaration">proc </aside>can_speak_language<aside>(language) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L992">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 992"/></a></aside>
+        </h3>
+        <p>Checks if atom can speak the language.</p><h3 id="proc/copy_languages"><aside class="declaration">proc </aside>copy_languages<aside>(from_holder, source_override) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1017">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1017"/></a></aside>
+        </h3>
+        <p>Copies all languages into the supplied atom/language holder. Source should be overridden when you
+do not want the language overwritten by later atom updates or want to avoid blocked languages.</p><h3 id="proc/could_speak_language"><aside class="declaration">proc </aside>could_speak_language<aside>(language) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L997">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 997"/></a></aside>
+        </h3>
+        <p>Returns the result of tongue specific limitations on spoken languages.</p><h3 id="proc/deadchat_plays"><aside class="declaration">proc </aside>deadchat_plays<aside>(mode, cooldown) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1080">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1080"/></a></aside>
+        </h3>
+        <p>Adds the deadchat_plays component to this atom with simple movement commands.</p>
+<p>Returns the component added.
+Arguments:</p>
+<ul>
+<li>mode - Either ANARCHY_MODE or DEMOCRACY_MODE passed to the deadchat_control component. See <a href="datum/component/deadchat_control.html" title="/datum/component/deadchat_control">/datum/component/deadchat_control</a> for more info.</li>
+<li>cooldown - The cooldown between command inputs passed to the deadchat_control component. See <a href="datum/component/deadchat_control.html" title="/datum/component/deadchat_control">/datum/component/deadchat_control</a> for more info.</li>
+</ul><h3 id="proc/get_language_holder"><aside class="declaration">proc </aside>get_language_holder<aside>(get_minds) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L951">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 951"/></a></aside>
+        </h3>
+        <p>Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.</p><h3 id="proc/get_random_spoken_language"><aside class="declaration">proc </aside>get_random_spoken_language<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1011">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1011"/></a></aside>
+        </h3>
+        <p>Gets a random spoken language, useful for forced speech and such.</p><h3 id="proc/get_random_understood_language"><aside class="declaration">proc </aside>get_random_understood_language<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1006">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1006"/></a></aside>
+        </h3>
+        <p>Gets a random understood language, useful for hallucinations and such.</p><h3 id="proc/get_selected_language"><aside class="declaration">proc </aside>get_selected_language<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1001">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1001"/></a></aside>
+        </h3>
+        <p>Returns selected language, if it can be spoken, or finds, sets and returns a new selected language if possible.</p><h3 id="proc/grant_all_languages"><aside class="declaration">proc </aside>grant_all_languages<aside>(understood, spoken, grant_omnitongue, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L962">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 962"/></a></aside>
+        </h3>
+        <p>Grants every language.</p><h3 id="proc/grant_language"><aside class="declaration">proc </aside>grant_language<aside>(language, understood, spoken, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L957">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 957"/></a></aside>
+        </h3>
+        <p>Grants the supplied language and sets omnitongue true.</p><h3 id="proc/has_buckled_mobs"><aside class="declaration">proc </aside>has_buckled_mobs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 71"/></a></aside>
+        </h3>
+        <p>Returns TRUE if there are mobs buckled to this atom and FALSE otherwise</p><h3 id="proc/has_language"><aside class="declaration">proc </aside>has_language<aside>(language, spoken) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L987">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 987"/></a></aside>
+        </h3>
+        <p>Checks if atom has the language. If spoken is true, only checks if atom can speak the language.</p><h3 id="proc/is_buckle_possible"><aside class="declaration">proc </aside>is_buckle_possible<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/target, force, check_loc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 198"/></a></aside>
+        </h3>
+        <p>Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.</p>
+<p>Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
+Called from <a href="atom/movable.html#proc/buckle_mob" title="/atom/movable">/atom/movable/proc/buckle_mob</a> and <a href="atom/movable.html#proc/is_user_buckle_possible" title="/atom/movable">/atom/movable/proc/is_user_buckle_possible</a>.
+Arguments:</p>
+<ul>
+<li>target - Target mob to check against buckling to src.</li>
+<li>force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle_to</li>
+<li>check_loc - TRUE if target and src have to be on the same tile, FALSE if they are allowed to just be adjacent</li>
+</ul><h3 id="proc/is_user_buckle_possible"><aside class="declaration">proc </aside>is_user_buckle_possible<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/target, /<a href="mob.html">mob</a>/user, check_loc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L247">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 247"/></a></aside>
+        </h3>
+        <p>Simple helper proc that runs a suite of checks to test whether it is possible or not for user to buckle target mob to src.</p>
+<p>Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
+Called from <a href="atom/movable.html#proc/user_buckle_mob" title="/atom/movable">/atom/movable/proc/user_buckle_mob</a>.
+Arguments:</p>
+<ul>
+<li>target - Target mob to check against buckling to src.</li>
+<li>user - The mob who is attempting to buckle the target to src.</li>
+<li>check_loc - TRUE if target and src have to be on the same tile, FALSE if buckling is allowed from adjacent tiles</li>
+</ul><h3 id="proc/keybind_face_direction"><aside class="declaration">proc </aside>keybind_face_direction<aside>(direction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1147"/></a></aside>
+        </h3>
+        <p>A wrapper for setDir that should only be able to fail by living mobs.</p>
+<p>Called from [/atom/movable/proc/keyLoop], this exists to be overwritten by living mobs with a check to see if we're actually alive enough to change directions</p><h3 id="proc/mouse_buckle_handling"><aside class="declaration">proc </aside>mouse_buckle_handling<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 64"/></a></aside>
+        </h3>
+        <p>Does some typechecks and then calls user_buckle_mob</p>
+<p>Arguments:
+M - The mob being buckled to src
+user - The mob buckling M to src</p><h3 id="proc/newtonian_move"><aside class="declaration">proc </aside>newtonian_move<aside>(direction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L676">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 676"/></a></aside>
+        </h3>
+        <p>Only moves the object if it's under no gravity</p><h3 id="proc/on_enter_storage"><aside class="declaration">proc </aside>on_enter_storage<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/storage.html">storage</a>/concrete/master_storage) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L838">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 838"/></a></aside>
+        </h3>
+        <p>called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.</p><h3 id="proc/on_exit_storage"><aside class="declaration">proc </aside>on_exit_storage<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/storage.html">storage</a>/concrete/master_storage) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L834">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 834"/></a></aside>
+        </h3>
+        <p>called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.</p><h3 id="proc/point_at"><aside class="declaration">proc </aside>point_at<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1910">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1910"/></a></aside>
+        </h3>
+        <p>Point at an atom</p>
+<p>Intended to enable and standardise the pointing animation for all atoms</p>
+<p>Not intended as a replacement for the mob verb</p><h3 id="proc/relay_container_resist_act"><aside class="declaration">proc </aside>relay_container_resist_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/O) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L861">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 861"/></a></aside>
+        </h3>
+        <p>called when a mob resists while inside a container that is itself inside something.</p><h3 id="proc/remove_all_languages"><aside class="declaration">proc </aside>remove_all_languages<aside>(source, remove_omnitongue) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L972">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 972"/></a></aside>
+        </h3>
+        <p>Removes every language and sets omnitongue false.</p><h3 id="proc/remove_blocked_language"><aside class="declaration">proc </aside>remove_blocked_language<aside>(language, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L982">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 982"/></a></aside>
+        </h3>
+        <p>Removes a language from the blocked language list.</p><h3 id="proc/remove_language"><aside class="declaration">proc </aside>remove_language<aside>(language, understood, spoken, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L967">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 967"/></a></aside>
+        </h3>
+        <p>Removes a single language.</p><h3 id="proc/setGrabState"><aside class="declaration">proc </aside>setGrabState<aside>(newstate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1050">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1050"/></a></aside>
+        </h3>
+        <p>Updates the grab state of the movable</p>
+<p>This exists to act as a hook for behaviour</p><h3 id="proc/set_anchored"><aside class="declaration">proc </aside>set_anchored<aside>(anchorvalue) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L572">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 572"/></a></aside>
+        </h3>
+        <p>Sets the anchored var and returns if it was sucessfully changed or not.</p><h3 id="proc/set_light_range_power_color"><aside class="declaration">proc </aside>set_light_range_power_color<aside>(range, power, color) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/movable_luminosity.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;movable_luminosity.dm 16"/></a></aside>
+        </h3>
+        <p>Helper to change several lighting overlay settings.</p><h3 id="proc/set_pulledby"><aside class="declaration">proc </aside>set_pulledby<aside>(new_pulledby) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L283">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 283"/></a></aside>
+        </h3>
+        <p>Reports the event of the change in value of the pulledby variable.</p><h3 id="proc/shuttleRotate"><aside class="parent"><a title="/atom" href="atom.html#proc/shuttleRotate">&uarr;</a></aside>shuttleRotate<aside>(rotation, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/shuttle/shuttle_rotate.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;shuttle_rotate.dm 30"/></a></aside>
+        </h3>
+        <p>Base /atom/movable proc</p><h3 id="proc/throw_at"><aside class="declaration">proc </aside>throw_at<aside>(/<a href="atom.html">atom</a>/target, range, speed, /<a href="mob.html">mob</a>/thrower, spin, diagonals_first, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/callback, force, gentle, quickstart) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L709">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 709"/></a></aside>
+        </h3>
+        <p>If this returns FALSE then callback will not be called.</p><h3 id="proc/unbuckle_all_mobs"><aside class="declaration">proc </aside>unbuckle_all_mobs<aside>(force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 175"/></a></aside>
+        </h3>
+        <p>Call <a href="atom/movable.html#proc/unbuckle_mob" title="/atom/movable">/atom/movable/proc/unbuckle_mob</a> for all buckled mobs</p><h3 id="proc/unbuckle_mob"><aside class="declaration">proc </aside>unbuckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/buckled_mob, force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 140"/></a></aside>
+        </h3>
+        <p>Set a mob as unbuckled from src</p>
+<p>The mob must actually be buckled to src or else bad things will happen.
+Arguments:
+buckled_mob - The mob to be unbuckled
+force - TRUE if we should ignore buckled_mob.can_buckle_to</p><h3 id="proc/update_atom_languages"><aside class="declaration">proc </aside>update_atom_languages<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms_movable.dm#L1026">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms_movable.dm 1026"/></a></aside>
+        </h3>
+        <p>Empties out the atom specific languages and updates them according to the current atoms language holder.
+As a side effect, it also creates missing language holders in the process.</p><h3 id="proc/update_dynamic_luminosity"><aside class="declaration">proc </aside>update_dynamic_luminosity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/movable_luminosity.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;movable_luminosity.dm 2"/></a></aside>
+        </h3>
+        <p>Keeps track of the sources of dynamic luminosity and updates our visibility with the highest.</p><h3 id="proc/user_buckle_mob"><aside class="declaration">proc </aside>user_buckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M, /<a href="mob.html">mob</a>/user, check_loc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L270">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 270"/></a></aside>
+        </h3>
+        <p>Handles a mob buckling another mob to src and sends a visible_message</p>
+<p>Basically exists to do some checks on the user and then call buckle_mob where the real buckling happens.
+First, checks if the buckle is valid and cancels if it isn't.
+Second, checks if src is on a different turf from the target; if it is, does a do_after and another check for sanity
+Finally, calls <a href="atom/movable.html#proc/buckle_mob" title="/atom/movable">/atom/movable/proc/buckle_mob</a> to buckle the target to src then gives chat feedback
+Arguments:</p>
+<ul>
+<li>M - The target mob/living being buckled to src</li>
+<li>user - The other mob that's buckling M to src</li>
+<li>check_loc - TRUE if src and M have to be on the same turf, false otherwise</li>
+</ul><h3 id="proc/user_unbuckle_mob"><aside class="declaration">proc </aside>user_unbuckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/buckled_mob, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/buckling.dm#L310">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;buckling.dm 310"/></a></aside>
+        </h3>
+        <p>Handles a user unbuckling a mob from src and sends a visible_message</p>
+<p>Basically just calls unbuckle_mob, sets fingerprint, and sends a visible_message
+about the user unbuckling the mob
+Arguments:
+buckled_mob - The mob/living to unbuckle
+user - The mob unbuckling buckled_mob</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

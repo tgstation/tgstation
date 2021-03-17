@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;client - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="client.html#var">Var Details</a> - <a href="client.html#proc">Proc Details</a></header>
+<main>
+<h1>client <aside>/<a href="client.html">client</a></aside><aside> inherits /<a href="datum.html">datum</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 2"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="client.html#var/AI_Interact">AI_Interact</a></th><td>Used for admin AI interaction</td></tr>
+            <tr><th><a href="client.html#var/account_age">account_age</a></th><td>Age of byond account in days</td></tr>
+            <tr><th><a href="client.html#var/account_join_date">account_join_date</a></th><td>Date of byond account creation in ISO 8601 format</td></tr>
+            <tr><th><a href="client.html#var/active_mousedown_item">active_mousedown_item</a></th><td>Autoclick variable referencing the associated item.</td></tr>
+            <tr><th><a href="client.html#var/admin_music_volume">admin_music_volume</a></th><td>Admin music volume, from 0 to 1.</td></tr>
+            <tr><th><a href="client.html#var/area">area</a></th><td>Current area of the controlled mob</td></tr>
+            <tr><th><a href="client.html#var/avgping">avgping</a></th><td>Average ping of the client</td></tr>
+            <tr><th><a href="client.html#var/ban_cache">ban_cache</a></th><td>Used to cache this client's bans to save on DB queries</td></tr>
+            <tr><th><a href="client.html#var/char_render_holders">char_render_holders</a></th><td>Should only be a key-value list of north/south/east/west = atom/movable/screen.</td></tr>
+            <tr><th><a href="client.html#var/click_intercept">click_intercept</a></th><td>Needs to implement InterceptClickOn(user,params,atom) proc</td></tr>
+            <tr><th><a href="client.html#var/clicklimiter">clicklimiter</a></th><td>Used for limiting the rate of clicks sends by the client to avoid abuse</td></tr>
+            <tr><th><a href="client.html#var/client_keysend_amount">client_keysend_amount</a></th><td>Amount of keydowns in the last keysend checking interval</td></tr>
+            <tr><th><a href="client.html#var/completed_asset_jobs">completed_asset_jobs</a></th><td>List of all completed blocking send jobs awaiting acknowledgement by send_asset</td></tr>
+            <tr><th><a href="client.html#var/connection_realtime">connection_realtime</a></th><td>world.realtime they connected</td></tr>
+            <tr><th><a href="client.html#var/connection_time">connection_time</a></th><td>world.time they connected</td></tr>
+            <tr><th><a href="client.html#var/connection_timeofday">connection_timeofday</a></th><td>world.timeofday they connected</td></tr>
+            <tr><th><a href="client.html#var/credits">credits</a></th><td>lazy list of all credit object bound to this client</td></tr>
+            <tr><th><a href="client.html#var/crew_manifest_delay">crew_manifest_delay</a></th><td>rate limiting for the crew manifest</td></tr>
+            <tr><th><a href="client.html#var/dont_animate_parallax">dont_animate_parallax</a></th><td>world.time of when we can state animate()ing parallax again</td></tr>
+            <tr><th><a href="client.html#var/externalreplyamount">externalreplyamount</a></th><td>Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.</td></tr>
+            <tr><th><a href="client.html#var/holder">holder</a></th><td>Contains admin info. Null if client is not an admin.</td></tr>
+            <tr><th><a href="client.html#var/inprefs">inprefs</a></th><td>If the client is currently in player preferences</td></tr>
+            <tr><th><a href="client.html#var/interviewee">interviewee</a></th><td>If the client is currently under the restrictions of the interview system</td></tr>
+            <tr><th><a href="client.html#var/ip_intel">ip_intel</a></th><td>Used for ip intel checking to identify evaders, disabled because of issues with traffic</td></tr>
+            <tr><th><a href="client.html#var/key_combos_held">key_combos_held</a></th><td>A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: <code>&quot;key&quot;</code> -&gt; <code>&quot;combo&quot;</code> (ex: <code>&quot;D&quot;</code> -&gt; <code>&quot;CtrlD&quot;</code>)</td></tr>
+            <tr><th><a href="client.html#var/keys_held">keys_held</a></th><td>A buffer of currently held keys.</td></tr>
+            <tr><th><a href="client.html#var/keysend_tripped">keysend_tripped</a></th><td>When set to true, user will be autokicked if they trip the keysends in a second limit again</td></tr>
+            <tr><th><a href="client.html#var/last_asset_job">last_asset_job</a></th><td>Last asset send job id.</td></tr>
+            <tr><th><a href="client.html#var/last_message">last_message</a></th><td>Contains the last message sent by this client - used to protect against copy-paste spamming.</td></tr>
+            <tr><th><a href="client.html#var/last_message_count">last_message_count</a></th><td>contins a number of how many times a message identical to last_message was sent.</td></tr>
+            <tr><th><a href="client.html#var/last_parallax_shift">last_parallax_shift</a></th><td>world.time of last parallax update</td></tr>
+            <tr><th><a href="client.html#var/last_turn">last_turn</a></th><td>last turn of the controlled mob, I think this is only used by mechs?</td></tr>
+            <tr><th><a href="client.html#var/lastping">lastping</a></th><td>Last ping of the client</td></tr>
+            <tr><th><a href="client.html#var/mouseLocation">mouseLocation</a></th><td>Used in MouseDrag to preserve the last mouse-entered location.</td></tr>
+            <tr><th><a href="client.html#var/mouseObject">mouseObject</a></th><td>Used in MouseDrag to preserve the last mouse-entered object.</td></tr>
+            <tr><th><a href="client.html#var/mouseParams">mouseParams</a></th><td>Used in MouseDrag to preserve the original mouse click parameters</td></tr>
+            <tr><th><a href="client.html#var/mouse_down_icon">mouse_down_icon</a></th><td>used to make a special mouse cursor, this one for mouse up icon</td></tr>
+            <tr><th><a href="client.html#var/mouse_up_icon">mouse_up_icon</a></th><td>used to make a special mouse cursor, this one for mouse up icon</td></tr>
+            <tr><th><a href="client.html#var/move_delay">move_delay</a></th><td>Move delay of controlled mob, related to input handling</td></tr>
+            <tr><th><a href="client.html#var/movement_keys">movement_keys</a></th><td>custom movement keys for this client</td></tr>
+            <tr><th><a href="client.html#var/movement_locked">movement_locked</a></th><td>Are we locking our movement input?</td></tr>
+            <tr><th><a href="client.html#var/next_keysend_reset">next_keysend_reset</a></th><td>World tick time where client_keysend_amount will reset</td></tr>
+            <tr><th><a href="client.html#var/next_keysend_trip_reset">next_keysend_trip_reset</a></th><td>World tick time where keysend_tripped will reset back to false</td></tr>
+            <tr><th><a href="client.html#var/next_move_dir_add">next_move_dir_add</a></th><td>On next move, add this dir to the move that would otherwise be done</td></tr>
+            <tr><th><a href="client.html#var/next_move_dir_sub">next_move_dir_sub</a></th><td>On next move, subtract this dir from the move that would otherwise be done</td></tr>
+            <tr><th><a href="client.html#var/panel_tabs">panel_tabs</a></th><td>list of all tabs</td></tr>
+            <tr><th><a href="client.html#var/parallax_throttle">parallax_throttle</a></th><td>ds between parallax updates</td></tr>
+            <tr><th><a href="client.html#var/player_age">player_age</a></th><td>Used to determine how old the account is - in days.</td></tr>
+            <tr><th><a href="client.html#var/player_details">player_details</a></th><td>these persist between logins/logouts during the same round.</td></tr>
+            <tr><th><a href="client.html#var/player_join_date">player_join_date</a></th><td>Date that this account was first seen in the server</td></tr>
+            <tr><th><a href="client.html#var/prefs">prefs</a></th><td>Player preferences datum for the client</td></tr>
+            <tr><th><a href="client.html#var/recent_examines">recent_examines</a></th><td>A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call <a href="atom.html#proc/examine_more" title="/atom">/atom/proc/examine_more</a> instead of <a href="atom.html#proc/examine" title="/atom">/atom/proc/examine</a> on them when examining</td></tr>
+            <tr><th><a href="client.html#var/related_accounts_cid">related_accounts_cid</a></th><td>So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id</td></tr>
+            <tr><th><a href="client.html#var/related_accounts_ip">related_accounts_ip</a></th><td>So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip</td></tr>
+            <tr><th><a href="client.html#var/screen_maps">screen_maps</a></th><td>Assoc list with all the active maps - when a screen obj is added to
+a map, it's put in here as well.</td></tr>
+            <tr><th><a href="client.html#var/script">script</a></th><td>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!HEY LISTEN!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</td></tr>
+            <tr><th><a href="client.html#var/seen_messages">seen_messages</a></th><td>Messages currently seen by this client</td></tr>
+            <tr><th><a href="client.html#var/selected_target">selected_target</a></th><td>Autoclick list of two elements, first being the clicked thing, second being the parameters.</td></tr>
+            <tr><th><a href="client.html#var/show_verb_panel">show_verb_panel</a></th><td>hides the byond verb panel as we use our own custom version</td></tr>
+            <tr><th><a href="client.html#var/spell_tabs">spell_tabs</a></th><td>list of tabs containing spells and abilities</td></tr>
+            <tr><th><a href="client.html#var/stat_tab">stat_tab</a></th><td>our current tab</td></tr>
+            <tr><th><a href="client.html#var/statbrowser_ready">statbrowser_ready</a></th><td>whether our browser is ready or not yet</td></tr>
+            <tr><th><a href="client.html#var/tgui_cache_reloaded">tgui_cache_reloaded</a></th><td>global</td></tr>
+            <tr><th><a href="client.html#var/tgui_windows">tgui_windows</a></th><td>global</td></tr>
+            <tr><th><a href="client.html#var/tooltips">tooltips</a></th><td>datum that controls the displaying and hiding of tooltips</td></tr>
+            <tr><th><a href="client.html#var/topiclimiter">topiclimiter</a></th><td>Used for limiting the rate of topic sends by the client to avoid abuse</td></tr>
+            <tr><th><a href="client.html#var/total_count_reset">total_count_reset</a></th><td>Next tick to reset the total message counter</td></tr>
+            <tr><th><a href="client.html#var/total_message_count">total_message_count</a></th><td>How many messages sent in the last 10 seconds</td></tr>
+            <tr><th><a href="client.html#var/view_size">view_size</a></th><td>datum wrapper for client view</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="client.html#proc/Move">Move</a></th><td>Move a client in a direction</td></tr>
+            <tr><th><a href="client.html#proc/Move_object">Move_object</a></th><td>force move the control_object of your client mob</td></tr>
+            <tr><th><a href="client.html#proc/Process_Grab">Process_Grab</a></th><td>Checks to see if you're being grabbed and if so attempts to break it</td></tr>
+            <tr><th><a href="client.html#proc/Process_Incorpmove">Process_Incorpmove</a></th><td>Allows mobs to ignore density and phase through objects</td></tr>
+            <tr><th><a href="client.html#proc/adjust_heart">adjust_heart</a></th><td>Gives someone hearted status for OOC, from behavior commendations</td></tr>
+            <tr><th><a href="client.html#proc/asset_cache_confirm_arrival">asset_cache_confirm_arrival</a></th><td>Process asset cache client topic calls for <code>&quot;asset_cache_confirm_arrival=[INT]&quot;</code></td></tr>
+            <tr><th><a href="client.html#proc/asset_cache_preload_data">asset_cache_preload_data</a></th><td>Process asset cache client topic calls for <code>&quot;asset_cache_preload_data=[HTML+JSON_STRING]&quot;</code></td></tr>
+            <tr><th><a href="client.html#proc/asset_cache_update_json">asset_cache_update_json</a></th><td>Updates the client side stored json file used to keep track of what assets the client has between restarts/reconnects.</td></tr>
+            <tr><th><a href="client.html#proc/body_chest">body_chest</a></th><td>Hidden verb to target the chest, bound to 5</td></tr>
+            <tr><th><a href="client.html#proc/body_eyes">body_eyes</a></th><td>Hidden verb to target the eyes, bound to 7</td></tr>
+            <tr><th><a href="client.html#proc/body_groin">body_groin</a></th><td>Hidden verb to target the groin, bound to 2</td></tr>
+            <tr><th><a href="client.html#proc/body_l_arm">body_l_arm</a></th><td>Hidden verb to target the left arm, bound to 6</td></tr>
+            <tr><th><a href="client.html#proc/body_l_leg">body_l_leg</a></th><td>Hidden verb to target the left leg, bound to 3</td></tr>
+            <tr><th><a href="client.html#proc/body_mouth">body_mouth</a></th><td>Hidden verb to target the mouth, bound to 9</td></tr>
+            <tr><th><a href="client.html#proc/body_r_arm">body_r_arm</a></th><td>Hidden verb to target the right arm, bound to 4</td></tr>
+            <tr><th><a href="client.html#proc/body_r_leg">body_r_leg</a></th><td>Hidden verb to target the right leg, bound to 1</td></tr>
+            <tr><th><a href="client.html#proc/body_toggle_head">body_toggle_head</a></th><td>Hidden verb to set the target zone of a mob to the head</td></tr>
+            <tr><th><a href="client.html#proc/browse_queue_flush">browse_queue_flush</a></th><td>Blocks until all currently sending browse and browse_rsc assets have been sent.
+Due to byond limitations, this proc will sleep for 1 client round trip even if the client has no pending asset sends.
+This proc will return an untrue value if it had to return before confirming the send, such as timeout or the client going away.</td></tr>
+            <tr><th><a href="client.html#proc/check_has_body_select">check_has_body_select</a></th><td>Validate the client's mob has a valid zone selected</td></tr>
+            <tr><th><a href="client.html#proc/check_timer_sources">check_timer_sources</a></th><td>A debug verb to check the sources of currently running timers</td></tr>
+            <tr><th><a href="client.html#proc/clear_all_maps">clear_all_maps</a></th><td>Clears all the maps of registered screen objects.</td></tr>
+            <tr><th><a href="client.html#proc/clear_map">clear_map</a></th><td>Clears the map of registered screen objects.</td></tr>
+            <tr><th><a href="client.html#proc/close_popup">close_popup</a></th><td>Closes a popup.</td></tr>
+            <tr><th><a href="client.html#proc/create_popup">create_popup</a></th><td>Creates a popup window with a basic map element in it, without any
+further initialization.</td></tr>
+            <tr><th><a href="client.html#proc/drop_item">drop_item</a></th><td>If your mob is concious, drop the item in the active hand</td></tr>
+            <tr><th><a href="client.html#proc/fix_tgui_panel">fix_tgui_panel</a></th><td>tgui panel / chat troubleshooting verb</td></tr>
+            <tr><th><a href="client.html#proc/get_award_status">get_award_status</a></th><td>Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.</td></tr>
+            <tr><th><a href="client.html#proc/give_award">give_award</a></th><td>Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments</td></tr>
+            <tr><th><a href="client.html#proc/handle_popup_close">handle_popup_close</a></th><td>When the popup closes in any way (player or proc call) it calls this.</td></tr>
+            <tr><th><a href="client.html#proc/init_verbs">init_verbs</a></th><td>compiles a full list of verbs and sends it to the browser</td></tr>
+            <tr><th><a href="client.html#proc/initialize_menus">initialize_menus</a></th><td>Initializes dropdown menus on client</td></tr>
+            <tr><th><a href="client.html#proc/keyUp">keyUp</a></th><td>Check if the key is short enough to even be a real key</td></tr>
+            <tr><th><a href="client.html#proc/register_map_obj">register_map_obj</a></th><td>Registers screen obj with the client, which makes it visible on the
+assigned map, and becomes a part of the assigned map's lifecycle.</td></tr>
+            <tr><th><a href="client.html#proc/reset_held_keys">reset_held_keys</a></th><td>Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.</td></tr>
+            <tr><th><a href="client.html#proc/send_resources">send_resources</a></th><td>Send resources to the client.
+Sends both game resources and browser assets.</td></tr>
+            <tr><th><a href="client.html#proc/set_tab">set_tab</a></th><td>verbs that send information from the browser UI</td></tr>
+            <tr><th><a href="client.html#proc/setup_popup">setup_popup</a></th><td>Create the popup, and get it ready for generic use by giving
+it a background.</td></tr>
+            <tr><th><a href="client.html#proc/toggle_walk_run">toggle_walk_run</a></th><td>Verb to toggle the walk or run status</td></tr>
+            <tr><th><a href="client.html#proc/uiclose">uiclose</a></th><td>verb</td></tr>
+            <tr><th><a href="client.html#proc/update_special_keybinds">update_special_keybinds</a></th><td>Updates the keybinds for special keys</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/AI_Interact"><aside class="declaration">var </aside>AI_Interact
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 17"/></a></h3>
+        <p>Used for admin AI interaction</p><h3 id="var/account_age"><aside class="declaration">var </aside>account_age
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 68"/></a></h3>
+        <p>Age of byond account in days</p><h3 id="var/account_join_date"><aside class="declaration">var </aside>account_join_date
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 66"/></a></h3>
+        <p>Date of byond account creation in ISO 8601 format</p><h3 id="var/active_mousedown_item"><aside class="declaration">var </aside>active_mousedown_item
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 126"/></a></h3>
+        <p>Autoclick variable referencing the associated item.</p><h3 id="var/admin_music_volume"><aside class="declaration">var </aside>admin_music_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui_panel/audio.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui_panel&#x2F;audio.dm 7"/></a></h3>
+        <p>Admin music volume, from 0 to 1.</p><h3 id="var/area"><aside class="declaration">var </aside>area
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 42"/></a></h3>
+        <p>Current area of the controlled mob</p><h3 id="var/avgping"><aside class="declaration">var </aside>avgping
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 88"/></a></h3>
+        <p>Average ping of the client</p><h3 id="var/ban_cache"><aside class="declaration">var </aside>ban_cache
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 20"/></a></h3>
+        <p>Used to cache this client's bans to save on DB queries</p><h3 id="var/char_render_holders"><aside class="declaration">var </aside>char_render_holders
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 110"/></a></h3>
+        <p>Should only be a key-value list of north/south/east/west = atom/movable/screen.</p><h3 id="var/click_intercept"><aside class="declaration">var </aside>click_intercept
+            <aside>&ndash; /<a href="datum.html">datum</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 15"/></a></h3>
+        <p>Needs to implement InterceptClickOn(user,params,atom) proc</p><h3 id="var/clicklimiter"><aside class="declaration">var </aside>clicklimiter
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 101"/></a></h3>
+        <p>Used for limiting the rate of clicks sends by the client to avoid abuse</p><h3 id="var/client_keysend_amount"><aside class="declaration">var </aside>client_keysend_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 113"/></a></h3>
+        <p>Amount of keydowns in the last keysend checking interval</p><h3 id="var/completed_asset_jobs"><aside class="declaration">var </aside>completed_asset_jobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 184"/></a></h3>
+        <p>List of all completed blocking send jobs awaiting acknowledgement by send_asset</p><h3 id="var/connection_realtime"><aside class="declaration">var </aside>connection_realtime
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 92"/></a></h3>
+        <p>world.realtime they connected</p><h3 id="var/connection_time"><aside class="declaration">var </aside>connection_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 90"/></a></h3>
+        <p>world.time they connected</p><h3 id="var/connection_timeofday"><aside class="declaration">var </aside>connection_timeofday
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 94"/></a></h3>
+        <p>world.timeofday they connected</p><h3 id="var/credits"><aside class="declaration">var </aside>credits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 104"/></a></h3>
+        <p>lazy list of all credit object bound to this client</p><h3 id="var/crew_manifest_delay"><aside class="declaration">var </aside>crew_manifest_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 190"/></a></h3>
+        <p>rate limiting for the crew manifest</p><h3 id="var/dont_animate_parallax"><aside class="declaration">var </aside>dont_animate_parallax
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 162"/></a></h3>
+        <p>world.time of when we can state animate()ing parallax again</p><h3 id="var/externalreplyamount"><aside class="declaration">var </aside>externalreplyamount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 30"/></a></h3>
+        <p>Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.</p><h3 id="var/holder"><aside class="declaration">var </aside>holder
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/admins.html">admins</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 13"/></a></h3>
+        <p>Contains admin info. Null if client is not an admin.</p><h3 id="var/inprefs"><aside class="declaration">var </aside>inprefs
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 97"/></a></h3>
+        <p>If the client is currently in player preferences</p><h3 id="var/interviewee"><aside class="declaration">var </aside>interviewee
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 206"/></a></h3>
+        <p>If the client is currently under the restrictions of the interview system</p><h3 id="var/ip_intel"><aside class="declaration">var </aside>ip_intel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 80"/></a></h3>
+        <p>Used for ip intel checking to identify evaders, disabled because of issues with traffic</p><h3 id="var/key_combos_held"><aside class="declaration">var </aside>key_combos_held
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L195">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 195"/></a></h3>
+        <p>A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: <code>&quot;key&quot;</code> -&gt; <code>&quot;combo&quot;</code> (ex: <code>&quot;D&quot;</code> -&gt; <code>&quot;CtrlD&quot;</code>)</p><h3 id="var/keys_held"><aside class="declaration">var </aside>keys_held
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L193">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 193"/></a></h3>
+        <p>A buffer of currently held keys.</p><h3 id="var/keysend_tripped"><aside class="declaration">var </aside>keysend_tripped
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 119"/></a></h3>
+        <p>When set to true, user will be autokicked if they trip the keysends in a second limit again</p><h3 id="var/last_asset_job"><aside class="declaration">var </aside>last_asset_job
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 186"/></a></h3>
+        <p>Last asset send job id.</p><h3 id="var/last_message"><aside class="declaration">var </aside>last_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 22"/></a></h3>
+        <p>Contains the last message sent by this client - used to protect against copy-paste spamming.</p><h3 id="var/last_message_count"><aside class="declaration">var </aside>last_message_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 24"/></a></h3>
+        <p>contins a number of how many times a message identical to last_message was sent.</p><h3 id="var/last_parallax_shift"><aside class="declaration">var </aside>last_parallax_shift
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 164"/></a></h3>
+        <p>world.time of last parallax update</p><h3 id="var/last_turn"><aside class="declaration">var </aside>last_turn
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 38"/></a></h3>
+        <p>last turn of the controlled mob, I think this is only used by mechs?</p><h3 id="var/lastping"><aside class="declaration">var </aside>lastping
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 86"/></a></h3>
+        <p>Last ping of the client</p><h3 id="var/mouseLocation"><aside class="declaration">var </aside>mouseLocation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 130"/></a></h3>
+        <p>Used in MouseDrag to preserve the last mouse-entered location.</p><h3 id="var/mouseObject"><aside class="declaration">var </aside>mouseObject
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 132"/></a></h3>
+        <p>Used in MouseDrag to preserve the last mouse-entered object.</p><h3 id="var/mouseParams"><aside class="declaration">var </aside>mouseParams
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 128"/></a></h3>
+        <p>Used in MouseDrag to preserve the original mouse click parameters</p><h3 id="var/mouse_down_icon"><aside class="declaration">var </aside>mouse_down_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 77"/></a></h3>
+        <p>used to make a special mouse cursor, this one for mouse up icon</p><h3 id="var/mouse_up_icon"><aside class="declaration">var </aside>mouse_up_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 75"/></a></h3>
+        <p>used to make a special mouse cursor, this one for mouse up icon</p><h3 id="var/move_delay"><aside class="declaration">var </aside>move_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 40"/></a></h3>
+        <p>Move delay of controlled mob, related to input handling</p><h3 id="var/movement_keys"><aside class="declaration">var </aside>movement_keys
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 121"/></a></h3>
+        <p>custom movement keys for this client</p><h3 id="var/movement_locked"><aside class="declaration">var </aside>movement_locked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L171">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 171"/></a></h3>
+        <p>Are we locking our movement input?</p><h3 id="var/next_keysend_reset"><aside class="declaration">var </aside>next_keysend_reset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 115"/></a></h3>
+        <p>World tick time where client_keysend_amount will reset</p><h3 id="var/next_keysend_trip_reset"><aside class="declaration">var </aside>next_keysend_trip_reset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 117"/></a></h3>
+        <p>World tick time where keysend_tripped will reset back to false</p><h3 id="var/next_move_dir_add"><aside class="declaration">var </aside>next_move_dir_add
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L201">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 201"/></a></h3>
+        <p>On next move, add this dir to the move that would otherwise be done</p><h3 id="var/next_move_dir_sub"><aside class="declaration">var </aside>next_move_dir_sub
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L203">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 203"/></a></h3>
+        <p>On next move, subtract this dir from the move that would otherwise be done</p><h3 id="var/panel_tabs"><aside class="declaration">var </aside>panel_tabs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 151"/></a></h3>
+        <p>list of all tabs</p><h3 id="var/parallax_throttle"><aside class="declaration">var </aside>parallax_throttle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 166"/></a></h3>
+        <p>ds between parallax updates</p><h3 id="var/player_age"><aside class="declaration">var </aside>player_age
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 58"/></a></h3>
+        <p>Used to determine how old the account is - in days.</p><h3 id="var/player_details"><aside class="declaration">var </aside>player_details
+            <aside>&ndash; /<a href="datum.html">datum</a>/player_details</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 107"/></a></h3>
+        <p>these persist between logins/logouts during the same round.</p><h3 id="var/player_join_date"><aside class="declaration">var </aside>player_join_date
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 60"/></a></h3>
+        <p>Date that this account was first seen in the server</p><h3 id="var/prefs"><aside class="declaration">var </aside>prefs
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/preferences.html">preferences</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 36"/></a></h3>
+        <p>Player preferences datum for the client</p><h3 id="var/recent_examines"><aside class="declaration">var </aside>recent_examines
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 155"/></a></h3>
+        <p>A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call <a href="atom.html#proc/examine_more" title="/atom">/atom/proc/examine_more</a> instead of <a href="atom.html#proc/examine" title="/atom">/atom/proc/examine</a> on them when examining</p><h3 id="var/related_accounts_cid"><aside class="declaration">var </aside>related_accounts_cid
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 64"/></a></h3>
+        <p>So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id</p><h3 id="var/related_accounts_ip"><aside class="declaration">var </aside>related_accounts_ip
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 62"/></a></h3>
+        <p>So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip</p><h3 id="var/screen_maps"><aside class="declaration">var </aside>screen_maps
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 179"/></a></h3>
+        <p>Assoc list with all the active maps - when a screen obj is added to
+a map, it's put in here as well.</p>
+<p>Format: list(<mapname> = list(/atom/movable/screen))</p><h3 id="var/script"><aside class="declaration">var </aside>script
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/interface/stylesheet.dm#L9">
+        <img src="git.png" width="16" height="16" title="interface&#x2F;stylesheet.dm 9"/></a></h3>
+        <p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!HEY LISTEN!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p><h3 id="var/seen_messages"><aside class="declaration">var </aside>seen_messages
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 139"/></a></h3>
+        <p>Messages currently seen by this client</p><h3 id="var/selected_target"><aside class="declaration">var </aside>selected_target
+            <aside>&ndash; /list/list/atom</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 124"/></a></h3>
+        <p>Autoclick list of two elements, first being the clicked thing, second being the parameters.</p><h3 id="var/show_verb_panel"><aside class="declaration">var </aside>show_verb_panel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 11"/></a></h3>
+        <p>hides the byond verb panel as we use our own custom version</p><h3 id="var/spell_tabs"><aside class="declaration">var </aside>spell_tabs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 153"/></a></h3>
+        <p>list of tabs containing spells and abilities</p><h3 id="var/stat_tab"><aside class="declaration">var </aside>stat_tab
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 145"/></a></h3>
+        <p>our current tab</p><h3 id="var/statbrowser_ready"><aside class="declaration">var </aside>statbrowser_ready
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 148"/></a></h3>
+        <p>whether our browser is ready or not yet</p><h3 id="var/tgui_cache_reloaded"><aside class="declaration">var </aside>tgui_cache_reloaded
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 140"/></a></h3>
+        <p>global</p>
+<p>TRUE if cache was reloaded by tgui dev server at least once.</p><h3 id="var/tgui_windows"><aside class="declaration">var </aside>tgui_windows
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 133"/></a></h3>
+        <p>global</p>
+<p>Tracks open windows for a user.</p><h3 id="var/tooltips"><aside class="declaration">var </aside>tooltips
+            <aside>&ndash; /<a href="datum.html">datum</a>/tooltip</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 83"/></a></h3>
+        <p>datum that controls the displaying and hiding of tooltips</p><h3 id="var/topiclimiter"><aside class="declaration">var </aside>topiclimiter
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 99"/></a></h3>
+        <p>Used for limiting the rate of topic sends by the client to avoid abuse</p><h3 id="var/total_count_reset"><aside class="declaration">var </aside>total_count_reset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 28"/></a></h3>
+        <p>Next tick to reset the total message counter</p><h3 id="var/total_message_count"><aside class="declaration">var </aside>total_message_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 26"/></a></h3>
+        <p>How many messages sent in the last 10 seconds</p><h3 id="var/view_size"><aside class="declaration">var </aside>view_size
+            <aside>&ndash; /<a href="datum.html">datum</a>/view_data</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_defines.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_defines.dm 142"/></a></h3>
+        <p>datum wrapper for client view</p><h2 id="proc">Proc Details</h2><h3 id="proc/Move"><aside class="declaration">proc </aside>Move<aside>(n, direct) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 69"/></a></aside>
+        </h3>
+        <p>Move a client in a direction</p>
+<p>Huge proc, has a lot of functionality</p>
+<p>Mostly it will despatch to the mob that you are the owner of to actually move
+in the physical realm</p>
+<p>Things that stop you moving as a mob:</p>
+<ul>
+<li>world time being less than your next move_delay</li>
+<li>not being in a mob, or that mob not having a loc</li>
+<li>missing the n and direction parameters</li>
+<li>being in remote control of an object (calls Moveobject instead)</li>
+<li>being dead (it ghosts you instead)</li>
+</ul>
+<p>Things that stop you moving as a mob living (why even have OO if you're just shoving it all
+in the parent proc with istype checks right?):</p>
+<ul>
+<li>having incorporeal_move set (calls Process_Incorpmove() instead)</li>
+<li>being grabbed</li>
+<li>being buckled  (relaymove() is called to the buckled atom instead)</li>
+<li>having your loc be some other mob (relaymove() is called on that mob instead)</li>
+<li>Not having MOBILITY_MOVE</li>
+<li>Failing Process_Spacemove() call</li>
+</ul>
+<p>At this point, if the mob is is confused, then a random direction and target turf will be calculated for you to travel to instead</p>
+<p>Now the parent call is made (to the byond builtin move), which moves you</p>
+<p>Some final move delay calculations (doubling if you moved diagonally successfully)</p>
+<p>if mob throwing is set I believe it's unset at this point via a call to finalize</p>
+<p>Finally if you're pulling an object and it's dense, you are turned 180 after the move
+(if you ask me, this should be at the top of the move so you don't dance around)</p><h3 id="proc/Move_object"><aside class="declaration">proc </aside>Move_object<aside>(direct) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 20"/></a></aside>
+        </h3>
+        <p>force move the control_object of your client mob</p>
+<p>Used in admin possession and called from the client Move proc
+ensures the possessed object moves and not the admin mob</p>
+<p>Has no sanity other than checking density</p><h3 id="proc/Process_Grab"><aside class="declaration">proc </aside>Process_Grab<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 159"/></a></aside>
+        </h3>
+        <p>Checks to see if you're being grabbed and if so attempts to break it</p>
+<p>Called by client/Move()</p><h3 id="proc/Process_Incorpmove"><aside class="declaration">proc </aside>Process_Incorpmove<aside>(direct) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L187">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 187"/></a></aside>
+        </h3>
+        <p>Allows mobs to ignore density and phase through objects</p>
+<p>Called by client/Move()</p>
+<p>The behaviour depends on the incorporeal_move value of the mob</p>
+<ul>
+<li>INCORPOREAL_MOVE_BASIC - forceMoved to the next tile with no stop</li>
+<li>INCORPOREAL_MOVE_SHADOW  - the same but leaves a cool effect path</li>
+<li>INCORPOREAL_MOVE_JAUNT - the same but blocked by holy tiles</li>
+</ul>
+<p>You'll note this is another mob living level proc living at the client level</p><h3 id="proc/adjust_heart"><aside class="declaration">proc </aside>adjust_heart<aside>(duration) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L1028">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 1028"/></a></aside>
+        </h3>
+        <p>Gives someone hearted status for OOC, from behavior commendations</p><h3 id="proc/asset_cache_confirm_arrival"><aside class="declaration">proc </aside>asset_cache_confirm_arrival<aside>(job_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/asset_cache/asset_cache_client.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;asset_cache&#x2F;asset_cache_client.dm 3"/></a></aside>
+        </h3>
+        <p>Process asset cache client topic calls for <code>&quot;asset_cache_confirm_arrival=[INT]&quot;</code></p><h3 id="proc/asset_cache_preload_data"><aside class="declaration">proc </aside>asset_cache_preload_data<aside>(data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/asset_cache/asset_cache_client.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;asset_cache&#x2F;asset_cache_client.dm 14"/></a></aside>
+        </h3>
+        <p>Process asset cache client topic calls for <code>&quot;asset_cache_preload_data=[HTML+JSON_STRING]&quot;</code></p><h3 id="proc/asset_cache_update_json"><aside class="declaration">proc </aside>asset_cache_update_json<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/asset_cache/asset_cache_client.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;asset_cache&#x2F;asset_cache_client.dm 26"/></a></aside>
+        </h3>
+        <p>Updates the client side stored json file used to keep track of what assets the client has between restarts/reconnects.</p><h3 id="proc/body_chest"><aside class="declaration">verb </aside>body_chest<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L408">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 408"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the chest, bound to 5</p><h3 id="proc/body_eyes"><aside class="declaration">verb </aside>body_eyes<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L375">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 375"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the eyes, bound to 7</p><h3 id="proc/body_groin"><aside class="declaration">verb </aside>body_groin<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L441">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 441"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the groin, bound to 2</p><h3 id="proc/body_l_arm"><aside class="declaration">verb </aside>body_l_arm<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L419">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 419"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the left arm, bound to 6</p><h3 id="proc/body_l_leg"><aside class="declaration">verb </aside>body_l_leg<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L452">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 452"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the left leg, bound to 3</p><h3 id="proc/body_mouth"><aside class="declaration">verb </aside>body_mouth<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L386">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 386"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the mouth, bound to 9</p><h3 id="proc/body_r_arm"><aside class="declaration">verb </aside>body_r_arm<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L397">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 397"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the right arm, bound to 4</p><h3 id="proc/body_r_leg"><aside class="declaration">verb </aside>body_r_leg<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L430">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 430"/></a></aside>
+        </h3>
+        <p>Hidden verb to target the right leg, bound to 1</p><h3 id="proc/body_toggle_head"><aside class="declaration">verb </aside>body_toggle_head<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L355">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 355"/></a></aside>
+        </h3>
+        <p>Hidden verb to set the target zone of a mob to the head</p>
+<p>(bound to 8) - repeated presses toggles through head - eyes - mouth
+Hidden verb to target the head, bound to 8</p><h3 id="proc/browse_queue_flush"><aside class="declaration">proc </aside>browse_queue_flush<aside>(timeout) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/asset_cache/asset_cache_client.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;asset_cache&#x2F;asset_cache_client.dm 35"/></a></aside>
+        </h3>
+        <p>Blocks until all currently sending browse and browse_rsc assets have been sent.
+Due to byond limitations, this proc will sleep for 1 client round trip even if the client has no pending asset sends.
+This proc will return an untrue value if it had to return before confirming the send, such as timeout or the client going away.</p><h3 id="proc/check_has_body_select"><aside class="declaration">proc </aside>check_has_body_select<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L345">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 345"/></a></aside>
+        </h3>
+        <p>Validate the client's mob has a valid zone selected</p><h3 id="proc/check_timer_sources"><aside class="declaration">proc </aside>check_timer_sources<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/debug.dm#L804">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;debug.dm 804"/></a></aside>
+        </h3>
+        <p>A debug verb to check the sources of currently running timers</p><h3 id="proc/clear_all_maps"><aside class="declaration">proc </aside>clear_all_maps<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 80"/></a></aside>
+        </h3>
+        <p>Clears all the maps of registered screen objects.</p><h3 id="proc/clear_map"><aside class="declaration">proc </aside>clear_map<aside>(map_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 68"/></a></aside>
+        </h3>
+        <p>Clears the map of registered screen objects.</p>
+<p>Not really needed most of the time, as the client's screen list gets reset
+on relog. any of the buttons are going to get caught by garbage collection
+anyway. they're effectively qdel'd.</p><h3 id="proc/close_popup"><aside class="declaration">proc </aside>close_popup<aside>(popup) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 137"/></a></aside>
+        </h3>
+        <p>Closes a popup.</p><h3 id="proc/create_popup"><aside class="declaration">proc </aside>create_popup<aside>(name, ratiox, ratioy) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 92"/></a></aside>
+        </h3>
+        <p>Creates a popup window with a basic map element in it, without any
+further initialization.</p>
+<p>Ratio is how many pixels by how many pixels (keep it simple).</p>
+<p>Returns a map name.</p><h3 id="proc/drop_item"><aside class="declaration">verb </aside>drop_item<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 6"/></a></aside>
+        </h3>
+        <p>If your mob is concious, drop the item in the active hand</p>
+<p>This is a hidden verb, likely for binding with winset for hotkeys</p><h3 id="proc/fix_tgui_panel"><aside class="declaration">verb </aside>fix_tgui_panel<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui_panel/external.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui_panel&#x2F;external.dm 11"/></a></aside>
+        </h3>
+        <p>tgui panel / chat troubleshooting verb</p><h3 id="proc/get_award_status"><aside class="declaration">proc </aside>get_award_status<aside>(achievement_type, /<a href="mob.html">mob</a>/user, value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L1024">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 1024"/></a></aside>
+        </h3>
+        <p>Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.</p><h3 id="proc/give_award"><aside class="declaration">proc </aside>give_award<aside>(achievement_type, /<a href="mob.html">mob</a>/user, value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L1020">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 1020"/></a></aside>
+        </h3>
+        <p>Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments</p><h3 id="proc/handle_popup_close"><aside class="declaration">verb </aside>handle_popup_close<aside>(window_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 144"/></a></aside>
+        </h3>
+        <p>When the popup closes in any way (player or proc call) it calls this.</p><h3 id="proc/init_verbs"><aside class="declaration">proc </aside>init_verbs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L1038">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 1038"/></a></aside>
+        </h3>
+        <p>compiles a full list of verbs and sends it to the browser</p><h3 id="proc/initialize_menus"><aside class="declaration">proc </aside>initialize_menus<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L1069">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 1069"/></a></aside>
+        </h3>
+        <p>Initializes dropdown menus on client</p><h3 id="proc/keyUp"><aside class="declaration">verb </aside>keyUp<aside>(_key) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/keybindings/bindings_client.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;keybindings&#x2F;bindings_client.dm 81"/></a></aside>
+        </h3>
+        <p>Check if the key is short enough to even be a real key</p><h3 id="proc/register_map_obj"><aside class="declaration">proc </aside>register_map_obj<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/screen_obj) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 49"/></a></aside>
+        </h3>
+        <p>Registers screen obj with the client, which makes it visible on the
+assigned map, and becomes a part of the assigned map's lifecycle.</p><h3 id="proc/reset_held_keys"><aside class="declaration">verb </aside>reset_held_keys<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/verbs/reset_held_keys.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;verbs&#x2F;reset_held_keys.dm 6"/></a></aside>
+        </h3>
+        <p>Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.</p>
+<p>Hardcoded to the ESC key.</p><h3 id="proc/send_resources"><aside class="declaration">proc </aside>send_resources<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L892">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 892"/></a></aside>
+        </h3>
+        <p>Send resources to the client.
+Sends both game resources and browser assets.</p><h3 id="proc/set_tab"><aside class="declaration">verb </aside>set_tab<aside>(tab) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/statpanel.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;statpanel.dm 173"/></a></aside>
+        </h3>
+        <p>verbs that send information from the browser UI</p><h3 id="proc/setup_popup"><aside class="declaration">proc </aside>setup_popup<aside>(popup_name, width, height, tilesize, bg_icon) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/map_popups.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;map_popups.dm 116"/></a></aside>
+        </h3>
+        <p>Create the popup, and get it ready for generic use by giving
+it a background.</p>
+<p>Width and height are multiplied by 64 by default.</p><h3 id="proc/toggle_walk_run"><aside class="declaration">verb </aside>toggle_walk_run<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L463">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 463"/></a></aside>
+        </h3>
+        <p>Verb to toggle the walk or run status</p><h3 id="proc/uiclose"><aside class="declaration">verb </aside>uiclose<aside>(window_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 158"/></a></aside>
+        </h3>
+        <p>verb</p>
+<p>Called by UIs when they are closed.
+Must be a verb so winset() can call it.</p>
+<p>required uiref ref The UI that was closed.</p><h3 id="proc/update_special_keybinds"><aside class="declaration">proc </aside>update_special_keybinds<aside>(/<a href="datum.html">datum</a>/<a href="datum/preferences.html">preferences</a>/direct_prefs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_procs.dm#L948">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_procs.dm 948"/></a></aside>
+        </h3>
+        <p>Updates the keybinds for special keys</p>
+<p>Handles adding macros for the keys that need it
+And adding movement keys to the clients movement_keys list
+At the time of writing this, communication(OOC, Say, IC) require macros
+Arguments:</p>
+<ul>
+<li>direct_prefs - the preference we're going to get keybinds from</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

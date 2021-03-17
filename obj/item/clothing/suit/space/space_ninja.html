@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;clothing&#x2F;suit&#x2F;space&#x2F;space_ninja - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/clothing/suit/space/space_ninja.html#var">Var Details</a> - <a href="obj/item/clothing/suit/space/space_ninja.html#proc">Proc Details</a></header>
+<main>
+<h1>Ninja Suit <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/suit/space.html">suit/space</a>/<a href="obj/item/clothing/suit/space/space_ninja.html">space_ninja</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 11"/></a></h1>
+
+<p>Space ninja's suit.  Provides him with most of his powers.</p>
+<p>Space ninja's suit.  Gives space ninja all his iconic powers, which are mostly kept in
+the folder ninja_equipment_actions.  Has a lot of unique stuff going on, so make sure to check
+the variables.  Check suit_attackby to see radium interaction, disk copying, and cell replacement.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/a_boost">a_boost</a></th><td>Whether or not the adrenaline boost ability is available</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/a_transfer">a_transfer</a></th><td>Units of radium required to refill the adrenaline boost</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/affecting">affecting</a></th><td>The person wearing the suit</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/energyKatana">energyKatana</a></th><td>The katana registered with the suit, used for recalling and catching the katana.  Set when the ninja outfit is created.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/n_gloves">n_gloves</a></th><td>The space ninja's gloves.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/n_hood">n_hood</a></th><td>The space ninja's hood.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/n_mask">n_mask</a></th><td>The space ninja's mask.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/n_shoes">n_shoes</a></th><td>The space ninja's shoes.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/s_acost">s_acost</a></th><td>Additional energy cost for cloaking per process</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/s_busy">s_busy</a></th><td>Whether or not the wearer is in the middle of an action, like hacking.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/s_coold">s_coold</a></th><td>The suit's current cooldown.  If not 0, blocks usage of most abilities, and decrements its value by 1 every process</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/s_cost">s_cost</a></th><td>How much energy the suit expends in a single process</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/s_delay">s_delay</a></th><td>How fast the suit is at certain actions, like draining power from things</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/s_initialized">s_initialized</a></th><td>Whether or not the suit is currently booted up.  Starts off.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/spark_system">spark_system</a></th><td>The suit's spark system, used for... sparking.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/stealth">stealth</a></th><td>Whether or not the suit is currently in stealth mode.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#var/stored_research">stored_research</a></th><td>The suit's stored research.  Used for the research objective (see antagonist file)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/cancel_stealth">cancel_stealth</a></th><td>Proc called to cancel stealth.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/deinitialize">deinitialize</a></th><td>Deinitializes the ninja suit</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/lockIcons">lockIcons</a></th><td>Proc for changing the suit's appearance upon locking.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/lock_suit">lock_suit</a></th><td>Proc called to lock the important gear pieces onto space ninja's body.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninitialize">ninitialize</a></th><td>Initializes the ninja suit</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninja_sword_recall">ninja_sword_recall</a></th><td>Proc called to recall the ninja's sword.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjaboost">ninjaboost</a></th><td>Proc called to activate space ninja's adrenaline.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjaboost_after">ninjaboost_after</a></th><td>Proc called to inject the ninja with radium.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjacost">ninjacost</a></th><td>Proc called to check if the ninja can afford an ability's cost.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjanet">ninjanet</a></th><td>Proc called to ensnare a person in a energy net.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjapulse">ninjapulse</a></th><td>Proc called to allow the ninja to EMP the nearby area.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjastar">ninjastar</a></th><td>Proc called to create a ninja star in the ninja's hands.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/ninjastatus">ninjastatus</a></th><td>Proc called to put a status readout to the ninja in chat.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/terminate">terminate</a></th><td>Proc used to delete all the attachments and itself.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/toggle_on_off">toggle_on_off</a></th><td>Toggles the ninja suit on/off</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/toggle_stealth">toggle_stealth</a></th><td>Proc called to toggle ninja stealth.</td></tr>
+            <tr><th><a href="obj/item/clothing/suit/space/space_ninja.html#proc/unlock_suit">unlock_suit</a></th><td>Proc called to unlock all the gear off space ninja's body.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/a_boost"><aside class="declaration">var </aside>a_boost
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 58"/></a></h3>
+        <p>Whether or not the adrenaline boost ability is available</p><h3 id="var/a_transfer"><aside class="declaration">var </aside>a_transfer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 52"/></a></h3>
+        <p>Units of radium required to refill the adrenaline boost</p><h3 id="var/affecting"><aside class="declaration">var </aside>affecting
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 24"/></a></h3>
+        <p>The person wearing the suit</p><h3 id="var/energyKatana"><aside class="declaration">var </aside>energyKatana
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/energy_katana.html">energy_katana</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 30"/></a></h3>
+        <p>The katana registered with the suit, used for recalling and catching the katana.  Set when the ninja outfit is created.</p><h3 id="var/n_gloves"><aside class="declaration">var </aside>n_gloves
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/gloves.html">gloves</a>/<a href="obj/item/clothing/gloves/space_ninja.html">space_ninja</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 37"/></a></h3>
+        <p>The space ninja's gloves.</p><h3 id="var/n_hood"><aside class="declaration">var </aside>n_hood
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/head.html">head</a>/<a href="obj/item/clothing/head/helmet.html">helmet</a>/<a href="obj/item/clothing/head/helmet/space/space_ninja.html">space/space_ninja</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 33"/></a></h3>
+        <p>The space ninja's hood.</p><h3 id="var/n_mask"><aside class="declaration">var </aside>n_mask
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/mask/gas/space_ninja.html">mask/gas/space_ninja</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 39"/></a></h3>
+        <p>The space ninja's mask.</p><h3 id="var/n_shoes"><aside class="declaration">var </aside>n_shoes
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/shoes.html">shoes</a>/<a href="obj/item/clothing/shoes/space_ninja.html">space_ninja</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 35"/></a></h3>
+        <p>The space ninja's shoes.</p><h3 id="var/s_acost"><aside class="declaration">var </aside>s_acost
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 48"/></a></h3>
+        <p>Additional energy cost for cloaking per process</p><h3 id="var/s_busy"><aside class="declaration">var </aside>s_busy
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 56"/></a></h3>
+        <p>Whether or not the wearer is in the middle of an action, like hacking.</p><h3 id="var/s_coold"><aside class="declaration">var </aside>s_coold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 44"/></a></h3>
+        <p>The suit's current cooldown.  If not 0, blocks usage of most abilities, and decrements its value by 1 every process</p><h3 id="var/s_cost"><aside class="declaration">var </aside>s_cost
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 46"/></a></h3>
+        <p>How much energy the suit expends in a single process</p><h3 id="var/s_delay"><aside class="declaration">var </aside>s_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 50"/></a></h3>
+        <p>How fast the suit is at certain actions, like draining power from things</p><h3 id="var/s_initialized"><aside class="declaration">var </aside>s_initialized
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 42"/></a></h3>
+        <p>Whether or not the suit is currently booted up.  Starts off.</p><h3 id="var/spark_system"><aside class="declaration">var </aside>spark_system
+            <aside>&ndash; /<a href="datum.html">datum</a>/effect_system/spark_spread</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 26"/></a></h3>
+        <p>The suit's spark system, used for... sparking.</p><h3 id="var/stealth"><aside class="declaration">var </aside>stealth
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 54"/></a></h3>
+        <p>Whether or not the suit is currently in stealth mode.</p><h3 id="var/stored_research"><aside class="declaration">var </aside>stored_research
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/techweb.html">techweb</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 28"/></a></h3>
+        <p>The suit's stored research.  Used for the research objective (see antagonist file)</p><h2 id="proc">Proc Details</h2><h3 id="proc/cancel_stealth"><aside class="declaration">proc </aside>cancel_stealth<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_stealth.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_stealth.dm 36"/></a></aside>
+        </h3>
+        <p>Proc called to cancel stealth.</p>
+<p>Called to cancel the stealth effect if it is ongoing.
+Does nothing otherwise.
+Arguments:</p>
+<ul>
+<li>Returns false if either the ninja no longer exists or is already visible, returns true if we successfully made the ninja visible.</li>
+</ul><h3 id="proc/deinitialize"><aside class="declaration">proc </aside>deinitialize<aside>(delay, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/ninja, phase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_suit_initialisation.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_suit_initialisation.dm 96"/></a></aside>
+        </h3>
+        <p>Deinitializes the ninja suit</p>
+<p>Deinitializes the ninja suit through eight phases, each of which calls this proc with an incremented phase
+Arguments:</p>
+<ul>
+<li>delay - The delay between each phase of deinitialization</li>
+<li>ninja - The human who is being affected by the suit</li>
+<li>phase - The phase of deinitialization</li>
+</ul><h3 id="proc/lockIcons"><aside class="declaration">proc </aside>lockIcons<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/ninja) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 161"/></a></aside>
+        </h3>
+        <p>Proc for changing the suit's appearance upon locking.</p>
+<p>Proc for when space ninja's suit locks.  If the user selects Original, gives it glowing lights, along with having an alternate sprite for female body types.
+Yes, we do have nipLEDs, how could you tell?
+If the user selects New Age, it applies new sprites to all the gear.
+Arguments:</p>
+<ul>
+<li>ninja - The person wearing the suit.</li>
+</ul><h3 id="proc/lock_suit"><aside class="declaration">proc </aside>lock_suit<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/ninja) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 186"/></a></aside>
+        </h3>
+        <p>Proc called to lock the important gear pieces onto space ninja's body.</p>
+<p>Called during the suit startup to lock all gear pieces onto space ninja.
+Terminates if a gear piece is not being worn.  Also gives the ninja the inability to use firearms.
+If the person in the suit isn't a ninja when this is called, this proc just gibs them instead.
+Arguments:</p>
+<ul>
+<li>ninja - The person wearing the suit.</li>
+<li>Returns false if the locking fails due to lack of all suit parts, and true if it succeeds.</li>
+</ul><h3 id="proc/ninitialize"><aside class="declaration">proc </aside>ninitialize<aside>(delay, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/ninja, phase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_suit_initialisation.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_suit_initialisation.dm 55"/></a></aside>
+        </h3>
+        <p>Initializes the ninja suit</p>
+<p>Initializes the ninja suit through seven phases, each of which calls this proc with an incremented phase
+Arguments:</p>
+<ul>
+<li>delay - The delay between each phase of initialization</li>
+<li>ninja - The human who is being affected by the suit</li>
+<li>phase - The phase of initialization</li>
+</ul><h3 id="proc/ninja_sword_recall"><aside class="declaration">proc </aside>ninja_sword_recall<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_sword_recall.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_sword_recall.dm 14"/></a></aside>
+        </h3>
+        <p>Proc called to recall the ninja's sword.</p>
+<p>Called to summon the ninja's katana back to them
+If the katana can see the ninja, it will throw itself towards them.
+If not, the katana will teleport itself to the ninja.</p><h3 id="proc/ninjaboost"><aside class="declaration">proc </aside>ninjaboost<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_adrenaline.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_adrenaline.dm 18"/></a></aside>
+        </h3>
+        <p>Proc called to activate space ninja's adrenaline.</p>
+<p>Proc called to use space ninja's adrenaline.  Gets the ninja out of almost any stun.
+Also makes them shout MGS references when used.  After a bit, it injects the user with
+radium by calling a different proc.</p><h3 id="proc/ninjaboost_after"><aside class="declaration">proc </aside>ninjaboost_after<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_adrenaline.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_adrenaline.dm 42"/></a></aside>
+        </h3>
+        <p>Proc called to inject the ninja with radium.</p>
+<p>Used after 7 seconds of using the ninja's adrenaline.
+Injects the user with how much radium the suit needs to refill an adrenaline boost.</p><h3 id="proc/ninjacost"><aside class="declaration">proc </aside>ninjacost<aside>(cost, specificCheck) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_cost_check.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_cost_check.dm 11"/></a></aside>
+        </h3>
+        <p>Proc called to check if the ninja can afford an ability's cost.</p>
+<p>Proc which determine whether or not a space ninja can afford to use a specific ability.
+It can also cancel stealth if the ability requested it.
+Arguments:</p>
+<ul>
+<li>cost - the energy cost of the ability</li>
+<li>specificCheck - Determines if the check is a normal one, an adrenaline one, or a stealth cancel check.</li>
+<li>Returns TRUE or the current cooldown timer if we can't perform the ability, and FALSE if we can.</li>
+</ul><h3 id="proc/ninjanet"><aside class="declaration">proc </aside>ninjanet<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_net.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_net.dm 13"/></a></aside>
+        </h3>
+        <p>Proc called to ensnare a person in a energy net.</p>
+<p>Used to ensnare a target in an energy net, preventing them from moving until the net is broken.
+Costs 40E, which is 40% of the default battery's max charge.  Intended as a means of reliably locking down an opponent when ninja stars won't suffice.</p><h3 id="proc/ninjapulse"><aside class="declaration">proc </aside>ninjapulse<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_empulse.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_empulse.dm 15"/></a></aside>
+        </h3>
+        <p>Proc called to allow the ninja to EMP the nearby area.</p>
+<p>Proc called to allow the ninja to EMP the nearby area.  By default, costs 500E, which is half of the default battery's max charge.
+Also affects the ninja as well.</p><h3 id="proc/ninjastar"><aside class="declaration">proc </aside>ninjastar<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_stars.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_stars.dm 14"/></a></aside>
+        </h3>
+        <p>Proc called to create a ninja star in the ninja's hands.</p>
+<p>Called to create a ninja star in the wearer's hand.  The ninja
+star doesn't do much up-front damage, but deals stamina damage
+as the target moves around, forcing a finish or flee scenario.</p><h3 id="proc/ninjastatus"><aside class="declaration">proc </aside>ninjastatus<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_status_read.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_status_read.dm 16"/></a></aside>
+        </h3>
+        <p>Proc called to put a status readout to the ninja in chat.</p>
+<p>Called put some information about the ninja's current status into chat.
+This information used to be displayed constantly on the status tab screen
+when the suit was on, but was turned into this as to remove the code from
+human.dm</p><h3 id="proc/terminate"><aside class="declaration">proc </aside>terminate<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L246">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 246"/></a></aside>
+        </h3>
+        <p>Proc used to delete all the attachments and itself.</p>
+<p>Can be called to entire rid of the suit pieces and the suit itself.</p><h3 id="proc/toggle_on_off"><aside class="declaration">proc </aside>toggle_on_off<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_suit_initialisation.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_suit_initialisation.dm 35"/></a></aside>
+        </h3>
+        <p>Toggles the ninja suit on/off</p>
+<p>Attempts to initialize or deinitialize the ninja suit</p><h3 id="proc/toggle_stealth"><aside class="declaration">proc </aside>toggle_stealth<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninja_equipment_actions/ninja_stealth.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninja_equipment_actions&#x2F;ninja_stealth.dm 13"/></a></aside>
+        </h3>
+        <p>Proc called to toggle ninja stealth.</p>
+<p>Proc called to toggle whether or not the ninja is in stealth mode.
+If cancelling, calls a separate proc in case something else needs to quickly cancel stealth.</p><h3 id="proc/unlock_suit"><aside class="declaration">proc </aside>unlock_suit<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/ninja) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/suit.dm#L223">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;suit.dm 223"/></a></aside>
+        </h3>
+        <p>Proc called to unlock all the gear off space ninja's body.</p>
+<p>Proc which is essentially the opposite of lock_suit.  Lets you take off all the suit parts.
+Also gets rid of the objection to using firearms from the wearer.
+Arguments:</p>
+<ul>
+<li>ninja - The person wearing the suit.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

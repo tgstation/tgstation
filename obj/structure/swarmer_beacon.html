@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;swarmer_beacon - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/swarmer_beacon.html#var">Var Details</a> - <a href="obj/structure/swarmer_beacon.html#proc">Proc Details</a></header>
+<main>
+<h1>Swarmer Beacon <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/swarmer_beacon.html">structure/swarmer_beacon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/swarmers/swarmer_objs.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;swarmers&#x2F;swarmer_objs.dm 42"/></a></h1>
+
+<p>Beacon which creates sentient player swarmers.</p>
+<p>The beacon which creates sentient player swarmers during the swarmer event.  Spawns in maint on xeno locations, and can create a player swarmer once every 30 seconds.
+The beacon cannot be damaged by swarmers, and must be destroyed to prevent the spawning of further player-controlled swarmers.
+Holds a swarmer within itself during the 30 seconds before releasing it and allowing for another swarmer to be spawned in.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/swarmer_beacon.html#var/processing_swarmer">processing_swarmer</a></th><td>Whether or not a swarmer is currently being created by this beacon</td></tr>
+            <tr><th><a href="obj/structure/swarmer_beacon.html#var/swarmerlist">swarmerlist</a></th><td>Reference to all the swarmers currently alive this beacon has created</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/swarmer_beacon.html#proc/que_swarmer">que_swarmer</a></th><td>Interaction when a ghost interacts with a swarmer beacon</td></tr>
+            <tr><th><a href="obj/structure/swarmer_beacon.html#proc/release_swarmer">release_swarmer</a></th><td>Releases a swarmer from the beacon and tells it what to do</td></tr>
+            <tr><th><a href="obj/structure/swarmer_beacon.html#proc/remove_swarmer">remove_swarmer</a></th><td>Removes a swarmer from the beacon's list.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/processing_swarmer"><aside class="declaration">var </aside>processing_swarmer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/swarmers/swarmer_objs.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;swarmers&#x2F;swarmer_objs.dm 55"/></a></h3>
+        <p>Whether or not a swarmer is currently being created by this beacon</p><h3 id="var/swarmerlist"><aside class="declaration">var </aside>swarmerlist
+            <aside>&ndash; /list/mob/living/simple_animal/hostile/swarmer</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/swarmers/swarmer_objs.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;swarmers&#x2F;swarmer_objs.dm 59"/></a></h3>
+        <p>Reference to all the swarmers currently alive this beacon has created</p><h2 id="proc">Proc Details</h2><h3 id="proc/que_swarmer"><aside class="declaration">proc </aside>que_swarmer<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/swarmers/swarmer_objs.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;swarmers&#x2F;swarmer_objs.dm 77"/></a></aside>
+        </h3>
+        <p>Interaction when a ghost interacts with a swarmer beacon</p>
+<p>Called when a ghost interacts with a swarmer beacon, allowing them to become a swarmer
+Arguments:</p>
+<ul>
+<li>user - A reference to the ghost interacting with the beacon</li>
+</ul><h3 id="proc/release_swarmer"><aside class="declaration">proc </aside>release_swarmer<aside>(/<a href="mob.html">mob</a>/swarmer) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/swarmers/swarmer_objs.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;swarmers&#x2F;swarmer_objs.dm 95"/></a></aside>
+        </h3>
+        <p>Releases a swarmer from the beacon and tells it what to do</p>
+<p>Occcurs 5 + (alive swarmers made from beacon * 2) seconds after a ghost becomes a swarmer.  The beacon releases it, tells it what to do, and opens itself up to spawn in a new swarmer.
+Arguments:</p>
+<ul>
+<li>swarmer - The swarmer being released and told what to do</li>
+</ul><h3 id="proc/remove_swarmer"><aside class="declaration">proc </aside>remove_swarmer<aside>(/<a href="mob.html">mob</a>/swarmer, force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/swarmers/swarmer_objs.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;swarmers&#x2F;swarmer_objs.dm 120"/></a></aside>
+        </h3>
+        <p>Removes a swarmer from the beacon's list.</p>
+<p>Removes the swarmer from our list.
+Called specifically when a swarmer is about to be destroyed, so we don't have any null references.
+Arguments:</p>
+<ul>
+<li>mob/swarmer - The swarmer to be removed from the list.</li>
+<li>force - Parameter sent by the COSMIG_PARENT_QDELETING signal.  Does nothing in this proc.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

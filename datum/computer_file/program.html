@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;computer_file&#x2F;program - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/computer_file/program.html#var">Var Details</a> - <a href="datum/computer_file/program.html#proc">Proc Details</a></header>
+<main>
+<h1>program <aside>/<a href="datum.html">datum</a>/<a href="datum/computer_file/program.html">computer_file/program</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 2"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/alert_able">alert_able</a></th><td>Whether this program can send alerts while minimized or closed. Used to show a mute button per program in the file manager</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/alert_pending">alert_pending</a></th><td>Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/alert_silenced">alert_silenced</a></th><td>Whether the user has muted this program's ability to send alerts.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/available_on_ntnet">available_on_ntnet</a></th><td>Whether the program can be downloaded from NTNet. Set to 0 to disable.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/available_on_syndinet">available_on_syndinet</a></th><td>Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/category">category</a></th><td>Category in the NTDownloader.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/computer">computer</a></th><td>Device that runs this program.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/extended_desc">extended_desc</a></th><td>Short description of this program's function.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/filedesc">filedesc</a></th><td>User-friendly name of this program.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/filename">filename</a></th><td>File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/ntnet_status">ntnet_status</a></th><td>NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/program_icon">program_icon</a></th><td>Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/program_icon_state">program_icon_state</a></th><td>Program-specific screen icon state</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/program_state">program_state</a></th><td>PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/required_access">required_access</a></th><td>List of required accesses to <em>run</em> the program.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/requires_ntnet">requires_ntnet</a></th><td>Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/requires_ntnet_feature">requires_ntnet_feature</a></th><td>Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD, NTNET_PEERTOPEER, NTNET_SYSTEMCONTROL and NTNET_COMMUNICATION)</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/tgui_id">tgui_id</a></th><td>Name of the tgui interface</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/transfer_access">transfer_access</a></th><td>List of required access to download or file host the program</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/ui_header">ui_header</a></th><td>Example: &quot;something.gif&quot; - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#var/usage_flags">usage_flags</a></th><td>Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/computer_file/program.html#proc/can_run">can_run</a></th><td>Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+NT Software Hub is checking available software), a list can be given to be used instead.
+Arguments:
+user is a ref of the mob using the device.
+loud is a bool deciding if this proc should use to_chats
+access_to_check is an access level that will be checked against the ID
+transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
+access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.</td></tr>
+            <tr><th><a href="datum/computer_file/program.html#proc/run_emag">run_emag</a></th><td>Called by the device when it is emagged.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/alert_able"><aside class="declaration">var </aside>alert_able
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 41"/></a></h3>
+        <p>Whether this program can send alerts while minimized or closed. Used to show a mute button per program in the file manager</p><h3 id="var/alert_pending"><aside class="declaration">var </aside>alert_pending
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 45"/></a></h3>
+        <p>Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.</p><h3 id="var/alert_silenced"><aside class="declaration">var </aside>alert_silenced
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 43"/></a></h3>
+        <p>Whether the user has muted this program's ability to send alerts.</p><h3 id="var/available_on_ntnet"><aside class="declaration">var </aside>available_on_ntnet
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 31"/></a></h3>
+        <p>Whether the program can be downloaded from NTNet. Set to 0 to disable.</p><h3 id="var/available_on_syndinet"><aside class="declaration">var </aside>available_on_syndinet
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 33"/></a></h3>
+        <p>Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.</p><h3 id="var/category"><aside class="declaration">var </aside>category
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 19"/></a></h3>
+        <p>Category in the NTDownloader.</p><h3 id="var/computer"><aside class="declaration">var </aside>computer
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/modular_computer.html">modular_computer</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 13"/></a></h3>
+        <p>Device that runs this program.</p><h3 id="var/extended_desc"><aside class="declaration">var </aside>extended_desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 17"/></a></h3>
+        <p>Short description of this program's function.</p><h3 id="var/filedesc"><aside class="declaration">var </aside>filedesc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 15"/></a></h3>
+        <p>User-friendly name of this program.</p><h3 id="var/filename">filename
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 5"/></a></h3>
+        <p>File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!</p><h3 id="var/ntnet_status"><aside class="declaration">var </aside>ntnet_status
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 27"/></a></h3>
+        <p>NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.</p><h3 id="var/program_icon"><aside class="declaration">var </aside>program_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 39"/></a></h3>
+        <p>Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.</p><h3 id="var/program_icon_state"><aside class="declaration">var </aside>program_icon_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 21"/></a></h3>
+        <p>Program-specific screen icon state</p><h3 id="var/program_state"><aside class="declaration">var </aside>program_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 11"/></a></h3>
+        <p>PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.</p><h3 id="var/required_access"><aside class="declaration">var </aside>required_access
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 7"/></a></h3>
+        <p>List of required accesses to <em>run</em> the program.</p><h3 id="var/requires_ntnet"><aside class="declaration">var </aside>requires_ntnet
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 23"/></a></h3>
+        <p>Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.</p><h3 id="var/requires_ntnet_feature"><aside class="declaration">var </aside>requires_ntnet_feature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 25"/></a></h3>
+        <p>Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD, NTNET_PEERTOPEER, NTNET_SYSTEMCONTROL and NTNET_COMMUNICATION)</p><h3 id="var/tgui_id"><aside class="declaration">var </aside>tgui_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 35"/></a></h3>
+        <p>Name of the tgui interface</p><h3 id="var/transfer_access"><aside class="declaration">var </aside>transfer_access
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 9"/></a></h3>
+        <p>List of required access to download or file host the program</p><h3 id="var/ui_header"><aside class="declaration">var </aside>ui_header
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 37"/></a></h3>
+        <p>Example: &quot;something.gif&quot; - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!</p><h3 id="var/usage_flags"><aside class="declaration">var </aside>usage_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 29"/></a></h3>
+        <p>Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL</p><h2 id="proc">Proc Details</h2><h3 id="proc/can_run"><aside class="declaration">proc </aside>can_run<aside>(/<a href="mob.html">mob</a>/user, loud, access_to_check, transfer, /list/access) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 104"/></a></aside>
+        </h3>
+        <p>Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+NT Software Hub is checking available software), a list can be given to be used instead.
+Arguments:
+user is a ref of the mob using the device.
+loud is a bool deciding if this proc should use to_chats
+access_to_check is an access level that will be checked against the ID
+transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
+access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.</p><h3 id="proc/run_emag"><aside class="declaration">proc </aside>run_emag<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/program.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;program.dm 174"/></a></aside>
+        </h3>
+        <p>Called by the device when it is emagged.</p>
+<p>Emagging the device allows certain programs to unlock new functions. However, the program will
+need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+The device will allow an emag to be run multiple times, so the user can re-emag to run the
+override again, should they download something new. The run_emag() proc should return TRUE if
+the emagging affected anything, and FALSE if no change was made (already emagged, or has no
+emag functions).</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

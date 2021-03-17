@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;gas_mixture - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/gas_mixture.html#proc">Proc Details</a></header>
+<main>
+<h1>gas_mixture <aside>/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 34"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/add_gas">add_gas</a></th><td>add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
+Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/add_gases">add_gases</a></th><td>add_gases(args) - shorthand for calling add_gas() once for each gas_type.</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/archive">archive</a></th><td>Update archived versions of variables. Returns: 1 in all cases</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/assert_gas">assert_gas</a></th><td>assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
+Must be used before adding to a gas. May be used before reading from a gas.</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/assert_gases">assert_gases</a></th><td>assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/compare">compare</a></th><td>Compares sample to self to see if within acceptable ranges that group processing may be enabled
+Returns: a string indicating what check failed, or &quot;&quot; if check passes</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/copy">copy</a></th><td>Creates new, identical gas mixture
+Returns: duplicate gas mixture</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/copy_from">copy_from</a></th><td>Copies variables from sample, moles multiplicated by partial
+Returns: 1 if we are mutable, 0 otherwise</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/copy_from_turf">copy_from_turf</a></th><td>Copies all gas info from the turf into the gas list along with temperature
+Returns: TRUE if we are mutable, FALSE otherwise</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/equalize">equalize</a></th><td>Distributes the contents of two mixes equally between themselves</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/garbage_collect">garbage_collect</a></th><td>garbage_collect() - removes any gas list which is empty.
+If called with a list as an argument, only removes gas lists with IDs from that list.
+Must be used after subtracting from a gas. Must be used after assert_gas()
+if assert_gas() was called only to read from the gas.
+By removing empty gases, processing speed is increased.</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/get_breath_partial_pressure">get_breath_partial_pressure</a></th><td>Takes the amount of the gas you want to PP as an argument
+So I don't have to do some hacky switches/defines/magic strings
+eg:
+Tox_PP = get_partial_pressure(gas_mixture.toxins)
+O2_PP = get_partial_pressure(gas_mixture.oxygen)</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/get_true_breath_pressure">get_true_breath_pressure</a></th><td>inverse</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/has_gas">has_gas</a></th><td>Checks to see if gas amount exists in mixture.
+Do NOT use this in code where performance matters!
+It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/heat_capacity">heat_capacity</a></th><td>joules per kelvin</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/merge">merge</a></th><td>Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/parse_gas_string">parse_gas_string</a></th><td>Copies variables from a particularly formatted string.
+Returns: 1 if we are mutable, 0 otherwise</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/pump_gas_to">pump_gas_to</a></th><td>Mathematical proofs:
+get_breath_partial_pressure(gas_pp) --&gt; gas_pp/total_moles()<em>breath_pp = pp
+get_true_breath_pressure(pp) --&gt; gas_pp = pp/breath_pp</em>total_moles()</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/react">react</a></th><td>Performs various reactions such as combustion or fusion (LOL)
+Returns: 1 if any reaction took place; 0 otherwise</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/release_gas_to">release_gas_to</a></th><td>Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/remove">remove</a></th><td>Proportionally removes amount of gas from the gas_mixture.
+Returns: gas_mixture with the gases removed</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/remove_ratio">remove_ratio</a></th><td>Proportionally removes amount of gas from the gas_mixture.
+Returns: gas_mixture with the gases removed</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/remove_specific">remove_specific</a></th><td>Removes an amount of a specific gas from the gas_mixture.
+Returns: gas_mixture with the gas removed</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/return_pressure">return_pressure</a></th><td>Calculate pressure in kilopascals</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/return_temperature">return_temperature</a></th><td>Calculate temperature in kelvins</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/return_volume">return_volume</a></th><td>Calculate volume in liters</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/share">share</a></th><td>Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
+Returns: amount of gas exchanged (+ if sharer received)</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/temperature_share">temperature_share</a></th><td>Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
+Returns: new temperature of the sharer</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/thermal_energy">thermal_energy</a></th><td>Calculate thermal energy in joules</td></tr>
+            <tr><th><a href="datum/gas_mixture.html#proc/total_moles">total_moles</a></th><td>Calculate moles</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/add_gas"><aside class="declaration">proc </aside>add_gas<aside>(gas_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 65"/></a></aside>
+        </h3>
+        <p>add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
+Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().</p><h3 id="proc/add_gases"><aside class="declaration">proc </aside>add_gases<aside>(...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 69"/></a></aside>
+        </h3>
+        <p>add_gases(args) - shorthand for calling add_gas() once for each gas_type.</p><h3 id="proc/archive"><aside class="declaration">proc </aside>archive<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 141"/></a></aside>
+        </h3>
+        <p>Update archived versions of variables. Returns: 1 in all cases</p><h3 id="proc/assert_gas"><aside class="declaration">proc </aside>assert_gas<aside>(gas_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 55"/></a></aside>
+        </h3>
+        <p>assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
+Must be used before adding to a gas. May be used before reading from a gas.</p><h3 id="proc/assert_gases"><aside class="declaration">proc </aside>assert_gases<aside>(...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 59"/></a></aside>
+        </h3>
+        <p>assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.</p><h3 id="proc/compare"><aside class="declaration">proc </aside>compare<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/sample) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L420">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 420"/></a></aside>
+        </h3>
+        <p>Compares sample to self to see if within acceptable ranges that group processing may be enabled
+Returns: a string indicating what check failed, or &quot;&quot; if check passes</p><h3 id="proc/copy"><aside class="declaration">proc </aside>copy<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L260">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 260"/></a></aside>
+        </h3>
+        <p>Creates new, identical gas mixture
+Returns: duplicate gas mixture</p><h3 id="proc/copy_from"><aside class="declaration">proc </aside>copy_from<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/sample, partial) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L274">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 274"/></a></aside>
+        </h3>
+        <p>Copies variables from sample, moles multiplicated by partial
+Returns: 1 if we are mutable, 0 otherwise</p><h3 id="proc/copy_from_turf"><aside class="declaration">proc </aside>copy_from_turf<aside>(/<a href="turf.html">turf</a>/model) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L290">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 290"/></a></aside>
+        </h3>
+        <p>Copies all gas info from the turf into the gas list along with temperature
+Returns: TRUE if we are mutable, FALSE otherwise</p><h3 id="proc/equalize"><aside class="declaration">proc </aside>equalize<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/other) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L234">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 234"/></a></aside>
+        </h3>
+        <p>Distributes the contents of two mixes equally between themselves</p><h3 id="proc/garbage_collect"><aside class="declaration">proc </aside>garbage_collect<aside>(/list/tocheck) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 79"/></a></aside>
+        </h3>
+        <p>garbage_collect() - removes any gas list which is empty.
+If called with a list as an argument, only removes gas lists with IDs from that list.
+Must be used after subtracting from a gas. Must be used after assert_gas()
+if assert_gas() was called only to read from the gas.
+By removing empty gases, processing speed is increased.</p><h3 id="proc/get_breath_partial_pressure"><aside class="declaration">proc </aside>get_breath_partial_pressure<aside>(gas_pressure) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L500">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 500"/></a></aside>
+        </h3>
+        <p>Takes the amount of the gas you want to PP as an argument
+So I don't have to do some hacky switches/defines/magic strings
+eg:
+Tox_PP = get_partial_pressure(gas_mixture.toxins)
+O2_PP = get_partial_pressure(gas_mixture.oxygen)</p><h3 id="proc/get_true_breath_pressure"><aside class="declaration">proc </aside>get_true_breath_pressure<aside>(partial_pressure) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L503">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 503"/></a></aside>
+        </h3>
+        <p>inverse</p><h3 id="proc/has_gas"><aside class="declaration">proc </aside>has_gas<aside>(gas_id, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 113"/></a></aside>
+        </h3>
+        <p>Checks to see if gas amount exists in mixture.
+Do NOT use this in code where performance matters!
+It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes</p><h3 id="proc/heat_capacity"><aside class="declaration">proc </aside>heat_capacity<aside>(data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 88"/></a></aside>
+        </h3>
+        <p>joules per kelvin</p><h3 id="proc/merge"><aside class="declaration">proc </aside>merge<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/giver) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 151"/></a></aside>
+        </h3>
+        <p>Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise</p><h3 id="proc/parse_gas_string"><aside class="declaration">proc </aside>parse_gas_string<aside>(gas_string) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L302">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 302"/></a></aside>
+        </h3>
+        <p>Copies variables from a particularly formatted string.
+Returns: 1 if we are mutable, 0 otherwise</p><h3 id="proc/pump_gas_to"><aside class="declaration">proc </aside>pump_gas_to<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/output_air, target_pressure) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L516">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 516"/></a></aside>
+        </h3>
+        <p>Mathematical proofs:
+get_breath_partial_pressure(gas_pp) --&gt; gas_pp/total_moles()<em>breath_pp = pp
+get_true_breath_pressure(pp) --&gt; gas_pp = pp/breath_pp</em>total_moles()</p>
+<p>10/20<em>5 = 2.5
+10 = 2.5/5</em>20
+Pumps gas from src to output_air. Amount depends on target_pressure</p><h3 id="proc/react"><aside class="declaration">proc </aside>react<aside>(/<a href="datum.html">datum</a>/holder) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L448">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 448"/></a></aside>
+        </h3>
+        <p>Performs various reactions such as combustion or fusion (LOL)
+Returns: 1 if any reaction took place; 0 otherwise</p><h3 id="proc/release_gas_to"><aside class="declaration">proc </aside>release_gas_to<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/output_air, target_pressure) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L535">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 535"/></a></aside>
+        </h3>
+        <p>Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.</p><h3 id="proc/remove"><aside class="declaration">proc </aside>remove<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 174"/></a></aside>
+        </h3>
+        <p>Proportionally removes amount of gas from the gas_mixture.
+Returns: gas_mixture with the gases removed</p><h3 id="proc/remove_ratio"><aside class="declaration">proc </aside>remove_ratio<aside>(ratio) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 196"/></a></aside>
+        </h3>
+        <p>Proportionally removes amount of gas from the gas_mixture.
+Returns: gas_mixture with the gases removed</p><h3 id="proc/remove_specific"><aside class="declaration">proc </aside>remove_specific<aside>(gas_id, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 217"/></a></aside>
+        </h3>
+        <p>Removes an amount of a specific gas from the gas_mixture.
+Returns: gas_mixture with the gas removed</p><h3 id="proc/return_pressure"><aside class="declaration">proc </aside>return_pressure<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 120"/></a></aside>
+        </h3>
+        <p>Calculate pressure in kilopascals</p><h3 id="proc/return_temperature"><aside class="declaration">proc </aside>return_temperature<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 129"/></a></aside>
+        </h3>
+        <p>Calculate temperature in kelvins</p><h3 id="proc/return_volume"><aside class="declaration">proc </aside>return_volume<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 133"/></a></aside>
+        </h3>
+        <p>Calculate volume in liters</p><h3 id="proc/share"><aside class="declaration">proc </aside>share<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/sharer, atmos_adjacent_turfs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L324">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 324"/></a></aside>
+        </h3>
+        <p>Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
+Returns: amount of gas exchanged (+ if sharer received)</p><h3 id="proc/temperature_share"><aside class="declaration">proc </aside>temperature_share<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L396">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 396"/></a></aside>
+        </h3>
+        <p>Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
+Returns: new temperature of the sharer</p><h3 id="proc/thermal_energy"><aside class="declaration">proc </aside>thermal_energy<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 137"/></a></aside>
+        </h3>
+        <p>Calculate thermal energy in joules</p><h3 id="proc/total_moles"><aside class="declaration">proc </aside>total_moles<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/gasmixtures/gas_mixture.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;gasmixtures&#x2F;gas_mixture.dm 106"/></a></aside>
+        </h3>
+        <p>Calculate moles</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

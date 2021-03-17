@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;computer&#x2F;communications - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/computer/communications.html#var">Var Details</a> - <a href="obj/machinery/computer/communications.html#proc">Proc Details</a></header>
+<main>
+<h1>communications <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/computer/communications.html">computer/communications</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 10"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/alert_level_tick">alert_level_tick</a></th><td>How many times the alert level has been changed
+Used to clear the modal to change alert level</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/authorize_access">authorize_access</a></th><td>The access that the card had on login</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/authorize_name">authorize_name</a></th><td>The name of the user who logged in</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/cyborg_state">cyborg_state</a></th><td>The current state of the UI for AIs</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/important_action_cooldown">important_action_cooldown</a></th><td>Cooldown for important actions, such as messaging CentCom or other sectors</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/last_status_display">last_status_display</a></th><td>The last lines used for changing the status display</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/messages">messages</a></th><td>The messages this console has been sent</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#var/state">state</a></th><td>The current state of the UI</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#proc/authenticated">authenticated</a></th><td>Are we a silicon, OR logged in?</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#proc/authenticated_as_non_silicon_captain">authenticated_as_non_silicon_captain</a></th><td>Are we NOT a silicon, AND we're logged in as the captain?</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#proc/authenticated_as_silicon_or_captain">authenticated_as_silicon_or_captain</a></th><td>Are we a silicon, OR we're logged in as the captain?</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#proc/can_buy_shuttles">can_buy_shuttles</a></th><td>Returns TRUE if the user can buy shuttles.
+If they cannot, returns FALSE or a string detailing why.</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#proc/has_communication">has_communication</a></th><td>Returns whether or not the communications console can communicate with the station</td></tr>
+            <tr><th><a href="obj/machinery/computer/communications.html#proc/override_cooldown">override_cooldown</a></th><td>Override the cooldown for special actions
+Used in places such as CentCom messaging back so that the crew can answer right away</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/alert_level_tick"><aside class="declaration">var </aside>alert_level_tick
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 39"/></a></h3>
+        <p>How many times the alert level has been changed
+Used to clear the modal to change alert level</p><h3 id="var/authorize_access"><aside class="declaration">var </aside>authorize_access
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 32"/></a></h3>
+        <p>The access that the card had on login</p><h3 id="var/authorize_name"><aside class="declaration">var </aside>authorize_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 29"/></a></h3>
+        <p>The name of the user who logged in</p><h3 id="var/cyborg_state"><aside class="declaration">var </aside>cyborg_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 26"/></a></h3>
+        <p>The current state of the UI for AIs</p><h3 id="var/important_action_cooldown"><aside class="declaration">var </aside>important_action_cooldown
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 20"/></a></h3>
+        <p>Cooldown for important actions, such as messaging CentCom or other sectors</p><h3 id="var/last_status_display"><aside class="declaration">var </aside>last_status_display
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 44"/></a></h3>
+        <p>The last lines used for changing the status display</p><h3 id="var/messages"><aside class="declaration">var </aside>messages
+            <aside>&ndash; /list/datum/comm_message</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 35"/></a></h3>
+        <p>The messages this console has been sent</p><h3 id="var/state"><aside class="declaration">var </aside>state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 23"/></a></h3>
+        <p>The current state of the UI</p><h2 id="proc">Proc Details</h2><h3 id="proc/authenticated"><aside class="declaration">proc </aside>authenticated<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 62"/></a></aside>
+        </h3>
+        <p>Are we a silicon, OR logged in?</p><h3 id="proc/authenticated_as_non_silicon_captain"><aside class="declaration">proc </aside>authenticated_as_non_silicon_captain<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 50"/></a></aside>
+        </h3>
+        <p>Are we NOT a silicon, AND we're logged in as the captain?</p><h3 id="proc/authenticated_as_silicon_or_captain"><aside class="declaration">proc </aside>authenticated_as_silicon_or_captain<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 56"/></a></aside>
+        </h3>
+        <p>Are we a silicon, OR we're logged in as the captain?</p><h3 id="proc/can_buy_shuttles"><aside class="declaration">proc </aside>can_buy_shuttles<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L504">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 504"/></a></aside>
+        </h3>
+        <p>Returns TRUE if the user can buy shuttles.
+If they cannot, returns FALSE or a string detailing why.</p><h3 id="proc/has_communication"><aside class="declaration">proc </aside>has_communication<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L491">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 491"/></a></aside>
+        </h3>
+        <p>Returns whether or not the communications console can communicate with the station</p><h3 id="proc/override_cooldown"><aside class="declaration">proc </aside>override_cooldown<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/communications.dm#L563">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;communications.dm 563"/></a></aside>
+        </h3>
+        <p>Override the cooldown for special actions
+Used in places such as CentCom messaging back so that the crew can answer right away</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

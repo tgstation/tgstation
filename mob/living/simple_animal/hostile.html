@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/hostile.html#var">Var Details</a> - <a href="mob/living/simple_animal/hostile.html#proc">Proc Details</a></header>
+<main>
+<h1>hostile <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/charge_cooldown">charge_cooldown</a></th><td>Declares a cooldown for potential charges right off the bat.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/charge_distance">charge_distance</a></th><td>In a charge, how many tiles will the charger travel?</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/charge_frequency">charge_frequency</a></th><td>How often can the charging mob actually charge? Effects the cooldown between charges.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/charge_state">charge_state</a></th><td>Tracks if the target is actively charging.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/charger">charger</a></th><td>When a target is found, will the mob attempt to charge at it's target?</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/knockdown_time">knockdown_time</a></th><td>If the mob is charging, how long will it stun it's target on success, and itself on failure?</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#var/stat_attack">stat_attack</a></th><td>Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/AICanContinue">AICanContinue</a></th><td>AI Status</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/ListTargets">ListTargets</a></th><td>HOSTILE MOB TARGETTING AND AGGRESSION</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/charge_end">charge_end</a></th><td>Proc that handles a charge attack after it's concluded.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/death">death</a></th><td>END HOSTILE MOB TARGETTING AND AGGRESSION</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/enter_charge">enter_charge</a></th><td>Proc that handles a charge attack windup for a mob.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/handle_charge_target">handle_charge_target</a></th><td>Proc that throws the mob at the target after the windup.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile.html#proc/throw_impact">throw_impact</a></th><td>Proc that handles the charge impact of the charging mob.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/charge_cooldown"><aside class="declaration">var </aside>charge_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 65"/></a></h3>
+        <p>Declares a cooldown for potential charges right off the bat.</p><h3 id="var/charge_distance"><aside class="declaration">var </aside>charge_distance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 59"/></a></h3>
+        <p>In a charge, how many tiles will the charger travel?</p><h3 id="var/charge_frequency"><aside class="declaration">var </aside>charge_frequency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 61"/></a></h3>
+        <p>How often can the charging mob actually charge? Effects the cooldown between charges.</p><h3 id="var/charge_state"><aside class="declaration">var </aside>charge_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 57"/></a></h3>
+        <p>Tracks if the target is actively charging.</p><h3 id="var/charger"><aside class="declaration">var </aside>charger
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 55"/></a></h3>
+        <p>When a target is found, will the mob attempt to charge at it's target?</p><h3 id="var/knockdown_time"><aside class="declaration">var </aside>knockdown_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 63"/></a></h3>
+        <p>If the mob is charging, how long will it stun it's target on success, and itself on failure?</p><h3 id="var/stat_attack"><aside class="declaration">var </aside>stat_attack
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 46"/></a></h3>
+        <p>Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.</p><h2 id="proc">Proc Details</h2><h3 id="proc/AICanContinue"><aside class="declaration">proc </aside>AICanContinue<aside>(/list/possible_targets) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L520">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 520"/></a></aside>
+        </h3>
+        <p>AI Status</p><h3 id="proc/ListTargets"><aside class="declaration">proc </aside>ListTargets<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 146"/></a></aside>
+        </h3>
+        <p>HOSTILE MOB TARGETTING AND AGGRESSION</p><h3 id="proc/charge_end"><aside class="declaration">proc </aside>charge_end<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L624">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 624"/></a></aside>
+        </h3>
+        <p>Proc that handles a charge attack after it's concluded.</p><h3 id="proc/death">death<aside>(gibbed) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L375">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 375"/></a></aside>
+        </h3>
+        <p>END HOSTILE MOB TARGETTING AND AGGRESSION</p><h3 id="proc/enter_charge"><aside class="declaration">proc </aside>enter_charge<aside>(/<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L603">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 603"/></a></aside>
+        </h3>
+        <p>Proc that handles a charge attack windup for a mob.</p><h3 id="proc/handle_charge_target"><aside class="declaration">proc </aside>handle_charge_target<aside>(/<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L615">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 615"/></a></aside>
+        </h3>
+        <p>Proc that throws the mob at the target after the windup.</p><h3 id="proc/throw_impact">throw_impact<aside>(/<a href="atom.html">atom</a>/hit_atom, /<a href="datum.html">datum</a>/<a href="datum/thrownthing.html">thrownthing</a>/throwingdatum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/hostile.dm#L630">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;hostile.dm 630"/></a></aside>
+        </h3>
+        <p>Proc that handles the charge impact of the charging mob.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

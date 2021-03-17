@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;ai_controller - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/ai_controller.html#var">Var Details</a> - <a href="datum/ai_controller.html#proc">Proc Details</a></header>
+<main>
+<h1>ai_controller <aside>/<a href="datum.html">datum</a>/<a href="datum/ai_controller.html">ai_controller</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/ai_movement">ai_movement</a></th><td>Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/ai_status">ai_status</a></th><td>Current status of AI (OFF/ON)</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/ai_traits">ai_traits</a></th><td>Bitfield of traits for this AI to handle extra behavior</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/behavior_cooldowns">behavior_cooldowns</a></th><td>Current actions and their respective last time ran as an assoc list.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/blackboard">blackboard</a></th><td>This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/continue_processing_when_client">continue_processing_when_client</a></th><td>Can the AI remain in control if there is a client?</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/current_behaviors">current_behaviors</a></th><td>Current actions being performed by the AI.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/current_movement_target">current_movement_target</a></th><td>Current movement target of the AI, generally set by decision making.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/max_target_distance">max_target_distance</a></th><td>distance to give up on target</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/movement_cooldown">movement_cooldown</a></th><td>Cooldown until next movement</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/movement_delay">movement_delay</a></th><td>Delay between movements. This is on the controller so we can keep the movement datum singleton</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/movement_path">movement_path</a></th><td>A list for the path we're currently following, if we're using JPS pathing</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/pathing_attempts">pathing_attempts</a></th><td>Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/pawn">pawn</a></th><td>The atom this controller is controlling</td></tr>
+            <tr><th><a href="datum/ai_controller.html#var/repath_cooldown">repath_cooldown</a></th><td>Cooldown for JPS movement, how often we're allowed to try making a new path</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/PerformIdleBehavior">PerformIdleBehavior</a></th><td>Are we close enough to engage?
+Perform some dumb idle behavior.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/PossessPawn">PossessPawn</a></th><td>Proc to move from one pawn to another, this will destroy the target's existing controller.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/SelectBehaviors">SelectBehaviors</a></th><td>This is where you decide what actions are taken by the AI.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/TryPossessPawn">TryPossessPawn</a></th><td>Abstract proc for initializing the pawn to the new controller</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/UnpossessPawn">UnpossessPawn</a></th><td>Proc for deinitializing the pawn to the old controller</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/able_to_run">able_to_run</a></th><td>Returns TRUE if the ai controller can actually run at the moment.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/get_access">get_access</a></th><td>Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/process">process</a></th><td>Generates a plan and see if our existing one is still valid.</td></tr>
+            <tr><th><a href="datum/ai_controller.html#proc/set_ai_status">set_ai_status</a></th><td>This proc handles changing ai status, and starts/stops processing if required.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/ai_movement"><aside class="declaration">var </aside>ai_movement
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/ai_movement.html">ai_movement</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 28"/></a></h3>
+        <p>Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.</p><h3 id="var/ai_status"><aside class="declaration">var </aside>ai_status
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 16"/></a></h3>
+        <p>Current status of AI (OFF/ON)</p><h3 id="var/ai_traits"><aside class="declaration">var </aside>ai_traits
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 10"/></a></h3>
+        <p>Bitfield of traits for this AI to handle extra behavior</p><h3 id="var/behavior_cooldowns"><aside class="declaration">var </aside>behavior_cooldowns
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 14"/></a></h3>
+        <p>Current actions and their respective last time ran as an assoc list.</p><h3 id="var/blackboard"><aside class="declaration">var </aside>blackboard
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 20"/></a></h3>
+        <p>This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.</p><h3 id="var/continue_processing_when_client"><aside class="declaration">var </aside>continue_processing_when_client
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 24"/></a></h3>
+        <p>Can the AI remain in control if there is a client?</p><h3 id="var/current_behaviors"><aside class="declaration">var </aside>current_behaviors
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 12"/></a></h3>
+        <p>Current actions being performed by the AI.</p><h3 id="var/current_movement_target"><aside class="declaration">var </aside>current_movement_target
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 18"/></a></h3>
+        <p>Current movement target of the AI, generally set by decision making.</p><h3 id="var/max_target_distance"><aside class="declaration">var </aside>max_target_distance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 26"/></a></h3>
+        <p>distance to give up on target</p><h3 id="var/movement_cooldown"><aside class="declaration">var </aside>movement_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 30"/></a></h3>
+        <p>Cooldown until next movement</p><h3 id="var/movement_delay"><aside class="declaration">var </aside>movement_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 32"/></a></h3>
+        <p>Delay between movements. This is on the controller so we can keep the movement datum singleton</p><h3 id="var/movement_path"><aside class="declaration">var </aside>movement_path
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 34"/></a></h3>
+        <p>A list for the path we're currently following, if we're using JPS pathing</p><h3 id="var/pathing_attempts"><aside class="declaration">var </aside>pathing_attempts
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 22"/></a></h3>
+        <p>Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.</p><h3 id="var/pawn"><aside class="declaration">var </aside>pawn
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 8"/></a></h3>
+        <p>The atom this controller is controlling</p><h3 id="var/repath_cooldown"><aside class="declaration">var </aside>repath_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 36"/></a></h3>
+        <p>Cooldown for JPS movement, how often we're allowed to try making a new path</p><h2 id="proc">Proc Details</h2><h3 id="proc/PerformIdleBehavior"><aside class="declaration">proc </aside>PerformIdleBehavior<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 131"/></a></aside>
+        </h3>
+        <p>Are we close enough to engage?
+Perform some dumb idle behavior.</p><h3 id="proc/PossessPawn"><aside class="declaration">proc </aside>PossessPawn<aside>(/<a href="atom.html">atom</a>/new_pawn) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 48"/></a></aside>
+        </h3>
+        <p>Proc to move from one pawn to another, this will destroy the target's existing controller.</p><h3 id="proc/SelectBehaviors"><aside class="declaration">proc </aside>SelectBehaviors<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 135"/></a></aside>
+        </h3>
+        <p>This is where you decide what actions are taken by the AI.</p><h3 id="proc/TryPossessPawn"><aside class="declaration">proc </aside>TryPossessPawn<aside>(/<a href="atom.html">atom</a>/new_pawn) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 74"/></a></aside>
+        </h3>
+        <p>Abstract proc for initializing the pawn to the new controller</p><h3 id="proc/UnpossessPawn"><aside class="declaration">proc </aside>UnpossessPawn<aside>(destroy) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 78"/></a></aside>
+        </h3>
+        <p>Proc for deinitializing the pawn to the old controller</p><h3 id="proc/able_to_run"><aside class="declaration">proc </aside>able_to_run<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 87"/></a></aside>
+        </h3>
+        <p>Returns TRUE if the ai controller can actually run at the moment.</p><h3 id="proc/get_access"><aside class="declaration">proc </aside>get_access<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 169"/></a></aside>
+        </h3>
+        <p>Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant</p><h3 id="proc/process"><aside class="parent"><a title="/datum" href="datum.html#proc/process">&uarr;</a></aside>process<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 91"/></a></aside>
+        </h3>
+        <p>Generates a plan and see if our existing one is still valid.</p><h3 id="proc/set_ai_status"><aside class="declaration">proc </aside>set_ai_status<aside>(new_ai_status) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/ai/_ai_controller.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;ai&#x2F;_ai_controller.dm 140"/></a></aside>
+        </h3>
+        <p>This proc handles changing ai status, and starts/stops processing if required.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

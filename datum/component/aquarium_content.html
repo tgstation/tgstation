@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;aquarium_content - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/aquarium_content.html#var">Var Details</a> - <a href="datum/component/aquarium_content.html#proc">Proc Details</a></header>
+<main>
+<h1>aquarium_content <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/aquarium_content.html">aquarium_content</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 2"/></a></h1>
+
+<p>Allows movables to be inserted/displayed in aquariums.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/base_px">base_px</a></th><td>Base px offset of the visual object in current aquarium aka current base position</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/base_py">base_py</a></th><td>Base px offset of the visual object in current aquarium aka current base position</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/current_aquarium">current_aquarium</a></th><td>Keeps track of our current aquarium.</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/properties">properties</a></th><td>This is a datum that describes our in-aquarium functionality</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/attack_reaction">attack_reaction</a></th><td>Our aquarium is hit with stuff</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/generate_animation">generate_animation</a></th><td>Actually animates the vc holder</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/generate_base_vc">generate_base_vc</a></th><td>Generates common visual object, propeties that don't depend on aquarium surface</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/on_surface_changed">on_surface_changed</a></th><td>Aquarium surface changed in some way, we need to recalculate base position and aninmation</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/start_flopping">start_flopping</a></th><td>Starts flopping animation</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/stop_flopping">stop_flopping</a></th><td>Stops flopping animation</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/swim_animation">swim_animation</a></th><td>Create looping random path animation, pixel offsets parameters include offsets already</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/base_px"><aside class="declaration">var </aside>base_px
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 13"/></a></h3>
+        <p>Base px offset of the visual object in current aquarium aka current base position</p><h3 id="var/base_py"><aside class="declaration">var </aside>base_py
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 15"/></a></h3>
+        <p>Base px offset of the visual object in current aquarium aka current base position</p><h3 id="var/current_aquarium"><aside class="declaration">var </aside>current_aquarium
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/structure/aquarium.html">structure/aquarium</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 7"/></a></h3>
+        <p>Keeps track of our current aquarium.</p><h3 id="var/properties"><aside class="declaration">var </aside>properties
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/aquarium_behaviour.html">aquarium_behaviour</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 4"/></a></h3>
+        <p>This is a datum that describes our in-aquarium functionality</p><h2 id="proc">Proc Details</h2><h3 id="proc/attack_reaction"><aside class="declaration">proc </aside>attack_reaction<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/thing, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 96"/></a></aside>
+        </h3>
+        <p>Our aquarium is hit with stuff</p><h3 id="proc/generate_animation"><aside class="declaration">proc </aside>generate_animation<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 125"/></a></aside>
+        </h3>
+        <p>Actually animates the vc holder</p><h3 id="proc/generate_base_vc"><aside class="declaration">proc </aside>generate_base_vc<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 115"/></a></aside>
+        </h3>
+        <p>Generates common visual object, propeties that don't depend on aquarium surface</p><h3 id="proc/on_surface_changed"><aside class="declaration">proc </aside>on_surface_changed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 90"/></a></aside>
+        </h3>
+        <p>Aquarium surface changed in some way, we need to recalculate base position and aninmation</p><h3 id="proc/start_flopping"><aside class="declaration">proc </aside>start_flopping<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 218"/></a></aside>
+        </h3>
+        <p>Starts flopping animation</p><h3 id="proc/stop_flopping"><aside class="declaration">proc </aside>stop_flopping<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 224"/></a></aside>
+        </h3>
+        <p>Stops flopping animation</p><h3 id="proc/swim_animation"><aside class="declaration">proc </aside>swim_animation<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 136"/></a></aside>
+        </h3>
+        <p>Create looping random path animation, pixel offsets parameters include offsets already</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

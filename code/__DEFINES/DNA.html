@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;DNA.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/DNA.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/DNA.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/DNA.html#define/MUTCOLORS_PARTSONLY">MUTCOLORS_PARTSONLY</a></th><td>Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/DIGITIGRADE">DIGITIGRADE</a></th><td>Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/DYNCOLORS">DYNCOLORS</a></th><td>Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/NOEYESPRITES">NOEYESPRITES</a></th><td>Do not draw eyes or eyeless overlay</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/HAS_FLESH">HAS_FLESH</a></th><td>Used for determining which wounds are applicable to this species.
+if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/HAS_BONE">HAS_BONE</a></th><td>if we have bones (can suffer bone wounds)</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/HAS_MARKINGS">HAS_MARKINGS</a></th><td>If we have a limb-specific overlay sprite</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/NOBLOODOVERLAY">NOBLOODOVERLAY</a></th><td>Do not draw blood overlay</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/NOAUGMENTS">NOAUGMENTS</a></th><td>No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/ORGAN_SLOT_XENO_PLASMAVESSEL">ORGAN_SLOT_XENO_PLASMAVESSEL</a></th><td>Xenomorph organ slots</td></tr>
+        <tr><th><a href="code/__DEFINES/DNA.html#define/STANDARD_ORGAN_DECAY">STANDARD_ORGAN_DECAY</a></th><td>designed to fail organs when left to decay for ~15 minutes</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/DIGITIGRADE"><aside class="declaration">#define </aside>DIGITIGRADE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 107"/></a>
+    </h3>
+    <p>Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)</p><h3 id="define/DYNCOLORS"><aside class="declaration">#define </aside>DYNCOLORS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 113"/></a>
+    </h3>
+    <p>Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting</p><h3 id="define/HAS_BONE"><aside class="declaration">#define </aside>HAS_BONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 121"/></a>
+    </h3>
+    <p>if we have bones (can suffer bone wounds)</p><h3 id="define/HAS_FLESH"><aside class="declaration">#define </aside>HAS_FLESH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 119"/></a>
+    </h3>
+    <p>Used for determining which wounds are applicable to this species.
+if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)</p><h3 id="define/HAS_MARKINGS"><aside class="declaration">#define </aside>HAS_MARKINGS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L123">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 123"/></a>
+    </h3>
+    <p>If we have a limb-specific overlay sprite</p><h3 id="define/MUTCOLORS_PARTSONLY"><aside class="declaration">#define </aside>MUTCOLORS_PARTSONLY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 104"/></a>
+    </h3>
+    <p>Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.</p><h3 id="define/NOAUGMENTS"><aside class="declaration">#define </aside>NOAUGMENTS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 127"/></a>
+    </h3>
+    <p>No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png</p><h3 id="define/NOBLOODOVERLAY"><aside class="declaration">#define </aside>NOBLOODOVERLAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 125"/></a>
+    </h3>
+    <p>Do not draw blood overlay</p><h3 id="define/NOEYESPRITES"><aside class="declaration">#define </aside>NOEYESPRITES
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 116"/></a>
+    </h3>
+    <p>Do not draw eyes or eyeless overlay</p><h3 id="define/ORGAN_SLOT_XENO_PLASMAVESSEL"><aside class="declaration">#define </aside>ORGAN_SLOT_XENO_PLASMAVESSEL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L156">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 156"/></a>
+    </h3>
+    <p>Xenomorph organ slots</p><h3 id="define/STANDARD_ORGAN_DECAY"><aside class="declaration">#define </aside>STANDARD_ORGAN_DECAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/DNA.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;DNA.dm 167"/></a>
+    </h3>
+    <p>designed to fail organs when left to decay for ~15 minutes</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

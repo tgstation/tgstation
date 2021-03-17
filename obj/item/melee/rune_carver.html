@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;melee&#x2F;rune_carver - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/melee/rune_carver.html#var">Var Details</a> - <a href="obj/item/melee/rune_carver.html#proc">Proc Details</a></header>
+<main>
+<h1>rune_carver <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/melee/rune_carver.html">melee/rune_carver</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L292">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 292"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/melee/rune_carver.html#var/blacklisted_turfs">blacklisted_turfs</a></th><td>turfs that you cannot draw carvings on</td></tr>
+            <tr><th><a href="obj/item/melee/rune_carver.html#var/current_runes">current_runes</a></th><td>A list of current runes</td></tr>
+            <tr><th><a href="obj/item/melee/rune_carver.html#var/drawing">drawing</a></th><td>A check to see if you are in process of drawing a rune</td></tr>
+            <tr><th><a href="obj/item/melee/rune_carver.html#var/linked_action">linked_action</a></th><td>Linked action</td></tr>
+            <tr><th><a href="obj/item/melee/rune_carver.html#var/max_rune_amt">max_rune_amt</a></th><td>Max amount of runes</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/melee/rune_carver.html#proc/carve_rune">carve_rune</a></th><td>Action of carving runes, gives you the ability to click on floor and choose a rune of your need.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blacklisted_turfs"><aside class="declaration">var </aside>blacklisted_turfs
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L308">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 308"/></a></h3>
+        <p>turfs that you cannot draw carvings on</p><h3 id="var/current_runes"><aside class="declaration">var </aside>current_runes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L312">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 312"/></a></h3>
+        <p>A list of current runes</p><h3 id="var/drawing"><aside class="declaration">var </aside>drawing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L310">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 310"/></a></h3>
+        <p>A check to see if you are in process of drawing a rune</p><h3 id="var/linked_action"><aside class="declaration">var </aside>linked_action
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/action/innate/rune_shatter.html">action/innate/rune_shatter</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L318">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 318"/></a></h3>
+        <p>Linked action</p><h3 id="var/max_rune_amt"><aside class="declaration">var </aside>max_rune_amt
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L314">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 314"/></a></h3>
+        <p>Max amount of runes</p><h2 id="proc">Proc Details</h2><h3 id="proc/carve_rune"><aside class="declaration">proc </aside>carve_rune<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, proximity_flag, click_parameters) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_items.dm#L346">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_items.dm 346"/></a></aside>
+        </h3>
+        <p>Action of carving runes, gives you the ability to click on floor and choose a rune of your need.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

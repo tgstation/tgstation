@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;maths.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/maths.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/maths.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/maths.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;maths.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/maths.html#define/SIGN">SIGN</a></th><td>Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive</td></tr>
+        <tr><th><a href="code/__DEFINES/maths.html#define/LPFILTER">LPFILTER</a></th><td>Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
+delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
+See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths</td></tr>
+        <tr><th><a href="code/__DEFINES/maths.html#define/TOBITSHIFT">TOBITSHIFT</a></th><td>Gets shift x that would be required the bitflag (1&lt;&lt;x)</td></tr>
+        <tr><th><a href="code/__DEFINES/maths.html#define/DT_PROB_RATE">DT_PROB_RATE</a></th><td>Converts a probability/second chance to probability/delta_time chance
+For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do <code>if(prob(100*DT_PROB_RATE(0.1, 5)))</code></td></tr>
+        <tr><th><a href="code/__DEFINES/maths.html#define/DT_PROB">DT_PROB</a></th><td>Like DT_PROB_RATE but easier to use, simply put <code>if(DT_PROB(10, 5))</code></td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/DT_PROB"><aside class="declaration">#define </aside>DT_PROB
+            <aside>(prob_per_second_percent, delta_time)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/maths.dm#L220">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;maths.dm 220"/></a>
+    </h3>
+    <p>Like DT_PROB_RATE but easier to use, simply put <code>if(DT_PROB(10, 5))</code></p><h3 id="define/DT_PROB_RATE"><aside class="declaration">#define </aside>DT_PROB_RATE
+            <aside>(prob_per_second, delta_time)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/maths.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;maths.dm 217"/></a>
+    </h3>
+    <p>Converts a probability/second chance to probability/delta_time chance
+For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do <code>if(prob(100*DT_PROB_RATE(0.1, 5)))</code></p><h3 id="define/LPFILTER"><aside class="declaration">#define </aside>LPFILTER
+            <aside>(memory, signal, delta_time, RC)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/maths.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;maths.dm 90"/></a>
+    </h3>
+    <p>Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
+delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
+See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths</p><h3 id="define/SIGN"><aside class="declaration">#define </aside>SIGN
+            <aside>(x)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/maths.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;maths.dm 27"/></a>
+    </h3>
+    <p>Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive</p><h3 id="define/TOBITSHIFT"><aside class="declaration">#define </aside>TOBITSHIFT
+            <aside>(bit)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/maths.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;maths.dm 112"/></a>
+    </h3>
+    <p>Gets shift x that would be required the bitflag (1&lt;&lt;x)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;ntnet_interface - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/ntnet_interface.html#proc">Proc Details</a></header>
+<main>
+<h1>ntnet_interface <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/ntnet_interface.html">ntnet_interface</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/ntnet_interface.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;ntnet_interface.dm 45"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/ntnet_interface.html#proc/Initialize">Initialize</a></th><td>Initialize for the interface</td></tr>
+            <tr><th><a href="datum/component/ntnet_interface.html#proc/connect_port">connect_port</a></th><td>Connect to a port on this interface</td></tr>
+            <tr><th><a href="datum/component/ntnet_interface.html#proc/deregister_port">deregister_port</a></th><td>Disconnects an existing port in the interface</td></tr>
+            <tr><th><a href="datum/component/ntnet_interface.html#proc/register_port">register_port</a></th><td>Create a port for this interface</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(network_name, network_tag) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/ntnet_interface.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;ntnet_interface.dm 61"/></a></aside>
+        </h3>
+        <p>Initialize for the interface</p>
+<p>Assigns a hardware id and gets your object onto the network</p>
+<p>Arguments:</p>
+<ul>
+<li>network_name - Fully qualified network id of the network we are joining</li>
+<li>network_tag - The objects id_tag.  Used for finding the device at mapload time</li>
+</ul><h3 id="proc/connect_port"><aside class="declaration">proc </aside>connect_port<aside>(port) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/ntnet_interface.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;ntnet_interface.dm 131"/></a></aside>
+        </h3>
+        <p>Connect to a port on this interface</p>
+<p>Returns the shared list that this interface uses to send
+data though a port.</p>
+<p>Arguments:</p>
+<ul>
+<li>port - text, Name of the port installed on this interface</li>
+</ul><h3 id="proc/deregister_port"><aside class="declaration">proc </aside>deregister_port<aside>(port) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/ntnet_interface.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;ntnet_interface.dm 114"/></a></aside>
+        </h3>
+        <p>Disconnects an existing port in the interface</p>
+<p>Removes a port from this interface and marks it that its
+has been disconnected</p>
+<p>Arguments:</p>
+<ul>
+<li>port - text, Name of the port installed on this interface</li>
+<li>data - list, shared list of data.  Don't put objects in this</li>
+</ul><h3 id="proc/register_port"><aside class="declaration">proc </aside>register_port<aside>(port, /list/data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/ntnet_interface.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;ntnet_interface.dm 94"/></a></aside>
+        </h3>
+        <p>Create a port for this interface</p>
+<p>A port is basicity a shared associated list() with some values that
+indicated its been updated.  (see _DEFINES/network.dm).  By using a shared
+we don't have to worry about qdeling this object if it goes out of scope.</p>
+<p>Once a port is created any number of devices can use the port, however only
+the creating interface can disconnect it.</p>
+<p>Arguments:</p>
+<ul>
+<li>port - text, Name of the port installed on this interface</li>
+<li>data - list, shared list of data.  Don't put objects in this</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

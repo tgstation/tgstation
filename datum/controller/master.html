@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;master - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/master.html#var">Var Details</a> - <a href="datum/controller/master.html#proc">Proc Details</a></header>
+<main>
+<h1>master <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/master.html">controller/master</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 18"/></a></h1>
+
+<p>Start of queue linked list
+End of queue linked list (used for appending to the list)
+Are we loading in a new map?
+for scheduling different subsystems for different stages of the round</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/master.html#var/current_ticklimit">current_ticklimit</a></th><td>current tick limit, assigned before running a subsystem.
+used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/iteration">iteration</a></th><td>How many times have we ran</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/last_run">last_run</a></th><td>world.time of last fire, for tracking lag outside of the mc</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/last_type_processed">last_type_processed</a></th><td>The type of the last subsystem to be fire()'d.</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/make_runtime">make_runtime</a></th><td>makes the mc main loop runtime</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/processing">processing</a></th><td>Are we processing (higher values increase the processing delay by n ticks)</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/skip_ticks">skip_ticks</a></th><td>Only run ticker subsystems for the next n ticks.</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/sleep_delta">sleep_delta</a></th><td>How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/stack_end_detector">stack_end_detector</a></th><td>Stack end detector to detect stack overflows that kill the mc's main loop</td></tr>
+            <tr><th><a href="datum/controller/master.html#var/subsystems">subsystems</a></th><td>List of subsystems to process().</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/master.html#proc/laggy_byond_map_update_incoming">laggy_byond_map_update_incoming</a></th><td>Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_ticklimit"><aside class="declaration">var </aside>current_ticklimit
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 70"/></a></h3>
+        <p>current tick limit, assigned before running a subsystem.
+used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits</p><h3 id="var/iteration"><aside class="declaration">var </aside>iteration
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 24"/></a></h3>
+        <p>How many times have we ran</p><h3 id="var/last_run"><aside class="declaration">var </aside>last_run
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 29"/></a></h3>
+        <p>world.time of last fire, for tracking lag outside of the mc</p><h3 id="var/last_type_processed"><aside class="declaration">var </aside>last_type_processed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 51"/></a></h3>
+        <p>The type of the last subsystem to be fire()'d.</p><h3 id="var/make_runtime"><aside class="declaration">var </aside>make_runtime
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 46"/></a></h3>
+        <p>makes the mc main loop runtime</p><h3 id="var/processing"><aside class="declaration">var </aside>processing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 22"/></a></h3>
+        <p>Are we processing (higher values increase the processing delay by n ticks)</p><h3 id="var/skip_ticks"><aside class="declaration">var </aside>skip_ticks
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 43"/></a></h3>
+        <p>Only run ticker subsystems for the next n ticks.</p><h3 id="var/sleep_delta"><aside class="declaration">var </aside>sleep_delta
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 40"/></a></h3>
+        <p>How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)</p><h3 id="var/stack_end_detector"><aside class="declaration">var </aside>stack_end_detector
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/stack_end_detector.html">stack_end_detector</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 26"/></a></h3>
+        <p>Stack end detector to detect stack overflows that kill the mc's main loop</p><h3 id="var/subsystems"><aside class="declaration">var </aside>subsystems
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 32"/></a></h3>
+        <p>List of subsystems to process().</p><h2 id="proc">Proc Details</h2><h3 id="proc/laggy_byond_map_update_incoming"><aside class="declaration">proc </aside>laggy_byond_map_update_incoming<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L607">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 607"/></a></aside>
+        </h3>
+        <p>Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

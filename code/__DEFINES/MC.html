@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;MC.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/MC.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/MC.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><td colspan="2"><p>SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)</p></td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_NO_INIT">SS_NO_INIT</a></th><td>subsystem does not initialize.</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_NO_FIRE">SS_NO_FIRE</a></th><td>subsystem does not fire.
+(like can_fire = 0, but keeps it from getting added to the processing subsystems list)
+(Requires a MC restart to change)</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_BACKGROUND">SS_BACKGROUND</a></th><td>Subsystem only runs on spare cpu (after all non-background subsystems have ran that tick)
+SS_BACKGROUND has its own priority bracket, this overrides SS_TICKER's priority bump</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_NO_TICK_CHECK">SS_NO_TICK_CHECK</a></th><td>subsystem does not tick check, and should not run unless there is enough time (or its running behind (unless background))</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_TICKER">SS_TICKER</a></th><td>Treat wait as a tick count, not DS, run every wait ticks.
+(also forces it to run first in the tick (unless SS_BACKGROUND))
+(implies all runlevels because of how it works)
+This is designed for basically anything that works as a mini-mc (like SStimer)</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_KEEP_TIMING">SS_KEEP_TIMING</a></th><td>keep the subsystem's timing on point by firing early if it fired late last fire because of lag
+ie: if a 20ds subsystem fires say 5 ds late due to lag or what not, its next fire would be in 15ds, not 20ds.</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_POST_FIRE_TIMING">SS_POST_FIRE_TIMING</a></th><td>Calculate its next fire after its fired.
+(IE: if a 5ds wait SS takes 2ds to run, its next fire should be 5ds away, not 3ds like it normally would be)
+This flag overrides SS_KEEP_TIMING</td></tr>
+        <tr><td colspan="2"><p>SUBSYSTEM STATES</p>
+</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_IDLE">SS_IDLE</a></th><td>ain't doing shit.</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_QUEUED">SS_QUEUED</a></th><td>queued to run</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_RUNNING">SS_RUNNING</a></th><td>actively running</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_PAUSED">SS_PAUSED</a></th><td>paused by mc_tick_check</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_SLEEPING">SS_SLEEPING</a></th><td>fire() slept.</td></tr>
+        <tr><th><a href="code/__DEFINES/MC.html#define/SS_PAUSING">SS_PAUSING</a></th><td>in the middle of pausing</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/SS_BACKGROUND"><aside class="declaration">#define </aside>SS_BACKGROUND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 37"/></a>
+    </h3>
+    <p>Subsystem only runs on spare cpu (after all non-background subsystems have ran that tick)
+SS_BACKGROUND has its own priority bracket, this overrides SS_TICKER's priority bump</p><h3 id="define/SS_IDLE"><aside class="declaration">#define </aside>SS_IDLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 58"/></a>
+    </h3>
+    <p>ain't doing shit.</p><h3 id="define/SS_KEEP_TIMING"><aside class="declaration">#define </aside>SS_KEEP_TIMING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 50"/></a>
+    </h3>
+    <p>keep the subsystem's timing on point by firing early if it fired late last fire because of lag
+ie: if a 20ds subsystem fires say 5 ds late due to lag or what not, its next fire would be in 15ds, not 20ds.</p><h3 id="define/SS_NO_FIRE"><aside class="declaration">#define </aside>SS_NO_FIRE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 33"/></a>
+    </h3>
+    <p>subsystem does not fire.
+(like can_fire = 0, but keeps it from getting added to the processing subsystems list)
+(Requires a MC restart to change)</p><h3 id="define/SS_NO_INIT"><aside class="declaration">#define </aside>SS_NO_INIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 28"/></a>
+    </h3>
+    <p>subsystem does not initialize.</p><h3 id="define/SS_NO_TICK_CHECK"><aside class="declaration">#define </aside>SS_NO_TICK_CHECK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 40"/></a>
+    </h3>
+    <p>subsystem does not tick check, and should not run unless there is enough time (or its running behind (unless background))</p><h3 id="define/SS_PAUSED"><aside class="declaration">#define </aside>SS_PAUSED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 61"/></a>
+    </h3>
+    <p>paused by mc_tick_check</p><h3 id="define/SS_PAUSING"><aside class="declaration">#define </aside>SS_PAUSING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 63"/></a>
+    </h3>
+    <p>in the middle of pausing</p><h3 id="define/SS_POST_FIRE_TIMING"><aside class="declaration">#define </aside>SS_POST_FIRE_TIMING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 55"/></a>
+    </h3>
+    <p>Calculate its next fire after its fired.
+(IE: if a 5ds wait SS takes 2ds to run, its next fire should be 5ds away, not 3ds like it normally would be)
+This flag overrides SS_KEEP_TIMING</p><h3 id="define/SS_QUEUED"><aside class="declaration">#define </aside>SS_QUEUED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 59"/></a>
+    </h3>
+    <p>queued to run</p><h3 id="define/SS_RUNNING"><aside class="declaration">#define </aside>SS_RUNNING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 60"/></a>
+    </h3>
+    <p>actively running</p><h3 id="define/SS_SLEEPING"><aside class="declaration">#define </aside>SS_SLEEPING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 62"/></a>
+    </h3>
+    <p>fire() slept.</p><h3 id="define/SS_TICKER"><aside class="declaration">#define </aside>SS_TICKER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/MC.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;MC.dm 46"/></a>
+    </h3>
+    <p>Treat wait as a tick count, not DS, run every wait ticks.
+(also forces it to run first in the tick (unless SS_BACKGROUND))
+(implies all runlevels because of how it works)
+This is designed for basically anything that works as a mini-mc (like SStimer)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

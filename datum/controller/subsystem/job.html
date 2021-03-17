@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;job - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/job.html#var">Var Details</a> - <a href="datum/controller/subsystem/job.html#proc">Proc Details</a></header>
+<main>
+<h1>job <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/job.html">job</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/additional_jobs_with_icons">additional_jobs_with_icons</a></th><td>A list of additional jobs that have various icons associated with them including sechud and card trims.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/always_promote_captain_job">always_promote_captain_job</a></th><td>If TRUE, the &quot;Captain&quot; job will always be given the code to the spare ID safe and always have a &quot;Captain on deck!&quot; announcement.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/assigned_captain">assigned_captain</a></th><td>If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/centcom_jobs">centcom_jobs</a></th><td>A list of jobs associed with Centcom and should use the standard NT Centcom icons.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/chain_of_command">chain_of_command</a></th><td>Keys should be assigned job roles. Values should be &gt;= 1.
+Represents the chain of command on the station. Lower numbers mean higher priority.
+Used to give the Cap's Spare safe code to a an appropriate player.
+Assumed Captain is always the highest in the chain of command.
+See [/datum/controller/subsystem/ticker/proc/equip_characters]</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/safe_code_request_loc">safe_code_request_loc</a></th><td>The loc to which the emergency safe code has been requested for delivery.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/safe_code_requested">safe_code_requested</a></th><td>Whether the emergency safe code has been requested via a comms console on shifts with no Captain or Acting Captain.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/safe_code_timer_id">safe_code_timer_id</a></th><td>Timer ID for the emergency safe code request.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#var/station_jobs">station_jobs</a></th><td>A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#proc/DivideOccupations">DivideOccupations</a></th><td></td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#proc/DropLandAtRandomHallwayPoint">DropLandAtRandomHallwayPoint</a></th><td>Lands specified mob at a random spot in the hallways</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#proc/send_spare_id_safe_code">send_spare_id_safe_code</a></th><td>Send a drop pod containing a piece of paper with the spare ID safe code to loc</td></tr>
+            <tr><th><a href="datum/controller/subsystem/job.html#proc/setup_job_lists">setup_job_lists</a></th><td>Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/additional_jobs_with_icons"><aside class="declaration">var </aside>additional_jobs_with_icons
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 22"/></a></h3>
+        <p>A list of additional jobs that have various icons associated with them including sechud and card trims.</p><h3 id="var/always_promote_captain_job"><aside class="declaration">var </aside>always_promote_captain_job
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 51"/></a></h3>
+        <p>If TRUE, the &quot;Captain&quot; job will always be given the code to the spare ID safe and always have a &quot;Captain on deck!&quot; announcement.</p><h3 id="var/assigned_captain"><aside class="declaration">var </aside>assigned_captain
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 43"/></a></h3>
+        <p>If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.</p><h3 id="var/centcom_jobs"><aside class="declaration">var </aside>centcom_jobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 24"/></a></h3>
+        <p>A list of jobs associed with Centcom and should use the standard NT Centcom icons.</p><h3 id="var/chain_of_command"><aside class="declaration">var </aside>chain_of_command
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 33"/></a></h3>
+        <p>Keys should be assigned job roles. Values should be &gt;= 1.
+Represents the chain of command on the station. Lower numbers mean higher priority.
+Used to give the Cap's Spare safe code to a an appropriate player.
+Assumed Captain is always the highest in the chain of command.
+See [/datum/controller/subsystem/ticker/proc/equip_characters]</p><h3 id="var/safe_code_request_loc"><aside class="declaration">var </aside>safe_code_request_loc
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 49"/></a></h3>
+        <p>The loc to which the emergency safe code has been requested for delivery.</p><h3 id="var/safe_code_requested"><aside class="declaration">var </aside>safe_code_requested
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 45"/></a></h3>
+        <p>Whether the emergency safe code has been requested via a comms console on shifts with no Captain or Acting Captain.</p><h3 id="var/safe_code_timer_id"><aside class="declaration">var </aside>safe_code_timer_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 47"/></a></h3>
+        <p>Timer ID for the emergency safe code request.</p><h3 id="var/station_jobs"><aside class="declaration">var </aside>station_jobs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 20"/></a></h3>
+        <p>A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.</p><h2 id="proc">Proc Details</h2><h3 id="proc/DivideOccupations"><aside class="declaration">proc </aside>DivideOccupations<aside>(/list/required_jobs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L271">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 271"/></a></aside>
+        </h3>
+        <ul>
+<li>Proc DivideOccupations</li>
+<li>fills var &quot;assigned_role&quot; for all ready players.</li>
+<li>This proc must not have any side effect besides of modifying &quot;assigned_role&quot;.</li>
+</ul><h3 id="proc/DropLandAtRandomHallwayPoint"><aside class="declaration">proc </aside>DropLandAtRandomHallwayPoint<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/living_mob) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L717">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 717"/></a></aside>
+        </h3>
+        <p>Lands specified mob at a random spot in the hallways</p><h3 id="proc/send_spare_id_safe_code"><aside class="declaration">proc </aside>send_spare_id_safe_code<aside>(loc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L834">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 834"/></a></aside>
+        </h3>
+        <p>Send a drop pod containing a piece of paper with the spare ID safe code to loc</p><h3 id="proc/setup_job_lists"><aside class="declaration">proc </aside>setup_job_lists<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/job.dm#L769">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;job.dm 769"/></a></aside>
+        </h3>
+        <p>Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

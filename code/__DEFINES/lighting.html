@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;lighting.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/lighting.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/lighting.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/lighting.html#define/NO_LIGHT_SUPPORT">NO_LIGHT_SUPPORT</a></th><td>Object doesn't use any of the light systems. Should be changed to add a light source to the object.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/STATIC_LIGHT">STATIC_LIGHT</a></th><td>Light made with the lighting datums, applying a matrix.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/MOVABLE_LIGHT">MOVABLE_LIGHT</a></th><td>Light made by masking the lighting darkness plane.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/MOVABLE_LIGHT_DIRECTIONAL">MOVABLE_LIGHT_DIRECTIONAL</a></th><td>Light made by masking the lighting darkness plane, and is directional.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHT_ATTACHED">LIGHT_ATTACHED</a></th><td>Is a movable light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_INTERVAL">LIGHTING_INTERVAL</a></th><td>frequency, in 1/10ths of a second, of the lighting process</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_FALLOFF">LIGHTING_FALLOFF</a></th><td>type of falloff to use for lighting; 1 for circular, 2 for square</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_LAMBERTIAN">LIGHTING_LAMBERTIAN</a></th><td>use lambertian shading for light sources</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_HEIGHT">LIGHTING_HEIGHT</a></th><td>height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_ROUND_VALUE">LIGHTING_ROUND_VALUE</a></th><td>Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_ICON">LIGHTING_ICON</a></th><td>icon used for lighting shading effects</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_SOFT_THRESHOLD">LIGHTING_SOFT_THRESHOLD</a></th><td>If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
+Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_BASE_MATRIX">LIGHTING_BASE_MATRIX</a></th><td>If I were you I'd leave this alone.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHT_RANGE_FIRE">LIGHT_RANGE_FIRE</a></th><td>How many tiles standard fires glow.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE">LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE</a></th><td>For lighting alpha, small amounts lead to big changes. even at 128 its hard to figure out what is dark and what is light, at 64 you almost can't even tell.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/DYNAMIC_LIGHTING_DISABLED">DYNAMIC_LIGHTING_DISABLED</a></th><td>dynamic lighting disabled (area stays at full brightness)</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/DYNAMIC_LIGHTING_ENABLED">DYNAMIC_LIGHTING_ENABLED</a></th><td>dynamic lighting enabled</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/DYNAMIC_LIGHTING_FORCED">DYNAMIC_LIGHTING_FORCED</a></th><td>dynamic lighting enabled even if the area doesn't require power</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/DYNAMIC_LIGHTING_IFSTARLIGHT">DYNAMIC_LIGHTING_IFSTARLIGHT</a></th><td>dynamic lighting enabled only if starlight is.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/EMISSIVE_BLOCK_GENERIC">EMISSIVE_BLOCK_GENERIC</a></th><td>Uses vis_overlays to leverage caching so that very few new items need to be made for the overlay. For anything that doesn't change outline or opaque area much or at all.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/EMISSIVE_BLOCK_UNIQUE">EMISSIVE_BLOCK_UNIQUE</a></th><td>Uses a dedicated render_target object to copy the entire appearance in real time to the blocking layer. For things that can change in appearance a lot from the base state, like humans.</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/GETREDPART">GETREDPART</a></th><td>Returns the red part of a #RRGGBB hex sequence as number</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/GETGREENPART">GETGREENPART</a></th><td>Returns the green part of a #RRGGBB hex sequence as number</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/GETBLUEPART">GETBLUEPART</a></th><td>Returns the blue part of a #RRGGBB hex sequence as number</td></tr>
+        <tr><th><a href="code/__DEFINES/lighting.html#define/PARSE_LIGHT_COLOR">PARSE_LIGHT_COLOR</a></th><td>Parse the hexadecimal color into lumcounts of each perspective.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/DYNAMIC_LIGHTING_DISABLED"><aside class="declaration">#define </aside>DYNAMIC_LIGHTING_DISABLED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 58"/></a>
+    </h3>
+    <p>dynamic lighting disabled (area stays at full brightness)</p><h3 id="define/DYNAMIC_LIGHTING_ENABLED"><aside class="declaration">#define </aside>DYNAMIC_LIGHTING_ENABLED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 60"/></a>
+    </h3>
+    <p>dynamic lighting enabled</p><h3 id="define/DYNAMIC_LIGHTING_FORCED"><aside class="declaration">#define </aside>DYNAMIC_LIGHTING_FORCED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 62"/></a>
+    </h3>
+    <p>dynamic lighting enabled even if the area doesn't require power</p><h3 id="define/DYNAMIC_LIGHTING_IFSTARLIGHT"><aside class="declaration">#define </aside>DYNAMIC_LIGHTING_IFSTARLIGHT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 64"/></a>
+    </h3>
+    <p>dynamic lighting enabled only if starlight is.</p><h3 id="define/EMISSIVE_BLOCK_GENERIC"><aside class="declaration">#define </aside>EMISSIVE_BLOCK_GENERIC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 79"/></a>
+    </h3>
+    <p>Uses vis_overlays to leverage caching so that very few new items need to be made for the overlay. For anything that doesn't change outline or opaque area much or at all.</p><h3 id="define/EMISSIVE_BLOCK_UNIQUE"><aside class="declaration">#define </aside>EMISSIVE_BLOCK_UNIQUE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 81"/></a>
+    </h3>
+    <p>Uses a dedicated render_target object to copy the entire appearance in real time to the blocking layer. For things that can change in appearance a lot from the base state, like humans.</p><h3 id="define/GETBLUEPART"><aside class="declaration">#define </aside>GETBLUEPART
+            <aside>(hexa)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 90"/></a>
+    </h3>
+    <p>Returns the blue part of a #RRGGBB hex sequence as number</p><h3 id="define/GETGREENPART"><aside class="declaration">#define </aside>GETGREENPART
+            <aside>(hexa)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 87"/></a>
+    </h3>
+    <p>Returns the green part of a #RRGGBB hex sequence as number</p><h3 id="define/GETREDPART"><aside class="declaration">#define </aside>GETREDPART
+            <aside>(hexa)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 84"/></a>
+    </h3>
+    <p>Returns the red part of a #RRGGBB hex sequence as number</p><h3 id="define/LIGHTING_BASE_MATRIX"><aside class="declaration">#define </aside>LIGHTING_BASE_MATRIX
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 36"/></a>
+    </h3>
+    <p>If I were you I'd leave this alone.</p><h3 id="define/LIGHTING_FALLOFF"><aside class="declaration">#define </aside>LIGHTING_FALLOFF
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 20"/></a>
+    </h3>
+    <p>type of falloff to use for lighting; 1 for circular, 2 for square</p><h3 id="define/LIGHTING_HEIGHT"><aside class="declaration">#define </aside>LIGHTING_HEIGHT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 24"/></a>
+    </h3>
+    <p>height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone</p><h3 id="define/LIGHTING_ICON"><aside class="declaration">#define </aside>LIGHTING_ICON
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 29"/></a>
+    </h3>
+    <p>icon used for lighting shading effects</p><h3 id="define/LIGHTING_INTERVAL"><aside class="declaration">#define </aside>LIGHTING_INTERVAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 15"/></a>
+    </h3>
+    <p>frequency, in 1/10ths of a second, of the lighting process</p><h3 id="define/LIGHTING_LAMBERTIAN"><aside class="declaration">#define </aside>LIGHTING_LAMBERTIAN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 22"/></a>
+    </h3>
+    <p>use lambertian shading for light sources</p><h3 id="define/LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE"><aside class="declaration">#define </aside>LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 53"/></a>
+    </h3>
+    <p>For lighting alpha, small amounts lead to big changes. even at 128 its hard to figure out what is dark and what is light, at 64 you almost can't even tell.</p><h3 id="define/LIGHTING_ROUND_VALUE"><aside class="declaration">#define </aside>LIGHTING_ROUND_VALUE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 26"/></a>
+    </h3>
+    <p>Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.</p><h3 id="define/LIGHTING_SOFT_THRESHOLD"><aside class="declaration">#define </aside>LIGHTING_SOFT_THRESHOLD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 33"/></a>
+    </h3>
+    <p>If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
+Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.</p><h3 id="define/LIGHT_ATTACHED"><aside class="declaration">#define </aside>LIGHT_ATTACHED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 11"/></a>
+    </h3>
+    <p>Is a movable light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.</p><h3 id="define/LIGHT_RANGE_FIRE"><aside class="declaration">#define </aside>LIGHT_RANGE_FIRE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 47"/></a>
+    </h3>
+    <p>How many tiles standard fires glow.</p><h3 id="define/MOVABLE_LIGHT"><aside class="declaration">#define </aside>MOVABLE_LIGHT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 6"/></a>
+    </h3>
+    <p>Light made by masking the lighting darkness plane.</p><h3 id="define/MOVABLE_LIGHT_DIRECTIONAL"><aside class="declaration">#define </aside>MOVABLE_LIGHT_DIRECTIONAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 8"/></a>
+    </h3>
+    <p>Light made by masking the lighting darkness plane, and is directional.</p><h3 id="define/NO_LIGHT_SUPPORT"><aside class="declaration">#define </aside>NO_LIGHT_SUPPORT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 2"/></a>
+    </h3>
+    <p>Object doesn't use any of the light systems. Should be changed to add a light source to the object.</p><h3 id="define/PARSE_LIGHT_COLOR"><aside class="declaration">#define </aside>PARSE_LIGHT_COLOR
+            <aside>(source)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 93"/></a>
+    </h3>
+    <p>Parse the hexadecimal color into lumcounts of each perspective.</p><h3 id="define/STATIC_LIGHT"><aside class="declaration">#define </aside>STATIC_LIGHT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/lighting.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;lighting.dm 4"/></a>
+    </h3>
+    <p>Light made with the lighting datums, applying a matrix.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

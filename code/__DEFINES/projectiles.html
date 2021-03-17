@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;projectiles.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/projectiles.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/projectiles.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/PROJECTILE_PIERCE_NONE">PROJECTILE_PIERCE_NONE</a></th><td>Default behavior: hit and delete self</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/PROJECTILE_PIERCE_HIT">PROJECTILE_PIERCE_HIT</a></th><td>Hit the thing but go through without deleting. Causes on_hit to be called with pierced = TRUE</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/PROJECTILE_PIERCE_PHASE">PROJECTILE_PIERCE_PHASE</a></th><td>Entirely phase through the thing without ever hitting.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_712X82MM">CALIBER_712X82MM</a></th><td>The caliber used by the <a href="obj/item/gun/ballistic/automatic.html" title="/obj/item/gun/ballistic/automatic">L6 SAW</a>.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_46X30MM">CALIBER_46X30MM</a></th><td>The caliber used by the <a href="obj/item/gun/ballistic/automatic.html" title="/obj/item/gun/ballistic/automatic">security auto-rifle</a>.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_9MM">CALIBER_9MM</a></th><td>The caliber used by the Nanotrasen Saber SMG, PP-95 SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_10MM">CALIBER_10MM</a></th><td>The caliber used as the default for ballistic guns. Only not overridden for the <a href="obj/item/gun/ballistic/automatic.html" title="/obj/item/gun/ballistic/automatic">surplus rifle</a>.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_357">CALIBER_357</a></th><td>The caliber used by most revolver variants.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_38">CALIBER_38</a></th><td>The caliber used by the detective's revolver.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_45">CALIBER_45</a></th><td>The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_50">CALIBER_50</a></th><td>The caliber used by sniper rifles and the desert eagle.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_75">CALIBER_75</a></th><td>The caliber used by the gyrojet pistol.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_N762">CALIBER_N762</a></th><td>The caliber used by <a href="obj/item/gun/ballistic.html" title="/obj/item/gun/ballistic">one revolver variant</a>.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_A556">CALIBER_A556</a></th><td>The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_A762">CALIBER_A762</a></th><td>The caliber used by bolt action rifles.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_SHOTGUN">CALIBER_SHOTGUN</a></th><td>The caliber used by shotguns.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_40MM">CALIBER_40MM</a></th><td>The caliber used by grenade launchers.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_84MM">CALIBER_84MM</a></th><td>The caliber used by rocket launchers.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_LASER">CALIBER_LASER</a></th><td>The caliber used by laser guns.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_ENERGY">CALIBER_ENERGY</a></th><td>The caliber used by most energy guns.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_GATLING">CALIBER_GATLING</a></th><td>The caliber used by the laser minigun.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_FOAM">CALIBER_FOAM</a></th><td>The acliber used by foam force and donksoft toy guns.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_ARROW">CALIBER_ARROW</a></th><td>The caliber used by the bow and arrow.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_HARPOON">CALIBER_HARPOON</a></th><td>The caliber used by the harpoon gun.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_HOOK">CALIBER_HOOK</a></th><td>The caliber used by the meat hook.</td></tr>
+        <tr><th><a href="code/__DEFINES/projectiles.html#define/CALIBER_TENTACLE">CALIBER_TENTACLE</a></th><td>The caliber used by the changeling tentacle mutation.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/CALIBER_10MM"><aside class="declaration">#define </aside>CALIBER_10MM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 19"/></a>
+    </h3>
+    <p>The caliber used as the default for ballistic guns. Only not overridden for the <a href="obj/item/gun/ballistic/automatic.html" title="/obj/item/gun/ballistic/automatic">surplus rifle</a>.</p><h3 id="define/CALIBER_357"><aside class="declaration">#define </aside>CALIBER_357
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 21"/></a>
+    </h3>
+    <p>The caliber used by most revolver variants.</p><h3 id="define/CALIBER_38"><aside class="declaration">#define </aside>CALIBER_38
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 23"/></a>
+    </h3>
+    <p>The caliber used by the detective's revolver.</p><h3 id="define/CALIBER_40MM"><aside class="declaration">#define </aside>CALIBER_40MM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 39"/></a>
+    </h3>
+    <p>The caliber used by grenade launchers.</p><h3 id="define/CALIBER_45"><aside class="declaration">#define </aside>CALIBER_45
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 25"/></a>
+    </h3>
+    <p>The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.</p><h3 id="define/CALIBER_46X30MM"><aside class="declaration">#define </aside>CALIBER_46X30MM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 15"/></a>
+    </h3>
+    <p>The caliber used by the <a href="obj/item/gun/ballistic/automatic.html" title="/obj/item/gun/ballistic/automatic">security auto-rifle</a>.</p><h3 id="define/CALIBER_50"><aside class="declaration">#define </aside>CALIBER_50
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 27"/></a>
+    </h3>
+    <p>The caliber used by sniper rifles and the desert eagle.</p><h3 id="define/CALIBER_712X82MM"><aside class="declaration">#define </aside>CALIBER_712X82MM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 13"/></a>
+    </h3>
+    <p>The caliber used by the <a href="obj/item/gun/ballistic/automatic.html" title="/obj/item/gun/ballistic/automatic">L6 SAW</a>.</p><h3 id="define/CALIBER_75"><aside class="declaration">#define </aside>CALIBER_75
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 29"/></a>
+    </h3>
+    <p>The caliber used by the gyrojet pistol.</p><h3 id="define/CALIBER_84MM"><aside class="declaration">#define </aside>CALIBER_84MM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 41"/></a>
+    </h3>
+    <p>The caliber used by rocket launchers.</p><h3 id="define/CALIBER_9MM"><aside class="declaration">#define </aside>CALIBER_9MM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 17"/></a>
+    </h3>
+    <p>The caliber used by the Nanotrasen Saber SMG, PP-95 SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.</p><h3 id="define/CALIBER_A556"><aside class="declaration">#define </aside>CALIBER_A556
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 33"/></a>
+    </h3>
+    <p>The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.</p><h3 id="define/CALIBER_A762"><aside class="declaration">#define </aside>CALIBER_A762
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 35"/></a>
+    </h3>
+    <p>The caliber used by bolt action rifles.</p><h3 id="define/CALIBER_ARROW"><aside class="declaration">#define </aside>CALIBER_ARROW
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 51"/></a>
+    </h3>
+    <p>The caliber used by the bow and arrow.</p><h3 id="define/CALIBER_ENERGY"><aside class="declaration">#define </aside>CALIBER_ENERGY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 45"/></a>
+    </h3>
+    <p>The caliber used by most energy guns.</p><h3 id="define/CALIBER_FOAM"><aside class="declaration">#define </aside>CALIBER_FOAM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 49"/></a>
+    </h3>
+    <p>The acliber used by foam force and donksoft toy guns.</p><h3 id="define/CALIBER_GATLING"><aside class="declaration">#define </aside>CALIBER_GATLING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 47"/></a>
+    </h3>
+    <p>The caliber used by the laser minigun.</p><h3 id="define/CALIBER_HARPOON"><aside class="declaration">#define </aside>CALIBER_HARPOON
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 53"/></a>
+    </h3>
+    <p>The caliber used by the harpoon gun.</p><h3 id="define/CALIBER_HOOK"><aside class="declaration">#define </aside>CALIBER_HOOK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 55"/></a>
+    </h3>
+    <p>The caliber used by the meat hook.</p><h3 id="define/CALIBER_LASER"><aside class="declaration">#define </aside>CALIBER_LASER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 43"/></a>
+    </h3>
+    <p>The caliber used by laser guns.</p><h3 id="define/CALIBER_N762"><aside class="declaration">#define </aside>CALIBER_N762
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 31"/></a>
+    </h3>
+    <p>The caliber used by <a href="obj/item/gun/ballistic.html" title="/obj/item/gun/ballistic">one revolver variant</a>.</p><h3 id="define/CALIBER_SHOTGUN"><aside class="declaration">#define </aside>CALIBER_SHOTGUN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 37"/></a>
+    </h3>
+    <p>The caliber used by shotguns.</p><h3 id="define/CALIBER_TENTACLE"><aside class="declaration">#define </aside>CALIBER_TENTACLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 57"/></a>
+    </h3>
+    <p>The caliber used by the changeling tentacle mutation.</p><h3 id="define/PROJECTILE_PIERCE_HIT"><aside class="declaration">#define </aside>PROJECTILE_PIERCE_HIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 5"/></a>
+    </h3>
+    <p>Hit the thing but go through without deleting. Causes on_hit to be called with pierced = TRUE</p><h3 id="define/PROJECTILE_PIERCE_NONE"><aside class="declaration">#define </aside>PROJECTILE_PIERCE_NONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 3"/></a>
+    </h3>
+    <p>Default behavior: hit and delete self</p><h3 id="define/PROJECTILE_PIERCE_PHASE"><aside class="declaration">#define </aside>PROJECTILE_PIERCE_PHASE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/projectiles.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;projectiles.dm 7"/></a>
+    </h3>
+    <p>Entirely phase through the thing without ever hitting.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

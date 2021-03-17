@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;game_mode&#x2F;dynamic - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/game_mode/dynamic.html#var">Var Details</a> - <a href="datum/game_mode/dynamic.html#proc">Proc Details</a></header>
+<main>
+<h1>dynamic <aside>/<a href="datum.html">datum</a>/<a href="datum/game_mode.html">game_mode</a>/<a href="datum/game_mode/dynamic.html">dynamic</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 19"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/candidates">candidates</a></th><td>List of candidates used on roundstart rulesets.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/configuration">configuration</a></th><td>Dynamic configuration, loaded on pre_setup</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/current_midround_rulesets">current_midround_rulesets</a></th><td>The last drafted midround rulesets (without the current one included).
+Used for choosing different midround injections.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/current_rules">current_rules</a></th><td>Rules that are processed, rule_process is called on the rules in this list.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/executed_rules">executed_rules</a></th><td>List of executed rulesets.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/forced_injection">forced_injection</a></th><td>When TRUE GetInjectionChance returns 100.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/forced_latejoin_rule">forced_latejoin_rule</a></th><td>Forced ruleset to be executed for the next latejoin.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/high_impact_ruleset_executed">high_impact_ruleset_executed</a></th><td>If a high impact ruleset was executed. Only one will run at a time in most circumstances.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/higher_injection_chance">higher_injection_chance</a></th><td>The chance of injection increase when above higher_injection_chance_minimum_threat</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/higher_injection_chance_minimum_threat">higher_injection_chance_minimum_threat</a></th><td>If above this threat, increase the chance of injection</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/hijacked_random_event_injection_chance">hijacked_random_event_injection_chance</a></th><td>The amount to inject when a round event is hijacked</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/initial_round_start_budget">initial_round_start_budget</a></th><td>The initial round start budget for logging purposes, set once at the beginning of the round.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/last_midround_injection_attempt">last_midround_injection_attempt</a></th><td>The time when the last midround injection was attempted, whether or not it was successful</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/latejoin_delay_max">latejoin_delay_max</a></th><td>The maximum time the recurring latejoin ruleset timer is allowed to be.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/latejoin_delay_min">latejoin_delay_min</a></th><td>The minimum time the recurring latejoin ruleset timer is allowed to be.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/latejoin_injection_cooldown">latejoin_injection_cooldown</a></th><td>When world.time is over this number the mode tries to inject a latejoin ruleset.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/latejoin_rules">latejoin_rules</a></th><td>List of latejoin rules used for selecting the rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/lower_injection_chance">lower_injection_chance</a></th><td>The chance of injection decrease when above lower_injection_chance_minimum_threat</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/lower_injection_chance_minimum_threat">lower_injection_chance_minimum_threat</a></th><td>If below this threat, decrease the chance of injection</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/mid_round_budget">mid_round_budget</a></th><td>Set at the beginning of the round. Spent by midrounds and latejoins.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/midround_delay_max">midround_delay_max</a></th><td>The maximum time the recurring midround ruleset timer is allowed to be.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/midround_delay_min">midround_delay_min</a></th><td>The minimum time the recurring midround ruleset timer is allowed to be.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/midround_injection_cooldown">midround_injection_cooldown</a></th><td>When world.time is over this number the mode tries to inject a midround ruleset.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/midround_injection_timer_id">midround_injection_timer_id</a></th><td>The timer ID for the cancellable midround rule injection</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/midround_rules">midround_rules</a></th><td>List of midround rules used for selecting the rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/only_ruleset_executed">only_ruleset_executed</a></th><td>If a only ruleset has been executed.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/peaceful_percentage">peaceful_percentage</a></th><td>How many percent of the rounds are more peaceful.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/pop_per_requirement">pop_per_requirement</a></th><td></td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/random_event_hijack_maximum">random_event_hijack_maximum</a></th><td>The maximum amount of time for antag random events to be hijacked.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/random_event_hijack_minimum">random_event_hijack_minimum</a></th><td>The minimum amount of time for antag random events to be hijacked.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/random_event_hijacked">random_event_hijacked</a></th><td>Whether or not a random event has been hijacked this midround cycle</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/round_start_budget">round_start_budget</a></th><td>Set at the beginning of the round. Spent by the mode to &quot;purchase&quot; rules. Everything else goes in the postround budget.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/roundstart_pop_ready">roundstart_pop_ready</a></th><td>Number of players who were ready on roundstart.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/roundstart_rules">roundstart_rules</a></th><td>List of roundstart rules used for selecting the rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/roundstart_split_curve_centre">roundstart_split_curve_centre</a></th><td>A number between -5 and +5.
+Equivalent to threat_curve_centre, but for the budget split.
+A negative value will weigh towards midround rulesets, and a positive
+value will weight towards roundstart ones.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/roundstart_split_curve_width">roundstart_split_curve_width</a></th><td>A number between 0.5 and 4.
+Equivalent to threat_curve_width, but for the budget split.
+Higher value will favour more variance in splits and
+lower value rounds closer to the average.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/snapshots">snapshots</a></th><td>A list of recorded &quot;snapshots&quot; of the round, stored in the dynamic.json log</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/threat_curve_centre">threat_curve_centre</a></th><td>A number between -5 and +5.
+A negative value will give a more peaceful round and
+a positive value will give a round with higher threat.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/threat_curve_width">threat_curve_width</a></th><td>A number between 0.5 and 4.
+Higher value will favour extreme rounds and
+lower value rounds closer to the average.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/threat_level">threat_level</a></th><td>The &quot;threat cap&quot;, threat shouldn't normally go above this and is used in ruleset calculations</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#var/threat_log">threat_log</a></th><td>Running information about the threat. Can store text or datum entries.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/admin_cancel_midround">admin_cancel_midround</a></th><td>Fired when an admin cancels the current midround injection.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/admin_different_midround">admin_different_midround</a></th><td>Fired when an admin requests a different midround injection.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/check_age">check_age</a></th><td>Checks if client age is age or older.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/check_blocking">check_blocking</a></th><td>Checks if a type in blocking_list is in rule_list.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/configure_ruleset">configure_ruleset</a></th><td>Apply configurations to rule.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/create_threat">create_threat</a></th><td>Generate threat and increase the threat_level if it goes beyond, capped at 100</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/dynamic_log">dynamic_log</a></th><td>Log to messages and to the game</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/execute_midround_latejoin_rule">execute_midround_latejoin_rule</a></th><td>Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/execute_midround_rule">execute_midround_rule</a></th><td>Fired after admins do not cancel a midround injection.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/execute_roundstart_rule">execute_roundstart_rule</a></th><td>Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/generate_budgets">generate_budgets</a></th><td>Generates the midround and roundstart budgets</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/generate_threat">generate_threat</a></th><td>Generates the threat level using lorentz distribution and assigns peaceful_percentage.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/get_injection_chance">get_injection_chance</a></th><td>Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/get_midround_injection_chance">get_midround_injection_chance</a></th><td>Gets the chance for midround injection, the dry_run argument is only used for forced injection.
+Usually defers to the latejoin injection chance.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/lorentz_to_amount">lorentz_to_amount</a></th><td>Turns the value generated by lorentz distribution to number between 0 and 100.
+Used for threat level and splitting the budgets.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/new_snapshot">new_snapshot</a></th><td>Creates a new snapshot with the given rulesets chosen, and writes to the JSON output.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/pick_latejoin_rule">pick_latejoin_rule</a></th><td>Executes a random latejoin ruleset from the list of drafted rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/pick_midround_rule">pick_midround_rule</a></th><td>Executes a random midround ruleset from the list of drafted rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/pick_ruleset">pick_ruleset</a></th><td>From a list of rulesets, returns one based on weight and availability.
+Mutates the list that is passed into it to remove invalid rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/picking_roundstart_rule">picking_roundstart_rule</a></th><td>Initializes the round start ruleset provided to it. Returns how much threat to spend.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/picking_specific_rule">picking_specific_rule</a></th><td>An experimental proc to allow admins to call rules on the fly or have rules call other rules.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/refund_threat">refund_threat</a></th><td>Refund threat, but no more than threat_level.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/remove_from_list">remove_from_list</a></th><td>Removes type from the list</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/rigged_roundstart">rigged_roundstart</a></th><td>A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/spend_midround_budget">spend_midround_budget</a></th><td>Expend midround threat, can't fall under 0.</td></tr>
+            <tr><th><a href="datum/game_mode/dynamic.html#proc/spend_roundstart_budget">spend_roundstart_budget</a></th><td>Expend round start threat, can't fall under 0.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/candidates"><aside class="declaration">var </aside>candidates
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 62"/></a></h3>
+        <p>List of candidates used on roundstart rulesets.</p><h3 id="var/configuration"><aside class="declaration">var </aside>configuration
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 78"/></a></h3>
+        <p>Dynamic configuration, loaded on pre_setup</p><h3 id="var/current_midround_rulesets"><aside class="declaration">var </aside>current_midround_rulesets
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 157"/></a></h3>
+        <p>The last drafted midround rulesets (without the current one included).
+Used for choosing different midround injections.</p><h3 id="var/current_rules"><aside class="declaration">var </aside>current_rules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 64"/></a></h3>
+        <p>Rules that are processed, rule_process is called on the rules in this list.</p><h3 id="var/executed_rules"><aside class="declaration">var </aside>executed_rules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 66"/></a></h3>
+        <p>List of executed rulesets.</p><h3 id="var/forced_injection"><aside class="declaration">var </aside>forced_injection
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 68"/></a></h3>
+        <p>When TRUE GetInjectionChance returns 100.</p><h3 id="var/forced_latejoin_rule"><aside class="declaration">var </aside>forced_latejoin_rule
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/dynamic_ruleset.html">dynamic_ruleset</a>/latejoin</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 70"/></a></h3>
+        <p>Forced ruleset to be executed for the next latejoin.</p><h3 id="var/high_impact_ruleset_executed"><aside class="declaration">var </aside>high_impact_ruleset_executed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 74"/></a></h3>
+        <p>If a high impact ruleset was executed. Only one will run at a time in most circumstances.</p><h3 id="var/higher_injection_chance"><aside class="declaration">var </aside>higher_injection_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 102"/></a></h3>
+        <p>The chance of injection increase when above higher_injection_chance_minimum_threat</p><h3 id="var/higher_injection_chance_minimum_threat"><aside class="declaration">var </aside>higher_injection_chance_minimum_threat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 99"/></a></h3>
+        <p>If above this threat, increase the chance of injection</p><h3 id="var/hijacked_random_event_injection_chance"><aside class="declaration">var </aside>hijacked_random_event_injection_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 145"/></a></h3>
+        <p>The amount to inject when a round event is hijacked</p><h3 id="var/initial_round_start_budget"><aside class="declaration">var </aside>initial_round_start_budget
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 40"/></a></h3>
+        <p>The initial round start budget for logging purposes, set once at the beginning of the round.</p><h3 id="var/last_midround_injection_attempt"><aside class="declaration">var </aside>last_midround_injection_attempt
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 142"/></a></h3>
+        <p>The time when the last midround injection was attempted, whether or not it was successful</p><h3 id="var/latejoin_delay_max"><aside class="declaration">var </aside>latejoin_delay_max
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 87"/></a></h3>
+        <p>The maximum time the recurring latejoin ruleset timer is allowed to be.</p><h3 id="var/latejoin_delay_min"><aside class="declaration">var </aside>latejoin_delay_min
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 84"/></a></h3>
+        <p>The minimum time the recurring latejoin ruleset timer is allowed to be.</p><h3 id="var/latejoin_injection_cooldown"><aside class="declaration">var </aside>latejoin_injection_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 81"/></a></h3>
+        <p>When world.time is over this number the mode tries to inject a latejoin ruleset.</p><h3 id="var/latejoin_rules"><aside class="declaration">var </aside>latejoin_rules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 47"/></a></h3>
+        <p>List of latejoin rules used for selecting the rules.</p><h3 id="var/lower_injection_chance"><aside class="declaration">var </aside>lower_injection_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 108"/></a></h3>
+        <p>The chance of injection decrease when above lower_injection_chance_minimum_threat</p><h3 id="var/lower_injection_chance_minimum_threat"><aside class="declaration">var </aside>lower_injection_chance_minimum_threat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 105"/></a></h3>
+        <p>If below this threat, decrease the chance of injection</p><h3 id="var/mid_round_budget"><aside class="declaration">var </aside>mid_round_budget
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 37"/></a></h3>
+        <p>Set at the beginning of the round. Spent by midrounds and latejoins.</p><h3 id="var/midround_delay_max"><aside class="declaration">var </aside>midround_delay_max
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 96"/></a></h3>
+        <p>The maximum time the recurring midround ruleset timer is allowed to be.</p><h3 id="var/midround_delay_min"><aside class="declaration">var </aside>midround_delay_min
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 93"/></a></h3>
+        <p>The minimum time the recurring midround ruleset timer is allowed to be.</p><h3 id="var/midround_injection_cooldown"><aside class="declaration">var </aside>midround_injection_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 90"/></a></h3>
+        <p>When world.time is over this number the mode tries to inject a midround ruleset.</p><h3 id="var/midround_injection_timer_id"><aside class="declaration">var </aside>midround_injection_timer_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 151"/></a></h3>
+        <p>The timer ID for the cancellable midround rule injection</p><h3 id="var/midround_rules"><aside class="declaration">var </aside>midround_rules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 49"/></a></h3>
+        <p>List of midround rules used for selecting the rules.</p><h3 id="var/only_ruleset_executed"><aside class="declaration">var </aside>only_ruleset_executed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 76"/></a></h3>
+        <p>If a only ruleset has been executed.</p><h3 id="var/peaceful_percentage"><aside class="declaration">var </aside>peaceful_percentage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 72"/></a></h3>
+        <p>How many percent of the rounds are more peaceful.</p><h3 id="var/pop_per_requirement"><aside class="declaration">var </aside>pop_per_requirement
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 58"/></a></h3>
+        <ul>
+<li><h1 id="pop-range-per-requirement">Pop range per requirement.</h1>
+<pre><code>* If the value is five the range is:
+* 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
+* If it is six the range is:
+* 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+
+* If it is seven the range is:
+* 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
+</code></pre>
+</li>
+</ul><h3 id="var/random_event_hijack_maximum"><aside class="declaration">var </aside>random_event_hijack_maximum
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 136"/></a></h3>
+        <p>The maximum amount of time for antag random events to be hijacked.</p><h3 id="var/random_event_hijack_minimum"><aside class="declaration">var </aside>random_event_hijack_minimum
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 133"/></a></h3>
+        <p>The minimum amount of time for antag random events to be hijacked.</p><h3 id="var/random_event_hijacked"><aside class="declaration">var </aside>random_event_hijacked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 148"/></a></h3>
+        <p>Whether or not a random event has been hijacked this midround cycle</p><h3 id="var/round_start_budget"><aside class="declaration">var </aside>round_start_budget
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 34"/></a></h3>
+        <p>Set at the beginning of the round. Spent by the mode to &quot;purchase&quot; rules. Everything else goes in the postround budget.</p><h3 id="var/roundstart_pop_ready"><aside class="declaration">var </aside>roundstart_pop_ready
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 60"/></a></h3>
+        <p>Number of players who were ready on roundstart.</p><h3 id="var/roundstart_rules"><aside class="declaration">var </aside>roundstart_rules
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 45"/></a></h3>
+        <p>List of roundstart rules used for selecting the rules.</p><h3 id="var/roundstart_split_curve_centre"><aside class="declaration">var </aside>roundstart_split_curve_centre
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 124"/></a></h3>
+        <p>A number between -5 and +5.
+Equivalent to threat_curve_centre, but for the budget split.
+A negative value will weigh towards midround rulesets, and a positive
+value will weight towards roundstart ones.</p><h3 id="var/roundstart_split_curve_width"><aside class="declaration">var </aside>roundstart_split_curve_width
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 130"/></a></h3>
+        <p>A number between 0.5 and 4.
+Equivalent to threat_curve_width, but for the budget split.
+Higher value will favour more variance in splits and
+lower value rounds closer to the average.</p><h3 id="var/snapshots"><aside class="declaration">var </aside>snapshots
+            <aside>&ndash; /list/datum/dynamic_snapshot</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 139"/></a></h3>
+        <p>A list of recorded &quot;snapshots&quot; of the round, stored in the dynamic.json log</p><h3 id="var/threat_curve_centre"><aside class="declaration">var </aside>threat_curve_centre
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 113"/></a></h3>
+        <p>A number between -5 and +5.
+A negative value will give a more peaceful round and
+a positive value will give a round with higher threat.</p><h3 id="var/threat_curve_width"><aside class="declaration">var </aside>threat_curve_width
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 118"/></a></h3>
+        <p>A number between 0.5 and 4.
+Higher value will favour extreme rounds and
+lower value rounds closer to the average.</p><h3 id="var/threat_level"><aside class="declaration">var </aside>threat_level
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 31"/></a></h3>
+        <p>The &quot;threat cap&quot;, threat shouldn't normally go above this and is used in ruleset calculations</p><h3 id="var/threat_log"><aside class="declaration">var </aside>threat_log
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 43"/></a></h3>
+        <p>Running information about the threat. Can store text or datum entries.</p><h2 id="proc">Proc Details</h2><h3 id="proc/admin_cancel_midround"><aside class="declaration">proc </aside>admin_cancel_midround<aside>(/<a href="mob.html">mob</a>/user, timer_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 94"/></a></aside>
+        </h3>
+        <p>Fired when an admin cancels the current midround injection.</p><h3 id="proc/admin_different_midround"><aside class="declaration">proc </aside>admin_different_midround<aside>(/<a href="mob.html">mob</a>/user, timer_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 105"/></a></aside>
+        </h3>
+        <p>Fired when an admin requests a different midround injection.</p><h3 id="proc/check_age"><aside class="declaration">proc </aside>check_age<aside>(/<a href="client.html">client</a>/C, age) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L684">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 684"/></a></aside>
+        </h3>
+        <p>Checks if client age is age or older.</p><h3 id="proc/check_blocking"><aside class="declaration">proc </aside>check_blocking<aside>(/list/blocking_list, /list/rule_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L674">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 674"/></a></aside>
+        </h3>
+        <p>Checks if a type in blocking_list is in rule_list.</p><h3 id="proc/configure_ruleset"><aside class="declaration">proc </aside>configure_ruleset<aside>(/<a href="datum.html">datum</a>/<a href="datum/dynamic_ruleset.html">dynamic_ruleset</a>/ruleset) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L729">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 729"/></a></aside>
+        </h3>
+        <p>Apply configurations to rule.</p><h3 id="proc/create_threat"><aside class="declaration">proc </aside>create_threat<aside>(gain) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L746">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 746"/></a></aside>
+        </h3>
+        <p>Generate threat and increase the threat_level if it goes beyond, capped at 100</p><h3 id="proc/dynamic_log"><aside class="declaration">proc </aside>dynamic_log<aside>(text) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L785">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 785"/></a></aside>
+        </h3>
+        <p>Log to messages and to the game</p><h3 id="proc/execute_midround_latejoin_rule"><aside class="declaration">proc </aside>execute_midround_latejoin_rule<aside>(sent_rule) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 68"/></a></aside>
+        </h3>
+        <p>Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.</p><h3 id="proc/execute_midround_rule"><aside class="declaration">proc </aside>execute_midround_rule<aside>(/<a href="datum.html">datum</a>/<a href="datum/dynamic_ruleset.html">dynamic_ruleset</a>/rule) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 51"/></a></aside>
+        </h3>
+        <p>Fired after admins do not cancel a midround injection.</p><h3 id="proc/execute_roundstart_rule"><aside class="declaration">proc </aside>execute_roundstart_rule<aside>(sent_rule) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L527">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 527"/></a></aside>
+        </h3>
+        <p>Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.</p><h3 id="proc/generate_budgets"><aside class="declaration">proc </aside>generate_budgets<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L336">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 336"/></a></aside>
+        </h3>
+        <p>Generates the midround and roundstart budgets</p><h3 id="proc/generate_threat"><aside class="declaration">proc </aside>generate_threat<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L329">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 329"/></a></aside>
+        </h3>
+        <p>Generates the threat level using lorentz distribution and assigns peaceful_percentage.</p><h3 id="proc/get_injection_chance"><aside class="declaration">proc </aside>get_injection_chance<aside>(dry_run) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L634">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 634"/></a></aside>
+        </h3>
+        <p>Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.</p><h3 id="proc/get_midround_injection_chance"><aside class="declaration">proc </aside>get_midround_injection_chance<aside>(dry_run) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L658">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 658"/></a></aside>
+        </h3>
+        <p>Gets the chance for midround injection, the dry_run argument is only used for forced injection.
+Usually defers to the latejoin injection chance.</p><h3 id="proc/lorentz_to_amount"><aside class="declaration">proc </aside>lorentz_to_amount<aside>(x) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L761">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 761"/></a></aside>
+        </h3>
+        <p>Turns the value generated by lorentz distribution to number between 0 and 100.
+Used for threat level and splitting the budgets.</p><h3 id="proc/new_snapshot"><aside class="declaration">proc </aside>new_snapshot<aside>(/<a href="datum.html">datum</a>/<a href="datum/dynamic_ruleset.html">dynamic_ruleset</a>/ruleset_chosen) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic_logging.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic_logging.dm 72"/></a></aside>
+        </h3>
+        <p>Creates a new snapshot with the given rulesets chosen, and writes to the JSON output.</p><h3 id="proc/pick_latejoin_rule"><aside class="declaration">proc </aside>pick_latejoin_rule<aside>(/list/drafted_rules) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 59"/></a></aside>
+        </h3>
+        <p>Executes a random latejoin ruleset from the list of drafted rules.</p><h3 id="proc/pick_midround_rule"><aside class="declaration">proc </aside>pick_midround_rule<aside>(/list/drafted_rules) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 33"/></a></aside>
+        </h3>
+        <p>Executes a random midround ruleset from the list of drafted rules.</p><h3 id="proc/pick_ruleset"><aside class="declaration">proc </aside>pick_ruleset<aside>(/list/drafted_rules) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/ruleset_picking.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;ruleset_picking.dm 5"/></a></aside>
+        </h3>
+        <p>From a list of rulesets, returns one based on weight and availability.
+Mutates the list that is passed into it to remove invalid rules.</p><h3 id="proc/picking_roundstart_rule"><aside class="declaration">proc </aside>picking_roundstart_rule<aside>(/<a href="datum.html">datum</a>/<a href="datum/dynamic_ruleset.html">dynamic_ruleset</a>/<a href="datum/dynamic_ruleset/roundstart.html">roundstart</a>/ruleset, scaled_times, forced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L508">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 508"/></a></aside>
+        </h3>
+        <p>Initializes the round start ruleset provided to it. Returns how much threat to spend.</p><h3 id="proc/picking_specific_rule"><aside class="declaration">proc </aside>picking_specific_rule<aside>(ruletype, forced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L540">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 540"/></a></aside>
+        </h3>
+        <p>An experimental proc to allow admins to call rules on the fly or have rules call other rules.</p><h3 id="proc/refund_threat"><aside class="declaration">proc </aside>refund_threat<aside>(regain) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L742">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 742"/></a></aside>
+        </h3>
+        <p>Refund threat, but no more than threat_level.</p><h3 id="proc/remove_from_list"><aside class="declaration">proc </aside>remove_from_list<aside>(/list/type_list, type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L667">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 667"/></a></aside>
+        </h3>
+        <p>Removes type from the list</p><h3 id="proc/rigged_roundstart"><aside class="declaration">proc </aside>rigged_roundstart<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L432">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 432"/></a></aside>
+        </h3>
+        <p>A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.</p><h3 id="proc/spend_midround_budget"><aside class="declaration">proc </aside>spend_midround_budget<aside>(cost) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L756">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 756"/></a></aside>
+        </h3>
+        <p>Expend midround threat, can't fall under 0.</p><h3 id="proc/spend_roundstart_budget"><aside class="declaration">proc </aside>spend_roundstart_budget<aside>(cost) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/gamemodes/dynamic/dynamic.dm#L752">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;gamemodes&#x2F;dynamic&#x2F;dynamic.dm 752"/></a></aside>
+        </h3>
+        <p>Expend round start threat, can't fall under 0.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;battle - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/computer/arcade/battle.html#var">Var Details</a> - <a href="obj/machinery/computer/arcade/battle.html#proc">Proc Details</a></header>
+<main>
+<h1>battle <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/computer/arcade/battle.html">computer/arcade/battle</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 142"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/blocked">blocked</a></th><td>the player cannot make any move while this is set to TRUE. should only TRUE during enemy turns.</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/bomb_cooldown">bomb_cooldown</a></th><td>unique to the emag mode, acts as a time limit where the player dies when it reaches 0.</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/chosen_weapon">chosen_weapon</a></th><td>weapon wielded by the enemy, the shotgun doesn't count.</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/enemy_hp">enemy_hp</a></th><td>Enemy health/attack points</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/enemy_passive">enemy_passive</a></th><td>the list of passive skill the enemy currently has. the actual passives are added in the enemy_setup() proc</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/finishing_move">finishing_move</a></th><td>if all the enemy's weakpoints have been triggered becomes TRUE</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/gameover">gameover</a></th><td>if the enemy or player died. restart the game when TRUE</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/last_three_move">last_three_move</a></th><td>used to remember the last three move of the player before this turn.</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/max_passive">max_passive</a></th><td>the number of passives the enemy will start with</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/pissed_off">pissed_off</a></th><td>linked to passives, when it's equal or above the max_passive finishing move will become TRUE</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/player_hp">player_hp</a></th><td>Player health</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/player_mp">player_mp</a></th><td>player magic points</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/temp">temp</a></th><td>Temporary message, for attack messages, etc</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/timer_id">timer_id</a></th><td>used to clear the enemy_action proc timer when the game is restarted</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#var/weapons">weapons</a></th><td>weapon used by the enemy, pure fluff.for certain actions</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#proc/arcade_action">arcade_action</a></th><td>happens after a player action and before the enemy turn. the enemy turn will be cancelled if there's a gameover.</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#proc/enemy_action">enemy_action</a></th><td>the enemy turn, the enemy's action entirely depend on their current passive and a teensy tiny bit of randomness</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#proc/enemy_setup">enemy_setup</a></th><td>creates the enemy base stats for a new round along with the enemy passives</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#proc/screen_setup">screen_setup</a></th><td>sets up the main screen for the user</td></tr>
+            <tr><th><a href="obj/machinery/computer/arcade/battle.html#proc/weakpoint_check">weakpoint_check</a></th><td>used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/blocked"><aside class="declaration">var </aside>blocked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 174"/></a></h3>
+        <p>the player cannot make any move while this is set to TRUE. should only TRUE during enemy turns.</p><h3 id="var/bomb_cooldown"><aside class="declaration">var </aside>bomb_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 180"/></a></h3>
+        <p>unique to the emag mode, acts as a time limit where the player dies when it reaches 0.</p><h3 id="var/chosen_weapon"><aside class="declaration">var </aside>chosen_weapon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L163">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 163"/></a></h3>
+        <p>weapon wielded by the enemy, the shotgun doesn't count.</p><h3 id="var/enemy_hp"><aside class="declaration">var </aside>enemy_hp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 150"/></a></h3>
+        <p>Enemy health/attack points</p><h3 id="var/enemy_passive"><aside class="declaration">var </aside>enemy_passive
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 155"/></a></h3>
+        <p>the list of passive skill the enemy currently has. the actual passives are added in the enemy_setup() proc</p><h3 id="var/finishing_move"><aside class="declaration">var </aside>finishing_move
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 157"/></a></h3>
+        <p>if all the enemy's weakpoints have been triggered becomes TRUE</p><h3 id="var/gameover"><aside class="declaration">var </aside>gameover
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 172"/></a></h3>
+        <p>if the enemy or player died. restart the game when TRUE</p><h3 id="var/last_three_move"><aside class="declaration">var </aside>last_three_move
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 170"/></a></h3>
+        <p>used to remember the last three move of the player before this turn.</p><h3 id="var/max_passive"><aside class="declaration">var </aside>max_passive
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 161"/></a></h3>
+        <p>the number of passives the enemy will start with</p><h3 id="var/pissed_off"><aside class="declaration">var </aside>pissed_off
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 159"/></a></h3>
+        <p>linked to passives, when it's equal or above the max_passive finishing move will become TRUE</p><h3 id="var/player_hp"><aside class="declaration">var </aside>player_hp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 166"/></a></h3>
+        <p>Player health</p><h3 id="var/player_mp"><aside class="declaration">var </aside>player_mp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 168"/></a></h3>
+        <p>player magic points</p><h3 id="var/temp"><aside class="declaration">var </aside>temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 153"/></a></h3>
+        <p>Temporary message, for attack messages, etc</p><h3 id="var/timer_id"><aside class="declaration">var </aside>timer_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L176">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 176"/></a></h3>
+        <p>used to clear the enemy_action proc timer when the game is restarted</p><h3 id="var/weapons"><aside class="declaration">var </aside>weapons
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L178">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 178"/></a></h3>
+        <p>weapon used by the enemy, pure fluff.for certain actions</p><h2 id="proc">Proc Details</h2><h3 id="proc/arcade_action"><aside class="declaration">proc </aside>arcade_action<aside>(/<a href="mob.html">mob</a>/user, player_stance, attackamt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L346">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 346"/></a></aside>
+        </h3>
+        <p>happens after a player action and before the enemy turn. the enemy turn will be cancelled if there's a gameover.</p><h3 id="proc/enemy_action"><aside class="declaration">proc </aside>enemy_action<aside>(player_stance, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L360">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 360"/></a></aside>
+        </h3>
+        <p>the enemy turn, the enemy's action entirely depend on their current passive and a teensy tiny bit of randomness</p><h3 id="proc/enemy_setup"><aside class="declaration">proc </aside>enemy_setup<aside>(player_skill) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 184"/></a></aside>
+        </h3>
+        <p>creates the enemy base stats for a new round along with the enemy passives</p><h3 id="proc/screen_setup"><aside class="declaration">proc </aside>screen_setup<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L253">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 253"/></a></aside>
+        </h3>
+        <p>sets up the main screen for the user</p><h3 id="proc/weakpoint_check"><aside class="declaration">proc </aside>weakpoint_check<aside>(passive, first_move, second_move, third_move) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arcade/arcade.dm#L576">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arcade&#x2F;arcade.dm 576"/></a></aside>
+        </h3>
+        <p>used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

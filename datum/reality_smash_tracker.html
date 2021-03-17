@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;reality_smash_tracker - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/reality_smash_tracker.html#var">Var Details</a> - <a href="datum/reality_smash_tracker.html#proc">Proc Details</a></header>
+<main>
+<h1>reality_smash_tracker <aside>/<a href="datum.html">datum</a>/<a href="datum/reality_smash_tracker.html">reality_smash_tracker</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 118"/></a></h1>
+
+<p>#Reality smash tracker</p>
+<p>Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.</p>
+<p>Tracks relevant data, generates relevant data, useful tool</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#var/smashes">smashes</a></th><td>list of tracked reality smashes</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#var/targets">targets</a></th><td>List of mobs with ability to see the smashes</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/AddMind">AddMind</a></th><td>Adds a mind to the list of people that can see the reality smashes</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/Generate">Generate</a></th><td>Generates a set amount of reality smashes based on the N value</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/RemoveMind">RemoveMind</a></th><td>Removes a mind from the list of people that can see the reality smashes</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/ReworkNetwork">ReworkNetwork</a></th><td>Automatically fixes the target and smash network</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/smashes"><aside class="declaration">var </aside>smashes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 120"/></a></h3>
+        <p>list of tracked reality smashes</p><h3 id="var/targets"><aside class="declaration">var </aside>targets
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 122"/></a></h3>
+        <p>List of mobs with ability to see the smashes</p><h2 id="proc">Proc Details</h2><h3 id="proc/AddMind"><aside class="declaration">proc </aside>AddMind<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/e_cultists) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 173"/></a></aside>
+        </h3>
+        <p>Adds a mind to the list of people that can see the reality smashes</p>
+<p>Use this whenever you want to add someone to the list</p><h3 id="proc/Generate"><aside class="declaration">proc </aside>Generate<aside>(/<a href="mob.html">mob</a>/caller) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 150"/></a></aside>
+        </h3>
+        <p>Generates a set amount of reality smashes based on the N value</p>
+<p>Automatically creates more reality smashes</p><h3 id="proc/RemoveMind"><aside class="declaration">proc </aside>RemoveMind<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/e_cultists) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 186"/></a></aside>
+        </h3>
+        <p>Removes a mind from the list of people that can see the reality smashes</p>
+<p>Use this whenever you want to remove someone from the list</p><h3 id="proc/ReworkNetwork"><aside class="declaration">proc </aside>ReworkNetwork<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_effects.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_effects.dm 135"/></a></aside>
+        </h3>
+        <p>Automatically fixes the target and smash network</p>
+<p>Fixes any bugs that are caused by late Generate() or exchanging clients</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

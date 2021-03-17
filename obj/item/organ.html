@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;organ - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/organ.html#var">Var Details</a> - <a href="obj/item/organ.html#proc">Proc Details</a></header>
+<main>
+<h1>organ <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/organ.html#var/healing_factor">healing_factor</a></th><td>Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick</td></tr>
+            <tr><th><a href="obj/item/organ.html#var/prev_damage">prev_damage</a></th><td>Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds</td></tr>
+            <tr><th><a href="obj/item/organ.html#var/reagent_vol">reagent_vol</a></th><td>The size of the reagent container</td></tr>
+            <tr><th><a href="obj/item/organ.html#var/useable">useable</a></th><td>When you take a bite you cant jam it in for surgery anymore.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/applyOrganDamage">applyOrganDamage</a></th><td>Adjusts an organ's damage by the amount &quot;d&quot;, up to a maximum amount, which is by default max damage</td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/before_organ_replacement">before_organ_replacement</a></th><td>Called before organs are replaced in regenerate_organs with new ones</td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/check_damage_thresholds">check_damage_thresholds</a></th><td></td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/examine">examine</a></th><td>Damage decrements by a percent of its maxhealth
+Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health</td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/get_availability">get_availability</a></th><td></td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/handle_failing_organs">handle_failing_organs</a></th><td>Organs don't die instantly, and neither should you when you get fucked up</td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/organ_failure">organ_failure</a></th><td></td></tr>
+            <tr><th><a href="obj/item/organ.html#proc/setOrganDamage">setOrganDamage</a></th><td>SETS an organ's damage to the amount &quot;d&quot;, and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/healing_factor"><aside class="declaration">var </aside>healing_factor
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 15"/></a></h3>
+        <p>Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick</p><h3 id="var/prev_damage"><aside class="declaration">var </aside>prev_damage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 21"/></a></h3>
+        <p>Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds</p><h3 id="var/reagent_vol"><aside class="declaration">var </aside>reagent_vol
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 33"/></a></h3>
+        <p>The size of the reagent container</p><h3 id="var/useable"><aside class="declaration">var </aside>useable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 30"/></a></h3>
+        <p>When you take a bite you cant jam it in for surgery anymore.</p><h2 id="proc">Proc Details</h2><h3 id="proc/applyOrganDamage"><aside class="declaration">proc </aside>applyOrganDamage<aside>(d, maximum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 168"/></a></aside>
+        </h3>
+        <p>Adjusts an organ's damage by the amount &quot;d&quot;, up to a maximum amount, which is by default max damage</p><h3 id="proc/before_organ_replacement"><aside class="declaration">proc </aside>before_organ_replacement<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/replacement) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L281">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 281"/></a></aside>
+        </h3>
+        <p>Called before organs are replaced in regenerate_organs with new ones</p><h3 id="proc/check_damage_thresholds"><aside class="declaration">proc </aside>check_damage_thresholds<aside>(M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 189"/></a></aside>
+        </h3>
+        <ul>
+<li>check_damage_thresholds</li>
+<li>input: M (a mob, the owner of the organ we call the proc on)</li>
+<li>output: returns a message should get displayed.</li>
+<li>description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.</li>
+<li>If we have, send the corresponding threshold message to the owner, if such a message exists.</li>
+</ul><h3 id="proc/examine"><aside class="parent"><a title="/atom" href="atom.html#proc/examine">&uarr;</a></aside>examine<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 133"/></a></aside>
+        </h3>
+        <p>Damage decrements by a percent of its maxhealth
+Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health</p><h3 id="proc/get_availability"><aside class="declaration">proc </aside>get_availability<aside>(/<a href="datum.html">datum</a>/<a href="datum/species.html">species</a>/S) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L277">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 277"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>get_availability</p>
+</li>
+<li>
+<p>returns whether the species should innately have this organ.</p>
+</li>
+<li>
+<p>regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.</p>
+</li>
+<li>
+<p>This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<p>S - species, needed to return whether the species has an organ specific trait</p>
+</li>
+</ul><h3 id="proc/handle_failing_organs"><aside class="declaration">proc </aside>handle_failing_organs<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L253">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 253"/></a></aside>
+        </h3>
+        <p>Organs don't die instantly, and neither should you when you get fucked up</p><h3 id="proc/organ_failure"><aside class="declaration">proc </aside>organ_failure<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L266">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 266"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>organ_failure</p>
+</li>
+<li>
+<p>generic proc for handling dying organs</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<p>delta_time - seconds since last tick</p>
+</li>
+</ul><h3 id="proc/setOrganDamage"><aside class="declaration">proc </aside>setOrganDamage<aside>(d) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/organ_internal.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;organ_internal.dm 180"/></a></aside>
+        </h3>
+        <p>SETS an organ's damage to the amount &quot;d&quot;, and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

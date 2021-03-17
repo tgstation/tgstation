@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;carp_rift - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/carp_rift.html#var">Var Details</a> - <a href="obj/structure/carp_rift.html#proc">Proc Details</a></header>
+<main>
+<h1>Carp Rift <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/carp_rift.html">structure/carp_rift</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L508">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 508"/></a></h1>
+
+<p>The portals Space Dragon summons to bring carp onto the station.</p>
+<p>The portals Space Dragon summons to bring carp onto the station.  His main objective is to summon 3 of them and protect them from being destroyed.
+The portals can summon sentient space carp in limited amounts.  The portal also changes color based on whether or not a carp spawn is available.
+Once it is fully charged, it becomes indestructible, and intermitently spawns non-sentient carp.  It is still destroyed if Space Dragon dies.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#var/carp_stored">carp_stored</a></th><td>How many carp spawns it has available.</td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#var/charge_state">charge_state</a></th><td>Current charge state of the rift.</td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#var/dragon">dragon</a></th><td>A reference to the Space Dragon that created it.</td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#var/last_carp_inc">last_carp_inc</a></th><td>The time since an extra carp was added to the ghost role spawning pool.</td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#var/max_charge">max_charge</a></th><td>The maximum charge the rift can have.</td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#var/time_charged">time_charged</a></th><td>The amount of time the rift has charged for.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#proc/summon_carp">summon_carp</a></th><td>Used to create carp controlled by ghosts when the option is available.</td></tr>
+            <tr><th><a href="obj/structure/carp_rift.html#proc/update_check">update_check</a></th><td>Does a series of checks based on the portal's status.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/carp_stored"><aside class="declaration">var </aside>carp_stored
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L525">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 525"/></a></h3>
+        <p>How many carp spawns it has available.</p><h3 id="var/charge_state"><aside class="declaration">var </aside>charge_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L529">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 529"/></a></h3>
+        <p>Current charge state of the rift.</p><h3 id="var/dragon"><aside class="declaration">var </aside>dragon
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/space_dragon.html">space_dragon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L527">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 527"/></a></h3>
+        <p>A reference to the Space Dragon that created it.</p><h3 id="var/last_carp_inc"><aside class="declaration">var </aside>last_carp_inc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L531">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 531"/></a></h3>
+        <p>The time since an extra carp was added to the ghost role spawning pool.</p><h3 id="var/max_charge"><aside class="declaration">var </aside>max_charge
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L523">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 523"/></a></h3>
+        <p>The maximum charge the rift can have.</p><h3 id="var/time_charged"><aside class="declaration">var </aside>time_charged
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L521">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 521"/></a></h3>
+        <p>The amount of time the rift has charged for.</p><h2 id="proc">Proc Details</h2><h3 id="proc/summon_carp"><aside class="declaration">proc </aside>summon_carp<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L644">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 644"/></a></aside>
+        </h3>
+        <p>Used to create carp controlled by ghosts when the option is available.</p>
+<p>Creates a carp for the ghost to control if we have a carp spawn available.
+Gives them prompt to control a carp, and if our circumstances still allow if when they hit yes, spawn them in as a carp.
+Also add them to the list of carps in Space Dragon's antgonist datum, so they'll be displayed as having assisted him on round end.
+Arguments:</p>
+<ul>
+<li>mob/user - The ghost which will take control of the carp.</li>
+</ul><h3 id="proc/update_check"><aside class="declaration">proc </aside>update_check<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L594">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 594"/></a></aside>
+        </h3>
+        <p>Does a series of checks based on the portal's status.</p>
+<p>Performs a number of checks based on the current charge of the portal, and triggers various effects accordingly.
+If the current charge is a multiple of 40, add an extra carp spawn.
+If we're halfway charged, announce to the crew our location in a CENTCOM announcement.
+If we're fully charged, tell the crew we are, change our color to yellow, become invulnerable, and give Space Dragon the ability to make another rift, if he hasn't summoned 3 total.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

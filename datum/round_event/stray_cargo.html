@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;round_event&#x2F;stray_cargo - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/round_event/stray_cargo.html#var">Var Details</a> - <a href="datum/round_event/stray_cargo.html#proc">Proc Details</a></header>
+<main>
+<h1>stray_cargo <aside>/<a href="datum.html">datum</a>/<a href="datum/round_event/stray_cargo.html">round_event/stray_cargo</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 10"/></a></h1>
+
+<p>Spawns a cargo pod containing a random cargo supply pack on a random area of the station</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#var/announceChance">announceChance</a></th><td>Randomly picked area</td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#var/stray_spawnable_supply_packs">stray_spawnable_supply_packs</a></th><td>List of possible supply packs dropped in the pod, if empty picks from the cargo list</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#proc/announce">announce</a></th><td>List of default spawnable supply packs, filtered from the cargo list</td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#proc/find_event_area">find_event_area</a></th><td>Picks an area that wouldn't risk critical damage if hit by a pod explosion</td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#proc/make_pod">make_pod</a></th><td>Handles the creation of the pod, in case it needs to be modified beforehand</td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#proc/setup">setup</a></th><td>Tries to find a valid area, throws an error if none are found
+Also randomizes the start timer</td></tr>
+            <tr><th><a href="datum/round_event/stray_cargo.html#proc/start">start</a></th><td>Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/announceChance">announceChance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 12"/></a></h3>
+        <p>Randomly picked area</p><h3 id="var/stray_spawnable_supply_packs"><aside class="declaration">var </aside>stray_spawnable_supply_packs
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 14"/></a></h3>
+        <p>List of possible supply packs dropped in the pod, if empty picks from the cargo list</p><h2 id="proc">Proc Details</h2><h3 id="proc/announce">announce<aside>(fake) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 16"/></a></aside>
+        </h3>
+        <p>List of default spawnable supply packs, filtered from the cargo list</p><h3 id="proc/find_event_area"><aside class="declaration">proc </aside>find_event_area<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 66"/></a></aside>
+        </h3>
+        <p>Picks an area that wouldn't risk critical damage if hit by a pod explosion</p><h3 id="proc/make_pod"><aside class="declaration">proc </aside>make_pod<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 61"/></a></aside>
+        </h3>
+        <p>Handles the creation of the pod, in case it needs to be modified beforehand</p><h3 id="proc/setup">setup<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 23"/></a></aside>
+        </h3>
+        <p>Tries to find a valid area, throws an error if none are found
+Also randomizes the start timer</p><h3 id="proc/start">start<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/stray_cargo.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;stray_cargo.dm 40"/></a></aside>
+        </h3>
+        <p>Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

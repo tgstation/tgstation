@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;runechat - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/runechat.html#var">Var Details</a></header>
+<main>
+<h1>runechat <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/runechat.html">runechat</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 18"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/runechat.html#var/bucket_count">bucket_count</a></th><td>How many messages are in the buckets</td></tr>
+            <tr><th><a href="datum/controller/subsystem/runechat.html#var/bucket_list">bucket_list</a></th><td>List of buckets, each bucket holds every message that has to be killed that byond tick</td></tr>
+            <tr><th><a href="datum/controller/subsystem/runechat.html#var/bucket_resolution">bucket_resolution</a></th><td>world.tick_lag the bucket was designed for</td></tr>
+            <tr><th><a href="datum/controller/subsystem/runechat.html#var/head_offset">head_offset</a></th><td>world.time of the first entry in the bucket list, effectively the 'start time' of the current buckets</td></tr>
+            <tr><th><a href="datum/controller/subsystem/runechat.html#var/practical_offset">practical_offset</a></th><td>Index of the first non-empty bucket</td></tr>
+            <tr><th><a href="datum/controller/subsystem/runechat.html#var/second_queue">second_queue</a></th><td>Queue used for storing messages that are scheduled for deletion too far in the future for the buckets</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bucket_count"><aside class="declaration">var </aside>bucket_count
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 31"/></a></h3>
+        <p>How many messages are in the buckets</p><h3 id="var/bucket_list"><aside class="declaration">var </aside>bucket_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 33"/></a></h3>
+        <p>List of buckets, each bucket holds every message that has to be killed that byond tick</p><h3 id="var/bucket_resolution"><aside class="declaration">var </aside>bucket_resolution
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 29"/></a></h3>
+        <p>world.tick_lag the bucket was designed for</p><h3 id="var/head_offset"><aside class="declaration">var </aside>head_offset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 25"/></a></h3>
+        <p>world.time of the first entry in the bucket list, effectively the 'start time' of the current buckets</p><h3 id="var/practical_offset"><aside class="declaration">var </aside>practical_offset
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 27"/></a></h3>
+        <p>Index of the first non-empty bucket</p><h3 id="var/second_queue"><aside class="declaration">var </aside>second_queue
+            <aside>&ndash; /list/datum/chatmessage</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 35"/></a></h3>
+        <p>Queue used for storing messages that are scheduled for deletion too far in the future for the buckets</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

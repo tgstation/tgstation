@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;porta_turret - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/porta_turret.html#var">Var Details</a> - <a href="obj/machinery/porta_turret.html#proc">Proc Details</a></header>
+<main>
+<h1>porta_turret <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/porta_turret.html">porta_turret</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 27"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/always_up">always_up</a></th><td>Will stay active</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/base">base</a></th><td>For turrets inside other objects</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/controllock">controllock</a></th><td>If the turret responds to control panels</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/cover">cover</a></th><td>The cover that is covering this turret</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/cp">cp</a></th><td>Linked turret control panel of the turret</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/faction">faction</a></th><td>Same faction mobs will never be shot at, no matter the other settings</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/gun_charge">gun_charge</a></th><td>The charge of the gun when retrieved from wreckage</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/has_cover">has_cover</a></th><td>Hides the cover</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/installation">installation</a></th><td>The type of weapon installed by default</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/last_fired">last_fired</a></th><td>World.time the turret last fired</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/lethal_projectile">lethal_projectile</a></th><td>Lethal mode projectile type</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/lethal_projectile_sound">lethal_projectile_sound</a></th><td>Sound of lethal projectile</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/locked">locked</a></th><td>If the turret's behaviour control access is locked</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/manual_control">manual_control</a></th><td>If the turret is manually controlled</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/mode">mode</a></th><td>In which mode is turret in, stun or lethal</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/on">on</a></th><td>Determines if the turret is on</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/power_channel">power_channel</a></th><td>Only people with Security access</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/quit_action">quit_action</a></th><td>Action button holder for quitting manual control</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/raised">raised</a></th><td>If the turret cover is &quot;open&quot; and the turret is raised</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/raising">raising</a></th><td>If the turret is currently opening or closing its cover</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/remote_controller">remote_controller</a></th><td>Mob that is remotely controlling the turret</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/reqpower">reqpower</a></th><td>Power needed per shot</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/scan_range">scan_range</a></th><td>Scan range of the turret for locating targets</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/shot_delay">shot_delay</a></th><td>Ticks until next shot (1.5 ?)</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/spark_system">spark_system</a></th><td>The spark system, used for generating... sparks?</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/stored_gun">stored_gun</a></th><td>What stored gun is in the turret</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/stun_projectile">stun_projectile</a></th><td>Stun mode projectile type</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/stun_projectile_sound">stun_projectile_sound</a></th><td>Sound of stun projectile</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/toggle_action">toggle_action</a></th><td>Action button holder for switching between turret modes when manually controlling</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/turret_flags">turret_flags</a></th><td>Turret flags about who is turret allowed to shoot</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/uses_stored">uses_stored</a></th><td>if TRUE this will cause the turret to stop working if the stored_gun var is null in process()</td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#var/wall_turret_direction">wall_turret_direction</a></th><td>The turret will try to shoot from a turf in that direction when in a wall</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/porta_turret.html#proc/null_gun">null_gun</a></th><td>destroys reference to stored_gun to prevent hard deletions</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/always_up"><aside class="declaration">var </aside>always_up
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 78"/></a></h3>
+        <p>Will stay active</p><h3 id="var/base"><aside class="declaration">var </aside>base
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 50"/></a></h3>
+        <p>For turrets inside other objects</p><h3 id="var/controllock"><aside class="declaration">var </aside>controllock
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 58"/></a></h3>
+        <p>If the turret responds to control panels</p><h3 id="var/cover"><aside class="declaration">var </aside>cover
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/porta_turret_cover</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 82"/></a></h3>
+        <p>The cover that is covering this turret</p><h3 id="var/cp"><aside class="declaration">var </aside>cp
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/turretid.html">turretid</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 96"/></a></h3>
+        <p>Linked turret control panel of the turret</p><h3 id="var/faction"><aside class="declaration">var </aside>faction
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 92"/></a></h3>
+        <p>Same faction mobs will never be shot at, no matter the other settings</p><h3 id="var/gun_charge"><aside class="declaration">var </aside>gun_charge
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 64"/></a></h3>
+        <p>The charge of the gun when retrieved from wreckage</p><h3 id="var/has_cover"><aside class="declaration">var </aside>has_cover
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 80"/></a></h3>
+        <p>Hides the cover</p><h3 id="var/installation"><aside class="declaration">var </aside>installation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 60"/></a></h3>
+        <p>The type of weapon installed by default</p><h3 id="var/last_fired"><aside class="declaration">var </aside>last_fired
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 84"/></a></h3>
+        <p>World.time the turret last fired</p><h3 id="var/lethal_projectile"><aside class="declaration">var </aside>lethal_projectile
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 72"/></a></h3>
+        <p>Lethal mode projectile type</p><h3 id="var/lethal_projectile_sound"><aside class="declaration">var </aside>lethal_projectile_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 74"/></a></h3>
+        <p>Sound of lethal projectile</p><h3 id="var/locked"><aside class="declaration">var </aside>locked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 56"/></a></h3>
+        <p>If the turret's behaviour control access is locked</p><h3 id="var/manual_control"><aside class="declaration">var </aside>manual_control
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 100"/></a></h3>
+        <p>If the turret is manually controlled</p><h3 id="var/mode"><aside class="declaration">var </aside>mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 66"/></a></h3>
+        <p>In which mode is turret in, stun or lethal</p><h3 id="var/on"><aside class="declaration">var </aside>on
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 90"/></a></h3>
+        <p>Determines if the turret is on</p><h3 id="var/power_channel">power_channel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 39"/></a></h3>
+        <p>Only people with Security access</p><h3 id="var/quit_action"><aside class="declaration">var </aside>quit_action
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/turret_quit</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 102"/></a></h3>
+        <p>Action button holder for quitting manual control</p><h3 id="var/raised"><aside class="declaration">var </aside>raised
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 52"/></a></h3>
+        <p>If the turret cover is &quot;open&quot; and the turret is raised</p><h3 id="var/raising"><aside class="declaration">var </aside>raising
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 54"/></a></h3>
+        <p>If the turret is currently opening or closing its cover</p><h3 id="var/remote_controller"><aside class="declaration">var </aside>remote_controller
+            <aside>&ndash; /<a href="mob.html">mob</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 108"/></a></h3>
+        <p>Mob that is remotely controlling the turret</p><h3 id="var/reqpower"><aside class="declaration">var </aside>reqpower
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 76"/></a></h3>
+        <p>Power needed per shot</p><h3 id="var/scan_range"><aside class="declaration">var </aside>scan_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 48"/></a></h3>
+        <p>Scan range of the turret for locating targets</p><h3 id="var/shot_delay"><aside class="declaration">var </aside>shot_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 86"/></a></h3>
+        <p>Ticks until next shot (1.5 ?)</p><h3 id="var/spark_system"><aside class="declaration">var </aside>spark_system
+            <aside>&ndash; /<a href="datum.html">datum</a>/effect_system/spark_spread</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 94"/></a></h3>
+        <p>The spark system, used for generating... sparks?</p><h3 id="var/stored_gun"><aside class="declaration">var </aside>stored_gun
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/gun.html">gun</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 62"/></a></h3>
+        <p>What stored gun is in the turret</p><h3 id="var/stun_projectile"><aside class="declaration">var </aside>stun_projectile
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 68"/></a></h3>
+        <p>Stun mode projectile type</p><h3 id="var/stun_projectile_sound"><aside class="declaration">var </aside>stun_projectile_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 70"/></a></h3>
+        <p>Sound of stun projectile</p><h3 id="var/toggle_action"><aside class="declaration">var </aside>toggle_action
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/turret_toggle</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 104"/></a></h3>
+        <p>Action button holder for switching between turret modes when manually controlling</p><h3 id="var/turret_flags"><aside class="declaration">var </aside>turret_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 88"/></a></h3>
+        <p>Turret flags about who is turret allowed to shoot</p><h3 id="var/uses_stored"><aside class="declaration">var </aside>uses_stored
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 46"/></a></h3>
+        <p>if TRUE this will cause the turret to stop working if the stored_gun var is null in process()</p><h3 id="var/wall_turret_direction"><aside class="declaration">var </aside>wall_turret_direction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 98"/></a></h3>
+        <p>The turret will try to shoot from a turf in that direction when in a wall</p><h2 id="proc">Proc Details</h2><h3 id="proc/null_gun"><aside class="declaration">proc </aside>null_gun<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/porta_turret/portable_turret.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;porta_turret&#x2F;portable_turret.dm 198"/></a></aside>
+        </h3>
+        <p>destroys reference to stored_gun to prevent hard deletions</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

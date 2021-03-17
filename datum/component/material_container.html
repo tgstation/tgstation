@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;material_container - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/material_container.html#var">Var Details</a> - <a href="datum/component/material_container.html#proc">Proc Details</a></header>
+<main>
+<h1>material_container <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/material_container.html">material_container</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 12"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/after_insert">after_insert</a></th><td>A callback invoked after materials are inserted into this container</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/allowed_item_typecache">allowed_item_typecache</a></th><td>The typecache of things that this material container can accept</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/allowed_materials">allowed_materials</a></th><td>The list of materials that this material container can accept</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/insertion_check">insertion_check</a></th><td>A callback for checking wheter we can insert a material into this container</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/last_inserted_id">last_inserted_id</a></th><td>The last main material that was inserted into this container</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/mat_container_flags">mat_container_flags</a></th><td>The material container flags. See __DEFINES/materials.dm.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/materials">materials</a></th><td>Map of material ref -&gt; amount</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/max_amount">max_amount</a></th><td>The maximum amount of materials this material container can contain</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/precise_insertion">precise_insertion</a></th><td>Whether or not this material container allows specific amounts from sheets to be inserted</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/precondition">precondition</a></th><td>A callback invoked before materials are inserted into this container</td></tr>
+            <tr><th><a href="datum/component/material_container.html#var/total_amount">total_amount</a></th><td>The total amount of materials this material container contains</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/Initialize">Initialize</a></th><td>Sets up the proper signals and fills the list of materials with the appropriate references.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/amount2sheet">amount2sheet</a></th><td>Turns a material amount into the amount of sheets it should output</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/can_hold_material">can_hold_material</a></th><td>The default check for whether we can add materials to this material container.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/can_insert_amount_mat">can_insert_amount_mat</a></th><td>Proc for checking if there is room in the component, returning the amount or else the amount lacking.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/get_categories">get_categories</a></th><td>Returns all the categories in a recipe.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/get_item_material_amount">get_item_material_amount</a></th><td>returns the amount of material relevant to this container; if this container does not support glass, any glass in 'I' will not be taken into account</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/get_material_amount">get_material_amount</a></th><td>Returns the amount of a specific material in this container.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/has_enough_of_category">has_enough_of_category</a></th><td>Returns TRUE if you have enough of a specified material category (Which could be multiple materials)</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/has_enough_of_material">has_enough_of_material</a></th><td>Returns TRUE if you have enough of the specified material.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/has_materials">has_materials</a></th><td>Checks if its possible to afford a certain amount of materials. Takes a dictionary of materials.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/has_space">has_space</a></th><td>Proc that returns TRUE if the container has space</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/insert_amount_mat">insert_amount_mat</a></th><td>For inserting an amount of material</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/insert_item">insert_item</a></th><td>Proc specifically for inserting items, returns the amount of materials entered.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/insert_item_materials">insert_item_materials</a></th><td>Inserts the relevant materials from an item into this material container.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/on_attackby">on_attackby</a></th><td>Proc that allows players to fill the parent with mats</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/retrieve_all">retrieve_all</a></th><td>Proc to get all the materials and dump them as sheets</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/retrieve_sheets">retrieve_sheets</a></th><td>For spawning mineral sheets at a specific location. Used by machines to output sheets.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/sheet2amount">sheet2amount</a></th><td>Turns an amount of sheets into the amount of material amount it should output</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/transer_amt_to">transer_amt_to</a></th><td>Proc for transfering materials to another container.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/use_amount_mat">use_amount_mat</a></th><td>Uses an amount of a specific material, effectively removing it.</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/use_materials">use_materials</a></th><td>For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=200)</td></tr>
+            <tr><th><a href="datum/component/material_container.html#proc/user_insert">user_insert</a></th><td>Proc used for when player inserts materials</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/after_insert"><aside class="declaration">var </aside>after_insert
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 32"/></a></h3>
+        <p>A callback invoked after materials are inserted into this container</p><h3 id="var/allowed_item_typecache"><aside class="declaration">var </aside>allowed_item_typecache
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 22"/></a></h3>
+        <p>The typecache of things that this material container can accept</p><h3 id="var/allowed_materials"><aside class="declaration">var </aside>allowed_materials
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 20"/></a></h3>
+        <p>The list of materials that this material container can accept</p><h3 id="var/insertion_check"><aside class="declaration">var </aside>insertion_check
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 28"/></a></h3>
+        <p>A callback for checking wheter we can insert a material into this container</p><h3 id="var/last_inserted_id"><aside class="declaration">var </aside>last_inserted_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 24"/></a></h3>
+        <p>The last main material that was inserted into this container</p><h3 id="var/mat_container_flags"><aside class="declaration">var </aside>mat_container_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 36"/></a></h3>
+        <p>The material container flags. See __DEFINES/materials.dm.</p><h3 id="var/materials"><aside class="declaration">var </aside>materials
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 18"/></a></h3>
+        <p>Map of material ref -&gt; amount</p><h3 id="var/max_amount"><aside class="declaration">var </aside>max_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 16"/></a></h3>
+        <p>The maximum amount of materials this material container can contain</p><h3 id="var/precise_insertion"><aside class="declaration">var </aside>precise_insertion
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 26"/></a></h3>
+        <p>Whether or not this material container allows specific amounts from sheets to be inserted</p><h3 id="var/precondition"><aside class="declaration">var </aside>precondition
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 30"/></a></h3>
+        <p>A callback invoked before materials are inserted into this container</p><h3 id="var/total_amount"><aside class="declaration">var </aside>total_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 14"/></a></h3>
+        <p>The total amount of materials this material container contains</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(/list/init_mats, max_amt, _mat_container_flags, /list/allowed_mats, /list/allowed_items, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/_insertion_check, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/_precondition, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/_after_insert) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 37"/></a></aside>
+        </h3>
+        <p>Sets up the proper signals and fills the list of materials with the appropriate references.</p><h3 id="proc/amount2sheet"><aside class="declaration">proc </aside>amount2sheet<aside>(amt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L389">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 389"/></a></aside>
+        </h3>
+        <p>Turns a material amount into the amount of sheets it should output</p><h3 id="proc/can_hold_material"><aside class="declaration">proc </aside>can_hold_material<aside>(/<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 204"/></a></aside>
+        </h3>
+        <p>The default check for whether we can add materials to this material container.</p>
+<p>Arguments:</p>
+<ul>
+<li><a href="atom.html" title="/atom">mat</a>: The material we are checking for insertability.</li>
+</ul><h3 id="proc/can_insert_amount_mat"><aside class="declaration">proc </aside>can_insert_amount_mat<aside>(amt, /<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L267">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 267"/></a></aside>
+        </h3>
+        <p>Proc for checking if there is room in the component, returning the amount or else the amount lacking.</p><h3 id="proc/get_categories"><aside class="declaration">proc </aside>get_categories<aside>(/list/mats) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L363">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 363"/></a></aside>
+        </h3>
+        <p>Returns all the categories in a recipe.</p><h3 id="proc/get_item_material_amount"><aside class="declaration">proc </aside>get_item_material_amount<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, breakdown_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L402">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 402"/></a></aside>
+        </h3>
+        <p>returns the amount of material relevant to this container; if this container does not support glass, any glass in 'I' will not be taken into account</p><h3 id="proc/get_material_amount"><aside class="declaration">proc </aside>get_material_amount<aside>(/<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L414">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 414"/></a></aside>
+        </h3>
+        <p>Returns the amount of a specific material in this container.</p><h3 id="proc/has_enough_of_category"><aside class="declaration">proc </aside>has_enough_of_category<aside>(category, amount, multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L381">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 381"/></a></aside>
+        </h3>
+        <p>Returns TRUE if you have enough of a specified material category (Which could be multiple materials)</p><h3 id="proc/has_enough_of_material"><aside class="declaration">proc </aside>has_enough_of_material<aside>(/<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/req_mat, amount, multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L372">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 372"/></a></aside>
+        </h3>
+        <p>Returns TRUE if you have enough of the specified material.</p><h3 id="proc/has_materials"><aside class="declaration">proc </aside>has_materials<aside>(/list/mats, multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L341">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 341"/></a></aside>
+        </h3>
+        <p>Checks if its possible to afford a certain amount of materials. Takes a dictionary of materials.</p><h3 id="proc/has_space"><aside class="declaration">proc </aside>has_space<aside>(amt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L337">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 337"/></a></aside>
+        </h3>
+        <p>Proc that returns TRUE if the container has space</p><h3 id="proc/insert_amount_mat"><aside class="declaration">proc </aside>insert_amount_mat<aside>(amt, /<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L216">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 216"/></a></aside>
+        </h3>
+        <p>For inserting an amount of material</p><h3 id="proc/insert_item"><aside class="declaration">proc </aside>insert_item<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, multiplier, stack_amt, breakdown_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 162"/></a></aside>
+        </h3>
+        <p>Proc specifically for inserting items, returns the amount of materials entered.</p><h3 id="proc/insert_item_materials"><aside class="declaration">proc </aside>insert_item_materials<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/source, multiplier, breakdown_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 183"/></a></aside>
+        </h3>
+        <p>Inserts the relevant materials from an item into this material container.</p>
+<p>Arguments:</p>
+<ul>
+<li><a href="obj/item.html" title="/obj/item">source</a>: The source of the materials we are inserting.</li>
+<li>multiplier: The multiplier for the materials being inserted.</li>
+<li>breakdown_flags: The breakdown bitflags that will be used to retrieve the materials from the source</li>
+</ul><h3 id="proc/on_attackby"><aside class="declaration">proc </aside>on_attackby<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 111"/></a></aside>
+        </h3>
+        <p>Proc that allows players to fill the parent with mats</p><h3 id="proc/retrieve_all"><aside class="declaration">proc </aside>retrieve_all<aside>(target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L329">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 329"/></a></aside>
+        </h3>
+        <p>Proc to get all the materials and dump them as sheets</p><h3 id="proc/retrieve_sheets"><aside class="declaration">proc </aside>retrieve_sheets<aside>(sheet_amt, /<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/M, /<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L304">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 304"/></a></aside>
+        </h3>
+        <p>For spawning mineral sheets at a specific location. Used by machines to output sheets.</p><h3 id="proc/sheet2amount"><aside class="declaration">proc </aside>sheet2amount<aside>(sheet_amt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L395">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 395"/></a></aside>
+        </h3>
+        <p>Turns an amount of sheets into the amount of material amount it should output</p><h3 id="proc/transer_amt_to"><aside class="declaration">proc </aside>transer_amt_to<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/material_container.html">material_container</a>/T, amt, /<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L252">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 252"/></a></aside>
+        </h3>
+        <p>Proc for transfering materials to another container.</p><h3 id="proc/use_amount_mat"><aside class="declaration">proc </aside>use_amount_mat<aside>(amt, /<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L237">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 237"/></a></aside>
+        </h3>
+        <p>Uses an amount of a specific material, effectively removing it.</p><h3 id="proc/use_materials"><aside class="declaration">proc </aside>use_materials<aside>(/list/mats, multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L278">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 278"/></a></aside>
+        </h3>
+        <p>For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=200)</p><h3 id="proc/user_insert"><aside class="declaration">proc </aside>user_insert<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, breakdown_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/material_container.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;material_container.dm 137"/></a></aside>
+        </h3>
+        <p>Proc used for when player inserts materials</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

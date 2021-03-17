@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;label - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/label.html#var">Var Details</a> - <a href="datum/component/label.html#proc">Proc Details</a></header>
+<main>
+<h1>label <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/label.html">label</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 12"/></a></h1>
+
+<p>The label component.</p>
+<p>This component is used to manage labels applied by the hand labeler.</p>
+<p>Atoms can only have one instance of this component, and therefore only one label at a time.
+This is to avoid having names like &quot;Backpack (label1) (label2) (label3)&quot;. This is annoying and abnoxious to read.</p>
+<p>When a player clicks the atom with a hand labeler to apply a label, this component gets applied to it.
+If the labeler is off, the component will be removed from it, and the label will be removed from its name.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/label.html#var/label_name">label_name</a></th><td>The name of the label the player is applying to the parent.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/label.html#proc/Examine">Examine</a></th><td>This proc will trigger when someone examines the parent.
+It will attach the text found in the body of the proc to the <code>examine_list</code> and display it to the player examining the parent.</td></tr>
+            <tr><th><a href="datum/component/label.html#proc/InheritComponent">InheritComponent</a></th><td>This proc will fire after the parent is hit by a hand labeler which is trying to apply another label.
+Since the parent already has a label, it will remove the old one from the parent's name, and apply the new one.</td></tr>
+            <tr><th><a href="datum/component/label.html#proc/OnAttackby">OnAttackby</a></th><td>This proc will trigger when any object is used to attack the parent.</td></tr>
+            <tr><th><a href="datum/component/label.html#proc/apply_label">apply_label</a></th><td>Applies a label to the name of the parent in the format of: &quot;parent_name (label)&quot;</td></tr>
+            <tr><th><a href="datum/component/label.html#proc/remove_label">remove_label</a></th><td>Removes the label from the parent's name</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/label_name"><aside class="declaration">var </aside>label_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 17"/></a></h3>
+        <p>The name of the label the player is applying to the parent.</p><h2 id="proc">Proc Details</h2><h3 id="proc/Examine"><aside class="declaration">proc </aside>Examine<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/user, /list/examine_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 77"/></a></aside>
+        </h3>
+        <p>This proc will trigger when someone examines the parent.
+It will attach the text found in the body of the proc to the <code>examine_list</code> and display it to the player examining the parent.</p>
+<p>Arguments:</p>
+<ul>
+<li>source: The parent.</li>
+<li>user: The mob exmaining the parent.</li>
+<li>examine_list: The current list of text getting passed from the parent's normal examine() proc.</li>
+</ul><h3 id="proc/InheritComponent"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/InheritComponent">&uarr;</a></aside>InheritComponent<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/label.html">label</a>/new_comp, i_am_original, _label_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 35"/></a></aside>
+        </h3>
+        <p>This proc will fire after the parent is hit by a hand labeler which is trying to apply another label.
+Since the parent already has a label, it will remove the old one from the parent's name, and apply the new one.</p><h3 id="proc/OnAttackby"><aside class="declaration">proc </aside>OnAttackby<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/attacker, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 54"/></a></aside>
+        </h3>
+        <p>This proc will trigger when any object is used to attack the parent.</p>
+<p>If the attacking object is not a hand labeler, it will return.
+If the attacking object is a hand labeler it will restore the name of the parent to what it was before this component was added to it, and the component will be deleted.</p>
+<p>Arguments:</p>
+<ul>
+<li>source: The parent.</li>
+<li>attacker: The object that is hitting the parent.</li>
+<li>user: The mob who is wielding the attacking object.</li>
+</ul><h3 id="proc/apply_label"><aside class="declaration">proc </aside>apply_label<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 83"/></a></aside>
+        </h3>
+        <p>Applies a label to the name of the parent in the format of: &quot;parent_name (label)&quot;</p><h3 id="proc/remove_label"><aside class="declaration">proc </aside>remove_label<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/label.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;label.dm 88"/></a></aside>
+        </h3>
+        <p>Removes the label from the parent's name</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

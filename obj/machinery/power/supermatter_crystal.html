@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;power&#x2F;supermatter_crystal - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/power/supermatter_crystal.html#var">Var Details</a></header>
+<main>
+<h1>supermatter_crystal <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/power/supermatter_crystal.html">power/supermatter_crystal</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 17"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/bullet_energy">bullet_energy</a></th><td>How much the bullets damage should be multiplied by when it is added to the internal variables</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/combined_gas">combined_gas</a></th><td>The last air sample's total molar count, will always be above or equal to 0</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/common_channel">common_channel</a></th><td>The common channel</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/countdown">countdown</a></th><td>An effect we show to admins and ghosts the percentage of delam we're at</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/damage">damage</a></th><td>The amount of damage we have currently</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/damage_archived">damage_archived</a></th><td>The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/damage_penalty_point">damage_penalty_point</a></th><td>When we pass this amount of damage we start shooting bolts</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/dynamic_heat_modifier">dynamic_heat_modifier</a></th><td>Affects the amount of o2 and plasma the sm outputs, along with the heat it makes.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/dynamic_heat_resistance">dynamic_heat_resistance</a></th><td>Affects the amount of damage and minimum point at which the sm takes heat damage</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/emergency_alert">emergency_alert</a></th><td>The alert we send when we've reached emergency_point</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/emergency_point">emergency_point</a></th><td>The point at which we start sending messages to the common channel</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/engineering_channel">engineering_channel</a></th><td>The engineering channel</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/explosion_point">explosion_point</a></th><td>The point at which we delam</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/explosion_power">explosion_power</a></th><td>A scaling value that affects the severity of explosions.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/final_countdown">final_countdown</a></th><td>Are we exploding?</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gas_change_rate">gas_change_rate</a></th><td>Determines the rate of positve change in gas comp values</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gas_comp">gas_comp</a></th><td>The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gas_heat">gas_heat</a></th><td>The list of gases mapped against their heat penaltys. We use it to determin molar and heat output</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gas_powermix">gas_powermix</a></th><td>The list of gases mapped against their powermix ratio</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gas_resist">gas_resist</a></th><td>The list of gases mapped against their heat resistance. We use it to moderate heat damage.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gas_trans">gas_trans</a></th><td>The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gasefficency">gasefficency</a></th><td>The portion of the gasmix we're on that we should remove</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gases_we_care_about">gases_we_care_about</a></th><td>The list of gases we will be interacting with in process_atoms()</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gasmix_power_ratio">gasmix_power_ratio</a></th><td>Affects the power gain the sm experiances from heat</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/gl_uid">gl_uid</a></th><td>The amount of supermatters that have been created this round</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/hallucination_power">hallucination_power</a></th><td>How much hallucination should we produce per unit of power?</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/has_been_powered">has_been_powered</a></th><td>Boolean used for logging if we've been powered</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/has_reached_emergency">has_reached_emergency</a></th><td>Boolean used for logging if we've passed the emergency point</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/is_main_engine">is_main_engine</a></th><td>Used along with a global var to track if we can give out the sm sliver stealing objective</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/last_accent_sound">last_accent_sound</a></th><td>cooldown tracker for accent sounds</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/lastwarning">lastwarning</a></th><td>Time in 1/10th of seconds since the last sent warning</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/matter_power">matter_power</a></th><td>Takes the energy throwing things into the sm generates and slowly turns it into actual power</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/mole_heat_penalty">mole_heat_penalty</a></th><td>Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/moveable">moveable</a></th><td>Can it be moved?</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/power">power</a></th><td>Refered to as eer on the moniter. This value effects gas output, heat, damage, and radiation.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/power_changes">power_changes</a></th><td>Disables power changes</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/power_transmission_bonus">power_transmission_bonus</a></th><td>Affects the amount of radiation the sm makes. We multiply this with power to find the rads.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/powerloss_dynamic_scaling">powerloss_dynamic_scaling</a></th><td>Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/powerloss_inhibitor">powerloss_inhibitor</a></th><td>Uses powerloss_dynamic_scaling and combined_gas to lessen the effects of our powerloss functions</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/processes">processes</a></th><td>Disables the sm's proccessing totally.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/produces_gas">produces_gas</a></th><td>Disables the production of gas, and pretty much any handling of it we do.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/psyCoeff">psyCoeff</a></th><td>Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/psyOverlay">psyOverlay</a></th><td>A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/psy_overlay">psy_overlay</a></th><td>Should we check the psy overlay?</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/radio">radio</a></th><td>Our internal radio</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/radio_key">radio_key</a></th><td>The key our internal radio uses</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/safe_alert">safe_alert</a></th><td>Our &quot;Shit is no longer fucked&quot; message. We send it when damage is less then damage_archived</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/soundloop">soundloop</a></th><td>Our soundloop</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/takes_damage">takes_damage</a></th><td>Disables all methods of taking damage</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/uid">uid</a></th><td>The id of our supermatter</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/warning_alert">warning_alert</a></th><td>The alert we send when we've reached warning_point</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/warning_point">warning_point</a></th><td>The point at which we should start sending messeges about the damage to the engi channels.</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/zap_cutoff">zap_cutoff</a></th><td>The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,</td></tr>
+            <tr><th><a href="obj/machinery/power/supermatter_crystal.html#var/zap_icon">zap_icon</a></th><td>Tracks the bolt color we are using</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bullet_energy"><aside class="declaration">var </aside>bullet_energy
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L178">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 178"/></a></h3>
+        <p>How much the bullets damage should be multiplied by when it is added to the internal variables</p><h3 id="var/combined_gas"><aside class="declaration">var </aside>combined_gas
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 158"/></a></h3>
+        <p>The last air sample's total molar count, will always be above or equal to 0</p><h3 id="var/common_channel"><aside class="declaration">var </aside>common_channel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 189"/></a></h3>
+        <p>The common channel</p><h3 id="var/countdown"><aside class="declaration">var </aside>countdown
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/countdown/supermatter</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L197">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 197"/></a></h3>
+        <p>An effect we show to admins and ghosts the percentage of delam we're at</p><h3 id="var/damage"><aside class="declaration">var </aside>damage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 44"/></a></h3>
+        <p>The amount of damage we have currently</p><h3 id="var/damage_archived"><aside class="declaration">var </aside>damage_archived
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 46"/></a></h3>
+        <p>The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert</p><h3 id="var/damage_penalty_point"><aside class="declaration">var </aside>damage_penalty_point
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 60"/></a></h3>
+        <p>When we pass this amount of damage we start shooting bolts</p><h3 id="var/dynamic_heat_modifier"><aside class="declaration">var </aside>dynamic_heat_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 162"/></a></h3>
+        <p>Affects the amount of o2 and plasma the sm outputs, along with the heat it makes.</p><h3 id="var/dynamic_heat_resistance"><aside class="declaration">var </aside>dynamic_heat_resistance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 164"/></a></h3>
+        <p>Affects the amount of damage and minimum point at which the sm takes heat damage</p><h3 id="var/emergency_alert"><aside class="declaration">var </aside>emergency_alert
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 56"/></a></h3>
+        <p>The alert we send when we've reached emergency_point</p><h3 id="var/emergency_point"><aside class="declaration">var </aside>emergency_point
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 54"/></a></h3>
+        <p>The point at which we start sending messages to the common channel</p><h3 id="var/engineering_channel"><aside class="declaration">var </aside>engineering_channel
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L187">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 187"/></a></h3>
+        <p>The engineering channel</p><h3 id="var/explosion_point"><aside class="declaration">var </aside>explosion_point
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 58"/></a></h3>
+        <p>The point at which we delam</p><h3 id="var/explosion_power"><aside class="declaration">var </aside>explosion_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 63"/></a></h3>
+        <p>A scaling value that affects the severity of explosions.</p><h3 id="var/final_countdown"><aside class="declaration">var </aside>final_countdown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 41"/></a></h3>
+        <p>Are we exploding?</p><h3 id="var/gas_change_rate"><aside class="declaration">var </aside>gas_change_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 69"/></a></h3>
+        <p>Determines the rate of positve change in gas comp values</p><h3 id="var/gas_comp"><aside class="declaration">var </aside>gas_comp
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 89"/></a></h3>
+        <p>The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1</p><h3 id="var/gas_heat"><aside class="declaration">var </aside>gas_heat
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 119"/></a></h3>
+        <p>The list of gases mapped against their heat penaltys. We use it to determin molar and heat output</p><h3 id="var/gas_powermix"><aside class="declaration">var </aside>gas_powermix
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 141"/></a></h3>
+        <p>The list of gases mapped against their powermix ratio</p><h3 id="var/gas_resist"><aside class="declaration">var </aside>gas_resist
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 135"/></a></h3>
+        <p>The list of gases mapped against their heat resistance. We use it to moderate heat damage.</p><h3 id="var/gas_trans"><aside class="declaration">var </aside>gas_trans
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 106"/></a></h3>
+        <p>The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation</p><h3 id="var/gasefficency"><aside class="declaration">var </aside>gasefficency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 38"/></a></h3>
+        <p>The portion of the gasmix we're on that we should remove</p><h3 id="var/gases_we_care_about"><aside class="declaration">var </aside>gases_we_care_about
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 71"/></a></h3>
+        <p>The list of gases we will be interacting with in process_atoms()</p><h3 id="var/gasmix_power_ratio"><aside class="declaration">var </aside>gasmix_power_ratio
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 160"/></a></h3>
+        <p>Affects the power gain the sm experiances from heat</p><h3 id="var/gl_uid"><aside class="declaration">var </aside>gl_uid
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 34"/></a></h3>
+        <p>The amount of supermatters that have been created this round</p><h3 id="var/hallucination_power"><aside class="declaration">var </aside>hallucination_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 180"/></a></h3>
+        <p>How much hallucination should we produce per unit of power?</p><h3 id="var/has_been_powered"><aside class="declaration">var </aside>has_been_powered
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 192"/></a></h3>
+        <p>Boolean used for logging if we've been powered</p><h3 id="var/has_reached_emergency"><aside class="declaration">var </aside>has_reached_emergency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 194"/></a></h3>
+        <p>Boolean used for logging if we've passed the emergency point</p><h3 id="var/is_main_engine"><aside class="declaration">var </aside>is_main_engine
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L200">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 200"/></a></h3>
+        <p>Used along with a global var to track if we can give out the sm sliver stealing objective</p><h3 id="var/last_accent_sound"><aside class="declaration">var </aside>last_accent_sound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L207">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 207"/></a></h3>
+        <p>cooldown tracker for accent sounds</p><h3 id="var/lastwarning"><aside class="declaration">var </aside>lastwarning
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 65"/></a></h3>
+        <p>Time in 1/10th of seconds since the last sent warning</p><h3 id="var/matter_power"><aside class="declaration">var </aside>matter_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 174"/></a></h3>
+        <p>Takes the energy throwing things into the sm generates and slowly turns it into actual power</p><h3 id="var/mole_heat_penalty"><aside class="declaration">var </aside>mole_heat_penalty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 172"/></a></h3>
+        <p>Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.</p><h3 id="var/moveable"><aside class="declaration">var </aside>moveable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 204"/></a></h3>
+        <p>Can it be moved?</p><h3 id="var/power"><aside class="declaration">var </aside>power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 67"/></a></h3>
+        <p>Refered to as eer on the moniter. This value effects gas output, heat, damage, and radiation.</p><h3 id="var/power_changes"><aside class="declaration">var </aside>power_changes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L221">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 221"/></a></h3>
+        <p>Disables power changes</p><h3 id="var/power_transmission_bonus"><aside class="declaration">var </aside>power_transmission_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 170"/></a></h3>
+        <p>Affects the amount of radiation the sm makes. We multiply this with power to find the rads.</p><h3 id="var/powerloss_dynamic_scaling"><aside class="declaration">var </aside>powerloss_dynamic_scaling
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 168"/></a></h3>
+        <p>Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor</p><h3 id="var/powerloss_inhibitor"><aside class="declaration">var </aside>powerloss_inhibitor
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 166"/></a></h3>
+        <p>Uses powerloss_dynamic_scaling and combined_gas to lessen the effects of our powerloss functions</p><h3 id="var/processes"><aside class="declaration">var </aside>processes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L223">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 223"/></a></h3>
+        <p>Disables the sm's proccessing totally.</p><h3 id="var/produces_gas"><aside class="declaration">var </aside>produces_gas
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L219">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 219"/></a></h3>
+        <p>Disables the production of gas, and pretty much any handling of it we do.</p><h3 id="var/psyCoeff"><aside class="declaration">var </aside>psyCoeff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L209">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 209"/></a></h3>
+        <p>Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way</p><h3 id="var/psyOverlay"><aside class="declaration">var </aside>psyOverlay
+            <aside>&ndash; /<a href="obj.html">obj</a>/overlay/psy</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L213">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 213"/></a></h3>
+        <p>A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal</p><h3 id="var/psy_overlay"><aside class="declaration">var </aside>psy_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L211">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 211"/></a></h3>
+        <p>Should we check the psy overlay?</p><h3 id="var/radio"><aside class="declaration">var </aside>radio
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 183"/></a></h3>
+        <p>Our internal radio</p><h3 id="var/radio_key"><aside class="declaration">var </aside>radio_key
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 185"/></a></h3>
+        <p>The key our internal radio uses</p><h3 id="var/safe_alert"><aside class="declaration">var </aside>safe_alert
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 48"/></a></h3>
+        <p>Our &quot;Shit is no longer fucked&quot; message. We send it when damage is less then damage_archived</p><h3 id="var/soundloop"><aside class="declaration">var </aside>soundloop
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/looping_sound.html">looping_sound</a>/supermatter</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L202">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 202"/></a></h3>
+        <p>Our soundloop</p><h3 id="var/takes_damage"><aside class="declaration">var </aside>takes_damage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 217"/></a></h3>
+        <p>Disables all methods of taking damage</p><h3 id="var/uid"><aside class="declaration">var </aside>uid
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 32"/></a></h3>
+        <p>The id of our supermatter</p><h3 id="var/warning_alert"><aside class="declaration">var </aside>warning_alert
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 52"/></a></h3>
+        <p>The alert we send when we've reached warning_point</p><h3 id="var/warning_point"><aside class="declaration">var </aside>warning_point
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 50"/></a></h3>
+        <p>The point at which we should start sending messeges about the damage to the engi channels.</p><h3 id="var/zap_cutoff"><aside class="declaration">var </aside>zap_cutoff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L176">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 176"/></a></h3>
+        <p>The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,</p><h3 id="var/zap_icon"><aside class="declaration">var </aside>zap_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/supermatter/supermatter.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;supermatter&#x2F;supermatter.dm 36"/></a></h3>
+        <p>Tracks the bolt color we are using</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

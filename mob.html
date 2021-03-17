@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob.html#var">Var Details</a> - <a href="mob.html#proc">Proc Details</a></header>
+<main>
+<h1>mob <aside>/<a href="mob.html">mob</a></aside><aside> inherits /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 9"/></a></h1>
+
+<p>The mob, usually meant to be a creature of some type</p>
+<p>Has a client attached that is a living person (most of the time), although I have to admit
+sometimes it's hard to tell they're sentient</p>
+<p>Has a lot of the creature game world logic, such as health etc</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob.html#var/LAssailant">LAssailant</a></th><td>The last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)</td></tr>
+            <tr><th><a href="mob.html#var/actions">actions</a></th><td>List of action hud items the user has</td></tr>
+            <tr><th><a href="mob.html#var/actionspeed_mod_immunities">actionspeed_mod_immunities</a></th><td>List of action speed modifiers ignored by this mob. List -&gt; List (id) -&gt; List (sources)</td></tr>
+            <tr><th><a href="mob.html#var/actionspeed_modification">actionspeed_modification</a></th><td>List of action speed modifiers applying to this mob</td></tr>
+            <tr><th><a href="mob.html#var/active_hand_index">active_hand_index</a></th><td>What hand is the active hand</td></tr>
+            <tr><th><a href="mob.html#var/active_storage">active_storage</a></th><td>Storage component (for mob inventory)</td></tr>
+            <tr><th><a href="mob.html#var/alerts">alerts</a></th><td>Contains <a href="atom/movable/screen/alert.html" title="/atom/movable/screen/alert">/atom/movable/screen/alert</a> only.</td></tr>
+            <tr><th><a href="mob.html#var/bodytemperature">bodytemperature</a></th><td>Default body temperature</td></tr>
+            <tr><th><a href="mob.html#var/buckled">buckled</a></th><td>movable atom we are buckled to</td></tr>
+            <tr><th><a href="mob.html#var/cached_multiplicative_actions_slowdown">cached_multiplicative_actions_slowdown</a></th><td>The calculated mob action speed slowdown based on the modifiers list</td></tr>
+            <tr><th><a href="mob.html#var/cached_multiplicative_slowdown">cached_multiplicative_slowdown</a></th><td>The calculated mob speed slowdown based on the modifiers list</td></tr>
+            <tr><th><a href="mob.html#var/chameleon_item_actions">chameleon_item_actions</a></th><td>A special action? No idea why this lives here</td></tr>
+            <tr><th><a href="mob.html#var/click_intercept">click_intercept</a></th><td>Allows a datum to intercept all click calls this mob is the source of</td></tr>
+            <tr><th><a href="mob.html#var/control_object">control_object</a></th><td>Used by admins to possess objects. All mobs should have this var</td></tr>
+            <tr><th><a href="mob.html#var/deathsound">deathsound</a></th><td>The sound made on death</td></tr>
+            <tr><th><a href="mob.html#var/dizziness">dizziness</a></th><td>Dizziness level of the mob</td></tr>
+            <tr><th><a href="mob.html#var/do_afters">do_afters</a></th><td>For storing what do_after's someone has, key = string, value = amount of interactions of that type happening.</td></tr>
+            <tr><th><a href="mob.html#var/drowsyness">drowsyness</a></th><td>Drowsyness level of the mob</td></tr>
+            <tr><th><a href="mob.html#var/emotes_used">emotes_used</a></th><td>Used for tracking last uses of emotes for cooldown purposes</td></tr>
+            <tr><th><a href="mob.html#var/examine_cursor_icon">examine_cursor_icon</a></th><td>Cursor icon used when holding shift over things</td></tr>
+            <tr><th><a href="mob.html#var/eye_blind">eye_blind</a></th><td>Is the mob blind</td></tr>
+            <tr><th><a href="mob.html#var/eye_blurry">eye_blurry</a></th><td>Does the mob have blurry sight</td></tr>
+            <tr><th><a href="mob.html#var/faction">faction</a></th><td>A list of factions that this mob is currently in, for hostile mob targetting, amongst other things</td></tr>
+            <tr><th><a href="mob.html#var/has_unlimited_silicon_privilege">has_unlimited_silicon_privilege</a></th><td>Can they interact with station electronics</td></tr>
+            <tr><th><a href="mob.html#var/held_items">held_items</a></th><td>list of items held in hands</td></tr>
+            <tr><th><a href="mob.html#var/hud_used">hud_used</a></th><td>Active hud</td></tr>
+            <tr><th><a href="mob.html#var/jitteriness">jitteriness</a></th><td>Jitteryness level of the mob</td></tr>
+            <tr><th><a href="mob.html#var/job">job</a></th><td>What job does this mob have</td></tr>
+            <tr><th><a href="mob.html#var/lastKnownIP">lastKnownIP</a></th><td>The last known IP of the client who was in this mob</td></tr>
+            <tr><th><a href="mob.html#var/listed_turf">listed_turf</a></th><td>the current turf being examined in the stat panel</td></tr>
+            <tr><th><a href="mob.html#var/m_intent">m_intent</a></th><td>The movement intent of the mob (run/wal)</td></tr>
+            <tr><th><a href="mob.html#var/machine">machine</a></th><td>The machine the mob is interacting with (this is very bad old code btw)</td></tr>
+            <tr><th><a href="mob.html#var/mob_spell_list">mob_spell_list</a></th><td>construct spells and mime spells.</td></tr>
+            <tr><th><a href="mob.html#var/mock_client">mock_client</a></th><td>A mock client, provided by tests and friends</td></tr>
+            <tr><th><a href="mob.html#var/move_on_shuttle">move_on_shuttle</a></th><td>Can this mob enter shuttles</td></tr>
+            <tr><th><a href="mob.html#var/movespeed_mod_immunities">movespeed_mod_immunities</a></th><td>List of movement speed modifiers ignored by this mob. List -&gt; List (id) -&gt; List (sources)</td></tr>
+            <tr><th><a href="mob.html#var/movespeed_modification">movespeed_modification</a></th><td>List of movement speed modifiers applying to this mob</td></tr>
+            <tr><th><a href="mob.html#var/name_archive">name_archive</a></th><td>back up of the real name during admin possession</td></tr>
+            <tr><th><a href="mob.html#var/next_move">next_move</a></th><td>Tick time the mob can next move</td></tr>
+            <tr><th><a href="mob.html#var/notransform">notransform</a></th><td>Magic var that stops you moving and interacting with anything</td></tr>
+            <tr><th><a href="mob.html#var/nutrition">nutrition</a></th><td>Hunger level of the mob</td></tr>
+            <tr><th><a href="mob.html#var/observers">observers</a></th><td>The list of people observing this mob.</td></tr>
+            <tr><th><a href="mob.html#var/overeatduration">overeatduration</a></th><td>How many ticks this mob has been over reating</td></tr>
+            <tr><th><a href="mob.html#var/progressbars">progressbars</a></th><td>List of progress bars this mob is currently seeing for actions</td></tr>
+            <tr><th><a href="mob.html#var/real_name">real_name</a></th><td>What is the mobs real name (name is overridden for disguises etc)</td></tr>
+            <tr><th><a href="mob.html#var/registered_z">registered_z</a></th><td>THe z level this mob is currently registered in</td></tr>
+            <tr><th><a href="mob.html#var/remote_control">remote_control</a></th><td>Calls relay_move() to whatever this is set to when the mob tries to move</td></tr>
+            <tr><th><a href="mob.html#var/research_scanner">research_scanner</a></th><td>I have no idea tbh</td></tr>
+            <tr><th><a href="mob.html#var/satiety">satiety</a></th><td>Satiation level of the mob</td></tr>
+            <tr><th><a href="mob.html#var/sound_environment_override">sound_environment_override</a></th><td>Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)</td></tr>
+            <tr><th><a href="mob.html#var/stat">stat</a></th><td>Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)</td></tr>
+            <tr><th><a href="mob.html#var/status_flags">status_flags</a></th><td>bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)</td></tr>
+            <tr><th><a href="mob.html#var/tgui_open_uis">tgui_open_uis</a></th><td>global</td></tr>
+            <tr><th><a href="mob.html#var/throw_mode">throw_mode</a></th><td>Is the mob throw intent on</td></tr>
+            <tr><th><a href="mob.html#var/updating_glide_size">updating_glide_size</a></th><td>Whether the mob is updating glide size when movespeed updates or not</td></tr>
+            <tr><th><a href="mob.html#var/vis_flags">vis_flags</a></th><td>when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.</td></tr>
+            <tr><th><a href="mob.html#var/zone_selected">zone_selected</a></th><td>The zone this mob is currently targeting</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob.html#proc/AddSpell">AddSpell</a></th><td>Add a spell to the mobs spell list</td></tr>
+            <tr><th><a href="mob.html#proc/AltClickOn">AltClickOn</a></th><td>Alt click
+Unused except for AI</td></tr>
+            <tr><th><a href="mob.html#proc/Cell">Cell</a></th><td>Some kind of debug verb that gives atmosphere environment details</td></tr>
+            <tr><th><a href="mob.html#proc/ClickOn">ClickOn</a></th><td>Standard mob ClickOn()
+Handles exceptions: Buildmode, middle click, modified clicks, mech actions</td></tr>
+            <tr><th><a href="mob.html#proc/CtrlClickOn">CtrlClickOn</a></th><td>Ctrl click
+For most objects, pull</td></tr>
+            <tr><th><a href="mob.html#proc/CtrlShiftClickOn">CtrlShiftClickOn</a></th><td>Control+Shift click
+Unused except for AI</td></tr>
+            <tr><th><a href="mob.html#proc/DblClickOn">DblClickOn</a></th><td>Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)</td></tr>
+            <tr><th><a href="mob.html#proc/Destroy">Destroy</a></th><td>Delete a mob</td></tr>
+            <tr><th><a href="mob.html#proc/Dizzy">Dizzy</a></th><td>Set the dizzyness of a mob to a passed in amount</td></tr>
+            <tr><th><a href="mob.html#proc/GenerateTag">GenerateTag</a></th><td>Generate the tag for this mob</td></tr>
+            <tr><th><a href="mob.html#proc/Initialize">Initialize</a></th><td>Intialize a mob</td></tr>
+            <tr><th><a href="mob.html#proc/Jitter">Jitter</a></th><td>Set the jitter of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/Login">Login</a></th><td>Run when a client is put in this mob or reconnets to byond and their client was on this mob</td></tr>
+            <tr><th><a href="mob.html#proc/MiddleClickOn">MiddleClickOn</a></th><td>Middle click
+Mainly used for swapping hands</td></tr>
+            <tr><th><a href="mob.html#proc/MouseDrop">MouseDrop</a></th><td>Controls if a mouse drop succeeds (return null if it doesnt)</td></tr>
+            <tr><th><a href="mob.html#proc/MouseDrop_T">MouseDrop_T</a></th><td>Handle the result of a click drag onto this mob</td></tr>
+            <tr><th><a href="mob.html#proc/MouseWheelOn">MouseWheelOn</a></th><td>MouseWheelOn</td></tr>
+            <tr><th><a href="mob.html#proc/Process_Spacemove">Process_Spacemove</a></th><td>Handles mob/living movement in space (or no gravity)</td></tr>
+            <tr><th><a href="mob.html#proc/RangedAttack">RangedAttack</a></th><td>Ranged unarmed attack:</td></tr>
+            <tr><th><a href="mob.html#proc/RemoveSpell">RemoveSpell</a></th><td>Remove a spell from the mobs spell list</td></tr>
+            <tr><th><a href="mob.html#proc/ShiftClickOn">ShiftClickOn</a></th><td>Shift click
+For most mobs, examine.
+This is overridden in ai.dm</td></tr>
+            <tr><th><a href="mob.html#proc/Topic">Topic</a></th><td>Topic call back for any mob</td></tr>
+            <tr><th><a href="mob.html#proc/UnarmedAttack">UnarmedAttack</a></th><td>Translates into <a href="atom.html#proc/attack_hand" title="/atom">atom/proc/attack_hand</a>, etc.</td></tr>
+            <tr><th><a href="mob.html#proc/abandon_mob">abandon_mob</a></th><td>Allows you to respawn, abandoning your current mob</td></tr>
+            <tr><th><a href="mob.html#proc/add_actionspeed_modifier">add_actionspeed_modifier</a></th><td>Add a action speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.</td></tr>
+            <tr><th><a href="mob.html#proc/add_client_colour">add_client_colour</a></th><td>Adds an instance of colour_type to the mob's client_colours list
+colour_type - a typepath (subtyped from /datum/client_colour)</td></tr>
+            <tr><th><a href="mob.html#proc/add_memory">add_memory</a></th><td>Add a note to the mind datum</td></tr>
+            <tr><th><a href="mob.html#proc/add_movespeed_modifier">add_movespeed_modifier</a></th><td>Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_alive_mob_list">add_to_alive_mob_list</a></th><td>Adds the mob reference to the list of all mobs alive. If mob is cliented, it adds it to the list of all living player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_current_dead_players">add_to_current_dead_players</a></th><td>Adds the cliented mob reference to either the list of dead player-mobs or to the list of observers, depending on how they joined the game.</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_current_living_antags">add_to_current_living_antags</a></th><td>Adds the cliented mob reference to the list of living antag player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_current_living_players">add_to_current_living_players</a></th><td>Adds the cliented mob reference to the list of living player-mobs. If the mob is an antag, it adds it to the list of living antag player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_dead_mob_list">add_to_dead_mob_list</a></th><td>Adds the mob reference to the list of all the dead mobs. If mob is cliented, it adds it to the list of all dead player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_mob_list">add_to_mob_list</a></th><td>Adds the mob reference to the list and directory of all mobs. Called on Initialize().</td></tr>
+            <tr><th><a href="mob.html#proc/add_to_player_list">add_to_player_list</a></th><td>Adds the cliented mob reference to the list of all player-mobs, besides to either the of dead or alive player-mob lists, as appropriate. Called on Login().</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_blindness">adjust_blindness</a></th><td>Adjust a mobs blindness by an amount</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_blurriness">adjust_blurriness</a></th><td>Adjust the current blurriness of the mobs vision by amount</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_bodytemperature">adjust_bodytemperature</a></th><td>Adjust the body temperature of a mob, with min/max settings</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_disgust">adjust_disgust</a></th><td>Adjust the disgust level of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_drugginess">adjust_drugginess</a></th><td>Adjust the drugginess of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/adjust_nutrition">adjust_nutrition</a></th><td>Adjust the nutrition of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/animate_client_colour">animate_client_colour</a></th><td>Works similarly to 'update_client_colour', but animated.</td></tr>
+            <tr><th><a href="mob.html#proc/anti_magic_check">anti_magic_check</a></th><td>Return any anti magic atom on this mob that matches the magic type</td></tr>
+            <tr><th><a href="mob.html#proc/attack_ui">attack_ui</a></th><td>This proc is called whenever someone clicks an inventory ui slot.</td></tr>
+            <tr><th><a href="mob.html#proc/audible_message">audible_message</a></th><td>Show a message to all mobs in earshot of this one</td></tr>
+            <tr><th><a href="mob.html#proc/auto_deadmin_on_login">auto_deadmin_on_login</a></th><td>Checks if the attached client is an admin and may deadmin them</td></tr>
+            <tr><th><a href="mob.html#proc/blind_eyes">blind_eyes</a></th><td>Blind a mobs eyes by amount</td></tr>
+            <tr><th><a href="mob.html#proc/blur_eyes">blur_eyes</a></th><td>Make the mobs vision blurry</td></tr>
+            <tr><th><a href="mob.html#proc/buckle_mob">buckle_mob</a></th><td>Buckle a living mob to this mob. Also turns you to face the other mob</td></tr>
+            <tr><th><a href="mob.html#proc/canUseStorage">canUseStorage</a></th><td>Can this mob use storage</td></tr>
+            <tr><th><a href="mob.html#proc/canUseTopic">canUseTopic</a></th><td>Can the mob use Topic to interact with machines</td></tr>
+            <tr><th><a href="mob.html#proc/canZMove">canZMove</a></th><td>Can this mob move between z levels</td></tr>
+            <tr><th><a href="mob.html#proc/can_hear">can_hear</a></th><td>Can the mob hear</td></tr>
+            <tr><th><a href="mob.html#proc/can_hold_items">can_hold_items</a></th><td>Can this mob hold items</td></tr>
+            <tr><th><a href="mob.html#proc/can_interact_with">can_interact_with</a></th><td>Can the mob interact() with an atom?</td></tr>
+            <tr><th><a href="mob.html#proc/can_read">can_read</a></th><td>Can this mob read (is literate and not blind)</td></tr>
+            <tr><th><a href="mob.html#proc/can_resist">can_resist</a></th><td>Can this mob resist (default FALSE)</td></tr>
+            <tr><th><a href="mob.html#proc/can_see_reagents">can_see_reagents</a></th><td>Can the mob see reagents inside of containers?</td></tr>
+            <tr><th><a href="mob.html#proc/cancel_camera">cancel_camera</a></th><td>Sometimes helps if the user is stuck in another perspective or camera</td></tr>
+            <tr><th><a href="mob.html#proc/canface">canface</a></th><td>Returns true if a mob can turn to face things</td></tr>
+            <tr><th><a href="mob.html#proc/check_emote">check_emote</a></th><td>Check if this message is an emote</td></tr>
+            <tr><th><a href="mob.html#proc/clear_from_recent_examines">clear_from_recent_examines</a></th><td>the item in our active hand
+our active hand, to check if it's disabled/detatched
+how long it takes for the blind person to find the thing they're examining
+our current intent, so we can go back to it after touching</td></tr>
+            <tr><th><a href="mob.html#proc/click_random_mob">click_random_mob</a></th><td>Clicks a random nearby mob with the source from this mob</td></tr>
+            <tr><th><a href="mob.html#proc/common_trait_examine">common_trait_examine</a></th><td>Examine text for traits shared by multiple types.</td></tr>
+            <tr><th><a href="mob.html#proc/create_chat_message">create_chat_message</a></th><td>Creates a message overlay at a defined location for a given speaker</td></tr>
+            <tr><th><a href="mob.html#proc/do_set_blindness">do_set_blindness</a></th><td>Proc that handles adding and removing the blindness overlays.</td></tr>
+            <tr><th><a href="mob.html#proc/down">down</a></th><td>Moves a mob down a z level</td></tr>
+            <tr><th><a href="mob.html#proc/dropItemToGround">dropItemToGround</a></th><td>Used to drop an item (if it exists) to the ground.</td></tr>
+            <tr><th><a href="mob.html#proc/eastface">eastface</a></th><td>Hidden verb to turn east</td></tr>
+            <tr><th><a href="mob.html#proc/equip_to_appropriate_slot">equip_to_appropriate_slot</a></th><td>Auto equip the passed in item the appropriate slot based on equipment priority</td></tr>
+            <tr><th><a href="mob.html#proc/equip_to_slot">equip_to_slot</a></th><td>Actually equips an item to a slot (UNSAFE)</td></tr>
+            <tr><th><a href="mob.html#proc/equip_to_slot_if_possible">equip_to_slot_if_possible</a></th><td>Try to equip an item to a slot on the mob</td></tr>
+            <tr><th><a href="mob.html#proc/equip_to_slot_or_del">equip_to_slot_or_del</a></th><td>Equip an item to the slot or delete</td></tr>
+            <tr><th><a href="mob.html#proc/equipped_speed_mods">equipped_speed_mods</a></th><td>Gets the combined speed modification of all worn items
+Except base mob type doesnt really wear items</td></tr>
+            <tr><th><a href="mob.html#proc/examinate">examinate</a></th><td>Examine a mob</td></tr>
+            <tr><th><a href="mob.html#proc/face_atom">face_atom</a></th><td>Simple helper to face what you clicked on, in case it should be needed in more than one place</td></tr>
+            <tr><th><a href="mob.html#proc/faction_check_mob">faction_check_mob</a></th><td>Check if the other mob has any factions the same as us</td></tr>
+            <tr><th><a href="mob.html#proc/first_name">first_name</a></th><td>Find the first name of a mob from the real name with regex</td></tr>
+            <tr><th><a href="mob.html#proc/fully_replace_character_name">fully_replace_character_name</a></th><td>Fully update the name of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/get_actionspeed_modifiers">get_actionspeed_modifiers</a></th><td>Get the action speed modifiers list of the mob</td></tr>
+            <tr><th><a href="mob.html#proc/get_active_hand">get_active_hand</a></th><td>Get the bodypart for whatever hand we have active, Only relevant for carbons</td></tr>
+            <tr><th><a href="mob.html#proc/get_active_held_item">get_active_held_item</a></th><td>Returns the thing we're currently holding</td></tr>
+            <tr><th><a href="mob.html#proc/get_config_multiplicative_speed">get_config_multiplicative_speed</a></th><td>Get the global config movespeed of a mob by type</td></tr>
+            <tr><th><a href="mob.html#proc/get_ghost">get_ghost</a></th><td>Get the ghost of this mob (from the mind)</td></tr>
+            <tr><th><a href="mob.html#proc/get_item_by_slot">get_item_by_slot</a></th><td>Get the item on the mob in the storage slot identified by the id passed in</td></tr>
+            <tr><th><a href="mob.html#proc/get_message_mods">get_message_mods</a></th><td>Extracts and cleans message of any extenstions at the begining of the message
+Inserts the info into the passed list, returns the cleaned message</td></tr>
+            <tr><th><a href="mob.html#proc/get_mob_buckling_height">get_mob_buckling_height</a></th><td>returns the height in pixel the mob should have when buckled to another mob.</td></tr>
+            <tr><th><a href="mob.html#proc/get_movespeed_modifiers">get_movespeed_modifiers</a></th><td>Get the move speed modifiers list of the mob</td></tr>
+            <tr><th><a href="mob.html#proc/get_num_held_items">get_num_held_items</a></th><td>Find number of held items, multihand compatible</td></tr>
+            <tr><th><a href="mob.html#proc/get_photo_description">get_photo_description</a></th><td>Return the desc of this mob for a photo</td></tr>
+            <tr><th><a href="mob.html#proc/get_policy_keywords">get_policy_keywords</a></th><td>Get the list of keywords for policy config</td></tr>
+            <tr><th><a href="mob.html#proc/get_proc_holders">get_proc_holders</a></th><td>Gets all relevant proc holders for the browser statpenl</td></tr>
+            <tr><th><a href="mob.html#proc/get_realname_string">get_realname_string</a></th><td>Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name</td></tr>
+            <tr><th><a href="mob.html#proc/get_spacemove_backup">get_spacemove_backup</a></th><td>Find movable atoms? near a mob that are viable for pushing off when moving</td></tr>
+            <tr><th><a href="mob.html#proc/get_spells_for_statpanel">get_spells_for_statpanel</a></th><td>Convert a list of spells into a displyable list for the statpanel</td></tr>
+            <tr><th><a href="mob.html#proc/get_status_tab_items">get_status_tab_items</a></th><td>Adds this list to the output to the stat browser</td></tr>
+            <tr><th><a href="mob.html#proc/getorgan">getorgan</a></th><td>Get the organ object from the mob matching the passed in typepath</td></tr>
+            <tr><th><a href="mob.html#proc/getorganslot">getorganslot</a></th><td>Returns a list of all organs in specified slot</td></tr>
+            <tr><th><a href="mob.html#proc/getorganszone">getorganszone</a></th><td>Get organ objects by zone</td></tr>
+            <tr><th><a href="mob.html#proc/grab_ghost">grab_ghost</a></th><td>Force get the ghost from the mind</td></tr>
+            <tr><th><a href="mob.html#proc/hallucinating">hallucinating</a></th><td>Is the mob hallucinating?</td></tr>
+            <tr><th><a href="mob.html#proc/handle_eye_contact">handle_eye_contact</a></th><td>handle_eye_contact() is called when we examine() something. If we examine an alive mob with a mind who has examined us in the last second within 5 tiles, we make eye contact!</td></tr>
+            <tr><th><a href="mob.html#proc/has_actionspeed_modifier">has_actionspeed_modifier</a></th><td>Is there a actionspeed modifier for this mob</td></tr>
+            <tr><th><a href="mob.html#proc/has_movespeed_modifier">has_movespeed_modifier</a></th><td>Is there a movespeed modifier for this mob</td></tr>
+            <tr><th><a href="mob.html#proc/hivecheck">hivecheck</a></th><td>Check if the mob has a hivemind channel</td></tr>
+            <tr><th><a href="mob.html#proc/incapacitated">incapacitated</a></th><td>Is the mob incapacitated</td></tr>
+            <tr><th><a href="mob.html#proc/initialize_actionspeed">initialize_actionspeed</a></th><td>Adds a default action speed</td></tr>
+            <tr><th><a href="mob.html#proc/is_blind">is_blind</a></th><td>Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.</td></tr>
+            <tr><th><a href="mob.html#proc/is_literate">is_literate</a></th><td>This mob is abile to read books</td></tr>
+            <tr><th><a href="mob.html#proc/is_muzzled">is_muzzled</a></th><td>Is the mob muzzled (default false)</td></tr>
+            <tr><th><a href="mob.html#proc/last_name">last_name</a></th><td>Find the last name of a mob from the real name with regex</td></tr>
+            <tr><th><a href="mob.html#proc/limb_attack_self">limb_attack_self</a></th><td>Called by using Activate Held Object with an empty hand/limb</td></tr>
+            <tr><th><a href="mob.html#proc/log_message">log_message</a></th><td>Logs a message in a mob's individual log, and in the global logs as well if log_globally is true</td></tr>
+            <tr><th><a href="mob.html#proc/lowest_buckled_mob">lowest_buckled_mob</a></th><td>Find the mob at the bottom of a buckle chain</td></tr>
+            <tr><th><a href="mob.html#proc/manual_emote">manual_emote</a></th><td>Allows the intrepid coder to send a basic emote
+Takes text as input, sends it out to those who need to know after some light parsing
+If you need something more complex, make it into a datum emote
+Arguments:</td></tr>
+            <tr><th><a href="mob.html#proc/me_verb">me_verb</a></th><td>The me emote verb</td></tr>
+            <tr><th><a href="mob.html#proc/memory">memory</a></th><td>Get the notes of this mob</td></tr>
+            <tr><th><a href="mob.html#proc/mob_has_gravity">mob_has_gravity</a></th><td>Returns true if a mob has gravity</td></tr>
+            <tr><th><a href="mob.html#proc/mob_negates_gravity">mob_negates_gravity</a></th><td>Does this mob ignore gravity</td></tr>
+            <tr><th><a href="mob.html#proc/mode">mode</a></th><td>Verb to activate the object in your held hand</td></tr>
+            <tr><th><a href="mob.html#proc/northface">northface</a></th><td>Hidden verb to turn north</td></tr>
+            <tr><th><a href="mob.html#proc/notify_ghost_cloning">notify_ghost_cloning</a></th><td>Notify a ghost that it's body is being cloned</td></tr>
+            <tr><th><a href="mob.html#proc/onShuttleMove">onShuttleMove</a></th><td>Mob move procs</td></tr>
+            <tr><th><a href="mob.html#proc/open_language_menu">open_language_menu</a></th><td>Show the language menu for this mob</td></tr>
+            <tr><th><a href="mob.html#proc/pointed">pointed</a></th><td>Point at an atom</td></tr>
+            <tr><th><a href="mob.html#proc/post_buckle_mob">post_buckle_mob</a></th><td>Call back post buckle to a mob to offset your visual height</td></tr>
+            <tr><th><a href="mob.html#proc/post_unbuckle_mob">post_unbuckle_mob</a></th><td>Call back post unbuckle from a mob, (reset your visual height here)</td></tr>
+            <tr><th><a href="mob.html#proc/query_heart">query_heart</a></th><td>Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up</td></tr>
+            <tr><th><a href="mob.html#proc/remove_actionspeed_modifier">remove_actionspeed_modifier</a></th><td>Remove a action speed modifier from a mob, whether static or variable.</td></tr>
+            <tr><th><a href="mob.html#proc/remove_client_colour">remove_client_colour</a></th><td>Removes an instance of colour_type from the mob's client_colours list
+colour_type - a typepath (subtyped from /datum/client_colour)</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_alive_mob_list">remove_from_alive_mob_list</a></th><td>Removes the mob reference from the list of all mobs alive. If mob is cliented, it removes it from the list of all living player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_current_dead_players">remove_from_current_dead_players</a></th><td>Removes the mob reference from either the list of dead player-mobs or from the list of observers, depending on how they joined the game.</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_current_living_antags">remove_from_current_living_antags</a></th><td>Removes the mob reference from the list of living antag player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_current_living_players">remove_from_current_living_players</a></th><td>Removes the mob reference from the list of living player-mobs. If the mob is an antag, it removes it from the list of living antag player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_dead_mob_list">remove_from_dead_mob_list</a></th><td>Remvoes the mob reference from list of all the dead mobs. If mob is cliented, it adds it to the list of all dead player-mobs.</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_mob_list">remove_from_mob_list</a></th><td>Removes the mob reference from the list and directory of all mobs. Called on Destroy().</td></tr>
+            <tr><th><a href="mob.html#proc/remove_from_player_list">remove_from_player_list</a></th><td>Removes the mob reference from the list of all player-mobs, besides from either the of dead or alive player-mob lists, as appropriate. Called on Logout().</td></tr>
+            <tr><th><a href="mob.html#proc/remove_movespeed_modifier">remove_movespeed_modifier</a></th><td>Remove a move speed modifier from a mob, whether static or variable.</td></tr>
+            <tr><th><a href="mob.html#proc/replace_identification_name">replace_identification_name</a></th><td>update the ID name of this mob</td></tr>
+            <tr><th><a href="mob.html#proc/replace_records_name">replace_records_name</a></th><td>Updates GLOB.data_core records with new name , see mob/living/carbon/human</td></tr>
+            <tr><th><a href="mob.html#proc/reset_perspective">reset_perspective</a></th><td>Reset the attached clients perspective (viewpoint)</td></tr>
+            <tr><th><a href="mob.html#proc/say_dead">say_dead</a></th><td>Speak as a dead person (ghost etc)</td></tr>
+            <tr><th><a href="mob.html#proc/say_verb">say_verb</a></th><td>Say verb</td></tr>
+            <tr><th><a href="mob.html#proc/set_blindness">set_blindness</a></th><td>Force set the blindness of a mob to some level</td></tr>
+            <tr><th><a href="mob.html#proc/set_blurriness">set_blurriness</a></th><td>Set the mobs blurriness of vision to an amount</td></tr>
+            <tr><th><a href="mob.html#proc/set_disgust">set_disgust</a></th><td>Set the disgust level of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/set_dizziness">set_dizziness</a></th><td>FOrce set the dizzyness of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/set_drugginess">set_drugginess</a></th><td>Set the drugginess of a mob</td></tr>
+            <tr><th><a href="mob.html#proc/set_nutrition">set_nutrition</a></th><td>Force set the mob nutrition</td></tr>
+            <tr><th><a href="mob.html#proc/set_species">set_species</a></th><td>DNA MOB-PROCS</td></tr>
+            <tr><th><a href="mob.html#proc/shared_ui_interaction">shared_ui_interaction</a></th><td>public</td></tr>
+            <tr><th><a href="mob.html#proc/show_inv">show_inv</a></th><td>Show the mob's inventory to another mob</td></tr>
+            <tr><th><a href="mob.html#proc/show_message">show_message</a></th><td>Show a message to this mob (visual or audible)</td></tr>
+            <tr><th><a href="mob.html#proc/shuttleRotate">shuttleRotate</a></th><td>Mob rotate procs</td></tr>
+            <tr><th><a href="mob.html#proc/slip">slip</a></th><td>Called when this mob slips over, override as needed</td></tr>
+            <tr><th><a href="mob.html#proc/southface">southface</a></th><td>Hidden verb to turn south</td></tr>
+            <tr><th><a href="mob.html#proc/spin">spin</a></th><td>Spin this mob around it's central axis</td></tr>
+            <tr><th><a href="mob.html#proc/sync_lighting_plane_alpha">sync_lighting_plane_alpha</a></th><td>Set the lighting plane hud alpha to the mobs lighting_alpha var</td></tr>
+            <tr><th><a href="mob.html#proc/throw_alert">throw_alert</a></th><td>Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
+category is a text string. Each mob may only have one alert per category; the previous one will be replaced
+path is a type path of the actual alert type to throw
+severity is an optional number that will be placed at the end of the icon_state for this alert
+for example, high pressure's icon_state is &quot;highpressure&quot; and can be serverity 1 or 2 to get &quot;highpressure1&quot; or &quot;highpressure2&quot;
+new_master is optional and sets the alert's icon state to &quot;template&quot; in the ui_style icons with the master as an overlay.
+flicks are forwarded to master
+override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.</td></tr>
+            <tr><th><a href="mob.html#proc/toggle_move_intent">toggle_move_intent</a></th><td>Toggle the move intent of the mob</td></tr>
+            <tr><th><a href="mob.html#proc/total_multiplicative_slowdown">total_multiplicative_slowdown</a></th><td>Calculate the total slowdown of all movespeed modifiers</td></tr>
+            <tr><th><a href="mob.html#proc/up">up</a></th><td>Moves a mob upwards in z level</td></tr>
+            <tr><th><a href="mob.html#proc/update_actionspeed">update_actionspeed</a></th><td>Go through the list of actionspeed modifiers and calculate a final actionspeed. ANY ADD/REMOVE DONE IN UPDATE_actionspeed MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!</td></tr>
+            <tr><th><a href="mob.html#proc/update_blindness">update_blindness</a></th><td>proc that adds and removes blindness overlays when necessary</td></tr>
+            <tr><th><a href="mob.html#proc/update_client_colour">update_client_colour</a></th><td>Resets the mob's client.color to null, and then reapplies a new color based
+on the client_colour datums it currently has.</td></tr>
+            <tr><th><a href="mob.html#proc/update_config_movespeed">update_config_movespeed</a></th><td>Set or update the global movespeed config on a mob</td></tr>
+            <tr><th><a href="mob.html#proc/update_eye_blur">update_eye_blur</a></th><td>Apply the blurry overlays to a mobs clients screen</td></tr>
+            <tr><th><a href="mob.html#proc/update_gravity">update_gravity</a></th><td>Update the gravity status of this mob</td></tr>
+            <tr><th><a href="mob.html#proc/update_mouse_pointer">update_mouse_pointer</a></th><td>Update the mouse pointer of the attached client in this mob</td></tr>
+            <tr><th><a href="mob.html#proc/update_movespeed">update_movespeed</a></th><td>Go through the list of movespeed modifiers and calculate a final movespeed. ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!</td></tr>
+            <tr><th><a href="mob.html#proc/update_pull_hud_icon">update_pull_hud_icon</a></th><td>Update the pulling hud icon</td></tr>
+            <tr><th><a href="mob.html#proc/update_rest_hud_icon">update_rest_hud_icon</a></th><td>Update the resting hud icon</td></tr>
+            <tr><th><a href="mob.html#proc/update_sight">update_sight</a></th><td>Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)</td></tr>
+            <tr><th><a href="mob.html#proc/visible_message">visible_message</a></th><td>Adds the functionality to self_message.</td></tr>
+            <tr><th><a href="mob.html#proc/vv_get_dropdown">vv_get_dropdown</a></th><td>Get the mob VV dropdown extras</td></tr>
+            <tr><th><a href="mob.html#proc/vv_get_var">vv_get_var</a></th><td>extra var handling for the logging var</td></tr>
+            <tr><th><a href="mob.html#proc/westface">westface</a></th><td>Hidden verb to turn west</td></tr>
+            <tr><th><a href="mob.html#proc/whisper">whisper</a></th><td>whisper a message</td></tr>
+            <tr><th><a href="mob.html#proc/whisper_verb">whisper_verb</a></th><td>Whisper verb</td></tr>
+            <tr><th><a href="mob.html#proc/zMove">zMove</a></th><td>Move a mob between z levels, if it's valid to move z's on this turf</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/LAssailant"><aside class="declaration">var </aside>LAssailant
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 158"/></a></h3>
+        <p>The last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)</p><h3 id="var/actions"><aside class="declaration">var </aside>actions
+            <aside>&ndash; /list/datum/action</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 43"/></a></h3>
+        <p>List of action hud items the user has</p><h3 id="var/actionspeed_mod_immunities"><aside class="declaration">var </aside>actionspeed_mod_immunities
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 39"/></a></h3>
+        <p>List of action speed modifiers ignored by this mob. List -&gt; List (id) -&gt; List (sources)</p><h3 id="var/actionspeed_modification"><aside class="declaration">var </aside>actionspeed_modification
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 37"/></a></h3>
+        <p>List of action speed modifiers applying to this mob</p><h3 id="var/active_hand_index"><aside class="declaration">var </aside>active_hand_index
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 122"/></a></h3>
+        <p>What hand is the active hand</p><h3 id="var/active_storage"><aside class="declaration">var </aside>active_storage
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/storage.html">storage</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 139"/></a></h3>
+        <p>Storage component (for mob inventory)</p><h3 id="var/alerts"><aside class="declaration">var </aside>alerts
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L211">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 211"/></a></h3>
+        <p>Contains <a href="atom/movable/screen/alert.html" title="/atom/movable/screen/alert">/atom/movable/screen/alert</a> only.</p>
+<p>On <a href="mob.html" title="/mob">/mob</a> so clientless mobs will throw alerts properly.</p><h3 id="var/bodytemperature"><aside class="declaration">var </aside>bodytemperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 96"/></a></h3>
+        <p>Default body temperature</p><h3 id="var/buckled"><aside class="declaration">var </aside>buckled
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 118"/></a></h3>
+        <p>movable atom we are buckled to</p><h3 id="var/cached_multiplicative_actions_slowdown"><aside class="declaration">var </aside>cached_multiplicative_actions_slowdown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 41"/></a></h3>
+        <p>The calculated mob action speed slowdown based on the modifiers list</p><h3 id="var/cached_multiplicative_slowdown"><aside class="declaration">var </aside>cached_multiplicative_slowdown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 35"/></a></h3>
+        <p>The calculated mob speed slowdown based on the modifiers list</p><h3 id="var/chameleon_item_actions"><aside class="declaration">var </aside>chameleon_item_actions
+            <aside>&ndash; /list/datum/action</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 45"/></a></h3>
+        <p>A special action? No idea why this lives here</p><h3 id="var/click_intercept"><aside class="declaration">var </aside>click_intercept
+            <aside>&ndash; /<a href="datum.html">datum</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L201">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 201"/></a></h3>
+        <p>Allows a datum to intercept all click calls this mob is the source of</p><h3 id="var/control_object"><aside class="declaration">var </aside>control_object
+            <aside>&ndash; /<a href="obj.html">obj</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L176">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 176"/></a></h3>
+        <p>Used by admins to possess objects. All mobs should have this var</p><h3 id="var/deathsound"><aside class="declaration">var </aside>deathsound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 186"/></a></h3>
+        <p>The sound made on death</p>
+<p>leave null for no sound. used for *deathgasp</p><h3 id="var/dizziness"><aside class="declaration">var </aside>dizziness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 100"/></a></h3>
+        <p>Dizziness level of the mob</p><h3 id="var/do_afters"><aside class="declaration">var </aside>do_afters
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 198"/></a></h3>
+        <p>For storing what do_after's someone has, key = string, value = amount of interactions of that type happening.</p><h3 id="var/drowsyness"><aside class="declaration">var </aside>drowsyness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 98"/></a></h3>
+        <p>Drowsyness level of the mob</p><h3 id="var/emotes_used"><aside class="declaration">var </aside>emotes_used
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L221">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 221"/></a></h3>
+        <p>Used for tracking last uses of emotes for cooldown purposes</p><h3 id="var/examine_cursor_icon"><aside class="declaration">var </aside>examine_cursor_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 47"/></a></h3>
+        <p>Cursor icon used when holding shift over things</p><h3 id="var/eye_blind"><aside class="declaration">var </aside>eye_blind
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 80"/></a></h3>
+        <p>Is the mob blind</p><h3 id="var/eye_blurry"><aside class="declaration">var </aside>eye_blurry
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 82"/></a></h3>
+        <p>Does the mob have blurry sight</p><h3 id="var/faction"><aside class="declaration">var </aside>faction
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L152">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 152"/></a></h3>
+        <p>A list of factions that this mob is currently in, for hostile mob targetting, amongst other things</p><h3 id="var/has_unlimited_silicon_privilege"><aside class="declaration">var </aside>has_unlimited_silicon_privilege
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 173"/></a></h3>
+        <p>Can they interact with station electronics</p><h3 id="var/held_items"><aside class="declaration">var </aside>held_items
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 134"/></a></h3>
+        <p>list of items held in hands</p>
+<p>len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand
+and 1 empty hand.</p>
+<p>NB: contains nulls!</p>
+<p><code>held_items[active_hand_index]</code> is the actively held item, but please use
+<a href="mob.html#proc/get_active_held_item" title="/mob">get_active_held_item()</a> instead, because OOP</p><h3 id="var/hud_used"><aside class="declaration">var </aside>hud_used
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/hud.html">hud</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 141"/></a></h3>
+        <p>Active hud</p><h3 id="var/jitteriness"><aside class="declaration">var </aside>jitteriness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 102"/></a></h3>
+        <p>Jitteryness level of the mob</p><h3 id="var/job"><aside class="declaration">var </aside>job
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 149"/></a></h3>
+        <p>What job does this mob have</p><h3 id="var/lastKnownIP"><aside class="declaration">var </aside>lastKnownIP
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 115"/></a></h3>
+        <p>The last known IP of the client who was in this mob</p><h3 id="var/listed_turf"><aside class="declaration">var </aside>listed_turf
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 189"/></a></h3>
+        <p>the current turf being examined in the stat panel</p><h3 id="var/m_intent"><aside class="declaration">var </aside>m_intent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 112"/></a></h3>
+        <p>The movement intent of the mob (run/wal)</p><h3 id="var/machine"><aside class="declaration">var </aside>machine
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 66"/></a></h3>
+        <p>The machine the mob is interacting with (this is very bad old code btw)</p><h3 id="var/mob_spell_list"><aside class="declaration">var </aside>mob_spell_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 166"/></a></h3>
+        <p>construct spells and mime spells.</p>
+<p>Spells that do not transfer from one mob to another and can not be lost in mindswap.
+obviously do not live in the mind</p><h3 id="var/mock_client"><aside class="declaration">var </aside>mock_client
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/client_interface.html">client_interface</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 3"/></a></h3>
+        <p>A mock client, provided by tests and friends</p><h3 id="var/move_on_shuttle"><aside class="declaration">var </aside>move_on_shuttle
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 155"/></a></h3>
+        <p>Can this mob enter shuttles</p><h3 id="var/movespeed_mod_immunities"><aside class="declaration">var </aside>movespeed_mod_immunities
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 33"/></a></h3>
+        <p>List of movement speed modifiers ignored by this mob. List -&gt; List (id) -&gt; List (sources)</p><h3 id="var/movespeed_modification"><aside class="declaration">var </aside>movespeed_modification
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 31"/></a></h3>
+        <p>List of movement speed modifiers applying to this mob</p><h3 id="var/name_archive"><aside class="declaration">var </aside>name_archive
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 93"/></a></h3>
+        <p>back up of the real name during admin possession</p>
+<p>If an admin possesses an object it's real name is set to the admin name and this
+stores whatever the real name was previously. When possession ends, the real name
+is reset to this value</p><h3 id="var/next_move"><aside class="declaration">var </aside>next_move
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 69"/></a></h3>
+        <p>Tick time the mob can next move</p><h3 id="var/notransform"><aside class="declaration">var </aside>notransform
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 77"/></a></h3>
+        <p>Magic var that stops you moving and interacting with anything</p>
+<p>Set when you're being turned into something else and also used in a bunch of places
+it probably shouldn't really be</p><h3 id="var/nutrition"><aside class="declaration">var </aside>nutrition
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 104"/></a></h3>
+        <p>Hunger level of the mob</p><h3 id="var/observers"><aside class="declaration">var </aside>observers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 192"/></a></h3>
+        <p>The list of people observing this mob.</p><h3 id="var/overeatduration"><aside class="declaration">var </aside>overeatduration
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 109"/></a></h3>
+        <p>How many ticks this mob has been over reating</p><h3 id="var/progressbars"><aside class="declaration">var </aside>progressbars
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L195">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 195"/></a></h3>
+        <p>List of progress bars this mob is currently seeing for actions</p><h3 id="var/real_name"><aside class="declaration">var </aside>real_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 84"/></a></h3>
+        <p>What is the mobs real name (name is overridden for disguises etc)</p><h3 id="var/registered_z"><aside class="declaration">var </aside>registered_z
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 204"/></a></h3>
+        <p>THe z level this mob is currently registered in</p><h3 id="var/remote_control"><aside class="declaration">var </aside>remote_control
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 179"/></a></h3>
+        <p>Calls relay_move() to whatever this is set to when the mob tries to move</p><h3 id="var/research_scanner"><aside class="declaration">var </aside>research_scanner
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 143"/></a></h3>
+        <p>I have no idea tbh</p><h3 id="var/satiety"><aside class="declaration">var </aside>satiety
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 106"/></a></h3>
+        <p>Satiation level of the mob</p><h3 id="var/sound_environment_override"><aside class="declaration">var </aside>sound_environment_override
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L227">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 227"/></a></h3>
+        <p>Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)</p><h3 id="var/stat"><aside class="declaration">var </aside>stat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 50"/></a></h3>
+        <p>Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)</p><h3 id="var/status_flags"><aside class="declaration">var </aside>status_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 170"/></a></h3>
+        <p>bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)</p><h3 id="var/tgui_open_uis"><aside class="declaration">var </aside>tgui_open_uis
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 126"/></a></h3>
+        <p>global</p>
+<p>Tracks open UIs for a user.</p><h3 id="var/throw_mode"><aside class="declaration">var </aside>throw_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 146"/></a></h3>
+        <p>Is the mob throw intent on</p><h3 id="var/updating_glide_size"><aside class="declaration">var </aside>updating_glide_size
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 224"/></a></h3>
+        <p>Whether the mob is updating glide size when movespeed updates or not</p><h3 id="var/vis_flags">vis_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 24"/></a></h3>
+        <p>when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.</p><h3 id="var/zone_selected"><aside class="declaration">var </aside>zone_selected
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_defines.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_defines.dm 60"/></a></h3>
+        <p>The zone this mob is currently targeting</p><h2 id="proc">Proc Details</h2><h3 id="proc/AddSpell"><aside class="declaration">proc </aside>AddSpell<aside>(/<a href="obj.html">obj</a>/<a href="obj/effect/proc_holder/spell.html">effect/proc_holder/spell</a>/S) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L965">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 965"/></a></aside>
+        </h3>
+        <p>Add a spell to the mobs spell list</p><h3 id="proc/AltClickOn"><aside class="declaration">proc </aside>AltClickOn<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L354">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 354"/></a></aside>
+        </h3>
+        <p>Alt click
+Unused except for AI</p><h3 id="proc/Cell"><aside class="declaration">proc </aside>Cell<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 110"/></a></aside>
+        </h3>
+        <p>Some kind of debug verb that gives atmosphere environment details</p><h3 id="proc/ClickOn"><aside class="declaration">proc </aside>ClickOn<aside>(/<a href="atom.html">atom</a>/A, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 67"/></a></aside>
+        </h3>
+        <p>Standard mob ClickOn()
+Handles exceptions: Buildmode, middle click, modified clicks, mech actions</p>
+<p>After that, mostly just check your state, check whether you're holding an item,
+check whether you're adjacent to the target, then pass off the click to whoever
+is receiving it.
+The most common are:</p>
+<ul>
+<li><a href="mob.html#proc/UnarmedAttack" title="/mob">mob/proc/UnarmedAttack</a> (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves</li>
+<li><a href="atom.html#proc/attackby" title="/atom">atom/proc/attackby</a> (item,user) - used only when adjacent</li>
+<li><a href="obj/item.html#proc/afterattack" title="/obj/item">obj/item/proc/afterattack</a> (atom,user,adjacent,params) - used both ranged and adjacent</li>
+<li><a href="mob.html#proc/RangedAttack" title="/mob">mob/proc/RangedAttack</a> (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed</li>
+</ul><h3 id="proc/CtrlClickOn"><aside class="declaration">proc </aside>CtrlClickOn<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L318">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 318"/></a></aside>
+        </h3>
+        <p>Ctrl click
+For most objects, pull</p><h3 id="proc/CtrlShiftClickOn"><aside class="declaration">proc </aside>CtrlShiftClickOn<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L382">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 382"/></a></aside>
+        </h3>
+        <p>Control+Shift click
+Unused except for AI</p><h3 id="proc/DblClickOn"><aside class="declaration">proc </aside>DblClickOn<aside>(/<a href="atom.html">atom</a>/A, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L254">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 254"/></a></aside>
+        </h3>
+        <p>Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)</p><h3 id="proc/Destroy"><aside class="parent"><a title="/atom" href="atom.html#proc/Destroy">&uarr;</a></aside>Destroy<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 23"/></a></aside>
+        </h3>
+        <p>Delete a mob</p>
+<p>Removes mob from the following global lists</p>
+<ul>
+<li>GLOB.mob_list</li>
+<li>GLOB.dead_mob_list</li>
+<li>GLOB.alive_mob_list</li>
+<li>GLOB.all_clockwork_mobs</li>
+<li>GLOB.mob_directory</li>
+</ul>
+<p>Unsets the focus var</p>
+<p>Clears alerts for this mob</p>
+<p>Resets all the observers perspectives to the tile this mob is on</p>
+<p>qdels any client colours in place on this mob</p>
+<p>Ghostizes the client attached to this mob</p>
+<p>Parent call</p><h3 id="proc/Dizzy"><aside class="declaration">proc </aside>Dizzy<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 15"/></a></aside>
+        </h3>
+        <p>Set the dizzyness of a mob to a passed in amount</p>
+<p>Except if dizziness is already higher in which case it does nothing</p><h3 id="proc/GenerateTag"><aside class="parent"><a title="/atom" href="atom.html#proc/GenerateTag">&uarr;</a></aside>GenerateTag<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 86"/></a></aside>
+        </h3>
+        <p>Generate the tag for this mob</p>
+<p>This is simply &quot;mob_&quot;+ a global incrementing counter that goes up for every mob</p><h3 id="proc/Initialize"><aside class="parent"><a title="/atom" href="atom.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 61"/></a></aside>
+        </h3>
+        <p>Intialize a mob</p>
+<p>Sends global signal COMSIG_GLOB_MOB_CREATED</p>
+<p>Adds to global lists</p>
+<ul>
+<li>GLOB.mob_list</li>
+<li>GLOB.mob_directory (by tag)</li>
+<li>GLOB.dead_mob_list - if mob is dead</li>
+<li>GLOB.alive_mob_list - if the mob is alive</li>
+</ul>
+<p>Other stuff:</p>
+<ul>
+<li>Sets the mob focus to itself</li>
+<li>Generates huds</li>
+<li>If there are any global alternate apperances apply them to this mob</li>
+<li>set a random nutrition level</li>
+<li>Intialize the movespeed of the mob</li>
+</ul><h3 id="proc/Jitter"><aside class="declaration">proc </aside>Jitter<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 7"/></a></aside>
+        </h3>
+        <p>Set the jitter of a mob</p><h3 id="proc/Login"><aside class="declaration">proc </aside>Login<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/login.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;login.dm 25"/></a></aside>
+        </h3>
+        <p>Run when a client is put in this mob or reconnets to byond and their client was on this mob</p>
+<p>Things it does:</p>
+<ul>
+<li>Adds player to player_list</li>
+<li>sets lastKnownIP</li>
+<li>sets computer_id</li>
+<li>logs the login</li>
+<li>tells the world to update it's status (for player count)</li>
+<li>create mob huds for the mob if needed</li>
+<li>reset next_move to 1</li>
+<li>parent call</li>
+<li>if the client exists set the perspective to the mob loc</li>
+<li>call on_log on the loc (sigh)</li>
+<li>reload the huds for the mob</li>
+<li>reload all full screen huds attached to this mob</li>
+<li>load any global alternate apperances</li>
+<li>sync the mind datum via sync_mind()</li>
+<li>call any client login callbacks that exist</li>
+<li>grant any actions the mob has to the client</li>
+<li>calls <a href="mob.html#proc/auto_deadmin_on_login">auto_deadmin_on_login</a></li>
+<li>send signal COMSIG_MOB_CLIENT_LOGIN
+client can be deleted mid-execution of this proc, chiefly on parent calls, with lag</li>
+</ul><h3 id="proc/MiddleClickOn"><aside class="declaration">proc </aside>MiddleClickOn<aside>(/<a href="atom.html">atom</a>/A, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L293">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 293"/></a></aside>
+        </h3>
+        <p>Middle click
+Mainly used for swapping hands</p><h3 id="proc/MouseDrop">MouseDrop<aside>(/<a href="mob.html">mob</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L797">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 797"/></a></aside>
+        </h3>
+        <p>Controls if a mouse drop succeeds (return null if it doesnt)</p><h3 id="proc/MouseDrop_T">MouseDrop_T<aside>(/<a href="atom.html">atom</a>/dropping, /<a href="atom.html">atom</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L812">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 812"/></a></aside>
+        </h3>
+        <p>Handle the result of a click drag onto this mob</p>
+<p>For mobs this just shows the inventory</p><h3 id="proc/MouseWheelOn"><aside class="declaration">proc </aside>MouseWheelOn<aside>(/<a href="atom.html">atom</a>/A, delta_x, delta_y, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L473">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 473"/></a></aside>
+        </h3>
+        <p>MouseWheelOn</p><h3 id="proc/Process_Spacemove"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#proc/Process_Spacemove">&uarr;</a></aside>Process_Spacemove<aside>(movement_dir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L271">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 271"/></a></aside>
+        </h3>
+        <p>Handles mob/living movement in space (or no gravity)</p>
+<p>Called by /client/Move()</p>
+<p>return TRUE for movement or FALSE for none</p>
+<p>You can move in space if you have a spacewalk ability</p><h3 id="proc/RangedAttack"><aside class="declaration">proc </aside>RangedAttack<aside>(/<a href="atom.html">atom</a>/A, modifiers) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L284">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 284"/></a></aside>
+        </h3>
+        <p>Ranged unarmed attack:</p>
+<p>This currently is just a default for all mobs, involving
+laser eyes and telekinesis.  You could easily add exceptions
+for things like ranged glove touches, spitting alien acid/neurotoxin,
+animals lunging, etc.</p><h3 id="proc/RemoveSpell"><aside class="declaration">proc </aside>RemoveSpell<aside>(/<a href="obj.html">obj</a>/<a href="obj/effect/proc_holder/spell.html">effect/proc_holder/spell</a>/spell) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L970">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 970"/></a></aside>
+        </h3>
+        <p>Remove a spell from the mobs spell list</p><h3 id="proc/ShiftClickOn"><aside class="declaration">proc </aside>ShiftClickOn<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L304">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 304"/></a></aside>
+        </h3>
+        <p>Shift click
+For most mobs, examine.
+This is overridden in ai.dm</p><h3 id="proc/Topic"><aside class="parent"><a title="/atom" href="atom.html#proc/Topic">&uarr;</a></aside>Topic<aside>(href, href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L754">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 754"/></a></aside>
+        </h3>
+        <p>Topic call back for any mob</p>
+<ul>
+<li>Unset machines if &quot;mach_close&quot; sent</li>
+<li>refresh the inventory of machines in range if &quot;refresh&quot; sent</li>
+<li>handles the strip panel equip and unequip as well if &quot;item&quot; sent</li>
+</ul><h3 id="proc/UnarmedAttack"><aside class="declaration">proc </aside>UnarmedAttack<aside>(/<a href="atom.html">atom</a>/A, proximity_flag, /list/modifiers) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L271">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 271"/></a></aside>
+        </h3>
+        <p>Translates into <a href="atom.html#proc/attack_hand" title="/atom">atom/proc/attack_hand</a>, etc.</p>
+<p>Note: proximity_flag here is used to distinguish between normal usage (flag=1),
+and usage when clicking on things telekinetically (flag=0).  This proc will
+not be called at ranged except with telekinesis.</p>
+<p>proximity_flag is not currently passed to attack_hand, and is instead used
+in human click code to allow glove touches only at melee range.</p>
+<p>modifiers is a lazy list of click modifiers this attack had,
+used for figuring out different properties of the click, mostly right vs left and such.</p><h3 id="proc/abandon_mob"><aside class="declaration">verb </aside>abandon_mob<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L693">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 693"/></a></aside>
+        </h3>
+        <p>Allows you to respawn, abandoning your current mob</p>
+<p>This sends you back to the lobby creating a new dead mob</p>
+<p>Only works if flag/norespawn is allowed in config</p><h3 id="proc/add_actionspeed_modifier"><aside class="declaration">proc </aside>add_actionspeed_modifier<aside>(/<a href="datum.html">datum</a>/<a href="datum/actionspeed_modifier.html">actionspeed_modifier</a>/type_or_datum, update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 60"/></a></aside>
+        </h3>
+        <p>Add a action speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.</p><h3 id="proc/add_client_colour"><aside class="declaration">proc </aside>add_client_colour<aside>(colour_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_colour.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_colour.dm 60"/></a></aside>
+        </h3>
+        <p>Adds an instance of colour_type to the mob's client_colours list
+colour_type - a typepath (subtyped from /datum/client_colour)</p><h3 id="proc/add_memory"><aside class="declaration">verb </aside>add_memory<aside>(msg) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L672">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 672"/></a></aside>
+        </h3>
+        <p>Add a note to the mind datum</p><h3 id="proc/add_movespeed_modifier"><aside class="declaration">proc </aside>add_movespeed_modifier<aside>(/<a href="datum.html">datum</a>/<a href="datum/movespeed_modifier.html">movespeed_modifier</a>/type_or_datum, update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 71"/></a></aside>
+        </h3>
+        <p>Add a move speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.</p><h3 id="proc/add_to_alive_mob_list"><aside class="declaration">proc </aside>add_to_alive_mob_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 12"/></a></aside>
+        </h3>
+        <p>Adds the mob reference to the list of all mobs alive. If mob is cliented, it adds it to the list of all living player-mobs.</p><h3 id="proc/add_to_current_dead_players"><aside class="declaration">proc </aside>add_to_current_dead_players<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 65"/></a></aside>
+        </h3>
+        <p>Adds the cliented mob reference to either the list of dead player-mobs or to the list of observers, depending on how they joined the game.</p><h3 id="proc/add_to_current_living_antags"><aside class="declaration">proc </aside>add_to_current_living_antags<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 114"/></a></aside>
+        </h3>
+        <p>Adds the cliented mob reference to the list of living antag player-mobs.</p><h3 id="proc/add_to_current_living_players"><aside class="declaration">proc </aside>add_to_current_living_players<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 97"/></a></aside>
+        </h3>
+        <p>Adds the cliented mob reference to the list of living player-mobs. If the mob is an antag, it adds it to the list of living antag player-mobs.</p><h3 id="proc/add_to_dead_mob_list"><aside class="declaration">proc </aside>add_to_dead_mob_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 27"/></a></aside>
+        </h3>
+        <p>Adds the mob reference to the list of all the dead mobs. If mob is cliented, it adds it to the list of all dead player-mobs.</p><h3 id="proc/add_to_mob_list"><aside class="declaration">proc </aside>add_to_mob_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 2"/></a></aside>
+        </h3>
+        <p>Adds the mob reference to the list and directory of all mobs. Called on Initialize().</p><h3 id="proc/add_to_player_list"><aside class="declaration">proc </aside>add_to_player_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 42"/></a></aside>
+        </h3>
+        <p>Adds the cliented mob reference to the list of all player-mobs, besides to either the of dead or alive player-mob lists, as appropriate. Called on Login().</p><h3 id="proc/adjust_blindness"><aside class="declaration">proc </aside>adjust_blindness<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 31"/></a></aside>
+        </h3>
+        <p>Adjust a mobs blindness by an amount</p>
+<p>Will apply the blind alerts if needed</p><h3 id="proc/adjust_blurriness"><aside class="declaration">proc </aside>adjust_blurriness<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 84"/></a></aside>
+        </h3>
+        <p>Adjust the current blurriness of the mobs vision by amount</p><h3 id="proc/adjust_bodytemperature"><aside class="declaration">proc </aside>adjust_bodytemperature<aside>(amount, min_temp, max_temp) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 120"/></a></aside>
+        </h3>
+        <p>Adjust the body temperature of a mob, with min/max settings</p><h3 id="proc/adjust_disgust"><aside class="declaration">proc </aside>adjust_disgust<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 112"/></a></aside>
+        </h3>
+        <p>Adjust the disgust level of a mob</p><h3 id="proc/adjust_drugginess"><aside class="declaration">proc </aside>adjust_drugginess<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 104"/></a></aside>
+        </h3>
+        <p>Adjust the drugginess of a mob</p><h3 id="proc/adjust_nutrition"><aside class="declaration">proc </aside>adjust_nutrition<aside>(change) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1288">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1288"/></a></aside>
+        </h3>
+        <p>Adjust the nutrition of a mob</p><h3 id="proc/animate_client_colour"><aside class="declaration">proc </aside>animate_client_colour<aside>(anim_time, anim_easing) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_colour.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_colour.dm 140"/></a></aside>
+        </h3>
+        <p>Works similarly to 'update_client_colour', but animated.</p><h3 id="proc/anti_magic_check"><aside class="declaration">proc </aside>anti_magic_check<aside>(magic, holy, tinfoil, chargecost, self) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L982">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 982"/></a></aside>
+        </h3>
+        <p>Return any anti magic atom on this mob that matches the magic type</p><h3 id="proc/attack_ui"><aside class="declaration">proc </aside>attack_ui<aside>(slot, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L297">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 297"/></a></aside>
+        </h3>
+        <p>This proc is called whenever someone clicks an inventory ui slot.</p>
+<p>Mostly tries to put the item into the slot if possible, or call attack hand
+on the item in the slot if the users active hand is empty</p><h3 id="proc/audible_message"><aside class="parent"><a title="/atom" href="atom.html#proc/audible_message">&uarr;</a></aside>audible_message<aside>(message, deaf_message, hearing_distance, self_message, audible_message_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L260">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 260"/></a></aside>
+        </h3>
+        <p>Show a message to all mobs in earshot of this one</p>
+<p>This would be for audible actions by the src mob</p>
+<p>vars:</p>
+<ul>
+<li>message is the message output to anyone who can hear.</li>
+<li>self_message (optional) is what the src mob hears.</li>
+<li>deaf_message (optional) is what deaf people will see.</li>
+<li>hearing_distance (optional) is the range, how many tiles away the message can be heard.</li>
+</ul><h3 id="proc/auto_deadmin_on_login"><aside class="declaration">proc </aside>auto_deadmin_on_login<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/login.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;login.dm 111"/></a></aside>
+        </h3>
+        <p>Checks if the attached client is an admin and may deadmin them</p>
+<p>Configs:</p>
+<ul>
+<li>flag/auto_deadmin_players</li>
+<li>client.prefs?.toggles &amp; DEADMIN_ALWAYS</li>
+<li>User is antag and flag/auto_deadmin_antagonists or client.prefs?.toggles &amp; DEADMIN_ANTAGONIST</li>
+<li>or if their job demands a deadminning SSjob.handle_auto_deadmin_roles()</li>
+</ul>
+<p>Called from <a href="mob.html#proc/Login">login</a></p><h3 id="proc/blind_eyes"><aside class="declaration">proc </aside>blind_eyes<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 23"/></a></aside>
+        </h3>
+        <p>Blind a mobs eyes by amount</p><h3 id="proc/blur_eyes"><aside class="declaration">proc </aside>blur_eyes<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 76"/></a></aside>
+        </h3>
+        <p>Make the mobs vision blurry</p><h3 id="proc/buckle_mob"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#proc/buckle_mob">&uarr;</a></aside>buckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M, force, check_loc, buckle_mob_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L999">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 999"/></a></aside>
+        </h3>
+        <p>Buckle a living mob to this mob. Also turns you to face the other mob</p>
+<p>You can buckle on mobs if you're next to them since most are dense</p><h3 id="proc/canUseStorage"><aside class="declaration">proc </aside>canUseStorage<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1044">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1044"/></a></aside>
+        </h3>
+        <p>Can this mob use storage</p><h3 id="proc/canUseTopic"><aside class="declaration">proc </aside>canUseTopic<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/M, be_close, no_dexterity, no_tk, need_hands, floor_okay) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1040">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1040"/></a></aside>
+        </h3>
+        <p>Can the mob use Topic to interact with machines</p><h3 id="proc/canZMove"><aside class="declaration">proc </aside>canZMove<aside>(direction, /<a href="turf.html">turf</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L528">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 528"/></a></aside>
+        </h3>
+        <p>Can this mob move between z levels</p><h3 id="proc/can_hear"><aside class="declaration">proc </aside>can_hear<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L472">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 472"/></a></aside>
+        </h3>
+        <p>Can the mob hear</p><h3 id="proc/can_hold_items"><aside class="declaration">proc </aside>can_hold_items<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L513">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 513"/></a></aside>
+        </h3>
+        <p>Can this mob hold items</p><h3 id="proc/can_interact_with"><aside class="declaration">proc </aside>can_interact_with<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1032">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1032"/></a></aside>
+        </h3>
+        <p>Can the mob interact() with an atom?</p><h3 id="proc/can_read"><aside class="declaration">proc </aside>can_read<aside>(/<a href="obj.html">obj</a>/O) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1187">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1187"/></a></aside>
+        </h3>
+        <p>Can this mob read (is literate and not blind)</p><h3 id="proc/can_resist"><aside class="declaration">proc </aside>can_resist<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L596">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 596"/></a></aside>
+        </h3>
+        <p>Can this mob resist (default FALSE)</p><h3 id="proc/can_see_reagents"><aside class="declaration">proc </aside>can_see_reagents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L509">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 509"/></a></aside>
+        </h3>
+        <p>Can the mob see reagents inside of containers?</p><h3 id="proc/cancel_camera"><aside class="declaration">verb </aside>cancel_camera<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L729">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 729"/></a></aside>
+        </h3>
+        <p>Sometimes helps if the user is stuck in another perspective or camera</p><h3 id="proc/canface"><aside class="declaration">proc </aside>canface<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L876">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 876"/></a></aside>
+        </h3>
+        <p>Returns true if a mob can turn to face things</p>
+<p>Conditions:</p>
+<ul>
+<li>client.last_turn &gt; world.time</li>
+<li>not dead or unconcious</li>
+<li>not anchored</li>
+<li>no transform not set</li>
+<li>we are not restrained</li>
+</ul><h3 id="proc/check_emote"><aside class="declaration">proc </aside>check_emote<aside>(message, forced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 89"/></a></aside>
+        </h3>
+        <p>Check if this message is an emote</p><h3 id="proc/clear_from_recent_examines"><aside class="declaration">proc </aside>clear_from_recent_examines<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L524">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 524"/></a></aside>
+        </h3>
+        <p>the item in our active hand
+our active hand, to check if it's disabled/detatched
+how long it takes for the blind person to find the thing they're examining
+our current intent, so we can go back to it after touching</p><h3 id="proc/click_random_mob"><aside class="declaration">proc </aside>click_random_mob<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L419">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 419"/></a></aside>
+        </h3>
+        <p>Clicks a random nearby mob with the source from this mob</p><h3 id="proc/common_trait_examine"><aside class="declaration">proc </aside>common_trait_examine<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L480">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 480"/></a></aside>
+        </h3>
+        <p>Examine text for traits shared by multiple types.</p>
+<p>I wish examine was less copypasted. (oranges say, be the change you want to see buddy)</p><h3 id="proc/create_chat_message"><aside class="declaration">proc </aside>create_chat_message<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/speaker, /<a href="datum.html">datum</a>/language/message_language, raw_message, /list/spans, runechat_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/chatmessage.dm#L231">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 231"/></a></aside>
+        </h3>
+        <p>Creates a message overlay at a defined location for a given speaker</p>
+<p>Arguments:</p>
+<ul>
+<li>speaker - The atom who is saying this message</li>
+<li>message_language - The language that the message is said in</li>
+<li>raw_message - The text content of the message</li>
+<li>spans - Additional classes to be added to the message</li>
+</ul><h3 id="proc/do_set_blindness"><aside class="declaration">proc </aside>do_set_blindness<aside>(now_blind) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 62"/></a></aside>
+        </h3>
+        <p>Proc that handles adding and removing the blindness overlays.</p><h3 id="proc/down"><aside class="declaration">verb </aside>down<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L500">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 500"/></a></aside>
+        </h3>
+        <p>Moves a mob down a z level</p><h3 id="proc/dropItemToGround"><aside class="declaration">proc </aside>dropItemToGround<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, force, silent, invdrop) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/inventory.dm#L282">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;inventory.dm 282"/></a></aside>
+        </h3>
+        <p>Used to drop an item (if it exists) to the ground.</p>
+<ul>
+<li>Will pass as TRUE is successfully dropped, or if there is no item to drop.</li>
+<li>Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
+If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.</li>
+</ul><h3 id="proc/eastface"><aside class="declaration">verb </aside>eastface<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L899">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 899"/></a></aside>
+        </h3>
+        <p>Hidden verb to turn east</p><h3 id="proc/equip_to_appropriate_slot"><aside class="declaration">proc </aside>equip_to_appropriate_slot<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/W, qdel_on_fail) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L368">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 368"/></a></aside>
+        </h3>
+        <p>Auto equip the passed in item the appropriate slot based on equipment priority</p>
+<p>puts the item &quot;W&quot; into an appropriate slot in a human's inventory</p>
+<p>returns 0 if it cannot, 1 if successful</p><h3 id="proc/equip_to_slot"><aside class="declaration">proc </aside>equip_to_slot<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/W, slot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L346">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 346"/></a></aside>
+        </h3>
+        <p>Actually equips an item to a slot (UNSAFE)</p>
+<p>This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on
+whether you can or can't equip need to be done before! Use mob_can_equip() for that task.</p>
+<p>In most cases you will want to use equip_to_slot_if_possible()</p><h3 id="proc/equip_to_slot_if_possible"><aside class="declaration">proc </aside>equip_to_slot_if_possible<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/W, slot, qdel_on_fail, disable_warning, redraw_mob, bypass_equip_delay_self, initial) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L326">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 326"/></a></aside>
+        </h3>
+        <p>Try to equip an item to a slot on the mob</p>
+<p>This is a SAFE proc. Use this instead of equip_to_slot()!</p>
+<p>set qdel_on_fail to have it delete W if it fails to equip</p>
+<p>set disable_warning to disable the 'you are unable to equip that' warning.</p>
+<p>unset redraw_mob to prevent the mob icons from being redrawn at the end.</p>
+<p>Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it</p><h3 id="proc/equip_to_slot_or_del"><aside class="declaration">proc </aside>equip_to_slot_or_del<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/W, slot, initial) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L358">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 358"/></a></aside>
+        </h3>
+        <p>Equip an item to the slot or delete</p>
+<p>This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to
+equip people when the round starts and when events happen and such.</p>
+<p>Also bypasses equip delay checks, since the mob isn't actually putting it on.
+Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it</p><h3 id="proc/equipped_speed_mods"><aside class="declaration">proc </aside>equipped_speed_mods<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1304">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1304"/></a></aside>
+        </h3>
+        <p>Gets the combined speed modification of all worn items
+Except base mob type doesnt really wear items</p><h3 id="proc/examinate"><aside class="declaration">verb </aside>examinate<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L441">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 441"/></a></aside>
+        </h3>
+        <p>Examine a mob</p>
+<p>mob verbs are faster than object verbs. See
+<a href="https://secure.byond.com/forum/?post=1326139&amp;page=2#comment8198716">this byond forum post</a>
+for why this isn't atom/verb/examine()</p><h3 id="proc/face_atom"><aside class="declaration">proc </aside>face_atom<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L400">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 400"/></a></aside>
+        </h3>
+        <p>Simple helper to face what you clicked on, in case it should be needed in more than one place</p><h3 id="proc/faction_check_mob"><aside class="declaration">proc </aside>faction_check_mob<aside>(/<a href="mob.html">mob</a>/target, exact_match) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1051">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1051"/></a></aside>
+        </h3>
+        <p>Check if the other mob has any factions the same as us</p>
+<p>If exact match is set, then all our factions must match exactly</p><h3 id="proc/first_name"><aside class="declaration">proc </aside>first_name<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L246">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 246"/></a></aside>
+        </h3>
+        <p>Find the first name of a mob from the real name with regex</p><h3 id="proc/fully_replace_character_name"><aside class="declaration">proc </aside>fully_replace_character_name<aside>(oldname, newname) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1086">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1086"/></a></aside>
+        </h3>
+        <p>Fully update the name of a mob</p>
+<p>This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text</p>
+<p>Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn</p><h3 id="proc/get_actionspeed_modifiers"><aside class="declaration">proc </aside>get_actionspeed_modifiers<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 168"/></a></aside>
+        </h3>
+        <p>Get the action speed modifiers list of the mob</p><h3 id="proc/get_active_hand"><aside class="declaration">proc </aside>get_active_hand<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/helpers.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;helpers.dm 24"/></a></aside>
+        </h3>
+        <p>Get the bodypart for whatever hand we have active, Only relevant for carbons</p><h3 id="proc/get_active_held_item"><aside class="declaration">proc </aside>get_active_held_item<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/inventory.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;inventory.dm 5"/></a></aside>
+        </h3>
+        <p>Returns the thing we're currently holding</p><h3 id="proc/get_config_multiplicative_speed"><aside class="declaration">proc </aside>get_config_multiplicative_speed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 162"/></a></aside>
+        </h3>
+        <p>Get the global config movespeed of a mob by type</p><h3 id="proc/get_ghost"><aside class="declaration">proc </aside>get_ghost<aside>(even_if_they_cant_reenter, ghosts_with_clients) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L948">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 948"/></a></aside>
+        </h3>
+        <p>Get the ghost of this mob (from the mind)</p><h3 id="proc/get_item_by_slot"><aside class="declaration">proc </aside>get_item_by_slot<aside>(slot_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L283">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 283"/></a></aside>
+        </h3>
+        <p>Get the item on the mob in the storage slot identified by the id passed in</p><h3 id="proc/get_message_mods"><aside class="declaration">proc </aside>get_message_mods<aside>(message, /list/mods) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 113"/></a></aside>
+        </h3>
+        <p>Extracts and cleans message of any extenstions at the begining of the message
+Inserts the info into the passed list, returns the cleaned message</p>
+<p>Result can be</p>
+<ul>
+<li>SAY_MODE (Things like aliens, channels that aren't channels)</li>
+<li>MODE_WHISPER (Quiet speech)</li>
+<li>MODE_SING (Singing)</li>
+<li>MODE_HEADSET (Common radio channel)</li>
+<li>RADIO_EXTENSION the extension we're using (lots of values here)</li>
+<li>RADIO_KEY the radio key we're using, to make some things easier later (lots of values here)</li>
+<li>LANGUAGE_EXTENSION the language we're trying to use (lots of values here)</li>
+</ul><h3 id="proc/get_mob_buckling_height"><aside class="declaration">proc </aside>get_mob_buckling_height<aside>(/<a href="mob.html">mob</a>/seat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1024">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1024"/></a></aside>
+        </h3>
+        <p>returns the height in pixel the mob should have when buckled to another mob.</p><h3 id="proc/get_movespeed_modifiers"><aside class="declaration">proc </aside>get_movespeed_modifiers<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 192"/></a></aside>
+        </h3>
+        <p>Get the move speed modifiers list of the mob</p><h3 id="proc/get_num_held_items"><aside class="declaration">proc </aside>get_num_held_items<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/inventory.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;inventory.dm 87"/></a></aside>
+        </h3>
+        <p>Find number of held items, multihand compatible</p><h3 id="proc/get_photo_description"><aside class="declaration">proc </aside>get_photo_description<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/camera/camera) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 131"/></a></aside>
+        </h3>
+        <p>Return the desc of this mob for a photo</p><h3 id="proc/get_policy_keywords"><aside class="declaration">proc </aside>get_policy_keywords<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L499">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 499"/></a></aside>
+        </h3>
+        <p>Get the list of keywords for policy config</p>
+<p>This gets the type, mind assigned roles and antag datums as a list, these are later used
+to send the user relevant headadmin policy config</p><h3 id="proc/get_proc_holders"><aside class="declaration">proc </aside>get_proc_holders<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L839">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 839"/></a></aside>
+        </h3>
+        <p>Gets all relevant proc holders for the browser statpenl</p><h3 id="proc/get_realname_string"><aside class="declaration">proc </aside>get_realname_string<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L258">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 258"/></a></aside>
+        </h3>
+        <p>Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name</p><h3 id="proc/get_spacemove_backup">get_spacemove_backup<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L286">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 286"/></a></aside>
+        </h3>
+        <p>Find movable atoms? near a mob that are viable for pushing off when moving</p><h3 id="proc/get_spells_for_statpanel"><aside class="declaration">proc </aside>get_spells_for_statpanel<aside>(/list/spells) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L850">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 850"/></a></aside>
+        </h3>
+        <p>Convert a list of spells into a displyable list for the statpanel</p>
+<p>Shows charge and other important info</p><h3 id="proc/get_status_tab_items"><aside class="declaration">proc </aside>get_status_tab_items<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L835">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 835"/></a></aside>
+        </h3>
+        <p>Adds this list to the output to the stat browser</p><h3 id="proc/getorgan"><aside class="declaration">proc </aside>getorgan<aside>(typepath) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/helpers.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;helpers.dm 7"/></a></aside>
+        </h3>
+        <p>Get the organ object from the mob matching the passed in typepath</p>
+<p>Arguments:</p>
+<ul>
+<li>typepath The typepath of the organ to get</li>
+</ul><h3 id="proc/getorganslot"><aside class="declaration">proc </aside>getorganslot<aside>(slot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/helpers.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;helpers.dm 25"/></a></aside>
+        </h3>
+        <p>Returns a list of all organs in specified slot</p>
+<p>Arguments:</p>
+<ul>
+<li>slot Slot to get the organs from</li>
+</ul><h3 id="proc/getorganszone"><aside class="declaration">proc </aside>getorganszone<aside>(zone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/organs/helpers.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;helpers.dm 17"/></a></aside>
+        </h3>
+        <p>Get organ objects by zone</p>
+<p>This will return a list of all the organs that are relevant to the zone that is passedin</p>
+<p>Arguments:</p>
+<ul>
+<li>zone <a href="https://github.com/tgstation/tgstation/blob/master/code/__DEFINES/combat.dm#L187-L200">a BODY_ZONE_X define</a></li>
+</ul><h3 id="proc/grab_ghost"><aside class="declaration">proc </aside>grab_ghost<aside>(force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L953">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 953"/></a></aside>
+        </h3>
+        <p>Force get the ghost from the mind</p><h3 id="proc/hallucinating"><aside class="declaration">proc </aside>hallucinating<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L269">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 269"/></a></aside>
+        </h3>
+        <p>Is the mob hallucinating?</p><h3 id="proc/handle_eye_contact"><aside class="declaration">proc </aside>handle_eye_contact<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/examined_mob) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L539">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 539"/></a></aside>
+        </h3>
+        <p>handle_eye_contact() is called when we examine() something. If we examine an alive mob with a mind who has examined us in the last second within 5 tiles, we make eye contact!</p>
+<p>Note that if either party has their face obscured, the other won't get the notice about the eye contact
+Also note that examine_more() doesn't proc this or extend the timer, just because it's simpler this way and doesn't lose much.
+The nice part about relying on examining is that we don't bother checking visibility, because we already know they were both visible to each other within the last second, and the one who triggers it is currently seeing them</p><h3 id="proc/has_actionspeed_modifier"><aside class="declaration">proc </aside>has_actionspeed_modifier<aside>(/<a href="datum.html">datum</a>/<a href="datum/actionspeed_modifier.html">actionspeed_modifier</a>/datum_type_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 135"/></a></aside>
+        </h3>
+        <p>Is there a actionspeed modifier for this mob</p><h3 id="proc/has_movespeed_modifier"><aside class="declaration">proc </aside>has_movespeed_modifier<aside>(/<a href="datum.html">datum</a>/<a href="datum/movespeed_modifier.html">movespeed_modifier</a>/datum_type_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 147"/></a></aside>
+        </h3>
+        <p>Is there a movespeed modifier for this mob</p><h3 id="proc/hivecheck"><aside class="declaration">proc </aside>hivecheck<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 95"/></a></aside>
+        </h3>
+        <p>Check if the mob has a hivemind channel</p><h3 id="proc/incapacitated"><aside class="declaration">proc </aside>incapacitated<aside>(ignore_restraints, ignore_grab, ignore_stasis) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L288">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 288"/></a></aside>
+        </h3>
+        <p>Is the mob incapacitated</p><h3 id="proc/initialize_actionspeed"><aside class="declaration">proc </aside>initialize_actionspeed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 164"/></a></aside>
+        </h3>
+        <p>Adds a default action speed</p><h3 id="proc/is_blind"><aside class="declaration">proc </aside>is_blind<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L264">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 264"/></a></aside>
+        </h3>
+        <p>Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.</p><h3 id="proc/is_literate"><aside class="declaration">proc </aside>is_literate<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1184"/></a></aside>
+        </h3>
+        <p>This mob is abile to read books</p><h3 id="proc/is_muzzled"><aside class="declaration">proc </aside>is_muzzled<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L831">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 831"/></a></aside>
+        </h3>
+        <p>Is the mob muzzled (default false)</p><h3 id="proc/last_name"><aside class="declaration">proc </aside>last_name<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L252">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 252"/></a></aside>
+        </h3>
+        <p>Find the last name of a mob from the real name with regex</p><h3 id="proc/limb_attack_self"><aside class="declaration">proc </aside>limb_attack_self<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L592">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 592"/></a></aside>
+        </h3>
+        <p>Called by using Activate Held Object with an empty hand/limb</p>
+<p>Does nothing by default. The intended use is to allow limbs to call their
+own attack_self procs. It is up to the individual mob to override this
+parent and actually use it.</p><h3 id="proc/log_message"><aside class="parent"><a title="/atom" href="atom.html#proc/log_message">&uarr;</a></aside>log_message<aside>(message, message_type, color, log_globally) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L429">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 429"/></a></aside>
+        </h3>
+        <p>Logs a message in a mob's individual log, and in the global logs as well if log_globally is true</p><h3 id="proc/lowest_buckled_mob"><aside class="declaration">proc </aside>lowest_buckled_mob<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 4"/></a></aside>
+        </h3>
+        <p>Find the mob at the bottom of a buckle chain</p><h3 id="proc/manual_emote"><aside class="declaration">proc </aside>manual_emote<aside>(text) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/emotes.dm#L163">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;emotes.dm 163"/></a></aside>
+        </h3>
+        <p>Allows the intrepid coder to send a basic emote
+Takes text as input, sends it out to those who need to know after some light parsing
+If you need something more complex, make it into a datum emote
+Arguments:</p>
+<ul>
+<li>text - The text to send out</li>
+</ul><h3 id="proc/me_verb"><aside class="declaration">verb </aside>me_verb<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 27"/></a></aside>
+        </h3>
+        <p>The me emote verb</p><h3 id="proc/memory"><aside class="declaration">verb </aside>memory<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L660">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 660"/></a></aside>
+        </h3>
+        <p>Get the notes of this mob</p>
+<p>This actually gets the mind datums notes</p><h3 id="proc/mob_has_gravity"><aside class="declaration">proc </aside>mob_has_gravity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L317">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 317"/></a></aside>
+        </h3>
+        <p>Returns true if a mob has gravity</p>
+<p>I hate that this exists</p><h3 id="proc/mob_negates_gravity"><aside class="declaration">proc </aside>mob_negates_gravity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L323">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 323"/></a></aside>
+        </h3>
+        <p>Does this mob ignore gravity</p><h3 id="proc/mode"><aside class="declaration">verb </aside>mode<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L635">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 635"/></a></aside>
+        </h3>
+        <p>Verb to activate the object in your held hand</p>
+<p>Calls attack self on the item and updates the inventory hud for hands</p><h3 id="proc/northface"><aside class="declaration">verb </aside>northface<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L917">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 917"/></a></aside>
+        </h3>
+        <p>Hidden verb to turn north</p><h3 id="proc/notify_ghost_cloning"><aside class="declaration">proc </aside>notify_ghost_cloning<aside>(message, sound, /<a href="atom.html">atom</a>/source, flashwindow) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L958">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 958"/></a></aside>
+        </h3>
+        <p>Notify a ghost that it's body is being cloned</p><h3 id="proc/onShuttleMove">onShuttleMove<aside>(/<a href="turf.html">turf</a>/newT, /<a href="turf.html">turf</a>/oldT, /list/movement_force, move_dir, /<a href="obj.html">obj</a>/<a href="obj/docking_port.html">docking_port</a>/stationary/old_dock, /<a href="obj.html">obj</a>/<a href="obj/docking_port.html">docking_port</a>/<a href="obj/docking_port/mobile.html">mobile</a>/moving_dock) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/shuttle/on_move.dm#L292">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;on_move.dm 292"/></a></aside>
+        </h3>
+        <p>Mob move procs</p><h3 id="proc/open_language_menu"><aside class="declaration">verb </aside>open_language_menu<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1280">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1280"/></a></aside>
+        </h3>
+        <p>Show the language menu for this mob</p><h3 id="proc/pointed"><aside class="declaration">verb </aside>pointed<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L571">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 571"/></a></aside>
+        </h3>
+        <p>Point at an atom</p>
+<p>mob verbs are faster than object verbs. See
+<a href="https://secure.byond.com/forum/?post=1326139&amp;page=2#comment8198716">this byond forum post</a>
+for why this isn't atom/verb/pointed()</p>
+<p>note: ghosts can point, this is intended</p>
+<p>visible_message will handle invisibility properly</p>
+<p>overridden here and in /mob/dead/observer for different point span classes and sanity checks</p><h3 id="proc/post_buckle_mob">post_buckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1013">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1013"/></a></aside>
+        </h3>
+        <p>Call back post buckle to a mob to offset your visual height</p><h3 id="proc/post_unbuckle_mob">post_unbuckle_mob<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1019">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1019"/></a></aside>
+        </h3>
+        <p>Call back post unbuckle from a mob, (reset your visual height here)</p><h3 id="proc/query_heart"><aside class="declaration">proc </aside>query_heart<aside>(attempt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/hearted.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;hearted.dm 33"/></a></aside>
+        </h3>
+        <p>Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up</p><h3 id="proc/remove_actionspeed_modifier"><aside class="declaration">proc </aside>remove_actionspeed_modifier<aside>(/<a href="datum.html">datum</a>/<a href="datum/actionspeed_modifier.html">actionspeed_modifier</a>/type_id_datum, update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 79"/></a></aside>
+        </h3>
+        <p>Remove a action speed modifier from a mob, whether static or variable.</p><h3 id="proc/remove_client_colour"><aside class="declaration">proc </aside>remove_client_colour<aside>(colour_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_colour.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_colour.dm 76"/></a></aside>
+        </h3>
+        <p>Removes an instance of colour_type from the mob's client_colours list
+colour_type - a typepath (subtyped from /datum/client_colour)</p><h3 id="proc/remove_from_alive_mob_list"><aside class="declaration">proc </aside>remove_from_alive_mob_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 20"/></a></aside>
+        </h3>
+        <p>Removes the mob reference from the list of all mobs alive. If mob is cliented, it removes it from the list of all living player-mobs.</p><h3 id="proc/remove_from_current_dead_players"><aside class="declaration">proc </aside>remove_from_current_dead_players<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 82"/></a></aside>
+        </h3>
+        <p>Removes the mob reference from either the list of dead player-mobs or from the list of observers, depending on how they joined the game.</p><h3 id="proc/remove_from_current_living_antags"><aside class="declaration">proc </aside>remove_from_current_living_antags<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 120"/></a></aside>
+        </h3>
+        <p>Removes the mob reference from the list of living antag player-mobs.</p><h3 id="proc/remove_from_current_living_players"><aside class="declaration">proc </aside>remove_from_current_living_players<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 105"/></a></aside>
+        </h3>
+        <p>Removes the mob reference from the list of living player-mobs. If the mob is an antag, it removes it from the list of living antag player-mobs.</p><h3 id="proc/remove_from_dead_mob_list"><aside class="declaration">proc </aside>remove_from_dead_mob_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 35"/></a></aside>
+        </h3>
+        <p>Remvoes the mob reference from list of all the dead mobs. If mob is cliented, it adds it to the list of all dead player-mobs.</p><h3 id="proc/remove_from_mob_list"><aside class="declaration">proc </aside>remove_from_mob_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 7"/></a></aside>
+        </h3>
+        <p>Removes the mob reference from the list and directory of all mobs. Called on Destroy().</p><h3 id="proc/remove_from_player_list"><aside class="declaration">proc </aside>remove_from_player_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_lists.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_lists.dm 53"/></a></aside>
+        </h3>
+        <p>Removes the mob reference from the list of all player-mobs, besides from either the of dead or alive player-mob lists, as appropriate. Called on Logout().</p><h3 id="proc/remove_movespeed_modifier"><aside class="declaration">proc </aside>remove_movespeed_modifier<aside>(/<a href="datum.html">datum</a>/<a href="datum/movespeed_modifier.html">movespeed_modifier</a>/type_id_datum, update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 90"/></a></aside>
+        </h3>
+        <p>Remove a move speed modifier from a mob, whether static or variable.</p><h3 id="proc/replace_identification_name"><aside class="declaration">proc </aside>replace_identification_name<aside>(oldname, newname) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1121"/></a></aside>
+        </h3>
+        <p>update the ID name of this mob</p><h3 id="proc/replace_records_name"><aside class="declaration">proc </aside>replace_records_name<aside>(oldname, newname) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1117"/></a></aside>
+        </h3>
+        <p>Updates GLOB.data_core records with new name , see mob/living/carbon/human</p><h3 id="proc/reset_perspective"><aside class="declaration">proc </aside>reset_perspective<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L398">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 398"/></a></aside>
+        </h3>
+        <p>Reset the attached clients perspective (viewpoint)</p>
+<p>reset_perspective() set eye to common default : mob on turf, loc otherwise
+reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)</p><h3 id="proc/say_dead"><aside class="declaration">proc </aside>say_dead<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 40"/></a></aside>
+        </h3>
+        <p>Speak as a dead person (ghost etc)</p><h3 id="proc/say_verb"><aside class="declaration">verb </aside>say_verb<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 4"/></a></aside>
+        </h3>
+        <p>Say verb</p><h3 id="proc/set_blindness"><aside class="declaration">proc </aside>set_blindness<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 39"/></a></aside>
+        </h3>
+        <p>Force set the blindness of a mob to some level</p><h3 id="proc/set_blurriness"><aside class="declaration">proc </aside>set_blurriness<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 89"/></a></aside>
+        </h3>
+        <p>Set the mobs blurriness of vision to an amount</p><h3 id="proc/set_disgust"><aside class="declaration">proc </aside>set_disgust<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 116"/></a></aside>
+        </h3>
+        <p>Set the disgust level of a mob</p><h3 id="proc/set_dizziness"><aside class="declaration">proc </aside>set_dizziness<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 19"/></a></aside>
+        </h3>
+        <p>FOrce set the dizzyness of a mob</p><h3 id="proc/set_drugginess"><aside class="declaration">proc </aside>set_drugginess<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 108"/></a></aside>
+        </h3>
+        <p>Set the drugginess of a mob</p><h3 id="proc/set_nutrition"><aside class="declaration">proc </aside>set_nutrition<aside>(change) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1292">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1292"/></a></aside>
+        </h3>
+        <p>Force set the mob nutrition</p><h3 id="proc/set_species"><aside class="declaration">proc </aside>set_species<aside>(/<a href="datum.html">datum</a>/<a href="datum/species.html">species</a>/mrace, icon_update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/dna.dm#L289">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;dna.dm 289"/></a></aside>
+        </h3>
+        <p>DNA MOB-PROCS</p><h3 id="proc/shared_ui_interaction"><aside class="declaration">proc </aside>shared_ui_interaction<aside>(src_object) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/states.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;states.dm 62"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Standard interaction/sanity checks. Different mob types may have overrides.</p>
+<p>return UI_state The state of the UI.</p><h3 id="proc/show_inv"><aside class="declaration">proc </aside>show_inv<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L430">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 430"/></a></aside>
+        </h3>
+        <p>Show the mob's inventory to another mob</p><h3 id="proc/show_message"><aside class="declaration">proc </aside>show_message<aside>(msg, type, alt_msg, alt_type, avoid_highlighting) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 137"/></a></aside>
+        </h3>
+        <p>Show a message to this mob (visual or audible)</p><h3 id="proc/shuttleRotate"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#proc/shuttleRotate">&uarr;</a></aside>shuttleRotate<aside>(rotation, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/shuttle/shuttle_rotate.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;shuttle_rotate.dm 51"/></a></aside>
+        </h3>
+        <p>Mob rotate procs</p><h3 id="proc/slip"><aside class="declaration">proc </aside>slip<aside>(knockdown_amount, /<a href="obj.html">obj</a>/O, lube, paralyze, force_drop) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L327">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 327"/></a></aside>
+        </h3>
+        <p>Called when this mob slips over, override as needed</p><h3 id="proc/southface"><aside class="declaration">verb </aside>southface<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L926">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 926"/></a></aside>
+        </h3>
+        <p>Hidden verb to turn south</p><h3 id="proc/spin"><aside class="declaration">proc </aside>spin<aside>(spintime, speed) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L600">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 600"/></a></aside>
+        </h3>
+        <p>Spin this mob around it's central axis</p><h3 id="proc/sync_lighting_plane_alpha"><aside class="declaration">proc </aside>sync_lighting_plane_alpha<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1160"/></a></aside>
+        </h3>
+        <p>Set the lighting plane hud alpha to the mobs lighting_alpha var</p><h3 id="proc/throw_alert"><aside class="declaration">proc </aside>throw_alert<aside>(category, type, severity, /<a href="obj.html">obj</a>/new_master, override) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/hud/alert.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;hud&#x2F;alert.dm 15"/></a></aside>
+        </h3>
+        <p>Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
+category is a text string. Each mob may only have one alert per category; the previous one will be replaced
+path is a type path of the actual alert type to throw
+severity is an optional number that will be placed at the end of the icon_state for this alert
+for example, high pressure's icon_state is &quot;highpressure&quot; and can be serverity 1 or 2 to get &quot;highpressure1&quot; or &quot;highpressure2&quot;
+new_master is optional and sets the alert's icon state to &quot;template&quot; in the ui_style icons with the master as an overlay.
+flicks are forwarded to master
+override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.</p><h3 id="proc/toggle_move_intent"><aside class="declaration">proc </aside>toggle_move_intent<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L475">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 475"/></a></aside>
+        </h3>
+        <p>Toggle the move intent of the mob</p>
+<p>triggers an update the move intent hud as well</p><h3 id="proc/total_multiplicative_slowdown"><aside class="declaration">proc </aside>total_multiplicative_slowdown<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 198"/></a></aside>
+        </h3>
+        <p>Calculate the total slowdown of all movespeed modifiers</p><h3 id="proc/up"><aside class="declaration">verb </aside>up<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L485">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 485"/></a></aside>
+        </h3>
+        <p>Moves a mob upwards in z level</p><h3 id="proc/update_actionspeed"><aside class="declaration">proc </aside>update_actionspeed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 146"/></a></aside>
+        </h3>
+        <p>Go through the list of actionspeed modifiers and calculate a final actionspeed. ANY ADD/REMOVE DONE IN UPDATE_actionspeed MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!</p><h3 id="proc/update_blindness"><aside class="declaration">proc </aside>update_blindness<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 47"/></a></aside>
+        </h3>
+        <p>proc that adds and removes blindness overlays when necessary</p><h3 id="proc/update_client_colour"><aside class="declaration">proc </aside>update_client_colour<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/client/client_colour.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;client&#x2F;client_colour.dm 131"/></a></aside>
+        </h3>
+        <p>Resets the mob's client.color to null, and then reapplies a new color based
+on the client_colour datums it currently has.</p><h3 id="proc/update_config_movespeed"><aside class="declaration">proc </aside>update_config_movespeed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 158"/></a></aside>
+        </h3>
+        <p>Set or update the global movespeed config on a mob</p><h3 id="proc/update_eye_blur"><aside class="declaration">proc </aside>update_eye_blur<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/status_procs.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;status_procs.dm 94"/></a></aside>
+        </h3>
+        <p>Apply the blurry overlays to a mobs clients screen</p><h3 id="proc/update_gravity"><aside class="declaration">proc </aside>update_gravity<aside>(has_gravity, override) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L331">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 331"/></a></aside>
+        </h3>
+        <p>Update the gravity status of this mob</p><h3 id="proc/update_mouse_pointer"><aside class="declaration">proc </aside>update_mouse_pointer<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1167"/></a></aside>
+        </h3>
+        <p>Update the mouse pointer of the attached client in this mob</p><h3 id="proc/update_movespeed"><aside class="declaration">proc </aside>update_movespeed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 169"/></a></aside>
+        </h3>
+        <p>Go through the list of movespeed modifiers and calculate a final movespeed. ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!</p><h3 id="proc/update_pull_hud_icon"><aside class="declaration">proc </aside>update_pull_hud_icon<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L623">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 623"/></a></aside>
+        </h3>
+        <p>Update the pulling hud icon</p><h3 id="proc/update_rest_hud_icon"><aside class="declaration">proc </aside>update_rest_hud_icon<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L627">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 627"/></a></aside>
+        </h3>
+        <p>Update the resting hud icon</p><h3 id="proc/update_sight"><aside class="declaration">proc </aside>update_sight<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1155"/></a></aside>
+        </h3>
+        <p>Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)</p><h3 id="proc/visible_message"><aside class="parent"><a title="/atom" href="atom.html#proc/visible_message">&uarr;</a></aside>visible_message<aside>(message, self_message, blind_message, vision_distance, /list/ignored_mobs, visible_message_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L222">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 222"/></a></aside>
+        </h3>
+        <p>Adds the functionality to self_message.</p><h3 id="proc/vv_get_dropdown"><aside class="parent"><a title="/atom" href="atom.html#proc/vv_get_dropdown">&uarr;</a></aside>vv_get_dropdown<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1199">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1199"/></a></aside>
+        </h3>
+        <p>Get the mob VV dropdown extras</p><h3 id="proc/vv_get_var">vv_get_var<aside>(var_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L1269">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 1269"/></a></aside>
+        </h3>
+        <p>extra var handling for the logging var</p><h3 id="proc/westface"><aside class="declaration">verb </aside>westface<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L908">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 908"/></a></aside>
+        </h3>
+        <p>Hidden verb to turn west</p><h3 id="proc/whisper"><aside class="declaration">proc </aside>whisper<aside>(message, /<a href="datum.html">datum</a>/language/language) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 23"/></a></aside>
+        </h3>
+        <p>whisper a message</p><h3 id="proc/whisper_verb"><aside class="declaration">verb </aside>whisper_verb<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_say.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_say.dm 14"/></a></aside>
+        </h3>
+        <p>Whisper verb</p><h3 id="proc/zMove"><aside class="declaration">proc </aside>zMove<aside>(dir, feedback) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_movement.dm#L508">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_movement.dm 508"/></a></aside>
+        </h3>
+        <p>Move a mob between z levels, if it's valid to move z's on this turf</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;card&#x2F;id - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/card/id.html#var">Var Details</a> - <a href="obj/item/card/id.html#proc">Proc Details</a></header>
+<main>
+<h1>id <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/card/id.html">card/id</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 65"/></a></h1>
+
+<p>&quot;Retro&quot; ID card that renders itself as the icon state with no overlays.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/access">access</a></th><td>Access levels held by this card.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/assignment">assignment</a></th><td>The job name registered on the card (for example: Assistant).</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/mining_points">mining_points</a></th><td>How many magical mining Disney Dollars this card has for spending at the mining equipment vendors.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/my_store">my_store</a></th><td>Linked paystand.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/registered_account">registered_account</a></th><td>Linked bank account.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/registered_age">registered_age</a></th><td>Registered owner's age.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/registered_name">registered_name</a></th><td>The name registered on the card (for example: Dr Bryan See)</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/trim">trim</a></th><td>Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#var/wildcard_slots">wildcard_slots</a></th><td>List of wildcard slot names as keys with lists of wildcard data as values.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/add_access">add_access</a></th><td>Attempts to add the given accesses to the ID card as non-wildcards.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/add_wildcards">add_wildcards</a></th><td>Attempts to add the given wildcards to the ID card.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/alt_click_can_use_id">alt_click_can_use_id</a></th><td>Helper proc. Can the user alt-click the ID?</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/build_access_lists">build_access_lists</a></th><td>Helper proc. Creates access lists for the access procs.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/can_add_wildcards">can_add_wildcards</a></th><td>Helper proc, checks whether the ID card can hold any given set of wildcards.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/clear_access">clear_access</a></th><td>Clears all accesses from the ID card - both wildcard and normal.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/get_icon_source">get_icon_source</a></th><td>Simple helper proc. Returns the source of the icon for this card. Advanced cards can override this to return their icon that has been cached due to using overlays.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/insert_money">insert_money</a></th><td>Insert credits or coins into the ID card and add their value to the associated bank account.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/mass_insert_money">mass_insert_money</a></th><td>Insert multiple money or money-equivalent items at once.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/remove_access">remove_access</a></th><td>Removes the given accesses from the ID Card.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/remove_wildcards">remove_wildcards</a></th><td>Removes wildcards from the ID card.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/set_access">set_access</a></th><td>Attempts to set the card's accesses to the given accesses, clearing all accesses not in the given list.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/set_new_account">set_new_account</a></th><td>Attempts to set a new bank account on the ID card.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/update_in_wallet">update_in_wallet</a></th><td>Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.</td></tr>
+            <tr><th><a href="obj/item/card/id.html#proc/update_label">update_label</a></th><td>Updates the name based on the card's vars and state.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/access"><aside class="declaration">var </aside>access
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 95"/></a></h3>
+        <p>Access levels held by this card.</p><h3 id="var/assignment"><aside class="declaration">var </aside>assignment
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 89"/></a></h3>
+        <p>The job name registered on the card (for example: Assistant).</p><h3 id="var/mining_points"><aside class="declaration">var </aside>mining_points
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 78"/></a></h3>
+        <p>How many magical mining Disney Dollars this card has for spending at the mining equipment vendors.</p><h3 id="var/my_store"><aside class="declaration">var </aside>my_store
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/paystand</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 84"/></a></h3>
+        <p>Linked paystand.</p><h3 id="var/registered_account"><aside class="declaration">var </aside>registered_account
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/bank_account.html">bank_account</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 82"/></a></h3>
+        <p>Linked bank account.</p><h3 id="var/registered_age"><aside class="declaration">var </aside>registered_age
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 86"/></a></h3>
+        <p>Registered owner's age.</p><h3 id="var/registered_name"><aside class="declaration">var </aside>registered_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 80"/></a></h3>
+        <p>The name registered on the card (for example: Dr Bryan See)</p><h3 id="var/trim"><aside class="declaration">var </aside>trim
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/id_trim.html">id_trim</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 92"/></a></h3>
+        <p>Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.</p><h3 id="var/wildcard_slots"><aside class="declaration">var </aside>wildcard_slots
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 98"/></a></h3>
+        <p>List of wildcard slot names as keys with lists of wildcard data as values.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_access"><aside class="declaration">proc </aside>add_access<aside>(/list/add_accesses, try_wildcard, mode) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L280">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 280"/></a></aside>
+        </h3>
+        <p>Attempts to add the given accesses to the ID card as non-wildcards.</p>
+<p>Depending on the mode, may add accesses as wildcards or error if it can't add them as non-wildcards.
+Arguments:</p>
+<ul>
+<li>add_accesses - List of accesses to check.</li>
+<li>try_wildcard - If not null, will attempt to add all accesses that require wildcard slots to this wildcard slot only.</li>
+<li>mode - The method to use when adding accesses. See define for ERROR_ON_FAIL</li>
+</ul><h3 id="proc/add_wildcards"><aside class="declaration">proc </aside>add_wildcards<aside>(/list/wildcard_list, try_wildcard, mode) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L177">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 177"/></a></aside>
+        </h3>
+        <p>Attempts to add the given wildcards to the ID card.</p>
+<p>Arguments:</p>
+<ul>
+<li>wildcard_list - List of accesses to add.</li>
+<li>try_wildcard - If not null, will attempt to add all wildcards to this wildcard slot only.</li>
+<li>mode - The method to use when adding wildcards. See define for ERROR_ON_FAIL</li>
+</ul><h3 id="proc/alt_click_can_use_id"><aside class="declaration">proc </aside>alt_click_can_use_id<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L477">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 477"/></a></aside>
+        </h3>
+        <p>Helper proc. Can the user alt-click the ID?</p><h3 id="proc/build_access_lists"><aside class="declaration">proc </aside>build_access_lists<aside>(/list/accesses, /list/basic_access_list, /list/wildcard_access_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L366">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 366"/></a></aside>
+        </h3>
+        <p>Helper proc. Creates access lists for the access procs.</p>
+<p>Takes the accesses list and compares it with the trim. Any basic accesses that match the trim are
+added to basic_access_list and the rest are added to wildcard_access_list.</p>
+<p>This proc directly modifies the lists passed in as args. It expects these lists to be instantiated.
+There is no return value.
+Arguments:</p>
+<ul>
+<li>accesses - List of accesses you want to stort into basic_access_list and wildcard_access_list. Should not be null.</li>
+<li>basic_access_list - Mandatory argument. The proc modifies the list passed in this argument and adds accesses the trim supports to it.</li>
+<li>wildcard_access_list - Mandatory argument. The proc modifies the list passed in this argument and adds accesses the trim does not support to it.</li>
+</ul><h3 id="proc/can_add_wildcards"><aside class="declaration">proc </aside>can_add_wildcards<aside>(/list/wildcard_list, try_wildcard) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 135"/></a></aside>
+        </h3>
+        <p>Helper proc, checks whether the ID card can hold any given set of wildcards.</p>
+<p>Returns TRUE if the card can hold the wildcards, FALSE otherwise.
+Arguments:</p>
+<ul>
+<li>wildcard_list - List of accesses to check.</li>
+<li>try_wildcard - If not null, will attempt to add wildcards for this wildcard specifically and will return FALSE if the card cannot hold all wildcards in this slot.</li>
+</ul><h3 id="proc/clear_access"><aside class="declaration">proc </aside>clear_access<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L343">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 343"/></a></aside>
+        </h3>
+        <p>Clears all accesses from the ID card - both wildcard and normal.</p><h3 id="proc/get_icon_source"><aside class="declaration">proc </aside>get_icon_source<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 124"/></a></aside>
+        </h3>
+        <p>Simple helper proc. Returns the source of the icon for this card. Advanced cards can override this to return their icon that has been cached due to using overlays.</p><h3 id="proc/insert_money"><aside class="declaration">proc </aside>insert_money<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/money, /<a href="mob.html">mob</a>/user, physical_currency) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L429">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 429"/></a></aside>
+        </h3>
+        <p>Insert credits or coins into the ID card and add their value to the associated bank account.</p>
+<p>Arguments:
+money - The item to attempt to convert to credits and insert into the card.
+user - The user inserting the item.
+physical_currency - Boolean, whether this is a physical currency such as a coin and not a holochip.</p><h3 id="proc/mass_insert_money"><aside class="declaration">proc </aside>mass_insert_money<aside>(/list/money, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L455">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 455"/></a></aside>
+        </h3>
+        <p>Insert multiple money or money-equivalent items at once.</p>
+<p>Arguments:
+money - List of items to attempt to convert to credits and insert into the card.
+user - The user inserting the items.</p><h3 id="proc/remove_access"><aside class="declaration">proc </aside>remove_access<aside>(/list/rem_accesses) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L305">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 305"/></a></aside>
+        </h3>
+        <p>Removes the given accesses from the ID Card.</p>
+<p>Will remove the wildcards if the accesses given are on the card as wildcard accesses.
+Arguments:</p>
+<ul>
+<li>rem_accesses - List of accesses to remove.</li>
+</ul><h3 id="proc/remove_wildcards"><aside class="declaration">proc </aside>remove_wildcards<aside>(/list/wildcard_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L233">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 233"/></a></aside>
+        </h3>
+        <p>Removes wildcards from the ID card.</p>
+<p>Arguments:</p>
+<ul>
+<li>wildcard_list - List of accesses to remove.</li>
+</ul><h3 id="proc/set_access"><aside class="declaration">proc </aside>set_access<aside>(/list/new_access_list, mode) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L322">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 322"/></a></aside>
+        </h3>
+        <p>Attempts to set the card's accesses to the given accesses, clearing all accesses not in the given list.</p>
+<p>Depending on the mode, may add accesses as wildcards or error if it can't add them as non-wildcards.
+Arguments:</p>
+<ul>
+<li>new_access_list - List of all accesses that this card should hold exclusively.</li>
+<li>mode - The method to use when setting accesses. See define for ERROR_ON_FAIL</li>
+</ul><h3 id="proc/set_new_account"><aside class="declaration">proc </aside>set_new_account<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L486">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 486"/></a></aside>
+        </h3>
+        <p>Attempts to set a new bank account on the ID card.</p><h3 id="proc/update_in_wallet"><aside class="declaration">proc </aside>update_in_wallet<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L590">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 590"/></a></aside>
+        </h3>
+        <p>Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.</p><h3 id="proc/update_label"><aside class="declaration">proc </aside>update_label<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/cards_ids.dm#L600">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;cards_ids.dm 600"/></a></aside>
+        </h3>
+        <p>Updates the name based on the card's vars and state.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

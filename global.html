@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>(global) - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="global.html#var">Var Details</a> - <a href="global.html#proc">Proc Details</a></header>
+<main>
+<h1>(global)
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/(unknown)">
+        <img src="git.png" width="16" height="16" title="(unknown)"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="global.html#var/Failsafe">Failsafe</a></th><td>Failsafe</td></tr>
+            <tr><th><a href="global.html#var/Master">Master</a></th><td>StonedMC</td></tr>
+            <tr><th><a href="global.html#var/SSacid">SSacid</a></th><td>The subsystem used to tick <a href="datum/component/acid.html" title="/datum/component/acid">/datum/component/acid</a> instances.</td></tr>
+            <tr><th><a href="global.html#var/SSai_controllers">SSai_controllers</a></th><td>The subsystem used to tick <a href="datum.html" title="/datum">/datum/ai_controllers</a> instances. Handling the re-checking of plans.</td></tr>
+            <tr><th><a href="global.html#var/SSai_movement">SSai_movement</a></th><td>The subsystem used to tick <a href="datum/ai_movement.html" title="/datum/ai_movement">/datum/ai_movement</a> instances. Handling the movement of individual AI instances</td></tr>
+            <tr><th><a href="global.html#var/SSambience">SSambience</a></th><td>The subsystem used to play ambience to users every now and then, makes them real excited.</td></tr>
+            <tr><th><a href="global.html#var/SSdiscord">SSdiscord</a></th><td></td></tr>
+            <tr><th><a href="global.html#var/SSid_access">SSid_access</a></th><td>Non-processing subsystem that holds various procs and data structures to manage ID cards, trims and access.</td></tr>
+            <tr><th><a href="global.html#var/SSrunechat">SSrunechat</a></th><td></td></tr>
+            <tr><th><a href="global.html#var/SStgui">SStgui</a></th><td>tgui subsystem</td></tr>
+            <tr><th><a href="global.html#var/SStime_track">SStime_track</a></th><td>The reference to the end of round sound that we have chosen.</td></tr>
+            <tr><th><a href="global.html#var/SStimer">SStimer</a></th><td></td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="global.html#proc/Gibberish">Gibberish</a></th><td>Turn text into complete gibberish!</td></tr>
+            <tr><th><a href="global.html#proc/HeapPathWeightCompare">HeapPathWeightCompare</a></th><td>TODO: Macro this to reduce proc overhead</td></tr>
+            <tr><th><a href="global.html#proc/WEAKREF">WEAKREF</a></th><td>Creates a weakref to the given input.
+See /datum/weakref's documentation for more information.</td></tr>
+            <tr><th><a href="global.html#proc/WrapAdminProcCall">WrapAdminProcCall</a></th><td>Wrapper for proccalls where the datum is flagged as vareditted</td></tr>
+            <tr><th><a href="global.html#proc/___TraitAdd">___TraitAdd</a></th><td>DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.</td></tr>
+            <tr><th><a href="global.html#proc/___TraitRemove">___TraitRemove</a></th><td>DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.</td></tr>
+            <tr><th><a href="global.html#proc/_addtimer">_addtimer</a></th><td>Create a new timer and insert it in the queue.
+You should not call this directly, and should instead use the addtimer macro, which includes source information.</td></tr>
+            <tr><th><a href="global.html#proc/_alert_drones">_alert_drones</a></th><td>Broadcast a message to all drones in a faction</td></tr>
+            <tr><th><a href="global.html#proc/above_neck">above_neck</a></th><td>Would this zone be above the neck</td></tr>
+            <tr><th><a href="global.html#proc/actionspeed_data_null_check">actionspeed_data_null_check</a></th><td>Checks if a action speed modifier is valid and not missing any data</td></tr>
+            <tr><th><a href="global.html#proc/active_free_borgs">active_free_borgs</a></th><td>Silicon Mob Procs</td></tr>
+            <tr><th><a href="global.html#proc/add_keybinding">add_keybinding</a></th><td>Adds an instanced keybinding to the global tracker</td></tr>
+            <tr><th><a href="global.html#proc/add_verb">add_verb</a></th><td>handles adding verbs and updating the stat panel browser</td></tr>
+            <tr><th><a href="global.html#proc/anonymous_all_players">anonymous_all_players</a></th><td>anonymous_all_players: sets all crewmembers on station anonymous.</td></tr>
+            <tr><th><a href="global.html#proc/baseturfs_string_list">baseturfs_string_list</a></th><td>A wrapper for baseturf string lists, to offer support of non list values, and a stack_trace if we have major issues</td></tr>
+            <tr><th><a href="global.html#proc/begin_the_end">begin_the_end</a></th><td>Begins the process of ending the round via cult narsie win
+Consists of later called procs (in order of called):</td></tr>
+            <tr><th><a href="global.html#proc/build_chemical_reagent_list">build_chemical_reagent_list</a></th><td>These are used in the reagents subsystem init() and the reagent_id_typos.dm</td></tr>
+            <tr><th><a href="global.html#proc/build_medicine_reagents">build_medicine_reagents</a></th><td>Just grab every craftable medicine you can think off</td></tr>
+            <tr><th><a href="global.html#proc/callback_select">callback_select</a></th><td>Runs a list of callbacks asyncronously, returning only when all have finished</td></tr>
+            <tr><th><a href="global.html#proc/checkCardDatums">checkCardDatums</a></th><td>Checks the global card list for cards that don't override all the default values of the card datum</td></tr>
+            <tr><th><a href="global.html#proc/checkCardDistribution">checkCardDistribution</a></th><td>Used to test open a large amount of cardpacks</td></tr>
+            <tr><th><a href="global.html#proc/checkCardpacks">checkCardpacks</a></th><td>Checks the passed type list for missing raritys, or raritys out of bounds</td></tr>
+            <tr><th><a href="global.html#proc/check_zone">check_zone</a></th><td>Convert a PRECISE ZONE into the BODY_ZONE</td></tr>
+            <tr><th><a href="global.html#proc/clearCards">clearCards</a></th><td>Empty the rarity cache so we can safely add new cards</td></tr>
+            <tr><th><a href="global.html#proc/cmp_crafting_req_priority">cmp_crafting_req_priority</a></th><td>Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes</td></tr>
+            <tr><th><a href="global.html#proc/color_to_full_rgba_matrix">color_to_full_rgba_matrix</a></th><td>Converts RGB shorthands into RGBA matrices complete of constants rows (ergo a 20 keys list in byond).</td></tr>
+            <tr><th><a href="global.html#proc/considered_exiled">considered_exiled</a></th><td>Exiled check</td></tr>
+            <tr><th><a href="global.html#proc/convert_ph_to_readable_color">convert_ph_to_readable_color</a></th><td>Converts the pH into a tgui readable color - i.e. white and black text is readable over it. This is NOT the colourwheel for pHes however.</td></tr>
+            <tr><th><a href="global.html#proc/create_mafia_game">create_mafia_game</a></th><td>Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.</td></tr>
+            <tr><th><a href="global.html#proc/cult_ending_helper">cult_ending_helper</a></th><td>Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward
+called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches it's conclusion</td></tr>
+            <tr><th><a href="global.html#proc/cultslur">cultslur</a></th><td>Makes you talk like you got cult stunned, which is slurring but with some dark messages</td></tr>
+            <tr><th><a href="global.html#proc/debug_variable">debug_variable</a></th><td>Get displayed variable in VV variable list</td></tr>
+            <tr><th><a href="global.html#proc/deltimer">deltimer</a></th><td>Delete a timer</td></tr>
+            <tr><th><a href="global.html#proc/derpspeech">derpspeech</a></th><td>Convert a message to derpy speak</td></tr>
+            <tr><th><a href="global.html#proc/do_after">do_after</a></th><td>Timed action involving one mob user. Target is optional.</td></tr>
+            <tr><th><a href="global.html#proc/do_after_mob">do_after_mob</a></th><td>Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.</td></tr>
+            <tr><th><a href="global.html#proc/do_mob">do_mob</a></th><td>Timed action involving two mobs, the user and the target. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.</td></tr>
+            <tr><th><a href="global.html#proc/end_cooldown">end_cooldown</a></th><td>Callback called by a timer to end an associative-list-indexed cooldown.</td></tr>
+            <tr><th><a href="global.html#proc/ending_helper">ending_helper</a></th><td>Helper to set the round to end asap. Current usage Cult round end code</td></tr>
+            <tr><th><a href="global.html#proc/find_reagent">find_reagent</a></th><td>Returns reagent datum from typepath</td></tr>
+            <tr><th><a href="global.html#proc/find_record">find_record</a></th><td>Returns datum/data/record</td></tr>
+            <tr><th><a href="global.html#proc/findname">findname</a></th><td>Find if the message has the real name of any user mob in the mob_list</td></tr>
+            <tr><th><a href="global.html#proc/firing_squad">firing_squad</a></th><td>firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense</td></tr>
+            <tr><th><a href="global.html#proc/first_day_of_month">first_day_of_month</a></th><td>Returns the first day of the given year and month in number format, from 1 (monday) - 7 (sunday).</td></tr>
+            <tr><th><a href="global.html#proc/flop_animation">flop_animation</a></th><td>This animation should be applied to actual parent atom instead of vc_object.</td></tr>
+            <tr><th><a href="global.html#proc/format_frequency">format_frequency</a></th><td>Format frequency by moving the decimal.</td></tr>
+            <tr><th><a href="global.html#proc/generate_asset_name">generate_asset_name</a></th><td>Generate a filename for this asset
+The same asset will always lead to the same asset name
+(Generated names do not include file extention.)</td></tr>
+            <tr><th><a href="global.html#proc/generate_bitfields">generate_bitfields</a></th><td>Turns /datum/bitfield subtypes into a list for use in debugging</td></tr>
+            <tr><th><a href="global.html#proc/generate_chemwiki_line">generate_chemwiki_line</a></th><td>Generate the big list of reagent based reactions.
+style='background-color:#FFEE88;'|{{anchor|Synthetic-derived growth factor}}Synthetic-derived growth factor<span style="color:#A502E0;background-color:white">â®</span></td></tr>
+            <tr><th><a href="global.html#proc/generate_fish">generate_fish</a></th><td>Automatically generates object of given base path from the behaviour type in loc</td></tr>
+            <tr><th><a href="global.html#proc/generate_selectable_species">generate_selectable_species</a></th><td>Generates species available to choose in character setup at roundstart</td></tr>
+            <tr><th><a href="global.html#proc/getFlatIcon">getFlatIcon</a></th><td>Create a single [/icon] from a given <a href="atom.html" title="/atom">/atom</a> or [/image].</td></tr>
+            <tr><th><a href="global.html#proc/get_airlock_overlay">get_airlock_overlay</a></th><td>Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
+tiny bit in door_assembly.dm  Refactored so you don't have to make a null copy of airlock
+to get to the damn thing
+Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
+if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
+everything</td></tr>
+            <tr><th><a href="global.html#proc/get_allowed_instrument_ids">get_allowed_instrument_ids</a></th><td>Get all non admin_only instruments as a list of text ids.</td></tr>
+            <tr><th><a href="global.html#proc/get_bbox_of_atoms">get_bbox_of_atoms</a></th><td>Get a bounding box of a list of atoms.</td></tr>
+            <tr><th><a href="global.html#proc/get_cached_actionspeed_modifier">get_cached_actionspeed_modifier</a></th><td>Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!</td></tr>
+            <tr><th><a href="global.html#proc/get_cached_movespeed_modifier">get_cached_movespeed_modifier</a></th><td>Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!</td></tr>
+            <tr><th><a href="global.html#proc/get_chem_id">get_chem_id</a></th><td>Returns reagent datum from reagent name string</td></tr>
+            <tr><th><a href="global.html#proc/get_path_to">get_path_to</a></th><td>This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
+over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
+cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.</td></tr>
+            <tr><th><a href="global.html#proc/get_powernet_info_from_source">get_powernet_info_from_source</a></th><td>Extracts the powernet and cell of the provided power source</td></tr>
+            <tr><th><a href="global.html#proc/get_random_reagent_id">get_random_reagent_id</a></th><td>Returns a random reagent object minus blacklisted reagents</td></tr>
+            <tr><th><a href="global.html#proc/get_ranged_target_turf_direct">get_ranged_target_turf_direct</a></th><td>Get ranged target turf, but with direct targets as opposed to directions</td></tr>
+            <tr><th><a href="global.html#proc/get_reagent_type_from_product_string">get_reagent_type_from_product_string</a></th><td>Returns a list of chemical_reaction datums that have the input STRING as a product</td></tr>
+            <tr><th><a href="global.html#proc/get_recipe_from_reagent_product">get_recipe_from_reagent_product</a></th><td>Takes a type in and returns a list of associated recipes</td></tr>
+            <tr><th><a href="global.html#proc/get_temp_change_amount">get_temp_change_amount</a></th><td>Used to get the amount of change between two body temperatures</td></tr>
+            <tr><th><a href="global.html#proc/getleftblocks">getleftblocks</a></th><td>DNA HELPER-PROCS</td></tr>
+            <tr><th><a href="global.html#proc/getline">getline</a></th><td>Get a list of turfs in a line from <code>M</code> to <code>N</code>.</td></tr>
+            <tr><th><a href="global.html#proc/goonchem_vortex">goonchem_vortex</a></th><td>Magical move-wooney that happens sometimes.</td></tr>
+            <tr><th><a href="global.html#proc/hex2rgb">hex2rgb</a></th><td>Converts &quot;#RRGGBB&quot; to list(0xRR, 0xGG, 0xBB)</td></tr>
+            <tr><th><a href="global.html#proc/htmlrendertext">htmlrendertext</a></th><td>Perform a whitespace cleanup on the text, similar to what HTML renderers do</td></tr>
+            <tr><th><a href="global.html#proc/icon2base64">icon2base64</a></th><td>Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
+exporting it as text, and then parsing the base64 from that.
+(This relies on byond automatically storing icons in savefiles as base64)</td></tr>
+            <tr><th><a href="global.html#proc/init_crafting_recipes">init_crafting_recipes</a></th><td>Inits the crafting recipe list, sorting crafting recipe requirements in the process.</td></tr>
+            <tr><th><a href="global.html#proc/init_keybindings">init_keybindings</a></th><td>Creates and sorts all the keybinding datums</td></tr>
+            <tr><th><a href="global.html#proc/ionnum">ionnum</a></th><td>is at the start to prevent us from changing say modes via get_message_mode()</td></tr>
+            <tr><th><a href="global.html#proc/isAdminGhostAI">isAdminGhostAI</a></th><td>Is the passed in mob an admin ghost WITH AI INTERACT enabled</td></tr>
+            <tr><th><a href="global.html#proc/isAdminObserver">isAdminObserver</a></th><td>Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to</td></tr>
+            <tr><th><a href="global.html#proc/is_ctf_target">is_ctf_target</a></th><td>hey uhhh don't hit anyone behind them</td></tr>
+            <tr><th><a href="global.html#proc/is_special_character">is_special_character</a></th><td>Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum</td></tr>
+            <tr><th><a href="global.html#proc/item_heal_robotic">item_heal_robotic</a></th><td>Heal a robotic body part on a mob</td></tr>
+            <tr><th><a href="global.html#proc/json_deserialize_datum">json_deserialize_datum</a></th><td>Convert a list of json to datum</td></tr>
+            <tr><th><a href="global.html#proc/json_serialize_datum">json_serialize_datum</a></th><td>Convert a datum into a json blob</td></tr>
+            <tr><th><a href="global.html#proc/loadAllCardFiles">loadAllCardFiles</a></th><td>Loads all the card files</td></tr>
+            <tr><th><a href="global.html#proc/loadCardFile">loadCardFile</a></th><td>Loads the contents of a json file into our global card list</td></tr>
+            <tr><th><a href="global.html#proc/load_map">load_map</a></th><td>Shortcut function to parse a map and apply it to the world.</td></tr>
+            <tr><th><a href="global.html#proc/load_poll_data">load_poll_data</a></th><td>Loads all current and future server polls and their options to store both as datums.</td></tr>
+            <tr><th><a href="global.html#proc/log_combat">log_combat</a></th><td>Log a combat message in the attack log</td></tr>
+            <tr><th><a href="global.html#proc/log_directed_talk">log_directed_talk</a></th><td>Helper for logging of messages with only one sender and receiver</td></tr>
+            <tr><th><a href="global.html#proc/log_tgui">log_tgui</a></th><td>Appends a tgui-related log entry. All arguments are optional.</td></tr>
+            <tr><th><a href="global.html#proc/log_wound">log_wound</a></th><td>log_wound() is for when someone is <em>attacked</em> and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over</td></tr>
+            <tr><th><a href="global.html#proc/make_datum_references_lists">make_datum_references_lists</a></th><td>Initial Building</td></tr>
+            <tr><th><a href="global.html#proc/md5asfile">md5asfile</a></th><td>Save file as an external file then md5 it.
+Used because md5ing files stored in the rsc sometimes gives incorrect md5 results.</td></tr>
+            <tr><th><a href="global.html#proc/md5filepath">md5filepath</a></th><td>Returns the md5 of a file at a given path.</td></tr>
+            <tr><th><a href="global.html#proc/message_centcom">message_centcom</a></th><td>Used by communications consoles to message CentCom</td></tr>
+            <tr><th><a href="global.html#proc/message_syndicate">message_syndicate</a></th><td>Used by communications consoles to message the Syndicate</td></tr>
+            <tr><th><a href="global.html#proc/message_to_html">message_to_html</a></th><td>Message-related procs</td></tr>
+            <tr><th><a href="global.html#proc/movespeed_data_null_check">movespeed_data_null_check</a></th><td>Checks if a move speed modifier is valid and not missing any data</td></tr>
+            <tr><th><a href="global.html#proc/narsie_apocalypse">narsie_apocalypse</a></th><td>Third crew last second win check and flufftext for [/proc/begin_the_end()]</td></tr>
+            <tr><th><a href="global.html#proc/narsie_end_begin_check">narsie_end_begin_check</a></th><td>First crew last second win check and flufftext for [/proc/begin_the_end()]</td></tr>
+            <tr><th><a href="global.html#proc/narsie_end_second_check">narsie_end_second_check</a></th><td>Second crew last second win check and flufftext for [/proc/begin_the_end()]</td></tr>
+            <tr><th><a href="global.html#proc/narsie_last_second_win">narsie_last_second_win</a></th><td>Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]</td></tr>
+            <tr><th><a href="global.html#proc/narsie_start_destroy_station">narsie_start_destroy_station</a></th><td>security level and shuttle lockdowns for [/proc/begin_the_end()]</td></tr>
+            <tr><th><a href="global.html#proc/notify_ghosts">notify_ghosts</a></th><td>Fancy notifications for ghosts</td></tr>
+            <tr><th><a href="global.html#proc/nuke_request">nuke_request</a></th><td>Used by communications consoles to request the nuclear launch codes</td></tr>
+            <tr><th><a href="global.html#proc/offer_control">offer_control</a></th><td>Offer control of the passed in mob to dead player</td></tr>
+            <tr><th><a href="global.html#proc/pick_n_take">pick_n_take</a></th><td>Pick a random element from the list and remove it from the list.</td></tr>
+            <tr><th><a href="global.html#proc/populate_editable_sign_types">populate_editable_sign_types</a></th><td>This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)</td></tr>
+            <tr><th><a href="global.html#proc/printAllCards">printAllCards</a></th><td>Prints all the cards names</td></tr>
+            <tr><th><a href="global.html#proc/print_command_report">print_command_report</a></th><td>If the announcer overrides alert messages, use that message.</td></tr>
+            <tr><th><a href="global.html#proc/process_teleport_locs">process_teleport_locs</a></th><td>Generate a list of turfs you can teleport to from the areas list</td></tr>
+            <tr><th><a href="global.html#proc/propagate_network">propagate_network</a></th><td>remove the old powernet and replace it with a new one throughout the network.</td></tr>
+            <tr><th><a href="global.html#proc/qdel">qdel</a></th><td>Should be treated as a replacement for the 'del' keyword.</td></tr>
+            <tr><th><a href="global.html#proc/ran_zone">ran_zone</a></th><td>Return the zone or randomly, another valid zone</td></tr>
+            <tr><th><a href="global.html#proc/random_bounty">random_bounty</a></th><td></td></tr>
+            <tr><th><a href="global.html#proc/random_fish_type">random_fish_type</a></th><td>Returns random fish, using random_case_rarity probabilities.</td></tr>
+            <tr><th><a href="global.html#proc/recursive_organ_check">recursive_organ_check</a></th><td></td></tr>
+            <tr><th><a href="global.html#proc/reject_bad_name">reject_bad_name</a></th><td>Filters out undesirable characters from names.</td></tr>
+            <tr><th><a href="global.html#proc/reloadAllCardFiles">reloadAllCardFiles</a></th><td>Reloads all card files</td></tr>
+            <tr><th><a href="global.html#proc/remove_verb">remove_verb</a></th><td>handles removing verb and sending it to browser to update, use this for removing verbs</td></tr>
+            <tr><th><a href="global.html#proc/reset_cooldown">reset_cooldown</a></th><td>Proc used by stoppable timers to end a cooldown before the time has ran out.</td></tr>
+            <tr><th><a href="global.html#proc/return_unused_frequency">return_unused_frequency</a></th><td>returns a random unused frequency between MIN_FREE_FREQ &amp; MAX_FREE_FREQ if free = TRUE, and MIN_FREQ &amp; MAX_FREQ if FALSE</td></tr>
+            <tr><th><a href="global.html#proc/sanitize_css_class_name">sanitize_css_class_name</a></th><td>Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts</td></tr>
+            <tr><th><a href="global.html#proc/sanitize_frequency">sanitize_frequency</a></th><td>Ensure the frequency is within bounds of what it should be sending/receiving at</td></tr>
+            <tr><th><a href="global.html#proc/sanitize_name">sanitize_name</a></th><td>returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.</td></tr>
+            <tr><th><a href="global.html#proc/sanitize_ooccolor">sanitize_ooccolor</a></th><td>Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: &quot;#ff1234&quot;, &quot;#A38321&quot;, COLOR_GREEN_GRAY</td></tr>
+            <tr><th><a href="global.html#proc/scramble_message_replace_chars">scramble_message_replace_chars</a></th><td>Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!</td></tr>
+            <tr><th><a href="global.html#proc/seedify">seedify</a></th><td>Finds and extracts seeds from an object</td></tr>
+            <tr><th><a href="global.html#proc/send2adminchat">send2adminchat</a></th><td>Sends a message to TGS admin chat channels.</td></tr>
+            <tr><th><a href="global.html#proc/send2chat">send2chat</a></th><td>Sends a message to TGS chat channels.</td></tr>
+            <tr><th><a href="global.html#proc/send2otherserver">send2otherserver</a></th><td>Sends a message to a set of cross-communications-enabled servers using world topic calls</td></tr>
+            <tr><th><a href="global.html#proc/shake_camera">shake_camera</a></th><td>Shake the camera of the person viewing the mob SO REAL!</td></tr>
+            <tr><th><a href="global.html#proc/simple_network_name_fix">simple_network_name_fix</a></th><td>Network name should be all caps and no punctuation except for _ and . between domains
+This does a quick an dirty fix to a network name to make sure it works</td></tr>
+            <tr><th><a href="global.html#proc/siunit">siunit</a></th><td>Formats a number to human readable form with the appropriate SI unit.</td></tr>
+            <tr><th><a href="global.html#proc/siunit_pressure">siunit_pressure</a></th><td></td></tr>
+            <tr><th><a href="global.html#proc/slur">slur</a></th><td>Makes you speak like you're drunk</td></tr>
+            <tr><th><a href="global.html#proc/stars">stars</a></th><td>Convert random parts of a passed in message to stars</td></tr>
+            <tr><th><a href="global.html#proc/status_bar_set_text">status_bar_set_text</a></th><td>Set status bar text for the provided <code>target</code>.</td></tr>
+            <tr><th><a href="global.html#proc/string_list">string_list</a></th><td>Caches lists with non-numeric stringify-able values (text or typepath).</td></tr>
+            <tr><th><a href="global.html#proc/stripped_input">stripped_input</a></th><td>Used to get a properly sanitized input, of max_length
+no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.</td></tr>
+            <tr><th><a href="global.html#proc/stutter">stutter</a></th><td>Adds stuttering to the message passed in</td></tr>
+            <tr><th><a href="global.html#proc/techweb_item_boost_check">techweb_item_boost_check</a></th><td>Returns an associative list of techweb node datums with values of the boost it gives. var/list/returned = list()</td></tr>
+            <tr><th><a href="global.html#proc/tgalert">tgalert</a></th><td><strong>DEPRECATED: USE tgui_alert(...) INSTEAD</strong></td></tr>
+            <tr><th><a href="global.html#proc/tgui_Topic">tgui_Topic</a></th><td>Middleware for /client/Topic.</td></tr>
+            <tr><th><a href="global.html#proc/tgui_alert">tgui_alert</a></th><td>Creates a TGUI alert window and returns the user's response.</td></tr>
+            <tr><th><a href="global.html#proc/tgui_alert_async">tgui_alert_async</a></th><td>Creates an asynchronous TGUI alert window with an associated callback.</td></tr>
+            <tr><th><a href="global.html#proc/tgui_input_list">tgui_input_list</a></th><td>Creates a TGUI input list window and returns the user's response.</td></tr>
+            <tr><th><a href="global.html#proc/tgui_input_list_async">tgui_input_list_async</a></th><td>Creates an asynchronous TGUI input list window with an associated callback.</td></tr>
+            <tr><th><a href="global.html#proc/timeleft">timeleft</a></th><td>Get the remaining deciseconds on a timer</td></tr>
+            <tr><th><a href="global.html#proc/to_chat">to_chat</a></th><td>Sends the message to the recipient (target).</td></tr>
+            <tr><th><a href="global.html#proc/to_chat_immediate">to_chat_immediate</a></th><td>Circumvents the message queue and sends the message
+to the recipient (target) as soon as possible.</td></tr>
+            <tr><th><a href="global.html#proc/truncate">truncate</a></th><td>Truncate a string to the given length</td></tr>
+            <tr><th><a href="global.html#proc/unformat_frequency">unformat_frequency</a></th><td>Opposite of format, returns as a number</td></tr>
+            <tr><th><a href="global.html#proc/url2htmlloader">url2htmlloader</a></th><td>Return html to load a url.
+for use inside of browse() calls to html assets that might be loaded on a cdn.</td></tr>
+            <tr><th><a href="global.html#proc/valid_window_location">valid_window_location</a></th><td>Checks whether the target turf is in a valid state to accept a directional window
+or other directional pseudo-dense object such as railings.</td></tr>
+            <tr><th><a href="global.html#proc/voice_of_god">voice_of_god</a></th><td>VOICE OF GOD</td></tr>
+            <tr><th><a href="global.html#proc/weekday_to_iso">weekday_to_iso</a></th><td>Returns a string day as an integer in ISO format 1 (Monday) - 7 (Sunday)</td></tr>
+            <tr><th><a href="global.html#proc/wendigo_slam">wendigo_slam</a></th><td>Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase</td></tr>
+            <tr><th><a href="global.html#proc/woundscan">woundscan</a></th><td>Displays wounds with extended information on their status vs medscanners</td></tr>
+            <tr><th><a href="global.html#proc/zone2body_parts_covered">zone2body_parts_covered</a></th><td>For finding out what body parts a body zone covers, the inverse of the below basically</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/Failsafe"><aside class="declaration">var </aside>Failsafe
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/controller/failsafe</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/failsafe.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;failsafe.dm 7"/></a></h3>
+        <p>Failsafe</p>
+<p>Pretty much pokes the MC to make sure it's still alive.</p><h3 id="var/Master"><aside class="declaration">var </aside>Master
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/master.html">controller/master</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/master.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;master.dm 12"/></a></h3>
+        <p>StonedMC</p>
+<p>Designed to properly split up a given tick among subsystems
+Note: if you read parts of this code and think &quot;why is it doing it that way&quot;
+Odds are, there is a reason</p><h3 id="var/SSacid"><aside class="declaration">var </aside>SSacid
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/processing/acid</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/acid.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;acid.dm 2"/></a></h3>
+        <p>The subsystem used to tick <a href="datum/component/acid.html" title="/datum/component/acid">/datum/component/acid</a> instances.</p><h3 id="var/SSai_controllers"><aside class="declaration">var </aside>SSai_controllers
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/processing/ai_controllers.html">processing/ai_controllers</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/ai_controllers.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;ai_controllers.dm 2"/></a></h3>
+        <p>The subsystem used to tick <a href="datum.html" title="/datum">/datum/ai_controllers</a> instances. Handling the re-checking of plans.</p><h3 id="var/SSai_movement"><aside class="declaration">var </aside>SSai_movement
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/processing/ai_movement.html">processing/ai_movement</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/ai_movement.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;ai_movement.dm 2"/></a></h3>
+        <p>The subsystem used to tick <a href="datum/ai_movement.html" title="/datum/ai_movement">/datum/ai_movement</a> instances. Handling the movement of individual AI instances</p><h3 id="var/SSambience"><aside class="declaration">var </aside>SSambience
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/ambience.html">ambience</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/ambience.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;ambience.dm 2"/></a></h3>
+        <p>The subsystem used to play ambience to users every now and then, makes them real excited.</p><h3 id="var/SSdiscord"><aside class="declaration">var </aside>SSdiscord
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/discord.html">discord</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/discord.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;discord.dm 31"/></a></h3>
+        <h1 id="discord-subsystem">Discord Subsystem</h1>
+<p>This subsystem handles some integrations with discord</p>
+<p>NOTES:</p>
+<ul>
+<li>There is a DB table to track ckeys and associated discord IDs. (discord_link)</li>
+<li>This system REQUIRES TGS for notifying users at end of the round</li>
+<li>The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown</li>
+<li>It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes</li>
+<li>The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.</li>
+</ul>
+<h2 id="how-notifying-works">HOW NOTIFYING WORKS</h2><h3 id="roundstart">ROUNDSTART:</h3>
+<ol>
+<li>The file is loaded and the discord IDs are extracted</li>
+<li>A ping is sent to the discord with the IDs of people who wished to be notified</li>
+<li>The file is emptied</li>
+</ol>
+<h3 id="midround">MIDROUND:</h3>
+<ol>
+<li>Someone usees the notify verb, it adds their discord ID to the list.</li>
+<li>On fire, it will write that to the disk, as long as conditions above are correct</li>
+</ol>
+<h3 id="end-round">END ROUND:</h3>
+<ol>
+<li>The file is force-saved, incase it hasn't fired at end round</li>
+</ol>
+<p>This is an absolute clusterfuck, but its my clusterfuck -aa07</p><h3 id="var/SSid_access"><aside class="declaration">var </aside>SSid_access
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/id_access.html">id_access</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/id_access.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;id_access.dm 4"/></a></h3>
+        <p>Non-processing subsystem that holds various procs and data structures to manage ID cards, trims and access.</p><h3 id="var/SSrunechat"><aside class="declaration">var </aside>SSrunechat
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/runechat.html">runechat</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/runechat.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;runechat.dm 18"/></a></h3>
+        <h1 id="runechat-subsystem">Runechat Subsystem</h1>
+<p>Maintains a timer-like system to handle destruction of runechat messages. Much of this code is modeled
+after or adapted from the timer subsystem.</p>
+<p>Note that this has the same structure for storing and queueing messages as the timer subsystem does
+for handling timers: the bucket_list is a list of chatmessage datums, each of which are the head
+of a circularly linked list. Any given index in bucket_list could be null, representing an empty bucket.</p><h3 id="var/SStgui"><aside class="declaration">var </aside>SStgui
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/tgui.html">tgui</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/tgui.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;tgui.dm 13"/></a></h3>
+        <p>tgui subsystem</p>
+<p>Contains all tgui state and subsystem code.</p><h3 id="var/SStime_track"><aside class="declaration">var </aside>SStime_track
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/time_track</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/time_track.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;time_track.dm 1"/></a></h3>
+        <p>The reference to the end of round sound that we have chosen.</p><h3 id="var/SStimer"><aside class="declaration">var </aside>SStimer
+            <aside>&ndash; /static/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/timer.html">timer</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/timer.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;timer.dm 19"/></a></h3>
+        <h1 id="timer-subsystem">Timer Subsystem</h1>
+<p>Handles creation, callbacks, and destruction of timed events.</p>
+<p>It is important to understand the buckets used in the timer subsystem are just a series of circular doubly-linked
+lists. The object at a given index in bucket_list is a /datum/timedevent, the head of a circular list, which has prev
+and next references for the respective elements in that bucket's circular list.</p><h2 id="proc">Proc Details</h2><h3 id="proc/Gibberish"><aside class="declaration">proc </aside>Gibberish<aside>(text, replace_characters, chance) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L201">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 201"/></a></aside>
+        </h3>
+        <p>Turn text into complete gibberish!</p>
+<p>text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.</p><h3 id="proc/HeapPathWeightCompare"><aside class="declaration">proc </aside>HeapPathWeightCompare<aside>(/<a href="datum.html">datum</a>/<a href="datum/jps_node.html">jps_node</a>/a, /<a href="datum.html">datum</a>/<a href="datum/jps_node.html">jps_node</a>/b) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 88"/></a></aside>
+        </h3>
+        <p>TODO: Macro this to reduce proc overhead</p><h3 id="proc/WEAKREF"><aside class="declaration">proc </aside>WEAKREF<aside>(/<a href="datum.html">datum</a>/input) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/weakrefs.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;weakrefs.dm 3"/></a></aside>
+        </h3>
+        <p>Creates a weakref to the given input.
+See /datum/weakref's documentation for more information.</p><h3 id="proc/WrapAdminProcCall"><aside class="declaration">proc </aside>WrapAdminProcCall<aside>(/<a href="datum.html">datum</a>/target, procname, /list/arguments) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/callproc/callproc.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;callproc&#x2F;callproc.dm 88"/></a></aside>
+        </h3>
+        <p>Wrapper for proccalls where the datum is flagged as vareditted</p><h3 id="proc/___TraitAdd"><aside class="declaration">proc </aside>___TraitAdd<aside>(target, trait, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L1338">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 1338"/></a></aside>
+        </h3>
+        <p>DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.</p><h3 id="proc/___TraitRemove"><aside class="declaration">proc </aside>___TraitRemove<aside>(target, trait, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L1352">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 1352"/></a></aside>
+        </h3>
+        <p>DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.</p><h3 id="proc/_addtimer"><aside class="declaration">proc </aside>_addtimer<aside>(/<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/callback, wait, flags, file, line) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/timer.dm#L525">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;timer.dm 525"/></a></aside>
+        </h3>
+        <p>Create a new timer and insert it in the queue.
+You should not call this directly, and should instead use the addtimer macro, which includes source information.</p>
+<p>Arguments:</p>
+<ul>
+<li>callback the callback to call on timer finish</li>
+<li>wait deciseconds to run the timer for</li>
+<li>flags flags for this timer, see: code__DEFINES\subsystems.dm</li>
+</ul><h3 id="proc/_alert_drones"><aside class="declaration">proc </aside>_alert_drones<aside>(msg, dead_can_hear, /<a href="atom.html">atom</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/faction_checked_mob, exact_faction_match) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/drone_say.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;drone_say.dm 11"/></a></aside>
+        </h3>
+        <p>Broadcast a message to all drones in a faction</p>
+<p>Arguments:</p>
+<ul>
+<li>msg - The message to send</li>
+<li>dead_can_hear - Boolean that determines if ghosts can hear the message (<code>FALSE</code> by default)</li>
+<li>source - <a href="atom.html" title="/atom">/atom</a> source that created the message</li>
+<li>faction_checked_mob - <a href="mob/living.html" title="/mob/living">/mob/living</a> to determine faction matches from</li>
+<li>exact_faction_match - Passed to <a href="mob.html#proc/faction_check_mob" title="/mob">/mob/proc/faction_check_mob</a></li>
+</ul><h3 id="proc/above_neck"><aside class="declaration">proc </aside>above_neck<aside>(zone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 45"/></a></aside>
+        </h3>
+        <p>Would this zone be above the neck</p><h3 id="proc/actionspeed_data_null_check"><aside class="declaration">proc </aside>actionspeed_data_null_check<aside>(/<a href="datum.html">datum</a>/<a href="datum/actionspeed_modifier.html">actionspeed_modifier</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 174"/></a></aside>
+        </h3>
+        <p>Checks if a action speed modifier is valid and not missing any data</p><h3 id="proc/active_free_borgs"><aside class="declaration">proc </aside>active_free_borgs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/mobs.dm#L582">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;mobs.dm 582"/></a></aside>
+        </h3>
+        <p>Silicon Mob Procs</p><h3 id="proc/add_keybinding"><aside class="declaration">proc </aside>add_keybinding<aside>(/<a href="datum.html">datum</a>/keybinding/instance) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_globalvars/lists/keybindings.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_globalvars&#x2F;lists&#x2F;keybindings.dm 11"/></a></aside>
+        </h3>
+        <p>Adds an instanced keybinding to the global tracker</p><h3 id="proc/add_verb"><aside class="declaration">proc </aside>add_verb<aside>(/<a href="client.html">client</a>/target, verb_or_list_to_add) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/verbs.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;verbs.dm 9"/></a></aside>
+        </h3>
+        <p>handles adding verbs and updating the stat panel browser</p>
+<p>pass the verb type path to this instead of adding it directly to verbs so the statpanel can update
+Arguments:</p>
+<ul>
+<li>target - Who the verb is being added to, client or mob typepath</li>
+<li>verb - typepath to a verb, or a list of verbs, supports lists of lists</li>
+</ul><h3 id="proc/anonymous_all_players"><aside class="declaration">proc </aside>anonymous_all_players<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/anonymousnames.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;anonymousnames.dm 54"/></a></aside>
+        </h3>
+        <p>anonymous_all_players: sets all crewmembers on station anonymous.</p>
+<p>why is this a proc instead of just part of above? events use this as well.</p><h3 id="proc/baseturfs_string_list"><aside class="declaration">proc </aside>baseturfs_string_list<aside>(/list/values, /<a href="turf.html">turf</a>/baseturf_holder) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/string_lists.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;string_lists.dm 17"/></a></aside>
+        </h3>
+        <p>A wrapper for baseturf string lists, to offer support of non list values, and a stack_trace if we have major issues</p><h3 id="proc/begin_the_end"><aside class="declaration">proc </aside>begin_the_end<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L214">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 214"/></a></aside>
+        </h3>
+        <p>Begins the process of ending the round via cult narsie win
+Consists of later called procs (in order of called):</p>
+<ul>
+<li>[/proc/narsie_end_begin_check()]</li>
+<li>[/proc/narsie_end_second_check()]</li>
+<li>[/proc/narsie_start_destroy_station()]</li>
+<li>[/proc/narsie_apocalypse()]</li>
+<li>[/proc/narsie_last_second_win()]</li>
+<li>[/proc/cult_ending_helper()]</li>
+</ul><h3 id="proc/build_chemical_reagent_list"><aside class="declaration">proc </aside>build_chemical_reagent_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 6"/></a></aside>
+        </h3>
+        <p>These are used in the reagents subsystem init() and the reagent_id_typos.dm</p><h3 id="proc/build_medicine_reagents"><aside class="declaration">proc </aside>build_medicine_reagents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/recipes/special.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;recipes&#x2F;special.dm 23"/></a></aside>
+        </h3>
+        <p>Just grab every craftable medicine you can think off</p><h3 id="proc/callback_select"><aside class="declaration">proc </aside>callback_select<aside>(/list/callbacks, /list/callback_args, savereturns, resolution) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/callback.dm#L205">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;callback.dm 205"/></a></aside>
+        </h3>
+        <p>Runs a list of callbacks asyncronously, returning only when all have finished</p>
+<p>Callbacks can be repeated, to call it multiple times</p>
+<p>Arguments:</p>
+<ul>
+<li>list/callbacks the list of callbacks to be called</li>
+<li>list/callback_args the list of lists of arguments to pass into each callback</li>
+<li>savereturns Optionally save and return the list of returned values from each of the callbacks</li>
+<li>resolution The number of byond ticks between each time you check if all callbacks are complete</li>
+</ul><h3 id="proc/checkCardDatums"><aside class="declaration">proc </aside>checkCardDatums<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L540">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 540"/></a></aside>
+        </h3>
+        <p>Checks the global card list for cards that don't override all the default values of the card datum</p><h3 id="proc/checkCardDistribution"><aside class="declaration">proc </aside>checkCardDistribution<aside>(cardPack, batchSize, batchCount, guaranteed) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L561">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 561"/></a></aside>
+        </h3>
+        <p>Used to test open a large amount of cardpacks</p><h3 id="proc/checkCardpacks"><aside class="declaration">proc </aside>checkCardpacks<aside>(cardPackList) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L516">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 516"/></a></aside>
+        </h3>
+        <p>Checks the passed type list for missing raritys, or raritys out of bounds</p><h3 id="proc/check_zone"><aside class="declaration">proc </aside>check_zone<aside>(zone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 11"/></a></aside>
+        </h3>
+        <p>Convert a PRECISE ZONE into the BODY_ZONE</p><h3 id="proc/clearCards"><aside class="declaration">proc </aside>clearCards<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L580">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 580"/></a></aside>
+        </h3>
+        <p>Empty the rarity cache so we can safely add new cards</p><h3 id="proc/cmp_crafting_req_priority"><aside class="declaration">proc </aside>cmp_crafting_req_priority<aside>(A, B) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/cmp.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;cmp.dm 141"/></a></aside>
+        </h3>
+        <p>Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes</p>
+<p>Prioritises <a href="datum/reagent.html" title="/datum/reagent">/datum/reagent</a> to ensure reagent requirements are always processed first when crafting.
+This prevents any reagent_containers from being consumed before the reagents they contain, which can
+lead to runtimes and item duplication when it happens.</p><h3 id="proc/color_to_full_rgba_matrix"><aside class="declaration">proc </aside>color_to_full_rgba_matrix<aside>(color) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/matrices.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;matrices.dm 198"/></a></aside>
+        </h3>
+        <p>Converts RGB shorthands into RGBA matrices complete of constants rows (ergo a 20 keys list in byond).</p><h3 id="proc/considered_exiled"><aside class="declaration">proc </aside>considered_exiled<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/game.dm#L327">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;game.dm 327"/></a></aside>
+        </h3>
+        <p>Exiled check</p>
+<p>Checks if the current body of the mind has an exile implant and is currently in
+an away mission. Returns FALSE if any of those conditions aren't met.</p><h3 id="proc/convert_ph_to_readable_color"><aside class="declaration">proc </aside>convert_ph_to_readable_color<aside>(pH) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/reagents.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;reagents.dm 94"/></a></aside>
+        </h3>
+        <p>Converts the pH into a tgui readable color - i.e. white and black text is readable over it. This is NOT the colourwheel for pHes however.</p><h3 id="proc/create_mafia_game"><aside class="declaration">proc </aside>create_mafia_game<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L979">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 979"/></a></aside>
+        </h3>
+        <p>Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.</p><h3 id="proc/cult_ending_helper"><aside class="declaration">proc </aside>cult_ending_helper<aside>(ending_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L271">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 271"/></a></aside>
+        </h3>
+        <p>Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward
+called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches it's conclusion</p><h3 id="proc/cultslur"><aside class="declaration">proc </aside>cultslur<aside>(phrase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 114"/></a></aside>
+        </h3>
+        <p>Makes you talk like you got cult stunned, which is slurring but with some dark messages</p><h3 id="proc/debug_variable"><aside class="declaration">proc </aside>debug_variable<aside>(name, value, level, /<a href="datum.html">datum</a>/D, sanitize) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/view_variables/debug_variables.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;view_variables&#x2F;debug_variables.dm 3"/></a></aside>
+        </h3>
+        <p>Get displayed variable in VV variable list</p><h3 id="proc/deltimer"><aside class="declaration">proc </aside>deltimer<aside>(id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/timer.dm#L574">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;timer.dm 574"/></a></aside>
+        </h3>
+        <p>Delete a timer</p>
+<p>Arguments:</p>
+<ul>
+<li>id a timerid or a /datum/timedevent</li>
+</ul><h3 id="proc/derpspeech"><aside class="declaration">proc </aside>derpspeech<aside>(message, stuttering) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 179"/></a></aside>
+        </h3>
+        <p>Convert a message to derpy speak</p><h3 id="proc/do_after"><aside class="declaration">proc </aside>do_after<aside>(/<a href="mob.html">mob</a>/user, delay, /<a href="atom.html">atom</a>/target, timed_action_flags, progress, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/extra_checks, interaction_key, max_interact_count) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/mobs.dm#L264">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;mobs.dm 264"/></a></aside>
+        </h3>
+        <p>Timed action involving one mob user. Target is optional.</p>
+<p>Checks that <code>user</code> does not move, change hands, get stunned, etc. for the
+given <code>delay</code>. Returns <code>TRUE</code> on success or <code>FALSE</code> on failure.
+Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.</p><h3 id="proc/do_after_mob"><aside class="declaration">proc </aside>do_after_mob<aside>(/<a href="mob.html">mob</a>/user, /list/targets, time, timed_action_flags, progress, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/extra_checks, interaction_key, max_interact_count) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/mobs.dm#L334">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;mobs.dm 334"/></a></aside>
+        </h3>
+        <p>Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.</p><h3 id="proc/do_mob"><aside class="declaration">proc </aside>do_mob<aside>(/<a href="mob.html">mob</a>/user, /<a href="mob.html">mob</a>/target, time, timed_action_flags, progress, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/extra_checks, interaction_key, max_interact_count) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/mobs.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;mobs.dm 184"/></a></aside>
+        </h3>
+        <p>Timed action involving two mobs, the user and the target. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.</p><h3 id="proc/end_cooldown"><aside class="declaration">proc </aside>end_cooldown<aside>(/<a href="datum.html">datum</a>/source, index) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L236">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 236"/></a></aside>
+        </h3>
+        <p>Callback called by a timer to end an associative-list-indexed cooldown.</p>
+<p>Arguments:</p>
+<ul>
+<li>source - datum storing the cooldown</li>
+<li>index - string index storing the cooldown on the cooldowns associative list</li>
+</ul>
+<p>This sends a signal reporting the cooldown end.</p><h3 id="proc/ending_helper"><aside class="declaration">proc </aside>ending_helper<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L264">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 264"/></a></aside>
+        </h3>
+        <p>Helper to set the round to end asap. Current usage Cult round end code</p><h3 id="proc/find_reagent"><aside class="declaration">proc </aside>find_reagent<aside>(input) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/reagents.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;reagents.dm 168"/></a></aside>
+        </h3>
+        <p>Returns reagent datum from typepath</p><h3 id="proc/find_record"><aside class="declaration">proc </aside>find_record<aside>(field, value, /list/L) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L367">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 367"/></a></aside>
+        </h3>
+        <p>Returns datum/data/record</p><h3 id="proc/findname"><aside class="declaration">proc </aside>findname<aside>(msg) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L236">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 236"/></a></aside>
+        </h3>
+        <p>Find if the message has the real name of any user mob in the mob_list</p><h3 id="proc/firing_squad"><aside class="declaration">proc </aside>firing_squad<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/target, /<a href="turf.html">turf</a>/source_turf, body_zone, wound_bonus, damage) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/randomverbs.dm#L1148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;randomverbs.dm 1148"/></a></aside>
+        </h3>
+        <p>firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense</p>
+<p>Hilariously, if you drag someone away mid smite, the bullets will still chase after them from the original spot, possibly hitting other people. Too funny to fix imo</p>
+<p>Arguments:</p>
+<ul>
+<li>target- guy we're shooting obviously</li>
+<li>source_turf- where the bullet begins, preferably on a turf next to the target</li>
+<li>body_zone- which bodypart we're aiming for, if there is one there</li>
+<li>wound_bonus- the wounding power we're assigning to the bullet, since we don't care about the base one</li>
+<li>damage- the damage we're assigning to the bullet, since we don't care about the base one</li>
+</ul><h3 id="proc/first_day_of_month"><aside class="declaration">proc </aside>first_day_of_month<aside>(year, month) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/time.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;time.dm 63"/></a></aside>
+        </h3>
+        <p>Returns the first day of the given year and month in number format, from 1 (monday) - 7 (sunday).</p><h3 id="proc/flop_animation"><aside class="declaration">proc </aside>flop_animation<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/animation_target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/aquarium.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium.dm 185"/></a></aside>
+        </h3>
+        <p>This animation should be applied to actual parent atom instead of vc_object.</p><h3 id="proc/format_frequency"><aside class="declaration">proc </aside>format_frequency<aside>(frequency) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/radio.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;radio.dm 12"/></a></aside>
+        </h3>
+        <p>Format frequency by moving the decimal.</p><h3 id="proc/generate_asset_name"><aside class="declaration">proc </aside>generate_asset_name<aside>(file) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icons.dm#L1104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icons.dm 1104"/></a></aside>
+        </h3>
+        <p>Generate a filename for this asset
+The same asset will always lead to the same asset name
+(Generated names do not include file extention.)</p><h3 id="proc/generate_bitfields"><aside class="declaration">proc </aside>generate_bitfields<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_globalvars/bitfields.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_globalvars&#x2F;bitfields.dm 12"/></a></aside>
+        </h3>
+        <p>Turns /datum/bitfield subtypes into a list for use in debugging</p><h3 id="proc/generate_chemwiki_line"><aside class="declaration">proc </aside>generate_chemwiki_line<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagent.html">reagent</a>/reagent, /<a href="datum.html">datum</a>/<a href="datum/chemical_reaction.html">chemical_reaction</a>/reaction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/chem_wiki_render.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;chem_wiki_render.dm 45"/></a></aside>
+        </h3>
+        <p>Generate the big list of reagent based reactions.
+style='background-color:#FFEE88;'|{{anchor|Synthetic-derived growth factor}}Synthetic-derived growth factor<span style="color:#A502E0;background-color:white">â®</span></p><h3 id="proc/generate_fish"><aside class="declaration">proc </aside>generate_fish<aside>(loc, behaviour_type, base_path) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/aquarium/fish.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;aquarium&#x2F;fish.dm 8"/></a></aside>
+        </h3>
+        <p>Automatically generates object of given base path from the behaviour type in loc</p><h3 id="proc/generate_selectable_species"><aside class="declaration">proc </aside>generate_selectable_species<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/carbon/human/species.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;carbon&#x2F;human&#x2F;species.dm 217"/></a></aside>
+        </h3>
+        <p>Generates species available to choose in character setup at roundstart</p>
+<p>This proc generates which species are available to pick from in character setup.
+If there are no available roundstart species, defaults to human.</p><h3 id="proc/getFlatIcon"><aside class="declaration">proc </aside>getFlatIcon<aside>(/image/A, defdir, deficon, defstate, defblend, start, no_anim) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icons.dm#L715">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icons.dm 715"/></a></aside>
+        </h3>
+        <p>Create a single [/icon] from a given <a href="atom.html" title="/atom">/atom</a> or [/image].</p>
+<p>Very low-performance. Should usually only be used for HTML, where BYOND's
+appearance system (overlays/underlays, etc.) is not available.</p>
+<p>Only the first argument is required.</p><h3 id="proc/get_airlock_overlay"><aside class="declaration">proc </aside>get_airlock_overlay<aside>(icon_state, icon_file) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/airlock.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;airlock.dm 24"/></a></aside>
+        </h3>
+        <p>Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
+tiny bit in door_assembly.dm  Refactored so you don't have to make a null copy of airlock
+to get to the damn thing
+Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
+if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
+everything</p><h3 id="proc/get_allowed_instrument_ids"><aside class="declaration">proc </aside>get_allowed_instrument_ids<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/instruments/instrument_data/_instrument_data.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;instruments&#x2F;instrument_data&#x2F;_instrument_data.dm 4"/></a></aside>
+        </h3>
+        <p>Get all non admin_only instruments as a list of text ids.</p><h3 id="proc/get_bbox_of_atoms"><aside class="declaration">proc </aside>get_bbox_of_atoms<aside>(/list/atoms) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/game.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;game.dm 64"/></a></aside>
+        </h3>
+        <p>Get a bounding box of a list of atoms.</p>
+<p>Arguments:</p>
+<ul>
+<li>atoms - List of atoms. Can accept output of view() and range() procs.</li>
+</ul>
+<p>Returns: list(x1, y1, x2, y2)</p><h3 id="proc/get_cached_actionspeed_modifier"><aside class="declaration">proc </aside>get_cached_actionspeed_modifier<aside>(modtype) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/actionspeed/_actionspeed_modifier.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;actionspeed&#x2F;_actionspeed_modifier.dm 48"/></a></aside>
+        </h3>
+        <p>Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!</p><h3 id="proc/get_cached_movespeed_modifier"><aside class="declaration">proc </aside>get_cached_movespeed_modifier<aside>(modtype) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 59"/></a></aside>
+        </h3>
+        <p>Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!</p><h3 id="proc/get_chem_id"><aside class="declaration">proc </aside>get_chem_id<aside>(chem_name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/reagents.dm#L193">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;reagents.dm 193"/></a></aside>
+        </h3>
+        <p>Returns reagent datum from reagent name string</p><h3 id="proc/get_path_to"><aside class="declaration">proc </aside>get_path_to<aside>(caller, end, max_distance, mintargetdist, id, simulated_only, /<a href="turf.html">turf</a>/exclude) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/path.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;path.dm 19"/></a></aside>
+        </h3>
+        <p>This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
+over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
+cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.</p>
+<p>This is the proc you use whenever you want to have pathfinding more complex than &quot;try stepping towards the thing&quot;</p>
+<p>Arguments:</p>
+<ul>
+<li>caller: The movable atom that's trying to find the path</li>
+<li>end: What we're trying to path to. It doesn't matter if this is a turf or some other atom, we're gonna just path to the turf it's on anyway</li>
+<li>max_distance: The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)</li>
+<li>mintargetdistance: Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.</li>
+<li>id: An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant</li>
+<li>simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)</li>
+<li>exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf</li>
+</ul><h3 id="proc/get_powernet_info_from_source"><aside class="declaration">proc </aside>get_powernet_info_from_source<aside>(power_source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/power.dm#L332">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;power.dm 332"/></a></aside>
+        </h3>
+        <p>Extracts the powernet and cell of the provided power source</p><h3 id="proc/get_random_reagent_id"><aside class="declaration">proc </aside>get_random_reagent_id<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/reagents.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;reagents.dm 182"/></a></aside>
+        </h3>
+        <p>Returns a random reagent object minus blacklisted reagents</p><h3 id="proc/get_ranged_target_turf_direct"><aside class="declaration">proc </aside>get_ranged_target_turf_direct<aside>(/<a href="atom.html">atom</a>/A, /<a href="atom.html">atom</a>/target, range, offset) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L407">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 407"/></a></aside>
+        </h3>
+        <p>Get ranged target turf, but with direct targets as opposed to directions</p>
+<p>Starts at atom A and gets the exact angle between A and target
+Moves from A with that angle, Range amount of times, until it stops, bound to map size
+Arguments:</p>
+<ul>
+<li>A - Initial Firer / Position</li>
+<li>target - Target to aim towards</li>
+<li>range - Distance of returned target turf from A</li>
+<li>offset - Angle offset, 180 input would make the returned target turf be in the opposite direction</li>
+</ul><h3 id="proc/get_reagent_type_from_product_string"><aside class="declaration">proc </aside>get_reagent_type_from_product_string<aside>(string) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/reagents.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;reagents.dm 155"/></a></aside>
+        </h3>
+        <p>Returns a list of chemical_reaction datums that have the input STRING as a product</p><h3 id="proc/get_recipe_from_reagent_product"><aside class="declaration">proc </aside>get_recipe_from_reagent_product<aside>(input_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/reagents.dm#L200">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;reagents.dm 200"/></a></aside>
+        </h3>
+        <p>Takes a type in and returns a list of associated recipes</p><h3 id="proc/get_temp_change_amount"><aside class="declaration">proc </aside>get_temp_change_amount<aside>(temp_diff, change_rate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/mobs.dm#L646">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;mobs.dm 646"/></a></aside>
+        </h3>
+        <p>Used to get the amount of change between two body temperatures</p>
+<p>When passed the difference between two temperatures returns the amount of change to temperature to apply.
+The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
+vars:</p>
+<ul>
+<li>temp_diff (required) The differance between two temperatures</li>
+<li>change_rate (optional)(Default: 0.06) The rate of range multiplyer</li>
+</ul><h3 id="proc/getleftblocks"><aside class="declaration">proc </aside>getleftblocks<aside>(input, blocknumber, blocksize) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/dna.dm#L474">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;dna.dm 474"/></a></aside>
+        </h3>
+        <p>DNA HELPER-PROCS</p><h3 id="proc/getline"><aside class="declaration">proc </aside>getline<aside>(/<a href="atom.html">atom</a>/M, /<a href="atom.html">atom</a>/N) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 149"/></a></aside>
+        </h3>
+        <p>Get a list of turfs in a line from <code>M</code> to <code>N</code>.</p>
+<p>Uses the ultra-fast <a href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm">Bresenham Line-Drawing Algorithm</a>.</p><h3 id="proc/goonchem_vortex"><aside class="declaration">proc </aside>goonchem_vortex<aside>(/<a href="turf.html">turf</a>/T, setting_type, range) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/recipes.dm#L274">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;recipes.dm 274"/></a></aside>
+        </h3>
+        <p>Magical move-wooney that happens sometimes.</p>
+<p>Simulates a vortex that moves nearby movable atoms towards or away from the turf T.
+Range also determines the strength of the effect. High values cause nearby objects to be thrown.
+Arguments:</p>
+<ul>
+<li>T - turf where it happens</li>
+<li>setting_type - does it suck or does it blow?</li>
+<li>range - range.</li>
+</ul><h3 id="proc/hex2rgb"><aside class="declaration">proc </aside>hex2rgb<aside>(color) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/type2type.dm#L389">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;type2type.dm 389"/></a></aside>
+        </h3>
+        <p>Converts &quot;#RRGGBB&quot; to list(0xRR, 0xGG, 0xBB)</p><h3 id="proc/htmlrendertext"><aside class="declaration">proc </aside>htmlrendertext<aside>(t) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 81"/></a></aside>
+        </h3>
+        <p>Perform a whitespace cleanup on the text, similar to what HTML renderers do</p>
+<p>This is useful if you want to better predict how text is going to look like when displaying it to a user.
+HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
+HTML5 defines whitespace pretty much exactly like regex defines the <code>\s</code> group, <code>[ \t\r\n\f]</code>.</p>
+<p>Arguments:</p>
+<ul>
+<li>t - The text to &quot;render&quot;</li>
+</ul><h3 id="proc/icon2base64"><aside class="declaration">proc </aside>icon2base64<aside>(/icon/icon) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icons.dm#L1113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icons.dm 1113"/></a></aside>
+        </h3>
+        <p>Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
+exporting it as text, and then parsing the base64 from that.
+(This relies on byond automatically storing icons in savefiles as base64)</p><h3 id="proc/init_crafting_recipes"><aside class="declaration">proc </aside>init_crafting_recipes<aside>(/list/crafting_recipes) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/global_lists.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;global_lists.dm 57"/></a></aside>
+        </h3>
+        <p>Inits the crafting recipe list, sorting crafting recipe requirements in the process.</p><h3 id="proc/init_keybindings"><aside class="declaration">proc </aside>init_keybindings<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_globalvars/lists/keybindings.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_globalvars&#x2F;lists&#x2F;keybindings.dm 2"/></a></aside>
+        </h3>
+        <p>Creates and sorts all the keybinding datums</p><h3 id="proc/ionnum"><aside class="declaration">proc </aside>ionnum<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L237">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 237"/></a></aside>
+        </h3>
+        <p>is at the start to prevent us from changing say modes via get_message_mode()</p><h3 id="proc/isAdminGhostAI"><aside class="declaration">proc </aside>isAdminGhostAI<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L377">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 377"/></a></aside>
+        </h3>
+        <p>Is the passed in mob an admin ghost WITH AI INTERACT enabled</p><h3 id="proc/isAdminObserver"><aside class="declaration">proc </aside>isAdminObserver<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L365">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 365"/></a></aside>
+        </h3>
+        <p>Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to</p><h3 id="proc/is_ctf_target"><aside class="declaration">proc </aside>is_ctf_target<aside>(/<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/awaymissions/capture_the_flag.dm#L507">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;awaymissions&#x2F;capture_the_flag.dm 507"/></a></aside>
+        </h3>
+        <p>hey uhhh don't hit anyone behind them</p><h3 id="proc/is_special_character"><aside class="declaration">proc </aside>is_special_character<aside>(/<a href="mob.html">mob</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L275">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 275"/></a></aside>
+        </h3>
+        <p>Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum</p><h3 id="proc/item_heal_robotic"><aside class="declaration">proc </aside>item_heal_robotic<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/H, /<a href="mob.html">mob</a>/user, brute_heal, burn_heal) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L347">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 347"/></a></aside>
+        </h3>
+        <p>Heal a robotic body part on a mob</p><h3 id="proc/json_deserialize_datum"><aside class="declaration">proc </aside>json_deserialize_datum<aside>(/list/jsonlist, /list/options, target_type, strict_target_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 196"/></a></aside>
+        </h3>
+        <p>Convert a list of json to datum</p><h3 id="proc/json_serialize_datum"><aside class="declaration">proc </aside>json_serialize_datum<aside>(/<a href="datum.html">datum</a>/D, /list/options) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L187">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 187"/></a></aside>
+        </h3>
+        <p>Convert a datum into a json blob</p><h3 id="proc/loadAllCardFiles"><aside class="declaration">proc </aside>loadAllCardFiles<aside>(cardFiles, directory) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L502">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 502"/></a></aside>
+        </h3>
+        <p>Loads all the card files</p><h3 id="proc/loadCardFile"><aside class="declaration">proc </aside>loadCardFile<aside>(filename, directory) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L591">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 591"/></a></aside>
+        </h3>
+        <p>Loads the contents of a json file into our global card list</p><h3 id="proc/load_map"><aside class="declaration">proc </aside>load_map<aside>(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/reader.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;reader.dm 47"/></a></aside>
+        </h3>
+        <p>Shortcut function to parse a map and apply it to the world.</p>
+<ul>
+<li><code>dmm_file</code>: A .dmm file to load (Required).</li>
+<li><code>x_offset</code>, <code>y_offset</code>, <code>z_offset</code>: Positions representign where to load the map (Optional).</li>
+<li><code>cropMap</code>: When true, the map will be cropped to fit the existing world dimensions (Optional).</li>
+<li><code>measureOnly</code>: When true, no changes will be made to the world (Optional).</li>
+<li><code>no_changeturf</code>: When true, [/turf/proc/AfterChange] won't be called on loaded turfs</li>
+<li><code>x_lower</code>, <code>x_upper</code>, <code>y_lower</code>, <code>y_upper</code>: Coordinates (relative to the map) to crop to (Optional).</li>
+<li><code>placeOnTop</code>: Whether to use [/turf/proc/PlaceOnTop] rather than [/turf/proc/ChangeTurf] (Optional).</li>
+</ul><h3 id="proc/load_poll_data"><aside class="declaration">proc </aside>load_poll_data<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/poll_management.dm#L696">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;poll_management.dm 696"/></a></aside>
+        </h3>
+        <p>Loads all current and future server polls and their options to store both as datums.</p><h3 id="proc/log_combat"><aside class="declaration">proc </aside>log_combat<aside>(/<a href="atom.html">atom</a>/user, /<a href="atom.html">atom</a>/target, what_done, /<a href="atom.html">atom</a>/object, addition) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1507">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1507"/></a></aside>
+        </h3>
+        <p>Log a combat message in the attack log</p>
+<p>Arguments:</p>
+<ul>
+<li>atom/user - argument is the actor performing the action</li>
+<li>atom/target - argument is the target of the action</li>
+<li>what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)</li>
+<li>atom/object - is a tool with which the action was made (usually an item)</li>
+<li>addition - is any additional text, which will be appended to the rest of the log line</li>
+</ul><h3 id="proc/log_directed_talk"><aside class="declaration">proc </aside>log_directed_talk<aside>(/<a href="atom.html">atom</a>/source, /<a href="atom.html">atom</a>/target, message, message_type, tag) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1488">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1488"/></a></aside>
+        </h3>
+        <p>Helper for logging of messages with only one sender and receiver</p><h3 id="proc/log_tgui"><aside class="declaration">proc </aside>log_tgui<aside>(user, message, context, /<a href="datum.html">datum</a>/<a href="datum/tgui_window.html">tgui_window</a>/window, /<a href="datum.html">datum</a>/src_object) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_logging.dm#L242">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_logging.dm 242"/></a></aside>
+        </h3>
+        <p>Appends a tgui-related log entry. All arguments are optional.</p><h3 id="proc/log_wound"><aside class="declaration">proc </aside>log_wound<aside>(/<a href="atom.html">atom</a>/victim, /<a href="datum.html">datum</a>/<a href="datum/wound.html">wound</a>/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1544">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1544"/></a></aside>
+        </h3>
+        <p>log_wound() is for when someone is <em>attacked</em> and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over</p>
+<p>Note that this has no info on the attack that dealt the wound: information about where damage came from isn't passed to the bodypart's damaged proc. When in doubt, check the attack log for attacks at that same time
+TODO later: Add logging for healed wounds, though that will require some rewriting of healing code to prevent admin heals from spamming the logs. Not high priority</p>
+<p>Arguments:</p>
+<ul>
+<li>victim- The guy who got wounded</li>
+<li>suffered_wound- The wound, already applied, that we're logging. It has to already be attached so we can get the limb from it</li>
+<li>dealt_damage- How much damage is associated with the attack that dealt with this wound.</li>
+<li>dealt_wound_bonus- The wound_bonus, if one was specified, of the wounding attack</li>
+<li>dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified <em>and applied</em>, of the wounding attack. Not shown if armor was present</li>
+<li>base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods</li>
+</ul><h3 id="proc/make_datum_references_lists"><aside class="declaration">proc </aside>make_datum_references_lists<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/global_lists.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;global_lists.dm 5"/></a></aside>
+        </h3>
+        <p>Initial Building</p><h3 id="proc/md5asfile"><aside class="declaration">proc </aside>md5asfile<aside>(file) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/files.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;files.dm 83"/></a></aside>
+        </h3>
+        <p>Save file as an external file then md5 it.
+Used because md5ing files stored in the rsc sometimes gives incorrect md5 results.</p><h3 id="proc/md5filepath"><aside class="declaration">proc </aside>md5filepath<aside>(path) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/files.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;files.dm 78"/></a></aside>
+        </h3>
+        <p>Returns the md5 of a file at a given path.</p><h3 id="proc/message_centcom"><aside class="declaration">proc </aside>message_centcom<aside>(text, /<a href="mob.html">mob</a>/sender) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/pray.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;pray.dm 57"/></a></aside>
+        </h3>
+        <p>Used by communications consoles to message CentCom</p><h3 id="proc/message_syndicate"><aside class="declaration">proc </aside>message_syndicate<aside>(text, /<a href="mob.html">mob</a>/sender) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/pray.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;pray.dm 65"/></a></aside>
+        </h3>
+        <p>Used by communications consoles to message the Syndicate</p><h3 id="proc/message_to_html"><aside class="declaration">proc </aside>message_to_html<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgchat/message.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgchat&#x2F;message.dm 14"/></a></aside>
+        </h3>
+        <p>Message-related procs</p>
+<p>Message format (/list):</p>
+<ul>
+<li>type - Message type, must be one of defines in <code>code/__DEFINES/chat.dm</code></li>
+<li>text - Plain message text</li>
+<li>html - HTML message text</li>
+<li>Optional metadata, can be any key/value pair.</li>
+</ul>
+<p>Copyright (c) 2020 Aleksej Komarov
+SPDX-License-Identifier: MIT</p><h3 id="proc/movespeed_data_null_check"><aside class="declaration">proc </aside>movespeed_data_null_check<aside>(/<a href="datum.html">datum</a>/<a href="datum/movespeed_modifier.html">movespeed_modifier</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/movespeed/_movespeed_modifier.dm#L205">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;movespeed&#x2F;_movespeed_modifier.dm 205"/></a></aside>
+        </h3>
+        <p>Checks if a move speed modifier is valid and not missing any data</p><h3 id="proc/narsie_apocalypse"><aside class="declaration">proc </aside>narsie_apocalypse<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L245">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 245"/></a></aside>
+        </h3>
+        <p>Third crew last second win check and flufftext for [/proc/begin_the_end()]</p><h3 id="proc/narsie_end_begin_check"><aside class="declaration">proc </aside>narsie_end_begin_check<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 218"/></a></aside>
+        </h3>
+        <p>First crew last second win check and flufftext for [/proc/begin_the_end()]</p><h3 id="proc/narsie_end_second_check"><aside class="declaration">proc </aside>narsie_end_second_check<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L228">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 228"/></a></aside>
+        </h3>
+        <p>Second crew last second win check and flufftext for [/proc/begin_the_end()]</p><h3 id="proc/narsie_last_second_win"><aside class="declaration">proc </aside>narsie_last_second_win<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L257">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 257"/></a></aside>
+        </h3>
+        <p>Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]</p><h3 id="proc/narsie_start_destroy_station"><aside class="declaration">proc </aside>narsie_start_destroy_station<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/singularity/narsie.dm#L238">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;singularity&#x2F;narsie.dm 238"/></a></aside>
+        </h3>
+        <p>security level and shuttle lockdowns for [/proc/begin_the_end()]</p><h3 id="proc/notify_ghosts"><aside class="declaration">proc </aside>notify_ghosts<aside>(message, ghost_sound, enter_link, /<a href="atom.html">atom</a>/source, /mutable_appearance/alert_overlay, action, flashwindow, ignore_mapload, ignore_key, header, notify_suiciders, notify_volume) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L312">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 312"/></a></aside>
+        </h3>
+        <p>Fancy notifications for ghosts</p>
+<p>The kitchen sink of notification procs</p>
+<p>Arguments:</p>
+<ul>
+<li>message</li>
+<li>ghost_sound sound to play</li>
+<li>enter_link Href link to enter the ghost role being notified for</li>
+<li>source The source of the notification</li>
+<li>alert_overlay The alert overlay to show in the alert message</li>
+<li>action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP</li>
+<li>flashwindow Flash the byond client window</li>
+<li>ignore_key  Ignore keys if they're in the GLOB.poll_ignore list</li>
+<li>header The header of the notifiaction</li>
+<li>notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)</li>
+<li>notify_volume How loud the sound should be to spook the user</li>
+</ul><h3 id="proc/nuke_request"><aside class="declaration">proc </aside>nuke_request<aside>(text, /<a href="mob.html">mob</a>/sender) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/pray.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;pray.dm 73"/></a></aside>
+        </h3>
+        <p>Used by communications consoles to request the nuclear launch codes</p><h3 id="proc/offer_control"><aside class="declaration">proc </aside>offer_control<aside>(/<a href="mob.html">mob</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L389">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 389"/></a></aside>
+        </h3>
+        <p>Offer control of the passed in mob to dead player</p>
+<p>Automatic logging and uses pollCandidatesForMob, how convenient</p><h3 id="proc/pick_n_take"><aside class="declaration">proc </aside>pick_n_take<aside>(/list/L) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L242">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 242"/></a></aside>
+        </h3>
+        <p>Pick a random element from the list and remove it from the list.</p><h3 id="proc/populate_editable_sign_types"><aside class="declaration">proc </aside>populate_editable_sign_types<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/signs/_signs.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;signs&#x2F;_signs.dm 61"/></a></aside>
+        </h3>
+        <p>This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)</p>
+<p>The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.</p><h3 id="proc/printAllCards"><aside class="declaration">proc </aside>printAllCards<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L508">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 508"/></a></aside>
+        </h3>
+        <p>Prints all the cards names</p><h3 id="proc/print_command_report"><aside class="declaration">proc </aside>print_command_report<aside>(text, title, announce) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/priority_announce.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;priority_announce.dm 47"/></a></aside>
+        </h3>
+        <p>If the announcer overrides alert messages, use that message.</p><h3 id="proc/process_teleport_locs"><aside class="declaration">proc </aside>process_teleport_locs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/area/areas.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;area&#x2F;areas.dm 110"/></a></aside>
+        </h3>
+        <p>Generate a list of turfs you can teleport to from the areas list</p>
+<p>Includes areas if they're not a shuttle or not not teleport or have no contents</p>
+<p>The chosen turf is the first item in the areas contents that is a station level</p>
+<p>The returned list of turfs is sorted by name</p><h3 id="proc/propagate_network"><aside class="declaration">proc </aside>propagate_network<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure/cable.html">structure/cable</a>/C, /<a href="datum.html">datum</a>/<a href="datum/powernet.html">powernet</a>/PN, skip_assigned_powernets) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/power.dm#L279">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;power.dm 279"/></a></aside>
+        </h3>
+        <p>remove the old powernet and replace it with a new one throughout the network.</p><h3 id="proc/qdel"><aside class="declaration">proc </aside>qdel<aside>(/<a href="datum.html">datum</a>/D, force, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/garbage.dm#L280">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;garbage.dm 280"/></a></aside>
+        </h3>
+        <p>Should be treated as a replacement for the 'del' keyword.</p>
+<p>Datums passed to this will be given a chance to clean up references to allow the GC to collect them.</p><h3 id="proc/ran_zone"><aside class="declaration">proc </aside>ran_zone<aside>(zone, probability) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 37"/></a></aside>
+        </h3>
+        <p>Return the zone or randomly, another valid zone</p>
+<p>probability controls the chance it chooses the passed in zone, or another random zone
+defaults to 80</p><h3 id="proc/random_bounty"><aside class="declaration">proc </aside>random_bounty<aside>(guided) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/cargo/bounty.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;bounty.dm 31"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Returns a new bounty of random type, but does not add it to GLOB.bounties_list.</p>
+</li>
+<li>
+<p>*Guided determines what specific catagory of bounty should be chosen.</p>
+</li>
+</ul><h3 id="proc/random_fish_type"><aside class="declaration">proc </aside>random_fish_type<aside>(case_fish_only, required_fluid) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/aquarium/fish.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;aquarium&#x2F;fish.dm 26"/></a></aside>
+        </h3>
+        <p>Returns random fish, using random_case_rarity probabilities.</p><h3 id="proc/recursive_organ_check"><aside class="declaration">proc </aside>recursive_organ_check<aside>(/<a href="atom.html">atom</a>/O) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/game.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;game.dm 186"/></a></aside>
+        </h3>
+        <ul>
+<li>recursive_organ_check</li>
+<li>inputs: O (object to start with)</li>
+<li>outputs:</li>
+<li>description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held</li>
+<li>within 'O', toggling their frozen flag. This check excludes items held within other safe organ</li>
+<li>storage units, so that only the lowest level of container dictates whether we do or don't decompose</li>
+</ul><h3 id="proc/reject_bad_name"><aside class="declaration">proc </aside>reject_bad_name<aside>(t_in, allow_numbers, max_length, ascii_only, strict) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 150"/></a></aside>
+        </h3>
+        <p>Filters out undesirable characters from names.</p>
+<ul>
+<li>strict - return null immidiately instead of filtering out</li>
+<li>allow_numbers - allows numbers and common special characters - used for silicon/other weird things names</li>
+</ul><h3 id="proc/reloadAllCardFiles"><aside class="declaration">proc </aside>reloadAllCardFiles<aside>(cardFiles, directory) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/tcg/tcg.dm#L585">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;tcg&#x2F;tcg.dm 585"/></a></aside>
+        </h3>
+        <p>Reloads all card files</p><h3 id="proc/remove_verb"><aside class="declaration">proc </aside>remove_verb<aside>(/<a href="client.html">client</a>/target, verb_or_list_to_remove) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/verbs.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;verbs.dm 58"/></a></aside>
+        </h3>
+        <p>handles removing verb and sending it to browser to update, use this for removing verbs</p>
+<p>pass the verb type path to this instead of removing it from verbs so the statpanel can update
+Arguments:</p>
+<ul>
+<li>target - Who the verb is being removed from, client or mob typepath</li>
+<li>verb - typepath to a verb, or a list of verbs, supports lists of lists</li>
+</ul><h3 id="proc/reset_cooldown"><aside class="declaration">proc </aside>reset_cooldown<aside>(/<a href="datum.html">datum</a>/source, index) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L252">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 252"/></a></aside>
+        </h3>
+        <p>Proc used by stoppable timers to end a cooldown before the time has ran out.</p>
+<p>Arguments:</p>
+<ul>
+<li>source - datum storing the cooldown</li>
+<li>index - string index storing the cooldown on the cooldowns associative list</li>
+</ul>
+<p>This sends a signal reporting the cooldown end, passing the time left as an argument.</p><h3 id="proc/return_unused_frequency"><aside class="declaration">proc </aside>return_unused_frequency<aside>(free) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/radio.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;radio.dm 22"/></a></aside>
+        </h3>
+        <p>returns a random unused frequency between MIN_FREE_FREQ &amp; MAX_FREE_FREQ if free = TRUE, and MIN_FREQ &amp; MAX_FREQ if FALSE</p><h3 id="proc/sanitize_css_class_name"><aside class="declaration">proc </aside>sanitize_css_class_name<aside>(name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/asset_cache/asset_list_items.dm#L524">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;asset_cache&#x2F;asset_list_items.dm 524"/></a></aside>
+        </h3>
+        <p>Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts</p><h3 id="proc/sanitize_frequency"><aside class="declaration">proc </aside>sanitize_frequency<aside>(frequency, free) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/radio.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;radio.dm 2"/></a></aside>
+        </h3>
+        <p>Ensure the frequency is within bounds of what it should be sending/receiving at</p><h3 id="proc/sanitize_name"><aside class="declaration">proc </aside>sanitize_name<aside>(t, allow_numbers) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 47"/></a></aside>
+        </h3>
+        <p>returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.</p><h3 id="proc/sanitize_ooccolor"><aside class="declaration">proc </aside>sanitize_ooccolor<aside>(color) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/sanitize_values.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;sanitize_values.dm 97"/></a></aside>
+        </h3>
+        <p>Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: &quot;#ff1234&quot;, &quot;#A38321&quot;, COLOR_GREEN_GRAY</p><h3 id="proc/scramble_message_replace_chars"><aside class="declaration">proc </aside>scramble_message_replace_chars<aside>(original, replaceprob, /list/replacementchars, replace_letters_only, replace_whitespace) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L942">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 942"/></a></aside>
+        </h3>
+        <p>Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!</p><h3 id="proc/seedify"><aside class="declaration">proc </aside>seedify<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/O, t_max, /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/seed_extractor.html">seed_extractor</a>/extractor, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/hydroponics/seed_extractor.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;hydroponics&#x2F;seed_extractor.dm 16"/></a></aside>
+        </h3>
+        <p>Finds and extracts seeds from an object</p>
+<p>Checks if the object is such that creates a seed when extracted.  Used by seed
+extractors or posably anything that would create seeds in some way.  The seeds
+are dropped either at the extractor, if it exists, or where the original object
+was and it qdel's the object</p>
+<p>Arguments:</p>
+<ul>
+<li>O - Object containing the seed, can be the loc of the dumping of seeds</li>
+<li>t_max - Amount of seed copies to dump, -1 is ranomized</li>
+<li>extractor - Seed Extractor, used as the dumping loc for the seeds and seed multiplier</li>
+<li>user - checks if we can remove the object from the inventory</li>
+</ul><h3 id="proc/send2adminchat"><aside class="declaration">proc </aside>send2adminchat<aside>(category, message, embed_links) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/chat.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;chat.dm 69"/></a></aside>
+        </h3>
+        <p>Sends a message to TGS admin chat channels.</p>
+<p>category - The category of the mssage.
+message - The message to send.</p><h3 id="proc/send2chat"><aside class="declaration">proc </aside>send2chat<aside>(message, channel_tag) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/chat.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;chat.dm 44"/></a></aside>
+        </h3>
+        <p>Sends a message to TGS chat channels.</p>
+<p>message - The message to send.
+channel_tag - Required. If &quot;&quot;, the message with be sent to all connected (Game-type for TGS3) channels. Otherwise, it will be sent to TGS4 channels with that tag (Delimited by ','s).</p><h3 id="proc/send2otherserver"><aside class="declaration">proc </aside>send2otherserver<aside>(source, msg, type, target_servers, /list/additional_data) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/adminhelp.dm#L602">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;adminhelp.dm 602"/></a></aside>
+        </h3>
+        <p>Sends a message to a set of cross-communications-enabled servers using world topic calls</p>
+<p>Arguments:</p>
+<ul>
+<li>source - Who sent this message</li>
+<li>msg - The message body</li>
+<li>type - The type of message, becomes the topic command under the hood</li>
+<li>target_servers - A collection of servers to send the message to, defined in config</li>
+<li>additional_data - An (optional) associated list of extra parameters and data to send with this world topic call</li>
+</ul><h3 id="proc/shake_camera"><aside class="declaration">proc </aside>shake_camera<aside>(/<a href="mob.html">mob</a>/M, duration, strength) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 218"/></a></aside>
+        </h3>
+        <p>Shake the camera of the person viewing the mob SO REAL!</p><h3 id="proc/simple_network_name_fix"><aside class="declaration">proc </aside>simple_network_name_fix<aside>(name) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/networks.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;networks.dm 57"/></a></aside>
+        </h3>
+        <p>Network name should be all caps and no punctuation except for _ and . between domains
+This does a quick an dirty fix to a network name to make sure it works</p><h3 id="proc/siunit"><aside class="declaration">proc </aside>siunit<aside>(value, unit, maxdecimals) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L907">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 907"/></a></aside>
+        </h3>
+        <p>Formats a number to human readable form with the appropriate SI unit.</p>
+<p>Supports SI exponents between 1e-15 to 1e15, but properly handles numbers outside that range as well.
+Examples:</p>
+<ul>
+<li>
+<p><code>siunit(1234, &quot;Pa&quot;, 1)</code> -&gt; <code>&quot;1.2 kPa&quot;</code></p>
+</li>
+<li>
+<p><code>siunit(0.5345, &quot;A&quot;, 0)</code> -&gt; <code>&quot;535 mA&quot;</code></p>
+</li>
+<li>
+<p><code>siunit(1000, &quot;Pa&quot;, 4)</code> -&gt; <code>&quot;1 kPa&quot;</code>
+Arguments:</p>
+</li>
+<li>
+<p>value - The number to convert to text. Can be positive or negative.</p>
+</li>
+<li>
+<p>unit - The base unit of the number, such as &quot;Pa&quot; or &quot;W&quot;.</p>
+</li>
+<li>
+<p>maxdecimals - Maximum amount of decimals to display for the final number. Defaults to 1.</p>
+</li>
+<li>
+<p>For pressure conversion, use proc/siunit_pressure() below</p>
+</li>
+</ul><h3 id="proc/siunit_pressure"><aside class="declaration">proc </aside>siunit_pressure<aside>(value_in_kpa, maxdecimals) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L937">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 937"/></a></aside>
+        </h3>
+        <ul>
+<li>The game code never uses Pa, but kPa, since 1 Pa is too small to reasonably handle</li>
+<li>Thus, to ensure correct conversion from any kPa in game code, this value needs to be multiplied by 10e3 to get Pa, which the siunit() proc expects</li>
+<li>Args:</li>
+<li>
+<ul>
+<li>value_in_kpa - Value that should be converted to readable text in kPa</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>maxdecimals - maximum number of decimals that are displayed, defaults to 1 in proc/siunit()</li>
+</ul>
+</li>
+</ul><h3 id="proc/slur"><aside class="declaration">proc </aside>slur<aside>(phrase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 78"/></a></aside>
+        </h3>
+        <p>Makes you speak like you're drunk</p><h3 id="proc/stars"><aside class="declaration">proc </aside>stars<aside>(phrase, probability) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 60"/></a></aside>
+        </h3>
+        <p>Convert random parts of a passed in message to stars</p>
+<ul>
+<li>phrase - the string to convert</li>
+<li>probability - probability any character gets changed</li>
+</ul>
+<p>This proc is dangerously laggy, avoid it or die</p><h3 id="proc/status_bar_set_text"><aside class="declaration">proc </aside>status_bar_set_text<aside>(target, text) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/status_bar/status_bar.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;status_bar&#x2F;status_bar.dm 13"/></a></aside>
+        </h3>
+        <p>Set status bar text for the provided <code>target</code>.</p>
+<p>Target can be either of <code>/client</code> or <code>/mob</code>.</p><h3 id="proc/string_list"><aside class="declaration">proc </aside>string_list<aside>(/list/values) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/string_lists.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;string_lists.dm 6"/></a></aside>
+        </h3>
+        <p>Caches lists with non-numeric stringify-able values (text or typepath).</p><h3 id="proc/stripped_input"><aside class="declaration">proc </aside>stripped_input<aside>(/<a href="mob.html">mob</a>/user, message, title, default, max_length, no_trim) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 122"/></a></aside>
+        </h3>
+        <p>Used to get a properly sanitized input, of max_length
+no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.</p><h3 id="proc/stutter"><aside class="declaration">proc </aside>stutter<aside>(phrase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob_helpers.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob_helpers.dm 157"/></a></aside>
+        </h3>
+        <p>Adds stuttering to the message passed in</p><h3 id="proc/techweb_item_boost_check"><aside class="declaration">proc </aside>techweb_item_boost_check<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/research/techweb/__techweb_helpers.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;research&#x2F;techweb&#x2F;__techweb_helpers.dm 14"/></a></aside>
+        </h3>
+        <p>Returns an associative list of techweb node datums with values of the boost it gives. var/list/returned = list()</p><h3 id="proc/tgalert"><aside class="declaration">proc </aside>tgalert<aside>(/<a href="mob.html">mob</a>/User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/browser.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;browser.dm 170"/></a></aside>
+        </h3>
+        <p><strong>DEPRECATED: USE tgui_alert(...) INSTEAD</strong></p>
+<p>Designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+Arguments:</p>
+<ul>
+<li>User - The user to show the alert to.</li>
+<li>Message - The textual body of the alert.</li>
+<li>Title - The title of the alert's window.</li>
+<li>Button1 - The first button option.</li>
+<li>Button2 - The second button option.</li>
+<li>Button3 - The third button option.</li>
+<li>StealFocus - Boolean operator controlling if the alert will steal the user's window focus.</li>
+<li>Timeout - The timeout of the window, after which no responses will be valid.</li>
+</ul><h3 id="proc/tgui_Topic"><aside class="declaration">proc </aside>tgui_Topic<aside>(href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 173"/></a></aside>
+        </h3>
+        <p>Middleware for /client/Topic.</p>
+<p>return bool If TRUE, prevents propagation of the topic call.</p><h3 id="proc/tgui_alert"><aside class="declaration">proc </aside>tgui_alert<aside>(/<a href="mob.html">mob</a>/user, message, title, /list/buttons, timeout) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/tgui_alert.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;tgui_alert.dm 12"/></a></aside>
+        </h3>
+        <p>Creates a TGUI alert window and returns the user's response.</p>
+<p>This proc should be used to create alerts that the caller will wait for a response from.
+Arguments:</p>
+<ul>
+<li>user - The user to show the alert to.</li>
+<li>message - The content of the alert, shown in the body of the TGUI window.</li>
+<li>title - The of the alert modal, shown on the top of the TGUI window.</li>
+<li>buttons - The options that can be chosen by the user, each string is assigned a button on the UI.</li>
+<li>timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.</li>
+</ul><h3 id="proc/tgui_alert_async"><aside class="declaration">proc </aside>tgui_alert_async<aside>(/<a href="mob.html">mob</a>/user, message, title, /list/buttons, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/callback, timeout) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/tgui_alert.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;tgui_alert.dm 40"/></a></aside>
+        </h3>
+        <p>Creates an asynchronous TGUI alert window with an associated callback.</p>
+<p>This proc should be used to create alerts that invoke a callback with the user's chosen option.
+Arguments:</p>
+<ul>
+<li>user - The user to show the alert to.</li>
+<li>message - The content of the alert, shown in the body of the TGUI window.</li>
+<li>title - The of the alert modal, shown on the top of the TGUI window.</li>
+<li>buttons - The options that can be chosen by the user, each string is assigned a button on the UI.</li>
+<li>callback - The callback to be invoked when a choice is made.</li>
+<li>timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.</li>
+</ul><h3 id="proc/tgui_input_list"><aside class="declaration">proc </aside>tgui_input_list<aside>(/<a href="mob.html">mob</a>/user, message, title, /list/buttons, timeout) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/tgui_input_list.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;tgui_input_list.dm 12"/></a></aside>
+        </h3>
+        <p>Creates a TGUI input list window and returns the user's response.</p>
+<p>This proc should be used to create alerts that the caller will wait for a response from.
+Arguments:</p>
+<ul>
+<li>user - The user to show the input box to.</li>
+<li>message - The content of the input box, shown in the body of the TGUI window.</li>
+<li>title - The title of the input box, shown on the top of the TGUI window.</li>
+<li>buttons - The options that can be chosen by the user, each string is assigned a button on the UI.</li>
+<li>timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.</li>
+</ul><h3 id="proc/tgui_input_list_async"><aside class="declaration">proc </aside>tgui_input_list_async<aside>(/<a href="mob.html">mob</a>/user, message, title, /list/buttons, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/callback, timeout) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/tgui_input_list.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;tgui_input_list.dm 42"/></a></aside>
+        </h3>
+        <p>Creates an asynchronous TGUI input list window with an associated callback.</p>
+<p>This proc should be used to create inputs that invoke a callback with the user's chosen option.
+Arguments:</p>
+<ul>
+<li>user - The user to show the input box to.</li>
+<li>message - The content of the input box, shown in the body of the TGUI window.</li>
+<li>title - The title of the input box, shown on the top of the TGUI window.</li>
+<li>buttons - The options that can be chosen by the user, each string is assigned a button on the UI.</li>
+<li>callback - The callback to be invoked when a choice is made.</li>
+<li>timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.</li>
+</ul><h3 id="proc/timeleft"><aside class="declaration">proc </aside>timeleft<aside>(id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/timer.dm#L595">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;timer.dm 595"/></a></aside>
+        </h3>
+        <p>Get the remaining deciseconds on a timer</p>
+<p>Arguments:</p>
+<ul>
+<li>id a timerid or a /datum/timedevent</li>
+</ul><h3 id="proc/to_chat"><aside class="declaration">proc </aside>to_chat<aside>(target, html, type, text, avoid_highlighting, handle_whitespace, trailing_newline, confidential) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgchat/to_chat.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgchat&#x2F;to_chat.dm 56"/></a></aside>
+        </h3>
+        <p>Sends the message to the recipient (target).</p>
+<p>Recommended way to write to_chat calls:</p>
+<pre><code>to_chat(client,
+    type = MESSAGE_TYPE_INFO,
+    html = &quot;You have found &lt;strong&gt;[object]&lt;/strong&gt;&quot;)
+</code></pre><h3 id="proc/to_chat_immediate"><aside class="declaration">proc </aside>to_chat_immediate<aside>(target, html, type, text, avoid_highlighting, handle_whitespace, trailing_newline, confidential) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgchat/to_chat.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgchat&#x2F;to_chat.dm 10"/></a></aside>
+        </h3>
+        <p>Circumvents the message queue and sends the message
+to the recipient (target) as soon as possible.</p><h3 id="proc/truncate"><aside class="declaration">proc </aside>truncate<aside>(text, max_length) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/text.dm#L314">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;text.dm 314"/></a></aside>
+        </h3>
+        <p>Truncate a string to the given length</p>
+<p>Will only truncate if the string is larger than the length and <em>ignores unicode concerns</em></p>
+<p>This exists soley because trim does other stuff too.</p>
+<p>Arguments:</p>
+<ul>
+<li>text - String</li>
+<li>max_length - integer length to truncate at</li>
+</ul><h3 id="proc/unformat_frequency"><aside class="declaration">proc </aside>unformat_frequency<aside>(frequency) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/radio.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;radio.dm 17"/></a></aside>
+        </h3>
+        <p>Opposite of format, returns as a number</p><h3 id="proc/url2htmlloader"><aside class="declaration">proc </aside>url2htmlloader<aside>(url) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/type2type.dm#L497">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;type2type.dm 497"/></a></aside>
+        </h3>
+        <p>Return html to load a url.
+for use inside of browse() calls to html assets that might be loaded on a cdn.</p><h3 id="proc/valid_window_location"><aside class="declaration">proc </aside>valid_window_location<aside>(/<a href="turf.html">turf</a>/dest_turf, test_dir, is_fulltile) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L1224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 1224"/></a></aside>
+        </h3>
+        <p>Checks whether the target turf is in a valid state to accept a directional window
+or other directional pseudo-dense object such as railings.</p>
+<p>Returns FALSE if the target turf cannot accept a directional window or railing.
+Returns TRUE otherwise.</p>
+<p>Arguments:</p>
+<ul>
+<li>dest_turf - The destination turf to check for existing windows and railings</li>
+<li>test_dir - The prospective dir of some atom you'd like to put on this turf.</li>
+<li>is_fulltile - Whether the thing you're attempting to move to this turf takes up the entire tile or whether it supports multiple movable atoms on its tile.</li>
+</ul><h3 id="proc/voice_of_god"><aside class="declaration">proc </aside>voice_of_god<aside>(message, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /list/span_list, base_multiplier, include_speaker, message_admins) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/voice_of_god_command.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;voice_of_god_command.dm 33"/></a></aside>
+        </h3>
+        <p>VOICE OF GOD</p><h3 id="proc/weekday_to_iso"><aside class="declaration">proc </aside>weekday_to_iso<aside>(ddd) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/time.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;time.dm 45"/></a></aside>
+        </h3>
+        <p>Returns a string day as an integer in ISO format 1 (Monday) - 7 (Sunday)</p><h3 id="proc/wendigo_slam"><aside class="declaration">proc </aside>wendigo_slam<aside>(/<a href="atom.html">atom</a>/source, range, delay, throw_range) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/wendigo.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;wendigo.dm 143"/></a></aside>
+        </h3>
+        <p>Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase</p><h3 id="proc/woundscan"><aside class="declaration">proc </aside>woundscan<aside>(/<a href="mob.html">mob</a>/user, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/patient, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/healthanalyzer/wound/scanner) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/scanners.dm#L490">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;scanners.dm 490"/></a></aside>
+        </h3>
+        <p>Displays wounds with extended information on their status vs medscanners</p><h3 id="proc/zone2body_parts_covered"><aside class="declaration">proc </aside>zone2body_parts_covered<aside>(def_zone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/type2type.dm#L221">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;type2type.dm 221"/></a></aside>
+        </h3>
+        <p>For finding out what body parts a body zone covers, the inverse of the below basically</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

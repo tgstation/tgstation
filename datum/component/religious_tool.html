@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;religious_tool - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/religious_tool.html#var">Var Details</a> - <a href="datum/component/religious_tool.html#proc">Proc Details</a></header>
+<main>
+<h1>religious_tool <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/religious_tool.html">religious_tool</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 6"/></a></h1>
+
+<p>Allows the parent to act similarly to the Altar of Gods with modularity. Invoke and Sect Selection is done via attacking with a bible. This means you cannot sacrifice Bibles (you shouldn't want to do this anyways although now that I mentioned it you probably will want to).</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#var/catalyst_type">catalyst_type</a></th><td>Sets the type for catalyst</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#var/easy_access_sect">easy_access_sect</a></th><td>Enables access to the global sect directly</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#var/force_catalyst_afterattack">force_catalyst_afterattack</a></th><td>Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#var/operation_flags">operation_flags</a></th><td>What extent do we want this religious tool to act? In case you don't want full access to the list. Generated on New</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#var/performing_rite">performing_rite</a></th><td>The rite currently being invoked</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#proc/AttemptActions">AttemptActions</a></th><td>Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#proc/SetGlobalToLocal">SetGlobalToLocal</a></th><td>Sets the easy access variable to the global if it exists.</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#proc/generate_available_sects">generate_available_sects</a></th><td>Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#proc/on_examine">on_examine</a></th><td>Appends to examine so the user knows it can be used for religious purposes.</td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#proc/perform_rite">perform_rite</a></th><td>Perform the rite, called async from <a href="datum/component/religious_tool.html#proc/AttemptActions" title="/datum/component/religious_tool">/datum/component/religious_tool/proc/AttemptActions</a></td></tr>
+            <tr><th><a href="datum/component/religious_tool.html#proc/select_sect">select_sect</a></th><td>Sect Selection</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/catalyst_type"><aside class="declaration">var </aside>catalyst_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 15"/></a></h3>
+        <p>Sets the type for catalyst</p><h3 id="var/easy_access_sect"><aside class="declaration">var </aside>easy_access_sect
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/religion_sect.html">religion_sect</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 9"/></a></h3>
+        <p>Enables access to the global sect directly</p><h3 id="var/force_catalyst_afterattack"><aside class="declaration">var </aside>force_catalyst_afterattack
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 17"/></a></h3>
+        <p>Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.</p><h3 id="var/operation_flags"><aside class="declaration">var </aside>operation_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 11"/></a></h3>
+        <p>What extent do we want this religious tool to act? In case you don't want full access to the list. Generated on New</p><h3 id="var/performing_rite"><aside class="declaration">var </aside>performing_rite
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/religion_rites.html">religion_rites</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 13"/></a></h3>
+        <p>The rite currently being invoked</p><h2 id="proc">Proc Details</h2><h3 id="proc/AttemptActions"><aside class="declaration">proc </aside>AttemptActions<aside>(/<a href="datum.html">datum</a>/source, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/the_item, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 53"/></a></aside>
+        </h3>
+        <p>Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.</p><h3 id="proc/SetGlobalToLocal"><aside class="declaration">proc </aside>SetGlobalToLocal<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 39"/></a></aside>
+        </h3>
+        <p>Sets the easy access variable to the global if it exists.</p><h3 id="proc/generate_available_sects"><aside class="declaration">proc </aside>generate_available_sects<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 127"/></a></aside>
+        </h3>
+        <p>Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.</p><h3 id="proc/on_examine"><aside class="declaration">proc </aside>on_examine<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/user, /list/examine_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 137"/></a></aside>
+        </h3>
+        <p>Appends to examine so the user knows it can be used for religious purposes.</p><h3 id="proc/perform_rite"><aside class="declaration">proc </aside>perform_rite<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 104"/></a></aside>
+        </h3>
+        <p>Perform the rite, called async from <a href="datum/component/religious_tool.html#proc/AttemptActions" title="/datum/component/religious_tool">/datum/component/religious_tool/proc/AttemptActions</a></p><h3 id="proc/select_sect"><aside class="declaration">proc </aside>select_sect<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/religious_tool.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;religious_tool.dm 79"/></a></aside>
+        </h3>
+        <p>Sect Selection</p>
+<p>Rite Invocation</p>
+<p>Sacrificing
+Select the sect, called async from <a href="datum/component/religious_tool.html#proc/AttemptActions" title="/datum/component/religious_tool">/datum/component/religious_tool/proc/AttemptActions</a></p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

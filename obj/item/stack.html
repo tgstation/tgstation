@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;stack - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/stack.html#var">Var Details</a> - <a href="obj/item/stack.html#proc">Proc Details</a></header>
+<main>
+<h1>stack <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 12"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/stack.html#var/absorption_capacity">absorption_capacity</a></th><td>How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up</td></tr>
+            <tr><th><a href="obj/item/stack.html#var/absorption_rate">absorption_rate</a></th><td>How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first</td></tr>
+            <tr><th><a href="obj/item/stack.html#var/has_unique_girder">has_unique_girder</a></th><td>Does this stack require a unique girder in order to make a wall?</td></tr>
+            <tr><th><a href="obj/item/stack.html#var/material_type">material_type</a></th><td>Datum material type that this stack is made of</td></tr>
+            <tr><th><a href="obj/item/stack.html#var/matter_amount">matter_amount</a></th><td>Amount of matter for RCD</td></tr>
+            <tr><th><a href="obj/item/stack.html#var/splint_factor">splint_factor</a></th><td>If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/add">add</a></th><td></td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/build_recipe">build_recipe</a></th><td>Returns a list of properties of a given recipe</td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/can_merge">can_merge</a></th><td></td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/is_valid_recipe">is_valid_recipe</a></th><td>Checks if the recipe is valid to be used</td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/merge">merge</a></th><td>Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.</td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/recursively_build_recipes">recursively_build_recipes</a></th><td>Builds all recipes in a given recipe list and returns an association list containing them</td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/set_custom_materials">set_custom_materials</a></th><td>Override to make things like metalgen accurately set custom materials</td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/set_mats_per_unit">set_mats_per_unit</a></th><td></td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/split_stack">split_stack</a></th><td></td></tr>
+            <tr><th><a href="obj/item/stack.html#proc/update_custom_materials">update_custom_materials</a></th><td>Updates the custom materials list of this stack.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/absorption_capacity"><aside class="declaration">var </aside>absorption_capacity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 37"/></a></h3>
+        <p>How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up</p><h3 id="var/absorption_rate"><aside class="declaration">var </aside>absorption_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 39"/></a></h3>
+        <p>How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first</p><h3 id="var/has_unique_girder"><aside class="declaration">var </aside>has_unique_girder
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 43"/></a></h3>
+        <p>Does this stack require a unique girder in order to make a wall?</p><h3 id="var/material_type"><aside class="declaration">var </aside>material_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 29"/></a></h3>
+        <p>Datum material type that this stack is made of</p><h3 id="var/matter_amount"><aside class="declaration">var </aside>matter_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 41"/></a></h3>
+        <p>Amount of matter for RCD</p><h3 id="var/splint_factor"><aside class="declaration">var </aside>splint_factor
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 35"/></a></h3>
+        <p>If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)</p><h2 id="proc">Proc Details</h2><h3 id="proc/add"><aside class="declaration">proc </aside>add<aside>(_amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L400">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 400"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Adds some number of units to this stack.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li>_amount: The number of units to add to this stack.</li>
+</ul>
+</li>
+</ul><h3 id="proc/build_recipe"><aside class="declaration">proc </aside>build_recipe<aside>(/<a href="datum.html">datum</a>/stack_recipe/R) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 186"/></a></aside>
+        </h3>
+        <p>Returns a list of properties of a given recipe</p>
+<p>Arguments:</p>
+<ul>
+<li>R - The stack recipe we are using to get a list of properties</li>
+</ul><h3 id="proc/can_merge"><aside class="declaration">proc </aside>can_merge<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/check) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L415">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 415"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Checks whether this stack can merge itself into another stack.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li><a href="obj/item/stack.html" title="/obj/item/stack">check</a>: The stack to check for mergeability.</li>
+</ul>
+</li>
+</ul><h3 id="proc/is_valid_recipe"><aside class="declaration">proc </aside>is_valid_recipe<aside>(/<a href="datum.html">datum</a>/stack_recipe/R, /list/recipe_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L201">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 201"/></a></aside>
+        </h3>
+        <p>Checks if the recipe is valid to be used</p>
+<p>Arguments:</p>
+<ul>
+<li>R - The stack recipe we are checking if it is valid</li>
+<li>recipe_list - The list of recipes we are using to check the given recipe</li>
+</ul><h3 id="proc/merge"><aside class="declaration">proc </aside>merge<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/S, limit) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L425">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 425"/></a></aside>
+        </h3>
+        <p>Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.</p><h3 id="proc/recursively_build_recipes"><aside class="declaration">proc </aside>recursively_build_recipes<aside>(/list/recipe_to_iterate) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 169"/></a></aside>
+        </h3>
+        <p>Builds all recipes in a given recipe list and returns an association list containing them</p>
+<p>Arguments:</p>
+<ul>
+<li>recipe_to_iterate - The list of recipes we are using to build recipes</li>
+</ul><h3 id="proc/set_custom_materials"><aside class="parent"><a title="/atom" href="atom.html#proc/set_custom_materials">&uarr;</a></aside>set_custom_materials<aside>(/list/materials, multiplier, is_update) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 99"/></a></aside>
+        </h3>
+        <p>Override to make things like metalgen accurately set custom materials</p><h3 id="proc/set_mats_per_unit"><aside class="declaration">proc </aside>set_mats_per_unit<aside>(/list/mats, multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 87"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Sets the amount of materials per unit for this stack.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li>[mats][/list]: The value to set the mats per unit to.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>multiplier: The amount to multiply the mats per unit by. Defaults to 1.</li>
+</ul>
+</li>
+</ul><h3 id="proc/split_stack"><aside class="declaration">proc </aside>split_stack<aside>(/<a href="mob.html">mob</a>/user, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L481">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 481"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Splits the stack into two stacks.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li><a href="mob.html" title="/mob">user</a>: The mob splitting the stack.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>amount: The number of units to split from this stack.</li>
+</ul>
+</li>
+</ul><h3 id="proc/update_custom_materials"><aside class="declaration">proc </aside>update_custom_materials<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/stacks/stack.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;stacks&#x2F;stack.dm 93"/></a></aside>
+        </h3>
+        <p>Updates the custom materials list of this stack.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

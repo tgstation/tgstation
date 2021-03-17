@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;map_generator&#x2F;cave_generator - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/map_generator/cave_generator.html#var">Var Details</a></header>
+<main>
+<h1>cave_generator <aside>/<a href="datum.html">datum</a>/<a href="datum/map_generator.html">map_generator</a>/<a href="datum/map_generator/cave_generator.html">cave_generator</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/birth_limit">birth_limit</a></th><td>How much neighbours does a dead cell need to become alive</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/closed_turf_types">closed_turf_types</a></th><td>Weighted list of the types that spawns if the turf is closed</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/death_limit">death_limit</a></th><td>How little neighbours does a alive cell need to die</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/feature_spawn_chance">feature_spawn_chance</a></th><td>Base chance of spawning features</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/feature_spawn_list">feature_spawn_list</a></th><td>Weighted list of extra features that can spawn in the area, such as geysers.</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/flora_spawn_chance">flora_spawn_chance</a></th><td>Base chance of spawning flora</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/flora_spawn_list">flora_spawn_list</a></th><td>Weighted list of flora that can spawn in the area.</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/initial_closed_chance">initial_closed_chance</a></th><td>Chance of cells starting closed</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/mob_spawn_chance">mob_spawn_chance</a></th><td>Base chance of spawning a mob</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/mob_spawn_list">mob_spawn_list</a></th><td>Weighted list of mobs that can spawn in the area.</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/open_turf_types">open_turf_types</a></th><td>Weighted list of the types that spawns if the turf is open</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/smoothing_iterations">smoothing_iterations</a></th><td>Amount of smoothing iterations</td></tr>
+            <tr><th><a href="datum/map_generator/cave_generator.html#var/string_gen">string_gen</a></th><td>Unique ID for this spawner</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/birth_limit"><aside class="declaration">var </aside>birth_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 33"/></a></h3>
+        <p>How much neighbours does a dead cell need to become alive</p><h3 id="var/closed_turf_types"><aside class="declaration">var </aside>closed_turf_types
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 6"/></a></h3>
+        <p>Weighted list of the types that spawns if the turf is closed</p><h3 id="var/death_limit"><aside class="declaration">var </aside>death_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 35"/></a></h3>
+        <p>How little neighbours does a alive cell need to die</p><h3 id="var/feature_spawn_chance"><aside class="declaration">var </aside>feature_spawn_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 24"/></a></h3>
+        <p>Base chance of spawning features</p><h3 id="var/feature_spawn_list"><aside class="declaration">var </aside>feature_spawn_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 16"/></a></h3>
+        <p>Weighted list of extra features that can spawn in the area, such as geysers.</p><h3 id="var/flora_spawn_chance"><aside class="declaration">var </aside>flora_spawn_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 22"/></a></h3>
+        <p>Base chance of spawning flora</p><h3 id="var/flora_spawn_list"><aside class="declaration">var </aside>flora_spawn_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 14"/></a></h3>
+        <p>Weighted list of flora that can spawn in the area.</p><h3 id="var/initial_closed_chance"><aside class="declaration">var </aside>initial_closed_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 29"/></a></h3>
+        <p>Chance of cells starting closed</p><h3 id="var/mob_spawn_chance"><aside class="declaration">var </aside>mob_spawn_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 20"/></a></h3>
+        <p>Base chance of spawning a mob</p><h3 id="var/mob_spawn_list"><aside class="declaration">var </aside>mob_spawn_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 10"/></a></h3>
+        <p>Weighted list of mobs that can spawn in the area.</p><h3 id="var/open_turf_types"><aside class="declaration">var </aside>open_turf_types
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 4"/></a></h3>
+        <p>Weighted list of the types that spawns if the turf is open</p><h3 id="var/smoothing_iterations"><aside class="declaration">var </aside>smoothing_iterations
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 31"/></a></h3>
+        <p>Amount of smoothing iterations</p><h3 id="var/string_gen"><aside class="declaration">var </aside>string_gen
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/mapgen/CaveGenerator.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;mapgen&#x2F;CaveGenerator.dm 26"/></a></h3>
+        <p>Unique ID for this spawner</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

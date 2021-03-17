@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;chem_recipe_debug - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/chem_recipe_debug.html#var">Var Details</a> - <a href="obj/machinery/chem_recipe_debug.html#proc">Proc Details</a></header>
+<main>
+<h1>chem_recipe_debug <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/chem_recipe_debug.html">chem_recipe_debug</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 5"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/beaker_spawn">beaker_spawn</a></th><td>If we spawn a beaker at the end of a reaction or not</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/cached_reactions">cached_reactions</a></th><td>List of every reaction in the game kept locally for easy access</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/failed">failed</a></th><td>If we failed to react this current chem so use a lower temp - all reactions only</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/force_temp">force_temp</a></th><td>Forced values</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/impure_string">impure_string</a></th><td>Final output that highlights all of the reactions with inoptimal purity/voolume at base</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/index">index</a></th><td>What index in the cached_reactions we're in</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/majorImpurity">majorImpurity</a></th><td>The count of reactions that resolve below 0.9 purity</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/min_temp">min_temp</a></th><td>If we force min temp on reaction setup</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/minorImpurity">minorImpurity</a></th><td>The count of reactions that resolve between 1 - 0.9 purity</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/problem_string">problem_string</a></th><td>Final output that highlights all of the reactions with inoptimal purity/voolume at base</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/process_all">process_all</a></th><td>IF we're doing EVERY reaction</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/processing">processing</a></th><td>If the machine is currently processing through the list</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/react">react</a></th><td>If we're reacting</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/react_time">react_time</a></th><td>Number of delta times taken to react</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/reaction_names">reaction_names</a></th><td>The name</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/reaction_stated">reaction_stated</a></th><td>If it's started</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/should_force_temp">should_force_temp</a></th><td>If we're forcing optimal conditions</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#var/vol_multiplier">vol_multiplier</a></th><td>Multiplier of product</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#proc/AltClick">AltClick</a></th><td>Enable the machine</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#proc/Initialize">Initialize</a></th><td>Create reagents datum</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#proc/attackby">attackby</a></th><td>Enable the machine</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#proc/setup_reactions">setup_reactions</a></th><td>Resets the index, and creates the cached_reaction list from all possible reactions</td></tr>
+            <tr><th><a href="obj/machinery/chem_recipe_debug.html#proc/ui_status">ui_status</a></th><td>Moves a type of buffer from the heater to the beaker,</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/beaker_spawn"><aside class="declaration">var </aside>beaker_spawn
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 48"/></a></h3>
+        <p>If we spawn a beaker at the end of a reaction or not</p><h3 id="var/cached_reactions"><aside class="declaration">var </aside>cached_reactions
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 14"/></a></h3>
+        <p>List of every reaction in the game kept locally for easy access</p><h3 id="var/failed"><aside class="declaration">var </aside>failed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 28"/></a></h3>
+        <p>If we failed to react this current chem so use a lower temp - all reactions only</p><h3 id="var/force_temp"><aside class="declaration">var </aside>force_temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 33"/></a></h3>
+        <p>Forced values</p><h3 id="var/impure_string"><aside class="declaration">var </aside>impure_string
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 22"/></a></h3>
+        <p>Final output that highlights all of the reactions with inoptimal purity/voolume at base</p><h3 id="var/index"><aside class="declaration">var </aside>index
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 16"/></a></h3>
+        <p>What index in the cached_reactions we're in</p><h3 id="var/majorImpurity"><aside class="declaration">var </aside>majorImpurity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 26"/></a></h3>
+        <p>The count of reactions that resolve below 0.9 purity</p><h3 id="var/min_temp"><aside class="declaration">var </aside>min_temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 50"/></a></h3>
+        <p>If we force min temp on reaction setup</p><h3 id="var/minorImpurity"><aside class="declaration">var </aside>minorImpurity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 24"/></a></h3>
+        <p>The count of reactions that resolve between 1 - 0.9 purity</p><h3 id="var/problem_string"><aside class="declaration">var </aside>problem_string
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 20"/></a></h3>
+        <p>Final output that highlights all of the reactions with inoptimal purity/voolume at base</p><h3 id="var/process_all"><aside class="declaration">var </aside>process_all
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 42"/></a></h3>
+        <p>IF we're doing EVERY reaction</p><h3 id="var/processing"><aside class="declaration">var </aside>processing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 18"/></a></h3>
+        <p>If the machine is currently processing through the list</p><h3 id="var/react"><aside class="declaration">var </aside>react
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 38"/></a></h3>
+        <p>If we're reacting</p><h3 id="var/react_time"><aside class="declaration">var </aside>react_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 40"/></a></h3>
+        <p>Number of delta times taken to react</p><h3 id="var/reaction_names"><aside class="declaration">var </aside>reaction_names
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 44"/></a></h3>
+        <p>The name</p><h3 id="var/reaction_stated"><aside class="declaration">var </aside>reaction_stated
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 46"/></a></h3>
+        <p>If it's started</p><h3 id="var/should_force_temp"><aside class="declaration">var </aside>should_force_temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 30"/></a></h3>
+        <p>If we're forcing optimal conditions</p><h3 id="var/vol_multiplier"><aside class="declaration">var </aside>vol_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 36"/></a></h3>
+        <p>Multiplier of product</p><h2 id="proc">Proc Details</h2><h3 id="proc/AltClick">AltClick<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 64"/></a></aside>
+        </h3>
+        <p>Enable the machine</p><h3 id="proc/Initialize"><aside class="parent"><a title="/atom" href="atom.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 53"/></a></aside>
+        </h3>
+        <p>Create reagents datum</p><h3 id="proc/attackby"><aside class="parent"><a title="/atom" href="atom.html#proc/attackby">&uarr;</a></aside>attackby<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 59"/></a></aside>
+        </h3>
+        <p>Enable the machine</p><h3 id="proc/setup_reactions"><aside class="declaration">proc </aside>setup_reactions<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 75"/></a></aside>
+        </h3>
+        <p>Resets the index, and creates the cached_reaction list from all possible reactions</p><h3 id="proc/ui_status"><aside class="parent"><a title="/datum" href="datum.html#proc/ui_status">&uarr;</a></aside>ui_status<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_recipe_debug.dm#L348">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_recipe_debug.dm 348"/></a></aside>
+        </h3>
+        <p>Moves a type of buffer from the heater to the beaker,</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

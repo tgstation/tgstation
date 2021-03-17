@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;air - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/air.html#var">Var Details</a> - <a href="datum/controller/subsystem/air.html#proc">Proc Details</a></header>
+<main>
+<h1>air <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/air.html">air</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#var/atmos_machinery">atmos_machinery</a></th><td>A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#var/currentrun">currentrun</a></th><td>A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#proc/add_to_active">add_to_active</a></th><td>Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group</td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#proc/expand_pipeline">expand_pipeline</a></th><td>Rebuilds a pipeline by expanding outwards, while yielding when sane</td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#proc/remove_from_active">remove_from_active</a></th><td>Removes a turf from processing, and causes its excited group to clean up so things properly adapt to the change</td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#proc/sleep_active_turf">sleep_active_turf</a></th><td>Puts an active turf to sleep so it doesn't process. Do this without cleaning up its excited group.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#proc/start_processing_machine">start_processing_machine</a></th><td>Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/air.html#proc/stop_processing_machine">stop_processing_machine</a></th><td>Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/atmos_machinery"><aside class="declaration">var </aside>atmos_machinery
+            <aside>&ndash; /list/obj/machinery</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 29"/></a></h3>
+        <p>A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.</p><h3 id="var/currentrun"><aside class="declaration">var </aside>currentrun
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 43"/></a></h3>
+        <p>A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_to_active"><aside class="declaration">proc </aside>add_to_active<aside>(/<a href="turf.html">turf</a>/<a href="turf/open.html">open</a>/T, blockchanges) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L426">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 426"/></a></aside>
+        </h3>
+        <p>Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group</p><h3 id="proc/expand_pipeline"><aside class="declaration">proc </aside>expand_pipeline<aside>(/<a href="datum.html">datum</a>/<a href="datum/pipeline.html">pipeline</a>/net, /list/border) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L362">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 362"/></a></aside>
+        </h3>
+        <p>Rebuilds a pipeline by expanding outwards, while yielding when sane</p><h3 id="proc/remove_from_active"><aside class="declaration">proc </aside>remove_from_active<aside>(/<a href="turf.html">turf</a>/<a href="turf/open.html">open</a>/T) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L400">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 400"/></a></aside>
+        </h3>
+        <p>Removes a turf from processing, and causes its excited group to clean up so things properly adapt to the change</p><h3 id="proc/sleep_active_turf"><aside class="declaration">proc </aside>sleep_active_turf<aside>(/<a href="turf.html">turf</a>/<a href="turf/open.html">open</a>/T) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L415">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 415"/></a></aside>
+        </h3>
+        <p>Puts an active turf to sleep so it doesn't process. Do this without cleaning up its excited group.</p><h3 id="proc/start_processing_machine"><aside class="declaration">proc </aside>start_processing_machine<aside>(/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/machine) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L614">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 614"/></a></aside>
+        </h3>
+        <p>Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.</p>
+<p>This should be fast, so no error checking is done.
+If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
+object you added. Do not use irresponsibly.
+Arguments:</p>
+<ul>
+<li>machine - The machine to start processing. Can be any /obj/machinery.</li>
+</ul><h3 id="proc/stop_processing_machine"><aside class="declaration">proc </aside>stop_processing_machine<aside>(/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/machine) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/air.dm#L627">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;air.dm 627"/></a></aside>
+        </h3>
+        <p>Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.</p>
+<p>This should be fast, so no error checking is done.
+If you call this proc when your machine isn't processing, you're likely attempting to
+remove something that isn't in a list with over 1000 objects, twice. Do not use
+irresponsibly.
+Arguments:</p>
+<ul>
+<li>machine - The machine to stop processing.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

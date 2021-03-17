@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;portable_atmospherics&#x2F;canister - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/portable_atmospherics/canister.html#var">Var Details</a> - <a href="obj/machinery/portable_atmospherics/canister.html#proc">Proc Details</a></header>
+<main>
+<h1>canister <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/portable_atmospherics.html">portable_atmospherics</a>/<a href="obj/machinery/portable_atmospherics/canister.html">canister</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 8"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/can_max_release_pressure">can_max_release_pressure</a></th><td>Maximum pressure allowed for release_pressure var</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/can_min_release_pressure">can_min_release_pressure</a></th><td>Minimum pressure allower for release_pressure var</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/filled">filled</a></th><td>How much the canister should be filled (recommended from 0 to 1)</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/gas_type">gas_type</a></th><td>Stores the path of the gas for mapped canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/heat_limit">heat_limit</a></th><td>Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/label2types">label2types</a></th><td>List of all the gases, used in labelling the canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/maximum_pressure">maximum_pressure</a></th><td>Maximum pressure allowed on initialize inside the canister, multiplied by the filled var</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/mode">mode</a></th><td>Set the tier of the canister and overlay used</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/pressure_limit">pressure_limit</a></th><td>Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/prototype">prototype</a></th><td>Is the canister a prototype one?</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/release_log">release_log</a></th><td>Used to log opening and closing of the valve, available on VV</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/release_pressure">release_pressure</a></th><td>Player controlled var that set the release pressure of the canister</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/restricted">restricted</a></th><td>If true, the prototype canister requires engi access to be used</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/starter_temp">starter_temp</a></th><td>Initial temperature gas mixture</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/temperature_resistance">temperature_resistance</a></th><td>Maximum amount of heat that the canister can handle before taking damage</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/valve_open">valve_open</a></th><td>Is the valve open?</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#var/valve_timer">valve_timer</a></th><td>Timer variables</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/canister_break">canister_break</a></th><td>Handle canisters disassemble, releases the gas content in the turf</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/create_gas">create_gas</a></th><td>Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
+Used for canisters spawned in maps and by admins</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/get_time_left">get_time_left</a></th><td>Getter for the amount of time left in the timer of prototype canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/set_active">set_active</a></th><td>Starts the timer of prototype canisters</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/should_atmos_process">should_atmos_process</a></th><td>Function is used to actually set the overlays</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/canister.html#proc/ui_state">ui_state</a></th><td>function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/can_max_release_pressure"><aside class="declaration">var </aside>can_max_release_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 34"/></a></h3>
+        <p>Maximum pressure allowed for release_pressure var</p><h3 id="var/can_min_release_pressure"><aside class="declaration">var </aside>can_min_release_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 36"/></a></h3>
+        <p>Minimum pressure allower for release_pressure var</p><h3 id="var/filled"><aside class="declaration">var </aside>filled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 26"/></a></h3>
+        <p>How much the canister should be filled (recommended from 0 to 1)</p><h3 id="var/gas_type"><aside class="declaration">var </aside>gas_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 30"/></a></h3>
+        <p>Stores the path of the gas for mapped canisters</p><h3 id="var/heat_limit"><aside class="declaration">var </aside>heat_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 38"/></a></h3>
+        <p>Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)</p><h3 id="var/label2types"><aside class="declaration">var </aside>label2types
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 60"/></a></h3>
+        <p>List of all the gases, used in labelling the canisters</p><h3 id="var/maximum_pressure"><aside class="declaration">var </aside>maximum_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 28"/></a></h3>
+        <p>Maximum pressure allowed on initialize inside the canister, multiplied by the filled var</p><h3 id="var/mode"><aside class="declaration">var </aside>mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 58"/></a></h3>
+        <p>Set the tier of the canister and overlay used</p><h3 id="var/pressure_limit"><aside class="declaration">var </aside>pressure_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 40"/></a></h3>
+        <p>Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)</p><h3 id="var/prototype"><aside class="declaration">var </aside>prototype
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 47"/></a></h3>
+        <p>Is the canister a prototype one?</p><h3 id="var/release_log"><aside class="declaration">var </aside>release_log
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 24"/></a></h3>
+        <p>Used to log opening and closing of the valve, available on VV</p><h3 id="var/release_pressure"><aside class="declaration">var </aside>release_pressure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 32"/></a></h3>
+        <p>Player controlled var that set the release pressure of the canister</p><h3 id="var/restricted"><aside class="declaration">var </aside>restricted
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 56"/></a></h3>
+        <p>If true, the prototype canister requires engi access to be used</p><h3 id="var/starter_temp"><aside class="declaration">var </aside>starter_temp
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 44"/></a></h3>
+        <p>Initial temperature gas mixture</p><h3 id="var/temperature_resistance"><aside class="declaration">var </aside>temperature_resistance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 42"/></a></h3>
+        <p>Maximum amount of heat that the canister can handle before taking damage</p><h3 id="var/valve_open"><aside class="declaration">var </aside>valve_open
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 22"/></a></h3>
+        <p>Is the valve open?</p><h3 id="var/valve_timer"><aside class="declaration">var </aside>valve_timer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 49"/></a></h3>
+        <p>Timer variables</p><h2 id="proc">Proc Details</h2><h3 id="proc/canister_break"><aside class="declaration">proc </aside>canister_break<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L451">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 451"/></a></aside>
+        </h3>
+        <p>Handle canisters disassemble, releases the gas content in the turf</p><h3 id="proc/create_gas"><aside class="declaration">proc </aside>create_gas<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L355">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 355"/></a></aside>
+        </h3>
+        <p>Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
+Used for canisters spawned in maps and by admins</p><h3 id="proc/get_time_left"><aside class="declaration">proc </aside>get_time_left<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L289">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 289"/></a></aside>
+        </h3>
+        <p>Getter for the amount of time left in the timer of prototype canisters</p><h3 id="proc/set_active"><aside class="declaration">proc </aside>set_active<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L298">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 298"/></a></aside>
+        </h3>
+        <p>Starts the timer of prototype canisters</p><h3 id="proc/should_atmos_process"><aside class="parent"><a title="/atom" href="atom.html#proc/should_atmos_process">&uarr;</a></aside>should_atmos_process<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/air, exposed_temperature) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L396">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 396"/></a></aside>
+        </h3>
+        <p>Function is used to actually set the overlays</p><h3 id="proc/ui_state"><aside class="parent"><a title="/datum" href="datum.html#proc/ui_state">&uarr;</a></aside>ui_state<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/canister.dm#L501">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;canister.dm 501"/></a></aside>
+        </h3>
+        <p>function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

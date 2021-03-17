@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;vehicle&#x2F;sealed&#x2F;mecha - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/vehicle/sealed/mecha.html#var">Var Details</a> - <a href="obj/vehicle/sealed/mecha.html#proc">Proc Details</a></header>
+<main>
+<h1>mecha <aside>/<a href="obj.html">obj</a>/<a href="obj/vehicle.html">vehicle</a>/<a href="obj/vehicle/sealed.html">sealed</a>/<a href="obj/vehicle/sealed/mecha.html">mecha</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 20"/></a></h1>
+
+<p>WELCOME TO MECHA.DM, ENJOY YOUR STAY</p>
+<p>Mechs are now (finally) vehicles, this means you can make them multicrew
+They can also grant select ability buttons based on occupant bitflags</p>
+<p>Movement is handled through vehicle_move() which is called by relaymove
+Clicking is done by way of signals registering to the entering mob
+NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
+AI also has special checks becaus it gets in and out of the mech differently
+Always call remove_occupant(mob) when leaving the mech so the mob is removed properly</p>
+<p>For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+Abilities can then be set to only apply for certain bitflags and are assigned as such automatically</p>
+<p>Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
+Or are used to call action() on equipped gear
+Cooldown for gear is on the mech because exploits</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/active_thrusters">active_thrusters</a></th><td>/Action vars
+Ref to any active thrusters we might have</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/allow_diagonal_movement">allow_diagonal_movement</a></th><td>Whether this mech is allowed to move diagonally</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/bumpsmash">bumpsmash</a></th><td>Whether or not the mech destroys walls by running into it.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/cabin_air">cabin_air</a></th><td>Internal air mix datum</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/capacitor">capacitor</a></th><td>Keeps track of the mech's capacitor</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/cell">cell</a></th><td>Keeps track of the mech's cell</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/completely_disabled">completely_disabled</a></th><td>Just stop the mech from doing anything</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/connected_port">connected_port</a></th><td>The connected air port, if we have one</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/construction_state">construction_state</a></th><td>Whether the mechs maintenance protocols are on or off</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/defense_mode">defense_mode</a></th><td>Bool for energy shield on/off</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/deflect_chance">deflect_chance</a></th><td>chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/destruction_sleep_duration">destruction_sleep_duration</a></th><td>Time you get slept for if you get forcible ejected by the mech exploding</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/dir_in">dir_in</a></th><td>What direction will the mech face when entered/powered on? Defaults to South.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/dna_lock">dna_lock</a></th><td>Stores the DNA enzymes of a carbon so tht only they can access the mech</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/enclosed">enclosed</a></th><td>Whether outside viewers can see the pilot inside</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/equipment_disabled">equipment_disabled</a></th><td>if we cant use our equipment(such as due to EMP)</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/exit_delay">exit_delay</a></th><td>TIme taken to leave the mech</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/facing_modifiers">facing_modifiers</a></th><td>Modifiers for directional armor</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/internal_damage">internal_damage</a></th><td>Bitflags for internal damage</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/internal_damage_threshold">internal_damage_threshold</a></th><td>health percentage below which internal damage is possible</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/internal_tank">internal_tank</a></th><td>The internal air tank obj of the mech</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/internal_tank_valve">internal_tank_valve</a></th><td>The setting of the valve on the internal tank</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/internals_req_access">internals_req_access</a></th><td>required access to change internal components</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/is_currently_ejecting">is_currently_ejecting</a></th><td>Currently ejecting, and unable to do things</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/lavaland_only">lavaland_only</a></th><td>Bool for whether this mech can only be used on lavaland</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/leg_overload_coeff">leg_overload_coeff</a></th><td>Energy use modifier for leg overload</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/leg_overload_mode">leg_overload_mode</a></th><td>Bool for leg overload on/off</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/lights_power">lights_power</a></th><td>How powerful our lights are</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/max_equip">max_equip</a></th><td>Maximum amount of equipment we can have</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/mecha_flags">mecha_flags</a></th><td>Contains flags for the mecha</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/melee_cooldown">melee_cooldown</a></th><td>Cooldown duration between melee punches</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/melee_energy_drain">melee_energy_drain</a></th><td>How much energy we drain each time we mechpunch someone</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/normal_step_energy_drain">normal_step_energy_drain</a></th><td>How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/operation_req_access">operation_req_access</a></th><td>required access level for mecha operation</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/overload_step_energy_drain_min">overload_step_energy_drain_min</a></th><td>The minimum amount of energy charge consumed by leg overload</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/phase_state">phase_state</a></th><td>icon_state for flick() when phazing</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/phasing">phasing</a></th><td>Bool for if the mech is currently phasing</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/phasing_energy_drain">phasing_energy_drain</a></th><td>Power we use every time we phaze through something</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/radio">radio</a></th><td>Special version of the radio, which is unsellable</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/scanmod">scanmod</a></th><td>Keeps track of the mech's scanning module</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/selected">selected</a></th><td>Current active equipment</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/silicon_icon_state">silicon_icon_state</a></th><td>In case theres a different iconstate for AI/MMI pilot(currently only used for ripley)</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/smashcooldown">smashcooldown</a></th><td>Cooldown length between bumpsmashes</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/smoke_charges">smoke_charges</a></th><td>Remaining smoke charges</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/smoke_cooldown">smoke_cooldown</a></th><td>Cooldown between using smoke</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/spark_system">spark_system</a></th><td>Spark effects are handled by this datum</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/step_energy_drain">step_energy_drain</a></th><td>How much energy the mech will consume each time it moves. this is the current active energy consumed</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/step_silent">step_silent</a></th><td>Whether our steps are silent due to no gravity</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/stepsound">stepsound</a></th><td>Sound played when the mech moves</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/strafe">strafe</a></th><td>Wether we are strafing</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/turnsound">turnsound</a></th><td>Sound played when the mech walks</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/use_internal_tank">use_internal_tank</a></th><td>////////ATMOS
+Whether we are currrently drawing from the internal tank</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#var/wreckage">wreckage</a></th><td>Typepath for the wreckage it spawns when destroyed</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/Topic">Topic</a></th><td>Topic</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/add_capacitor">add_capacitor</a></th><td>Adds a capacitor, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/add_cell">add_cell</a></th><td>Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/add_scanmod">add_scanmod</a></th><td>Adds a scanning module, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/ai_enter_mech">ai_enter_mech</a></th><td>Hack and From Card interactions share some code, so leave that here for both to use.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/aimob_enter_mech">aimob_enter_mech</a></th><td>Handles an actual AI (simple_animal mecha pilot) entering the mech</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/aimob_exit_mech">aimob_exit_mech</a></th><td>Handles an actual AI (simple_animal mecha pilot) exiting the mech</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/ammo_resupply">ammo_resupply</a></th><td>Ammo stuff</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/attack_ai">attack_ai</a></th><td>AI piloting</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/check_for_internal_damage">check_for_internal_damage</a></th><td>Internal damage</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/disconnect_air">disconnect_air</a></th><td>Disconnects air tank- air port connection on mecha move</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/display_speech_bubble">display_speech_bubble</a></th><td>Displays a special speech bubble when someone inside the mecha speaks</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/generate_action_type">generate_action_type</a></th><td>MECHA ACTIONS</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/get_actions">get_actions</a></th><td>Returns HTML for mech actions. Ideally, this proc would be empty for the base mecha. Segmented for easy refactoring.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/get_commands">get_commands</a></th><td>HTML for commands.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/get_equipment_list">get_equipment_list</a></th><td>HTML for list of equipment.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/get_stats_html">get_stats_html</a></th><td>Rendering stats window</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/get_stats_part">get_stats_part</a></th><td>Returns the status of the mech.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/has_charge">has_charge</a></th><td>Power stuff</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/on_light_eater">on_light_eater</a></th><td>Special light eater handling</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/on_mouseclick">on_mouseclick</a></th><td>// Action processing ////</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/operation_allowed">operation_allowed</a></th><td>Access stuff</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/play_stepsound">play_stepsound</a></th><td>/////  Movement procs  ////////</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/remove_air">remove_air</a></th><td>Atmospheric stuff</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/report_internal_damage">report_internal_damage</a></th><td>HTML for internal damage.</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/return_pressure">return_pressure</a></th><td>fetches pressure of the gas mixture we are using</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/return_temperature">return_temperature</a></th><td>fetches temp of the gas mixture we are using</td></tr>
+            <tr><th><a href="obj/vehicle/sealed/mecha.html#proc/stationary_repair">stationary_repair</a></th><td>Repairs internal damage if the mech hasn't moved.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active_thrusters"><aside class="declaration">var </aside>active_thrusters
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/mecha_parts/mecha_equipment.html">mecha_parts/mecha_equipment</a>/thrusters</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 136"/></a></h3>
+        <p>/Action vars
+Ref to any active thrusters we might have</p><h3 id="var/allow_diagonal_movement"><aside class="declaration">var </aside>allow_diagonal_movement
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 71"/></a></h3>
+        <p>Whether this mech is allowed to move diagonally</p><h3 id="var/bumpsmash"><aside class="declaration">var </aside>bumpsmash
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 73"/></a></h3>
+        <p>Whether or not the mech destroys walls by running into it.</p><h3 id="var/cabin_air"><aside class="declaration">var </aside>cabin_air
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 83"/></a></h3>
+        <p>Internal air mix datum</p><h3 id="var/capacitor"><aside class="declaration">var </aside>capacitor
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/stock_parts/capacitor</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 57"/></a></h3>
+        <p>Keeps track of the mech's capacitor</p><h3 id="var/cell"><aside class="declaration">var </aside>cell
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stock_parts/cell.html">stock_parts/cell</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 53"/></a></h3>
+        <p>Keeps track of the mech's cell</p><h3 id="var/completely_disabled"><aside class="declaration">var </aside>completely_disabled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 69"/></a></h3>
+        <p>Just stop the mech from doing anything</p><h3 id="var/connected_port"><aside class="declaration">var </aside>connected_port
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/atmospherics.html">atmospherics</a>/<a href="obj/machinery/atmospherics/components.html">components</a>/unary/portables_connector</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 85"/></a></h3>
+        <p>The connected air port, if we have one</p><h3 id="var/construction_state"><aside class="declaration">var </aside>construction_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 59"/></a></h3>
+        <p>Whether the mechs maintenance protocols are on or off</p><h3 id="var/defense_mode"><aside class="declaration">var </aside>defense_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 139"/></a></h3>
+        <p>Bool for energy shield on/off</p><h3 id="var/deflect_chance"><aside class="declaration">var </aside>deflect_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 47"/></a></h3>
+        <p>chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.</p><h3 id="var/destruction_sleep_duration"><aside class="declaration">var </aside>destruction_sleep_duration
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 124"/></a></h3>
+        <p>Time you get slept for if you get forcible ejected by the mech exploding</p><h3 id="var/dir_in"><aside class="declaration">var </aside>dir_in
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 37"/></a></h3>
+        <p>What direction will the mech face when entered/powered on? Defaults to South.</p><h3 id="var/dna_lock"><aside class="declaration">var </aside>dna_lock
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 63"/></a></h3>
+        <p>Stores the DNA enzymes of a carbon so tht only they can access the mech</p><h3 id="var/enclosed"><aside class="declaration">var </aside>enclosed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 126"/></a></h3>
+        <p>Whether outside viewers can see the pilot inside</p><h3 id="var/equipment_disabled"><aside class="declaration">var </aside>equipment_disabled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 51"/></a></h3>
+        <p>if we cant use our equipment(such as due to EMP)</p><h3 id="var/exit_delay"><aside class="declaration">var </aside>exit_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 122"/></a></h3>
+        <p>TIme taken to leave the mech</p><h3 id="var/facing_modifiers"><aside class="declaration">var </aside>facing_modifiers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 49"/></a></h3>
+        <p>Modifiers for directional armor</p><h3 id="var/internal_damage"><aside class="declaration">var </aside>internal_damage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 95"/></a></h3>
+        <p>Bitflags for internal damage</p><h3 id="var/internal_damage_threshold"><aside class="declaration">var </aside>internal_damage_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 93"/></a></h3>
+        <p>health percentage below which internal damage is possible</p><h3 id="var/internal_tank"><aside class="declaration">var </aside>internal_tank
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/portable_atmospherics.html">portable_atmospherics</a>/<a href="obj/machinery/portable_atmospherics/canister.html">canister</a>/air</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 81"/></a></h3>
+        <p>The internal air tank obj of the mech</p><h3 id="var/internal_tank_valve"><aside class="declaration">var </aside>internal_tank_valve
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 79"/></a></h3>
+        <p>The setting of the valve on the internal tank</p><h3 id="var/internals_req_access"><aside class="declaration">var </aside>internals_req_access
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 100"/></a></h3>
+        <p>required access to change internal components</p><h3 id="var/is_currently_ejecting"><aside class="declaration">var </aside>is_currently_ejecting
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 130"/></a></h3>
+        <p>Currently ejecting, and unable to do things</p><h3 id="var/lavaland_only"><aside class="declaration">var </aside>lavaland_only
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 168"/></a></h3>
+        <p>Bool for whether this mech can only be used on lavaland</p><h3 id="var/leg_overload_coeff"><aside class="declaration">var </aside>leg_overload_coeff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 144"/></a></h3>
+        <p>Energy use modifier for leg overload</p><h3 id="var/leg_overload_mode"><aside class="declaration">var </aside>leg_overload_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 142"/></a></h3>
+        <p>Bool for leg overload on/off</p><h3 id="var/lights_power"><aside class="declaration">var </aside>lights_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 67"/></a></h3>
+        <p>How powerful our lights are</p><h3 id="var/max_equip"><aside class="declaration">var </aside>max_equip
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 109"/></a></h3>
+        <p>Maximum amount of equipment we can have</p><h3 id="var/mecha_flags"><aside class="declaration">var </aside>mecha_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 61"/></a></h3>
+        <p>Contains flags for the mecha</p><h3 id="var/melee_cooldown"><aside class="declaration">var </aside>melee_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 119"/></a></h3>
+        <p>Cooldown duration between melee punches</p><h3 id="var/melee_energy_drain"><aside class="declaration">var </aside>melee_energy_drain
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 43"/></a></h3>
+        <p>How much energy we drain each time we mechpunch someone</p><h3 id="var/normal_step_energy_drain"><aside class="declaration">var </aside>normal_step_energy_drain
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 39"/></a></h3>
+        <p>How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.</p><h3 id="var/operation_req_access"><aside class="declaration">var </aside>operation_req_access
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 98"/></a></h3>
+        <p>required access level for mecha operation</p><h3 id="var/overload_step_energy_drain_min"><aside class="declaration">var </aside>overload_step_energy_drain_min
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 45"/></a></h3>
+        <p>The minimum amount of energy charge consumed by leg overload</p><h3 id="var/phase_state"><aside class="declaration">var </aside>phase_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 159"/></a></h3>
+        <p>icon_state for flick() when phazing</p><h3 id="var/phasing"><aside class="declaration">var </aside>phasing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 155"/></a></h3>
+        <p>Bool for if the mech is currently phasing</p><h3 id="var/phasing_energy_drain"><aside class="declaration">var </aside>phasing_energy_drain
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 157"/></a></h3>
+        <p>Power we use every time we phaze through something</p><h3 id="var/radio"><aside class="declaration">var </aside>radio
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a>/mech</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 88"/></a></h3>
+        <p>Special version of the radio, which is unsellable</p><h3 id="var/scanmod"><aside class="declaration">var </aside>scanmod
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/stock_parts/scanning_module</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 55"/></a></h3>
+        <p>Keeps track of the mech's scanning module</p><h3 id="var/selected"><aside class="declaration">var </aside>selected
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/mecha_parts/mecha_equipment.html">mecha_parts/mecha_equipment</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 107"/></a></h3>
+        <p>Current active equipment</p><h3 id="var/silicon_icon_state"><aside class="declaration">var </aside>silicon_icon_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 128"/></a></h3>
+        <p>In case theres a different iconstate for AI/MMI pilot(currently only used for ripley)</p><h3 id="var/smashcooldown"><aside class="declaration">var </aside>smashcooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 165"/></a></h3>
+        <p>Cooldown length between bumpsmashes</p><h3 id="var/smoke_charges"><aside class="declaration">var </aside>smoke_charges
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 150"/></a></h3>
+        <p>Remaining smoke charges</p><h3 id="var/smoke_cooldown"><aside class="declaration">var </aside>smoke_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L152">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 152"/></a></h3>
+        <p>Cooldown between using smoke</p><h3 id="var/spark_system"><aside class="declaration">var </aside>spark_system
+            <aside>&ndash; /<a href="datum.html">datum</a>/effect_system/spark_spread</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 65"/></a></h3>
+        <p>Spark effects are handled by this datum</p><h3 id="var/step_energy_drain"><aside class="declaration">var </aside>step_energy_drain
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 41"/></a></h3>
+        <p>How much energy the mech will consume each time it moves. this is the current active energy consumed</p><h3 id="var/step_silent"><aside class="declaration">var </aside>step_silent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 112"/></a></h3>
+        <p>Whether our steps are silent due to no gravity</p><h3 id="var/stepsound"><aside class="declaration">var </aside>stepsound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 114"/></a></h3>
+        <p>Sound played when the mech moves</p><h3 id="var/strafe"><aside class="declaration">var </aside>strafe
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 162"/></a></h3>
+        <p>Wether we are strafing</p><h3 id="var/turnsound"><aside class="declaration">var </aside>turnsound
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 116"/></a></h3>
+        <p>Sound played when the mech walks</p><h3 id="var/use_internal_tank"><aside class="declaration">var </aside>use_internal_tank
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 77"/></a></h3>
+        <p>////////ATMOS
+Whether we are currrently drawing from the internal tank</p><h3 id="var/wreckage"><aside class="declaration">var </aside>wreckage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 103"/></a></h3>
+        <p>Typepath for the wreckage it spawns when destroyed</p><h2 id="proc">Proc Details</h2><h3 id="proc/Topic"><aside class="parent"><a title="/atom" href="atom.html#proc/Topic">&uarr;</a></aside>Topic<aside>(href, href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L225">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 225"/></a></aside>
+        </h3>
+        <p>Topic</p><h3 id="proc/add_capacitor"><aside class="declaration">proc </aside>add_capacitor<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/stock_parts/capacitor/cap) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L334">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 334"/></a></aside>
+        </h3>
+        <p>Adds a capacitor, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.</p><h3 id="proc/add_cell"><aside class="declaration">proc </aside>add_cell<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stock_parts/cell.html">stock_parts/cell</a>/C) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L316">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 316"/></a></aside>
+        </h3>
+        <p>Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.</p>
+<p>/// Helpers /////////</p>
+<p>Adds a cell, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.</p><h3 id="proc/add_scanmod"><aside class="declaration">proc </aside>add_scanmod<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/stock_parts/scanning_module/sm) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L325">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 325"/></a></aside>
+        </h3>
+        <p>Adds a scanning module, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.</p><h3 id="proc/ai_enter_mech"><aside class="declaration">proc </aside>ai_enter_mech<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/silicon.html">silicon</a>/<a href="mob/living/silicon/ai.html">ai</a>/AI) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L859">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 859"/></a></aside>
+        </h3>
+        <p>Hack and From Card interactions share some code, so leave that here for both to use.</p><h3 id="proc/aimob_enter_mech"><aside class="declaration">proc </aside>aimob_enter_mech<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/syndicate/mecha_pilot.html">syndicate/mecha_pilot</a>/pilot_mob) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L872">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 872"/></a></aside>
+        </h3>
+        <p>Handles an actual AI (simple_animal mecha pilot) entering the mech</p><h3 id="proc/aimob_exit_mech"><aside class="declaration">proc </aside>aimob_exit_mech<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/syndicate/mecha_pilot.html">syndicate/mecha_pilot</a>/pilot_mob) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L883">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 883"/></a></aside>
+        </h3>
+        <p>Handles an actual AI (simple_animal mecha pilot) exiting the mech</p><h3 id="proc/ammo_resupply"><aside class="declaration">proc </aside>ammo_resupply<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/mecha_ammo/A, /<a href="mob.html">mob</a>/user, fail_chat_override) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1168"/></a></aside>
+        </h3>
+        <p>Ammo stuff</p><h3 id="proc/attack_ai">attack_ai<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/silicon.html">silicon</a>/<a href="mob/living/silicon/ai.html">ai</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L763">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 763"/></a></aside>
+        </h3>
+        <p>AI piloting</p><h3 id="proc/check_for_internal_damage"><aside class="declaration">proc </aside>check_for_internal_damage<aside>(/list/possible_int_damage, ignore_threshold) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L723">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 723"/></a></aside>
+        </h3>
+        <p>Internal damage</p><h3 id="proc/disconnect_air"><aside class="declaration">proc </aside>disconnect_air<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L582">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 582"/></a></aside>
+        </h3>
+        <p>Disconnects air tank- air port connection on mecha move</p><h3 id="proc/display_speech_bubble"><aside class="declaration">proc </aside>display_speech_bubble<aside>(/<a href="datum.html">datum</a>/source, /list/speech_args) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L505">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 505"/></a></aside>
+        </h3>
+        <p>Displays a special speech bubble when someone inside the mecha speaks</p><h3 id="proc/generate_action_type">generate_action_type<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_actions.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_actions.dm 3"/></a></aside>
+        </h3>
+        <p>MECHA ACTIONS</p><h3 id="proc/get_actions"><aside class="declaration">proc </aside>get_actions<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 80"/></a></aside>
+        </h3>
+        <p>Returns HTML for mech actions. Ideally, this proc would be empty for the base mecha. Segmented for easy refactoring.</p><h3 id="proc/get_commands"><aside class="declaration">proc </aside>get_commands<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 117"/></a></aside>
+        </h3>
+        <p>HTML for commands.</p><h3 id="proc/get_equipment_list"><aside class="declaration">proc </aside>get_equipment_list<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 108"/></a></aside>
+        </h3>
+        <p>HTML for list of equipment.</p><h3 id="proc/get_stats_html"><aside class="declaration">proc </aside>get_stats_html<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 6"/></a></aside>
+        </h3>
+        <p>Rendering stats window</p><h3 id="proc/get_stats_part"><aside class="declaration">proc </aside>get_stats_part<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 55"/></a></aside>
+        </h3>
+        <p>Returns the status of the mech.</p><h3 id="proc/has_charge"><aside class="declaration">proc </aside>has_charge<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1111"/></a></aside>
+        </h3>
+        <p>Power stuff</p><h3 id="proc/on_light_eater"><aside class="declaration">proc </aside>on_light_eater<aside>(/<a href="obj.html">obj</a>/<a href="obj/vehicle.html">vehicle</a>/<a href="obj/vehicle/sealed.html">sealed</a>/source, /<a href="datum.html">datum</a>/light_eater) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1220">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1220"/></a></aside>
+        </h3>
+        <p>Special light eater handling</p><h3 id="proc/on_mouseclick"><aside class="declaration">proc </aside>on_mouseclick<aside>(/<a href="mob.html">mob</a>/user, /<a href="atom.html">atom</a>/target, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L518">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 518"/></a></aside>
+        </h3>
+        <p>// Action processing ////</p>
+<p>Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.</p><h3 id="proc/operation_allowed"><aside class="declaration">proc </aside>operation_allowed<aside>(/<a href="mob.html">mob</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1096">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1096"/></a></aside>
+        </h3>
+        <p>Access stuff</p><h3 id="proc/play_stepsound"><aside class="declaration">proc </aside>play_stepsound<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L575">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 575"/></a></aside>
+        </h3>
+        <p>/////  Movement procs  ////////</p>
+<p>Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.</p><h3 id="proc/remove_air"><aside class="parent"><a title="/atom" href="atom.html#proc/remove_air">&uarr;</a></aside>remove_air<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1139"/></a></aside>
+        </h3>
+        <p>Atmospheric stuff</p><h3 id="proc/report_internal_damage"><aside class="declaration">proc </aside>report_internal_damage<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 90"/></a></aside>
+        </h3>
+        <p>HTML for internal damage.</p><h3 id="proc/return_pressure"><aside class="declaration">proc </aside>return_pressure<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1153"/></a></aside>
+        </h3>
+        <p>fetches pressure of the gas mixture we are using</p><h3 id="proc/return_temperature"><aside class="parent"><a title="/atom" href="atom.html#proc/return_temperature">&uarr;</a></aside>return_temperature<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/_mecha.dm#L1158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;_mecha.dm 1158"/></a></aside>
+        </h3>
+        <p>fetches temp of the gas mixture we are using</p><h3 id="proc/stationary_repair"><aside class="declaration">proc </aside>stationary_repair<aside>(location) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mecha_topic.dm#L414">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mecha_topic.dm 414"/></a></aside>
+        </h3>
+        <p>Repairs internal damage if the mech hasn't moved.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

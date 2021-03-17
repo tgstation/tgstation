@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;reaction_chamber - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/reaction_chamber.html#var">Var Details</a> - <a href="obj/machinery/plumbing/reaction_chamber.html#proc">Proc Details</a></header>
+<main>
+<h1>reaction_chamber <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/reaction_chamber.html">reaction_chamber</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 2"/></a></h1>
+
+<p>a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents seperated and only reacts under your given terms</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/acidic_beaker">acidic_beaker</a></th><td>Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a seperate thing. It's a small (50u) beaker</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/acidic_limit">acidic_limit</a></th><td>If above this pH, we start dumping buffer into it</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/alkaline_beaker">alkaline_beaker</a></th><td>beaker that holds the alkaline buffer.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/alkaline_limit">alkaline_limit</a></th><td>If below this pH, we start dumping buffer into it</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/emptying">emptying</a></th><td>our reagent goal has been reached, so now we lock our inputs and start emptying</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/heater_coefficient">heater_coefficient</a></th><td>cool/heat power</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/target_temperature">target_temperature</a></th><td>towards which temperature do we build (except during draining)?</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#var/target_volume">target_volume</a></th><td>At what volume do we start reacting?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#proc/on_reagent_change">on_reagent_change</a></th><td>Handles stopping the emptying process when the chamber empties.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/reaction_chamber.html#proc/on_reagents_del">on_reagents_del</a></th><td>Handles properly detaching signal hooks.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/acidic_beaker"><aside class="declaration">var </aside>acidic_beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/glass/beaker</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 23"/></a></h3>
+        <p>Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a seperate thing. It's a small (50u) beaker</p><h3 id="var/acidic_limit"><aside class="declaration">var </aside>acidic_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 12"/></a></h3>
+        <p>If above this pH, we start dumping buffer into it</p><h3 id="var/alkaline_beaker"><aside class="declaration">var </aside>alkaline_beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/glass/beaker</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 27"/></a></h3>
+        <p>beaker that holds the alkaline buffer.</p><h3 id="var/alkaline_limit"><aside class="declaration">var </aside>alkaline_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 14"/></a></h3>
+        <p>If below this pH, we start dumping buffer into it</p><h3 id="var/emptying"><aside class="declaration">var </aside>emptying
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 16"/></a></h3>
+        <p>our reagent goal has been reached, so now we lock our inputs and start emptying</p><h3 id="var/heater_coefficient"><aside class="declaration">var </aside>heater_coefficient
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 21"/></a></h3>
+        <p>cool/heat power</p><h3 id="var/target_temperature"><aside class="declaration">var </aside>target_temperature
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 19"/></a></h3>
+        <p>towards which temperature do we build (except during draining)?</p><h3 id="var/target_volume"><aside class="declaration">var </aside>target_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 10"/></a></h3>
+        <p>At what volume do we start reacting?</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_reagent_change"><aside class="declaration">proc </aside>on_reagent_change<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/holder, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 50"/></a></aside>
+        </h3>
+        <p>Handles stopping the emptying process when the chamber empties.</p><h3 id="proc/on_reagents_del"><aside class="declaration">proc </aside>on_reagents_del<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/reagents) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/plumbing/plumbers/reaction_chamber.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;reaction_chamber.dm 43"/></a></aside>
+        </h3>
+        <p>Handles properly detaching signal hooks.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

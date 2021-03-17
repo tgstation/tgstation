@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;chem_heater - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/chem_heater.html#var">Var Details</a> - <a href="obj/machinery/chem_heater.html#proc">Proc Details</a></header>
+<main>
+<h1>chem_heater <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/chem_heater.html">chem_heater</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 11"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/chem_heater.html#var/tutorial_active">tutorial_active</a></th><td>If the user has the tutorial enabled</td></tr>
+            <tr><th><a href="obj/machinery/chem_heater.html#var/tutorial_state">tutorial_state</a></th><td>What state we're at in the tutorial</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/chem_heater.html#proc/move_buffer">move_buffer</a></th><td>Moves a type of buffer from the heater to the beaker, or vice versa</td></tr>
+            <tr><th><a href="obj/machinery/chem_heater.html#proc/on_reaction_step">on_reaction_step</a></th><td>Forces a UI update every time a reaction step happens inside of the beaker it contains. This is so the UI is in sync with the reaction since it's important that the output matches the current conditions for pH adjustment and temperature.</td></tr>
+            <tr><th><a href="obj/machinery/chem_heater.html#proc/on_ui_deletion">on_ui_deletion</a></th><td>This catches a signal and uses it to delete the ui instance from the list</td></tr>
+            <tr><th><a href="obj/machinery/chem_heater.html#proc/remove_ui_client_list">remove_ui_client_list</a></th><td>This removes an open ui instance from the ui list and deregsiters the signal</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/tutorial_active"><aside class="declaration">var </aside>tutorial_active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 30"/></a></h3>
+        <p>If the user has the tutorial enabled</p><h3 id="var/tutorial_state"><aside class="declaration">var </aside>tutorial_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 32"/></a></h3>
+        <p>What state we're at in the tutorial</p><h2 id="proc">Proc Details</h2><h3 id="proc/move_buffer"><aside class="declaration">proc </aside>move_buffer<aside>(buffer_type, volume) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L419">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 419"/></a></aside>
+        </h3>
+        <p>Moves a type of buffer from the heater to the beaker, or vice versa</p><h3 id="proc/on_reaction_step"><aside class="declaration">proc </aside>on_reaction_step<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/holder, num_reactions, delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L181">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 181"/></a></aside>
+        </h3>
+        <p>Forces a UI update every time a reaction step happens inside of the beaker it contains. This is so the UI is in sync with the reaction since it's important that the output matches the current conditions for pH adjustment and temperature.</p><h3 id="proc/on_ui_deletion"><aside class="declaration">proc </aside>on_ui_deletion<aside>(/<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/source, force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L222">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 222"/></a></aside>
+        </h3>
+        <p>This catches a signal and uses it to delete the ui instance from the list</p><h3 id="proc/remove_ui_client_list"><aside class="declaration">proc </aside>remove_ui_client_list<aside>(old_ui) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/machinery/chem_heater.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;chem_heater.dm 217"/></a></aside>
+        </h3>
+        <p>This removes an open ui instance from the ui list and deregsiters the signal</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

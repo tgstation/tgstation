@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;access.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/access.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/access.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_BRIG">ACCESS_BRIG</a></th><td>Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_ARMORY">ACCESS_ARMORY</a></th><td>Armory, gulag teleporter, execution chamber</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FORENSICS_LOCKERS">ACCESS_FORENSICS_LOCKERS</a></th><td>Detective's office, forensics lockers, security+medical records</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_MEDICAL">ACCESS_MEDICAL</a></th><td>Medical general access</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_MORGUE">ACCESS_MORGUE</a></th><td>Morgue access</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_RND">ACCESS_RND</a></th><td>R&amp;D department and R&amp;D console</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_TOXINS">ACCESS_TOXINS</a></th><td>Toxins lab and burn chamber</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_GENETICS">ACCESS_GENETICS</a></th><td>Genetics access</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_ENGINE">ACCESS_ENGINE</a></th><td>Engineering area, power monitor, power flow control console</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_ENGINE_EQUIP">ACCESS_ENGINE_EQUIP</a></th><td>APCs, EngiVend/YouTool, engineering equipment lockers</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_HEADS">ACCESS_HEADS</a></th><td>Bridge, EVA storage windoors, gateway shutters, AI integrity restorer, comms console</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CHEMISTRY">ACCESS_CHEMISTRY</a></th><td>Allows access to chemistry factory areas on compatible maps</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_RC_ANNOUNCE">ACCESS_RC_ANNOUNCE</a></th><td>Request console announcements</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_KEYCARD_AUTH">ACCESS_KEYCARD_AUTH</a></th><td>Used for events which require at least two people to confirm them</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_TCOMSAT">ACCESS_TCOMSAT</a></th><td>has access to the entire telecomms satellite / machinery</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_SEC_DOORS">ACCESS_SEC_DOORS</a></th><td>Outer brig doors, department security posts</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_MINERAL_STOREROOM">ACCESS_MINERAL_STOREROOM</a></th><td>For releasing minerals from the ORM</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_WEAPONS">ACCESS_WEAPONS</a></th><td>Weapon authorization for secbots</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_NETWORK">ACCESS_NETWORK</a></th><td>NTnet diagnostics/monitoring software</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_PHARMACY">ACCESS_PHARMACY</a></th><td>Pharmacy access (Chemistry room in Medbay)
+Nice.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_TOXINS_STORAGE">ACCESS_TOXINS_STORAGE</a></th><td>Toxins tank storage room access</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AUX_BASE">ACCESS_AUX_BASE</a></th><td>Room and launching.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_GENERAL">ACCESS_CENT_GENERAL</a></th><td>General facilities. CentCom ferry.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_THUNDER">ACCESS_CENT_THUNDER</a></th><td>Thunderdome.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_SPECOPS">ACCESS_CENT_SPECOPS</a></th><td>Special Ops. Captain's display case, Marauder and Seraph mechs.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_MEDICAL">ACCESS_CENT_MEDICAL</a></th><td>Medical/Research</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_LIVING">ACCESS_CENT_LIVING</a></th><td>Living quarters.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_STORAGE">ACCESS_CENT_STORAGE</a></th><td>Generic storage areas.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_TELEPORTER">ACCESS_CENT_TELEPORTER</a></th><td>Teleporter.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_CAPTAIN">ACCESS_CENT_CAPTAIN</a></th><td>Captain's office/ID comp/AI.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_CENT_BAR">ACCESS_CENT_BAR</a></th><td>The non-existent CentCom Bar</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_SYNDICATE">ACCESS_SYNDICATE</a></th><td>General Syndicate Access. Includes Syndicate mechs and ruins.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_SYNDICATE_LEADER">ACCESS_SYNDICATE_LEADER</a></th><td>Nuke Op Leader Access</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AWAY_GENERAL">ACCESS_AWAY_GENERAL</a></th><td>Away general facilities.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AWAY_MAINT">ACCESS_AWAY_MAINT</a></th><td>Away maintenance</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AWAY_MED">ACCESS_AWAY_MED</a></th><td>Away medical</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AWAY_SEC">ACCESS_AWAY_SEC</a></th><td>Away security</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AWAY_ENGINE">ACCESS_AWAY_ENGINE</a></th><td>Away engineering</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_AWAY_GENERIC1">ACCESS_AWAY_GENERIC1</a></th><td>Away generic access</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_ALERT_ADMINS">ACCESS_ALERT_ADMINS</a></th><td>A list of access levels that, when added to an ID card, will warn admins.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/LOG_ID_ACCESS_CHANGE">LOG_ID_ACCESS_CHANGE</a></th><td>Logging define for ID card access changes</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_COMMON_NAME">ACCESS_FLAG_COMMON_NAME</a></th><td>Displayed name for Common ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_COMMON">ACCESS_FLAG_COMMON</a></th><td>Bitflag for Common ID card accesses. See COMMON_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_COMMAND_NAME">ACCESS_FLAG_COMMAND_NAME</a></th><td>Displayed name for Command ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_COMMAND">ACCESS_FLAG_COMMAND</a></th><td>Bitflag for Command ID card accesses. See COMMAND_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_PRV_COMMAND_NAME">ACCESS_FLAG_PRV_COMMAND_NAME</a></th><td>Displayed name for Private Command ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_PRV_COMMAND">ACCESS_FLAG_PRV_COMMAND</a></th><td>Bitflag for Private Command ID card accesses. See PRIVATE_COMMAND_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_CAPTAIN_NAME">ACCESS_FLAG_CAPTAIN_NAME</a></th><td>Displayed name for Captain ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_CAPTAIN">ACCESS_FLAG_CAPTAIN</a></th><td>Bitflag for Captain ID card accesses. See CAPTAIN_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_CENTCOM_NAME">ACCESS_FLAG_CENTCOM_NAME</a></th><td>Displayed name for Centcom ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_CENTCOM">ACCESS_FLAG_CENTCOM</a></th><td>Bitflag for Centcom ID card accesses. See CENTCOM_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_SYNDICATE_NAME">ACCESS_FLAG_SYNDICATE_NAME</a></th><td>Displayed name for Syndicate ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_SYNDICATE">ACCESS_FLAG_SYNDICATE</a></th><td>Bitflag for Syndicate ID card accesses. See SYNDICATE_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_AWAY_NAME">ACCESS_FLAG_AWAY_NAME</a></th><td>Displayed name for Offstation/Ruin/Away Mission ID card accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_AWAY">ACCESS_FLAG_AWAY</a></th><td>Bitflag for Offstation/Ruin/Away Mission ID card accesses. See AWAY_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_SPECIAL_NAME">ACCESS_FLAG_SPECIAL_NAME</a></th><td>Displayed name for Special accesses that ordinaryily shouldn't be on ID cards.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ACCESS_FLAG_SPECIAL">ACCESS_FLAG_SPECIAL</a></th><td>Bitflag for Special accesses that ordinaryily shouldn't be on ID cards. See CULT_ACCESS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_ALL">WILDCARD_FLAG_ALL</a></th><td>This wildcraft flag accepts any access level.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_ALL">WILDCARD_NAME_ALL</a></th><td>Name associated with the all wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_COMMON">WILDCARD_FLAG_COMMON</a></th><td>Access flags that can be applied to common wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_COMMON">WILDCARD_NAME_COMMON</a></th><td>Name associated with the common wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_COMMAND">WILDCARD_FLAG_COMMAND</a></th><td>Access flags that can be applied to command wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_COMMAND">WILDCARD_NAME_COMMAND</a></th><td>Name associated with the command wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_PRV_COMMAND">WILDCARD_FLAG_PRV_COMMAND</a></th><td>Access flags that can be applied to private command wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_PRV_COMMAND">WILDCARD_NAME_PRV_COMMAND</a></th><td>Name associated with the private command wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_CAPTAIN">WILDCARD_FLAG_CAPTAIN</a></th><td>Access flags that can be applied to captain wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_CAPTAIN">WILDCARD_NAME_CAPTAIN</a></th><td>Name associated with the captain wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_CENTCOM">WILDCARD_FLAG_CENTCOM</a></th><td>Access flags that can be applied to centcom wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_CENTCOM">WILDCARD_NAME_CENTCOM</a></th><td>Name associated with the centcom wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_SYNDICATE">WILDCARD_FLAG_SYNDICATE</a></th><td>Access flags that can be applied to syndicate wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_SYNDICATE">WILDCARD_NAME_SYNDICATE</a></th><td>Name associated with the syndicate wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_AWAY">WILDCARD_FLAG_AWAY</a></th><td>Access flags that can be applied to offstation wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_AWAY">WILDCARD_NAME_AWAY</a></th><td>Name associated with the offstation wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_SPECIAL">WILDCARD_FLAG_SPECIAL</a></th><td>Access flags that can be applied to super special weird wildcard slots.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_SPECIAL">WILDCARD_NAME_SPECIAL</a></th><td>Name associated with the super special weird wildcard bitflag.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_FLAG_FORCED">WILDCARD_FLAG_FORCED</a></th><td>Access flag that indicates a wildcard was forced onto an ID card.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/WILDCARD_NAME_FORCED">WILDCARD_NAME_FORCED</a></th><td>Name associated with the wildcard bitflag that covers wildcards that have been forced onto an ID card that could not accept them.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/COMMON_ACCESS">COMMON_ACCESS</a></th><td>Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/COMMAND_ACCESS">COMMAND_ACCESS</a></th><td>Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/PRIVATE_COMMAND_ACCESS">PRIVATE_COMMAND_ACCESS</a></th><td>Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/CAPTAIN_ACCESS">CAPTAIN_ACCESS</a></th><td>Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/CENTCOM_ACCESS">CENTCOM_ACCESS</a></th><td>Centcom area stuff. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CENTCOM)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/SYNDICATE_ACCESS">SYNDICATE_ACCESS</a></th><td>Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/AWAY_ACCESS">AWAY_ACCESS</a></th><td>Away missions/gateway/space ruins.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_AWAY)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/CULT_ACCESS">CULT_ACCESS</a></th><td>Weird internal Cult access that prevents non-cult from using their doors.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SPECIAL)</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ALL_GLOBAL">REGION_ALL_GLOBAL</a></th><td>Name for the Global region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_ALL_GLOBAL">REGION_ACCESS_ALL_GLOBAL</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of every single access in the game.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ALL_STATION">REGION_ALL_STATION</a></th><td>Name for the Station All Access region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_ALL_STATION">REGION_ACCESS_ALL_STATION</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all station accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_GENERAL">REGION_GENERAL</a></th><td>Name for the General region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_GENERAL">REGION_ACCESS_GENERAL</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_SECURITY">REGION_SECURITY</a></th><td>Name for the Security region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_SECURITY">REGION_ACCESS_SECURITY</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all security regional accesses that are overseen by the HoS.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_MEDBAY">REGION_MEDBAY</a></th><td>Name for the Medbay region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_MEDBAY">REGION_ACCESS_MEDBAY</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_RESEARCH">REGION_RESEARCH</a></th><td>Name for the Research region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_RESEARCH">REGION_ACCESS_RESEARCH</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ENGINEERING">REGION_ENGINEERING</a></th><td>Name for the Engineering region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_ENGINEERING">REGION_ACCESS_ENGINEERING</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_SUPPLY">REGION_SUPPLY</a></th><td>Name for the Supply region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_SUPPLY">REGION_ACCESS_SUPPLY</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_COMMAND">REGION_COMMAND</a></th><td>Name for the Command region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_COMMAND">REGION_ACCESS_COMMAND</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all command regional accesses that are overseen by the Captain.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_CENTCOM">REGION_CENTCOM</a></th><td>Name for the Centcom region.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_ACCESS_CENTCOM">REGION_ACCESS_CENTCOM</a></th><td>Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/PDA_PAINTING_REGIONS">PDA_PAINTING_REGIONS</a></th><td>A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
+If a PDA is not in this list, it cannot be painted using the PDA &amp; ID Painter.
+If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
+Used to see pda_region in <a href="datum/controller/subsystem/id_access.html#proc/setup_tgui_lists" title="/datum/controller/subsystem/id_access">/datum/controller/subsystem/id_access/proc/setup_tgui_lists</a></td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/REGION_AREA_STATION">REGION_AREA_STATION</a></th><td>All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/TRY_ADD_ALL">TRY_ADD_ALL</a></th><td>Used in ID card access adding procs. Will try to add all accesses and utilises free wildcards, skipping over any accesses it can't add.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/TRY_ADD_ALL_NO_WILDCARD">TRY_ADD_ALL_NO_WILDCARD</a></th><td>Used in ID card access adding procs. Will try to add all accesses and does not utilise wildcards, skipping anything requiring a wildcard.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/FORCE_ADD_ALL">FORCE_ADD_ALL</a></th><td>Used in ID card access adding procs. Will forcefully add all accesses.</td></tr>
+        <tr><th><a href="code/__DEFINES/access.html#define/ERROR_ON_FAIL">ERROR_ON_FAIL</a></th><td>Used in ID card access adding procs. Will stack trace on fail.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ACCESS_ALERT_ADMINS"><aside class="declaration">#define </aside>ACCESS_ALERT_ADMINS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 146"/></a>
+    </h3>
+    <p>A list of access levels that, when added to an ID card, will warn admins.</p><h3 id="define/ACCESS_ARMORY"><aside class="declaration">#define </aside>ACCESS_ARMORY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 6"/></a>
+    </h3>
+    <p>Armory, gulag teleporter, execution chamber</p><h3 id="define/ACCESS_AUX_BASE"><aside class="declaration">#define </aside>ACCESS_AUX_BASE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 86"/></a>
+    </h3>
+    <p>Room and launching.</p><h3 id="define/ACCESS_AWAY_ENGINE"><aside class="declaration">#define </aside>ACCESS_AWAY_ENGINE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 128"/></a>
+    </h3>
+    <p>Away engineering</p><h3 id="define/ACCESS_AWAY_GENERAL"><aside class="declaration">#define </aside>ACCESS_AWAY_GENERAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 120"/></a>
+    </h3>
+    <p>Away general facilities.</p><h3 id="define/ACCESS_AWAY_GENERIC1"><aside class="declaration">#define </aside>ACCESS_AWAY_GENERIC1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 130"/></a>
+    </h3>
+    <p>Away generic access</p><h3 id="define/ACCESS_AWAY_MAINT"><aside class="declaration">#define </aside>ACCESS_AWAY_MAINT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 122"/></a>
+    </h3>
+    <p>Away maintenance</p><h3 id="define/ACCESS_AWAY_MED"><aside class="declaration">#define </aside>ACCESS_AWAY_MED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 124"/></a>
+    </h3>
+    <p>Away medical</p><h3 id="define/ACCESS_AWAY_SEC"><aside class="declaration">#define </aside>ACCESS_AWAY_SEC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 126"/></a>
+    </h3>
+    <p>Away security</p><h3 id="define/ACCESS_BRIG"><aside class="declaration">#define </aside>ACCESS_BRIG
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 4"/></a>
+    </h3>
+    <p>Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console</p><h3 id="define/ACCESS_CENT_BAR"><aside class="declaration">#define </aside>ACCESS_CENT_BAR
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 108"/></a>
+    </h3>
+    <p>The non-existent CentCom Bar</p><h3 id="define/ACCESS_CENT_CAPTAIN"><aside class="declaration">#define </aside>ACCESS_CENT_CAPTAIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 106"/></a>
+    </h3>
+    <p>Captain's office/ID comp/AI.</p><h3 id="define/ACCESS_CENT_GENERAL"><aside class="declaration">#define </aside>ACCESS_CENT_GENERAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 92"/></a>
+    </h3>
+    <p>General facilities. CentCom ferry.</p><h3 id="define/ACCESS_CENT_LIVING"><aside class="declaration">#define </aside>ACCESS_CENT_LIVING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 100"/></a>
+    </h3>
+    <p>Living quarters.</p><h3 id="define/ACCESS_CENT_MEDICAL"><aside class="declaration">#define </aside>ACCESS_CENT_MEDICAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 98"/></a>
+    </h3>
+    <p>Medical/Research</p><h3 id="define/ACCESS_CENT_SPECOPS"><aside class="declaration">#define </aside>ACCESS_CENT_SPECOPS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 96"/></a>
+    </h3>
+    <p>Special Ops. Captain's display case, Marauder and Seraph mechs.</p><h3 id="define/ACCESS_CENT_STORAGE"><aside class="declaration">#define </aside>ACCESS_CENT_STORAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 102"/></a>
+    </h3>
+    <p>Generic storage areas.</p><h3 id="define/ACCESS_CENT_TELEPORTER"><aside class="declaration">#define </aside>ACCESS_CENT_TELEPORTER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 104"/></a>
+    </h3>
+    <p>Teleporter.</p><h3 id="define/ACCESS_CENT_THUNDER"><aside class="declaration">#define </aside>ACCESS_CENT_THUNDER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 94"/></a>
+    </h3>
+    <p>Thunderdome.</p><h3 id="define/ACCESS_CHEMISTRY"><aside class="declaration">#define </aside>ACCESS_CHEMISTRY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 45"/></a>
+    </h3>
+    <p>Allows access to chemistry factory areas on compatible maps</p><h3 id="define/ACCESS_ENGINE"><aside class="declaration">#define </aside>ACCESS_ENGINE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 20"/></a>
+    </h3>
+    <p>Engineering area, power monitor, power flow control console</p><h3 id="define/ACCESS_ENGINE_EQUIP"><aside class="declaration">#define </aside>ACCESS_ENGINE_EQUIP
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 22"/></a>
+    </h3>
+    <p>APCs, EngiVend/YouTool, engineering equipment lockers</p><h3 id="define/ACCESS_FLAG_AWAY"><aside class="declaration">#define </aside>ACCESS_FLAG_AWAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L181">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 181"/></a>
+    </h3>
+    <p>Bitflag for Offstation/Ruin/Away Mission ID card accesses. See AWAY_ACCESS.</p><h3 id="define/ACCESS_FLAG_AWAY_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_AWAY_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 179"/></a>
+    </h3>
+    <p>Displayed name for Offstation/Ruin/Away Mission ID card accesses.</p><h3 id="define/ACCESS_FLAG_CAPTAIN"><aside class="declaration">#define </aside>ACCESS_FLAG_CAPTAIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 169"/></a>
+    </h3>
+    <p>Bitflag for Captain ID card accesses. See CAPTAIN_ACCESS.</p><h3 id="define/ACCESS_FLAG_CAPTAIN_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_CAPTAIN_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 167"/></a>
+    </h3>
+    <p>Displayed name for Captain ID card accesses.</p><h3 id="define/ACCESS_FLAG_CENTCOM"><aside class="declaration">#define </aside>ACCESS_FLAG_CENTCOM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 173"/></a>
+    </h3>
+    <p>Bitflag for Centcom ID card accesses. See CENTCOM_ACCESS.</p><h3 id="define/ACCESS_FLAG_CENTCOM_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_CENTCOM_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L171">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 171"/></a>
+    </h3>
+    <p>Displayed name for Centcom ID card accesses.</p><h3 id="define/ACCESS_FLAG_COMMAND"><aside class="declaration">#define </aside>ACCESS_FLAG_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 161"/></a>
+    </h3>
+    <p>Bitflag for Command ID card accesses. See COMMAND_ACCESS.</p><h3 id="define/ACCESS_FLAG_COMMAND_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_COMMAND_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 159"/></a>
+    </h3>
+    <p>Displayed name for Command ID card accesses.</p><h3 id="define/ACCESS_FLAG_COMMON"><aside class="declaration">#define </aside>ACCESS_FLAG_COMMON
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 157"/></a>
+    </h3>
+    <p>Bitflag for Common ID card accesses. See COMMON_ACCESS.</p><h3 id="define/ACCESS_FLAG_COMMON_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_COMMON_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 155"/></a>
+    </h3>
+    <p>Displayed name for Common ID card accesses.</p><h3 id="define/ACCESS_FLAG_PRV_COMMAND"><aside class="declaration">#define </aside>ACCESS_FLAG_PRV_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 165"/></a>
+    </h3>
+    <p>Bitflag for Private Command ID card accesses. See PRIVATE_COMMAND_ACCESS.</p><h3 id="define/ACCESS_FLAG_PRV_COMMAND_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_PRV_COMMAND_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L163">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 163"/></a>
+    </h3>
+    <p>Displayed name for Private Command ID card accesses.</p><h3 id="define/ACCESS_FLAG_SPECIAL"><aside class="declaration">#define </aside>ACCESS_FLAG_SPECIAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 185"/></a>
+    </h3>
+    <p>Bitflag for Special accesses that ordinaryily shouldn't be on ID cards. See CULT_ACCESS.</p><h3 id="define/ACCESS_FLAG_SPECIAL_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_SPECIAL_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 183"/></a>
+    </h3>
+    <p>Displayed name for Special accesses that ordinaryily shouldn't be on ID cards.</p><h3 id="define/ACCESS_FLAG_SYNDICATE"><aside class="declaration">#define </aside>ACCESS_FLAG_SYNDICATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L177">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 177"/></a>
+    </h3>
+    <p>Bitflag for Syndicate ID card accesses. See SYNDICATE_ACCESS.</p><h3 id="define/ACCESS_FLAG_SYNDICATE_NAME"><aside class="declaration">#define </aside>ACCESS_FLAG_SYNDICATE_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 175"/></a>
+    </h3>
+    <p>Displayed name for Syndicate ID card accesses.</p><h3 id="define/ACCESS_FORENSICS_LOCKERS"><aside class="declaration">#define </aside>ACCESS_FORENSICS_LOCKERS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 8"/></a>
+    </h3>
+    <p>Detective's office, forensics lockers, security+medical records</p><h3 id="define/ACCESS_GENETICS"><aside class="declaration">#define </aside>ACCESS_GENETICS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 18"/></a>
+    </h3>
+    <p>Genetics access</p><h3 id="define/ACCESS_HEADS"><aside class="declaration">#define </aside>ACCESS_HEADS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 30"/></a>
+    </h3>
+    <p>Bridge, EVA storage windoors, gateway shutters, AI integrity restorer, comms console</p><h3 id="define/ACCESS_KEYCARD_AUTH"><aside class="declaration">#define </aside>ACCESS_KEYCARD_AUTH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 67"/></a>
+    </h3>
+    <p>Used for events which require at least two people to confirm them</p><h3 id="define/ACCESS_MEDICAL"><aside class="declaration">#define </aside>ACCESS_MEDICAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 10"/></a>
+    </h3>
+    <p>Medical general access</p><h3 id="define/ACCESS_MINERAL_STOREROOM"><aside class="declaration">#define </aside>ACCESS_MINERAL_STOREROOM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 74"/></a>
+    </h3>
+    <p>For releasing minerals from the ORM</p><h3 id="define/ACCESS_MORGUE"><aside class="declaration">#define </aside>ACCESS_MORGUE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 12"/></a>
+    </h3>
+    <p>Morgue access</p><h3 id="define/ACCESS_NETWORK"><aside class="declaration">#define </aside>ACCESS_NETWORK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 79"/></a>
+    </h3>
+    <p>NTnet diagnostics/monitoring software</p><h3 id="define/ACCESS_PHARMACY"><aside class="declaration">#define </aside>ACCESS_PHARMACY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 81"/></a>
+    </h3>
+    <p>Pharmacy access (Chemistry room in Medbay)
+Nice.</p><h3 id="define/ACCESS_RC_ANNOUNCE"><aside class="declaration">#define </aside>ACCESS_RC_ANNOUNCE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 65"/></a>
+    </h3>
+    <p>Request console announcements</p><h3 id="define/ACCESS_RND"><aside class="declaration">#define </aside>ACCESS_RND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 14"/></a>
+    </h3>
+    <p>R&amp;D department and R&amp;D console</p><h3 id="define/ACCESS_SEC_DOORS"><aside class="declaration">#define </aside>ACCESS_SEC_DOORS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 72"/></a>
+    </h3>
+    <p>Outer brig doors, department security posts</p><h3 id="define/ACCESS_SYNDICATE"><aside class="declaration">#define </aside>ACCESS_SYNDICATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 112"/></a>
+    </h3>
+    <p>General Syndicate Access. Includes Syndicate mechs and ruins.</p><h3 id="define/ACCESS_SYNDICATE_LEADER"><aside class="declaration">#define </aside>ACCESS_SYNDICATE_LEADER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 114"/></a>
+    </h3>
+    <p>Nuke Op Leader Access</p><h3 id="define/ACCESS_TCOMSAT"><aside class="declaration">#define </aside>ACCESS_TCOMSAT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 69"/></a>
+    </h3>
+    <p>has access to the entire telecomms satellite / machinery</p><h3 id="define/ACCESS_TOXINS"><aside class="declaration">#define </aside>ACCESS_TOXINS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 16"/></a>
+    </h3>
+    <p>Toxins lab and burn chamber</p><h3 id="define/ACCESS_TOXINS_STORAGE"><aside class="declaration">#define </aside>ACCESS_TOXINS_STORAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 84"/></a>
+    </h3>
+    <p>Toxins tank storage room access</p><h3 id="define/ACCESS_WEAPONS"><aside class="declaration">#define </aside>ACCESS_WEAPONS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 77"/></a>
+    </h3>
+    <p>Weapon authorization for secbots</p><h3 id="define/AWAY_ACCESS"><aside class="declaration">#define </aside>AWAY_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L331">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 331"/></a>
+    </h3>
+    <p>Away missions/gateway/space ruins.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_AWAY)</p><h3 id="define/CAPTAIN_ACCESS"><aside class="declaration">#define </aside>CAPTAIN_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L308">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 308"/></a>
+    </h3>
+    <p>Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)</p><h3 id="define/CENTCOM_ACCESS"><aside class="declaration">#define </aside>CENTCOM_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L312">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 312"/></a>
+    </h3>
+    <p>Centcom area stuff. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CENTCOM)</p><h3 id="define/COMMAND_ACCESS"><aside class="declaration">#define </aside>COMMAND_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L278">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 278"/></a>
+    </h3>
+    <p>Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)</p><h3 id="define/COMMON_ACCESS"><aside class="declaration">#define </aside>COMMON_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L229">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 229"/></a>
+    </h3>
+    <p>Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)</p><h3 id="define/CULT_ACCESS"><aside class="declaration">#define </aside>CULT_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L344">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 344"/></a>
+    </h3>
+    <p>Weird internal Cult access that prevents non-cult from using their doors.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SPECIAL)</p><h3 id="define/ERROR_ON_FAIL"><aside class="declaration">#define </aside>ERROR_ON_FAIL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L523">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 523"/></a>
+    </h3>
+    <p>Used in ID card access adding procs. Will stack trace on fail.</p><h3 id="define/FORCE_ADD_ALL"><aside class="declaration">#define </aside>FORCE_ADD_ALL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L521">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 521"/></a>
+    </h3>
+    <p>Used in ID card access adding procs. Will forcefully add all accesses.</p><h3 id="define/LOG_ID_ACCESS_CHANGE"><aside class="declaration">#define </aside>LOG_ID_ACCESS_CHANGE
+            <aside>(user, id_card, change_description)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 149"/></a>
+    </h3>
+    <p>Logging define for ID card access changes</p><h3 id="define/PDA_PAINTING_REGIONS"><aside class="declaration">#define </aside>PDA_PAINTING_REGIONS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L472">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 472"/></a>
+    </h3>
+    <p>A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
+If a PDA is not in this list, it cannot be painted using the PDA &amp; ID Painter.
+If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
+Used to see pda_region in <a href="datum/controller/subsystem/id_access.html#proc/setup_tgui_lists" title="/datum/controller/subsystem/id_access">/datum/controller/subsystem/id_access/proc/setup_tgui_lists</a></p><h3 id="define/PRIVATE_COMMAND_ACCESS"><aside class="declaration">#define </aside>PRIVATE_COMMAND_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L299">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 299"/></a>
+    </h3>
+    <p>Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)</p><h3 id="define/REGION_ACCESS_ALL_GLOBAL"><aside class="declaration">#define </aside>REGION_ACCESS_ALL_GLOBAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L351">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 351"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of every single access in the game.</p><h3 id="define/REGION_ACCESS_ALL_STATION"><aside class="declaration">#define </aside>REGION_ACCESS_ALL_STATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L355">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 355"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all station accesses.</p><h3 id="define/REGION_ACCESS_CENTCOM"><aside class="declaration">#define </aside>REGION_ACCESS_CENTCOM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L464">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 464"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.</p><h3 id="define/REGION_ACCESS_COMMAND"><aside class="declaration">#define </aside>REGION_ACCESS_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L447">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 447"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all command regional accesses that are overseen by the Captain.</p><h3 id="define/REGION_ACCESS_ENGINEERING"><aside class="declaration">#define </aside>REGION_ACCESS_ENGINEERING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L417">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 417"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.</p><h3 id="define/REGION_ACCESS_GENERAL"><aside class="declaration">#define </aside>REGION_ACCESS_GENERAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L359">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 359"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.</p><h3 id="define/REGION_ACCESS_MEDBAY"><aside class="declaration">#define </aside>REGION_ACCESS_MEDBAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L387">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 387"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.</p><h3 id="define/REGION_ACCESS_RESEARCH"><aside class="declaration">#define </aside>REGION_ACCESS_RESEARCH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L401">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 401"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.</p><h3 id="define/REGION_ACCESS_SECURITY"><aside class="declaration">#define </aside>REGION_ACCESS_SECURITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L373">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 373"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all security regional accesses that are overseen by the HoS.</p><h3 id="define/REGION_ACCESS_SUPPLY"><aside class="declaration">#define </aside>REGION_ACCESS_SUPPLY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L434">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 434"/></a>
+    </h3>
+    <p>Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.</p><h3 id="define/REGION_ALL_GLOBAL"><aside class="declaration">#define </aside>REGION_ALL_GLOBAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L349">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 349"/></a>
+    </h3>
+    <p>Name for the Global region.</p><h3 id="define/REGION_ALL_STATION"><aside class="declaration">#define </aside>REGION_ALL_STATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L353">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 353"/></a>
+    </h3>
+    <p>Name for the Station All Access region.</p><h3 id="define/REGION_AREA_STATION"><aside class="declaration">#define </aside>REGION_AREA_STATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L506">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 506"/></a>
+    </h3>
+    <p>All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.</p><h3 id="define/REGION_CENTCOM"><aside class="declaration">#define </aside>REGION_CENTCOM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L462">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 462"/></a>
+    </h3>
+    <p>Name for the Centcom region.</p><h3 id="define/REGION_COMMAND"><aside class="declaration">#define </aside>REGION_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L445">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 445"/></a>
+    </h3>
+    <p>Name for the Command region.</p><h3 id="define/REGION_ENGINEERING"><aside class="declaration">#define </aside>REGION_ENGINEERING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L415">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 415"/></a>
+    </h3>
+    <p>Name for the Engineering region.</p><h3 id="define/REGION_GENERAL"><aside class="declaration">#define </aside>REGION_GENERAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L357">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 357"/></a>
+    </h3>
+    <p>Name for the General region.</p><h3 id="define/REGION_MEDBAY"><aside class="declaration">#define </aside>REGION_MEDBAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L385">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 385"/></a>
+    </h3>
+    <p>Name for the Medbay region.</p><h3 id="define/REGION_RESEARCH"><aside class="declaration">#define </aside>REGION_RESEARCH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L399">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 399"/></a>
+    </h3>
+    <p>Name for the Research region.</p><h3 id="define/REGION_SECURITY"><aside class="declaration">#define </aside>REGION_SECURITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L371">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 371"/></a>
+    </h3>
+    <p>Name for the Security region.</p><h3 id="define/REGION_SUPPLY"><aside class="declaration">#define </aside>REGION_SUPPLY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L432">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 432"/></a>
+    </h3>
+    <p>Name for the Supply region.</p><h3 id="define/SYNDICATE_ACCESS"><aside class="declaration">#define </aside>SYNDICATE_ACCESS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L325">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 325"/></a>
+    </h3>
+    <p>Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)</p><h3 id="define/TRY_ADD_ALL"><aside class="declaration">#define </aside>TRY_ADD_ALL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L517">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 517"/></a>
+    </h3>
+    <p>Used in ID card access adding procs. Will try to add all accesses and utilises free wildcards, skipping over any accesses it can't add.</p><h3 id="define/TRY_ADD_ALL_NO_WILDCARD"><aside class="declaration">#define </aside>TRY_ADD_ALL_NO_WILDCARD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L519">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 519"/></a>
+    </h3>
+    <p>Used in ID card access adding procs. Will try to add all accesses and does not utilise wildcards, skipping anything requiring a wildcard.</p><h3 id="define/WILDCARD_FLAG_ALL"><aside class="declaration">#define </aside>WILDCARD_FLAG_ALL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L188">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 188"/></a>
+    </h3>
+    <p>This wildcraft flag accepts any access level.</p><h3 id="define/WILDCARD_FLAG_AWAY"><aside class="declaration">#define </aside>WILDCARD_FLAG_AWAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L216">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 216"/></a>
+    </h3>
+    <p>Access flags that can be applied to offstation wildcard slots.</p><h3 id="define/WILDCARD_FLAG_CAPTAIN"><aside class="declaration">#define </aside>WILDCARD_FLAG_CAPTAIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 204"/></a>
+    </h3>
+    <p>Access flags that can be applied to captain wildcard slots.</p><h3 id="define/WILDCARD_FLAG_CENTCOM"><aside class="declaration">#define </aside>WILDCARD_FLAG_CENTCOM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L208">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 208"/></a>
+    </h3>
+    <p>Access flags that can be applied to centcom wildcard slots.</p><h3 id="define/WILDCARD_FLAG_COMMAND"><aside class="declaration">#define </aside>WILDCARD_FLAG_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 196"/></a>
+    </h3>
+    <p>Access flags that can be applied to command wildcard slots.</p><h3 id="define/WILDCARD_FLAG_COMMON"><aside class="declaration">#define </aside>WILDCARD_FLAG_COMMON
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 192"/></a>
+    </h3>
+    <p>Access flags that can be applied to common wildcard slots.</p><h3 id="define/WILDCARD_FLAG_FORCED"><aside class="declaration">#define </aside>WILDCARD_FLAG_FORCED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 224"/></a>
+    </h3>
+    <p>Access flag that indicates a wildcard was forced onto an ID card.</p><h3 id="define/WILDCARD_FLAG_PRV_COMMAND"><aside class="declaration">#define </aside>WILDCARD_FLAG_PRV_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L200">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 200"/></a>
+    </h3>
+    <p>Access flags that can be applied to private command wildcard slots.</p><h3 id="define/WILDCARD_FLAG_SPECIAL"><aside class="declaration">#define </aside>WILDCARD_FLAG_SPECIAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L220">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 220"/></a>
+    </h3>
+    <p>Access flags that can be applied to super special weird wildcard slots.</p><h3 id="define/WILDCARD_FLAG_SYNDICATE"><aside class="declaration">#define </aside>WILDCARD_FLAG_SYNDICATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L212">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 212"/></a>
+    </h3>
+    <p>Access flags that can be applied to syndicate wildcard slots.</p><h3 id="define/WILDCARD_NAME_ALL"><aside class="declaration">#define </aside>WILDCARD_NAME_ALL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 190"/></a>
+    </h3>
+    <p>Name associated with the all wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_AWAY"><aside class="declaration">#define </aside>WILDCARD_NAME_AWAY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 218"/></a>
+    </h3>
+    <p>Name associated with the offstation wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_CAPTAIN"><aside class="declaration">#define </aside>WILDCARD_NAME_CAPTAIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 206"/></a>
+    </h3>
+    <p>Name associated with the captain wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_CENTCOM"><aside class="declaration">#define </aside>WILDCARD_NAME_CENTCOM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L210">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 210"/></a>
+    </h3>
+    <p>Name associated with the centcom wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_COMMAND"><aside class="declaration">#define </aside>WILDCARD_NAME_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 198"/></a>
+    </h3>
+    <p>Name associated with the command wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_COMMON"><aside class="declaration">#define </aside>WILDCARD_NAME_COMMON
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 194"/></a>
+    </h3>
+    <p>Name associated with the common wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_FORCED"><aside class="declaration">#define </aside>WILDCARD_NAME_FORCED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L226">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 226"/></a>
+    </h3>
+    <p>Name associated with the wildcard bitflag that covers wildcards that have been forced onto an ID card that could not accept them.</p><h3 id="define/WILDCARD_NAME_PRV_COMMAND"><aside class="declaration">#define </aside>WILDCARD_NAME_PRV_COMMAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L202">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 202"/></a>
+    </h3>
+    <p>Name associated with the private command wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_SPECIAL"><aside class="declaration">#define </aside>WILDCARD_NAME_SPECIAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L222">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 222"/></a>
+    </h3>
+    <p>Name associated with the super special weird wildcard bitflag.</p><h3 id="define/WILDCARD_NAME_SYNDICATE"><aside class="declaration">#define </aside>WILDCARD_NAME_SYNDICATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/access.dm#L214">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;access.dm 214"/></a>
+    </h3>
+    <p>Name associated with the syndicate wildcard bitflag.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

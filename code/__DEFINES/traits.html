@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;traits.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/traits.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/traits.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_KNOCKEDOUT">TRAIT_KNOCKEDOUT</a></th><td>Forces the user to stay unconscious.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_IMMOBILIZED">TRAIT_IMMOBILIZED</a></th><td>Prevents voluntary movement.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_FLOORED">TRAIT_FLOORED</a></th><td>Prevents voluntary standing or staying up on its own.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_FORCED_STANDING">TRAIT_FORCED_STANDING</a></th><td>Forces user to stay standing</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_HANDS_BLOCKED">TRAIT_HANDS_BLOCKED</a></th><td>Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_UI_BLOCKED">TRAIT_UI_BLOCKED</a></th><td>Inability to access UI hud elements. Turned into a trait from <a href="code/__DEFINES/flags.html#define/MOBILITY_UI" title="MOBILITY_UI">MOBILITY_UI</a> to be able to track sources.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_PULL_BLOCKED">TRAIT_PULL_BLOCKED</a></th><td>Inability to pull things. Turned into a trait from <a href="code/__DEFINES/flags.html#define/MOBILITY_PULL" title="MOBILITY_PULL">MOBILITY_PULL</a> to be able to track sources.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_RESTRAINED">TRAIT_RESTRAINED</a></th><td>Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_PERFECT_ATTACKER">TRAIT_PERFECT_ATTACKER</a></th><td>Doesn't miss attacks</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_CORPSELOCKED">TRAIT_CORPSELOCKED</a></th><td>Prevents you from leaving your corpse</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_SPECIAL_TRAUMA_BOOST">TRAIT_SPECIAL_TRAUMA_BOOST</a></th><td>Increases chance of getting special traumas, makes them harder to cure</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_WEAK_SOUL">TRAIT_WEAK_SOUL</a></th><td>Revenants draining you only get a very small benefit.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_CANT_RIDE">TRAIT_CANT_RIDE</a></th><td>Prevents mob from riding mobs when buckled onto something</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_ANTICONVULSANT">TRAIT_ANTICONVULSANT</a></th><td>From anti-convulsant medication against seizures.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_ANTENNAE">TRAIT_ANTENNAE</a></th><td>The holder of this trait has antennae or whatever that hurt a ton when noogied</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_KISS_OF_DEATH">TRAIT_KISS_OF_DEATH</a></th><td>Blowing kisses actually does damage to the victim</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_PLASMABURNT">TRAIT_PLASMABURNT</a></th><td>Used on limbs in the process of turning a human into a plasmaman while in plasma lava</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_AI_BAGATTACK">TRAIT_AI_BAGATTACK</a></th><td>This atom can ignore the &quot;is on a turf&quot; check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_MOVE_GROUND">TRAIT_MOVE_GROUND</a></th><td>Movement type traits for movables. See elements/movetype_handler.dm</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_NO_FLOATING_ANIM">TRAIT_NO_FLOATING_ANIM</a></th><td>Disables the floating animation. See above.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_PARALYSIS">TRAIT_PARALYSIS</a></th><td>Used for limb-based paralysis, where replacing the limb will fix it.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_DISABLED_BY_WOUND">TRAIT_DISABLED_BY_WOUND</a></th><td>Used for limbs.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_KEEP_TOGETHER">TRAIT_KEEP_TOGETHER</a></th><td>Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_MAT_TRANSMUTED">TRAIT_MAT_TRANSMUTED</a></th><td>Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_PLANT_WILDMUTATE">TRAIT_PLANT_WILDMUTATE</a></th><td>Plants that were mutated as a result of passive instability, not a mutation threshold.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_DRYABLE">TRAIT_DRYABLE</a></th><td>Trait for dryable items</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_DRIED">TRAIT_DRIED</a></th><td>Trait for dried items</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TRAIT_MAY_CONTAIN_BLENDED_DUST">TRAIT_MAY_CONTAIN_BLENDED_DUST</a></th><td>Minor trait used for beakers, or beaker-ishes. <a href="obj/item/reagent_containers.html" title="/obj/item/reagent_containers">/obj/item/reagent_containers</a>, to show that they've been used in a reagent grinder.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/EXPERIMENTAL_SURGERY_TRAIT">EXPERIMENTAL_SURGERY_TRAIT</a></th><td>Trait inherited by experimental surgeries</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/IMPLANT_TRAIT">IMPLANT_TRAIT</a></th><td>Trait inherited by implants</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/SUIT_TRAIT">SUIT_TRAIT</a></th><td>Trait associated to wearing a suit</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/LYING_DOWN_TRAIT">LYING_DOWN_TRAIT</a></th><td>Trait associated to lying down (having a [lying_angle] of a different value than zero).</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/POWER_LACK_TRAIT">POWER_LACK_TRAIT</a></th><td>Trait associated to lacking electrical power.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/MAFIA_TRAIT">MAFIA_TRAIT</a></th><td>Trait associated with mafia</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/HIGHLANDER_TRAIT">HIGHLANDER_TRAIT</a></th><td>Trait associated with highlander</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/WARPWHISTLE_TRAIT">WARPWHISTLE_TRAIT</a></th><td>Trait granted by <a href="obj/item.html" title="/obj/item">/obj/item/warpwhistle</a></td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/TURF_Z_TRANSPARENT_TRAIT">TURF_Z_TRANSPARENT_TRAIT</a></th><td>Turf trait for when a turf is transparent</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/SOULSTONE_TRAIT">SOULSTONE_TRAIT</a></th><td>Trait applied by <a href="datum/component.html" title="/datum/component">/datum/component/soulstoned</a></td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/SLIME_COLD">SLIME_COLD</a></th><td>Trait applied to slimes by low temperature</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/BOT_TIPPED_OVER">BOT_TIPPED_OVER</a></th><td>Trait applied to bots by being tipped over</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/PAI_FOLDED">PAI_FOLDED</a></th><td>Trait applied to PAIs by being folded</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/BRAIN_UNAIDED">BRAIN_UNAIDED</a></th><td>Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/ELEMENT_TRAIT">ELEMENT_TRAIT</a></th><td>Trait applied by element</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/BERSERK_TRAIT">BERSERK_TRAIT</a></th><td>Trait granted by <a href="obj/item/clothing/head/helmet/space/hardsuit/berserker.html" title="/obj/item/clothing/head/helmet/space/hardsuit/berserker">/obj/item/clothing/head/helmet/space/hardsuit/berserker</a></td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/HIPPOCRATIC_OATH_TRAIT">HIPPOCRATIC_OATH_TRAIT</a></th><td>Trait granted by <a href="obj/item.html" title="/obj/item">/obj/item/rod_of_asclepius</a></td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/BLOODDRUNK_TRAIT">BLOODDRUNK_TRAIT</a></th><td>Trait granted by <a href="datum/status_effect.html" title="/datum/status_effect">/datum/status_effect/blooddrunk</a></td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/LIPSTICK_TRAIT">LIPSTICK_TRAIT</a></th><td>Trait granted by lipstick</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/BEAUTY_ELEMENT_TRAIT">BEAUTY_ELEMENT_TRAIT</a></th><td>Self-explainatory.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/NO_TONGUE_TRAIT">NO_TONGUE_TRAIT</a></th><td>Trait granted by <a href="mob.html#proc/Initialize" title="/mob">/mob/living/carbon/Initialize</a> and
+granted/removed by <a href="obj/item/organ/tongue.html" title="/obj/item/organ/tongue">/obj/item/organ/tongue</a>
+Used for ensuring that carbons without tongues cannot taste anything
+so it is added in Initialize, and then removed when a tongue is inserted
+and readded when a tongue is removed.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/MODEL_TRAIT">MODEL_TRAIT</a></th><td>Trait granted by <a href="mob/living/silicon/robot.html" title="/mob/living/silicon/robot">/mob/living/silicon/robot</a>
+Traits applied to a silicon mob by their model.</td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/CLOWNOP_TRAIT">CLOWNOP_TRAIT</a></th><td>Trait from <a href="datum/antagonist.html" title="/datum/antagonist">/datum/antagonist/nukeop/clownop</a></td></tr>
+        <tr><th><a href="code/__DEFINES/traits.html#define/STATION_TRAIT_BANANIUM_SHIPMENTS">STATION_TRAIT_BANANIUM_SHIPMENTS</a></th><td>Traits given by station traits</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BEAUTY_ELEMENT_TRAIT"><aside class="declaration">#define </aside>BEAUTY_ELEMENT_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L529">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 529"/></a>
+    </h3>
+    <p>Self-explainatory.</p><h3 id="define/BERSERK_TRAIT"><aside class="declaration">#define </aside>BERSERK_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L521">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 521"/></a>
+    </h3>
+    <p>Trait granted by <a href="obj/item/clothing/head/helmet/space/hardsuit/berserker.html" title="/obj/item/clothing/head/helmet/space/hardsuit/berserker">/obj/item/clothing/head/helmet/space/hardsuit/berserker</a></p><h3 id="define/BLOODDRUNK_TRAIT"><aside class="declaration">#define </aside>BLOODDRUNK_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L525">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 525"/></a>
+    </h3>
+    <p>Trait granted by <a href="datum/status_effect.html" title="/datum/status_effect">/datum/status_effect/blooddrunk</a></p><h3 id="define/BOT_TIPPED_OVER"><aside class="declaration">#define </aside>BOT_TIPPED_OVER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L513">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 513"/></a>
+    </h3>
+    <p>Trait applied to bots by being tipped over</p><h3 id="define/BRAIN_UNAIDED"><aside class="declaration">#define </aside>BRAIN_UNAIDED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L517">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 517"/></a>
+    </h3>
+    <p>Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.</p><h3 id="define/CLOWNOP_TRAIT"><aside class="declaration">#define </aside>CLOWNOP_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L546">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 546"/></a>
+    </h3>
+    <p>Trait from <a href="datum/antagonist.html" title="/datum/antagonist">/datum/antagonist/nukeop/clownop</a></p><h3 id="define/ELEMENT_TRAIT"><aside class="declaration">#define </aside>ELEMENT_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L519">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 519"/></a>
+    </h3>
+    <p>Trait applied by element</p><h3 id="define/EXPERIMENTAL_SURGERY_TRAIT"><aside class="declaration">#define </aside>EXPERIMENTAL_SURGERY_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L410">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 410"/></a>
+    </h3>
+    <p>Trait inherited by experimental surgeries</p><h3 id="define/HIGHLANDER_TRAIT"><aside class="declaration">#define </aside>HIGHLANDER_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L450">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 450"/></a>
+    </h3>
+    <p>Trait associated with highlander</p><h3 id="define/HIPPOCRATIC_OATH_TRAIT"><aside class="declaration">#define </aside>HIPPOCRATIC_OATH_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L523">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 523"/></a>
+    </h3>
+    <p>Trait granted by <a href="obj/item.html" title="/obj/item">/obj/item/rod_of_asclepius</a></p><h3 id="define/IMPLANT_TRAIT"><aside class="declaration">#define </aside>IMPLANT_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L428">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 428"/></a>
+    </h3>
+    <p>Trait inherited by implants</p><h3 id="define/LIPSTICK_TRAIT"><aside class="declaration">#define </aside>LIPSTICK_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L527">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 527"/></a>
+    </h3>
+    <p>Trait granted by lipstick</p><h3 id="define/LYING_DOWN_TRAIT"><aside class="declaration">#define </aside>LYING_DOWN_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L444">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 444"/></a>
+    </h3>
+    <p>Trait associated to lying down (having a [lying_angle] of a different value than zero).</p><h3 id="define/MAFIA_TRAIT"><aside class="declaration">#define </aside>MAFIA_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L448">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 448"/></a>
+    </h3>
+    <p>Trait associated with mafia</p><h3 id="define/MODEL_TRAIT"><aside class="declaration">#define </aside>MODEL_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L543">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 543"/></a>
+    </h3>
+    <p>Trait granted by <a href="mob/living/silicon/robot.html" title="/mob/living/silicon/robot">/mob/living/silicon/robot</a>
+Traits applied to a silicon mob by their model.</p><h3 id="define/NO_TONGUE_TRAIT"><aside class="declaration">#define </aside>NO_TONGUE_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L539">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 539"/></a>
+    </h3>
+    <p>Trait granted by <a href="mob.html#proc/Initialize" title="/mob">/mob/living/carbon/Initialize</a> and
+granted/removed by <a href="obj/item/organ/tongue.html" title="/obj/item/organ/tongue">/obj/item/organ/tongue</a>
+Used for ensuring that carbons without tongues cannot taste anything
+so it is added in Initialize, and then removed when a tongue is inserted
+and readded when a tongue is removed.</p><h3 id="define/PAI_FOLDED"><aside class="declaration">#define </aside>PAI_FOLDED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L515">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 515"/></a>
+    </h3>
+    <p>Trait applied to PAIs by being folded</p><h3 id="define/POWER_LACK_TRAIT"><aside class="declaration">#define </aside>POWER_LACK_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L446">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 446"/></a>
+    </h3>
+    <p>Trait associated to lacking electrical power.</p><h3 id="define/SLIME_COLD"><aside class="declaration">#define </aside>SLIME_COLD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L511">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 511"/></a>
+    </h3>
+    <p>Trait applied to slimes by low temperature</p><h3 id="define/SOULSTONE_TRAIT"><aside class="declaration">#define </aside>SOULSTONE_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L509">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 509"/></a>
+    </h3>
+    <p>Trait applied by <a href="datum/component.html" title="/datum/component">/datum/component/soulstoned</a></p><h3 id="define/STATION_TRAIT_BANANIUM_SHIPMENTS"><aside class="declaration">#define </aside>STATION_TRAIT_BANANIUM_SHIPMENTS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L549">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 549"/></a>
+    </h3>
+    <p>Traits given by station traits</p><h3 id="define/SUIT_TRAIT"><aside class="declaration">#define </aside>SUIT_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L442">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 442"/></a>
+    </h3>
+    <p>Trait associated to wearing a suit</p><h3 id="define/TRAIT_AI_BAGATTACK"><aside class="declaration">#define </aside>TRAIT_AI_BAGATTACK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L259">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 259"/></a>
+    </h3>
+    <p>This atom can ignore the &quot;is on a turf&quot; check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met</p><h3 id="define/TRAIT_ANTENNAE"><aside class="declaration">#define </aside>TRAIT_ANTENNAE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L251">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 251"/></a>
+    </h3>
+    <p>The holder of this trait has antennae or whatever that hurt a ton when noogied</p><h3 id="define/TRAIT_ANTICONVULSANT"><aside class="declaration">#define </aside>TRAIT_ANTICONVULSANT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L249">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 249"/></a>
+    </h3>
+    <p>From anti-convulsant medication against seizures.</p><h3 id="define/TRAIT_CANT_RIDE"><aside class="declaration">#define </aside>TRAIT_CANT_RIDE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L245">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 245"/></a>
+    </h3>
+    <p>Prevents mob from riding mobs when buckled onto something</p><h3 id="define/TRAIT_CORPSELOCKED"><aside class="declaration">#define </aside>TRAIT_CORPSELOCKED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L152">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 152"/></a>
+    </h3>
+    <p>Prevents you from leaving your corpse</p><h3 id="define/TRAIT_DISABLED_BY_WOUND"><aside class="declaration">#define </aside>TRAIT_DISABLED_BY_WOUND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L320">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 320"/></a>
+    </h3>
+    <p>Used for limbs.</p><h3 id="define/TRAIT_DRIED"><aside class="declaration">#define </aside>TRAIT_DRIED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L378">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 378"/></a>
+    </h3>
+    <p>Trait for dried items</p><h3 id="define/TRAIT_DRYABLE"><aside class="declaration">#define </aside>TRAIT_DRYABLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L376">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 376"/></a>
+    </h3>
+    <p>Trait for dryable items</p><h3 id="define/TRAIT_FLOORED"><aside class="declaration">#define </aside>TRAIT_FLOORED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 108"/></a>
+    </h3>
+    <p>Prevents voluntary standing or staying up on its own.</p><h3 id="define/TRAIT_FORCED_STANDING"><aside class="declaration">#define </aside>TRAIT_FORCED_STANDING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 110"/></a>
+    </h3>
+    <p>Forces user to stay standing</p><h3 id="define/TRAIT_HANDS_BLOCKED"><aside class="declaration">#define </aside>TRAIT_HANDS_BLOCKED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 112"/></a>
+    </h3>
+    <p>Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).</p><h3 id="define/TRAIT_IMMOBILIZED"><aside class="declaration">#define </aside>TRAIT_IMMOBILIZED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 106"/></a>
+    </h3>
+    <p>Prevents voluntary movement.</p><h3 id="define/TRAIT_KEEP_TOGETHER"><aside class="declaration">#define </aside>TRAIT_KEEP_TOGETHER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L329">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 329"/></a>
+    </h3>
+    <p>Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]</p><h3 id="define/TRAIT_KISS_OF_DEATH"><aside class="declaration">#define </aside>TRAIT_KISS_OF_DEATH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L253">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 253"/></a>
+    </h3>
+    <p>Blowing kisses actually does damage to the victim</p><h3 id="define/TRAIT_KNOCKEDOUT"><aside class="declaration">#define </aside>TRAIT_KNOCKEDOUT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 104"/></a>
+    </h3>
+    <p>Forces the user to stay unconscious.</p><h3 id="define/TRAIT_MAT_TRANSMUTED"><aside class="declaration">#define </aside>TRAIT_MAT_TRANSMUTED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L332">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 332"/></a>
+    </h3>
+    <p>Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.</p><h3 id="define/TRAIT_MAY_CONTAIN_BLENDED_DUST"><aside class="declaration">#define </aside>TRAIT_MAY_CONTAIN_BLENDED_DUST
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L391">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 391"/></a>
+    </h3>
+    <p>Minor trait used for beakers, or beaker-ishes. <a href="obj/item/reagent_containers.html" title="/obj/item/reagent_containers">/obj/item/reagent_containers</a>, to show that they've been used in a reagent grinder.</p><h3 id="define/TRAIT_MOVE_GROUND"><aside class="declaration">#define </aside>TRAIT_MOVE_GROUND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L308">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 308"/></a>
+    </h3>
+    <p>Movement type traits for movables. See elements/movetype_handler.dm</p><h3 id="define/TRAIT_NO_FLOATING_ANIM"><aside class="declaration">#define </aside>TRAIT_NO_FLOATING_ANIM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L314">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 314"/></a>
+    </h3>
+    <p>Disables the floating animation. See above.</p><h3 id="define/TRAIT_PARALYSIS"><aside class="declaration">#define </aside>TRAIT_PARALYSIS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L318">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 318"/></a>
+    </h3>
+    <p>Used for limb-based paralysis, where replacing the limb will fix it.</p><h3 id="define/TRAIT_PERFECT_ATTACKER"><aside class="declaration">#define </aside>TRAIT_PERFECT_ATTACKER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 120"/></a>
+    </h3>
+    <p>Doesn't miss attacks</p><h3 id="define/TRAIT_PLANT_WILDMUTATE"><aside class="declaration">#define </aside>TRAIT_PLANT_WILDMUTATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L344">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 344"/></a>
+    </h3>
+    <p>Plants that were mutated as a result of passive instability, not a mutation threshold.</p><h3 id="define/TRAIT_PLASMABURNT"><aside class="declaration">#define </aside>TRAIT_PLASMABURNT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L255">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 255"/></a>
+    </h3>
+    <p>Used on limbs in the process of turning a human into a plasmaman while in plasma lava</p><h3 id="define/TRAIT_PULL_BLOCKED"><aside class="declaration">#define </aside>TRAIT_PULL_BLOCKED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 116"/></a>
+    </h3>
+    <p>Inability to pull things. Turned into a trait from <a href="code/__DEFINES/flags.html#define/MOBILITY_PULL" title="MOBILITY_PULL">MOBILITY_PULL</a> to be able to track sources.</p><h3 id="define/TRAIT_RESTRAINED"><aside class="declaration">#define </aside>TRAIT_RESTRAINED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 118"/></a>
+    </h3>
+    <p>Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.</p><h3 id="define/TRAIT_SPECIAL_TRAUMA_BOOST"><aside class="declaration">#define </aside>TRAIT_SPECIAL_TRAUMA_BOOST
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L228">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 228"/></a>
+    </h3>
+    <p>Increases chance of getting special traumas, makes them harder to cure</p><h3 id="define/TRAIT_UI_BLOCKED"><aside class="declaration">#define </aside>TRAIT_UI_BLOCKED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 114"/></a>
+    </h3>
+    <p>Inability to access UI hud elements. Turned into a trait from <a href="code/__DEFINES/flags.html#define/MOBILITY_UI" title="MOBILITY_UI">MOBILITY_UI</a> to be able to track sources.</p><h3 id="define/TRAIT_WEAK_SOUL"><aside class="declaration">#define </aside>TRAIT_WEAK_SOUL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L243">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 243"/></a>
+    </h3>
+    <p>Revenants draining you only get a very small benefit.</p><h3 id="define/TURF_Z_TRANSPARENT_TRAIT"><aside class="declaration">#define </aside>TURF_Z_TRANSPARENT_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L507">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 507"/></a>
+    </h3>
+    <p>Turf trait for when a turf is transparent</p><h3 id="define/WARPWHISTLE_TRAIT"><aside class="declaration">#define </aside>WARPWHISTLE_TRAIT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/traits.dm#L505">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;traits.dm 505"/></a>
+    </h3>
+    <p>Trait granted by <a href="obj/item.html" title="/obj/item">/obj/item/warpwhistle</a></p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;nanites - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/nanites.html#var">Var Details</a> - <a href="datum/component/nanites.html#proc">Proc Details</a></header>
+<main>
+<h1>nanites <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/nanites.html">nanites</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 3"/></a></h1>
+
+<p>Sanity is low, stay addicted.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/nanites.html#var/start_time">start_time</a></th><td>Separate list of protocol programs, to avoid looping through the whole programs list when cheking for conflicts</td></tr>
+            <tr><th><a href="datum/component/nanites.html#var/stealth">stealth</a></th><td>Timestamp to when the nanites were first inserted in the host</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/add_program">add_program</a></th><td>Adds a nanite program, replacing existing unique programs of the same type. A source program can be specified to copy its programming onto the new one.</td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/adjust_nanites">adjust_nanites</a></th><td>Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount</td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/cloud_sync">cloud_sync</a></th><td>Syncs the nanites to their assigned cloud copy, if it is available. If it is not, there is a small chance of a software error instead.</td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/delete_nanites">delete_nanites</a></th><td>Deletes nanites!</td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/reject_excess_nanites">reject_excess_nanites</a></th><td>Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount</td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/set_nanite_bar">set_nanite_bar</a></th><td>Updates the nanite volume bar visible in diagnostic HUDs</td></tr>
+            <tr><th><a href="datum/component/nanites.html#proc/sync">sync</a></th><td>Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/start_time"><aside class="declaration">var </aside>start_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 18"/></a></h3>
+        <p>Separate list of protocol programs, to avoid looping through the whole programs list when cheking for conflicts</p><h3 id="var/stealth"><aside class="declaration">var </aside>stealth
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 19"/></a></h3>
+        <p>Timestamp to when the nanites were first inserted in the host</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_program"><aside class="declaration">proc </aside>add_program<aside>(/<a href="datum.html">datum</a>/source, /<a href="datum.html">datum</a>/<a href="datum/nanite_program.html">nanite_program</a>/new_program, /<a href="datum.html">datum</a>/<a href="datum/nanite_program.html">nanite_program</a>/source_program) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 167"/></a></aside>
+        </h3>
+        <p>Adds a nanite program, replacing existing unique programs of the same type. A source program can be specified to copy its programming onto the new one.</p><h3 id="proc/adjust_nanites"><aside class="declaration">proc </aside>adjust_nanites<aside>(/<a href="datum.html">datum</a>/source, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 189"/></a></aside>
+        </h3>
+        <p>Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount</p><h3 id="proc/cloud_sync"><aside class="declaration">proc </aside>cloud_sync<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 153"/></a></aside>
+        </h3>
+        <p>Syncs the nanites to their assigned cloud copy, if it is available. If it is not, there is a small chance of a software error instead.</p><h3 id="proc/delete_nanites"><aside class="declaration">proc </aside>delete_nanites<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 125"/></a></aside>
+        </h3>
+        <p>Deletes nanites!</p><h3 id="proc/reject_excess_nanites"><aside class="declaration">proc </aside>reject_excess_nanites<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L207">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 207"/></a></aside>
+        </h3>
+        <p>Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount</p>
+<p>IC explanation:
+Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.</p><h3 id="proc/set_nanite_bar"><aside class="declaration">proc </aside>set_nanite_bar<aside>(remove) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L249">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 249"/></a></aside>
+        </h3>
+        <p>Updates the nanite volume bar visible in diagnostic HUDs</p><h3 id="proc/sync"><aside class="declaration">proc </aside>sync<aside>(/<a href="datum.html">datum</a>/signal_source, /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/nanites.html">nanites</a>/source, full_overwrite, copy_activation) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/nanites.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;nanites.dm 131"/></a></aside>
+        </h3>
+        <p>Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

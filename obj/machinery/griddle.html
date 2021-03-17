@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;griddle - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/griddle.html#var">Var Details</a> - <a href="obj/machinery/griddle.html#proc">Proc Details</a></header>
+<main>
+<h1>griddle <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/griddle.html">griddle</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/griddle.html#var/griddled_objects">griddled_objects</a></th><td>Things that are being griddled right now</td></tr>
+            <tr><th><a href="obj/machinery/griddle.html#var/grill_loop">grill_loop</a></th><td>Looping sound for the grill</td></tr>
+            <tr><th><a href="obj/machinery/griddle.html#var/max_items">max_items</a></th><td>How many shit fits on the griddle?</td></tr>
+            <tr><th><a href="obj/machinery/griddle.html#var/on">on</a></th><td>Whether or not the machine is turned on right now</td></tr>
+            <tr><th><a href="obj/machinery/griddle.html#var/variant">variant</a></th><td>What variant of griddle is this?</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/griddle.html#proc/get_dumping_location">get_dumping_location</a></th><td>Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/griddled_objects"><aside class="declaration">var </aside>griddled_objects
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 15"/></a></h3>
+        <p>Things that are being griddled right now</p><h3 id="var/grill_loop"><aside class="declaration">var </aside>grill_loop
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/looping_sound.html">looping_sound</a>/grill</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 17"/></a></h3>
+        <p>Looping sound for the grill</p><h3 id="var/max_items"><aside class="declaration">var </aside>max_items
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 23"/></a></h3>
+        <p>How many shit fits on the griddle?</p><h3 id="var/on"><aside class="declaration">var </aside>on
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 19"/></a></h3>
+        <p>Whether or not the machine is turned on right now</p><h3 id="var/variant"><aside class="declaration">var </aside>variant
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 21"/></a></h3>
+        <p>What variant of griddle is this?</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_dumping_location"><aside class="parent"><a title="/atom" href="atom.html#proc/get_dumping_location">&uarr;</a></aside>get_dumping_location<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/storage/source, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/food_and_drinks/kitchen_machinery/griddle.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;food_and_drinks&#x2F;kitchen_machinery&#x2F;griddle.dm 126"/></a></aside>
+        </h3>
+        <p>Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

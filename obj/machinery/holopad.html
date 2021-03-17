@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;holopad - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/holopad.html#var">Var Details</a> - <a href="obj/machinery/holopad.html#proc">Proc Details</a></header>
+<main>
+<h1>holopad <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/holopad.html">holopad</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 30"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/calling">calling</a></th><td>If we are currently calling another holopad</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/disk">disk</a></th><td>Record disk</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/force_answer_call">force_answer_call</a></th><td>Calls will be automatically answered after a couple rings, here for debugging</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/holo_calls">holo_calls</a></th><td>Array of /datum/holocalls</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/holo_range">holo_range</a></th><td>Change to change how far the AI can move away from the holopad before deactivating</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/holorays">holorays</a></th><td>Holoray-mob link</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/last_request">last_request</a></th><td>To prevent request spam. ~Carn</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/loop_mode">loop_mode</a></th><td>Currently looping a recording</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/masters">masters</a></th><td>List of living mobs that use the holopad</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/outgoing_call">outgoing_call</a></th><td>Currently outgoing holocall, do not modify the datums only check and call the public procs</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/record_mode">record_mode</a></th><td>Currently recording</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/record_start">record_start</a></th><td>Recording start time</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/record_user">record_user</a></th><td>User that inititiated the recording</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/replay_holo">replay_holo</a></th><td>Replay hologram</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/replay_mode">replay_mode</a></th><td>Currently replaying a recording</td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#var/secure">secure</a></th><td>For pads in secure areas; do not allow forced connecting</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/holopad.html#proc/hangup_all_calls">hangup_all_calls</a></th><td>hangup_all_calls: Disconnects all current holocalls from the holopad</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/calling"><aside class="declaration">var </aside>calling
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 81"/></a></h3>
+        <p>If we are currently calling another holopad</p><h3 id="var/disk"><aside class="declaration">var </aside>disk
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/disk/holodisk</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 58"/></a></h3>
+        <p>Record disk</p><h3 id="var/force_answer_call"><aside class="declaration">var </aside>force_answer_call
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 72"/></a></h3>
+        <p>Calls will be automatically answered after a couple rings, here for debugging</p><h3 id="var/holo_calls"><aside class="declaration">var </aside>holo_calls
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 54"/></a></h3>
+        <p>Array of /datum/holocalls</p><h3 id="var/holo_range"><aside class="declaration">var </aside>holo_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 52"/></a></h3>
+        <p>Change to change how far the AI can move away from the holopad before deactivating</p><h3 id="var/holorays"><aside class="declaration">var </aside>holorays
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 48"/></a></h3>
+        <p>Holoray-mob link</p><h3 id="var/last_request"><aside class="declaration">var </aside>last_request
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 50"/></a></h3>
+        <p>To prevent request spam. ~Carn</p><h3 id="var/loop_mode"><aside class="declaration">var </aside>loop_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 62"/></a></h3>
+        <p>Currently looping a recording</p><h3 id="var/masters"><aside class="declaration">var </aside>masters
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 46"/></a></h3>
+        <p>List of living mobs that use the holopad</p><h3 id="var/outgoing_call"><aside class="declaration">var </aside>outgoing_call
+            <aside>&ndash; /<a href="datum.html">datum</a>/holocall</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 56"/></a></h3>
+        <p>Currently outgoing holocall, do not modify the datums only check and call the public procs</p><h3 id="var/record_mode"><aside class="declaration">var </aside>record_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 64"/></a></h3>
+        <p>Currently recording</p><h3 id="var/record_start"><aside class="declaration">var </aside>record_start
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 66"/></a></h3>
+        <p>Recording start time</p><h3 id="var/record_user"><aside class="declaration">var </aside>record_user
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 68"/></a></h3>
+        <p>User that inititiated the recording</p><h3 id="var/replay_holo"><aside class="declaration">var </aside>replay_holo
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/overlay/holo_pad_hologram</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 70"/></a></h3>
+        <p>Replay hologram</p><h3 id="var/replay_mode"><aside class="declaration">var </aside>replay_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 60"/></a></h3>
+        <p>Currently replaying a recording</p><h3 id="var/secure"><aside class="declaration">var </aside>secure
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 79"/></a></h3>
+        <p>For pads in secure areas; do not allow forced connecting</p><h2 id="proc">Proc Details</h2><h3 id="proc/hangup_all_calls"><aside class="declaration">proc </aside>hangup_all_calls<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/hologram.dm#L332">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;hologram.dm 332"/></a></aside>
+        </h3>
+        <p>hangup_all_calls: Disconnects all current holocalls from the holopad</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

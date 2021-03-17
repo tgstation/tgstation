@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;iv_drip - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/iv_drip.html#var">Var Details</a> - <a href="obj/machinery/iv_drip.html#proc">Proc Details</a></header>
+<main>
+<h1>iv_drip <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/iv_drip.html">iv_drip</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 4"/></a></h1>
+
+<p>Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#var/attached">attached</a></th><td>Who are we sticking our needle in?</td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#var/beaker">beaker</a></th><td>Internal beaker</td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#var/drip_containers">drip_containers</a></th><td>Typecache of containers we accept</td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#var/dripfeed">dripfeed</a></th><td>whether we feed slower</td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#var/mode">mode</a></th><td>Are we donating or injecting?</td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#var/use_internal_storage">use_internal_storage</a></th><td>Set false to block beaker use and instead use an internal reagent holder</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#proc/attach_iv">attach_iv</a></th><td>called when an IV is attached</td></tr>
+            <tr><th><a href="obj/machinery/iv_drip.html#proc/detach_iv">detach_iv</a></th><td>Called when an iv is detached. doesnt include chat stuff because there's multiple options and its better handled by the caller</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/attached"><aside class="declaration">var </aside>attached
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 13"/></a></h3>
+        <p>Who are we sticking our needle in?</p><h3 id="var/beaker"><aside class="declaration">var </aside>beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 19"/></a></h3>
+        <p>Internal beaker</p><h3 id="var/drip_containers"><aside class="declaration">var </aside>drip_containers
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 23"/></a></h3>
+        <p>Typecache of containers we accept</p><h3 id="var/dripfeed"><aside class="declaration">var </aside>dripfeed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 17"/></a></h3>
+        <p>whether we feed slower</p><h3 id="var/mode"><aside class="declaration">var </aside>mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 15"/></a></h3>
+        <p>Are we donating or injecting?</p><h3 id="var/use_internal_storage"><aside class="declaration">var </aside>use_internal_storage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 21"/></a></h3>
+        <p>Set false to block beaker use and instead use an internal reagent holder</p><h2 id="proc">Proc Details</h2><h3 id="proc/attach_iv"><aside class="declaration">proc </aside>attach_iv<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/target, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L191">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 191"/></a></aside>
+        </h3>
+        <p>called when an IV is attached</p><h3 id="proc/detach_iv"><aside class="declaration">proc </aside>detach_iv<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/iv_drip.dm#L203">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;iv_drip.dm 203"/></a></aside>
+        </h3>
+        <p>Called when an iv is detached. doesnt include chat stuff because there's multiple options and its better handled by the caller</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

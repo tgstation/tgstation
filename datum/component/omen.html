@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;omen - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/omen.html#var">Var Details</a> - <a href="datum/component/omen.html#proc">Proc Details</a></header>
+<main>
+<h1>omen <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/omen.html">omen</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/omen.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;omen.dm 9"/></a></h1>
+
+<p>omen.dm: For when you want someone to have a really bad day</p>
+<p>When you attach an omen component to someone, they start running the risk of all sorts of bad environmental injuries, like nearby vending machines randomly falling on you,
+or hitting your head really hard when you slip and fall, or... well, for now those two are all I have. More will come.</p>
+<p>Omens are removed once the victim is either maimed by one of the possible injuries, or if they receive a blessing (read: bashing with a bible) from the chaplain.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/omen.html#var/permanent">permanent</a></th><td>Whether this is a permanent omen that cannot be removed by any non-admin means.</td></tr>
+            <tr><th><a href="datum/component/omen.html#var/vessel">vessel</a></th><td>Whatever's causing the omen, if there is one. Destroying the vessel won't stop the omen, but we destroy the vessel (if one exists) upon the omen ending</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/omen.html#proc/check_accident">check_accident</a></th><td>check_accident() is called each step we take</td></tr>
+            <tr><th><a href="datum/component/omen.html#proc/check_bless">check_bless</a></th><td>Hijack the mood system to see if we get the blessing mood event to cancel the omen</td></tr>
+            <tr><th><a href="datum/component/omen.html#proc/check_slip">check_slip</a></th><td>If we get knocked down, see if we have a really bad slip and bash our head hard</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/permanent"><aside class="declaration">var </aside>permanent
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/omen.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;omen.dm 16"/></a></h3>
+        <p>Whether this is a permanent omen that cannot be removed by any non-admin means.</p><h3 id="var/vessel"><aside class="declaration">var </aside>vessel
+            <aside>&ndash; /<a href="obj.html">obj</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/omen.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;omen.dm 13"/></a></h3>
+        <p>Whatever's causing the omen, if there is one. Destroying the vessel won't stop the omen, but we destroy the vessel (if one exists) upon the omen ending</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_accident"><aside class="declaration">proc </aside>check_accident<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/our_guy) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/omen.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;omen.dm 53"/></a></aside>
+        </h3>
+        <p>check_accident() is called each step we take</p>
+<p>While we're walking around, roll to see if there's any environmental hazards (currently only vending machines) on one of the adjacent tiles we can trigger.
+We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time</p><h3 id="proc/check_bless"><aside class="declaration">proc </aside>check_bless<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/our_guy, category) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/omen.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;omen.dm 111"/></a></aside>
+        </h3>
+        <p>Hijack the mood system to see if we get the blessing mood event to cancel the omen</p><h3 id="proc/check_slip"><aside class="declaration">proc </aside>check_slip<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/our_guy, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/omen.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;omen.dm 93"/></a></aside>
+        </h3>
+        <p>If we get knocked down, see if we have a really bad slip and bash our head hard</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

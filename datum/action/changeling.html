@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;action&#x2F;changeling - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/action/changeling.html#var">Var Details</a> - <a href="datum/action/changeling.html#proc">Proc Details</a></header>
+<main>
+<h1>changeling <aside>/<a href="datum.html">datum</a>/<a href="datum/action/changeling.html">action/changeling</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/changeling/changeling_power.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;changeling&#x2F;changeling_power.dm 5"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/action/changeling.html#var/req_stat">req_stat</a></th><td>Maximum stat before the ability is blocked. For example, <code>UNCONSCIOUS</code> prevents it from being used when in hard crit or dead, while <code>DEAD</code> allows the ability to be used on any stat values.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/action/changeling.html#proc/try_to_sting">try_to_sting</a></th><td>Contrary to the name, this proc isn't just used by changeling stings. It handles the activation of the action and the deducation of its cost.
+The order of the proc chain is:
+can_sting(). Should this fail, the process gets aborted early.
+sting_action(). This proc usually handles the actual effect of the action.
+Should sting_action succeed the following will be done:
+sting_feedback(). Produces feedback on the performed action. Don't ask me why this isn't handled in sting_action()
+The deduction of the cost of this power.
+Returns TRUE on a successful activation.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/req_stat"><aside class="declaration">var </aside>req_stat
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/changeling/changeling_power.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;changeling&#x2F;changeling_power.dm 17"/></a></h3>
+        <p>Maximum stat before the ability is blocked. For example, <code>UNCONSCIOUS</code> prevents it from being used when in hard crit or dead, while <code>DEAD</code> allows the ability to be used on any stat values.</p><h2 id="proc">Proc Details</h2><h3 id="proc/try_to_sting"><aside class="declaration">proc </aside>try_to_sting<aside>(/<a href="mob.html">mob</a>/user, /<a href="mob.html">mob</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/changeling/changeling_power.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;changeling&#x2F;changeling_power.dm 49"/></a></aside>
+        </h3>
+        <p>Contrary to the name, this proc isn't just used by changeling stings. It handles the activation of the action and the deducation of its cost.
+The order of the proc chain is:
+can_sting(). Should this fail, the process gets aborted early.
+sting_action(). This proc usually handles the actual effect of the action.
+Should sting_action succeed the following will be done:
+sting_feedback(). Produces feedback on the performed action. Don't ask me why this isn't handled in sting_action()
+The deduction of the cost of this power.
+Returns TRUE on a successful activation.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

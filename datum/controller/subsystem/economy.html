@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;economy - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/economy.html#var">Var Details</a> - <a href="datum/controller/subsystem/economy.html#proc">Proc Details</a></header>
+<main>
+<h1>economy <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/economy.html">economy</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/bank_accounts_by_id">bank_accounts_by_id</a></th><td>List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
+A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/bounty_modifier">bounty_modifier</a></th><td>The modifier multiplied to the value of bounties paid out.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/civ_bounty_tracker">civ_bounty_tracker</a></th><td>How many civilain bounties have been completed so far this shift? Affects civilian budget payout values.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/earning_report">earning_report</a></th><td>Contains the message to send to newscasters about price inflation and earnings, updated on price_update()</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/inflation_value">inflation_value</a></th><td>A var that displays the result of inflation_value for easier debugging and tracking.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/pack_price_modifier">pack_price_modifier</a></th><td>The modifier multiplied to the value of cargo pack prices.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/station_target">station_target</a></th><td>A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/station_target_buffer">station_target_buffer</a></th><td>A passively increasing buffer to help alliviate inflation later into the shift, but to a lesser degree.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/station_total">station_total</a></th><td>A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#var/techweb_bounty">techweb_bounty</a></th><td>Departmental cash provided to science when a node is researched in specific configs.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#proc/departmental_payouts">departmental_payouts</a></th><td>Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
+Iterates over every department account for the same payment.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#proc/get_dep_account">get_dep_account</a></th><td>Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#proc/inflation_value">inflation_value</a></th><td>Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/economy.html#proc/price_update">price_update</a></th><td>Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bank_accounts_by_id"><aside class="declaration">var </aside>bank_accounts_by_id
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 24"/></a></h3>
+        <p>List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
+A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.</p><h3 id="var/bounty_modifier"><aside class="declaration">var </aside>bounty_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 39"/></a></h3>
+        <p>The modifier multiplied to the value of bounties paid out.</p><h3 id="var/civ_bounty_tracker"><aside class="declaration">var </aside>civ_bounty_tracker
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 35"/></a></h3>
+        <p>How many civilain bounties have been completed so far this shift? Affects civilian budget payout values.</p><h3 id="var/earning_report"><aside class="declaration">var </aside>earning_report
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 37"/></a></h3>
+        <p>Contains the message to send to newscasters about price inflation and earnings, updated on price_update()</p><h3 id="var/inflation_value"><aside class="declaration">var </aside>inflation_value
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 33"/></a></h3>
+        <p>A var that displays the result of inflation_value for easier debugging and tracking.</p><h3 id="var/pack_price_modifier"><aside class="declaration">var </aside>pack_price_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 41"/></a></h3>
+        <p>The modifier multiplied to the value of cargo pack prices.</p><h3 id="var/station_target"><aside class="declaration">var </aside>station_target
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 29"/></a></h3>
+        <p>A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.</p><h3 id="var/station_target_buffer"><aside class="declaration">var </aside>station_target_buffer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 31"/></a></h3>
+        <p>A passively increasing buffer to help alliviate inflation later into the shift, but to a lesser degree.</p><h3 id="var/station_total"><aside class="declaration">var </aside>station_total
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 27"/></a></h3>
+        <p>A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()</p><h3 id="var/techweb_bounty"><aside class="declaration">var </aside>techweb_bounty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 19"/></a></h3>
+        <p>Departmental cash provided to science when a node is researched in specific configs.</p><h2 id="proc">Proc Details</h2><h3 id="proc/departmental_payouts"><aside class="declaration">proc </aside>departmental_payouts<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 77"/></a></aside>
+        </h3>
+        <p>Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
+Iterates over every department account for the same payment.</p><h3 id="proc/get_dep_account"><aside class="declaration">proc </aside>get_dep_account<aside>(dep_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 68"/></a></aside>
+        </h3>
+        <p>Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.</p><h3 id="proc/inflation_value"><aside class="declaration">proc </aside>inflation_value<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 106"/></a></aside>
+        </h3>
+        <p>Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.</p>
+<p>If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
+Additionally, civilain bounties will cost less, and cargo goodies will increase in price as well.
+The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.</p><h3 id="proc/price_update"><aside class="declaration">proc </aside>price_update<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/economy.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;economy.dm 89"/></a></aside>
+        </h3>
+        <p>Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.</p>
+<p>Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

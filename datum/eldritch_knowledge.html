@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;eldritch_knowledge - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/eldritch_knowledge.html#var">Var Details</a> - <a href="datum/eldritch_knowledge.html#proc">Proc Details</a></header>
+<main>
+<h1>eldritch_knowledge <aside>/<a href="datum.html">datum</a>/<a href="datum/eldritch_knowledge.html">eldritch_knowledge</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 9"/></a></h1>
+
+<p>#Eldritch Knwoledge</p>
+<p>Datum that makes eldritch cultist interesting.</p>
+<p>Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/banned_knowledge">banned_knowledge</a></th><td>What knowledge is incompatible with this. This will simply make it impossible to research knowledges that are in banned_knowledge once this gets researched.</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/cost">cost</a></th><td>Cost of knowledge in souls</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/desc">desc</a></th><td>Description of the knowledge</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/gain_text">gain_text</a></th><td>What shows up</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/name">name</a></th><td>Name of the knowledge</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/next_knowledge">next_knowledge</a></th><td>Next knowledge in the research tree</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/required_atoms">required_atoms</a></th><td>Used with rituals, how many items this needs</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/result_atoms">result_atoms</a></th><td>What do we get out of this</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#var/route">route</a></th><td>What path is this on defaults to &quot;Side&quot;</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/cleanup_atoms">cleanup_atoms</a></th><td>Used atom cleanup</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_death">on_death</a></th><td>A proc that handles the code when the mob dies</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_eldritch_blade">on_eldritch_blade</a></th><td>Sickly blade act</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_finished_recipe">on_finished_recipe</a></th><td>What happens once the recipe is succesfully finished</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_gain">on_gain</a></th><td>What happens when this is assigned to an antag datum</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_life">on_life</a></th><td>What happens every tick</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_lose">on_lose</a></th><td>What happens when you loose this</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_mansus_grasp">on_mansus_grasp</a></th><td>Mansus grasp act</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/on_ranged_attack_eldritch_blade">on_ranged_attack_eldritch_blade</a></th><td>Sickly blade distant act</td></tr>
+            <tr><th><a href="datum/eldritch_knowledge.html#proc/recipe_snowflake_check">recipe_snowflake_check</a></th><td>Special check for recipes</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/banned_knowledge"><aside class="declaration">var </aside>banned_knowledge
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 21"/></a></h3>
+        <p>What knowledge is incompatible with this. This will simply make it impossible to research knowledges that are in banned_knowledge once this gets researched.</p><h3 id="var/cost"><aside class="declaration">var </aside>cost
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 17"/></a></h3>
+        <p>Cost of knowledge in souls</p><h3 id="var/desc"><aside class="declaration">var </aside>desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 13"/></a></h3>
+        <p>Description of the knowledge</p><h3 id="var/gain_text"><aside class="declaration">var </aside>gain_text
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 15"/></a></h3>
+        <p>What shows up</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 11"/></a></h3>
+        <p>Name of the knowledge</p><h3 id="var/next_knowledge"><aside class="declaration">var </aside>next_knowledge
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 19"/></a></h3>
+        <p>Next knowledge in the research tree</p><h3 id="var/required_atoms"><aside class="declaration">var </aside>required_atoms
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 23"/></a></h3>
+        <p>Used with rituals, how many items this needs</p><h3 id="var/result_atoms"><aside class="declaration">var </aside>result_atoms
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 25"/></a></h3>
+        <p>What do we get out of this</p><h3 id="var/route"><aside class="declaration">var </aside>route
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 27"/></a></h3>
+        <p>What path is this on defaults to &quot;Side&quot;</p><h2 id="proc">Proc Details</h2><h3 id="proc/cleanup_atoms"><aside class="declaration">proc </aside>cleanup_atoms<aside>(/list/atoms) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 95"/></a></aside>
+        </h3>
+        <p>Used atom cleanup</p>
+<p>Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.</p><h3 id="proc/on_death"><aside class="declaration">proc </aside>on_death<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 73"/></a></aside>
+        </h3>
+        <p>A proc that handles the code when the mob dies</p>
+<p>This proc is primarily used to end any soundloops when the heretic dies</p><h3 id="proc/on_eldritch_blade"><aside class="declaration">proc </aside>on_eldritch_blade<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, proximity_flag, click_parameters) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 117"/></a></aside>
+        </h3>
+        <p>Sickly blade act</p>
+<p>Gives addtional effects to sickly blade weapon</p><h3 id="proc/on_finished_recipe"><aside class="declaration">proc </aside>on_finished_recipe<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /list/atoms, loc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 81"/></a></aside>
+        </h3>
+        <p>What happens once the recipe is succesfully finished</p>
+<p>By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.</p><h3 id="proc/on_gain"><aside class="declaration">proc </aside>on_gain<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 42"/></a></aside>
+        </h3>
+        <p>What happens when this is assigned to an antag datum</p>
+<p>This proc is called whenever a new eldritch knowledge is added to an antag datum</p><h3 id="proc/on_life"><aside class="declaration">proc </aside>on_life<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 57"/></a></aside>
+        </h3>
+        <p>What happens every tick</p>
+<p>This proc is called on SSprocess in eldritch cultist antag datum. SSprocess happens roughly every second</p><h3 id="proc/on_lose"><aside class="declaration">proc </aside>on_lose<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 50"/></a></aside>
+        </h3>
+        <p>What happens when you loose this</p>
+<p>This proc is called whenever antagonist looses his antag datum, put cleanup code in here</p><h3 id="proc/on_mansus_grasp"><aside class="declaration">proc </aside>on_mansus_grasp<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, proximity_flag, click_parameters) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 108"/></a></aside>
+        </h3>
+        <p>Mansus grasp act</p>
+<p>Gives addtional effects to mansus grasp spell</p><h3 id="proc/on_ranged_attack_eldritch_blade"><aside class="declaration">proc </aside>on_ranged_attack_eldritch_blade<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user, click_parameters) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 125"/></a></aside>
+        </h3>
+        <p>Sickly blade distant act</p>
+<p>Same as <a href="datum/eldritch_knowledge.html#proc/on_eldritch_blade" title="/datum/eldritch_knowledge">/datum/eldritch_knowledge/proc/on_eldritch_blade</a> but works on targets that are not in proximity to you.</p><h3 id="proc/recipe_snowflake_check"><aside class="declaration">proc </aside>recipe_snowflake_check<aside>(/list/atoms, loc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/antagonists/eldritch_cult/eldritch_knowledge.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;eldritch_cult&#x2F;eldritch_knowledge.dm 65"/></a></aside>
+        </h3>
+        <p>Special check for recipes</p>
+<p>If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

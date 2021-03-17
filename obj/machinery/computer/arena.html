@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;computer&#x2F;arena - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/computer/arena.html#var">Var Details</a> - <a href="obj/machinery/computer/arena.html#proc">Proc Details</a></header>
+<main>
+<h1>arena <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/computer/arena.html">computer/arena</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 22"/></a></h1>
+
+<p>Controller for admin event arenas</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/arena_id">arena_id</a></th><td>Arena ID</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/arena_templates">arena_templates</a></th><td>Assoc list of map templates indexed by user friendly names</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/current_arena_template">current_arena_template</a></th><td>Name of currently loaded template</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/default_arenas_loaded">default_arenas_loaded</a></th><td>Were the config directory arenas loaded</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/default_outfit">default_outfit</a></th><td>Default team outfit if <code>outfits[team]</code> is empty</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/loading">loading</a></th><td>Is the arena template loading in</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/outfits">outfits</a></th><td>List of outfit datums/types indexed by team id, can be empty</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/ready_to_spawn">ready_to_spawn</a></th><td>Enables/disables spawning</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/team_colors">team_colors</a></th><td>List of hud colors indexed by team id</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/team_huds">team_huds</a></th><td>List of hud instances indedxed by team id</td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#var/team_keys">team_keys</a></th><td>List of ckeys indexed by team id</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/arena.html#proc/LoadDefaultArenas">LoadDefaultArenas</a></th><td>Loads the arenas from config directory.
+THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/arena_id"><aside class="declaration">var </aside>arena_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 25"/></a></h3>
+        <p>Arena ID</p><h3 id="var/arena_templates"><aside class="declaration">var </aside>arena_templates
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 29"/></a></h3>
+        <p>Assoc list of map templates indexed by user friendly names</p><h3 id="var/current_arena_template"><aside class="declaration">var </aside>current_arena_template
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 33"/></a></h3>
+        <p>Name of currently loaded template</p><h3 id="var/default_arenas_loaded"><aside class="declaration">var </aside>default_arenas_loaded
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 31"/></a></h3>
+        <p>Were the config directory arenas loaded</p><h3 id="var/default_outfit"><aside class="declaration">var </aside>default_outfit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 50"/></a></h3>
+        <p>Default team outfit if <code>outfits[team]</code> is empty</p><h3 id="var/loading"><aside class="declaration">var </aside>loading
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 53"/></a></h3>
+        <p>Is the arena template loading in</p><h3 id="var/outfits"><aside class="declaration">var </aside>outfits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 48"/></a></h3>
+        <p>List of outfit datums/types indexed by team id, can be empty</p><h3 id="var/ready_to_spawn"><aside class="declaration">var </aside>ready_to_spawn
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 27"/></a></h3>
+        <p>Enables/disables spawning</p><h3 id="var/team_colors"><aside class="declaration">var </aside>team_colors
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 41"/></a></h3>
+        <p>List of hud colors indexed by team id</p><h3 id="var/team_huds"><aside class="declaration">var </aside>team_huds
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 39"/></a></h3>
+        <p>List of hud instances indedxed by team id</p><h3 id="var/team_keys"><aside class="declaration">var </aside>team_keys
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 46"/></a></h3>
+        <p>List of ckeys indexed by team id</p><h2 id="proc">Proc Details</h2><h3 id="proc/LoadDefaultArenas"><aside class="declaration">proc </aside>LoadDefaultArenas<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/computer/arena.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;arena.dm 84"/></a></aside>
+        </h3>
+        <p>Loads the arenas from config directory.
+THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

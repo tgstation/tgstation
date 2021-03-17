@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;wounds.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/wounds.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/wounds.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_DAMAGE_EXPONENT">WOUND_DAMAGE_EXPONENT</a></th><td>the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See <a href="obj/item/bodypart.html#proc/check_wounding" title="/obj/item/bodypart">/obj/item/bodypart/proc/check_wounding</a></td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_MAX_CONSIDERED_DAMAGE">WOUND_MAX_CONSIDERED_DAMAGE</a></th><td>any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (35^1.4=145, for reference)</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_MINIMUM_DAMAGE">WOUND_MINIMUM_DAMAGE</a></th><td>an attack must do this much damage after armor in order to roll for being a wound (so pressure damage/being on fire doesn't proc it)</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/DISMEMBER_MINIMUM_DAMAGE">DISMEMBER_MINIMUM_DAMAGE</a></th><td>an attack must do this much damage after armor in order to be eliigible to dismember a suitably mushed bodypart</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_DISMEMBER_OUTRIGHT_THRESH">WOUND_DISMEMBER_OUTRIGHT_THRESH</a></th><td>If an attack rolls this high with their wound (including mods), we try to outright dismember the limb. Note 250 is high enough that with a perfect max roll of 145 (see max cons'd damage), you'd need +100 in mods to do this</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/CANT_WOUND">CANT_WOUND</a></th><td>set wound_bonus on an item or attack to this to disable checking wounding for the attack</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_SEVERITY_TRIVIAL">WOUND_SEVERITY_TRIVIAL</a></th><td>for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_SEVERITY_LOSS">WOUND_SEVERITY_LOSS</a></th><td>outright dismemberment of limb</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_BLUNT">WOUND_BLUNT</a></th><td>any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_SLASH">WOUND_SLASH</a></th><td>any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_PIERCE">WOUND_PIERCE</a></th><td>any brute weapon/attack with sharpness = SHARP_POINTY. rolls for piercing wounds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_BURN">WOUND_BURN</a></th><td>any concentrated burn attack (lasers really). rolls for burning wounds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_DETERMINATION_MAX">WOUND_DETERMINATION_MAX</a></th><td>the max amount of determination you can have</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_DETERMINATION_BLEED_MOD">WOUND_DETERMINATION_BLEED_MOD</a></th><td>While someone has determination in their system, their bleed rate is slightly reduced</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_INFECTION_MODERATE">WOUND_INFECTION_MODERATE</a></th><td>below this has no ill effects from infection</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_INFECTION_SEVERE">WOUND_INFECTION_SEVERE</a></th><td>then below here, you ooze some pus and suffer minor tox damage, but nothing serious</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_INFECTION_CRITICAL">WOUND_INFECTION_CRITICAL</a></th><td>then below here, your limb occasionally locks up from damage and infection and briefly becomes disabled. Things are getting really bad</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_INFECTION_SEPTIC">WOUND_INFECTION_SEPTIC</a></th><td>below here, your skin is almost entirely falling off and your limb locks up more frequently. You are within a stone's throw of septic paralysis and losing the limb</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_BURN_SANITIZATION_RATE">WOUND_BURN_SANITIZATION_RATE</a></th><td>how quickly sanitization removes infestation and decays per second</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_SLASH_MAX_BLOODFLOW">WOUND_SLASH_MAX_BLOODFLOW</a></th><td>how much blood you can lose per second per slash max. 4 is a LOT of blood for one cut so don't worry about hitting it easily</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_SLASH_DEAD_CLOT_MIN">WOUND_SLASH_DEAD_CLOT_MIN</a></th><td>dead people don't bleed, but they can clot! this is the minimum amount of clotting per tick on dead people, so even critical cuts will slowly clot in dead people</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/WOUND_BONE_HEAD_TIME_VARIANCE">WOUND_BONE_HEAD_TIME_VARIANCE</a></th><td>if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BIO_INORGANIC">BIO_INORGANIC</a></th><td>golems and androids, cannot suffer any wounds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BIO_JUST_BONE">BIO_JUST_BONE</a></th><td>skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BIO_JUST_FLESH">BIO_JUST_FLESH</a></th><td>nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BIO_FLESH_BONE">BIO_FLESH_BONE</a></th><td>standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_JUST_BONE and BIO_JUST_FLESH</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/FLESH_WOUND">FLESH_WOUND</a></th><td>If this wound requires having the HAS_FLESH flag for humanoids</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BONE_WOUND">BONE_WOUND</a></th><td>If this wound requires having the HAS_BONE flag for humanaoids</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/MANGLES_FLESH">MANGLES_FLESH</a></th><td>If having this wound counts as mangled flesh for dismemberment</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/MANGLES_BONE">MANGLES_BONE</a></th><td>If having this wound counts as mangled bone for dismemberment</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/ACCEPTS_GAUZE">ACCEPTS_GAUZE</a></th><td>If this wound marks the limb as being allowed to have gauze applied</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_VERS">SCAR_SAVE_VERS</a></th><td>The version number of the scar we're saving, any scars being loaded below this number will be discarded, see SCAR_CURRENT_VERSION below</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_ZONE">SCAR_SAVE_ZONE</a></th><td>The body_zone we're applying to on granting</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_DESC">SCAR_SAVE_DESC</a></th><td>The description we're loading</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_PRECISE_LOCATION">SCAR_SAVE_PRECISE_LOCATION</a></th><td>The precise location we're loading</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_SEVERITY">SCAR_SAVE_SEVERITY</a></th><td>The severity the scar had</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_BIOLOGY">SCAR_SAVE_BIOLOGY</a></th><td>Whether this is a BIO_JUST_BONE scar, a BIO_JUST_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_CHAR_SLOT">SCAR_SAVE_CHAR_SLOT</a></th><td>Which character slot this was saved to</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_SAVE_LENGTH">SCAR_SAVE_LENGTH</a></th><td>how many fields we save for each scar (so the number of above fields)</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/SCAR_CURRENT_VERSION">SCAR_CURRENT_VERSION</a></th><td>saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/PERSISTENT_SCAR_SLOTS">PERSISTENT_SCAR_SLOTS</a></th><td>how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BLOOD_FLOW_DECREASING">BLOOD_FLOW_DECREASING</a></th><td>Our wound is clotting and will eventually stop bleeding if this continues</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BLOOD_FLOW_STEADY">BLOOD_FLOW_STEADY</a></th><td>Our wound is bleeding but is holding steady at the same rate.</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BLOOD_FLOW_INCREASING">BLOOD_FLOW_INCREASING</a></th><td>Our wound is bleeding and actively getting worse, like if we're a critical slash or if we're afflicted with heparin</td></tr>
+        <tr><th><a href="code/__DEFINES/wounds.html#define/BLEEDING_MESSAGE_BASE_CD">BLEEDING_MESSAGE_BASE_CD</a></th><td>How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ACCEPTS_GAUZE"><aside class="declaration">#define </aside>ACCEPTS_GAUZE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 122"/></a>
+    </h3>
+    <p>If this wound marks the limb as being allowed to have gauze applied</p><h3 id="define/BIO_FLESH_BONE"><aside class="declaration">#define </aside>BIO_FLESH_BONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 109"/></a>
+    </h3>
+    <p>standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_JUST_BONE and BIO_JUST_FLESH</p><h3 id="define/BIO_INORGANIC"><aside class="declaration">#define </aside>BIO_INORGANIC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 103"/></a>
+    </h3>
+    <p>golems and androids, cannot suffer any wounds</p><h3 id="define/BIO_JUST_BONE"><aside class="declaration">#define </aside>BIO_JUST_BONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 105"/></a>
+    </h3>
+    <p>skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember</p><h3 id="define/BIO_JUST_FLESH"><aside class="declaration">#define </aside>BIO_JUST_FLESH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 107"/></a>
+    </h3>
+    <p>nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds</p><h3 id="define/BLEEDING_MESSAGE_BASE_CD"><aside class="declaration">#define </aside>BLEEDING_MESSAGE_BASE_CD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 158"/></a>
+    </h3>
+    <p>How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding</p><h3 id="define/BLOOD_FLOW_DECREASING"><aside class="declaration">#define </aside>BLOOD_FLOW_DECREASING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 151"/></a>
+    </h3>
+    <p>Our wound is clotting and will eventually stop bleeding if this continues</p><h3 id="define/BLOOD_FLOW_INCREASING"><aside class="declaration">#define </aside>BLOOD_FLOW_INCREASING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 155"/></a>
+    </h3>
+    <p>Our wound is bleeding and actively getting worse, like if we're a critical slash or if we're afflicted with heparin</p><h3 id="define/BLOOD_FLOW_STEADY"><aside class="declaration">#define </aside>BLOOD_FLOW_STEADY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 153"/></a>
+    </h3>
+    <p>Our wound is bleeding but is holding steady at the same rate.</p><h3 id="define/BONE_WOUND"><aside class="declaration">#define </aside>BONE_WOUND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 116"/></a>
+    </h3>
+    <p>If this wound requires having the HAS_BONE flag for humanaoids</p><h3 id="define/CANT_WOUND"><aside class="declaration">#define </aside>CANT_WOUND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 14"/></a>
+    </h3>
+    <p>set wound_bonus on an item or attack to this to disable checking wounding for the attack</p><h3 id="define/DISMEMBER_MINIMUM_DAMAGE"><aside class="declaration">#define </aside>DISMEMBER_MINIMUM_DAMAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 10"/></a>
+    </h3>
+    <p>an attack must do this much damage after armor in order to be eliigible to dismember a suitably mushed bodypart</p><h3 id="define/FLESH_WOUND"><aside class="declaration">#define </aside>FLESH_WOUND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 114"/></a>
+    </h3>
+    <p>If this wound requires having the HAS_FLESH flag for humanoids</p><h3 id="define/MANGLES_BONE"><aside class="declaration">#define </aside>MANGLES_BONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 120"/></a>
+    </h3>
+    <p>If having this wound counts as mangled bone for dismemberment</p><h3 id="define/MANGLES_FLESH"><aside class="declaration">#define </aside>MANGLES_FLESH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 118"/></a>
+    </h3>
+    <p>If having this wound counts as mangled flesh for dismemberment</p><h3 id="define/PERSISTENT_SCAR_SLOTS"><aside class="declaration">#define </aside>PERSISTENT_SCAR_SLOTS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 147"/></a>
+    </h3>
+    <p>how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs</p><h3 id="define/SCAR_CURRENT_VERSION"><aside class="declaration">#define </aside>SCAR_CURRENT_VERSION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 145"/></a>
+    </h3>
+    <p>saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)</p><h3 id="define/SCAR_SAVE_BIOLOGY"><aside class="declaration">#define </aside>SCAR_SAVE_BIOLOGY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 138"/></a>
+    </h3>
+    <p>Whether this is a BIO_JUST_BONE scar, a BIO_JUST_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)</p><h3 id="define/SCAR_SAVE_CHAR_SLOT"><aside class="declaration">#define </aside>SCAR_SAVE_CHAR_SLOT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 140"/></a>
+    </h3>
+    <p>Which character slot this was saved to</p><h3 id="define/SCAR_SAVE_DESC"><aside class="declaration">#define </aside>SCAR_SAVE_DESC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 132"/></a>
+    </h3>
+    <p>The description we're loading</p><h3 id="define/SCAR_SAVE_LENGTH"><aside class="declaration">#define </aside>SCAR_SAVE_LENGTH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 142"/></a>
+    </h3>
+    <p>how many fields we save for each scar (so the number of above fields)</p><h3 id="define/SCAR_SAVE_PRECISE_LOCATION"><aside class="declaration">#define </aside>SCAR_SAVE_PRECISE_LOCATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 134"/></a>
+    </h3>
+    <p>The precise location we're loading</p><h3 id="define/SCAR_SAVE_SEVERITY"><aside class="declaration">#define </aside>SCAR_SAVE_SEVERITY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 136"/></a>
+    </h3>
+    <p>The severity the scar had</p><h3 id="define/SCAR_SAVE_VERS"><aside class="declaration">#define </aside>SCAR_SAVE_VERS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 128"/></a>
+    </h3>
+    <p>The version number of the scar we're saving, any scars being loaded below this number will be discarded, see SCAR_CURRENT_VERSION below</p><h3 id="define/SCAR_SAVE_ZONE"><aside class="declaration">#define </aside>SCAR_SAVE_ZONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 130"/></a>
+    </h3>
+    <p>The body_zone we're applying to on granting</p><h3 id="define/WOUND_BLUNT"><aside class="declaration">#define </aside>WOUND_BLUNT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 28"/></a>
+    </h3>
+    <p>any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds</p><h3 id="define/WOUND_BONE_HEAD_TIME_VARIANCE"><aside class="declaration">#define </aside>WOUND_BONE_HEAD_TIME_VARIANCE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 85"/></a>
+    </h3>
+    <p>if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)</p><h3 id="define/WOUND_BURN"><aside class="declaration">#define </aside>WOUND_BURN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 34"/></a>
+    </h3>
+    <p>any concentrated burn attack (lasers really). rolls for burning wounds</p><h3 id="define/WOUND_BURN_SANITIZATION_RATE"><aside class="declaration">#define </aside>WOUND_BURN_SANITIZATION_RATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 79"/></a>
+    </h3>
+    <p>how quickly sanitization removes infestation and decays per second</p><h3 id="define/WOUND_DAMAGE_EXPONENT"><aside class="declaration">#define </aside>WOUND_DAMAGE_EXPONENT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 4"/></a>
+    </h3>
+    <p>the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See <a href="obj/item/bodypart.html#proc/check_wounding" title="/obj/item/bodypart">/obj/item/bodypart/proc/check_wounding</a></p><h3 id="define/WOUND_DETERMINATION_BLEED_MOD"><aside class="declaration">#define </aside>WOUND_DETERMINATION_BLEED_MOD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 47"/></a>
+    </h3>
+    <p>While someone has determination in their system, their bleed rate is slightly reduced</p><h3 id="define/WOUND_DETERMINATION_MAX"><aside class="declaration">#define </aside>WOUND_DETERMINATION_MAX
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 44"/></a>
+    </h3>
+    <p>the max amount of determination you can have</p><h3 id="define/WOUND_DISMEMBER_OUTRIGHT_THRESH"><aside class="declaration">#define </aside>WOUND_DISMEMBER_OUTRIGHT_THRESH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 12"/></a>
+    </h3>
+    <p>If an attack rolls this high with their wound (including mods), we try to outright dismember the limb. Note 250 is high enough that with a perfect max roll of 145 (see max cons'd damage), you'd need +100 in mods to do this</p><h3 id="define/WOUND_INFECTION_CRITICAL"><aside class="declaration">#define </aside>WOUND_INFECTION_CRITICAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 71"/></a>
+    </h3>
+    <p>then below here, your limb occasionally locks up from damage and infection and briefly becomes disabled. Things are getting really bad</p><h3 id="define/WOUND_INFECTION_MODERATE"><aside class="declaration">#define </aside>WOUND_INFECTION_MODERATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 67"/></a>
+    </h3>
+    <p>below this has no ill effects from infection</p><h3 id="define/WOUND_INFECTION_SEPTIC"><aside class="declaration">#define </aside>WOUND_INFECTION_SEPTIC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 73"/></a>
+    </h3>
+    <p>below here, your skin is almost entirely falling off and your limb locks up more frequently. You are within a stone's throw of septic paralysis and losing the limb</p><h3 id="define/WOUND_INFECTION_SEVERE"><aside class="declaration">#define </aside>WOUND_INFECTION_SEVERE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 69"/></a>
+    </h3>
+    <p>then below here, you ooze some pus and suffer minor tox damage, but nothing serious</p><h3 id="define/WOUND_MAX_CONSIDERED_DAMAGE"><aside class="declaration">#define </aside>WOUND_MAX_CONSIDERED_DAMAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 6"/></a>
+    </h3>
+    <p>any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (35^1.4=145, for reference)</p><h3 id="define/WOUND_MINIMUM_DAMAGE"><aside class="declaration">#define </aside>WOUND_MINIMUM_DAMAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 8"/></a>
+    </h3>
+    <p>an attack must do this much damage after armor in order to roll for being a wound (so pressure damage/being on fire doesn't proc it)</p><h3 id="define/WOUND_PIERCE"><aside class="declaration">#define </aside>WOUND_PIERCE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 32"/></a>
+    </h3>
+    <p>any brute weapon/attack with sharpness = SHARP_POINTY. rolls for piercing wounds</p><h3 id="define/WOUND_SEVERITY_LOSS"><aside class="declaration">#define </aside>WOUND_SEVERITY_LOSS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 23"/></a>
+    </h3>
+    <p>outright dismemberment of limb</p><h3 id="define/WOUND_SEVERITY_TRIVIAL"><aside class="declaration">#define </aside>WOUND_SEVERITY_TRIVIAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 18"/></a>
+    </h3>
+    <p>for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds</p><h3 id="define/WOUND_SLASH"><aside class="declaration">#define </aside>WOUND_SLASH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 30"/></a>
+    </h3>
+    <p>any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds</p><h3 id="define/WOUND_SLASH_DEAD_CLOT_MIN"><aside class="declaration">#define </aside>WOUND_SLASH_DEAD_CLOT_MIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 83"/></a>
+    </h3>
+    <p>dead people don't bleed, but they can clot! this is the minimum amount of clotting per tick on dead people, so even critical cuts will slowly clot in dead people</p><h3 id="define/WOUND_SLASH_MAX_BLOODFLOW"><aside class="declaration">#define </aside>WOUND_SLASH_MAX_BLOODFLOW
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/wounds.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;wounds.dm 81"/></a>
+    </h3>
+    <p>how much blood you can lose per second per slash max. 4 is a LOT of blood for one cut so don't worry about hitting it easily</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

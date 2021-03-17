@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;food - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/food.html#var">Var Details</a> - <a href="obj/item/food.html#proc">Proc Details</a></header>
+<main>
+<h1>food <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/food.html">food</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 2"/></a></h1>
+
+<p>Abstract class to allow us to easily create all the generic &quot;normal&quot; food without too much copy pasta of adding more components</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/food.html#var/bite_consumption">bite_consumption</a></th><td>How much reagents per bite</td></tr>
+            <tr><th><a href="obj/item/food.html#var/burns_on_grill">burns_on_grill</a></th><td>Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time</td></tr>
+            <tr><th><a href="obj/item/food.html#var/eat_time">eat_time</a></th><td>How long it will take to eat this food without any other modifiers</td></tr>
+            <tr><th><a href="obj/item/food.html#var/eatverbs">eatverbs</a></th><td>Verbs used when eating this food in the to_chat messages</td></tr>
+            <tr><th><a href="obj/item/food.html#var/food_flags">food_flags</a></th><td>Extra flags for things such as if the food is in a container or not</td></tr>
+            <tr><th><a href="obj/item/food.html#var/food_reagents">food_reagents</a></th><td>List of reagents this food gets on creation</td></tr>
+            <tr><th><a href="obj/item/food.html#var/foodtypes">foodtypes</a></th><td>Bitflag of the types of food this food is</td></tr>
+            <tr><th><a href="obj/item/food.html#var/junkiness">junkiness</a></th><td>How much junkiness this food has? God I should remove junkiness soon</td></tr>
+            <tr><th><a href="obj/item/food.html#var/max_volume">max_volume</a></th><td>Amount of volume the food can contain</td></tr>
+            <tr><th><a href="obj/item/food.html#var/microwaved_type">microwaved_type</a></th><td>What you get if you microwave the food, this should be replaced once I fully re-work cooking.</td></tr>
+            <tr><th><a href="obj/item/food.html#var/tastes">tastes</a></th><td>Tastes to describe this food</td></tr>
+            <tr><th><a href="obj/item/food.html#var/trash_type">trash_type</a></th><td>Type of atom thats spawned after eating this item</td></tr>
+            <tr><th><a href="obj/item/food.html#var/venue_value">venue_value</a></th><td>Price of this food if sold in a venue</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/food.html#proc/MakeEdible">MakeEdible</a></th><td>This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.</td></tr>
+            <tr><th><a href="obj/item/food.html#proc/MakeGrillable">MakeGrillable</a></th><td>This proc handles grillable components, overwrite if you want different grill results etc.</td></tr>
+            <tr><th><a href="obj/item/food.html#proc/MakeLeaveTrash">MakeLeaveTrash</a></th><td>This proc handles trash components, overwrite this if you want the object to spawn trash</td></tr>
+            <tr><th><a href="obj/item/food.html#proc/MakeProcessable">MakeProcessable</a></th><td>This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bite_consumption"><aside class="declaration">var </aside>bite_consumption
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 28"/></a></h3>
+        <p>How much reagents per bite</p><h3 id="var/burns_on_grill"><aside class="declaration">var </aside>burns_on_grill
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 36"/></a></h3>
+        <p>Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time</p><h3 id="var/eat_time"><aside class="declaration">var </aside>eat_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 22"/></a></h3>
+        <p>How long it will take to eat this food without any other modifiers</p><h3 id="var/eatverbs"><aside class="declaration">var </aside>eatverbs
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 26"/></a></h3>
+        <p>Verbs used when eating this food in the to_chat messages</p><h3 id="var/food_flags"><aside class="declaration">var </aside>food_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 16"/></a></h3>
+        <p>Extra flags for things such as if the food is in a container or not</p><h3 id="var/food_reagents"><aside class="declaration">var </aside>food_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 14"/></a></h3>
+        <p>List of reagents this food gets on creation</p><h3 id="var/foodtypes"><aside class="declaration">var </aside>foodtypes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 18"/></a></h3>
+        <p>Bitflag of the types of food this food is</p><h3 id="var/junkiness"><aside class="declaration">var </aside>junkiness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 34"/></a></h3>
+        <p>How much junkiness this food has? God I should remove junkiness soon</p><h3 id="var/max_volume"><aside class="declaration">var </aside>max_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 20"/></a></h3>
+        <p>Amount of volume the food can contain</p><h3 id="var/microwaved_type"><aside class="declaration">var </aside>microwaved_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 30"/></a></h3>
+        <p>What you get if you microwave the food, this should be replaced once I fully re-work cooking.</p><h3 id="var/tastes"><aside class="declaration">var </aside>tastes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 24"/></a></h3>
+        <p>Tastes to describe this food</p><h3 id="var/trash_type"><aside class="declaration">var </aside>trash_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 32"/></a></h3>
+        <p>Type of atom thats spawned after eating this item</p><h3 id="var/venue_value"><aside class="declaration">var </aside>venue_value
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 40"/></a></h3>
+        <p>Price of this food if sold in a venue</p><h2 id="proc">Proc Details</h2><h3 id="proc/MakeEdible"><aside class="declaration">proc </aside>MakeEdible<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 56"/></a></aside>
+        </h3>
+        <p>This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.</p><h3 id="proc/MakeGrillable"><aside class="declaration">proc </aside>MakeGrillable<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 75"/></a></aside>
+        </h3>
+        <p>This proc handles grillable components, overwrite if you want different grill results etc.</p><h3 id="proc/MakeLeaveTrash"><aside class="declaration">proc </aside>MakeLeaveTrash<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 81"/></a></aside>
+        </h3>
+        <p>This proc handles trash components, overwrite this if you want the object to spawn trash</p><h3 id="proc/MakeProcessable"><aside class="declaration">proc </aside>MakeProcessable<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/food/_food.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;food&#x2F;_food.dm 71"/></a></aside>
+        </h3>
+        <p>This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

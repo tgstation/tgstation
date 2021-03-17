@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;round_event&#x2F;crystal_invasion - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/round_event/crystal_invasion.html#var">Var Details</a> - <a href="datum/round_event/crystal_invasion.html#proc">Proc Details</a></header>
+<main>
+<h1>crystal_invasion <aside>/<a href="datum.html">datum</a>/<a href="datum/round_event/crystal_invasion.html">round_event/crystal_invasion</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 39"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/center_areas">center_areas</a></th><td>Store the areas where the huge portals appears</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/dest_crystal">dest_crystal</a></th><td>Store the destabilized crystal</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/is_zk_scenario">is_zk_scenario</a></th><td>Check if the event will end badly</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/portal_numbers">portal_numbers</a></th><td>Max number of portals that can spawn per type of wave</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/second_wave">second_wave</a></th><td>Ticks that have to pass before second wave</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/spawned">spawned</a></th><td>Check if this is the first wave or not</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#var/wave_name">wave_name</a></th><td>Is the name of the wave, used to check wich wave will be generated</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/announce_locations">announce_locations</a></th><td>After 8 seconds from the initial explosions centcom will announce the location of the huge portals</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/choose_wave_type">choose_wave_type</a></th><td>Choose the type of the wave</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/create_random_portals">create_random_portals</a></th><td>Chooses random areas where to put the main huge portals and then spawn around them 6 more portals</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/destabilize_supermatter_crystal">destabilize_supermatter_crystal</a></th><td>Destabilize the Supermatter crystal and spawn 6 portals around it</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/do_zk_event">do_zk_event</a></th><td>This proc actually manages the end of the event</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/finish_event">finish_event</a></th><td>Handles wich end the event shall have</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/more_portals">more_portals</a></th><td>If after 10 minutes the crystal is not stabilized more portals are spawned and the event progress further</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/on_dest_crystal_qdel">on_dest_crystal_qdel</a></th><td>Handle the dest_crystal var to be null if the destabilized crystal is deleted by a badmin before the end of the event</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/restore">restore</a></th><td>Restore the Destabilized Crystal as it was before</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/spawn_portal">spawn_portal</a></th><td>Spawn one portal in a random location choosen from the generic_event_spawns list</td></tr>
+            <tr><th><a href="datum/round_event/crystal_invasion.html#proc/zk_event_announcement">zk_event_announcement</a></th><td>This proc announces that the event is concluding with the worst scenario</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/center_areas"><aside class="declaration">var </aside>center_areas
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 56"/></a></h3>
+        <p>Store the areas where the huge portals appears</p><h3 id="var/dest_crystal"><aside class="declaration">var </aside>dest_crystal
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/destabilized_crystal.html">destabilized_crystal</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 50"/></a></h3>
+        <p>Store the destabilized crystal</p><h3 id="var/is_zk_scenario"><aside class="declaration">var </aside>is_zk_scenario
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 52"/></a></h3>
+        <p>Check if the event will end badly</p><h3 id="var/portal_numbers"><aside class="declaration">var </aside>portal_numbers
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 46"/></a></h3>
+        <p>Max number of portals that can spawn per type of wave</p><h3 id="var/second_wave"><aside class="declaration">var </aside>second_wave
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 54"/></a></h3>
+        <p>Ticks that have to pass before second wave</p><h3 id="var/spawned"><aside class="declaration">var </aside>spawned
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 48"/></a></h3>
+        <p>Check if this is the first wave or not</p><h3 id="var/wave_name"><aside class="declaration">var </aside>wave_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 44"/></a></h3>
+        <p>Is the name of the wave, used to check wich wave will be generated</p><h2 id="proc">Proc Details</h2><h3 id="proc/announce_locations"><aside class="declaration">proc </aside>announce_locations<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 160"/></a></aside>
+        </h3>
+        <p>After 8 seconds from the initial explosions centcom will announce the location of the huge portals</p><h3 id="proc/choose_wave_type"><aside class="declaration">proc </aside>choose_wave_type<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L170">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 170"/></a></aside>
+        </h3>
+        <p>Choose the type of the wave</p><h3 id="proc/create_random_portals"><aside class="declaration">proc </aside>create_random_portals<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 106"/></a></aside>
+        </h3>
+        <p>Chooses random areas where to put the main huge portals and then spawn around them 6 more portals</p><h3 id="proc/destabilize_supermatter_crystal"><aside class="declaration">proc </aside>destabilize_supermatter_crystal<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 64"/></a></aside>
+        </h3>
+        <p>Destabilize the Supermatter crystal and spawn 6 portals around it</p><h3 id="proc/do_zk_event"><aside class="declaration">proc </aside>do_zk_event<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L244">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 244"/></a></aside>
+        </h3>
+        <p>This proc actually manages the end of the event</p><h3 id="proc/finish_event"><aside class="declaration">proc </aside>finish_event<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L228">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 228"/></a></aside>
+        </h3>
+        <p>Handles wich end the event shall have</p><h3 id="proc/more_portals"><aside class="declaration">proc </aside>more_portals<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 204"/></a></aside>
+        </h3>
+        <p>If after 10 minutes the crystal is not stabilized more portals are spawned and the event progress further</p><h3 id="proc/on_dest_crystal_qdel"><aside class="declaration">proc </aside>on_dest_crystal_qdel<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L268">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 268"/></a></aside>
+        </h3>
+        <p>Handle the dest_crystal var to be null if the destabilized crystal is deleted by a badmin before the end of the event</p><h3 id="proc/restore"><aside class="declaration">proc </aside>restore<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L257">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 257"/></a></aside>
+        </h3>
+        <p>Restore the Destabilized Crystal as it was before</p><h3 id="proc/spawn_portal"><aside class="declaration">proc </aside>spawn_portal<aside>(/list/wave_type, /list/spawners) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 196"/></a></aside>
+        </h3>
+        <p>Spawn one portal in a random location choosen from the generic_event_spawns list</p><h3 id="proc/zk_event_announcement"><aside class="declaration">proc </aside>zk_event_announcement<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/events/crystal_event.dm#L236">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;events&#x2F;crystal_event.dm 236"/></a></aside>
+        </h3>
+        <p>This proc announces that the event is concluding with the worst scenario</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

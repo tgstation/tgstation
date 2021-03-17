@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;door&#x2F;airlock - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/door/airlock.html#var">Var Details</a> - <a href="obj/machinery/door/airlock.html#proc">Proc Details</a></header>
+<main>
+<h1>airlock <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/door.html">door</a>/<a href="obj/machinery/door/airlock.html">airlock</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/airlock_control.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;airlock_control.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/door/airlock.html#var/airlock_state">airlock_state</a></th><td>The current state of the airlock, used to construct the airlock overlays</td></tr>
+            <tr><th><a href="obj/machinery/door/airlock.html#var/seal">seal</a></th><td>The seal on the airlock</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/door/airlock.html#proc/beforeShuttleMove">beforeShuttleMove</a></th><td>Turf move procs</td></tr>
+            <tr><th><a href="obj/machinery/door/airlock.html#proc/set_wires">set_wires</a></th><td>Generates the airlock's wire layout based on the current area the airlock resides in.</td></tr>
+            <tr><th><a href="obj/machinery/door/airlock.html#proc/try_remove_seal">try_remove_seal</a></th><td>Used when attempting to remove a seal from an airlock</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/airlock_state"><aside class="declaration">var </aside>airlock_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/airlock_control.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;airlock_control.dm 6"/></a></h3>
+        <p>The current state of the airlock, used to construct the airlock overlays</p><h3 id="var/seal"><aside class="declaration">var </aside>seal
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/airlock.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;airlock.dm 95"/></a></h3>
+        <p>The seal on the airlock</p><h2 id="proc">Proc Details</h2><h3 id="proc/beforeShuttleMove">beforeShuttleMove<aside>(/<a href="turf.html">turf</a>/newT, rotation, move_mode, /<a href="obj.html">obj</a>/<a href="obj/docking_port.html">docking_port</a>/<a href="obj/docking_port/mobile.html">mobile</a>/moving_dock) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/shuttle/on_move.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;on_move.dm 184"/></a></aside>
+        </h3>
+        <p>Turf move procs</p>
+<p>Area move procs</p>
+<p>Machinery move procs</p><h3 id="proc/set_wires"><aside class="declaration">proc </aside>set_wires<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/airlock.dm#L1576">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;airlock.dm 1576"/></a></aside>
+        </h3>
+        <p>Generates the airlock's wire layout based on the current area the airlock resides in.</p>
+<p>Returns a new /datum/wires/ with the appropriate wire layout based on the airlock_wires
+of the area the airlock is in.</p><h3 id="proc/try_remove_seal"><aside class="parent"><a title="/obj/machinery/door" href="obj/machinery/door.html#proc/try_remove_seal">&uarr;</a></aside>try_remove_seal<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/doors/airlock.dm#L1036">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;doors&#x2F;airlock.dm 1036"/></a></aside>
+        </h3>
+        <p>Used when attempting to remove a seal from an airlock</p>
+<p>Called when attacking an airlock with an empty hand, returns TRUE (there was a seal and we removed it, or failed to remove it)
+or FALSE (there was no seal)
+Arguments:</p>
+<ul>
+<li>user - Whoever is attempting to remove the seal</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

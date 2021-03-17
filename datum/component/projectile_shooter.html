@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;projectile_shooter - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/projectile_shooter.html#var">Var Details</a> - <a href="datum/component/projectile_shooter.html#proc">Proc Details</a></header>
+<main>
+<h1>projectile_shooter <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/projectile_shooter.html">projectile_shooter</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 10"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#var/projectile_type">projectile_type</a></th><td>What projectile do we shoot?</td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#var/shot_prob">shot_prob</a></th><td>If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#proc/check_dropped">check_dropped</a></th><td>As above, special case for gun shoes so they can kick and shoot</td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#proc/check_equip">check_equip</a></th><td>As above, special case for gun shoes so they can kick and shoot</td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#proc/check_kick">check_kick</a></th><td>For the special case of gunboots being able to shoot someone when you kick them</td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#proc/pew">pew</a></th><td>This is where the magic happens, and a projectile is made and fired at wherever</td></tr>
+            <tr><th><a href="datum/component/projectile_shooter.html#proc/shoot_randomly">shoot_randomly</a></th><td>Whatever signals you hook up (minus the unarmed attack case) goes through here, and fires a projectile at a random tile around the parent's turf</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/projectile_type"><aside class="declaration">var </aside>projectile_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 12"/></a></h3>
+        <p>What projectile do we shoot?</p><h3 id="var/shot_prob"><aside class="declaration">var </aside>shot_prob
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 16"/></a></h3>
+        <p>If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire</p><h2 id="proc">Proc Details</h2><h3 id="proc/check_dropped"><aside class="declaration">proc </aside>check_dropped<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 74"/></a></aside>
+        </h3>
+        <p>As above, special case for gun shoes so they can kick and shoot</p><h3 id="proc/check_equip"><aside class="declaration">proc </aside>check_equip<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, slot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 69"/></a></aside>
+        </h3>
+        <p>As above, special case for gun shoes so they can kick and shoot</p><h3 id="proc/check_kick"><aside class="declaration">proc </aside>check_kick<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/kicking_person, /<a href="atom.html">atom</a>/attacked_atom, proximity) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 60"/></a></aside>
+        </h3>
+        <p>For the special case of gunboots being able to shoot someone when you kick them</p><h3 id="proc/pew"><aside class="declaration">proc </aside>pew<aside>(/<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 39"/></a></aside>
+        </h3>
+        <p>This is where the magic happens, and a projectile is made and fired at wherever</p><h3 id="proc/shoot_randomly"><aside class="declaration">proc </aside>shoot_randomly<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/projectile_shooter.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;projectile_shooter.dm 29"/></a></aside>
+        </h3>
+        <p>Whatever signals you hook up (minus the unarmed attack case) goes through here, and fires a projectile at a random tile around the parent's turf</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

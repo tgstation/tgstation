@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;drone - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/drone.html#var">Var Details</a> - <a href="mob/living/simple_animal/drone.html#proc">Proc Details</a></header>
+<main>
+<h1>Maintenance Drone <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/drone.html">drone</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 41"/></a></h1>
+
+<p>Small player controlled fixer-upper</p>
+<p>The maintenace drone is a ghost role with the objective to repair and
+maintain the station.</p>
+<p>Featuring two dexterous hands, and a built in toolbox stocked with
+tools.</p>
+<p>They have laws to prevent them from doing anything else.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/alarms">alarms</a></th><td>List of active alarms. See <a href="mob/living/simple_animal/drone.html#proc/triggerAlarm" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/triggerAlarm</a> and <a href="mob/living/simple_animal/drone.html#proc/cancelAlarm" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/cancelAlarm</a></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/colour">colour</a></th><td>Stored drone color, restored when unhacked</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/default_hatmask">default_hatmask</a></th><td>Default <a href="mob/living/simple_animal/drone.html#var/head" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/head</a> item</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/default_storage">default_storage</a></th><td>Default <a href="mob/living/simple_animal/drone.html#var/internal_storage" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/internal_storage</a> item</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/flavortext">flavortext</a></th><td>Flavor text announced to drones on <a href="mob.html#proc/Login" title="/mob">/mob/proc/Login</a></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/hacked">hacked</a></th><td>Hacked state, see <a href="mob/living/simple_animal/drone.html#proc/update_drone_hack" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/update_drone_hack</a></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/head">head</a></th><td>Headwear slot</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/heavy_emp_damage">heavy_emp_damage</a></th><td>Amount of damage sustained if hit by a heavy EMP pulse</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/internal_storage">internal_storage</a></th><td>Internal storage slot. Fits any item</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/laws">laws</a></th><td>Drone laws announced on spawn</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/picked">picked</a></th><td><code>TRUE</code> if we have picked our visual appearance, <code>FALSE</code> otherwise (default)</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#var/visualAppearance">visualAppearance</a></th><td>icon_state of drone from icons/mobs/drone.dmi</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/alert_drones">alert_drones</a></th><td>Wraps <a href="global.html#proc/_alert_drones" title="/global">/proc/_alert_drones</a> with defaults</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/cancelAlarm">cancelAlarm</a></th><td>Clears alarm and alerts drones</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/check_laws">check_laws</a></th><td>Echoes drone laws to the user</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/check_menu">check_menu</a></th><td>check_menu: Checks if we are allowed to interact with a radial menu</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/drone_chat">drone_chat</a></th><td>Wraps <a href="mob/living/simple_animal/drone.html#proc/alert_drones" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/alert_drones</a> as a Drone Chat</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/drone_ping">drone_ping</a></th><td>Creates an alert to drones in the same network</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/freeCamera">freeCamera</a></th><td>This isn't currently needed since drones do jack shit with cameras. I hate this code so much</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/liberate">liberate</a></th><td></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/pickVisualAppearance">pickVisualAppearance</a></th><td>Prompt for usr to pick <a href="mob/living/simple_animal/drone.html#var/visualAppearance" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/visualAppearance</a></td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/triggerAlarm">triggerAlarm</a></th><td>Alerts drones about different priorities of alarms</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/try_reactivate">try_reactivate</a></th><td>Called when a drone attempts to reactivate a dead drone</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/update_drone_hack">update_drone_hack</a></th><td>Hack or unhack a drone</td></tr>
+            <tr><th><a href="mob/living/simple_animal/drone.html#proc/update_drone_icon_hacked">update_drone_icon_hacked</a></th><td>Changes the icon state to a hacked version</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/alarms"><aside class="declaration">var </aside>alarms
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 92"/></a></h3>
+        <p>List of active alarms. See <a href="mob/living/simple_animal/drone.html#proc/triggerAlarm" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/triggerAlarm</a> and <a href="mob/living/simple_animal/drone.html#proc/cancelAlarm" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/cancelAlarm</a></p><h3 id="var/colour"><aside class="declaration">var </aside>colour
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 82"/></a></h3>
+        <p>Stored drone color, restored when unhacked</p><h3 id="var/default_hatmask"><aside class="declaration">var </aside>default_hatmask
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 100"/></a></h3>
+        <p>Default <a href="mob/living/simple_animal/drone.html#var/head" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/head</a> item</p><h3 id="var/default_storage"><aside class="declaration">var </aside>default_storage
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 98"/></a></h3>
+        <p>Default <a href="mob/living/simple_animal/drone.html#var/internal_storage" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/internal_storage</a> item</p><h3 id="var/flavortext"><aside class="declaration">var </aside>flavortext
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 115"/></a></h3>
+        <p>Flavor text announced to drones on <a href="mob.html#proc/Login" title="/mob">/mob/proc/Login</a></p><h3 id="var/hacked"><aside class="declaration">var </aside>hacked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 113"/></a></h3>
+        <p>Hacked state, see <a href="mob/living/simple_animal/drone.html#proc/update_drone_hack" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/update_drone_hack</a></p><h3 id="var/head"><aside class="declaration">var </aside>head
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 96"/></a></h3>
+        <p>Headwear slot</p><h3 id="var/heavy_emp_damage"><aside class="declaration">var </aside>heavy_emp_damage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 90"/></a></h3>
+        <p>Amount of damage sustained if hit by a heavy EMP pulse</p><h3 id="var/internal_storage"><aside class="declaration">var </aside>internal_storage
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 94"/></a></h3>
+        <p>Internal storage slot. Fits any item</p><h3 id="var/laws"><aside class="declaration">var </aside>laws
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 85"/></a></h3>
+        <p>Drone laws announced on spawn</p><h3 id="var/picked"><aside class="declaration">var </aside>picked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 80"/></a></h3>
+        <p><code>TRUE</code> if we have picked our visual appearance, <code>FALSE</code> otherwise (default)</p><h3 id="var/visualAppearance"><aside class="declaration">var </aside>visualAppearance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 111"/></a></h3>
+        <p>icon_state of drone from icons/mobs/drone.dmi</p>
+<p>Possible states are:</p>
+<ul>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/MAINTDRONE" title="MAINTDRONE">MAINTDRONE</a></li>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/REPAIRDRONE" title="REPAIRDRONE">REPAIRDRONE</a></li>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/SCOUTDRONE" title="SCOUTDRONE">SCOUTDRONE</a></li>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/CLOCKDRONE" title="CLOCKDRONE">CLOCKDRONE</a></li>
+</ul><h2 id="proc">Proc Details</h2><h3 id="proc/alert_drones"><aside class="declaration">proc </aside>alert_drones<aside>(msg, dead_can_hear) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/drone_say.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;drone_say.dm 34"/></a></aside>
+        </h3>
+        <p>Wraps <a href="global.html#proc/_alert_drones" title="/global">/proc/_alert_drones</a> with defaults</p>
+<ul>
+<li>source - <code>src</code></li>
+<li>faction_check_mob - <code>src</code></li>
+<li>dead_can_hear - <code>TRUE</code></li>
+</ul><h3 id="proc/cancelAlarm"><aside class="declaration">proc </aside>cancelAlarm<aside>(class, /<a href="area.html">area</a>/A, /<a href="obj.html">obj</a>/origin) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L297">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 297"/></a></aside>
+        </h3>
+        <p>Clears alarm and alerts drones</p>
+<p>Arguments:</p>
+<ul>
+<li>class - One of the keys listed in <a href="mob/living/simple_animal/drone.html#var/alarms" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/alarms</a></li>
+<li>A - <a href="area.html" title="/area">/area</a> the alarm occurs</li>
+<li>alarmsource - <a href="atom.html" title="/atom">/atom</a> source of the alarm</li>
+</ul><h3 id="proc/check_laws"><aside class="declaration">verb </aside>check_laws<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/verbs.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;verbs.dm 12"/></a></aside>
+        </h3>
+        <p>Echoes drone laws to the user</p>
+<p>See <a href="mob/living/simple_animal/drone.html#var/laws" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/laws</a></p><h3 id="proc/check_menu"><aside class="declaration">proc </aside>check_menu<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/visuals_icons.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;visuals_icons.dm 146"/></a></aside>
+        </h3>
+        <p>check_menu: Checks if we are allowed to interact with a radial menu</p><h3 id="proc/drone_chat"><aside class="declaration">proc </aside>drone_chat<aside>(msg) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/drone_say.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;drone_say.dm 42"/></a></aside>
+        </h3>
+        <p>Wraps <a href="mob/living/simple_animal/drone.html#proc/alert_drones" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/proc/alert_drones</a> as a Drone Chat</p>
+<p>Shares the same radio code with binary</p><h3 id="proc/drone_ping"><aside class="declaration">verb </aside>drone_ping<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/verbs.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;verbs.dm 30"/></a></aside>
+        </h3>
+        <p>Creates an alert to drones in the same network</p>
+<p>Prompts user for alert level of:</p>
+<ul>
+<li>Low</li>
+<li>Medium</li>
+<li>High</li>
+<li>Critical</li>
+</ul>
+<p>Attaches area name to message</p><h3 id="proc/freeCamera"><aside class="declaration">proc </aside>freeCamera<aside>(/<a href="area.html">area</a>/home, /<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/camera/cam) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L286">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 286"/></a></aside>
+        </h3>
+        <p>This isn't currently needed since drones do jack shit with cameras. I hate this code so much</p><h3 id="proc/liberate"><aside class="declaration">proc </aside>liberate<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/interaction.dm#L187">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;interaction.dm 187"/></a></aside>
+        </h3>
+        <h1 id="f-r-e-e-d-r-o-n-e">F R E E D R O N E</h1><h3 id="r">R</h3><h3 id="e">E</h3><h3 id="e">E</h3><h3 id="d">D</h3><h3 id="r">R</h3><h3 id="o">O</h3><h3 id="n">N</h3><h3 id="e">E</h3><h3 id="proc/pickVisualAppearance"><aside class="declaration">proc </aside>pickVisualAppearance<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/visuals_icons.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;visuals_icons.dm 102"/></a></aside>
+        </h3>
+        <p>Prompt for usr to pick <a href="mob/living/simple_animal/drone.html#var/visualAppearance" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/visualAppearance</a></p>
+<p>Does nothing if there is no usr</p>
+<p>Called on <a href="mob.html#proc/Login" title="/mob">/mob/proc/Login</a></p><h3 id="proc/triggerAlarm"><aside class="declaration">proc </aside>triggerAlarm<aside>(class, /<a href="area.html">area</a>/home, cameras, /<a href="obj.html">obj</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/_drone.dm#L268">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;_drone.dm 268"/></a></aside>
+        </h3>
+        <p>Alerts drones about different priorities of alarms</p>
+<p>Arguments:</p>
+<ul>
+<li>class - One of the keys listed in <a href="mob/living/simple_animal/drone.html#var/alarms" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/alarms</a></li>
+<li>A - <a href="area.html" title="/area">/area</a> the alarm occurs</li>
+<li>O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]</li>
+<li>alarmsource - <a href="atom.html" title="/atom">/atom</a> source of the alarm</li>
+</ul><h3 id="proc/try_reactivate"><aside class="declaration">proc </aside>try_reactivate<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/interaction.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;interaction.dm 65"/></a></aside>
+        </h3>
+        <p>Called when a drone attempts to reactivate a dead drone</p>
+<p>If the owner is still ghosted, will notify them.
+If the owner cannot be found, fails with an error message.</p>
+<p>Arguments:</p>
+<ul>
+<li>user - The <a href="mob/living.html" title="/mob/living">/mob/living</a> attempting to reactivate the drone</li>
+</ul><h3 id="proc/update_drone_hack"><aside class="declaration">proc </aside>update_drone_hack<aside>(hack) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/interaction.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;interaction.dm 138"/></a></aside>
+        </h3>
+        <p>Hack or unhack a drone</p>
+<p>This changes the drone's laws to destroy the station or resets them
+to normal.</p>
+<p>Some debuffs are applied like slowing the drone down and disabling
+vent crawling</p>
+<p>Arguments</p>
+<ul>
+<li>hack - Boolean if the drone is being hacked or unhacked</li>
+</ul><h3 id="proc/update_drone_icon_hacked"><aside class="declaration">proc </aside>update_drone_icon_hacked<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/friendly/drone/interaction.dm#L200">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;friendly&#x2F;drone&#x2F;interaction.dm 200"/></a></aside>
+        </h3>
+        <p>Changes the icon state to a hacked version</p>
+<p>See also</p>
+<ul>
+<li><a href="mob/living/simple_animal/drone.html#var/visualAppearance" title="/mob/living/simple_animal/drone">/mob/living/simple_animal/drone/var/visualAppearance</a></li>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/MAINTDRONE" title="MAINTDRONE">MAINTDRONE</a></li>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/REPAIRDRONE" title="REPAIRDRONE">REPAIRDRONE</a></li>
+<li><a href="code/modules/mob/living/simple_animal/friendly/drone/_drone.html#define/SCOUTDRONE" title="SCOUTDRONE">SCOUTDRONE</a></li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

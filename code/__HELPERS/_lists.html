@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__HELPERS&#x2F;_lists.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__HELPERS/_lists.html#define">Define Details</a></header>
+<main>
+<h1>code/__HELPERS/_lists.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__HELPERS/_lists.html#define/LAZYLISTDUPLICATE">LAZYLISTDUPLICATE</a></th><td>Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/LAZYNULL">LAZYNULL</a></th><td>Sets a list to null</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/LAZYADDASSOCLIST">LAZYADDASSOCLIST</a></th><td>This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/COMPARE_KEY">COMPARE_KEY</a></th><td>Passed into BINARY_INSERT to compare keys</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/COMPARE_VALUE">COMPARE_VALUE</a></th><td>Passed into BINARY_INSERT to compare values</td></tr>
+        <tr><th><a href="code/__HELPERS/_lists.html#define/BINARY_INSERT">BINARY_INSERT</a></th><td>Binary search sorted insert
+INPUT: Object to be inserted
+LIST: List to insert object into
+TYPECONT: The typepath of the contents of the list
+COMPARE: The object to compare against, usualy the same as INPUT
+COMPARISON: The variable on the objects to compare
+COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BINARY_INSERT"><aside class="declaration">#define </aside>BINARY_INSERT
+            <aside>(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 51"/></a>
+    </h3>
+    <p>Binary search sorted insert
+INPUT: Object to be inserted
+LIST: List to insert object into
+TYPECONT: The typepath of the contents of the list
+COMPARE: The object to compare against, usualy the same as INPUT
+COMPARISON: The variable on the objects to compare
+COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.</p><h3 id="define/COMPARE_KEY"><aside class="declaration">#define </aside>COMPARE_KEY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 38"/></a>
+    </h3>
+    <p>Passed into BINARY_INSERT to compare keys</p><h3 id="define/COMPARE_VALUE"><aside class="declaration">#define </aside>COMPARE_VALUE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 40"/></a>
+    </h3>
+    <p>Passed into BINARY_INSERT to compare values</p><h3 id="define/LAZYADDASSOCLIST"><aside class="declaration">#define </aside>LAZYADDASSOCLIST
+            <aside>(L, K, V)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 27"/></a>
+    </h3>
+    <p>This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)</p><h3 id="define/LAZYLISTDUPLICATE"><aside class="declaration">#define </aside>LAZYLISTDUPLICATE
+            <aside>(L)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 15"/></a>
+    </h3>
+    <p>Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled</p><h3 id="define/LAZYNULL"><aside class="declaration">#define </aside>LAZYNULL
+            <aside>(L)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/_lists.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;_lists.dm 24"/></a>
+    </h3>
+    <p>Sets a list to null</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

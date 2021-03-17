@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;organ&#x2F;brain - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/organ/brain.html#var">Var Details</a> - <a href="obj/item/organ/brain.html#proc">Proc Details</a></header>
+<main>
+<h1>brain <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/brain.html">brain</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/brain_item.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;brain_item.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#var/decay_factor">decay_factor</a></th><td>The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#var/max_skillchip_complexity">max_skillchip_complexity</a></th><td>Maximum skillchip complexity we can support before they stop working. Do not reference this var directly and instead call get_max_skillchip_complexity()</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#var/max_skillchip_slots">max_skillchip_slots</a></th><td>Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#var/skillchips">skillchips</a></th><td>List of skillchip items, their location should be this brain.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/activate_skillchip_failsafe">activate_skillchip_failsafe</a></th><td>Deactivates all chips currently in the brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/clone_skillchip_list">clone_skillchip_list</a></th><td>Creates a list of assoc lists containing skillchip types and key metadata.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/destroy_all_skillchips">destroy_all_skillchips</a></th><td>Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
+Arguments:</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/get_max_skillchip_complexity">get_max_skillchip_complexity</a></th><td>Returns the total maximum skillchip complexity supported by this brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/get_max_skillchip_slots">get_max_skillchip_slots</a></th><td>Returns the total maximum skillchip slot capacity supported by this brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/get_used_skillchip_complexity">get_used_skillchip_complexity</a></th><td>Returns the total current skillchip complexity used in this brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/get_used_skillchip_slots">get_used_skillchip_slots</a></th><td>Returns the total current skillchip slot capacity used in this brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/has_trauma_type">has_trauma_type</a></th><td>TRAUMAS</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/implant_skillchip">implant_skillchip</a></th><td>Attempts to implant target skillchip into the brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/remove_skillchip">remove_skillchip</a></th><td>Attempts to remove target skillchip from the brain.</td></tr>
+            <tr><th><a href="obj/item/organ/brain.html#proc/update_skillchips">update_skillchips</a></th><td>Disables or re-enables any extra skillchips after skillchip limit changes.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/decay_factor">decay_factor
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/brain_item.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;brain_item.dm 15"/></a></h3>
+        <p>The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth</p><h3 id="var/max_skillchip_complexity"><aside class="declaration">var </aside>max_skillchip_complexity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/brain_item.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;brain_item.dm 33"/></a></h3>
+        <p>Maximum skillchip complexity we can support before they stop working. Do not reference this var directly and instead call get_max_skillchip_complexity()</p><h3 id="var/max_skillchip_slots"><aside class="declaration">var </aside>max_skillchip_slots
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/brain_item.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;brain_item.dm 35"/></a></h3>
+        <p>Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()</p><h3 id="var/skillchips"><aside class="declaration">var </aside>skillchips
+            <aside>&ndash; /list/obj/item/skillchip</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/brain_item.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;brain_item.dm 31"/></a></h3>
+        <p>List of skillchip items, their location should be this brain.</p><h2 id="proc">Proc Details</h2><h3 id="proc/activate_skillchip_failsafe"><aside class="declaration">proc </aside>activate_skillchip_failsafe<aside>(silent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 133"/></a></aside>
+        </h3>
+        <p>Deactivates all chips currently in the brain.</p><h3 id="proc/clone_skillchip_list"><aside class="declaration">proc </aside>clone_skillchip_list<aside>(not_removable) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 53"/></a></aside>
+        </h3>
+        <p>Creates a list of assoc lists containing skillchip types and key metadata.</p>
+<p>Returns a complete list of new skillchip types with their metadata cloned from the brain's existing skillchip stock.
+Rumour has it that Changelings just LOVE this proc.
+Arguments:</p>
+<ul>
+<li>not_removable - Special override, whether or not to force cloned chips to be non-removable, i.e. to delete on removal.</li>
+</ul><h3 id="proc/destroy_all_skillchips"><aside class="declaration">proc </aside>destroy_all_skillchips<aside>(silent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 79"/></a></aside>
+        </h3>
+        <p>Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
+Arguments:</p>
+<ul>
+<li>silent - Whether to give the user a chat notification with the removal flavour text.</li>
+</ul><h3 id="proc/get_max_skillchip_complexity"><aside class="declaration">proc </aside>get_max_skillchip_complexity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 89"/></a></aside>
+        </h3>
+        <p>Returns the total maximum skillchip complexity supported by this brain.</p><h3 id="proc/get_max_skillchip_slots"><aside class="declaration">proc </aside>get_max_skillchip_slots<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 114"/></a></aside>
+        </h3>
+        <p>Returns the total maximum skillchip slot capacity supported by this brain.</p><h3 id="proc/get_used_skillchip_complexity"><aside class="declaration">proc </aside>get_used_skillchip_complexity<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 98"/></a></aside>
+        </h3>
+        <p>Returns the total current skillchip complexity used in this brain.</p><h3 id="proc/get_used_skillchip_slots"><aside class="declaration">proc </aside>get_used_skillchip_slots<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 120"/></a></aside>
+        </h3>
+        <p>Returns the total current skillchip slot capacity used in this brain.</p><h3 id="proc/has_trauma_type"><aside class="declaration">proc </aside>has_trauma_type<aside>(brain_trauma_type, resilience) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/brain_item.dm#L310">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;brain_item.dm 310"/></a></aside>
+        </h3>
+        <p>TRAUMAS</p><h3 id="proc/implant_skillchip"><aside class="declaration">proc </aside>implant_skillchip<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/skillchip.html">skillchip</a>/skillchip, force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 30"/></a></aside>
+        </h3>
+        <p>Attempts to implant target skillchip into the brain.</p>
+<p>Returns whether the skillchip was implanted or not.
+If you're implanting the skillchip into a mob, use the implant_skillchip proc in mob/living/carbon instead.
+DANGEROUS - This proc assumes you've done the appropriate checks to make sure the skillchip should be implanted.
+Where possible, call the mob/living/carbon version of this proc which does relevant checks.
+Arguments:</p>
+<ul>
+<li>skillchip - The skillchip you'd like to implant.</li>
+<li>force - Whether or not to force the skillchip to be implanted, ignoring any checks.</li>
+</ul><h3 id="proc/remove_skillchip"><aside class="declaration">proc </aside>remove_skillchip<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/skillchip.html">skillchip</a>/skillchip, silent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 9"/></a></aside>
+        </h3>
+        <p>Attempts to remove target skillchip from the brain.</p>
+<p>Returns whether the skillchip was removed or not.
+If you're removing the skillchip from a mob, use the remove_skillchip proc in mob/living/carbon instead.
+Arguments:</p>
+<ul>
+<li>skillchip - The skillchip you'd like to remove.</li>
+</ul><h3 id="proc/update_skillchips"><aside class="declaration">proc </aside>update_skillchips<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/brain/skillchip.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;brain&#x2F;skillchip.dm 157"/></a></aside>
+        </h3>
+        <p>Disables or re-enables any extra skillchips after skillchip limit changes.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

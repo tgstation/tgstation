@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;atom - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="atom.html#var">Var Details</a> - <a href="atom.html#proc">Proc Details</a></header>
+<main>
+<h1>atom <aside>/<a href="atom.html">atom</a></aside><aside> inherits /<a href="datum.html">datum</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 7"/></a></h1>
+
+<p>The base type for nearly all physical objects in SS13</p>
+<p>Lots and lots of functionality lives here, although in general we are striving to move
+as much as possible to the components/elements system</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="atom.html#var/add_overlays">add_overlays</a></th><td>a very temporary list of overlays to add</td></tr>
+            <tr><th><a href="atom.html#var/age_restricted">age_restricted</a></th><td>Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item</td></tr>
+            <tr><th><a href="atom.html#var/ai_controller">ai_controller</a></th><td>AI controller that controls this atom. type on init, then turned into an instance during runtime</td></tr>
+            <tr><th><a href="atom.html#var/article">article</a></th><td>If non-null, overrides a/an/some in all cases</td></tr>
+            <tr><th><a href="atom.html#var/atom_colours">atom_colours</a></th><td>used to store the different colors on an atom</td></tr>
+            <tr><th><a href="atom.html#var/base_icon_state">base_icon_state</a></th><td>Used for changing icon states for different base sprites.</td></tr>
+            <tr><th><a href="atom.html#var/base_pixel_x">base_pixel_x</a></th><td>Default pixel x shifting for the atom's icon.</td></tr>
+            <tr><th><a href="atom.html#var/base_pixel_y">base_pixel_y</a></th><td>Default pixel y shifting for the atom's icon.</td></tr>
+            <tr><th><a href="atom.html#var/bottom_left_corner">bottom_left_corner</a></th><td>Smoothing variable</td></tr>
+            <tr><th><a href="atom.html#var/bottom_right_corner">bottom_right_corner</a></th><td>Smoothing variable</td></tr>
+            <tr><th><a href="atom.html#var/buckle_message_cooldown">buckle_message_cooldown</a></th><td>Cooldown tick timer for buckle messages</td></tr>
+            <tr><th><a href="atom.html#var/canSmoothWith">canSmoothWith</a></th><td>List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.</td></tr>
+            <tr><th><a href="atom.html#var/chat_color">chat_color</a></th><td>Last color calculated for the the chatmessage overlays</td></tr>
+            <tr><th><a href="atom.html#var/chat_color_darkened">chat_color_darkened</a></th><td>A luminescence-shifted value of the last color calculated for chatmessage overlays</td></tr>
+            <tr><th><a href="atom.html#var/chat_color_name">chat_color_name</a></th><td>Last name used to calculate a color for the chatmessage overlays</td></tr>
+            <tr><th><a href="atom.html#var/custom_acid_overlay">custom_acid_overlay</a></th><td>The icon state intended to be used for the acid component. Used to override the default acid overlay icon state.</td></tr>
+            <tr><th><a href="atom.html#var/custom_materials">custom_materials</a></th><td>The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use <a href="atom.html#proc/set_custom_materials" title="/atom">set_custom_materials</a>.</td></tr>
+            <tr><th><a href="atom.html#var/custom_premium_price">custom_premium_price</a></th><td>Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.</td></tr>
+            <tr><th><a href="atom.html#var/custom_price">custom_price</a></th><td>Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.</td></tr>
+            <tr><th><a href="atom.html#var/demo_last_appearance">demo_last_appearance</a></th><td>Last appearance of the atom for demo saving purposes</td></tr>
+            <tr><th><a href="atom.html#var/explosion_block">explosion_block</a></th><td>Value used to increment ex_act() if reactionary_explosions is on</td></tr>
+            <tr><th><a href="atom.html#var/fingerprintslast">fingerprintslast</a></th><td>Last fingerprints to touch this atom</td></tr>
+            <tr><th><a href="atom.html#var/flags_1">flags_1</a></th><td>First atom flags var</td></tr>
+            <tr><th><a href="atom.html#var/hud_list">hud_list</a></th><td>This atom's HUD (med/sec, etc) images. Associative list.</td></tr>
+            <tr><th><a href="atom.html#var/hud_possible">hud_possible</a></th><td>HUD images that this atom can provide.</td></tr>
+            <tr><th><a href="atom.html#var/interaction_flags_atom">interaction_flags_atom</a></th><td>Intearaction flags</td></tr>
+            <tr><th><a href="atom.html#var/light">light</a></th><td>Our light source. Don't fuck with this directly unless you have a good reason!</td></tr>
+            <tr><th><a href="atom.html#var/light_color">light_color</a></th><td>Hexadecimal RGB string representing the colour of the light. White by default.</td></tr>
+            <tr><th><a href="atom.html#var/light_flags">light_flags</a></th><td>Bitflags to determine lighting-related atom properties.</td></tr>
+            <tr><th><a href="atom.html#var/light_on">light_on</a></th><td>Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.</td></tr>
+            <tr><th><a href="atom.html#var/light_power">light_power</a></th><td>Intensity of the light. The stronger, the less shadows you will see on the lit area.</td></tr>
+            <tr><th><a href="atom.html#var/light_range">light_range</a></th><td>Range of the light in tiles. Zero means no light.</td></tr>
+            <tr><th><a href="atom.html#var/light_sources">light_sources</a></th><td>Any light sources that are &quot;inside&quot; of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.</td></tr>
+            <tr><th><a href="atom.html#var/light_system">light_system</a></th><td>Light systems, both shouldn't be active at the same time.</td></tr>
+            <tr><th><a href="atom.html#var/managed_overlays">managed_overlays</a></th><td>overlays managed by <a href="atom.html#proc/update_overlays" title="/atom">update_overlays</a> to prevent removing overlays that weren't added by the same proc</td></tr>
+            <tr><th><a href="atom.html#var/managed_vis_overlays">managed_vis_overlays</a></th><td>vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays</td></tr>
+            <tr><th><a href="atom.html#var/material_flags">material_flags</a></th><td>Bitfield for how the atom handles materials.</td></tr>
+            <tr><th><a href="atom.html#var/material_modifier">material_modifier</a></th><td>Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.</td></tr>
+            <tr><th><a href="atom.html#var/orbit_target">orbit_target</a></th><td>Reference to atom being orbited</td></tr>
+            <tr><th><a href="atom.html#var/pass_flags_self">pass_flags_self</a></th><td>pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.</td></tr>
+            <tr><th><a href="atom.html#var/proximity_monitor">proximity_monitor</a></th><td>Proximity monitor associated with this atom</td></tr>
+            <tr><th><a href="atom.html#var/rad_insulation">rad_insulation</a></th><td>Radiation insulation types</td></tr>
+            <tr><th><a href="atom.html#var/reagents">reagents</a></th><td>Reagents holder</td></tr>
+            <tr><th><a href="atom.html#var/receive_ricochet_chance_mod">receive_ricochet_chance_mod</a></th><td>When a projectile tries to ricochet off this atom, the projectile ricochet chance is multiplied by this</td></tr>
+            <tr><th><a href="atom.html#var/receive_ricochet_damage_coeff">receive_ricochet_damage_coeff</a></th><td>When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom</td></tr>
+            <tr><th><a href="atom.html#var/remove_overlays">remove_overlays</a></th><td>a very temporary list of overlays to remove</td></tr>
+            <tr><th><a href="atom.html#var/smoothing_flags">smoothing_flags</a></th><td>Icon-smoothing behavior.</td></tr>
+            <tr><th><a href="atom.html#var/smoothing_groups">smoothing_groups</a></th><td>What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.</td></tr>
+            <tr><th><a href="atom.html#var/smoothing_junction">smoothing_junction</a></th><td>What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.</td></tr>
+            <tr><th><a href="atom.html#var/top_left_corner">top_left_corner</a></th><td>Smoothing variable</td></tr>
+            <tr><th><a href="atom.html#var/top_right_corner">top_right_corner</a></th><td>Smoothing variable</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="atom.html#proc/AllowDrop">AllowDrop</a></th><td>Are you allowed to drop this atom</td></tr>
+            <tr><th><a href="atom.html#proc/AltClickNoInteract">AltClickNoInteract</a></th><td>Use this instead of <a href="mob.html#proc/AltClickOn" title="/mob">/mob/proc/AltClickOn</a> where you only want turf content listing without additional atom alt-click interaction</td></tr>
+            <tr><th><a href="atom.html#proc/Beam">Beam</a></th><td>This is what you use to start a beam. Example: origin.Beam(target, args). <strong>Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.</strong></td></tr>
+            <tr><th><a href="atom.html#proc/CanAllowThrough">CanAllowThrough</a></th><td>Returns true or false to allow the mover to move through src</td></tr>
+            <tr><th><a href="atom.html#proc/CanPass">CanPass</a></th><td>Can the mover object pass this atom, while heading for the target turf</td></tr>
+            <tr><th><a href="atom.html#proc/CheckParts">CheckParts</a></th><td>Ensure a list of atoms/reagents exists inside this atom</td></tr>
+            <tr><th><a href="atom.html#proc/Click">Click</a></th><td>Before anything else, defer these calls to a per-mobtype handler.  This allows us to
+remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.</td></tr>
+            <tr><th><a href="atom.html#proc/ComponentInitialize">ComponentInitialize</a></th><td>Put your <a href="code/__DEFINES/dcs/helpers.html#define/AddComponent" title="AddComponent">AddComponent</a> calls here</td></tr>
+            <tr><th><a href="atom.html#proc/Destroy">Destroy</a></th><td>Top level of the destroy chain for most atoms</td></tr>
+            <tr><th><a href="atom.html#proc/Entered">Entered</a></th><td>An atom has entered this atom's contents</td></tr>
+            <tr><th><a href="atom.html#proc/Exit">Exit</a></th><td>An atom is attempting to exit this atom's contents</td></tr>
+            <tr><th><a href="atom.html#proc/Exited">Exited</a></th><td>An atom has exited this atom's contents</td></tr>
+            <tr><th><a href="atom.html#proc/GenerateTag">GenerateTag</a></th><td>Generate a tag for this atom</td></tr>
+            <tr><th><a href="atom.html#proc/GetAllContents">GetAllContents</a></th><td>Returns the src and all recursive contents as a list.</td></tr>
+            <tr><th><a href="atom.html#proc/HandleTurfChange">HandleTurfChange</a></th><td>called when the turf the atom resides on is ChangeTurfed</td></tr>
+            <tr><th><a href="atom.html#proc/HasProximity">HasProximity</a></th><td>Is this atom within 1 tile of another atom</td></tr>
+            <tr><th><a href="atom.html#proc/Initialize">Initialize</a></th><td>The primary method that objects are setup in SS13 with</td></tr>
+            <tr><th><a href="atom.html#proc/InitializeAIController">InitializeAIController</a></th><td></td></tr>
+            <tr><th><a href="atom.html#proc/IsObscured">IsObscured</a></th><td>Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it</td></tr>
+            <tr><th><a href="atom.html#proc/LateInitialize">LateInitialize</a></th><td>Sends a signal that the new atom <code>src</code>, has been created at <code>loc</code>
+Late Intialization, for code that should run after all atoms have run Intialization</td></tr>
+            <tr><th><a href="atom.html#proc/New">New</a></th><td>Called when an atom is created in byond (built in engine proc)</td></tr>
+            <tr><th><a href="atom.html#proc/ShowProcessingGui">ShowProcessingGui</a></th><td>Creates the radial and processes the selected option</td></tr>
+            <tr><th><a href="atom.html#proc/Topic">Topic</a></th><td>Passes Stat Browser Panel clicks to the game and calls client click on an atom</td></tr>
+            <tr><th><a href="atom.html#proc/acid_act">acid_act</a></th><td>Respond to acid being used on our atom</td></tr>
+            <tr><th><a href="atom.html#proc/add_atom_colour">add_atom_colour</a></th><td>Adds an instance of colour_type to the atom's atom_colours list</td></tr>
+            <tr><th><a href="atom.html#proc/add_mob_blood">add_mob_blood</a></th><td>to add blood from a mob onto something, and transfer their dna info</td></tr>
+            <tr><th><a href="atom.html#proc/analyzer_act">analyzer_act</a></th><td>Analyzer act</td></tr>
+            <tr><th><a href="atom.html#proc/assume_air">assume_air</a></th><td>Take air from the passed in gas mixture datum</td></tr>
+            <tr><th><a href="atom.html#proc/atmos_end">atmos_end</a></th><td>What to do when our requirements are no longer met. Null inputs are possible</td></tr>
+            <tr><th><a href="atom.html#proc/atmos_expose">atmos_expose</a></th><td>This is your process() proc</td></tr>
+            <tr><th><a href="atom.html#proc/attack_hand">attack_hand</a></th><td>Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.</td></tr>
+            <tr><th><a href="atom.html#proc/attack_hand_secondary">attack_hand_secondary</a></th><td>When the user uses their hand on an item while holding right-click
+Returns a SECONDARY_ATTACK_* value.</td></tr>
+            <tr><th><a href="atom.html#proc/attack_hulk">attack_hulk</a></th><td>This atom has been hit by a hulkified mob in hulk mode (user)</td></tr>
+            <tr><th><a href="atom.html#proc/attack_paw">attack_paw</a></th><td>Attacked by monkey</td></tr>
+            <tr><th><a href="atom.html#proc/attack_self_tk">attack_self_tk</a></th><td>Telekinesis item attack_self act.</td></tr>
+            <tr><th><a href="atom.html#proc/attack_tk">attack_tk</a></th><td>Telekinesis attack act, happens when the TK user clicks on a non-adjacent target in range.</td></tr>
+            <tr><th><a href="atom.html#proc/attackby">attackby</a></th><td>Called on an object being hit by an item</td></tr>
+            <tr><th><a href="atom.html#proc/attackby_secondary">attackby_secondary</a></th><td>Called on an object being right-clicked on by an item</td></tr>
+            <tr><th><a href="atom.html#proc/attempt_charge">attempt_charge</a></th><td>Used to attempt to charge an object with a payment component.</td></tr>
+            <tr><th><a href="atom.html#proc/audible_message">audible_message</a></th><td>Show a message to all mobs in earshot of this atom</td></tr>
+            <tr><th><a href="atom.html#proc/bitmask_smooth">bitmask_smooth</a></th><td>Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.</td></tr>
+            <tr><th><a href="atom.html#proc/blob_act">blob_act</a></th><td>React to a hit by a blob objecd</td></tr>
+            <tr><th><a href="atom.html#proc/bullet_act">bullet_act</a></th><td>React to a hit by a projectile object</td></tr>
+            <tr><th><a href="atom.html#proc/calculate_adjacencies">calculate_adjacencies</a></th><td>Scans all adjacent turfs to find targets to smooth with.</td></tr>
+            <tr><th><a href="atom.html#proc/check_eye">check_eye</a></th><td>Check if this atoms eye is still alive (probably)</td></tr>
+            <tr><th><a href="atom.html#proc/component_storage_contents_dump_act">component_storage_contents_dump_act</a></th><td>Implement the behaviour for when a user click drags another storage item to you</td></tr>
+            <tr><th><a href="atom.html#proc/connect_to_shuttle">connect_to_shuttle</a></th><td>Connect this atom to a shuttle</td></tr>
+            <tr><th><a href="atom.html#proc/container_resist_act">container_resist_act</a></th><td>Called when something resists while this atom is its loc</td></tr>
+            <tr><th><a href="atom.html#proc/contents_explosion">contents_explosion</a></th><td>Handle what happens when your contents are exploded by a bomb</td></tr>
+            <tr><th><a href="atom.html#proc/create_reagents">create_reagents</a></th><td>Convenience proc to create a reagents holder for an atom</td></tr>
+            <tr><th><a href="atom.html#proc/crowbar_act">crowbar_act</a></th><td>Crowbar act</td></tr>
+            <tr><th><a href="atom.html#proc/do_alert_animation">do_alert_animation</a></th><td>Does the MGS ! animation</td></tr>
+            <tr><th><a href="atom.html#proc/drop_location">drop_location</a></th><td>Where atoms should drop if taken from this atom</td></tr>
+            <tr><th><a href="atom.html#proc/emag_act">emag_act</a></th><td>Respond to an emag being used on our atom</td></tr>
+            <tr><th><a href="atom.html#proc/emp_act">emp_act</a></th><td>React to an EMP of the given severity</td></tr>
+            <tr><th><a href="atom.html#proc/ex_act">ex_act</a></th><td>React to being hit by an explosion</td></tr>
+            <tr><th><a href="atom.html#proc/examine">examine</a></th><td>Called when a mob examines (shift click or verb) this atom</td></tr>
+            <tr><th><a href="atom.html#proc/examine_more">examine_more</a></th><td>Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_TIME (default 1.5 seconds)</td></tr>
+            <tr><th><a href="atom.html#proc/expose_reagents">expose_reagents</a></th><td></td></tr>
+            <tr><th><a href="atom.html#proc/find_type_in_direction">find_type_in_direction</a></th><td>Scans direction to find targets to smooth with.</td></tr>
+            <tr><th><a href="atom.html#proc/get_all_contents_type">get_all_contents_type</a></th><td>identical to getallcontents but returns a list of atoms of the type passed in the argument.</td></tr>
+            <tr><th><a href="atom.html#proc/get_all_orbiters">get_all_orbiters</a></th><td>Recursive getter method to return a list of all ghosts orbitting this atom</td></tr>
+            <tr><th><a href="atom.html#proc/get_custom_material_amount">get_custom_material_amount</a></th><td>Gets the total amount of materials in this atom.</td></tr>
+            <tr><th><a href="atom.html#proc/get_dumping_location">get_dumping_location</a></th><td>Get the best place to dump the items contained in the source storage item?</td></tr>
+            <tr><th><a href="atom.html#proc/get_examine_name">get_examine_name</a></th><td>Get the name of this object for examine</td></tr>
+            <tr><th><a href="atom.html#proc/get_examine_string">get_examine_string</a></th><td>Generate the full examine string of this atom (including icon for goonchat)</td></tr>
+            <tr><th><a href="atom.html#proc/get_id_examine_strings">get_id_examine_strings</a></th><td>Returns an extended list of examine strings for any contained ID cards.</td></tr>
+            <tr><th><a href="atom.html#proc/get_master_material">get_master_material</a></th><td>Gets the most common material in the object.</td></tr>
+            <tr><th><a href="atom.html#proc/get_material_composition">get_material_composition</a></th><td>Returns the material composition of the atom.</td></tr>
+            <tr><th><a href="atom.html#proc/get_name_chaser">get_name_chaser</a></th><td>Used to insert text after the name but before the description in examine()</td></tr>
+            <tr><th><a href="atom.html#proc/get_remote_view_fullscreens">get_remote_view_fullscreens</a></th><td>the vision impairment to give to the mob whose perspective is set to that atom</td></tr>
+            <tr><th><a href="atom.html#proc/handle_atom_del">handle_atom_del</a></th><td>This proc is called when an atom in our contents has it's <a href="atom.html#proc/Destroy" title="/atom">Destroy</a> called</td></tr>
+            <tr><th><a href="atom.html#proc/handle_fall">handle_fall</a></th><td>Used for making a sound when a mob involuntarily falls into the ground.</td></tr>
+            <tr><th><a href="atom.html#proc/handle_slip">handle_slip</a></th><td>Handle the atom being slipped over</td></tr>
+            <tr><th><a href="atom.html#proc/has_gravity">has_gravity</a></th><td>Returns true if this atom has gravity for the passed in turf</td></tr>
+            <tr><th><a href="atom.html#proc/has_material_category">has_material_category</a></th><td>Fetches a list of all of the materials this object has with the desired material category.</td></tr>
+            <tr><th><a href="atom.html#proc/has_material_type">has_material_type</a></th><td>Fetches a list of all of the materials this object has of the desired type. Returns null if there is no valid materials of the type</td></tr>
+            <tr><th><a href="atom.html#proc/hitby">hitby</a></th><td>React to being hit by a thrown object</td></tr>
+            <tr><th><a href="atom.html#proc/hitby_react">hitby_react</a></th><td>We have have actually hit the passed in atom</td></tr>
+            <tr><th><a href="atom.html#proc/in_contents_of">in_contents_of</a></th><td>Return true if we're inside the passed in atom</td></tr>
+            <tr><th><a href="atom.html#proc/is_drainable">is_drainable</a></th><td>Is this atom drainable of reagents</td></tr>
+            <tr><th><a href="atom.html#proc/is_drawable">is_drawable</a></th><td>Can we draw from this atom with an injectable atom</td></tr>
+            <tr><th><a href="atom.html#proc/is_injectable">is_injectable</a></th><td>Is this atom injectable into other atoms</td></tr>
+            <tr><th><a href="atom.html#proc/is_open_container">is_open_container</a></th><td>Convenience proc to see if a container is open for chemistry handling</td></tr>
+            <tr><th><a href="atom.html#proc/is_refillable">is_refillable</a></th><td>Can this atoms reagents be refilled</td></tr>
+            <tr><th><a href="atom.html#proc/isinspace">isinspace</a></th><td>Is this atom in space</td></tr>
+            <tr><th><a href="atom.html#proc/log_message">log_message</a></th><td>Generic logging helper</td></tr>
+            <tr><th><a href="atom.html#proc/log_talk">log_talk</a></th><td>Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)</td></tr>
+            <tr><th><a href="atom.html#proc/mat_update_desc">mat_update_desc</a></th><td>This proc is called when a material updates an object's description</td></tr>
+            <tr><th><a href="atom.html#proc/mech_melee_attack">mech_melee_attack</a></th><td>Called when a mech melee attacks an atom</td></tr>
+            <tr><th><a href="atom.html#proc/multitool_act">multitool_act</a></th><td>Multitool act</td></tr>
+            <tr><th><a href="atom.html#proc/multitool_check_buffer">multitool_check_buffer</a></th><td>Check if the multitool has an item in it's data buffer</td></tr>
+            <tr><th><a href="atom.html#proc/narsie_act">narsie_act</a></th><td>Respond to narsie eating our atom</td></tr>
+            <tr><th><a href="atom.html#proc/ninjadrain_act">ninjadrain_act</a></th><td>Atom level proc for space ninja's glove interactions.</td></tr>
+            <tr><th><a href="atom.html#proc/onAwayMission">onAwayMission</a></th><td>Is the atom in an away mission</td></tr>
+            <tr><th><a href="atom.html#proc/onCentCom">onCentCom</a></th><td>Is this atom currently located on centcom</td></tr>
+            <tr><th><a href="atom.html#proc/onSyndieBase">onSyndieBase</a></th><td>Is the atom in any of the centcom syndicate areas</td></tr>
+            <tr><th><a href="atom.html#proc/on_log">on_log</a></th><td>Called when the atom log's in or out</td></tr>
+            <tr><th><a href="atom.html#proc/prepare_huds">prepare_huds</a></th><td>Prepare the huds for this atom</td></tr>
+            <tr><th><a href="atom.html#proc/rad_act">rad_act</a></th><td>Respond to a radioactive wave hitting this atom</td></tr>
+            <tr><th><a href="atom.html#proc/rcd_act">rcd_act</a></th><td>Respond to an RCD acting on our item</td></tr>
+            <tr><th><a href="atom.html#proc/rcd_vals">rcd_vals</a></th><td>Return the values you get when an RCD eats you?</td></tr>
+            <tr><th><a href="atom.html#proc/relaydrive">relaydrive</a></th><td>A special case of relaymove() in which the person relaying the move may be &quot;driving&quot; this atom</td></tr>
+            <tr><th><a href="atom.html#proc/relaymove">relaymove</a></th><td>An atom we are buckled or is contained within us has tried to move</td></tr>
+            <tr><th><a href="atom.html#proc/remove_air">remove_air</a></th><td>Remove air from this atom</td></tr>
+            <tr><th><a href="atom.html#proc/remove_atom_colour">remove_atom_colour</a></th><td>Removes an instance of colour_type from the atom's atom_colours list</td></tr>
+            <tr><th><a href="atom.html#proc/return_air">return_air</a></th><td>Return the current air environment in this atom</td></tr>
+            <tr><th><a href="atom.html#proc/return_analyzable_air">return_analyzable_air</a></th><td>Return the air if we can analyze it</td></tr>
+            <tr><th><a href="atom.html#proc/return_temperature">return_temperature</a></th><td>Return atom temperature</td></tr>
+            <tr><th><a href="atom.html#proc/runechat_prefs_check">runechat_prefs_check</a></th><td>Returns the client runechat visible messages preference according to the message type.</td></tr>
+            <tr><th><a href="atom.html#proc/rust_heretic_act">rust_heretic_act</a></th><td>Causes effects when the atom gets hit by a rust effect from heretics</td></tr>
+            <tr><th><a href="atom.html#proc/screwdriver_act">screwdriver_act</a></th><td>Screwdriver act</td></tr>
+            <tr><th><a href="atom.html#proc/setClosed">setClosed</a></th><td>Used to set something as 'closed' if it's being used as a supplypod</td></tr>
+            <tr><th><a href="atom.html#proc/setDir">setDir</a></th><td>Hook for running code when a dir change occurs</td></tr>
+            <tr><th><a href="atom.html#proc/setOpened">setOpened</a></th><td>Used to set something as 'open' if it's being used as a supplypod</td></tr>
+            <tr><th><a href="atom.html#proc/set_base_pixel_x">set_base_pixel_x</a></th><td>Setter for the <code>base_pixel_x</code> variable to append behavior related to its changing.</td></tr>
+            <tr><th><a href="atom.html#proc/set_base_pixel_y">set_base_pixel_y</a></th><td>Setter for the <code>base_pixel_y</code> variable to append behavior related to its changing.</td></tr>
+            <tr><th><a href="atom.html#proc/set_custom_materials">set_custom_materials</a></th><td>Sets the custom materials for an item.</td></tr>
+            <tr><th><a href="atom.html#proc/set_light_color">set_light_color</a></th><td>Setter for the light color of this atom.</td></tr>
+            <tr><th><a href="atom.html#proc/set_light_flags">set_light_flags</a></th><td>Setter for the light flags of this atom.</td></tr>
+            <tr><th><a href="atom.html#proc/set_light_on">set_light_on</a></th><td>Setter for whether or not this atom's light is on.</td></tr>
+            <tr><th><a href="atom.html#proc/set_light_power">set_light_power</a></th><td>Setter for the light power of this atom.</td></tr>
+            <tr><th><a href="atom.html#proc/set_light_range">set_light_range</a></th><td>Setter for the light range of this atom.</td></tr>
+            <tr><th><a href="atom.html#proc/set_opacity">set_opacity</a></th><td>Updates the atom's opacity value.</td></tr>
+            <tr><th><a href="atom.html#proc/set_smoothed_icon_state">set_smoothed_icon_state</a></th><td>Changes the icon state based on the new junction bitmask. Returns the old junction value.</td></tr>
+            <tr><th><a href="atom.html#proc/should_atmos_process">should_atmos_process</a></th><td>We use this proc to check if we should start processing an item, or continue processing it. Returns true/false as expected</td></tr>
+            <tr><th><a href="atom.html#proc/shuttleRotate">shuttleRotate</a></th><td>Base proc</td></tr>
+            <tr><th><a href="atom.html#proc/singularity_act">singularity_act</a></th><td>Respond to the singularity eating this atom</td></tr>
+            <tr><th><a href="atom.html#proc/singularity_pull">singularity_pull</a></th><td>Respond to the singularity pulling on us</td></tr>
+            <tr><th><a href="atom.html#proc/storage_contents_dump_act">storage_contents_dump_act</a></th><td>Implement the behaviour for when a user click drags a storage object to your atom</td></tr>
+            <tr><th><a href="atom.html#proc/tool_act">tool_act</a></th><td>Tool behavior procedure. Redirects to tool-specific procs by default.</td></tr>
+            <tr><th><a href="atom.html#proc/transfer_mob_blood_dna">transfer_mob_blood_dna</a></th><td>to add a mob's dna info into an object's blood_dna list.</td></tr>
+            <tr><th><a href="atom.html#proc/update_appearance">update_appearance</a></th><td>Updates the appearence of the icon</td></tr>
+            <tr><th><a href="atom.html#proc/update_atom_colour">update_atom_colour</a></th><td>Resets the atom's color to null, and then sets it to the highest priority colour available</td></tr>
+            <tr><th><a href="atom.html#proc/update_desc">update_desc</a></th><td>Updates the description of the atom</td></tr>
+            <tr><th><a href="atom.html#proc/update_icon">update_icon</a></th><td>Updates the icon of the atom</td></tr>
+            <tr><th><a href="atom.html#proc/update_icon_state">update_icon_state</a></th><td>Updates the icon state of the atom</td></tr>
+            <tr><th><a href="atom.html#proc/update_name">update_name</a></th><td>Updates the name of the atom</td></tr>
+            <tr><th><a href="atom.html#proc/update_overlays">update_overlays</a></th><td>Updates the overlays of the atom</td></tr>
+            <tr><th><a href="atom.html#proc/update_remote_sight">update_remote_sight</a></th><td>the sight changes to give to the mob whose perspective is set to that atom</td></tr>
+            <tr><th><a href="atom.html#proc/visible_message">visible_message</a></th><td>Generate a visible message from this atom</td></tr>
+            <tr><th><a href="atom.html#proc/vv_edit_var">vv_edit_var</a></th><td>call back when a var is edited on this atom</td></tr>
+            <tr><th><a href="atom.html#proc/vv_get_dropdown">vv_get_dropdown</a></th><td>Return the markup to for the dropdown list for the VV panel for this atom</td></tr>
+            <tr><th><a href="atom.html#proc/wash">wash</a></th><td>Wash this atom</td></tr>
+            <tr><th><a href="atom.html#proc/welder_act">welder_act</a></th><td>Welder act</td></tr>
+            <tr><th><a href="atom.html#proc/wirecutter_act">wirecutter_act</a></th><td>Wirecutter act</td></tr>
+            <tr><th><a href="atom.html#proc/wrench_act">wrench_act</a></th><td>Wrench act</td></tr>
+            <tr><th><a href="atom.html#proc/zap_act">zap_act</a></th><td>Respond to an electric bolt action on our item</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/add_overlays"><aside class="declaration">var </aside>add_overlays
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 52"/></a></h3>
+        <p>a very temporary list of overlays to add</p><h3 id="var/age_restricted"><aside class="declaration">var </aside>age_restricted
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 73"/></a></h3>
+        <p>Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item</p><h3 id="var/ai_controller"><aside class="declaration">var </aside>ai_controller
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/ai_controller.html">ai_controller</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L152">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 152"/></a></h3>
+        <p>AI controller that controls this atom. type on init, then turned into an instance during runtime</p><h3 id="var/article"><aside class="declaration">var </aside>article
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 16"/></a></h3>
+        <p>If non-null, overrides a/an/some in all cases</p><h3 id="var/atom_colours"><aside class="declaration">var </aside>atom_colours
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 46"/></a></h3>
+        <p>used to store the different colors on an atom</p>
+<p>its inherent color, the colored paint applied on it, special color effect etc...</p><h3 id="var/base_icon_state"><aside class="declaration">var </aside>base_icon_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 129"/></a></h3>
+        <p>Used for changing icon states for different base sprites.</p><h3 id="var/base_pixel_x"><aside class="declaration">var </aside>base_pixel_x
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 125"/></a></h3>
+        <p>Default pixel x shifting for the atom's icon.</p><h3 id="var/base_pixel_y"><aside class="declaration">var </aside>base_pixel_y
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 127"/></a></h3>
+        <p>Default pixel y shifting for the atom's icon.</p><h3 id="var/bottom_left_corner"><aside class="declaration">var </aside>bottom_left_corner
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 140"/></a></h3>
+        <p>Smoothing variable</p><h3 id="var/bottom_right_corner"><aside class="declaration">var </aside>bottom_right_corner
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 142"/></a></h3>
+        <p>Smoothing variable</p><h3 id="var/buckle_message_cooldown"><aside class="declaration">var </aside>buckle_message_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 62"/></a></h3>
+        <p>Cooldown tick timer for buckle messages</p><h3 id="var/canSmoothWith"><aside class="declaration">var </aside>canSmoothWith
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 146"/></a></h3>
+        <p>List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.</p><h3 id="var/chat_color"><aside class="declaration">var </aside>chat_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 120"/></a></h3>
+        <p>Last color calculated for the the chatmessage overlays</p><h3 id="var/chat_color_darkened"><aside class="declaration">var </aside>chat_color_darkened
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 122"/></a></h3>
+        <p>A luminescence-shifted value of the last color calculated for chatmessage overlays</p><h3 id="var/chat_color_name"><aside class="declaration">var </aside>chat_color_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 118"/></a></h3>
+        <p>Last name used to calculate a color for the chatmessage overlays</p><h3 id="var/custom_acid_overlay"><aside class="declaration">var </aside>custom_acid_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 82"/></a></h3>
+        <p>The icon state intended to be used for the acid component. Used to override the default acid overlay icon state.</p><h3 id="var/custom_materials"><aside class="declaration">var </aside>custom_materials
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 86"/></a></h3>
+        <p>The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use <a href="atom.html#proc/set_custom_materials" title="/atom">set_custom_materials</a>.</p><h3 id="var/custom_premium_price"><aside class="declaration">var </aside>custom_premium_price
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 71"/></a></h3>
+        <p>Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.</p><h3 id="var/custom_price"><aside class="declaration">var </aside>custom_price
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 69"/></a></h3>
+        <p>Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.</p><h3 id="var/demo_last_appearance"><aside class="declaration">var </aside>demo_last_appearance
+            <aside>&ndash; /image</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 98"/></a></h3>
+        <p>Last appearance of the atom for demo saving purposes</p><h3 id="var/explosion_block"><aside class="declaration">var </aside>explosion_block
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 39"/></a></h3>
+        <p>Value used to increment ex_act() if reactionary_explosions is on</p><h3 id="var/fingerprintslast"><aside class="declaration">var </aside>fingerprintslast
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 64"/></a></h3>
+        <p>Last fingerprints to touch this atom</p><h3 id="var/flags_1"><aside class="declaration">var </aside>flags_1
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 19"/></a></h3>
+        <p>First atom flags var</p><h3 id="var/hud_list"><aside class="declaration">var </aside>hud_list
+            <aside>&ndash; /list/image</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 34"/></a></h3>
+        <p>This atom's HUD (med/sec, etc) images. Associative list.</p><h3 id="var/hud_possible"><aside class="declaration">var </aside>hud_possible
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 36"/></a></h3>
+        <p>HUD images that this atom can provide.</p><h3 id="var/interaction_flags_atom"><aside class="declaration">var </aside>interaction_flags_atom
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 21"/></a></h3>
+        <p>Intearaction flags</p><h3 id="var/light"><aside class="declaration">var </aside>light
+            <aside>&ndash; /tmp/<a href="datum.html">datum</a>/light_source</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 113"/></a></h3>
+        <p>Our light source. Don't fuck with this directly unless you have a good reason!</p><h3 id="var/light_color"><aside class="declaration">var </aside>light_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 107"/></a></h3>
+        <p>Hexadecimal RGB string representing the colour of the light. White by default.</p><h3 id="var/light_flags"><aside class="declaration">var </aside>light_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 111"/></a></h3>
+        <p>Bitflags to determine lighting-related atom properties.</p><h3 id="var/light_on"><aside class="declaration">var </aside>light_on
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 109"/></a></h3>
+        <p>Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.</p><h3 id="var/light_power"><aside class="declaration">var </aside>light_power
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L105">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 105"/></a></h3>
+        <p>Intensity of the light. The stronger, the less shadows you will see on the lit area.</p><h3 id="var/light_range"><aside class="declaration">var </aside>light_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L103">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 103"/></a></h3>
+        <p>Range of the light in tiles. Zero means no light.</p><h3 id="var/light_sources"><aside class="declaration">var </aside>light_sources
+            <aside>&ndash; /tmp/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 115"/></a></h3>
+        <p>Any light sources that are &quot;inside&quot; of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.</p><h3 id="var/light_system"><aside class="declaration">var </aside>light_system
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 101"/></a></h3>
+        <p>Light systems, both shouldn't be active at the same time.</p><h3 id="var/managed_overlays"><aside class="declaration">var </aside>managed_overlays
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 57"/></a></h3>
+        <p>overlays managed by <a href="atom.html#proc/update_overlays" title="/atom">update_overlays</a> to prevent removing overlays that weren't added by the same proc</p><h3 id="var/managed_vis_overlays"><aside class="declaration">var </aside>managed_vis_overlays
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 55"/></a></h3>
+        <p>vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays</p><h3 id="var/material_flags"><aside class="declaration">var </aside>material_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 88"/></a></h3>
+        <p>Bitfield for how the atom handles materials.</p><h3 id="var/material_modifier"><aside class="declaration">var </aside>material_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 90"/></a></h3>
+        <p>Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.</p><h3 id="var/orbit_target"><aside class="declaration">var </aside>orbit_target
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 148"/></a></h3>
+        <p>Reference to atom being orbited</p><h3 id="var/pass_flags_self"><aside class="declaration">var </aside>pass_flags_self
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 13"/></a></h3>
+        <p>pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.</p><h3 id="var/proximity_monitor"><aside class="declaration">var </aside>proximity_monitor
+            <aside>&ndash; /<a href="datum.html">datum</a>/proximity_monitor</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 60"/></a></h3>
+        <p>Proximity monitor associated with this atom</p><h3 id="var/rad_insulation"><aside class="declaration">var </aside>rad_insulation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 79"/></a></h3>
+        <p>Radiation insulation types</p><h3 id="var/reagents"><aside class="declaration">var </aside>reagents
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 31"/></a></h3>
+        <p>Reagents holder</p><h3 id="var/receive_ricochet_chance_mod"><aside class="declaration">var </aside>receive_ricochet_chance_mod
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 26"/></a></h3>
+        <p>When a projectile tries to ricochet off this atom, the projectile ricochet chance is multiplied by this</p><h3 id="var/receive_ricochet_damage_coeff"><aside class="declaration">var </aside>receive_ricochet_damage_coeff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 28"/></a></h3>
+        <p>When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom</p><h3 id="var/remove_overlays"><aside class="declaration">var </aside>remove_overlays
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 50"/></a></h3>
+        <p>a very temporary list of overlays to remove</p><h3 id="var/smoothing_flags"><aside class="declaration">var </aside>smoothing_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 132"/></a></h3>
+        <p>Icon-smoothing behavior.</p><h3 id="var/smoothing_groups"><aside class="declaration">var </aside>smoothing_groups
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L144">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 144"/></a></h3>
+        <p>What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.</p><h3 id="var/smoothing_junction"><aside class="declaration">var </aside>smoothing_junction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 134"/></a></h3>
+        <p>What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.</p><h3 id="var/top_left_corner"><aside class="declaration">var </aside>top_left_corner
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 136"/></a></h3>
+        <p>Smoothing variable</p><h3 id="var/top_right_corner"><aside class="declaration">var </aside>top_right_corner
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 138"/></a></h3>
+        <p>Smoothing variable</p><h2 id="proc">Proc Details</h2><h3 id="proc/AllowDrop"><aside class="declaration">proc </aside>AllowDrop<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L515">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 515"/></a></aside>
+        </h3>
+        <p>Are you allowed to drop this atom</p><h3 id="proc/AltClickNoInteract"><aside class="declaration">proc </aside>AltClickNoInteract<aside>(/<a href="mob.html">mob</a>/user, /<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L369">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 369"/></a></aside>
+        </h3>
+        <p>Use this instead of <a href="mob.html#proc/AltClickOn" title="/mob">/mob/proc/AltClickOn</a> where you only want turf content listing without additional atom alt-click interaction</p><h3 id="proc/Beam"><aside class="declaration">proc </aside>Beam<aside>(/<a href="atom.html">atom</a>/BeamTarget, icon_state, icon, time, maxdistance, beam_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/beam.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;beam.dm 162"/></a></aside>
+        </h3>
+        <p>This is what you use to start a beam. Example: origin.Beam(target, args). <strong>Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.</strong></p>
+<p>Unless you're making a custom beam effect (see the beam_type argument), you won't actually have to mess with any other procs. Make sure you store the return of this Proc, you'll need it
+to kill the beam.
+<strong>Arguments:</strong>
+BeamTarget: Where you're beaming from. Where do you get origin? You didn't read the docs, fuck you.
+icon_state: What the beam's icon_state is. The datum effect isn't the ebeam object, it doesn't hold any icon and isn't type dependent.
+icon: What the beam's icon file is. Don't change this, man. All beam icons should be in beam.dmi anyways.
+maxdistance: how far the beam will go before stopping itself. Used mainly for two things: preventing lag if the beam may go in that direction and setting a range to abilities that use beams.
+beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.</p><h3 id="proc/CanAllowThrough"><aside class="declaration">proc </aside>CanAllowThrough<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/mover, /<a href="turf.html">turf</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L321">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 321"/></a></aside>
+        </h3>
+        <p>Returns true or false to allow the mover to move through src</p><h3 id="proc/CanPass"><aside class="declaration">proc </aside>CanPass<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/mover, /<a href="turf.html">turf</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L310">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 310"/></a></aside>
+        </h3>
+        <p>Can the mover object pass this atom, while heading for the target turf</p><h3 id="proc/CheckParts"><aside class="declaration">proc </aside>CheckParts<aside>(/list/parts_list, /<a href="datum.html">datum</a>/<a href="datum/crafting_recipe.html">crafting_recipe</a>/R) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L425">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 425"/></a></aside>
+        </h3>
+        <p>Ensure a list of atoms/reagents exists inside this atom</p>
+<p>Goes throught he list of passed in parts, if they're reagents, adds them to our reagent holder
+creating the reagent holder if it exists.</p>
+<p>If the part is a moveable atom and the  previous location of the item was a mob/living,
+it calls the inventory handler transferItemToLoc for that mob/living and transfers the part
+to this atom</p>
+<p>Otherwise it simply forceMoves the atom into this atom</p><h3 id="proc/Click"><aside class="declaration">proc </aside>Click<aside>(location, control, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 41"/></a></aside>
+        </h3>
+        <p>Before anything else, defer these calls to a per-mobtype handler.  This allows us to
+remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.</p>
+<p>Alternately, you could hardcode every mob's variation in a flat <a href="mob.html#proc/ClickOn" title="/mob">/mob/proc/ClickOn</a> proc; however,
+that's a lot of code duplication and is hard to maintain.</p>
+<p>Note that this proc can be overridden, and is in the case of screen objects.</p><h3 id="proc/ComponentInitialize"><aside class="declaration">proc </aside>ComponentInitialize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L260">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 260"/></a></aside>
+        </h3>
+        <p>Put your <a href="code/__DEFINES/dcs/helpers.html#define/AddComponent" title="AddComponent">AddComponent</a> calls here</p><h3 id="proc/Destroy"><aside class="parent"><a title="/datum" href="datum.html#proc/Destroy">&uarr;</a></aside>Destroy<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L273">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 273"/></a></aside>
+        </h3>
+        <p>Top level of the destroy chain for most atoms</p>
+<p>Cleans up the following:</p>
+<ul>
+<li>Removes alternate apperances from huds that see them</li>
+<li>qdels the reagent holder from atoms if it exists</li>
+<li>clears the orbiters list</li>
+<li>clears overlays and priority overlays</li>
+<li>clears the light object</li>
+</ul><h3 id="proc/Entered"><aside class="declaration">proc </aside>Entered<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM, /<a href="atom.html">atom</a>/oldLoc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1277">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1277"/></a></aside>
+        </h3>
+        <p>An atom has entered this atom's contents</p>
+<p>Default behaviour is to send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_ENTERED" title="COMSIG_ATOM_ENTERED">COMSIG_ATOM_ENTERED</a></p><h3 id="proc/Exit"><aside class="declaration">proc </aside>Exit<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM, /<a href="atom.html">atom</a>/newLoc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1288">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1288"/></a></aside>
+        </h3>
+        <p>An atom is attempting to exit this atom's contents</p>
+<p>Default behaviour is to send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_EXIT" title="COMSIG_ATOM_EXIT">COMSIG_ATOM_EXIT</a></p>
+<p>Return value should be set to FALSE if the moving atom is unable to leave,
+otherwise leave value the result of the parent call</p><h3 id="proc/Exited"><aside class="declaration">proc </aside>Exited<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM, /<a href="atom.html">atom</a>/newLoc) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1298">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1298"/></a></aside>
+        </h3>
+        <p>An atom has exited this atom's contents</p>
+<p>Default behaviour is to send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_EXITED" title="COMSIG_ATOM_EXITED">COMSIG_ATOM_EXITED</a></p><h3 id="proc/GenerateTag"><aside class="declaration">proc </aside>GenerateTag<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1427">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1427"/></a></aside>
+        </h3>
+        <p>Generate a tag for this atom</p><h3 id="proc/GetAllContents"><aside class="declaration">proc </aside>GetAllContents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L430">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 430"/></a></aside>
+        </h3>
+        <p>Returns the src and all recursive contents as a list.</p><h3 id="proc/HandleTurfChange"><aside class="declaration">proc </aside>HandleTurfChange<aside>(/<a href="turf.html">turf</a>/T) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L980">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 980"/></a></aside>
+        </h3>
+        <p>called when the turf the atom resides on is ChangeTurfed</p>
+<p>Default behaviour is to loop through atom contents and call their HandleTurfChange() proc</p><h3 id="proc/HasProximity"><aside class="declaration">proc </aside>HasProximity<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L522">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 522"/></a></aside>
+        </h3>
+        <p>Is this atom within 1 tile of another atom</p><h3 id="proc/Initialize"><aside class="declaration">proc </aside>Initialize<aside>(mapload, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L211">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 211"/></a></aside>
+        </h3>
+        <p>The primary method that objects are setup in SS13 with</p>
+<p>we don't use New as we have better control over when this is called and we can choose
+to delay calls or hook other logic in and so forth</p>
+<p>During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
+After the map has loaded, then Initalize is called on all atoms one by one. NB: this
+is also true for loading map templates as well, so they don't Initalize until all objects
+in the map file are parsed and present in the world</p>
+<p>If you're creating an object at any point after SSInit has run then this proc will be
+immediately be called from New.</p>
+<p>mapload: This parameter is true if the atom being loaded is either being intialized during
+the Atom subsystem intialization, or if the atom is being loaded from the map template.
+If the item is being created at runtime any time after the Atom subsystem is intialized then
+it's false.</p>
+<p>You must always call the parent of this proc, otherwise failures will occur as the item
+will not be seen as initalized (this can lead to all sorts of strange behaviour, like
+the item being completely unclickable)</p>
+<p>You must not sleep in this proc, or any subprocs</p>
+<p>Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
+there are no other arguments</p>
+<p>Must return an <a href="code/__DEFINES/subsystems.html#define/INITIALIZE_HINT_NORMAL" title="INITIALIZE_HINT_NORMAL">initialization hint</a> or a runtime will occur.</p>
+<p>Note: the following functions don't call the base for optimization and must copypasta handling:</p>
+<ul>
+<li><a href="turf.html#proc/Initialize" title="/turf">/turf/proc/Initialize</a></li>
+<li><a href="turf/open/space.html#proc/Initialize" title="/turf/open/space">/turf/open/space/proc/Initialize</a></li>
+</ul><h3 id="proc/InitializeAIController"><aside class="declaration">proc </aside>InitializeAIController<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1899">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1899"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Instantiates the AI controller of this atom. Override this if you want to assign variables first.</p>
+</li>
+<li>
+<p>This will work fine without manually passing arguments.</p>
+</li>
+</ul>
+<ul>
+<li></li>
+</ul><h3 id="proc/IsObscured"><aside class="declaration">proc </aside>IsObscured<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/click.dm#L165">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;click.dm 165"/></a></aside>
+        </h3>
+        <p>Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it</p><h3 id="proc/LateInitialize"><aside class="declaration">proc </aside>LateInitialize<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L256">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 256"/></a></aside>
+        </h3>
+        <p>Sends a signal that the new atom <code>src</code>, has been created at <code>loc</code>
+Late Intialization, for code that should run after all atoms have run Intialization</p>
+<p>To have your LateIntialize proc be called, your atoms <a href="atom.html#proc/Initialize" title="/atom">Initalization</a>
+proc must return the hint
+<a href="code/__DEFINES/subsystems.html#define/INITIALIZE_HINT_LATELOAD" title="INITIALIZE_HINT_LATELOAD">INITIALIZE_HINT_LATELOAD</a> otherwise you will never be called.</p>
+<p>useful for doing things like finding other machines on GLOB.machines because you can guarantee
+that all atoms will actually exist in the &quot;WORLD&quot; at this time and that all their Intialization
+code has been run</p><h3 id="proc/New">New<aside>(loc, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L162">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 162"/></a></aside>
+        </h3>
+        <p>Called when an atom is created in byond (built in engine proc)</p>
+<p>Not a lot happens here in SS13 code, as we offload most of the work to the
+<a href="atom.html#proc/Initialize" title="/atom">Intialization</a> proc, mostly we run the preloader
+if the preloader is being used and then call <a href="datum/controller/subsystem/atoms.html#proc/InitAtom" title="/datum/controller/subsystem/atoms">InitAtom</a> of which the ultimate
+result is that the Intialize proc is called.</p>
+<p>We also generate a tag here if the DF_USE_TAG flag is set on the atom</p><h3 id="proc/ShowProcessingGui"><aside class="declaration">proc </aside>ShowProcessingGui<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /list/possible_options) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1347">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1347"/></a></aside>
+        </h3>
+        <p>Creates the radial and processes the selected option</p><h3 id="proc/Topic"><aside class="parent"><a title="/datum" href="datum.html#proc/Topic">&uarr;</a></aside>Topic<aside>(href, /list/href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1856">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1856"/></a></aside>
+        </h3>
+        <p>Passes Stat Browser Panel clicks to the game and calls client click on an atom</p><h3 id="proc/acid_act"><aside class="declaration">proc </aside>acid_act<aside>(acidpwr, acid_volume) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L874">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 874"/></a></aside>
+        </h3>
+        <p>Respond to acid being used on our atom</p>
+<p>Default behaviour is to send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_ACID_ACT" title="COMSIG_ATOM_ACID_ACT">COMSIG_ATOM_ACID_ACT</a> and return</p><h3 id="proc/add_atom_colour"><aside class="declaration">proc </aside>add_atom_colour<aside>(coloration, colour_priority) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1031">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1031"/></a></aside>
+        </h3>
+        <p>Adds an instance of colour_type to the atom's atom_colours list</p><h3 id="proc/add_mob_blood"><aside class="declaration">proc </aside>add_mob_blood<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/M) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L839">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 839"/></a></aside>
+        </h3>
+        <p>to add blood from a mob onto something, and transfer their dna info</p><h3 id="proc/analyzer_act"><aside class="declaration">proc </aside>analyzer_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1423">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1423"/></a></aside>
+        </h3>
+        <p>Analyzer act</p><h3 id="proc/assume_air"><aside class="declaration">proc </aside>assume_air<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/giver) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L445">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 445"/></a></aside>
+        </h3>
+        <p>Take air from the passed in gas mixture datum</p><h3 id="proc/atmos_end"><aside class="declaration">proc </aside>atmos_end<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/air, exposed_temperature) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/atmos_sensitive.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;atmos_sensitive.dm 78"/></a></aside>
+        </h3>
+        <p>What to do when our requirements are no longer met. Null inputs are possible</p><h3 id="proc/atmos_expose"><aside class="declaration">proc </aside>atmos_expose<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/air, exposed_temperature) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/atmos_sensitive.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;atmos_sensitive.dm 74"/></a></aside>
+        </h3>
+        <p>This is your process() proc</p><h3 id="proc/attack_hand"><aside class="declaration">proc </aside>attack_hand<aside>(/<a href="mob.html">mob</a>/user, /list/modifiers) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/other_mobs.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;other_mobs.dm 46"/></a></aside>
+        </h3>
+        <p>Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.</p><h3 id="proc/attack_hand_secondary"><aside class="declaration">proc </aside>attack_hand_secondary<aside>(/<a href="mob.html">mob</a>/user, modifiers) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/other_mobs.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;other_mobs.dm 57"/></a></aside>
+        </h3>
+        <p>When the user uses their hand on an item while holding right-click
+Returns a SECONDARY_ATTACK_* value.</p><h3 id="proc/attack_hulk"><aside class="declaration">proc </aside>attack_hulk<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L410">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 410"/></a></aside>
+        </h3>
+        <p>This atom has been hit by a hulkified mob in hulk mode (user)</p><h3 id="proc/attack_paw"><aside class="declaration">proc </aside>attack_paw<aside>(/<a href="mob.html">mob</a>/user, /list/modifiers) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/other_mobs.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;other_mobs.dm 126"/></a></aside>
+        </h3>
+        <p>Attacked by monkey</p><h3 id="proc/attack_self_tk"><aside class="declaration">proc </aside>attack_self_tk<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/telekinesis.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;telekinesis.dm 68"/></a></aside>
+        </h3>
+        <p>Telekinesis item attack_self act.</p>
+<ul>
+<li>This is similar to item attack_self, but applies to anything that you can grab with a telekinetic grab.</li>
+<li>It is used for manipulating things at range, for example, opening and closing closets..</li>
+<li>Defined at the <code>/atom</code> level but only used at the <code>/obj/item</code> one.</li>
+<li>Returns <code>COMPONENT_CANCEL_ATTACK_CHAIN</code> when it performs any action, to further acts on the attack chain.</li>
+</ul><h3 id="proc/attack_tk"><aside class="declaration">proc </aside>attack_tk<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/telekinesis.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;telekinesis.dm 17"/></a></aside>
+        </h3>
+        <p>Telekinesis attack act, happens when the TK user clicks on a non-adjacent target in range.</p>
+<ul>
+<li>By default, emulates the user's unarmed attack.</li>
+<li>Called indirectly by the <code>COMSIG_MOB_ATTACK_RANGED</code> signal.</li>
+<li>Returns <code>COMPONENT_CANCEL_ATTACK_CHAIN</code> when it performs any action, to further acts on the attack chain.</li>
+</ul><h3 id="proc/attackby"><aside class="declaration">proc </aside>attackby<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/W, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/item_attack.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;item_attack.dm 109"/></a></aside>
+        </h3>
+        <p>Called on an object being hit by an item</p>
+<p>Arguments:</p>
+<ul>
+<li>obj/item/W - The item hitting this atom</li>
+<li>mob/user - The wielder of this item</li>
+<li>params - click params such as alt/shift etc</li>
+</ul>
+<p>See: <a href="obj/item.html#proc/melee_attack_chain" title="/obj/item">/obj/item/proc/melee_attack_chain</a></p><h3 id="proc/attackby_secondary"><aside class="declaration">proc </aside>attackby_secondary<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/weapon, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/_onclick/item_attack.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;_onclick&#x2F;item_attack.dm 124"/></a></aside>
+        </h3>
+        <p>Called on an object being right-clicked on by an item</p>
+<p>Arguments:</p>
+<ul>
+<li>obj/item/weapon - The item hitting this atom</li>
+<li>mob/user - The wielder of this item</li>
+<li>params - click params such as alt/shift etc</li>
+</ul>
+<p>See: <a href="obj/item.html#proc/melee_attack_chain" title="/obj/item">/obj/item/proc/melee_attack_chain</a></p><h3 id="proc/attempt_charge"><aside class="declaration">proc </aside>attempt_charge<aside>(/<a href="atom.html">atom</a>/sender, /<a href="atom.html">atom</a>/target, extra_fees) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1852">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1852"/></a></aside>
+        </h3>
+        <p>Used to attempt to charge an object with a payment component.</p>
+<p>Use this if an atom needs to attempt to charge another atom.</p><h3 id="proc/audible_message"><aside class="declaration">proc </aside>audible_message<aside>(message, deaf_message, hearing_distance, self_message, audible_message_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L237">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 237"/></a></aside>
+        </h3>
+        <p>Show a message to all mobs in earshot of this atom</p>
+<p>Use for objects performing audible actions</p>
+<p>vars:</p>
+<ul>
+<li>message is the message output to anyone who can hear.</li>
+<li>deaf_message (optional) is what deaf people will see.</li>
+<li>hearing_distance (optional) is the range, how many tiles away the message can be heard.</li>
+</ul><h3 id="proc/bitmask_smooth"><aside class="declaration">proc </aside>bitmask_smooth<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icon_smoothing.dm#L317">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icon_smoothing.dm 317"/></a></aside>
+        </h3>
+        <p>Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.</p>
+<p>Returns the previous smoothing_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.</p><h3 id="proc/blob_act"><aside class="declaration">proc </aside>blob_act<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure/blob.html">structure/blob</a>/B) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L765">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 765"/></a></aside>
+        </h3>
+        <p>React to a hit by a blob objecd</p>
+<p>default behaviour is to send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_BLOB_ACT" title="COMSIG_ATOM_BLOB_ACT">COMSIG_ATOM_BLOB_ACT</a> signal</p><h3 id="proc/bullet_act"><aside class="declaration">proc </aside>bullet_act<aside>(/<a href="obj.html">obj</a>/<a href="obj/projectile.html">projectile</a>/P, def_zone, piercing_hit) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L551">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 551"/></a></aside>
+        </h3>
+        <p>React to a hit by a projectile object</p>
+<p>Default behaviour is to send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_BULLET_ACT" title="COMSIG_ATOM_BULLET_ACT">COMSIG_ATOM_BULLET_ACT</a> and then call <a href="obj/projectile.html#proc/on_hit" title="/obj/projectile">on_hit</a> on the projectile</p>
+<p>@params
+P - projectile
+def_zone - zone hit
+piercing_hit - is this hit piercing or normal?</p><h3 id="proc/calculate_adjacencies"><aside class="declaration">proc </aside>calculate_adjacencies<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icon_smoothing.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icon_smoothing.dm 97"/></a></aside>
+        </h3>
+        <p>Scans all adjacent turfs to find targets to smooth with.</p><h3 id="proc/check_eye"><aside class="declaration">proc </aside>check_eye<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L465">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 465"/></a></aside>
+        </h3>
+        <p>Check if this atoms eye is still alive (probably)</p><h3 id="proc/component_storage_contents_dump_act"><aside class="declaration">proc </aside>component_storage_contents_dump_act<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/storage.html">storage</a>/src_object, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L948">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 948"/></a></aside>
+        </h3>
+        <p>Implement the behaviour for when a user click drags another storage item to you</p>
+<p>In this case we get as many of the tiems from the target items compoent storage and then
+put everything into ourselves (or our storage component)</p>
+<p>TODO these should be purely component items that intercept the atom clicks higher in the
+call chain</p><h3 id="proc/connect_to_shuttle"><aside class="declaration">proc </aside>connect_to_shuttle<aside>(/<a href="obj.html">obj</a>/<a href="obj/docking_port.html">docking_port</a>/<a href="obj/docking_port/mobile.html">mobile</a>/port, /<a href="obj.html">obj</a>/<a href="obj/docking_port.html">docking_port</a>/stationary/dock) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1431">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1431"/></a></aside>
+        </h3>
+        <p>Connect this atom to a shuttle</p><h3 id="proc/container_resist_act"><aside class="declaration">proc </aside>container_resist_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1845">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1845"/></a></aside>
+        </h3>
+        <p>Called when something resists while this atom is its loc</p><h3 id="proc/contents_explosion"><aside class="declaration">proc </aside>contents_explosion<aside>(severity, target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L747">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 747"/></a></aside>
+        </h3>
+        <p>Handle what happens when your contents are exploded by a bomb</p><h3 id="proc/create_reagents"><aside class="declaration">proc </aside>create_reagents<aside>(max_vol, flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/reagents/chemistry/holder.dm#L1920">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;holder.dm 1920"/></a></aside>
+        </h3>
+        <p>Convenience proc to create a reagents holder for an atom</p>
+<p>Arguments:</p>
+<ul>
+<li>max_vol - maximum volume of holder</li>
+<li>flags - flags to pass to the holder</li>
+</ul><h3 id="proc/crowbar_act"><aside class="declaration">proc </aside>crowbar_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1391">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1391"/></a></aside>
+        </h3>
+        <p>Crowbar act</p><h3 id="proc/do_alert_animation"><aside class="declaration">proc </aside>do_alert_animation<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/structures/crates_lockers/closets/cardboardbox.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;structures&#x2F;crates_lockers&#x2F;closets&#x2F;cardboardbox.dm 59"/></a></aside>
+        </h3>
+        <p>Does the MGS ! animation</p><h3 id="proc/drop_location"><aside class="declaration">proc </aside>drop_location<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1263">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1263"/></a></aside>
+        </h3>
+        <p>Where atoms should drop if taken from this atom</p><h3 id="proc/emag_act"><aside class="declaration">proc </aside>emag_act<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/card/emag/E) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L883">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 883"/></a></aside>
+        </h3>
+        <p>Respond to an emag being used on our atom</p>
+<p>Default behaviour is to send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_EMAG_ACT" title="COMSIG_ATOM_EMAG_ACT">COMSIG_ATOM_EMAG_ACT</a> and return</p><h3 id="proc/emp_act"><aside class="declaration">proc </aside>emp_act<aside>(severity) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L535">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 535"/></a></aside>
+        </h3>
+        <p>React to an EMP of the given severity</p>
+<p>Default behaviour is to send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_EMP_ACT" title="COMSIG_ATOM_EMP_ACT">COMSIG_ATOM_EMP_ACT</a> signal</p>
+<p>If the signal does not return protection, and there are attached wires then we call
+<a href="datum/wires.html#proc/emp_pulse" title="/datum/wires">emp_pulse</a> on the wires</p>
+<p>We then return the protection value</p><h3 id="proc/ex_act"><aside class="declaration">proc </aside>ex_act<aside>(severity, target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L755">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 755"/></a></aside>
+        </h3>
+        <p>React to being hit by an explosion</p>
+<p>Default behaviour is to call <a href="atom.html#proc/contents_explosion" title="/atom">contents_explosion</a> and send the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_EX_ACT" title="COMSIG_ATOM_EX_ACT">COMSIG_ATOM_EX_ACT</a> signal</p><h3 id="proc/examine"><aside class="declaration">proc </aside>examine<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L605">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 605"/></a></aside>
+        </h3>
+        <p>Called when a mob examines (shift click or verb) this atom</p>
+<p>Default behaviour is to get the name and icon of the object and it's reagents where
+the [TRANSPARENT] flag is set on the reagents holder</p>
+<p>Produces a signal <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_PARENT_EXAMINE" title="COMSIG_PARENT_EXAMINE">COMSIG_PARENT_EXAMINE</a></p><h3 id="proc/examine_more"><aside class="declaration">proc </aside>examine_more<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L650">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 650"/></a></aside>
+        </h3>
+        <p>Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_TIME (default 1.5 seconds)</p>
+<p>This is where you can put extra information on something that may be superfluous or not important in critical gameplay
+moments, while allowing people to manually double-examine to take a closer look</p>
+<p>Produces a signal <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_PARENT_EXAMINE_MORE" title="COMSIG_PARENT_EXAMINE_MORE">COMSIG_PARENT_EXAMINE_MORE</a></p><h3 id="proc/expose_reagents"><aside class="declaration">proc </aside>expose_reagents<aside>(/list/reagents, /<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/source, methods, volume_modifier, show_message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L504">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 504"/></a></aside>
+        </h3>
+        <ul>
+<li>
+<p>Handles exposing this atom to a list of reagents.</p>
+</li>
+<li>
+<p>Sends COMSIG_ATOM_EXPOSE_REAGENTS</p>
+</li>
+<li>
+<p>Calls expose_atom() for every reagent in the reagent list.</p>
+</li>
+<li>
+<p>Arguments:</p>
+</li>
+<li>
+<ul>
+<li>[reagents][/list]: The list of reagents the atom is being exposed to.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="datum/reagents.html" title="/datum/reagents">source</a>: The reagent holder the reagents are being sourced from.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>methods: How the atom is being exposed to the reagents. Bitflags.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>volume_modifier: Volume multiplier.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>show_message: Whether to display anything to mobs when they are exposed.</li>
+</ul>
+</li>
+</ul><h3 id="proc/find_type_in_direction"><aside class="declaration">proc </aside>find_type_in_direction<aside>(direction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icon_smoothing.dm#L276">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icon_smoothing.dm 276"/></a></aside>
+        </h3>
+        <p>Scans direction to find targets to smooth with.</p><h3 id="proc/get_all_contents_type"><aside class="declaration">proc </aside>get_all_contents_type<aside>(type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/unsorted.dm#L438">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;unsorted.dm 438"/></a></aside>
+        </h3>
+        <p>identical to getallcontents but returns a list of atoms of the type passed in the argument.</p><h3 id="proc/get_all_orbiters"><aside class="declaration">proc </aside>get_all_orbiters<aside>(/list/processed, source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1879">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1879"/></a></aside>
+        </h3>
+        <p>Recursive getter method to return a list of all ghosts orbitting this atom</p>
+<p>This will work fine without manually passing arguments.</p><h3 id="proc/get_custom_material_amount"><aside class="declaration">proc </aside>get_custom_material_amount<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1748">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1748"/></a></aside>
+        </h3>
+        <p>Gets the total amount of materials in this atom.</p><h3 id="proc/get_dumping_location"><aside class="declaration">proc </aside>get_dumping_location<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/storage/source, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L964">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 964"/></a></aside>
+        </h3>
+        <p>Get the best place to dump the items contained in the source storage item?</p><h3 id="proc/get_examine_name"><aside class="declaration">proc </aside>get_examine_name<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L570">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 570"/></a></aside>
+        </h3>
+        <p>Get the name of this object for examine</p>
+<p>You can override what is returned from this proc by registering to listen for the
+<a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_GET_EXAMINE_NAME" title="COMSIG_ATOM_GET_EXAMINE_NAME">COMSIG_ATOM_GET_EXAMINE_NAME</a> signal</p><h3 id="proc/get_examine_string"><aside class="declaration">proc </aside>get_examine_string<aside>(/<a href="mob.html">mob</a>/user, thats) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L580">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 580"/></a></aside>
+        </h3>
+        <p>Generate the full examine string of this atom (including icon for goonchat)</p><h3 id="proc/get_id_examine_strings"><aside class="declaration">proc </aside>get_id_examine_strings<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L589">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 589"/></a></aside>
+        </h3>
+        <p>Returns an extended list of examine strings for any contained ID cards.</p>
+<p>Arguments:</p>
+<ul>
+<li>user - The user who is doing the examining.</li>
+</ul><h3 id="proc/get_master_material"><aside class="declaration">proc </aside>get_master_material<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1730">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1730"/></a></aside>
+        </h3>
+        <p>Gets the most common material in the object.</p><h3 id="proc/get_material_composition"><aside class="declaration">proc </aside>get_material_composition<aside>(breakdown_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1659">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1659"/></a></aside>
+        </h3>
+        <p>Returns the material composition of the atom.</p>
+<p>Used when recycling items, specifically to turn alloys back into their component mats.</p>
+<p>Exists because I'd need to add a way to un-alloy alloys or otherwise deal
+with people converting the entire stations material supply into alloys.</p>
+<p>Arguments:</p>
+<ul>
+<li>flags: A set of flags determining how exactly the materials are broken down.</li>
+</ul><h3 id="proc/get_name_chaser"><aside class="declaration">proc </aside>get_name_chaser<aside>(/<a href="mob.html">mob</a>/user, /list/name_chaser) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L594">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 594"/></a></aside>
+        </h3>
+        <p>Used to insert text after the name but before the description in examine()</p><h3 id="proc/get_remote_view_fullscreens"><aside class="declaration">proc </aside>get_remote_view_fullscreens<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L990">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 990"/></a></aside>
+        </h3>
+        <p>the vision impairment to give to the mob whose perspective is set to that atom</p>
+<p>(e.g. an unfocused camera giving you an impaired vision when looking through it)</p><h3 id="proc/handle_atom_del"><aside class="declaration">proc </aside>handle_atom_del<aside>(/<a href="atom.html">atom</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L972">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 972"/></a></aside>
+        </h3>
+        <p>This proc is called when an atom in our contents has it's <a href="atom.html#proc/Destroy" title="/atom">Destroy</a> called</p>
+<p>Default behaviour is to simply send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_CONTENTS_DEL" title="COMSIG_ATOM_CONTENTS_DEL">COMSIG_ATOM_CONTENTS_DEL</a></p><h3 id="proc/handle_fall"><aside class="declaration">proc </aside>handle_fall<aside>(/<a href="mob.html">mob</a>/faller) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L853">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 853"/></a></aside>
+        </h3>
+        <p>Used for making a sound when a mob involuntarily falls into the ground.</p><h3 id="proc/handle_slip"><aside class="declaration">proc </aside>handle_slip<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/C, knockdown_amount, /<a href="obj.html">obj</a>/O, lube, paralyze, force_drop) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L800">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 800"/></a></aside>
+        </h3>
+        <p>Handle the atom being slipped over</p><h3 id="proc/has_gravity"><aside class="declaration">proc </aside>has_gravity<aside>(/<a href="turf.html">turf</a>/T) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1784">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1784"/></a></aside>
+        </h3>
+        <p>Returns true if this atom has gravity for the passed in turf</p>
+<p>Sends signals <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_HAS_GRAVITY" title="COMSIG_ATOM_HAS_GRAVITY">COMSIG_ATOM_HAS_GRAVITY</a> and <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_TURF_HAS_GRAVITY" title="COMSIG_TURF_HAS_GRAVITY">COMSIG_TURF_HAS_GRAVITY</a>, both can force gravity with
+the forced gravity var</p>
+<p>Gravity situations:</p>
+<ul>
+<li>No gravity if you're not in a turf</li>
+<li>No gravity if this atom is in is a space turf</li>
+<li>Gravity if the area it's in always has gravity</li>
+<li>Gravity if there's a gravity generator on the z level</li>
+<li>Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY</li>
+<li>otherwise no gravity</li>
+</ul><h3 id="proc/has_material_category"><aside class="declaration">proc </aside>has_material_category<aside>(category, any_flags, all_flags, no_flags, mat_amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1705">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1705"/></a></aside>
+        </h3>
+        <p>Fetches a list of all of the materials this object has with the desired material category.</p>
+<p>Arguments:</p>
+<ul>
+<li>category: The category to check for</li>
+<li>any_flags: Any bitflags that must be present for the category</li>
+<li>all_flags: All bitflags that must be present for the category</li>
+<li>no_flags: Any bitflags that must not be present for the category</li>
+<li>mat_amount: The minimum amount of materials that must be present</li>
+</ul><h3 id="proc/has_material_type"><aside class="declaration">proc </aside>has_material_type<aside>(/<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat_type, exact, mat_amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1679">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1679"/></a></aside>
+        </h3>
+        <p>Fetches a list of all of the materials this object has of the desired type. Returns null if there is no valid materials of the type</p>
+<p>Arguments:</p>
+<ul>
+<li><a href="datum/material.html" title="/datum/material">mat_type</a>: The type of material we are checking for</li>
+<li>exact: Whether to search for the <em>exact</em> material type</li>
+<li>mat_amount: The minimum required amount of material</li>
+</ul><h3 id="proc/hitby"><aside class="declaration">proc </aside>hitby<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM, skipcatch, hitpush, blocked, /<a href="datum.html">datum</a>/<a href="datum/thrownthing.html">thrownthing</a>/throwingdatum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L785">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 785"/></a></aside>
+        </h3>
+        <p>React to being hit by a thrown object</p>
+<p>Default behaviour is to call <a href="atom.html#proc/hitby_react" title="/atom">hitby_react</a> on ourselves after 2 seconds if we are dense
+and under normal gravity.</p>
+<p>Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
+deleted shortly after hitting something (during explosions or other massive events that
+throw lots of items around - singularity being a notable example)</p><h3 id="proc/hitby_react"><aside class="declaration">proc </aside>hitby_react<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/AM) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L795">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 795"/></a></aside>
+        </h3>
+        <p>We have have actually hit the passed in atom</p>
+<p>Default behaviour is to move back from the item that hit us</p><h3 id="proc/in_contents_of"><aside class="declaration">proc </aside>in_contents_of<aside>(container) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L556">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 556"/></a></aside>
+        </h3>
+        <p>Return true if we're inside the passed in atom</p><h3 id="proc/is_drainable"><aside class="declaration">proc </aside>is_drainable<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L489">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 489"/></a></aside>
+        </h3>
+        <p>Is this atom drainable of reagents</p><h3 id="proc/is_drawable"><aside class="declaration">proc </aside>is_drawable<aside>(/<a href="mob.html">mob</a>/user, allowmobs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L481">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 481"/></a></aside>
+        </h3>
+        <p>Can we draw from this atom with an injectable atom</p><h3 id="proc/is_injectable"><aside class="declaration">proc </aside>is_injectable<aside>(/<a href="mob.html">mob</a>/user, allowmobs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L477">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 477"/></a></aside>
+        </h3>
+        <p>Is this atom injectable into other atoms</p><h3 id="proc/is_open_container"><aside class="declaration">proc </aside>is_open_container<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L473">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 473"/></a></aside>
+        </h3>
+        <p>Convenience proc to see if a container is open for chemistry handling</p><h3 id="proc/is_refillable"><aside class="declaration">proc </aside>is_refillable<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L485">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 485"/></a></aside>
+        </h3>
+        <p>Can this atoms reagents be refilled</p><h3 id="proc/isinspace"><aside class="declaration">proc </aside>isinspace<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L846">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 846"/></a></aside>
+        </h3>
+        <p>Is this atom in space</p><h3 id="proc/log_message"><aside class="declaration">proc </aside>log_message<aside>(message, message_type, color, log_globally) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1435">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1435"/></a></aside>
+        </h3>
+        <p>Generic logging helper</p><h3 id="proc/log_talk"><aside class="declaration">proc </aside>log_talk<aside>(message, message_type, tag, log_globally, forced_by) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1482">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1482"/></a></aside>
+        </h3>
+        <p>Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)</p><h3 id="proc/mat_update_desc"><aside class="declaration">proc </aside>mat_update_desc<aside>(/<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/mat) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/materials/_material.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;materials&#x2F;_material.dm 91"/></a></aside>
+        </h3>
+        <p>This proc is called when a material updates an object's description</p><h3 id="proc/mech_melee_attack"><aside class="declaration">proc </aside>mech_melee_attack<aside>(/<a href="obj.html">obj</a>/<a href="obj/vehicle.html">vehicle</a>/<a href="obj/vehicle/sealed.html">sealed</a>/<a href="obj/vehicle/sealed/mecha.html">mecha</a>/mecha_attacker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_melee_attack.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_melee_attack.dm 2"/></a></aside>
+        </h3>
+        <p>Called when a mech melee attacks an atom</p><h3 id="proc/multitool_act"><aside class="declaration">proc </aside>multitool_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1395">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1395"/></a></aside>
+        </h3>
+        <p>Multitool act</p><h3 id="proc/multitool_check_buffer"><aside class="declaration">proc </aside>multitool_check_buffer<aside>(user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, silent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1399">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1399"/></a></aside>
+        </h3>
+        <p>Check if the multitool has an item in it's data buffer</p><h3 id="proc/narsie_act"><aside class="declaration">proc </aside>narsie_act<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L899">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 899"/></a></aside>
+        </h3>
+        <p>Respond to narsie eating our atom</p>
+<p>Default behaviour is to send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_NARSIE_ACT" title="COMSIG_ATOM_NARSIE_ACT">COMSIG_ATOM_NARSIE_ACT</a> and return</p><h3 id="proc/ninjadrain_act"><aside class="declaration">proc </aside>ninjadrain_act<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/suit/space.html">suit/space</a>/<a href="obj/item/clothing/suit/space/space_ninja.html">space_ninja</a>/ninja_suit, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/ninja, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/clothing.html">clothing</a>/<a href="obj/item/clothing/gloves.html">gloves</a>/<a href="obj/item/clothing/gloves/space_ninja.html">space_ninja</a>/ninja_gloves) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/ninja/suit/ninjaDrainAct.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;ninja&#x2F;suit&#x2F;ninjaDrainAct.dm 11"/></a></aside>
+        </h3>
+        <p>Atom level proc for space ninja's glove interactions.</p>
+<p>Proc which only occurs when space ninja uses his gloves on an atom.
+Does nothing by default, but effects will vary.
+Arguments:</p>
+<ul>
+<li>ninja_suit - The offending space ninja's suit.</li>
+<li>ninja - The human mob wearing the suit.</li>
+<li>ninja_gloves - The offending space ninja's gloves.</li>
+</ul><h3 id="proc/onAwayMission"><aside class="declaration">proc </aside>onAwayMission<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L397">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 397"/></a></aside>
+        </h3>
+        <p>Is the atom in an away mission</p>
+<p>Must be in the away mission z-level to return TRUE</p>
+<p>Also used in gamemode code for win conditions</p><h3 id="proc/onCentCom"><aside class="declaration">proc </aside>onCentCom<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L340">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 340"/></a></aside>
+        </h3>
+        <p>Is this atom currently located on centcom</p>
+<p>Specifically, is it on the z level and within the centcom areas</p>
+<p>You can also be in a shuttleshuttle during endgame transit</p>
+<p>Used in gamemode to identify mobs who have escaped and for some other areas of the code
+who don't want atoms where they shouldn't be</p><h3 id="proc/onSyndieBase"><aside class="declaration">proc </aside>onSyndieBase<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L377">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 377"/></a></aside>
+        </h3>
+        <p>Is the atom in any of the centcom syndicate areas</p>
+<p>Either in the syndie base on centcom, or any of their shuttles</p>
+<p>Also used in gamemode code for win conditions</p><h3 id="proc/on_log"><aside class="declaration">proc </aside>on_log<aside>(login) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1017">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1017"/></a></aside>
+        </h3>
+        <p>Called when the atom log's in or out</p>
+<p>Default behaviour is to call on_log on the location this atom is in</p><h3 id="proc/prepare_huds"><aside class="declaration">proc </aside>prepare_huds<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 95"/></a></aside>
+        </h3>
+        <p>Prepare the huds for this atom</p>
+<p>Goes through hud_possible list and adds the images to the hud_list variable (if not already
+cached)</p><h3 id="proc/rad_act"><aside class="declaration">proc </aside>rad_act<aside>(strength) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L891">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 891"/></a></aside>
+        </h3>
+        <p>Respond to a radioactive wave hitting this atom</p>
+<p>Default behaviour is to send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_RAD_ACT" title="COMSIG_ATOM_RAD_ACT">COMSIG_ATOM_RAD_ACT</a> and return</p><h3 id="proc/rcd_act"><aside class="declaration">proc </aside>rcd_act<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/construction.html">construction</a>/<a href="obj/item/construction/rcd.html">rcd</a>/the_rcd, passed_mode) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L913">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 913"/></a></aside>
+        </h3>
+        <p>Respond to an RCD acting on our item</p>
+<p>Default behaviour is to send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_RCD_ACT" title="COMSIG_ATOM_RCD_ACT">COMSIG_ATOM_RCD_ACT</a> and return FALSE</p><h3 id="proc/rcd_vals"><aside class="declaration">proc </aside>rcd_vals<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/construction.html">construction</a>/<a href="obj/item/construction/rcd.html">rcd</a>/the_rcd) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L904">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 904"/></a></aside>
+        </h3>
+        <p>Return the values you get when an RCD eats you?</p><h3 id="proc/relaydrive"><aside class="declaration">proc </aside>relaydrive<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, direction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L743">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 743"/></a></aside>
+        </h3>
+        <p>A special case of relaymove() in which the person relaying the move may be &quot;driving&quot; this atom</p>
+<p>This is a special case for vehicles and ridden animals where the relayed movement may be handled
+by the riding component attached to this atom. Returns TRUE as long as there's nothing blocking
+the movement, or FALSE if the signal gets a reply that specifically blocks the movement</p><h3 id="proc/relaymove"><aside class="declaration">proc </aside>relaymove<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, direction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L730">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 730"/></a></aside>
+        </h3>
+        <p>An atom we are buckled or is contained within us has tried to move</p>
+<p>Default behaviour is to send a warning that the user can't move while buckled as long
+as the <a href="atom.html#var/buckle_message_cooldown" title="/atom">buckle_message_cooldown</a> has expired (50 ticks)</p><h3 id="proc/remove_air"><aside class="declaration">proc </aside>remove_air<aside>(amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L450">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 450"/></a></aside>
+        </h3>
+        <p>Remove air from this atom</p><h3 id="proc/remove_atom_colour"><aside class="declaration">proc </aside>remove_atom_colour<aside>(colour_priority, coloration) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1044">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1044"/></a></aside>
+        </h3>
+        <p>Removes an instance of colour_type from the atom's atom_colours list</p><h3 id="proc/return_air"><aside class="declaration">proc </aside>return_air<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L454">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 454"/></a></aside>
+        </h3>
+        <p>Return the current air environment in this atom</p><h3 id="proc/return_analyzable_air"><aside class="declaration">proc </aside>return_analyzable_air<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L461">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 461"/></a></aside>
+        </h3>
+        <p>Return the air if we can analyze it</p><h3 id="proc/return_temperature"><aside class="declaration">proc </aside>return_temperature<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1302">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1302"/></a></aside>
+        </h3>
+        <p>Return atom temperature</p><h3 id="proc/runechat_prefs_check"><aside class="declaration">proc </aside>runechat_prefs_check<aside>(/<a href="mob.html">mob</a>/target, visible_message_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L267">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 267"/></a></aside>
+        </h3>
+        <p>Returns the client runechat visible messages preference according to the message type.</p><h3 id="proc/rust_heretic_act"><aside class="declaration">proc </aside>rust_heretic_act<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1824">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1824"/></a></aside>
+        </h3>
+        <p>Causes effects when the atom gets hit by a rust effect from heretics</p>
+<p>Override this if you want custom behaviour in whatever gets hit by the rust</p><h3 id="proc/screwdriver_act"><aside class="declaration">proc </aside>screwdriver_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1407">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1407"/></a></aside>
+        </h3>
+        <p>Screwdriver act</p><h3 id="proc/setClosed"><aside class="declaration">proc </aside>setClosed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1840">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1840"/></a></aside>
+        </h3>
+        <p>Used to set something as 'closed' if it's being used as a supplypod</p>
+<p>Override this if you want an atom to be usable as a supplypod.</p><h3 id="proc/setDir"><aside class="declaration">proc </aside>setDir<aside>(newdir) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1007">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1007"/></a></aside>
+        </h3>
+        <p>Hook for running code when a dir change occurs</p>
+<p>Not recommended to use, listen for the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_DIR_CHANGE" title="COMSIG_ATOM_DIR_CHANGE">COMSIG_ATOM_DIR_CHANGE</a> signal instead (sent by this proc)</p><h3 id="proc/setOpened"><aside class="declaration">proc </aside>setOpened<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1832">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1832"/></a></aside>
+        </h3>
+        <p>Used to set something as 'open' if it's being used as a supplypod</p>
+<p>Override this if you want an atom to be usable as a supplypod.</p><h3 id="proc/set_base_pixel_x"><aside class="declaration">proc </aside>set_base_pixel_x<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1752">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1752"/></a></aside>
+        </h3>
+        <p>Setter for the <code>base_pixel_x</code> variable to append behavior related to its changing.</p><h3 id="proc/set_base_pixel_y"><aside class="declaration">proc </aside>set_base_pixel_y<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1762">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1762"/></a></aside>
+        </h3>
+        <p>Setter for the <code>base_pixel_y</code> variable to append behavior related to its changing.</p><h3 id="proc/set_custom_materials"><aside class="declaration">proc </aside>set_custom_materials<aside>(/list/materials, multiplier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1631">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1631"/></a></aside>
+        </h3>
+        <p>Sets the custom materials for an item.</p><h3 id="proc/set_light_color"><aside class="declaration">proc </aside>set_light_color<aside>(new_color) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/lighting/lighting_atom.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;lighting&#x2F;lighting_atom.dm 138"/></a></aside>
+        </h3>
+        <p>Setter for the light color of this atom.</p><h3 id="proc/set_light_flags"><aside class="declaration">proc </aside>set_light_flags<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/lighting/lighting_atom.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;lighting&#x2F;lighting_atom.dm 158"/></a></aside>
+        </h3>
+        <p>Setter for the light flags of this atom.</p><h3 id="proc/set_light_on"><aside class="declaration">proc </aside>set_light_on<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/lighting/lighting_atom.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;lighting&#x2F;lighting_atom.dm 148"/></a></aside>
+        </h3>
+        <p>Setter for whether or not this atom's light is on.</p><h3 id="proc/set_light_power"><aside class="declaration">proc </aside>set_light_power<aside>(new_power) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/lighting/lighting_atom.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;lighting&#x2F;lighting_atom.dm 118"/></a></aside>
+        </h3>
+        <p>Setter for the light power of this atom.</p><h3 id="proc/set_light_range"><aside class="declaration">proc </aside>set_light_range<aside>(new_range) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/lighting/lighting_atom.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;lighting&#x2F;lighting_atom.dm 128"/></a></aside>
+        </h3>
+        <p>Setter for the light range of this atom.</p><h3 id="proc/set_opacity"><aside class="declaration">proc </aside>set_opacity<aside>(new_opacity) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/lighting/lighting_atom.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;lighting&#x2F;lighting_atom.dm 58"/></a></aside>
+        </h3>
+        <p>Updates the atom's opacity value.</p>
+<p>This exists to act as a hook for associated behavior.
+It notifies (potentially) affected light sources so they can update (if needed).</p><h3 id="proc/set_smoothed_icon_state"><aside class="declaration">proc </aside>set_smoothed_icon_state<aside>(new_junction) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/icon_smoothing.dm#L345">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;icon_smoothing.dm 345"/></a></aside>
+        </h3>
+        <p>Changes the icon state based on the new junction bitmask. Returns the old junction value.</p><h3 id="proc/should_atmos_process"><aside class="declaration">proc </aside>should_atmos_process<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/air, exposed_temperature) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/atmos_sensitive.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;atmos_sensitive.dm 69"/></a></aside>
+        </h3>
+        <p>We use this proc to check if we should start processing an item, or continue processing it. Returns true/false as expected</p><h3 id="proc/shuttleRotate"><aside class="declaration">proc </aside>shuttleRotate<aside>(rotation, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/shuttle/shuttle_rotate.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;shuttle&#x2F;shuttle_rotate.dm 9"/></a></aside>
+        </h3>
+        <p>Base proc</p><h3 id="proc/singularity_act"><aside class="declaration">proc </aside>singularity_act<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L857">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 857"/></a></aside>
+        </h3>
+        <p>Respond to the singularity eating this atom</p><h3 id="proc/singularity_pull"><aside class="declaration">proc </aside>singularity_pull<aside>(/<a href="obj.html">obj</a>/<a href="obj/singularity.html">singularity</a>/S, current_size) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L865">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 865"/></a></aside>
+        </h3>
+        <p>Respond to the singularity pulling on us</p>
+<p>Default behaviour is to send <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_ATOM_SING_PULL" title="COMSIG_ATOM_SING_PULL">COMSIG_ATOM_SING_PULL</a> and return</p><h3 id="proc/storage_contents_dump_act"><aside class="declaration">proc </aside>storage_contents_dump_act<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/storage/src_object, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L934">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 934"/></a></aside>
+        </h3>
+        <p>Implement the behaviour for when a user click drags a storage object to your atom</p>
+<p>This behaviour is usually to mass transfer, but this is no longer a used proc as it just
+calls the underyling /datum/component/storage dump act if a component exists</p>
+<p>TODO these should be purely component items that intercept the atom clicks higher in the
+call chain</p><h3 id="proc/tool_act"><aside class="declaration">proc </aside>tool_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, tool_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1312">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1312"/></a></aside>
+        </h3>
+        <p>Tool behavior procedure. Redirects to tool-specific procs by default.</p>
+<p>You can override it to catch all tool interactions, for use in complex deconstruction procs.</p>
+<p>Must return  parent proc ..() in the end if overridden</p><h3 id="proc/transfer_mob_blood_dna"><aside class="declaration">proc </aside>transfer_mob_blood_dna<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/L) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L827">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 827"/></a></aside>
+        </h3>
+        <p>to add a mob's dna info into an object's blood_dna list.</p><h3 id="proc/update_appearance"><aside class="declaration">proc </aside>update_appearance<aside>(updates) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L664">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 664"/></a></aside>
+        </h3>
+        <p>Updates the appearence of the icon</p>
+<p>Mostly delegates to update_name, update_desc, and update_icon</p>
+<p>Arguments:</p>
+<ul>
+<li>updates: A set of bitflags dictating what should be updated. Defaults to [ALL]</li>
+</ul><h3 id="proc/update_atom_colour"><aside class="declaration">proc </aside>update_atom_colour<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1056">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1056"/></a></aside>
+        </h3>
+        <p>Resets the atom's color to null, and then sets it to the highest priority colour available</p><h3 id="proc/update_desc"><aside class="declaration">proc </aside>update_desc<aside>(updates) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L683">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 683"/></a></aside>
+        </h3>
+        <p>Updates the description of the atom</p><h3 id="proc/update_icon"><aside class="declaration">proc </aside>update_icon<aside>(updates) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L688">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 688"/></a></aside>
+        </h3>
+        <p>Updates the icon of the atom</p><h3 id="proc/update_icon_state"><aside class="declaration">proc </aside>update_icon_state<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L714">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 714"/></a></aside>
+        </h3>
+        <p>Updates the icon state of the atom</p><h3 id="proc/update_name"><aside class="declaration">proc </aside>update_name<aside>(updates) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L678">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 678"/></a></aside>
+        </h3>
+        <p>Updates the name of the atom</p><h3 id="proc/update_overlays"><aside class="declaration">proc </aside>update_overlays<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L719">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 719"/></a></aside>
+        </h3>
+        <p>Updates the overlays of the atom</p><h3 id="proc/update_remote_sight"><aside class="declaration">proc </aside>update_remote_sight<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L998">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 998"/></a></aside>
+        </h3>
+        <p>the sight changes to give to the mob whose perspective is set to that atom</p>
+<p>(e.g. A mob with nightvision loses its nightvision while looking through a normal camera)</p><h3 id="proc/visible_message"><aside class="declaration">proc </aside>visible_message<aside>(message, self_message, blind_message, vision_distance, /list/ignored_mobs, visible_message_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/mob.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;mob.dm 183"/></a></aside>
+        </h3>
+        <p>Generate a visible message from this atom</p>
+<p>Show a message to all player mobs who sees this atom</p>
+<p>Show a message to the src mob (if the src is a mob)</p>
+<p>Use for atoms performing visible actions</p>
+<p>message is output to anyone who can see, e.g. <code>&quot;The [src] does something!&quot;</code></p>
+<p>Vars:</p>
+<ul>
+<li>self_message (optional) is what the src mob sees e.g. &quot;You do something!&quot;</li>
+<li>blind_message (optional) is what blind people will hear e.g. &quot;You hear something!&quot;</li>
+<li>vision_distance (optional) define how many tiles away the message can be seen.</li>
+<li>ignored_mob (optional) doesn't show any message to a given mob if TRUE.</li>
+</ul><h3 id="proc/vv_edit_var">vv_edit_var<aside>(var_name, var_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1102"/></a></aside>
+        </h3>
+        <p>call back when a var is edited on this atom</p>
+<p>Can be used to implement special handling of vars</p>
+<p>At the atom level, if you edit a var named &quot;color&quot; it will add the atom colour with
+admin level priority to the atom colours list</p>
+<p>Also, if GLOB.Debug2 is FALSE, it sets the <a href="code/__DEFINES/flags.html#define/ADMIN_SPAWNED_1" title="ADMIN_SPAWNED_1">ADMIN_SPAWNED_1</a> flag on <a href="atom.html#var/flags_1" title="/atom">flags_1</a>, which signifies
+the object has been admin edited</p><h3 id="proc/vv_get_dropdown">vv_get_dropdown<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1160"/></a></aside>
+        </h3>
+        <p>Return the markup to for the dropdown list for the VV panel for this atom</p>
+<p>Override in subtypes to add custom VV handling in the VV panel</p><h3 id="proc/wash"><aside class="declaration">proc </aside>wash<aside>(clean_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1079">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1079"/></a></aside>
+        </h3>
+        <p>Wash this atom</p>
+<p>This will clean it off any temporary stuff like blood. Override this in your item to add custom cleaning behavior.
+Returns true if any washing was necessary and thus performed
+Arguments:</p>
+<ul>
+<li>clean_types: any of the CLEAN_ constants</li>
+</ul><h3 id="proc/welder_act"><aside class="declaration">proc </aside>welder_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1419">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1419"/></a></aside>
+        </h3>
+        <p>Welder act</p><h3 id="proc/wirecutter_act"><aside class="declaration">proc </aside>wirecutter_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1415">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1415"/></a></aside>
+        </h3>
+        <p>Wirecutter act</p><h3 id="proc/wrench_act"><aside class="declaration">proc </aside>wrench_act<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L1411">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 1411"/></a></aside>
+        </h3>
+        <p>Wrench act</p><h3 id="proc/zap_act"><aside class="declaration">proc </aside>zap_act<aside>(power, zap_flags) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/atoms.dm#L922">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;atoms.dm 922"/></a></aside>
+        </h3>
+        <p>Respond to an electric bolt action on our item</p>
+<p>Default behaviour is to return, we define here to allow for cleaner code later on</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

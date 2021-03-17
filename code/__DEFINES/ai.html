@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;ai.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/ai.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/ai.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/ai.html#define/SHOULD_RESIST">SHOULD_RESIST</a></th><td>Monkey checks</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_MAX_PATH_LENGTH">AI_MAX_PATH_LENGTH</a></th><td>For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_CONTROLLER_INCOMPATIBLE">AI_CONTROLLER_INCOMPATIBLE</a></th><td>Flags for ai_behavior new()</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_BEHAVIOR_REQUIRE_MOVEMENT">AI_BEHAVIOR_REQUIRE_MOVEMENT</a></th><td>Does this task require movement from the AI before it can be performed?</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_BEHAVIOR_MOVE_AND_PERFORM">AI_BEHAVIOR_MOVE_AND_PERFORM</a></th><td>Does this task let you perform the action while you move closer? (Things like moving and shooting)</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_MONKEY_AGRESSIVE">BB_MONKEY_AGRESSIVE</a></th><td>Monkey AI controller blackboard keys</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/HAUNTED_ITEM_ATTACK_HAUNT_CHANCE">HAUNTED_ITEM_ATTACK_HAUNT_CHANCE</a></th><td>Haunted item controller defines
+Chance for haunted item to haunt someone</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/HAUNTED_ITEM_ESCAPE_GRASP_CHANCE">HAUNTED_ITEM_ESCAPE_GRASP_CHANCE</a></th><td>Chance for haunted item to try to get itself let go.</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/HAUNTED_ITEM_TELEPORT_CHANCE">HAUNTED_ITEM_TELEPORT_CHANCE</a></th><td>Chance for haunted item to warp somewhere new</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/HAUNTED_ITEM_AGGRO_ADDITION">HAUNTED_ITEM_AGGRO_ADDITION</a></th><td>Amount of aggro you get when picking up a haunted item</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_TO_HAUNT_LIST">BB_TO_HAUNT_LIST</a></th><td>Blackboard keys for haunted items</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_HAUNT_TARGET">BB_HAUNT_TARGET</a></th><td>Actual mob the item is haunting at the moment</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_HAUNTED_THROW_ATTEMPT_COUNT">BB_HAUNTED_THROW_ATTEMPT_COUNT</a></th><td>Amount of successful hits in a row this item has had</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_VENDING_CURRENT_TARGET">BB_VENDING_CURRENT_TARGET</a></th><td>Vending machine AI controller blackboard keys</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_CUSTOMER_CURRENT_ORDER">BB_CUSTOMER_CURRENT_ORDER</a></th><td>Robot customer AI controller blackboard keys</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/BB_SIMPLE_CARRY_ITEM">BB_SIMPLE_CARRY_ITEM</a></th><td>Dog AI controller blackboard keys</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_DOG_VISION_RANGE">AI_DOG_VISION_RANGE</a></th><td>Basically, what is our vision/hearing range for picking up on things to fetch</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_DOG_PET_FRIEND_PROB">AI_DOG_PET_FRIEND_PROB</a></th><td>What are the odds someone petting us will become our friend?</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_FETCH_IGNORE_DURATION">AI_FETCH_IGNORE_DURATION</a></th><td>After this long without having fetched something, we clear our ignore list</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_DOG_HEEL_DURATION">AI_DOG_HEEL_DURATION</a></th><td>After being ordered to heel, we spend this long chilling out</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/AI_DOG_COMMAND_COOLDOWN">AI_DOG_COMMAND_COOLDOWN</a></th><td>After either being given a verbal order or a pointing order, ignore further of each for this duration</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/DOG_COMMAND_NONE">DOG_COMMAND_NONE</a></th><td>Don't do anything (will still react to stuff around them though)</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/DOG_COMMAND_FETCH">DOG_COMMAND_FETCH</a></th><td>Will try to pick up and bring back whatever you point to</td></tr>
+        <tr><th><a href="code/__DEFINES/ai.html#define/DOG_COMMAND_ATTACK">DOG_COMMAND_ATTACK</a></th><td>Will get within a few tiles of whatever you point at and continually growl/bark. If the target is a living mob who gets too close, the dog will attack them with bites</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/AI_BEHAVIOR_MOVE_AND_PERFORM"><aside class="declaration">#define </aside>AI_BEHAVIOR_MOVE_AND_PERFORM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 21"/></a>
+    </h3>
+    <p>Does this task let you perform the action while you move closer? (Things like moving and shooting)</p><h3 id="define/AI_BEHAVIOR_REQUIRE_MOVEMENT"><aside class="declaration">#define </aside>AI_BEHAVIOR_REQUIRE_MOVEMENT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 19"/></a>
+    </h3>
+    <p>Does this task require movement from the AI before it can be performed?</p><h3 id="define/AI_CONTROLLER_INCOMPATIBLE"><aside class="declaration">#define </aside>AI_CONTROLLER_INCOMPATIBLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 16"/></a>
+    </h3>
+    <p>Flags for ai_behavior new()</p><h3 id="define/AI_DOG_COMMAND_COOLDOWN"><aside class="declaration">#define </aside>AI_DOG_COMMAND_COOLDOWN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 93"/></a>
+    </h3>
+    <p>After either being given a verbal order or a pointing order, ignore further of each for this duration</p><h3 id="define/AI_DOG_HEEL_DURATION"><aside class="declaration">#define </aside>AI_DOG_HEEL_DURATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 91"/></a>
+    </h3>
+    <p>After being ordered to heel, we spend this long chilling out</p><h3 id="define/AI_DOG_PET_FRIEND_PROB"><aside class="declaration">#define </aside>AI_DOG_PET_FRIEND_PROB
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 87"/></a>
+    </h3>
+    <p>What are the odds someone petting us will become our friend?</p><h3 id="define/AI_DOG_VISION_RANGE"><aside class="declaration">#define </aside>AI_DOG_VISION_RANGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 85"/></a>
+    </h3>
+    <p>Basically, what is our vision/hearing range for picking up on things to fetch</p><h3 id="define/AI_FETCH_IGNORE_DURATION"><aside class="declaration">#define </aside>AI_FETCH_IGNORE_DURATION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 89"/></a>
+    </h3>
+    <p>After this long without having fetched something, we clear our ignore list</p><h3 id="define/AI_MAX_PATH_LENGTH"><aside class="declaration">#define </aside>AI_MAX_PATH_LENGTH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 13"/></a>
+    </h3>
+    <p>For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on</p><h3 id="define/BB_CUSTOMER_CURRENT_ORDER"><aside class="declaration">#define </aside>BB_CUSTOMER_CURRENT_ORDER
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 64"/></a>
+    </h3>
+    <p>Robot customer AI controller blackboard keys</p><h3 id="define/BB_HAUNTED_THROW_ATTEMPT_COUNT"><aside class="declaration">#define </aside>BB_HAUNTED_THROW_ATTEMPT_COUNT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 54"/></a>
+    </h3>
+    <p>Amount of successful hits in a row this item has had</p><h3 id="define/BB_HAUNT_TARGET"><aside class="declaration">#define </aside>BB_HAUNT_TARGET
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 52"/></a>
+    </h3>
+    <p>Actual mob the item is haunting at the moment</p><h3 id="define/BB_MONKEY_AGRESSIVE"><aside class="declaration">#define </aside>BB_MONKEY_AGRESSIVE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 26"/></a>
+    </h3>
+    <p>Monkey AI controller blackboard keys</p><h3 id="define/BB_SIMPLE_CARRY_ITEM"><aside class="declaration">#define </aside>BB_SIMPLE_CARRY_ITEM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 75"/></a>
+    </h3>
+    <p>Dog AI controller blackboard keys</p><h3 id="define/BB_TO_HAUNT_LIST"><aside class="declaration">#define </aside>BB_TO_HAUNT_LIST
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 50"/></a>
+    </h3>
+    <p>Blackboard keys for haunted items</p><h3 id="define/BB_VENDING_CURRENT_TARGET"><aside class="declaration">#define </aside>BB_VENDING_CURRENT_TARGET
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 57"/></a>
+    </h3>
+    <p>Vending machine AI controller blackboard keys</p><h3 id="define/DOG_COMMAND_ATTACK"><aside class="declaration">#define </aside>DOG_COMMAND_ATTACK
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 101"/></a>
+    </h3>
+    <p>Will get within a few tiles of whatever you point at and continually growl/bark. If the target is a living mob who gets too close, the dog will attack them with bites</p><h3 id="define/DOG_COMMAND_FETCH"><aside class="declaration">#define </aside>DOG_COMMAND_FETCH
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 99"/></a>
+    </h3>
+    <p>Will try to pick up and bring back whatever you point to</p><h3 id="define/DOG_COMMAND_NONE"><aside class="declaration">#define </aside>DOG_COMMAND_NONE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 97"/></a>
+    </h3>
+    <p>Don't do anything (will still react to stuff around them though)</p><h3 id="define/HAUNTED_ITEM_AGGRO_ADDITION"><aside class="declaration">#define </aside>HAUNTED_ITEM_AGGRO_ADDITION
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 47"/></a>
+    </h3>
+    <p>Amount of aggro you get when picking up a haunted item</p><h3 id="define/HAUNTED_ITEM_ATTACK_HAUNT_CHANCE"><aside class="declaration">#define </aside>HAUNTED_ITEM_ATTACK_HAUNT_CHANCE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 41"/></a>
+    </h3>
+    <p>Haunted item controller defines
+Chance for haunted item to haunt someone</p><h3 id="define/HAUNTED_ITEM_ESCAPE_GRASP_CHANCE"><aside class="declaration">#define </aside>HAUNTED_ITEM_ESCAPE_GRASP_CHANCE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 43"/></a>
+    </h3>
+    <p>Chance for haunted item to try to get itself let go.</p><h3 id="define/HAUNTED_ITEM_TELEPORT_CHANCE"><aside class="declaration">#define </aside>HAUNTED_ITEM_TELEPORT_CHANCE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 45"/></a>
+    </h3>
+    <p>Chance for haunted item to warp somewhere new</p><h3 id="define/SHOULD_RESIST"><aside class="declaration">#define </aside>SHOULD_RESIST
+            <aside>(source)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/ai.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;ai.dm 9"/></a>
+    </h3>
+    <p>Monkey checks</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

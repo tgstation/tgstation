@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;bodypart - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/bodypart.html#var">Var Details</a> - <a href="obj/item/bodypart.html#proc">Proc Details</a></header>
+<main>
+<h1>bodypart <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 2"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/bodypart_disabled">bodypart_disabled</a></th><td>If disabled, limb is as good as missing.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/can_be_disabled">can_be_disabled</a></th><td>Controls whether bodypart_disabled makes sense or not for this limb.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/current_gauze">current_gauze</a></th><td>If we have a gauze wrapping currently applied (not including splints)</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/disable_threshold">disable_threshold</a></th><td>Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1. 0 means no disable thru damage</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/disabled_wound_penalty">disabled_wound_penalty</a></th><td>When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/generic_bleedstacks">generic_bleedstacks</a></th><td>How much generic bleedstacks we have on this bodypart</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/grasped_by">grasped_by</a></th><td>If something is currently grasping this bodypart and trying to staunch bleeding (see <a href="obj/item/self_grasp.html" title="/obj/item/self_grasp">/obj/item/self_grasp</a>)</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/last_maxed">last_maxed</a></th><td>So we know if we need to scream if this limb hits max damage</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/scars">scars</a></th><td>The scars currently afflicting this body part</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/scars_covered_by_clothes">scars_covered_by_clothes</a></th><td>A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/wound_damage_multiplier">wound_damage_multiplier</a></th><td>Our current stored wound damage multiplier</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/wound_resistance">wound_resistance</a></th><td>This number is subtracted from all wound rolls on this bodypart, higher numbers mean more defense, negative means easier to wound</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#var/wounds">wounds</a></th><td>The wounds currently afflicting this body part</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/apply_gauze">apply_gauze</a></th><td>apply_gauze() is used to- well, apply gauze to a bodypart</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/change_bodypart">change_bodypart</a></th><td>Proc to turn bodypart into another.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/check_wounding">check_wounding</a></th><td>check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/check_woundings_mods">check_woundings_mods</a></th><td>check_wounding_mods() is where we handle the various modifiers of a wound roll</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/drop_limb">drop_limb</a></th><td>limb removal. The &quot;special&quot; argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/get_mangled_state">get_mangled_state</a></th><td>get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/get_organs">get_organs</a></th><td>since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/get_wound_type">get_wound_type</a></th><td>Get whatever wound of the given type is currently attached to this limb, if any</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/on_owner_nolimbdisable_trait_gain">on_owner_nolimbdisable_trait_gain</a></th><td>Called when TRAIT_NOLIMBDISABLE is added to the owner.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/on_owner_nolimbdisable_trait_loss">on_owner_nolimbdisable_trait_loss</a></th><td>Called when TRAIT_NOLIMBDISABLE is removed from the owner.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/on_paralysis_trait_gain">on_paralysis_trait_gain</a></th><td>Called when TRAIT_PARALYSIS is added to the limb.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/on_paralysis_trait_loss">on_paralysis_trait_loss</a></th><td>Called when TRAIT_PARALYSIS is removed from the limb.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/painless_wound_roll">painless_wound_roll</a></th><td>Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/seep_gauze">seep_gauze</a></th><td>seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/set_brute_dam">set_brute_dam</a></th><td>Proc to hook behavior associated to the change of the brute_dam variable's value.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/set_burn_dam">set_burn_dam</a></th><td>Proc to hook behavior associated to the change of the burn_dam variable's value.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/set_can_be_disabled">set_can_be_disabled</a></th><td>Proc to change the value of the <code>can_be_disabled</code> variable and react to the event of its change.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/set_disabled">set_disabled</a></th><td>Proc to change the value of the <code>disabled</code> variable and react to the event of its change.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/set_owner">set_owner</a></th><td>Proc to change the value of the <code>owner</code> variable and react to the event of its change.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/set_stamina_dam">set_stamina_dam</a></th><td>Proc to hook behavior associated to the change of the stamina_dam variable's value.</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/try_dismember">try_dismember</a></th><td>try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it</td></tr>
+            <tr><th><a href="obj/item/bodypart.html#proc/update_wounds">update_wounds</a></th><td>update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bodypart_disabled"><aside class="declaration">var </aside>bodypart_disabled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 26"/></a></h3>
+        <p>If disabled, limb is as good as missing.</p><h3 id="var/can_be_disabled"><aside class="declaration">var </aside>can_be_disabled
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 30"/></a></h3>
+        <p>Controls whether bodypart_disabled makes sense or not for this limb.</p><h3 id="var/current_gauze"><aside class="declaration">var </aside>current_gauze
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 94"/></a></h3>
+        <p>If we have a gauze wrapping currently applied (not including splints)</p><h3 id="var/disable_threshold"><aside class="declaration">var </aside>disable_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 28"/></a></h3>
+        <p>Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1. 0 means no disable thru damage</p><h3 id="var/disabled_wound_penalty"><aside class="declaration">var </aside>disabled_wound_penalty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 85"/></a></h3>
+        <p>When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.</p><h3 id="var/generic_bleedstacks"><aside class="declaration">var </aside>generic_bleedstacks
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 92"/></a></h3>
+        <p>How much generic bleedstacks we have on this bodypart</p><h3 id="var/grasped_by"><aside class="declaration">var </aside>grasped_by
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/self_grasp.html">self_grasp</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 99"/></a></h3>
+        <p>If something is currently grasping this bodypart and trying to staunch bleeding (see <a href="obj/item/self_grasp.html" title="/obj/item/self_grasp">/obj/item/self_grasp</a>)</p><h3 id="var/last_maxed"><aside class="declaration">var </aside>last_maxed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 90"/></a></h3>
+        <p>So we know if we need to scream if this limb hits max damage</p><h3 id="var/scars"><aside class="declaration">var </aside>scars
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 78"/></a></h3>
+        <p>The scars currently afflicting this body part</p><h3 id="var/scars_covered_by_clothes"><aside class="declaration">var </aside>scars_covered_by_clothes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 88"/></a></h3>
+        <p>A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest</p><h3 id="var/wound_damage_multiplier"><aside class="declaration">var </aside>wound_damage_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 80"/></a></h3>
+        <p>Our current stored wound damage multiplier</p><h3 id="var/wound_resistance"><aside class="declaration">var </aside>wound_resistance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 83"/></a></h3>
+        <p>This number is subtracted from all wound rolls on this bodypart, higher numbers mean more defense, negative means easier to wound</p><h3 id="var/wounds"><aside class="declaration">var </aside>wounds
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 75"/></a></h3>
+        <p>The wounds currently afflicting this body part</p><h2 id="proc">Proc Details</h2><h3 id="proc/apply_gauze"><aside class="declaration">proc </aside>apply_gauze<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/gauze) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L955">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 955"/></a></aside>
+        </h3>
+        <p>apply_gauze() is used to- well, apply gauze to a bodypart</p>
+<p>As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
+The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
+applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
+the gauze falls off.</p>
+<p>Arguments:</p>
+<ul>
+<li>gauze- Just the gauze stack we're taking a sheet from to apply here</li>
+</ul><h3 id="proc/change_bodypart"><aside class="declaration">proc </aside>change_bodypart<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a>/new_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L986">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 986"/></a></aside>
+        </h3>
+        <p>Proc to turn bodypart into another.</p><h3 id="proc/check_wounding"><aside class="declaration">proc </aside>check_wounding<aside>(woundtype, damage, wound_bonus, bare_wound_bonus) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L381">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 381"/></a></aside>
+        </h3>
+        <p>check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria</p>
+<p>We generate a &quot;score&quot; for how woundable the attack was based on the damage and other factors discussed in <a href="obj/item/bodypart.html#proc/check_woundings_mods" title="/obj/item/bodypart">/obj/item/bodypart/proc/check_woundings_mods</a>, then go down the list from most severe to least severe wounds in that category.
+We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades</p>
+<p>Arguments:</p>
+<ul>
+<li>woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.</li>
+<li>damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)</li>
+<li>wound_bonus- The wound_bonus of an attack</li>
+<li>bare_wound_bonus- The bare_wound_bonus of an attack</li>
+</ul><h3 id="proc/check_woundings_mods"><aside class="declaration">proc </aside>check_woundings_mods<aside>(wounding_type, damage, wound_bonus, bare_wound_bonus) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L463">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 463"/></a></aside>
+        </h3>
+        <p>check_wounding_mods() is where we handle the various modifiers of a wound roll</p>
+<p>A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
+We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
+Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled</p>
+<p>Arguments:</p>
+<ul>
+<li>It's the same ones on [/obj/item/bodypart/proc/receive_damage]</li>
+</ul><h3 id="proc/drop_limb"><aside class="declaration">proc </aside>drop_limb<aside>(special, dismembered) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/dismemberment.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;dismemberment.dm 79"/></a></aside>
+        </h3>
+        <p>limb removal. The &quot;special&quot; argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.</p><h3 id="proc/get_mangled_state"><aside class="declaration">proc </aside>get_mangled_state<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/dismemberment.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;dismemberment.dm 159"/></a></aside>
+        </h3>
+        <p>get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)</p>
+<p>Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
+(severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)</p>
+<p>Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_FLESH if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering</p><h3 id="proc/get_organs"><aside class="declaration">proc </aside>get_organs<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 189"/></a></aside>
+        </h3>
+        <p>since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have</p><h3 id="proc/get_wound_type"><aside class="declaration">proc </aside>get_wound_type<aside>(checking_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L882">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 882"/></a></aside>
+        </h3>
+        <p>Get whatever wound of the given type is currently attached to this limb, if any</p><h3 id="proc/on_owner_nolimbdisable_trait_gain"><aside class="declaration">proc </aside>on_owner_nolimbdisable_trait_gain<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L676">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 676"/></a></aside>
+        </h3>
+        <p>Called when TRAIT_NOLIMBDISABLE is added to the owner.</p><h3 id="proc/on_owner_nolimbdisable_trait_loss"><aside class="declaration">proc </aside>on_owner_nolimbdisable_trait_loss<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L682">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 682"/></a></aside>
+        </h3>
+        <p>Called when TRAIT_NOLIMBDISABLE is removed from the owner.</p><h3 id="proc/on_paralysis_trait_gain"><aside class="declaration">proc </aside>on_paralysis_trait_gain<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L662">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 662"/></a></aside>
+        </h3>
+        <p>Called when TRAIT_PARALYSIS is added to the limb.</p><h3 id="proc/on_paralysis_trait_loss"><aside class="declaration">proc </aside>on_paralysis_trait_loss<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L669">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 669"/></a></aside>
+        </h3>
+        <p>Called when TRAIT_PARALYSIS is removed from the limb.</p><h3 id="proc/painless_wound_roll"><aside class="declaration">proc </aside>painless_wound_roll<aside>(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus, sharpness) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L326">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 326"/></a></aside>
+        </h3>
+        <p>Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds</p><h3 id="proc/seep_gauze"><aside class="declaration">proc </aside>seep_gauze<aside>(seep_amt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L975">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 975"/></a></aside>
+        </h3>
+        <p>seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.</p>
+<p>The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages falls off and we're left with nothing.</p>
+<p>Arguments:</p>
+<ul>
+<li>seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)</li>
+</ul><h3 id="proc/set_brute_dam"><aside class="declaration">proc </aside>set_brute_dam<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L522">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 522"/></a></aside>
+        </h3>
+        <p>Proc to hook behavior associated to the change of the brute_dam variable's value.</p><h3 id="proc/set_burn_dam"><aside class="declaration">proc </aside>set_burn_dam<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L530">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 530"/></a></aside>
+        </h3>
+        <p>Proc to hook behavior associated to the change of the burn_dam variable's value.</p><h3 id="proc/set_can_be_disabled"><aside class="declaration">proc </aside>set_can_be_disabled<aside>(new_can_be_disabled) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L640">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 640"/></a></aside>
+        </h3>
+        <p>Proc to change the value of the <code>can_be_disabled</code> variable and react to the event of its change.</p><h3 id="proc/set_disabled"><aside class="declaration">proc </aside>set_disabled<aside>(new_disabled) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L598">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 598"/></a></aside>
+        </h3>
+        <p>Proc to change the value of the <code>disabled</code> variable and react to the event of its change.</p><h3 id="proc/set_owner"><aside class="declaration">proc </aside>set_owner<aside>(new_owner) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L611">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 611"/></a></aside>
+        </h3>
+        <p>Proc to change the value of the <code>owner</code> variable and react to the event of its change.</p><h3 id="proc/set_stamina_dam"><aside class="declaration">proc </aside>set_stamina_dam<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L538">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 538"/></a></aside>
+        </h3>
+        <p>Proc to hook behavior associated to the change of the stamina_dam variable's value.</p><h3 id="proc/try_dismember"><aside class="declaration">proc </aside>try_dismember<aside>(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/dismemberment.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;dismemberment.dm 182"/></a></aside>
+        </h3>
+        <p>try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it</p>
+<p>Mangling is described in the above proc, <a href="obj/item/bodypart.html#proc/get_mangled_state" title="/obj/item/bodypart">/obj/item/bodypart/proc/get_mangled_state</a>. This simply makes the roll for whether we actually dismember or not
+using how damaged the limb already is, and how much damage this blow was for. If we have a critical bone wound instead of just a severe, we add +10% to the roll.
+Lastly, we choose which kind of dismember we want based on the wounding type we hit with. Note we don't care about all the normal mods or armor for this</p>
+<p>Arguments:</p>
+<ul>
+<li>wounding_type: Either WOUND_BLUNT, WOUND_SLASH, or WOUND_PIERCE, basically only matters for the dismember message</li>
+<li>wounding_dmg: The damage of the strike that prompted this roll, higher damage = higher chance</li>
+<li>wound_bonus: Not actually used right now, but maybe someday</li>
+<li>bare_wound_bonus: ditto above</li>
+</ul><h3 id="proc/update_wounds"><aside class="declaration">proc </aside>update_wounds<aside>(replaced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/surgery/bodyparts/_bodyparts.dm#L898">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;bodyparts&#x2F;_bodyparts.dm 898"/></a></aside>
+        </h3>
+        <p>update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status</p>
+<p>Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging</p>
+<p>Arguments:</p>
+<ul>
+<li>replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

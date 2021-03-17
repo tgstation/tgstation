@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;mafia_controller - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/mafia_controller.html#var">Var Details</a> - <a href="datum/mafia_controller.html#proc">Proc Details</a></header>
+<main>
+<h1>mafia_controller <aside>/<a href="datum.html">datum</a>/<a href="datum/mafia_controller.html">mafia_controller</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 7"/></a></h1>
+
+<p>The mafia controller handles the mafia minigame in progress.
+It is first created when the first ghost signs up to play.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/all_roles">all_roles</a></th><td>all roles in the game, dead or alive. check their game status if you only want living or dead.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/current_map">current_map</a></th><td>template picked when the game starts. used for the name and desc reading</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/current_setup_text">current_setup_text</a></th><td>Readable list of roles in current game, sent to the tgui panel for roles list &gt; list(&quot;Psychologist x1&quot;, &quot;Clown x2&quot;)</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/custom_setup">custom_setup</a></th><td>for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/day_phase_period">day_phase_period</a></th><td>talk with others about the last night</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/debug">debug</a></th><td>used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/first_day_phase_period">first_day_phase_period</a></th><td>first day has no voting, and thus is shorter</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/judgement_abstain_votes">judgement_abstain_votes</a></th><td>and these (judgement_innocent_votes, judgement_abstain_votes and judgement_guilty_votes) are the judgement phase votes, aka people sorting themselves into guilty and innocent, and &quot;eh, i don't really care&quot; lists. whichever has more inno or guilty wins!</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/judgement_lynch_period">judgement_lynch_period</a></th><td>guilty or innocent, we want a bit of time for players to process the outcome of the vote</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/judgement_phase_period">judgement_phase_period</a></th><td>defend yourself! don't get lynched! sometimes skipped if nobody votes.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/landmarks">landmarks</a></th><td>spawn points for players, each one has a house</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/map_deleter">map_deleter</a></th><td>map generation tool that deletes the current map after the game finishes</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/next_phase_timer">next_phase_timer</a></th><td>current timer for phase</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/night_phase_period">night_phase_period</a></th><td>mafia talk at night and pick someone to kill, some town roles use their actions, etc etc.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/on_trial">on_trial</a></th><td>current role on trial for the judgement phase, will die if guilty is greater than innocent</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/phase">phase</a></th><td>what part of the game you're playing in. day phases, night phases, judgement phases, etc.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/player_outfit">player_outfit</a></th><td>starting outfit for all mafia players. it's just a grey jumpsuit.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/player_role_lookup">player_role_lookup</a></th><td>exists to speed up role retrieval, it's a dict. <code>player_role_lookup[player ckey]</code> will give you the role they play</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/spectators">spectators</a></th><td>list of observers that should get game updates.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/speed_up">speed_up</a></th><td>if enabled, the game has fallen under half pop and is sped up</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/town_center_landmark">town_center_landmark</a></th><td>town center for when people get put on trial</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/turn">turn</a></th><td>how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/victory_lap_period">victory_lap_period</a></th><td>like the lynch period, players need to see what the other players in the game's roles were</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/votes">votes</a></th><td>group voting on one person, like putting people to trial or choosing who to kill as mafia</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#var/voting_phase_period">voting_phase_period</a></th><td>vote someone to get put on trial</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/add_setup_role">add_setup_role</a></th><td>Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one. unique roles can only get added once.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/award_role">award_role</a></th><td>PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
+PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
+Lets the game award roles with all their checks and sanity, prevents achievements given out for debug games</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/basic_setup">basic_setup</a></th><td>Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/check_signups">check_signups</a></th><td>Filters inactive player into a different list until they reconnect, and removes players who are no longer ghosts.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/check_trial">check_trial</a></th><td>Players have voted someone up, and now the person must defend themselves while the town votes innocent or guilty.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/check_victory">check_victory</a></th><td>Checks to see if a faction (or solo antagonist) has won.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/create_bodies">create_bodies</a></th><td>Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/display_votes">display_votes</a></th><td>Adds mutable appearances to people who get publicly voted on (so not night votes) showing how many people are picking them
+Arguments:</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/end_game">end_game</a></th><td>Cleans up the game, resetting variables back to the beginning and removing the map with the generator.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/generate_random_setup">generate_random_setup</a></th><td>Returns a semirandom setup with 12 roles. balance not guaranteed!</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/get_random_voter">get_random_voter</a></th><td>Returns a random person who voted for whatever vote (day vote, night kill vote)
+Arguments:</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/get_vote_count">get_vote_count</a></th><td>Returns how many people voted for the role, in whatever vote (day vote, night kill vote)
+Arguments:</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/get_vote_winner">get_vote_winner</a></th><td>Returns whichever role got the most votes, in whatever vote (day vote, night kill vote)
+returns null if no votes
+Arguments:</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/lockdown">lockdown</a></th><td>After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/lynch">lynch</a></th><td>Players have voted innocent or guilty on the person on trial, and that person is now killed or returned home.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/prepare_game">prepare_game</a></th><td>Triggers at beginning of the game when there is a confirmed list of valid, ready players.
+Creates a 100% ready game that has NOT started (no players in bodies)
+Followed by start game</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/reset_votes">reset_votes</a></th><td>Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/resolve_night">resolve_night</a></th><td>The end of the night, and a series of signals for the order of events on a night.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/send_home">send_home</a></th><td>Teenie helper proc to move players back to their home.
+Used in the above, but also used in the debug button &quot;send all players home&quot;
+Arguments:</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/start_day">start_day</a></th><td>How every day starts.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/start_game">start_game</a></th><td>The game by this point is now all set up, and so we can put people in their bodies and start the first phase.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/start_night">start_night</a></th><td>The actual start of night for players. Mostly info is given at the start of the night as the end of the night is when votes and actions are submitted and tried.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/start_the_end">start_the_end</a></th><td>The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
+Because of how check_victory works, the game is halted in other places by this point.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/start_voting_phase">start_voting_phase</a></th><td>Players have finished the discussion period, and now must put up someone to the chopping block.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/toggle_night_curtains">toggle_night_curtains</a></th><td>Shuts poddoors attached to mafia.
+Arguments:</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/try_autostart">try_autostart</a></th><td>Called when someone signs up, and sees if there are enough people in the signup list to begin.</td></tr>
+            <tr><th><a href="datum/mafia_controller.html#proc/vote_for">vote_for</a></th><td>Proc that goes off when players vote for something with their mafia panel.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/all_roles"><aside class="declaration">var </aside>all_roles
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 11"/></a></h3>
+        <p>all roles in the game, dead or alive. check their game status if you only want living or dead.</p><h3 id="var/current_map"><aside class="declaration">var </aside>current_map
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/map_template.html">map_template</a>/mafia</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 38"/></a></h3>
+        <p>template picked when the game starts. used for the name and desc reading</p><h3 id="var/current_setup_text"><aside class="declaration">var </aside>current_setup_text
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 43"/></a></h3>
+        <p>Readable list of roles in current game, sent to the tgui panel for roles list &gt; list(&quot;Psychologist x1&quot;, &quot;Clown x2&quot;)</p><h3 id="var/custom_setup"><aside class="declaration">var </aside>custom_setup
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 21"/></a></h3>
+        <p>for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over</p><h3 id="var/day_phase_period"><aside class="declaration">var </aside>day_phase_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 25"/></a></h3>
+        <p>talk with others about the last night</p><h3 id="var/debug"><aside class="declaration">var </aside>debug
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 66"/></a></h3>
+        <p>used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated</p><h3 id="var/first_day_phase_period"><aside class="declaration">var </aside>first_day_phase_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 23"/></a></h3>
+        <p>first day has no voting, and thus is shorter</p><h3 id="var/judgement_abstain_votes"><aside class="declaration">var </aside>judgement_abstain_votes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 56"/></a></h3>
+        <p>and these (judgement_innocent_votes, judgement_abstain_votes and judgement_guilty_votes) are the judgement phase votes, aka people sorting themselves into guilty and innocent, and &quot;eh, i don't really care&quot; lists. whichever has more inno or guilty wins!</p><h3 id="var/judgement_lynch_period"><aside class="declaration">var </aside>judgement_lynch_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 31"/></a></h3>
+        <p>guilty or innocent, we want a bit of time for players to process the outcome of the vote</p><h3 id="var/judgement_phase_period"><aside class="declaration">var </aside>judgement_phase_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 29"/></a></h3>
+        <p>defend yourself! don't get lynched! sometimes skipped if nobody votes.</p><h3 id="var/landmarks"><aside class="declaration">var </aside>landmarks
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 49"/></a></h3>
+        <p>spawn points for players, each one has a house</p><h3 id="var/map_deleter"><aside class="declaration">var </aside>map_deleter
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/map_generator.html">map_generator</a>/massdelete</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 40"/></a></h3>
+        <p>map generation tool that deletes the current map after the game finishes</p><h3 id="var/next_phase_timer"><aside class="declaration">var </aside>next_phase_timer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 63"/></a></h3>
+        <p>current timer for phase</p><h3 id="var/night_phase_period"><aside class="declaration">var </aside>night_phase_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 33"/></a></h3>
+        <p>mafia talk at night and pick someone to kill, some town roles use their actions, etc etc.</p><h3 id="var/on_trial"><aside class="declaration">var </aside>on_trial
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 60"/></a></h3>
+        <p>current role on trial for the judgement phase, will die if guilty is greater than innocent</p><h3 id="var/phase"><aside class="declaration">var </aside>phase
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 15"/></a></h3>
+        <p>what part of the game you're playing in. day phases, night phases, judgement phases, etc.</p><h3 id="var/player_outfit"><aside class="declaration">var </aside>player_outfit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 46"/></a></h3>
+        <p>starting outfit for all mafia players. it's just a grey jumpsuit.</p><h3 id="var/player_role_lookup"><aside class="declaration">var </aside>player_role_lookup
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 13"/></a></h3>
+        <p>exists to speed up role retrieval, it's a dict. <code>player_role_lookup[player ckey]</code> will give you the role they play</p><h3 id="var/spectators"><aside class="declaration">var </aside>spectators
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 9"/></a></h3>
+        <p>list of observers that should get game updates.</p><h3 id="var/speed_up"><aside class="declaration">var </aside>speed_up
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 19"/></a></h3>
+        <p>if enabled, the game has fallen under half pop and is sped up</p><h3 id="var/town_center_landmark"><aside class="declaration">var </aside>town_center_landmark
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 51"/></a></h3>
+        <p>town center for when people get put on trial</p><h3 id="var/turn"><aside class="declaration">var </aside>turn
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 17"/></a></h3>
+        <p>how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.</p><h3 id="var/victory_lap_period"><aside class="declaration">var </aside>victory_lap_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 35"/></a></h3>
+        <p>like the lynch period, players need to see what the other players in the game's roles were</p><h3 id="var/votes"><aside class="declaration">var </aside>votes
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 54"/></a></h3>
+        <p>group voting on one person, like putting people to trial or choosing who to kill as mafia</p><h3 id="var/voting_phase_period"><aside class="declaration">var </aside>voting_phase_period
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 27"/></a></h3>
+        <p>vote someone to get put on trial</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_setup_role"><aside class="declaration">proc </aside>add_setup_role<aside>(setup_list, banned_roles, wanted_role_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L862">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 862"/></a></aside>
+        </h3>
+        <p>Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one. unique roles can only get added once.</p><h3 id="proc/award_role"><aside class="declaration">proc </aside>award_role<aside>(award, /<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a>/rewarded) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L355">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 355"/></a></aside>
+        </h3>
+        <p>PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
+PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
+Lets the game award roles with all their checks and sanity, prevents achievements given out for debug games</p>
+<p>Arguments:</p>
+<ul>
+<li>award: path of the award</li>
+<li>role: mafia_role datum to reward.</li>
+</ul><h3 id="proc/basic_setup"><aside class="declaration">proc </aside>basic_setup<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L891">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 891"/></a></aside>
+        </h3>
+        <p>Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.</p>
+<p>Checks for a custom setup, if so gets the required players from that and if not it sets the player requirement to MAFIA_MAX_PLAYER_COUNT and generates one IF basic setup starts a game.
+Checks if everyone signed up is an observer, and is still connected. If people aren't, they're removed from the list.
+If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.</p><h3 id="proc/check_signups"><aside class="declaration">proc </aside>check_signups<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L948">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 948"/></a></aside>
+        </h3>
+        <p>Filters inactive player into a different list until they reconnect, and removes players who are no longer ghosts.</p>
+<p>If a disconnected player gets a non-ghost mob and reconnects, they will be first put back into mafia_signup then filtered by that.</p><h3 id="proc/check_trial"><aside class="declaration">proc </aside>check_trial<aside>(verbose) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L210">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 210"/></a></aside>
+        </h3>
+        <p>Players have voted someone up, and now the person must defend themselves while the town votes innocent or guilty.</p>
+<p>What players do in this phase:</p>
+<ul>
+<li>Vote innocent or guilty, if they are not on trial.</li>
+<li>Defend themselves and wait for judgement, if they are.</li>
+<li>Leads to the lynch phase.
+Arguments:</li>
+<li>verbose: boolean, announces whether there were votes or not. after judgement it goes back here with no voting period to end the day.</li>
+</ul><h3 id="proc/check_victory"><aside class="declaration">proc </aside>check_victory<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L285">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 285"/></a></aside>
+        </h3>
+        <p>Checks to see if a faction (or solo antagonist) has won.</p>
+<p>Calculates in this order:</p>
+<ul>
+<li>counts up town, mafia, and solo</li>
+<li>solos can count as town members for the purposes of mafia winning</li>
+<li>sends the amount of living people to the solo antagonists, and see if they won OR block the victory of the teams</li>
+<li>checks if solos won from above, then if town, then if mafia</li>
+<li>starts the end of the game if a faction won</li>
+<li>returns TRUE if someone won the game, halting other procs from continuing in the case of a victory</li>
+</ul><h3 id="proc/create_bodies"><aside class="declaration">proc </aside>create_bodies<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L570">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 570"/></a></aside>
+        </h3>
+        <p>Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key</p>
+<p>Notably:</p>
+<ul>
+<li>Toggles godmode so the mafia players cannot kill themselves</li>
+<li>Adds signals for voting overlays, see display_votes proc</li>
+<li>gives mafia panel</li>
+<li>sends the greeting text (goals, role name, etc)</li>
+</ul><h3 id="proc/display_votes"><aside class="declaration">proc </aside>display_votes<aside>(/<a href="atom.html">atom</a>/source, /list/overlay_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L552">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 552"/></a></aside>
+        </h3>
+        <p>Adds mutable appearances to people who get publicly voted on (so not night votes) showing how many people are picking them
+Arguments:</p>
+<ul>
+<li>source: the body of the role getting the overlays</li>
+<li>overlay_list: signal var passing the overlay list of the mob</li>
+</ul><h3 id="proc/end_game"><aside class="declaration">proc </aside>end_game<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L383">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 383"/></a></aside>
+        </h3>
+        <p>Cleans up the game, resetting variables back to the beginning and removing the map with the generator.</p><h3 id="proc/generate_random_setup"><aside class="declaration">proc </aside>generate_random_setup<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L818">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 818"/></a></aside>
+        </h3>
+        <p>Returns a semirandom setup with 12 roles. balance not guaranteed!</p>
+<p>please check the variables at the top of the proc to see how much of each role types it picks</p><h3 id="proc/get_random_voter"><aside class="declaration">proc </aside>get_random_voter<aside>(vote_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L542">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 542"/></a></aside>
+        </h3>
+        <p>Returns a random person who voted for whatever vote (day vote, night kill vote)
+Arguments:</p>
+<ul>
+<li>vote_type: vote type (getting a random day voter, or mafia night voter)</li>
+</ul><h3 id="proc/get_vote_count"><aside class="declaration">proc </aside>get_vote_count<aside>(role, vote_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L514">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 514"/></a></aside>
+        </h3>
+        <p>Returns how many people voted for the role, in whatever vote (day vote, night kill vote)
+Arguments:</p>
+<ul>
+<li>role: the mafia role the proc tries to get the amount of votes for</li>
+<li>vote_type: the vote type (getting how many day votes were for the role, or mafia night votes for the role)</li>
+</ul><h3 id="proc/get_vote_winner"><aside class="declaration">proc </aside>get_vote_winner<aside>(vote_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L527">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 527"/></a></aside>
+        </h3>
+        <p>Returns whichever role got the most votes, in whatever vote (day vote, night kill vote)
+returns null if no votes
+Arguments:</p>
+<ul>
+<li>vote_type: the vote type (getting the role that got the most day votes, or the role that got the most mafia votes)</li>
+</ul><h3 id="proc/lockdown"><aside class="declaration">proc </aside>lockdown<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L405">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 405"/></a></aside>
+        </h3>
+        <p>After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.</p><h3 id="proc/lynch"><aside class="declaration">proc </aside>lynch<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L244">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 244"/></a></aside>
+        </h3>
+        <p>Players have voted innocent or guilty on the person on trial, and that person is now killed or returned home.</p>
+<p>What players do in this phase:</p>
+<ul>
+<li>r/watchpeopledie</li>
+<li>If the accused is killed, their true role is revealed to the rest of the players.</li>
+</ul><h3 id="proc/prepare_game"><aside class="declaration">proc </aside>prepare_game<aside>(setup_list, ready_players) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 93"/></a></aside>
+        </h3>
+        <p>Triggers at beginning of the game when there is a confirmed list of valid, ready players.
+Creates a 100% ready game that has NOT started (no players in bodies)
+Followed by start game</p>
+<p>Does the following:</p>
+<ul>
+<li>Picks map, and loads it</li>
+<li>Grabs landmarks if it is the first time it's loading</li>
+<li>Sets up the role list</li>
+<li>Puts players in each role randomly
+Arguments:</li>
+<li>setup_list: list of all the datum setups (fancy list of roles) that would work for the game</li>
+<li>ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles</li>
+</ul><h3 id="proc/reset_votes"><aside class="declaration">proc </aside>reset_votes<aside>(vote_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L499">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 499"/></a></aside>
+        </h3>
+        <p>Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched</p><h3 id="proc/resolve_night"><aside class="declaration">proc </aside>resolve_night<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L448">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 448"/></a></aside>
+        </h3>
+        <p>The end of the night, and a series of signals for the order of events on a night.</p>
+<p>Order of events, and what they mean:</p>
+<ul>
+<li>Start of resolve (NIGHT_START) is for activating night abilities that MUST go first</li>
+<li>Action phase (NIGHT_ACTION_PHASE) is for non-lethal day abilities</li>
+<li>Mafia then tallies votes and kills the highest voted person (note: one random voter visits that person for the purposes of roleblocking)</li>
+<li>Killing phase (NIGHT_KILL_PHASE) is for lethal night abilities</li>
+<li>End of resolve (NIGHT_END) is for cleaning up abilities that went off and i guess doing some that must go last</li>
+<li>Finally opens the curtains and calls the start of day phase, completing the cycle until check victory returns TRUE</li>
+</ul><h3 id="proc/send_home"><aside class="declaration">proc </aside>send_home<aside>(/<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a>/role) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L271">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 271"/></a></aside>
+        </h3>
+        <p>Teenie helper proc to move players back to their home.
+Used in the above, but also used in the debug button &quot;send all players home&quot;
+Arguments:</p>
+<ul>
+<li>role: mafia role that is getting sent back to the game.</li>
+</ul><h3 id="proc/start_day"><aside class="declaration">proc </aside>start_day<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 159"/></a></aside>
+        </h3>
+        <p>How every day starts.</p>
+<p>What players do in this phase:</p>
+<ul>
+<li>If day one, just a small starting period to see who is in the game and check role, leading to the night phase.</li>
+<li>Otherwise, it's a longer period used to discuss events that happened during the night, leading to the voting phase.</li>
+</ul><h3 id="proc/start_game"><aside class="declaration">proc </aside>start_game<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 148"/></a></aside>
+        </h3>
+        <p>The game by this point is now all set up, and so we can put people in their bodies and start the first phase.</p>
+<p>Does the following:</p>
+<ul>
+<li>Creates bodies for all of the roles with the first proc</li>
+<li>Starts the first day manually (so no timer) with the second proc</li>
+</ul><h3 id="proc/start_night"><aside class="declaration">proc </aside>start_night<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L430">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 430"/></a></aside>
+        </h3>
+        <p>The actual start of night for players. Mostly info is given at the start of the night as the end of the night is when votes and actions are submitted and tried.</p>
+<p>What players do in this phase:</p>
+<ul>
+<li>Mafia are told to begin voting on who to kill</li>
+<li>Powers that are picked during the day announce themselves right now</li>
+</ul><h3 id="proc/start_the_end"><aside class="declaration">proc </aside>start_the_end<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L371">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 371"/></a></aside>
+        </h3>
+        <p>The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
+Because of how check_victory works, the game is halted in other places by this point.</p>
+<p>What players do in this phase:</p>
+<ul>
+<li>See everyone's role postgame</li>
+<li>See who won the game
+Arguments:</li>
+<li>message: string, if non-null it sends it to all players. used to announce team victories while solos are handled in check victory</li>
+</ul><h3 id="proc/start_voting_phase"><aside class="declaration">proc </aside>start_voting_phase<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 194"/></a></aside>
+        </h3>
+        <p>Players have finished the discussion period, and now must put up someone to the chopping block.</p>
+<p>What players do in this phase:</p>
+<ul>
+<li>Vote on which player to put up for lynching, leading to the judgement phase.</li>
+<li>If no votes are case, the judgement phase is skipped, leading to the night phase.</li>
+</ul><h3 id="proc/toggle_night_curtains"><aside class="declaration">proc </aside>toggle_night_curtains<aside>(close) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L414">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 414"/></a></aside>
+        </h3>
+        <p>Shuts poddoors attached to mafia.
+Arguments:</p>
+<ul>
+<li>close: boolean, the state you want the curtains in.</li>
+</ul><h3 id="proc/try_autostart"><aside class="declaration">proc </aside>try_autostart<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L937">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 937"/></a></aside>
+        </h3>
+        <p>Called when someone signs up, and sees if there are enough people in the signup list to begin.</p>
+<p>Only checks if everyone is actually valid to start (still connected and an observer) if there are enough players (basic_setup)</p><h3 id="proc/vote_for"><aside class="declaration">proc </aside>vote_for<aside>(/<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a>/voter, /<a href="datum.html">datum</a>/<a href="datum/mafia_role.html">mafia_role</a>/target, vote_type, teams) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mafia/controller.dm#L478">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mafia&#x2F;controller.dm 478"/></a></aside>
+        </h3>
+        <p>Proc that goes off when players vote for something with their mafia panel.</p>
+<p>If teams, it hides the tally overlay and only sends the vote messages to the team that is voting
+Arguments:</p>
+<ul>
+<li>voter: the mafia role that is trying to vote for...</li>
+<li>target: the mafia role that is getting voted for</li>
+<li>vote_type: type of vote submitted (is this the day vote? is this the mafia night vote?)</li>
+<li>teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;flags.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/flags.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/flags.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/flags.html#define/ALL_CARDINALS">ALL_CARDINALS</a></th><td>All the cardinal direction bitflags.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/DF_SIGNAL_ENABLED">DF_SIGNAL_ENABLED</a></th><td>Is this datum capable of sending signals?
+Set when a signal has been registered.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/HEAR_1">HEAR_1</a></th><td>This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ATMOS_IS_PROCESSING_1">ATMOS_IS_PROCESSING_1</a></th><td>Is this object currently processing in the atmos object list?</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/CONDUCT_1">CONDUCT_1</a></th><td>conducts electricity (metal etc.)</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NODECONSTRUCT_1">NODECONSTRUCT_1</a></th><td>For machines and structures that should not break into parts, eg, holodeck stuff</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/OVERLAY_QUEUED_1">OVERLAY_QUEUED_1</a></th><td>atom queued to SSoverlay</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ON_BORDER_1">ON_BORDER_1</a></th><td>item has priority to check when entering or leaving</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NO_SCREENTIPS_1">NO_SCREENTIPS_1</a></th><td>Whether or not this atom shows screentips when hovered over</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/PREVENT_CLICK_UNDER_1">PREVENT_CLICK_UNDER_1</a></th><td>Prevent clicking things below it on the same turf eg. doors/ fulltile windows</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/SHOCKED_1">SHOCKED_1</a></th><td>Prevents mobs from getting chainshocked by teslas and the supermatter</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/INITIALIZED_1">INITIALIZED_1</a></th><td>Whether /atom/Initialize() has already run for the object</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ADMIN_SPAWNED_1">ADMIN_SPAWNED_1</a></th><td>was this spawned by an admin? used for stat tracking stuff.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/PREVENT_CONTENTS_EXPLOSION_1">PREVENT_CONTENTS_EXPLOSION_1</a></th><td>should not get harmed if this gets caught by an explosion?</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/RAD_PROTECT_CONTENTS_1">RAD_PROTECT_CONTENTS_1</a></th><td>should the contents of this atom be acted upon</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/RAD_NO_CONTAMINATE_1">RAD_NO_CONTAMINATE_1</a></th><td>should this object be allowed to be contaminated</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ALLOW_DARK_PAINTS_1">ALLOW_DARK_PAINTS_1</a></th><td>Should this object be paintable with very dark colors?</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UNPAINTABLE_1">UNPAINTABLE_1</a></th><td>Should this object be unpaintable?</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/IS_SPINNING_1">IS_SPINNING_1</a></th><td>Is the thing currently spinning?</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/CAN_BE_DIRTY_1">CAN_BE_DIRTY_1</a></th><td>If a turf can be made dirty at roundstart. This is also used in areas.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UPDATE_NAME">UPDATE_NAME</a></th><td>Update the atom's name</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UPDATE_DESC">UPDATE_DESC</a></th><td>Update the atom's desc</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UPDATE_ICON_STATE">UPDATE_ICON_STATE</a></th><td>Update the atom's icon state</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UPDATE_OVERLAYS">UPDATE_OVERLAYS</a></th><td>Update the atom's overlays</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UPDATE_ICON">UPDATE_ICON</a></th><td>Update the atom's icon</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/RICOCHET_SHINY">RICOCHET_SHINY</a></th><td>If the thing can reflect light (lasers/energy)</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/RICOCHET_HARD">RICOCHET_HARD</a></th><td>If the thing can reflect matter (bullets/bomb shrapnel)</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NOJAUNT">NOJAUNT</a></th><td>If a turf cant be jaunted through.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NO_LAVA_GEN">NO_LAVA_GEN</a></th><td>Blocks lava rivers being generated on the turf.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NO_RUINS">NO_RUINS</a></th><td>Blocks ruins spawning on the turf.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/VALID_TERRITORY">VALID_TERRITORY</a></th><td>/////////////Area flags\\\\\\\
+If it's a valid territory for cult summoning or the CRAB-17 phone to spawn</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/BLOBS_ALLOWED">BLOBS_ALLOWED</a></th><td>If blobs can spawn there and if it counts towards their score.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/CAVES_ALLOWED">CAVES_ALLOWED</a></th><td>If mining tunnel generation is allowed in this area</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/FLORA_ALLOWED">FLORA_ALLOWED</a></th><td>If flora are allowed to spawn in this area randomly through tunnel generation</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOB_SPAWN_ALLOWED">MOB_SPAWN_ALLOWED</a></th><td>If mobs can be spawned by natural random generation</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MEGAFAUNA_SPAWN_ALLOWED">MEGAFAUNA_SPAWN_ALLOWED</a></th><td>If megafauna can be spawned by natural random generation</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NOTELEPORT">NOTELEPORT</a></th><td>Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/HIDDEN_AREA">HIDDEN_AREA</a></th><td>Hides area from player Teleport function.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UNIQUE_AREA">UNIQUE_AREA</a></th><td>If false, loading multiple maps with this area type will create multiple instances.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/BLOCK_SUICIDE">BLOCK_SUICIDE</a></th><td>If people are allowed to suicide in it. Mostly for OOC stuff like minigames</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/XENOBIOLOGY_COMPATIBLE">XENOBIOLOGY_COMPATIBLE</a></th><td>Can the Xenobio management console transverse this area by default?</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ABDUCTOR_PROOF">ABDUCTOR_PROOF</a></th><td>If Abductors are unable to teleport in with their observation console</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NO_ALERTS">NO_ALERTS</a></th><td>If an area should be hidden from power consoles, power/atmosphere alerts, etc.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/CULT_PERMITTED">CULT_PERMITTED</a></th><td>If blood cultists can draw runes or build structures on this AREA.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/LETPASSTHROW">LETPASSTHROW</a></th><td>Let thrown things past us. <strong>ONLY MEANINGFUL ON pass_flags_self!</strong></td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/PHASING">PHASING</a></th><td>When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/FIRE_PROOF">FIRE_PROOF</a></th><td>100% immune to fire damage (but not necessarily to lava or heat)</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/UNACIDABLE">UNACIDABLE</a></th><td>acid can't even appear on it, let alone melt it.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ACID_PROOF">ACID_PROOF</a></th><td>acid stuck on it doesn't melt it.</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/INDESTRUCTIBLE">INDESTRUCTIBLE</a></th><td>doesn't take damage</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/FREEZE_PROOF">FREEZE_PROOF</a></th><td>can't be frozen</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_MOVE">MOBILITY_MOVE</a></th><td>can move</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_STAND">MOBILITY_STAND</a></th><td>can, and is, standing up</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_PICKUP">MOBILITY_PICKUP</a></th><td>can pickup items</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_USE">MOBILITY_USE</a></th><td>can hold and use items</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_UI">MOBILITY_UI</a></th><td>can use interfaces like machinery</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_STORAGE">MOBILITY_STORAGE</a></th><td>can use storage item</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_PULL">MOBILITY_PULL</a></th><td>can pull things</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MOBILITY_REST">MOBILITY_REST</a></th><td>can rest</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/ISDIAGONALDIR">ISDIAGONALDIR</a></th><td>Returns true if the dir is diagonal, false otherwise</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NSCOMPONENT">NSCOMPONENT</a></th><td>True if the dir is north or south, false therwise</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/EWCOMPONENT">EWCOMPONENT</a></th><td>True if the dir is east/west, false otherwise</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/NSDIRFLIP">NSDIRFLIP</a></th><td>Flips the dir for north/south directions</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/EWDIRFLIP">EWDIRFLIP</a></th><td>Flips the dir for east/west directions</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/DIRFLIP">DIRFLIP</a></th><td>Turns the dir by 180 degrees</td></tr>
+        <tr><th><a href="code/__DEFINES/flags.html#define/MAX_BITFLAG_DIGITS">MAX_BITFLAG_DIGITS</a></th><td>33554431 (2^24 - 1) is the maximum value our bitflags can reach.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/ABDUCTOR_PROOF"><aside class="declaration">#define </aside>ABDUCTOR_PROOF
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 116"/></a>
+    </h3>
+    <p>If Abductors are unable to teleport in with their observation console</p><h3 id="define/ACID_PROOF"><aside class="declaration">#define </aside>ACID_PROOF
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L157">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 157"/></a>
+    </h3>
+    <p>acid stuck on it doesn't melt it.</p><h3 id="define/ADMIN_SPAWNED_1"><aside class="declaration">#define </aside>ADMIN_SPAWNED_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 48"/></a>
+    </h3>
+    <p>was this spawned by an admin? used for stat tracking stuff.</p><h3 id="define/ALLOW_DARK_PAINTS_1"><aside class="declaration">#define </aside>ALLOW_DARK_PAINTS_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 56"/></a>
+    </h3>
+    <p>Should this object be paintable with very dark colors?</p><h3 id="define/ALL_CARDINALS"><aside class="declaration">#define </aside>ALL_CARDINALS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 11"/></a>
+    </h3>
+    <p>All the cardinal direction bitflags.</p><h3 id="define/ATMOS_IS_PROCESSING_1"><aside class="declaration">#define </aside>ATMOS_IS_PROCESSING_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 29"/></a>
+    </h3>
+    <p>Is this object currently processing in the atmos object list?</p><h3 id="define/BLOBS_ALLOWED"><aside class="declaration">#define </aside>BLOBS_ALLOWED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 96"/></a>
+    </h3>
+    <p>If blobs can spawn there and if it counts towards their score.</p><h3 id="define/BLOCK_SUICIDE"><aside class="declaration">#define </aside>BLOCK_SUICIDE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 112"/></a>
+    </h3>
+    <p>If people are allowed to suicide in it. Mostly for OOC stuff like minigames</p><h3 id="define/CAN_BE_DIRTY_1"><aside class="declaration">#define </aside>CAN_BE_DIRTY_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 64"/></a>
+    </h3>
+    <p>If a turf can be made dirty at roundstart. This is also used in areas.</p><h3 id="define/CAVES_ALLOWED"><aside class="declaration">#define </aside>CAVES_ALLOWED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 98"/></a>
+    </h3>
+    <p>If mining tunnel generation is allowed in this area</p><h3 id="define/CONDUCT_1"><aside class="declaration">#define </aside>CONDUCT_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 31"/></a>
+    </h3>
+    <p>conducts electricity (metal etc.)</p><h3 id="define/CULT_PERMITTED"><aside class="declaration">#define </aside>CULT_PERMITTED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 120"/></a>
+    </h3>
+    <p>If blood cultists can draw runes or build structures on this AREA.</p><h3 id="define/DF_SIGNAL_ENABLED"><aside class="declaration">#define </aside>DF_SIGNAL_ENABLED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 21"/></a>
+    </h3>
+    <p>Is this datum capable of sending signals?
+Set when a signal has been registered.</p><h3 id="define/DIRFLIP"><aside class="declaration">#define </aside>DIRFLIP
+            <aside>(d)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L245">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 245"/></a>
+    </h3>
+    <p>Turns the dir by 180 degrees</p><h3 id="define/EWCOMPONENT"><aside class="declaration">#define </aside>EWCOMPONENT
+            <aside>(d)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L239">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 239"/></a>
+    </h3>
+    <p>True if the dir is east/west, false otherwise</p><h3 id="define/EWDIRFLIP"><aside class="declaration">#define </aside>EWDIRFLIP
+            <aside>(d)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L243">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 243"/></a>
+    </h3>
+    <p>Flips the dir for east/west directions</p><h3 id="define/FIRE_PROOF"><aside class="declaration">#define </aside>FIRE_PROOF
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L151">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 151"/></a>
+    </h3>
+    <p>100% immune to fire damage (but not necessarily to lava or heat)</p><h3 id="define/FLORA_ALLOWED"><aside class="declaration">#define </aside>FLORA_ALLOWED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 100"/></a>
+    </h3>
+    <p>If flora are allowed to spawn in this area randomly through tunnel generation</p><h3 id="define/FREEZE_PROOF"><aside class="declaration">#define </aside>FREEZE_PROOF
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L161">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 161"/></a>
+    </h3>
+    <p>can't be frozen</p><h3 id="define/HEAR_1"><aside class="declaration">#define </aside>HEAR_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 27"/></a>
+    </h3>
+    <p>This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.</p><h3 id="define/HIDDEN_AREA"><aside class="declaration">#define </aside>HIDDEN_AREA
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 108"/></a>
+    </h3>
+    <p>Hides area from player Teleport function.</p><h3 id="define/INDESTRUCTIBLE"><aside class="declaration">#define </aside>INDESTRUCTIBLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L159">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 159"/></a>
+    </h3>
+    <p>doesn't take damage</p><h3 id="define/INITIALIZED_1"><aside class="declaration">#define </aside>INITIALIZED_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 46"/></a>
+    </h3>
+    <p>Whether /atom/Initialize() has already run for the object</p><h3 id="define/ISDIAGONALDIR"><aside class="declaration">#define </aside>ISDIAGONALDIR
+            <aside>(d)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L235">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 235"/></a>
+    </h3>
+    <p>Returns true if the dir is diagonal, false otherwise</p><h3 id="define/IS_SPINNING_1"><aside class="declaration">#define </aside>IS_SPINNING_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 60"/></a>
+    </h3>
+    <p>Is the thing currently spinning?</p><h3 id="define/LETPASSTHROW"><aside class="declaration">#define </aside>LETPASSTHROW
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 134"/></a>
+    </h3>
+    <p>Let thrown things past us. <strong>ONLY MEANINGFUL ON pass_flags_self!</strong></p><h3 id="define/MAX_BITFLAG_DIGITS"><aside class="declaration">#define </aside>MAX_BITFLAG_DIGITS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L248">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 248"/></a>
+    </h3>
+    <p>33554431 (2^24 - 1) is the maximum value our bitflags can reach.</p><h3 id="define/MEGAFAUNA_SPAWN_ALLOWED"><aside class="declaration">#define </aside>MEGAFAUNA_SPAWN_ALLOWED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 104"/></a>
+    </h3>
+    <p>If megafauna can be spawned by natural random generation</p><h3 id="define/MOBILITY_MOVE"><aside class="declaration">#define </aside>MOBILITY_MOVE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 182"/></a>
+    </h3>
+    <p>can move</p><h3 id="define/MOBILITY_PICKUP"><aside class="declaration">#define </aside>MOBILITY_PICKUP
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 186"/></a>
+    </h3>
+    <p>can pickup items</p><h3 id="define/MOBILITY_PULL"><aside class="declaration">#define </aside>MOBILITY_PULL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 194"/></a>
+    </h3>
+    <p>can pull things</p><h3 id="define/MOBILITY_REST"><aside class="declaration">#define </aside>MOBILITY_REST
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L196">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 196"/></a>
+    </h3>
+    <p>can rest</p><h3 id="define/MOBILITY_STAND"><aside class="declaration">#define </aside>MOBILITY_STAND
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 184"/></a>
+    </h3>
+    <p>can, and is, standing up</p><h3 id="define/MOBILITY_STORAGE"><aside class="declaration">#define </aside>MOBILITY_STORAGE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 192"/></a>
+    </h3>
+    <p>can use storage item</p><h3 id="define/MOBILITY_UI"><aside class="declaration">#define </aside>MOBILITY_UI
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 190"/></a>
+    </h3>
+    <p>can use interfaces like machinery</p><h3 id="define/MOBILITY_USE"><aside class="declaration">#define </aside>MOBILITY_USE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L188">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 188"/></a>
+    </h3>
+    <p>can hold and use items</p><h3 id="define/MOB_SPAWN_ALLOWED"><aside class="declaration">#define </aside>MOB_SPAWN_ALLOWED
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 102"/></a>
+    </h3>
+    <p>If mobs can be spawned by natural random generation</p><h3 id="define/NODECONSTRUCT_1"><aside class="declaration">#define </aside>NODECONSTRUCT_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 33"/></a>
+    </h3>
+    <p>For machines and structures that should not break into parts, eg, holodeck stuff</p><h3 id="define/NOJAUNT"><aside class="declaration">#define </aside>NOJAUNT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 85"/></a>
+    </h3>
+    <p>If a turf cant be jaunted through.</p><h3 id="define/NOTELEPORT"><aside class="declaration">#define </aside>NOTELEPORT
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 106"/></a>
+    </h3>
+    <p>Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)</p><h3 id="define/NO_ALERTS"><aside class="declaration">#define </aside>NO_ALERTS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 118"/></a>
+    </h3>
+    <p>If an area should be hidden from power consoles, power/atmosphere alerts, etc.</p><h3 id="define/NO_LAVA_GEN"><aside class="declaration">#define </aside>NO_LAVA_GEN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 88"/></a>
+    </h3>
+    <p>Blocks lava rivers being generated on the turf.</p><h3 id="define/NO_RUINS"><aside class="declaration">#define </aside>NO_RUINS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 90"/></a>
+    </h3>
+    <p>Blocks ruins spawning on the turf.</p><h3 id="define/NO_SCREENTIPS_1"><aside class="declaration">#define </aside>NO_SCREENTIPS_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 39"/></a>
+    </h3>
+    <p>Whether or not this atom shows screentips when hovered over</p><h3 id="define/NSCOMPONENT"><aside class="declaration">#define </aside>NSCOMPONENT
+            <aside>(d)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L237">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 237"/></a>
+    </h3>
+    <p>True if the dir is north or south, false therwise</p><h3 id="define/NSDIRFLIP"><aside class="declaration">#define </aside>NSDIRFLIP
+            <aside>(d)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L241">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 241"/></a>
+    </h3>
+    <p>Flips the dir for north/south directions</p><h3 id="define/ON_BORDER_1"><aside class="declaration">#define </aside>ON_BORDER_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 37"/></a>
+    </h3>
+    <p>item has priority to check when entering or leaving</p><h3 id="define/OVERLAY_QUEUED_1"><aside class="declaration">#define </aside>OVERLAY_QUEUED_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 35"/></a>
+    </h3>
+    <p>atom queued to SSoverlay</p><h3 id="define/PHASING"><aside class="declaration">#define </aside>PHASING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 146"/></a>
+    </h3>
+    <p>When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.</p><h3 id="define/PREVENT_CLICK_UNDER_1"><aside class="declaration">#define </aside>PREVENT_CLICK_UNDER_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 41"/></a>
+    </h3>
+    <p>Prevent clicking things below it on the same turf eg. doors/ fulltile windows</p><h3 id="define/PREVENT_CONTENTS_EXPLOSION_1"><aside class="declaration">#define </aside>PREVENT_CONTENTS_EXPLOSION_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 50"/></a>
+    </h3>
+    <p>should not get harmed if this gets caught by an explosion?</p><h3 id="define/RAD_NO_CONTAMINATE_1"><aside class="declaration">#define </aside>RAD_NO_CONTAMINATE_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L54">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 54"/></a>
+    </h3>
+    <p>should this object be allowed to be contaminated</p><h3 id="define/RAD_PROTECT_CONTENTS_1"><aside class="declaration">#define </aside>RAD_PROTECT_CONTENTS_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 52"/></a>
+    </h3>
+    <p>should the contents of this atom be acted upon</p><h3 id="define/RICOCHET_HARD"><aside class="declaration">#define </aside>RICOCHET_HARD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L81">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 81"/></a>
+    </h3>
+    <p>If the thing can reflect matter (bullets/bomb shrapnel)</p><h3 id="define/RICOCHET_SHINY"><aside class="declaration">#define </aside>RICOCHET_SHINY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 79"/></a>
+    </h3>
+    <p>If the thing can reflect light (lasers/energy)</p><h3 id="define/SHOCKED_1"><aside class="declaration">#define </aside>SHOCKED_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 44"/></a>
+    </h3>
+    <p>Prevents mobs from getting chainshocked by teslas and the supermatter</p><h3 id="define/UNACIDABLE"><aside class="declaration">#define </aside>UNACIDABLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L155">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 155"/></a>
+    </h3>
+    <p>acid can't even appear on it, let alone melt it.</p><h3 id="define/UNIQUE_AREA"><aside class="declaration">#define </aside>UNIQUE_AREA
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 110"/></a>
+    </h3>
+    <p>If false, loading multiple maps with this area type will create multiple instances.</p><h3 id="define/UNPAINTABLE_1"><aside class="declaration">#define </aside>UNPAINTABLE_1
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 58"/></a>
+    </h3>
+    <p>Should this object be unpaintable?</p><h3 id="define/UPDATE_DESC"><aside class="declaration">#define </aside>UPDATE_DESC
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 70"/></a>
+    </h3>
+    <p>Update the atom's desc</p><h3 id="define/UPDATE_ICON"><aside class="declaration">#define </aside>UPDATE_ICON
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 76"/></a>
+    </h3>
+    <p>Update the atom's icon</p><h3 id="define/UPDATE_ICON_STATE"><aside class="declaration">#define </aside>UPDATE_ICON_STATE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 72"/></a>
+    </h3>
+    <p>Update the atom's icon state</p><h3 id="define/UPDATE_NAME"><aside class="declaration">#define </aside>UPDATE_NAME
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 68"/></a>
+    </h3>
+    <p>Update the atom's name</p><h3 id="define/UPDATE_OVERLAYS"><aside class="declaration">#define </aside>UPDATE_OVERLAYS
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 74"/></a>
+    </h3>
+    <p>Update the atom's overlays</p><h3 id="define/VALID_TERRITORY"><aside class="declaration">#define </aside>VALID_TERRITORY
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L94">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 94"/></a>
+    </h3>
+    <p>/////////////Area flags\\\\\\\
+If it's a valid territory for cult summoning or the CRAB-17 phone to spawn</p><h3 id="define/XENOBIOLOGY_COMPATIBLE"><aside class="declaration">#define </aside>XENOBIOLOGY_COMPATIBLE
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/flags.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;flags.dm 114"/></a>
+    </h3>
+    <p>Can the Xenobio management console transverse this area by default?</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

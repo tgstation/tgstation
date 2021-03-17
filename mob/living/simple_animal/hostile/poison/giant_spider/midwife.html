@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;poison&#x2F;giant_spider&#x2F;midwife - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var">Var Details</a> - <a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#proc">Proc Details</a></header>
+<main>
+<h1>Spider Broodmother <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/poison.html">poison</a>/<a href="mob/living/simple_animal/hostile/poison/giant_spider.html">giant_spider</a>/<a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html">midwife</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L267">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 267"/></a></h1>
+
+<p>The reproductive line of spider subtypes.  Is the only subtype to lay eggs, which is the only way for spiders to reproduce.</p>
+<p>A subtype of the giant spider which is the crux of a spider horde.  Can lay normal eggs at any time which become normal spider types,
+but by consuming human bodies can lay special eggs which can become one of the more specialized subtypes, including possibly another broodmother.
+However, this spider subtype has no offensive capability and can be quickly dispatched without assistance from other spiders.  They are also capable
+of sending messages to all living spiders, being a communication line for the rest of the horde.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/cocoon_target">cocoon_target</a></th><td>If the spider is trying to cocoon something, what that something is.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/consumed_mobs">consumed_mobs</a></th><td>A shared list of all the mobs consumed by any spider so that the same target can't be drained several times.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/fed">fed</a></th><td>How many humans this spider has drained but not layed enriched eggs for.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/lay_eggs">lay_eggs</a></th><td>The ability for the spider to lay basic eggs.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/lay_eggs_enriched">lay_eggs_enriched</a></th><td>The ability for the spider to lay enriched eggs.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/letmetalkpls">letmetalkpls</a></th><td>The ability for the spider to send a message to all currently living spiders.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/set_directive">set_directive</a></th><td>The ability for the spider to set a directive, a message shown to the child spider player when the player takes control.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#var/wrap">wrap</a></th><td>The ability for the spider to wrap targets.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/poison/giant_spider/midwife.html#proc/cocoon">cocoon</a></th><td>Attempts to cocoon the spider's current cocoon_target.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/cocoon_target"><aside class="declaration">var </aside>cocoon_target
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L282">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 282"/></a></h3>
+        <p>If the spider is trying to cocoon something, what that something is.</p><h3 id="var/consumed_mobs"><aside class="declaration">var </aside>consumed_mobs
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L294">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 294"/></a></h3>
+        <p>A shared list of all the mobs consumed by any spider so that the same target can't be drained several times.</p><h3 id="var/fed"><aside class="declaration">var </aside>fed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L284">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 284"/></a></h3>
+        <p>How many humans this spider has drained but not layed enriched eggs for.</p><h3 id="var/lay_eggs"><aside class="declaration">var </aside>lay_eggs
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/innate/spider/lay_eggs</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L288">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 288"/></a></h3>
+        <p>The ability for the spider to lay basic eggs.</p><h3 id="var/lay_eggs_enriched"><aside class="declaration">var </aside>lay_eggs_enriched
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/innate/spider/lay_eggs/enriched</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L290">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 290"/></a></h3>
+        <p>The ability for the spider to lay enriched eggs.</p><h3 id="var/letmetalkpls"><aside class="declaration">var </aside>letmetalkpls
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/action/innate/spider/comm.html">action/innate/spider/comm</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L298">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 298"/></a></h3>
+        <p>The ability for the spider to send a message to all currently living spiders.</p><h3 id="var/set_directive"><aside class="declaration">var </aside>set_directive
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/innate/spider/set_directive</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L292">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 292"/></a></h3>
+        <p>The ability for the spider to set a directive, a message shown to the child spider player when the player takes control.</p><h3 id="var/wrap"><aside class="declaration">var </aside>wrap
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/proc_holder/wrap</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L286">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 286"/></a></h3>
+        <p>The ability for the spider to wrap targets.</p><h2 id="proc">Proc Details</h2><h3 id="proc/cocoon"><aside class="declaration">proc </aside>cocoon<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/giant_spider.dm#L317">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;giant_spider.dm 317"/></a></aside>
+        </h3>
+        <p>Attempts to cocoon the spider's current cocoon_target.</p>
+<p>Attempts to coccon the spider's cocoon_target after a do_after.
+If the target is a human who hasn't been drained before, ups the spider's fed counter so it can lay enriched eggs.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

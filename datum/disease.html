@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;disease - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/disease.html#var">Var Details</a> - <a href="datum/disease.html#proc">Proc Details</a></header>
+<main>
+<h1>disease <aside>/<a href="datum.html">datum</a>/<a href="datum/disease.html">disease</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/diseases/_disease.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;diseases&#x2F;_disease.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/disease.html#var/cure_chance">cure_chance</a></th><td>The probability of this infection being cured every second the cure is present</td></tr>
+            <tr><th><a href="datum/disease.html#var/infectivity">infectivity</a></th><td>The probability of spreading through the air every second</td></tr>
+            <tr><th><a href="datum/disease.html#var/stage_prob">stage_prob</a></th><td>The probability of this infection advancing a stage every second the cure is not present.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/disease.html#proc/is_viable_mobtype">is_viable_mobtype</a></th><td>Checks the given typepath against the list of viable mobtypes.</td></tr>
+            <tr><th><a href="datum/disease.html#proc/stage_act">stage_act</a></th><td>Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/cure_chance"><aside class="declaration">var </aside>cure_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/diseases/_disease.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;diseases&#x2F;_disease.dm 28"/></a></h3>
+        <p>The probability of this infection being cured every second the cure is present</p><h3 id="var/infectivity"><aside class="declaration">var </aside>infectivity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/diseases/_disease.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;diseases&#x2F;_disease.dm 26"/></a></h3>
+        <p>The probability of spreading through the air every second</p><h3 id="var/stage_prob"><aside class="declaration">var </aside>stage_prob
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/diseases/_disease.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;diseases&#x2F;_disease.dm 19"/></a></h3>
+        <p>The probability of this infection advancing a stage every second the cure is not present.</p><h2 id="proc">Proc Details</h2><h3 id="proc/is_viable_mobtype"><aside class="declaration">proc </aside>is_viable_mobtype<aside>(mob_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/diseases/_disease.dm#L183">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;diseases&#x2F;_disease.dm 183"/></a></aside>
+        </h3>
+        <p>Checks the given typepath against the list of viable mobtypes.</p>
+<p>Returns TRUE if the mob_type path is derived from of any entry in the viable_mobtypes list.
+Returns FALSE otherwise.</p>
+<p>Arguments:</p>
+<ul>
+<li>mob_type - Type path to check against the viable_mobtypes list.</li>
+</ul><h3 id="proc/stage_act"><aside class="declaration">proc </aside>stage_act<aside>(delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/diseases/_disease.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;diseases&#x2F;_disease.dm 70"/></a></aside>
+        </h3>
+        <p>Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

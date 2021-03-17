@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;job - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/job.html#var">Var Details</a> - <a href="datum/job.html#proc">Proc Details</a></header>
+<main>
+<h1>job <aside>/<a href="datum.html">datum</a>/<a href="datum/job.html">job</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/job.html#var/allow_bureaucratic_error">allow_bureaucratic_error</a></th><td>Should this job be allowed to be picked for the bureaucratic error event?</td></tr>
+            <tr><th><a href="datum/job.html#var/departments">departments</a></th><td>Bitfield of departments this job belongs wit</td></tr>
+            <tr><th><a href="datum/job.html#var/family_heirlooms">family_heirlooms</a></th><td>List of family heirlooms this job can get with the family heirloom quirk. List of types.</td></tr>
+            <tr><th><a href="datum/job.html#var/liver_traits">liver_traits</a></th><td>Lazylist of traits added to the liver of the mob assigned this job (used for the classic &quot;cops heal from donuts&quot; reaction, among others)</td></tr>
+            <tr><th><a href="datum/job.html#var/minimal_skills">minimal_skills</a></th><td>Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a full crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm</td></tr>
+            <tr><th><a href="datum/job.html#var/random_spawns_possible">random_spawns_possible</a></th><td>Is this job affected by weird spawns like the ones from station traits</td></tr>
+            <tr><th><a href="datum/job.html#var/skills">skills</a></th><td>Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/job.html#proc/get_map_changes">get_map_changes</a></th><td>Loads up map configs if necessary and returns job changes for this job.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/allow_bureaucratic_error"><aside class="declaration">var </aside>allow_bureaucratic_error
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 71"/></a></h3>
+        <p>Should this job be allowed to be picked for the bureaucratic error event?</p><h3 id="var/departments"><aside class="declaration">var </aside>departments
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 68"/></a></h3>
+        <p>Bitfield of departments this job belongs wit</p><h3 id="var/family_heirlooms"><aside class="declaration">var </aside>family_heirlooms
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 79"/></a></h3>
+        <p>List of family heirlooms this job can get with the family heirloom quirk. List of types.</p><h3 id="var/liver_traits"><aside class="declaration">var </aside>liver_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 61"/></a></h3>
+        <p>Lazylist of traits added to the liver of the mob assigned this job (used for the classic &quot;cops heal from donuts&quot; reaction, among others)</p><h3 id="var/minimal_skills"><aside class="declaration">var </aside>minimal_skills
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 8"/></a></h3>
+        <p>Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a full crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm</p><h3 id="var/random_spawns_possible"><aside class="declaration">var </aside>random_spawns_possible
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 74"/></a></h3>
+        <p>Is this job affected by weird spawns like the ones from station traits</p><h3 id="var/skills"><aside class="declaration">var </aside>skills
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 6"/></a></h3>
+        <p>Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm</p><h2 id="proc">Proc Details</h2><h3 id="proc/get_map_changes"><aside class="declaration">proc </aside>get_map_changes<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/jobs/job_types/_job.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;jobs&#x2F;job_types&#x2F;_job.dm 90"/></a></aside>
+        </h3>
+        <p>Loads up map configs if necessary and returns job changes for this job.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

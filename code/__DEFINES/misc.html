@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;misc.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/misc.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/misc.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/misc.html#define/REVERSE_DIR">REVERSE_DIR</a></th><td>Inverse direction, taking into account UP|DOWN if necessary.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/BLOODY_FOOTPRINT_BASE_ALPHA">BLOODY_FOOTPRINT_BASE_ALPHA</a></th><td>Minimum alpha of footprints</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/BLOOD_AMOUNT_PER_DECAL">BLOOD_AMOUNT_PER_DECAL</a></th><td>How much blood a regular blood splatter contains</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/BLOOD_ITEM_MAX">BLOOD_ITEM_MAX</a></th><td>How much blood an item can have stuck on it</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/BLOOD_POOL_MAX">BLOOD_POOL_MAX</a></th><td>How much blood a blood decal can contain</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/BLOOD_FOOTPRINTS_MIN">BLOOD_FOOTPRINTS_MIN</a></th><td>How much blood a footprint need to at least contain</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/get_turf">get_turf</a></th><td>Get the turf that <code>A</code> resides in, regardless of any containers.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/get_area">get_area</a></th><td>Get the ultimate area of <code>A</code>, similarly to <a href="code/__DEFINES/misc.html#define/get_turf" title="get_turf">get_turf</a>.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/MAPTEXT">MAPTEXT</a></th><td>Prepares a text to be used for maptext. Use this so it doesn't look hideous.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/GRAVITY_DAMAGE_THRESHOLD">GRAVITY_DAMAGE_THRESHOLD</a></th><td>The gravity strength threshold for high gravity damage.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/GRAVITY_DAMAGE_SCALING">GRAVITY_DAMAGE_SCALING</a></th><td>The scaling factor for high gravity damage.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/GRAVITY_DAMAGE_MAXIMUM">GRAVITY_DAMAGE_MAXIMUM</a></th><td>The maximum <a href="code/__DEFINES/combat.html#define/BRUTE" title="BRUTE">BRUTE</a> damage a mob can take from high gravity per second.</td></tr>
+        <tr><th><a href="code/__DEFINES/misc.html#define/NO_BUCKLE_LYING">NO_BUCKLE_LYING</a></th><td>Possible value of <a href="atom/movable.html#var/buckle_lying" title="/atom/movable">/atom/movable/buckle_lying</a>. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/BLOODY_FOOTPRINT_BASE_ALPHA"><aside class="declaration">#define </aside>BLOODY_FOOTPRINT_BASE_ALPHA
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 138"/></a>
+    </h3>
+    <p>Minimum alpha of footprints</p><h3 id="define/BLOOD_AMOUNT_PER_DECAL"><aside class="declaration">#define </aside>BLOOD_AMOUNT_PER_DECAL
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L139">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 139"/></a>
+    </h3>
+    <p>How much blood a regular blood splatter contains</p><h3 id="define/BLOOD_FOOTPRINTS_MIN"><aside class="declaration">#define </aside>BLOOD_FOOTPRINTS_MIN
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 142"/></a>
+    </h3>
+    <p>How much blood a footprint need to at least contain</p><h3 id="define/BLOOD_ITEM_MAX"><aside class="declaration">#define </aside>BLOOD_ITEM_MAX
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 140"/></a>
+    </h3>
+    <p>How much blood an item can have stuck on it</p><h3 id="define/BLOOD_POOL_MAX"><aside class="declaration">#define </aside>BLOOD_POOL_MAX
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L141">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 141"/></a>
+    </h3>
+    <p>How much blood a blood decal can contain</p><h3 id="define/GRAVITY_DAMAGE_MAXIMUM"><aside class="declaration">#define </aside>GRAVITY_DAMAGE_MAXIMUM
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L472">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 472"/></a>
+    </h3>
+    <p>The maximum <a href="code/__DEFINES/combat.html#define/BRUTE" title="BRUTE">BRUTE</a> damage a mob can take from high gravity per second.</p><h3 id="define/GRAVITY_DAMAGE_SCALING"><aside class="declaration">#define </aside>GRAVITY_DAMAGE_SCALING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L470">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 470"/></a>
+    </h3>
+    <p>The scaling factor for high gravity damage.</p><h3 id="define/GRAVITY_DAMAGE_THRESHOLD"><aside class="declaration">#define </aside>GRAVITY_DAMAGE_THRESHOLD
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L468">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 468"/></a>
+    </h3>
+    <p>The gravity strength threshold for high gravity damage.</p><h3 id="define/MAPTEXT"><aside class="declaration">#define </aside>MAPTEXT
+            <aside>(text)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L460">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 460"/></a>
+    </h3>
+    <p>Prepares a text to be used for maptext. Use this so it doesn't look hideous.</p><h3 id="define/NO_BUCKLE_LYING"><aside class="declaration">#define </aside>NO_BUCKLE_LYING
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L538">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 538"/></a>
+    </h3>
+    <p>Possible value of <a href="atom/movable.html#var/buckle_lying" title="/atom/movable">/atom/movable/buckle_lying</a>. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.</p><h3 id="define/REVERSE_DIR"><aside class="declaration">#define </aside>REVERSE_DIR
+            <aside>(dir)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 13"/></a>
+    </h3>
+    <p>Inverse direction, taking into account UP|DOWN if necessary.</p><h3 id="define/get_area"><aside class="declaration">#define </aside>get_area
+            <aside>(A)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L202">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 202"/></a>
+    </h3>
+    <p>Get the ultimate area of <code>A</code>, similarly to <a href="code/__DEFINES/misc.html#define/get_turf" title="get_turf">get_turf</a>.</p>
+<p>Use instead of <code>A.loc.loc</code>.</p><h3 id="define/get_turf"><aside class="declaration">#define </aside>get_turf
+            <aside>(A)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__DEFINES/misc.dm#L195">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;misc.dm 195"/></a>
+    </h3>
+    <p>Get the turf that <code>A</code> resides in, regardless of any containers.</p>
+<p>Use in favor of <code>A.loc</code> or <code>src.loc</code> so that things work correctly when
+stored inside an inventory, locker, or other container.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

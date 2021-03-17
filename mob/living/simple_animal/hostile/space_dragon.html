@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/hostile/space_dragon.html#var">Var Details</a> - <a href="mob/living/simple_animal/hostile/space_dragon.html#proc">Proc Details</a></header>
+<main>
+<h1>Space Dragon <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/space_dragon.html">space_dragon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 28"/></a></h1>
+
+<p>A space-faring leviathan-esque monster which breathes fire and summons carp.  Spawned during its respective midround antagonist event.</p>
+<p>A space-faring monstrosity who has the ability to breathe dangerous fire breath and uses its powerful wings to knock foes away.
+Normally spawned as an antagonist during the Space Dragon event, Space Dragon's main goal is to open three rifts from which to pull a great tide of carp onto the station.
+Space Dragon can summon only one rift at a time, and can do so anywhere a blob is allowed to spawn.  In order to trigger his victory condition, Space Dragon must summon and defend three rifts while they charge.
+Space Dragon, when spawned, has five minutes to summon the first rift.  Failing to do so will cause Space Dragon to return from whence he came.
+When the rift spawns, ghosts can interact with it to spawn in as space carp to help complete the mission.  One carp is granted when the rift is first summoned, with an extra one every 40 seconds.
+Once the victory condition is met, the shuttle is called and all current rifts are allowed to spawn infinite sentient space carp.
+If a charging rift is destroyed, Space Dragon will be incredibly slowed, and the endlag on his gust attack is greatly increased on each use.
+Space Dragon has the following abilities to assist him with his objective:</p>
+<ul>
+<li>Can shoot fire in straight line, dealing 30 burn damage and setting those suseptible on fire.</li>
+<li>Can use his wings to temporarily stun and knock back any nearby mobs.  This attack has no cooldown, but instead has endlag after the attack where Space Dragon cannot act.  This endlag's time decreases over time, but is added to every time he uses the move.</li>
+<li>Can swallow mob corpses to heal for half their max health.  Any corpses swallowed are stored within him, and will be regurgitated on death.</li>
+<li>Can tear through any type of wall.  This takes 4 seconds for most walls, and 12 seconds for reinforced walls.</li>
+</ul><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/chosen_color">chosen_color</a></th><td>The color of the space dragon.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/gust">gust</a></th><td>The innate ability to use wing gust</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/maxRiftTimer">maxRiftTimer</a></th><td>Maximum amount of time which can pass without a rift before Space Dragon despawns.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/objective_complete">objective_complete</a></th><td>Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/rift">rift</a></th><td>The innate ability to summon rifts</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/riftTimer">riftTimer</a></th><td>Current time since the the last rift was activated.  If set to -1, does not increment.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/rift_list">rift_list</a></th><td>A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/rifts_charged">rifts_charged</a></th><td>How many rifts have been successfully charged</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/tiredness">tiredness</a></th><td>How much endlag using Wing Gust should apply.  Each use of wing gust increments this, and it decreases over time.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/tiredness_mult">tiredness_mult</a></th><td>A multiplier to how much each use of wing gust should add to the tiredness variable.  Set to 5 if the current rift is destroyed.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#var/using_special">using_special</a></th><td>Determines whether or not Space Dragon is in the middle of using wing gust.  If set to true, prevents him from moving and doing certain actions.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/add_dragon_overlay">add_dragon_overlay</a></th><td>Adds the proper overlay to the space dragon.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/color_selection">color_selection</a></th><td>Allows space dragon to choose a color for itself.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/destroy_rifts">destroy_rifts</a></th><td>Destroys all of Space Dragon's current rifts.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/dragon_fire_line">dragon_fire_line</a></th><td>What occurs on each tile to actually create the fire.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/dragon_name">dragon_name</a></th><td>Allows space dragon to choose its own name.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/eat">eat</a></th><td>Handles consuming and storing consumed things inside Space Dragon</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/empty_contents">empty_contents</a></th><td>Disperses the contents of the mob on the surrounding tiles.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/fire_stream">fire_stream</a></th><td>Spawns fire at each position in a line from the source to the target.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/line_target">line_target</a></th><td>Determines a line of turfs from sources's position to the target with length range.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/reset_status">reset_status</a></th><td>Resets Space Dragon's status after using wing gust.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/rift_empower">rift_empower</a></th><td>Handles Space Dragon's temporary empowerment after boosting a rift.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/useGust">useGust</a></th><td>Handles wing gust from the windup all the way to the endlag at the end.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/space_dragon.html#proc/victory">victory</a></th><td>Sets up Space Dragon's victory for completing the objectives.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/chosen_color"><aside class="declaration">var </aside>chosen_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 88"/></a></h3>
+        <p>The color of the space dragon.</p><h3 id="var/gust"><aside class="declaration">var </aside>gust
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/innate/space_dragon/gust_attack</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 82"/></a></h3>
+        <p>The innate ability to use wing gust</p><h3 id="var/maxRiftTimer"><aside class="declaration">var </aside>maxRiftTimer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 68"/></a></h3>
+        <p>Maximum amount of time which can pass without a rift before Space Dragon despawns.</p><h3 id="var/objective_complete"><aside class="declaration">var </aside>objective_complete
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 80"/></a></h3>
+        <p>Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.</p><h3 id="var/rift"><aside class="declaration">var </aside>rift
+            <aside>&ndash; /<a href="datum.html">datum</a>/action/innate/space_dragon/summon_rift</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 84"/></a></h3>
+        <p>The innate ability to summon rifts</p><h3 id="var/riftTimer"><aside class="declaration">var </aside>riftTimer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 66"/></a></h3>
+        <p>Current time since the the last rift was activated.  If set to -1, does not increment.</p><h3 id="var/rift_list"><aside class="declaration">var </aside>rift_list
+            <aside>&ndash; /list/obj/structure/carp_rift</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 76"/></a></h3>
+        <p>A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.</p><h3 id="var/rifts_charged"><aside class="declaration">var </aside>rifts_charged
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 78"/></a></h3>
+        <p>How many rifts have been successfully charged</p><h3 id="var/tiredness"><aside class="declaration">var </aside>tiredness
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 70"/></a></h3>
+        <p>How much endlag using Wing Gust should apply.  Each use of wing gust increments this, and it decreases over time.</p><h3 id="var/tiredness_mult"><aside class="declaration">var </aside>tiredness_mult
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 72"/></a></h3>
+        <p>A multiplier to how much each use of wing gust should add to the tiredness variable.  Set to 5 if the current rift is destroyed.</p><h3 id="var/using_special"><aside class="declaration">var </aside>using_special
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 74"/></a></h3>
+        <p>Determines whether or not Space Dragon is in the middle of using wing gust.  If set to true, prevents him from moving and doing certain actions.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_dragon_overlay"><aside class="declaration">proc </aside>add_dragon_overlay<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 224"/></a></aside>
+        </h3>
+        <p>Adds the proper overlay to the space dragon.</p>
+<p>Clears the current overlay on space dragon and adds a proper one for whatever animation he's in.</p><h3 id="proc/color_selection"><aside class="declaration">proc </aside>color_selection<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L205">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 205"/></a></aside>
+        </h3>
+        <p>Allows space dragon to choose a color for itself.</p>
+<p>Prompts the space dragon to choose a color, from which it will then apply to itself.
+If an invalid color is given, will re-prompt the dragon until a proper color is chosen.</p><h3 id="proc/destroy_rifts"><aside class="declaration">proc </aside>destroy_rifts<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L381">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 381"/></a></aside>
+        </h3>
+        <p>Destroys all of Space Dragon's current rifts.</p>
+<p>QDeletes all the current rifts after removing their references to other objects.
+Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
+Currently used when Space Dragon dies.</p><h3 id="proc/dragon_fire_line"><aside class="declaration">proc </aside>dragon_fire_line<aside>(/<a href="turf.html">turf</a>/T) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L298">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 298"/></a></aside>
+        </h3>
+        <p>What occurs on each tile to actually create the fire.</p>
+<p>Creates a fire on the given turf.
+It creates a hotspot on the given turf, damages any living mob with 30 burn damage, and damages mechs by 50.
+It can only hit any given target once.
+Arguments:</p>
+<ul>
+<li>turf/T - The turf to trigger the effects on.</li>
+</ul><h3 id="proc/dragon_name"><aside class="declaration">proc </aside>dragon_name<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 190"/></a></aside>
+        </h3>
+        <p>Allows space dragon to choose its own name.</p>
+<p>Prompts the space dragon to choose a name, which it will then apply to itself.
+If the name is invalid, will re-prompt the dragon until a proper name is chosen.</p><h3 id="proc/eat"><aside class="declaration">proc </aside>eat<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/A) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L324">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 324"/></a></aside>
+        </h3>
+        <p>Handles consuming and storing consumed things inside Space Dragon</p>
+<p>Plays a sound and then stores the consumed thing inside Space Dragon.
+Used in AttackingTarget(), paired with a heal should it succeed.
+Arguments:</p>
+<ul>
+<li>atom/movable/A - The thing being consumed</li>
+</ul><h3 id="proc/empty_contents"><aside class="declaration">proc </aside>empty_contents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L338">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 338"/></a></aside>
+        </h3>
+        <p>Disperses the contents of the mob on the surrounding tiles.</p>
+<p>Randomly places the contents of the mob onto surrounding tiles.
+Has a 10% chance to place on the same tile as the mob.</p><h3 id="proc/fire_stream"><aside class="declaration">proc </aside>fire_stream<aside>(/<a href="atom.html">atom</a>/at) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L272">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 272"/></a></aside>
+        </h3>
+        <p>Spawns fire at each position in a line from the source to the target.</p>
+<p>Spawns fire at each position in a line from the source to the target.
+Stops if it comes into contact with a solid wall, a window, or a door.
+Delays the spawning of each fire by 1.5 deciseconds.
+Arguments:</p>
+<ul>
+<li>atom/at - The target</li>
+</ul><h3 id="proc/line_target"><aside class="declaration">proc </aside>line_target<aside>(offset, range, /<a href="atom.html">atom</a>/at) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L251">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 251"/></a></aside>
+        </h3>
+        <p>Determines a line of turfs from sources's position to the target with length range.</p>
+<p>Determines a line of turfs from the source's position to the target with length range.
+The line will extend on past the target if the range is large enough, and not reach the target if range is small enough.
+Arguments:</p>
+<ul>
+<li>offset - whether or not to aim slightly to the left or right of the target</li>
+<li>range - how many turfs should we go out for</li>
+<li>atom/at - The target</li>
+</ul><h3 id="proc/reset_status"><aside class="declaration">proc </aside>reset_status<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L351">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 351"/></a></aside>
+        </h3>
+        <p>Resets Space Dragon's status after using wing gust.</p>
+<p>Resets Space Dragon's status after using wing gust.
+If it isn't dead by the time it calls this method, reset the sprite back to the normal living sprite.
+Also sets the using_special variable to FALSE, allowing Space Dragon to move and attack freely again.</p><h3 id="proc/rift_empower"><aside class="declaration">proc </aside>rift_empower<aside>(is_empowered) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L364">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 364"/></a></aside>
+        </h3>
+        <p>Handles Space Dragon's temporary empowerment after boosting a rift.</p>
+<p>Empowers and depowers Space Dragon after a successful rift charge.
+Empowered, Space Dragon regains all his health and becomes temporarily faster for 30 seconds, along with being tinted red.
+Depowered simply resets him back to his default state.</p><h3 id="proc/useGust"><aside class="declaration">proc </aside>useGust<aside>(timer) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L399">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 399"/></a></aside>
+        </h3>
+        <p>Handles wing gust from the windup all the way to the endlag at the end.</p>
+<p>Handles the wing gust attack from start to finish, based on the timer.
+When intially triggered, starts at 0.  Until the timer reaches 10, increase Space Dragon's y position by 2 and call back to the function in 1.5 deciseconds.
+When the timer is at 10, trigger the attack.  Change Space Dragon's sprite. reset his y position, and push all living creatures back in a 3 tile radius and stun them for 5 seconds.
+Stay in the ending state for how much our tiredness dictates and add to our tiredness.
+Arguments:</p>
+<ul>
+<li>timer - The timer used for the windup.</li>
+</ul><h3 id="proc/victory"><aside class="declaration">proc </aside>victory<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/space_dragon.dm#L435">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;space_dragon.dm 435"/></a></aside>
+        </h3>
+        <p>Sets up Space Dragon's victory for completing the objectives.</p>
+<p>Triggers when Space Dragon completes his objective.
+Calls the shuttle with a coefficient of 3, making it impossible to recall.
+Sets all of his rifts to allow for infinite sentient carp spawns
+Also plays appropiate sounds and CENTCOM messages.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

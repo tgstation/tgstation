@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;radio&#x2F;intercom - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/radio/intercom.html#proc">Proc Details</a></header>
+<main>
+<h1>intercom <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a>/<a href="obj/item/radio/intercom.html">intercom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/radio/intercom.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;radio&#x2F;intercom.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/radio/intercom.html#proc/AreaPowerCheck">AreaPowerCheck</a></th><td>Proc called whenever the intercom's area loses or gains power. Responsible for setting the <code>on</code> variable and calling <code>update_icon()</code>.</td></tr>
+            <tr><th><a href="obj/item/radio/intercom.html#proc/attack_tk_grab">attack_tk_grab</a></th><td>Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
+functionality. What we DON'T want is attack_tk_grab attempting to pick up the
+intercom as if it was an ordinary item.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/AreaPowerCheck"><aside class="declaration">proc </aside>AreaPowerCheck<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/radio/intercom.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;radio&#x2F;intercom.dm 122"/></a></aside>
+        </h3>
+        <p>Proc called whenever the intercom's area loses or gains power. Responsible for setting the <code>on</code> variable and calling <code>update_icon()</code>.</p>
+<p>Normally called after the intercom's area recieves the <code>COMSIG_AREA_POWER_CHANGE</code> signal, but it can also be called directly.
+Arguments:</p>
+<ul>
+<li>source - the area that just had a power change.</li>
+</ul><h3 id="proc/attack_tk_grab"><aside class="parent"><a title="/obj" href="obj.html#proc/attack_tk_grab">&uarr;</a></aside>attack_tk_grab<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/devices/radio/intercom.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;devices&#x2F;radio&#x2F;intercom.dm 63"/></a></aside>
+        </h3>
+        <p>Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
+functionality. What we DON'T want is attack_tk_grab attempting to pick up the
+intercom as if it was an ordinary item.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

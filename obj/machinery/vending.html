@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;vending - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/vending.html#var">Var Details</a> - <a href="obj/machinery/vending.html#proc">Proc Details</a></header>
+<main>
+<h1>vending machines <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/vending.html">vending</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 45"/></a></h1>
+
+<p>Captalism in the year 2525, everything in a vending machine, even love</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/Radio">Radio</a></th><td>used for narcing on underages</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/active">active</a></th><td>Is the machine active (No sales pitches if off)!</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/age_restrictions">age_restrictions</a></th><td>Whether our age check is currently functional</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/bill">bill</a></th><td>Bills we accept?</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/canload_access_list">canload_access_list</a></th><td>ID's that can load this vending machine wtih refills</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/coin">coin</a></th><td>Coins that we accept?</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/contraband">contraband</a></th><td>List of products this machine sells when you hack it</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/default_price">default_price</a></th><td>Default price of items if not overridden</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/extended_inventory">extended_inventory</a></th><td>can we access the hidden inventory?</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/extra_price">extra_price</a></th><td>Default price of premium items if not overridden</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/icon_deny">icon_deny</a></th><td>Icon to flash when user is denied a vend</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/icon_vend">icon_vend</a></th><td>Icon when vending an item to the user</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/input_display_header">input_display_header</a></th><td>Display header on the input view</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/last_reply">last_reply</a></th><td>Last world tick we sent a vent reply</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/last_shopper">last_shopper</a></th><td>Last mob to shop with us</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/last_slogan">last_slogan</a></th><td>Last world tick we sent a slogan message out</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/light_mask">light_mask</a></th><td>Name of lighting mask for the vending machine</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/loaded_items">loaded_items</a></th><td>how many items have been inserted in a vendor</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/onstation">onstation</a></th><td>Is this item on station or not</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/onstation_override">onstation_override</a></th><td>A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/premium">premium</a></th><td>List of premium products this machine sells</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/product_ads">product_ads</a></th><td>String of small ad messages in the vending screen - random chance</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/product_slogans">product_slogans</a></th><td>String of slogans separated by semicolons, optional</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/products">products</a></th><td>List of products this machine sells</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/purchase_message_cooldown">purchase_message_cooldown</a></th><td>Next world time to send a purchase message</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/scan_id">scan_id</a></th><td>Are we checking the users ID</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/seconds_electrified">seconds_electrified</a></th><td>World ticks the machine is electified for</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/shoot_inventory">shoot_inventory</a></th><td>When this is TRUE, we fire items at customers! We're broken!</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/shoot_inventory_chance">shoot_inventory_chance</a></th><td>How likely this is to happen (prob 100) per second</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/slogan_delay">slogan_delay</a></th><td>How many ticks until we can send another</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/small_ads">small_ads</a></th><td>Small ad messages in the vending screen - random chance of popping up whenever you open it</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/vend_ready">vend_ready</a></th><td>Are we ready to vend?? Is it time??</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#var/vend_reply">vend_reply</a></th><td>Message sent post vend (Thank you for shopping!)</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/Initialize">Initialize</a></th><td>Initialize the vending machine</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/build_inventory">build_inventory</a></th><td>Build the inventory of the vending machine from it's product and record lists</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/canLoadItem">canLoadItem</a></th><td>Are we able to load the item passed in</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/compartmentLoadAccessCheck">compartmentLoadAccessCheck</a></th><td>Is the passed in user allowed to load this vending machines compartments</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/pre_throw">pre_throw</a></th><td>A callback called before an item is tossed out</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/refill_inventory">refill_inventory</a></th><td>Refill our inventory from the passed in product list into the record list</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/reset_prices">reset_prices</a></th><td>Prices of vending machines are all increased uniformly.
+Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/restock">restock</a></th><td>Refill a vending machine from a refill canister</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/shock">shock</a></th><td>Shock the passed in user</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/speak">speak</a></th><td>Speak the given message verbally</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/throw_impact">throw_impact</a></th><td>Crush the mob that the vending machine got thrown at</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/throw_item">throw_item</a></th><td>Throw an item from our internal inventory out in front of us</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/tilt">tilt</a></th><td>Tilts ontop of the atom supplied, if crit is true some extra shit can happen. Returns TRUE if it dealt damage to something.</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/unbuild_inventory">unbuild_inventory</a></th><td>Given a record list, go through and and return a list of type -&gt; amount</td></tr>
+            <tr><th><a href="obj/machinery/vending.html#proc/update_canister">update_canister</a></th><td>Set up a refill canister that matches this machines products</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/Radio"><aside class="declaration">var </aside>Radio
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/radio.html">radio</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 173"/></a></h3>
+        <p>used for narcing on underages</p><h3 id="var/active"><aside class="declaration">var </aside>active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 63"/></a></h3>
+        <p>Is the machine active (No sales pitches if off)!</p><h3 id="var/age_restrictions"><aside class="declaration">var </aside>age_restrictions
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 142"/></a></h3>
+        <p>Whether our age check is currently functional</p><h3 id="var/bill"><aside class="declaration">var </aside>bill
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stack.html">stack</a>/spacecash</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 136"/></a></h3>
+        <p>Bills we accept?</p><h3 id="var/canload_access_list"><aside class="declaration">var </aside>canload_access_list
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 153"/></a></h3>
+        <p>ID's that can load this vending machine wtih refills</p><h3 id="var/coin"><aside class="declaration">var </aside>coin
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/coin</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 134"/></a></h3>
+        <p>Coins that we accept?</p><h3 id="var/contraband"><aside class="declaration">var </aside>contraband
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 89"/></a></h3>
+        <p>List of products this machine sells when you hack it</p>
+<p>form should be list(/type/path = amount, /type/path2 = amount2)</p><h3 id="var/default_price"><aside class="declaration">var </aside>default_price
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 138"/></a></h3>
+        <p>Default price of items if not overridden</p><h3 id="var/extended_inventory"><aside class="declaration">var </aside>extended_inventory
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 130"/></a></h3>
+        <p>can we access the hidden inventory?</p><h3 id="var/extra_price"><aside class="declaration">var </aside>extra_price
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L140">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 140"/></a></h3>
+        <p>Default price of premium items if not overridden</p><h3 id="var/icon_deny"><aside class="declaration">var </aside>icon_deny
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 120"/></a></h3>
+        <p>Icon to flash when user is denied a vend</p><h3 id="var/icon_vend"><aside class="declaration">var </aside>icon_vend
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L118">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 118"/></a></h3>
+        <p>Icon when vending an item to the user</p><h3 id="var/input_display_header"><aside class="declaration">var </aside>input_display_header
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L158">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 158"/></a></h3>
+        <p>Display header on the input view</p><h3 id="var/last_reply"><aside class="declaration">var </aside>last_reply
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 112"/></a></h3>
+        <p>Last world tick we sent a vent reply</p><h3 id="var/last_shopper"><aside class="declaration">var </aside>last_shopper
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 69"/></a></h3>
+        <p>Last mob to shop with us</p><h3 id="var/last_slogan"><aside class="declaration">var </aside>last_slogan
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L114">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 114"/></a></h3>
+        <p>Last world tick we sent a slogan message out</p><h3 id="var/light_mask"><aside class="declaration">var </aside>light_mask
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 167"/></a></h3>
+        <p>Name of lighting mask for the vending machine</p><h3 id="var/loaded_items"><aside class="declaration">var </aside>loaded_items
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 164"/></a></h3>
+        <p>how many items have been inserted in a vendor</p><h3 id="var/onstation"><aside class="declaration">var </aside>onstation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 148"/></a></h3>
+        <p>Is this item on station or not</p>
+<p>if it doesn't originate from off-station during mapload, everything is free</p><h3 id="var/onstation_override"><aside class="declaration">var </aside>onstation_override
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 150"/></a></h3>
+        <p>A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements</p><h3 id="var/premium"><aside class="declaration">var </aside>premium
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L96">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 96"/></a></h3>
+        <p>List of premium products this machine sells</p>
+<p>form should be list(/type/path, /type/path2) as there is only ever one in stock</p><h3 id="var/product_ads"><aside class="declaration">var </aside>product_ads
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 101"/></a></h3>
+        <p>String of small ad messages in the vending screen - random chance</p><h3 id="var/product_slogans"><aside class="declaration">var </aside>product_slogans
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 99"/></a></h3>
+        <p>String of slogans separated by semicolons, optional</p><h3 id="var/products"><aside class="declaration">var </aside>products
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 82"/></a></h3>
+        <p>List of products this machine sells</p>
+<p>form should be list(/type/path = amount, /type/path2 = amount2)</p><h3 id="var/purchase_message_cooldown"><aside class="declaration">var </aside>purchase_message_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 67"/></a></h3>
+        <p>Next world time to send a purchase message</p><h3 id="var/scan_id"><aside class="declaration">var </aside>scan_id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L132">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 132"/></a></h3>
+        <p>Are we checking the users ID</p><h3 id="var/seconds_electrified"><aside class="declaration">var </aside>seconds_electrified
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 122"/></a></h3>
+        <p>World ticks the machine is electified for</p><h3 id="var/shoot_inventory"><aside class="declaration">var </aside>shoot_inventory
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 124"/></a></h3>
+        <p>When this is TRUE, we fire items at customers! We're broken!</p><h3 id="var/shoot_inventory_chance"><aside class="declaration">var </aside>shoot_inventory_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 126"/></a></h3>
+        <p>How likely this is to happen (prob 100) per second</p><h3 id="var/slogan_delay"><aside class="declaration">var </aside>slogan_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L116">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 116"/></a></h3>
+        <p>How many ticks until we can send another</p><h3 id="var/small_ads"><aside class="declaration">var </aside>small_ads
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 108"/></a></h3>
+        <p>Small ad messages in the vending screen - random chance of popping up whenever you open it</p><h3 id="var/vend_ready"><aside class="declaration">var </aside>vend_ready
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 65"/></a></h3>
+        <p>Are we ready to vend?? Is it time??</p><h3 id="var/vend_reply"><aside class="declaration">var </aside>vend_reply
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 110"/></a></h3>
+        <p>Message sent post vend (Thank you for shopping!)</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/atom" href="atom.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(mapload) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L182">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 182"/></a></aside>
+        </h3>
+        <p>Initialize the vending machine</p>
+<p>Builds the vending machine inventory, sets up slogans and other such misc work</p>
+<p>This also sets the onstation var to:</p>
+<ul>
+<li>FALSE - if the machine was maploaded on a zlevel that doesn't pass the is_station_level check</li>
+<li>TRUE - all other cases</li>
+</ul><h3 id="proc/build_inventory"><aside class="declaration">proc </aside>build_inventory<aside>(/list/productlist, /list/recordlist, start_empty) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L306">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 306"/></a></aside>
+        </h3>
+        <p>Build the inventory of the vending machine from it's product and record lists</p>
+<p>This builds up a full set of /datum/data/vending_products from the product list of the vending machine type
+Arguments:</p>
+<ul>
+<li>productlist - the list of products that need to be converted</li>
+<li>recordlist - the list containing /datum/data/vending_product datums</li>
+<li>startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)</li>
+</ul><h3 id="proc/canLoadItem"><aside class="declaration">proc </aside>canLoadItem<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L1001">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1001"/></a></aside>
+        </h3>
+        <p>Are we able to load the item passed in</p>
+<p>Arguments:</p>
+<ul>
+<li>I - the item being loaded</li>
+<li>user - the user doing the loading</li>
+</ul><h3 id="proc/compartmentLoadAccessCheck"><aside class="declaration">proc </aside>compartmentLoadAccessCheck<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L662">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 662"/></a></aside>
+        </h3>
+        <p>Is the passed in user allowed to load this vending machines compartments</p>
+<p>Arguments:</p>
+<ul>
+<li>user - mob that is doing the loading of the vending machine</li>
+</ul><h3 id="proc/pre_throw"><aside class="declaration">proc </aside>pre_throw<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L971">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 971"/></a></aside>
+        </h3>
+        <p>A callback called before an item is tossed out</p>
+<p>Override this if you need to do any special case handling</p>
+<p>Arguments:</p>
+<ul>
+<li>I - obj/item being thrown</li>
+</ul><h3 id="proc/refill_inventory"><aside class="declaration">proc </aside>refill_inventory<aside>(/list/productlist, /list/recordlist) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L379">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 379"/></a></aside>
+        </h3>
+        <p>Refill our inventory from the passed in product list into the record list</p>
+<p>Arguments:</p>
+<ul>
+<li>productlist - list of types -&gt; amount</li>
+<li>recordlist - existing record datums</li>
+</ul><h3 id="proc/reset_prices"><aside class="declaration">proc </aside>reset_prices<aside>(/list/recordlist, /list/premiumlist) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L336">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 336"/></a></aside>
+        </h3>
+        <p>Prices of vending machines are all increased uniformly.
+Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy</p>
+<p>This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+Arguments:</p>
+<ul>
+<li>recordlist - the list of standard product datums in the vendor to refresh their prices.</li>
+<li>premiumlist - the list of premium product datums in the vendor to refresh their prices.</li>
+</ul><h3 id="proc/restock"><aside class="declaration">proc </aside>restock<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/vending_refill/canister) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L361">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 361"/></a></aside>
+        </h3>
+        <p>Refill a vending machine from a refill canister</p>
+<p>This takes the products from the refill canister and then fills the products,contraband and premium product categories</p>
+<p>Arguments:</p>
+<ul>
+<li>canister - the vending canister we are refilling from</li>
+</ul><h3 id="proc/shock"><aside class="declaration">proc </aside>shock<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, prb) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L983">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 983"/></a></aside>
+        </h3>
+        <p>Shock the passed in user</p>
+<p>This checks we have power and that the passed in prob is passed, then generates some sparks
+and calls electrocute_mob on the user</p>
+<p>Arguments:</p>
+<ul>
+<li>user - the user to shock</li>
+<li>prb - probability the shock happens</li>
+</ul><h3 id="proc/speak"><aside class="declaration">proc </aside>speak<aside>(message) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L919">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 919"/></a></aside>
+        </h3>
+        <p>Speak the given message verbally</p>
+<p>Checks if the machine is powered and the message exists</p>
+<p>Arguments:</p>
+<ul>
+<li>message - the message to speak</li>
+</ul><h3 id="proc/throw_impact">throw_impact<aside>(/<a href="atom.html">atom</a>/hit_atom, /<a href="datum.html">datum</a>/<a href="datum/thrownthing.html">thrownthing</a>/throwingdatum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L1019">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 1019"/></a></aside>
+        </h3>
+        <p>Crush the mob that the vending machine got thrown at</p><h3 id="proc/throw_item"><aside class="declaration">proc </aside>throw_item<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L939">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 939"/></a></aside>
+        </h3>
+        <p>Throw an item from our internal inventory out in front of us</p>
+<p>This is called when we are hacked, it selects a random product from the records that has an amount &gt; 0
+This item is then created and tossed out in front of us with a visible message</p><h3 id="proc/tilt"><aside class="declaration">proc </aside>tilt<aside>(/<a href="atom.html">atom</a>/fatty, crit) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L519">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 519"/></a></aside>
+        </h3>
+        <p>Tilts ontop of the atom supplied, if crit is true some extra shit can happen. Returns TRUE if it dealt damage to something.</p><h3 id="proc/unbuild_inventory"><aside class="declaration">proc </aside>unbuild_inventory<aside>(/list/recordlist) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L408">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 408"/></a></aside>
+        </h3>
+        <p>Given a record list, go through and and return a list of type -&gt; amount</p><h3 id="proc/update_canister"><aside class="declaration">proc </aside>update_canister<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vending/_vending.dm#L393">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vending&#x2F;_vending.dm 393"/></a></aside>
+        </h3>
+        <p>Set up a refill canister that matches this machines products</p>
+<p>This is used when the machine is deconstructed, so the items aren't &quot;lost&quot;</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

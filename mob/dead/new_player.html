@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;dead&#x2F;new_player - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/dead/new_player.html#proc">Proc Details</a></header>
+<main>
+<h1>new_player <aside>/<a href="mob.html">mob</a>/<a href="mob/dead/new_player.html">dead/new_player</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/new_player.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;new_player.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/handle_player_polling">handle_player_polling</a></th><td>Shows a list of currently running polls a player can vote/has voted on</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/new_player_panel">new_player_panel</a></th><td>This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/open_interview">open_interview</a></th><td>Verb for opening the existing interview, or if relevant creating a new interview if possible.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/poll_player">poll_player</a></th><td>Redirects a player to the correct poll window based on poll type.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/poll_player_irv">poll_player_irv</a></th><td>Shows voting window for an IRV type poll, listing its options and relevant details.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/poll_player_multi">poll_player_multi</a></th><td>Shows voting window for a multiple choice type poll, listing its options and relevant details.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/poll_player_option">poll_player_option</a></th><td>Shows voting window for an option type poll, listing its options and relevant details.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/poll_player_rating">poll_player_rating</a></th><td>Shows voting window for a rating type poll, listing its options and relevant details.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/poll_player_text">poll_player_text</a></th><td>Shows voting window for a text response type poll, listing its relevant details.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/register_for_interview">register_for_interview</a></th><td>Prepares a client for the interview system, and provides them with a new interview</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/vote_on_poll_handler">vote_on_poll_handler</a></th><td>Runs some poll validation before a vote is processed.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/vote_on_poll_irv">vote_on_poll_irv</a></th><td>Processes vote form data and saves results to the database for an IRV type poll.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/vote_on_poll_multi">vote_on_poll_multi</a></th><td>Processes vote form data and saves results to the database for a multiple choice type poll.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/vote_on_poll_option">vote_on_poll_option</a></th><td>Processes vote form data and saves results to the database for an option type poll.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/vote_on_poll_rating">vote_on_poll_rating</a></th><td>Processes vote form data and saves results to the database for a rating type poll.</td></tr>
+            <tr><th><a href="mob/dead/new_player.html#proc/vote_on_poll_text">vote_on_poll_text</a></th><td>Processes response form data and saves results to the database for a text response type poll.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/handle_player_polling"><aside class="declaration">proc </aside>handle_player_polling<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 5"/></a></aside>
+        </h3>
+        <p>Shows a list of currently running polls a player can vote/has voted on</p><h3 id="proc/new_player_panel"><aside class="declaration">proc </aside>new_player_panel<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/new_player.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;new_player.dm 46"/></a></aside>
+        </h3>
+        <p>This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.</p><h3 id="proc/open_interview"><aside class="declaration">proc </aside>open_interview<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/interview/interview.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;interview&#x2F;interview.dm 101"/></a></aside>
+        </h3>
+        <p>Verb for opening the existing interview, or if relevant creating a new interview if possible.</p><h3 id="proc/poll_player"><aside class="declaration">proc </aside>poll_player<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 20"/></a></aside>
+        </h3>
+        <p>Redirects a player to the correct poll window based on poll type.</p><h3 id="proc/poll_player_irv"><aside class="declaration">proc </aside>poll_player_irv<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 224"/></a></aside>
+        </h3>
+        <p>Shows voting window for an IRV type poll, listing its options and relevant details.</p>
+<p>If already voted on, the options are sorted how a player voted for them, otherwise they are randomly shuffled.</p><h3 id="proc/poll_player_multi"><aside class="declaration">proc </aside>poll_player_multi<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 180"/></a></aside>
+        </h3>
+        <p>Shows voting window for a multiple choice type poll, listing its options and relevant details.</p>
+<p>If already voted on, the options a player voted for are pre-selected.</p><h3 id="proc/poll_player_option"><aside class="declaration">proc </aside>poll_player_option<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 44"/></a></aside>
+        </h3>
+        <p>Shows voting window for an option type poll, listing its options and relevant details.</p>
+<p>If already voted on, the option a player voted for is pre-selected.</p><h3 id="proc/poll_player_rating"><aside class="declaration">proc </aside>poll_player_rating<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 125"/></a></aside>
+        </h3>
+        <p>Shows voting window for a rating type poll, listing its options and relevant details.</p>
+<p>If already voted on, the options a player voted for are pre-selected.</p><h3 id="proc/poll_player_text"><aside class="declaration">proc </aside>poll_player_text<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 88"/></a></aside>
+        </h3>
+        <p>Shows voting window for a text response type poll, listing its relevant details.</p>
+<p>If already responded to, the saved response of a player is shown.</p><h3 id="proc/register_for_interview"><aside class="declaration">proc </aside>register_for_interview<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/new_player.dm#L548">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;new_player.dm 548"/></a></aside>
+        </h3>
+        <p>Prepares a client for the interview system, and provides them with a new interview</p>
+<p>This proc will both prepare the user by removing all verbs from them, as well as
+giving them the interview form and forcing it to appear.</p><h3 id="proc/vote_on_poll_handler"><aside class="declaration">proc </aside>vote_on_poll_handler<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll, href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L312">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 312"/></a></aside>
+        </h3>
+        <p>Runs some poll validation before a vote is processed.</p>
+<p>Checks a player is who they claim to be and that a poll is actually still running.
+Also loads the vote_id to pass onto single-option and text polls.
+Increments the vote count when successful.</p><h3 id="proc/vote_on_poll_irv"><aside class="declaration">proc </aside>vote_on_poll_irv<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll, /list/href_list, admin_rank, sql_poll_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L533">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 533"/></a></aside>
+        </h3>
+        <p>Processes vote form data and saves results to the database for an IRV type poll.</p><h3 id="proc/vote_on_poll_multi"><aside class="declaration">proc </aside>vote_on_poll_multi<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll, /list/href_list, admin_rank, sql_poll_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L486">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 486"/></a></aside>
+        </h3>
+        <p>Processes vote form data and saves results to the database for a multiple choice type poll.</p><h3 id="proc/vote_on_poll_option"><aside class="declaration">proc </aside>vote_on_poll_option<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll, href_list, admin_rank, sql_poll_id, vote_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L379">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 379"/></a></aside>
+        </h3>
+        <p>Processes vote form data and saves results to the database for an option type poll.</p><h3 id="proc/vote_on_poll_rating"><aside class="declaration">proc </aside>vote_on_poll_rating<aside>(/<a href="datum.html">datum</a>/<a href="datum/poll_question.html">poll_question</a>/poll, /list/href_list, admin_rank, sql_poll_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L443">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 443"/></a></aside>
+        </h3>
+        <p>Processes vote form data and saves results to the database for a rating type poll.</p><h3 id="proc/vote_on_poll_text"><aside class="declaration">proc </aside>vote_on_poll_text<aside>(href_list, admin_rank, sql_poll_id, vote_id) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/dead/new_player/poll.dm#L411">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;dead&#x2F;new_player&#x2F;poll.dm 411"/></a></aside>
+        </h3>
+        <p>Processes response form data and saves results to the database for a text response type poll.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

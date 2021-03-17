@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;effect&#x2F;mapping_helpers&#x2F;custom_icon - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/effect/mapping_helpers/custom_icon.html#var">Var Details</a> - <a href="obj/effect/mapping_helpers/custom_icon.html#proc">Proc Details</a></header>
+<main>
+<h1>custom_icon <aside>/<a href="obj.html">obj</a>/<a href="obj/effect/mapping_helpers/custom_icon.html">effect/mapping_helpers/custom_icon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L505">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 505"/></a></h1>
+
+<p>Fetches an external dmi and applies to the target object</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/effect/mapping_helpers/custom_icon.html#var/first_match_only">first_match_only</a></th><td>Will inject into all fitting the criteria if false, otherwise first found.</td></tr>
+            <tr><th><a href="obj/effect/mapping_helpers/custom_icon.html#var/icon_url">icon_url</a></th><td>This should return raw dmi in response to http get request. For example: &quot;https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true&quot;</td></tr>
+            <tr><th><a href="obj/effect/mapping_helpers/custom_icon.html#var/target_name">target_name</a></th><td>Will inject into atoms with this name.</td></tr>
+            <tr><th><a href="obj/effect/mapping_helpers/custom_icon.html#var/target_type">target_type</a></th><td>Will inject into atoms of this type.</td></tr>
+            <tr><th><a href="obj/effect/mapping_helpers/custom_icon.html#var/target_variable">target_variable</a></th><td>This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/effect/mapping_helpers/custom_icon.html#proc/fetch_icon">fetch_icon</a></th><td>TODO put this injector stuff under common root</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/first_match_only"><aside class="declaration">var </aside>first_match_only
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L510">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 510"/></a></h3>
+        <p>Will inject into all fitting the criteria if false, otherwise first found.</p><h3 id="var/icon_url"><aside class="declaration">var </aside>icon_url
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L520">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 520"/></a></h3>
+        <p>This should return raw dmi in response to http get request. For example: &quot;https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true&quot;</p><h3 id="var/target_name"><aside class="declaration">var </aside>target_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L514">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 514"/></a></h3>
+        <p>Will inject into atoms with this name.</p><h3 id="var/target_type"><aside class="declaration">var </aside>target_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L512">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 512"/></a></h3>
+        <p>Will inject into atoms of this type.</p><h3 id="var/target_variable"><aside class="declaration">var </aside>target_variable
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L516">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 516"/></a></h3>
+        <p>This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.</p><h2 id="proc">Proc Details</h2><h3 id="proc/fetch_icon"><aside class="declaration">proc </aside>fetch_icon<aside>(url) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mapping/mapping_helpers.dm#L542">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mapping&#x2F;mapping_helpers.dm 542"/></a></aside>
+        </h3>
+        <p>TODO put this injector stuff under common root</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

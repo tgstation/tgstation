@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;portable_atmospherics&#x2F;scrubber - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/portable_atmospherics/scrubber.html#var">Var Details</a> - <a href="obj/machinery/portable_atmospherics/scrubber.html#proc">Proc Details</a></header>
+<main>
+<h1>scrubber <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/portable_atmospherics.html">portable_atmospherics</a>/<a href="obj/machinery/portable_atmospherics/scrubber.html">scrubber</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/heat_limit">heat_limit</a></th><td>Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/on">on</a></th><td>Is the machine on?</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/overpressure_m">overpressure_m</a></th><td>Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/pressure_limit">pressure_limit</a></th><td>Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/scrubbing">scrubbing</a></th><td>List of gases that can be scrubbed</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/use_overlays">use_overlays</a></th><td>Should the machine use overlay in update_overlays() when open/close?</td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#var/volume_rate">volume_rate</a></th><td>the rate the machine will scrub air</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/portable_atmospherics/scrubber.html#proc/scrub">scrub</a></th><td>function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can receive, if the heat and pressure are way higher than the limit the more damage will be done
+Called in process_atmos(), handles the scrubbing of the given gas_mixture
+Arguments:</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/heat_limit"><aside class="declaration">var </aside>heat_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 9"/></a></h3>
+        <p>Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)</p><h3 id="var/on"><aside class="declaration">var </aside>on
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 13"/></a></h3>
+        <p>Is the machine on?</p><h3 id="var/overpressure_m"><aside class="declaration">var </aside>overpressure_m
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 17"/></a></h3>
+        <p>Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work</p><h3 id="var/pressure_limit"><aside class="declaration">var </aside>pressure_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 11"/></a></h3>
+        <p>Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)</p><h3 id="var/scrubbing"><aside class="declaration">var </aside>scrubbing
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 21"/></a></h3>
+        <p>List of gases that can be scrubbed</p><h3 id="var/use_overlays"><aside class="declaration">var </aside>use_overlays
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 19"/></a></h3>
+        <p>Should the machine use overlay in update_overlays() when open/close?</p><h3 id="var/volume_rate"><aside class="declaration">var </aside>volume_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 15"/></a></h3>
+        <p>the rate the machine will scrub air</p><h2 id="proc">Proc Details</h2><h3 id="proc/scrub"><aside class="declaration">proc </aside>scrub<aside>(/<a href="datum.html">datum</a>/<a href="datum/gas_mixture.html">gas_mixture</a>/mixture) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/atmospherics/machinery/portable/scrubber.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;atmospherics&#x2F;machinery&#x2F;portable&#x2F;scrubber.dm 80"/></a></aside>
+        </h3>
+        <p>function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can receive, if the heat and pressure are way higher than the limit the more damage will be done
+Called in process_atmos(), handles the scrubbing of the given gas_mixture
+Arguments:</p>
+<ul>
+<li>mixture: the gas mixture to be scrubbed</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

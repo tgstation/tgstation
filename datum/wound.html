@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;wound - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/wound.html#var">Var Details</a> - <a href="datum/wound.html#proc">Proc Details</a></header>
+<main>
+<h1>wound <aside>/<a href="datum.html">datum</a>/<a href="datum/wound.html">wound</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 17"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/wound.html#var/a_or_from">a_or_from</a></th><td>needed for &quot;your arm has a compound fracture&quot; vs &quot;your arm has some third degree burns&quot;</td></tr>
+            <tr><th><a href="datum/wound.html#var/already_scarred">already_scarred</a></th><td>If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner</td></tr>
+            <tr><th><a href="datum/wound.html#var/attached_surgery">attached_surgery</a></th><td>If we're operating on this wound and it gets healed, we'll nix the surgery too</td></tr>
+            <tr><th><a href="datum/wound.html#var/base_treat_time">base_treat_time</a></th><td>How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery</td></tr>
+            <tr><th><a href="datum/wound.html#var/blood_flow">blood_flow</a></th><td>How much we're contributing to this limb's bleed_rate</td></tr>
+            <tr><th><a href="datum/wound.html#var/cryo_progress">cryo_progress</a></th><td>if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power</td></tr>
+            <tr><th><a href="datum/wound.html#var/damage_mulitplier_penalty">damage_mulitplier_penalty</a></th><td>Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability (mostly burns).</td></tr>
+            <tr><th><a href="datum/wound.html#var/desc">desc</a></th><td>The description shown on the scanners</td></tr>
+            <tr><th><a href="datum/wound.html#var/disabling">disabling</a></th><td>If having this wound makes currently makes the parent bodypart unusable</td></tr>
+            <tr><th><a href="datum/wound.html#var/examine_desc">examine_desc</a></th><td>What the limb looks like on a cursory examine</td></tr>
+            <tr><th><a href="datum/wound.html#var/from_smite">from_smite</a></th><td>If we forced this wound through badmin smite, we won't count it towards the round totals</td></tr>
+            <tr><th><a href="datum/wound.html#var/interaction_efficiency_penalty">interaction_efficiency_penalty</a></th><td>Using this limb in a do_after interaction will multiply the length by this duration (arms)</td></tr>
+            <tr><th><a href="datum/wound.html#var/limb">limb</a></th><td>The bodypart we're parented to</td></tr>
+            <tr><th><a href="datum/wound.html#var/limp_slowdown">limp_slowdown</a></th><td>If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg</td></tr>
+            <tr><th><a href="datum/wound.html#var/name">name</a></th><td>What it's named</td></tr>
+            <tr><th><a href="datum/wound.html#var/occur_text">occur_text</a></th><td>The visible message when this happens</td></tr>
+            <tr><th><a href="datum/wound.html#var/processes">processes</a></th><td>If we need to process each life tick</td></tr>
+            <tr><th><a href="datum/wound.html#var/scar_keyword">scar_keyword</a></th><td>What kind of scars this wound will create description wise once healed</td></tr>
+            <tr><th><a href="datum/wound.html#var/severity">severity</a></th><td>Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)</td></tr>
+            <tr><th><a href="datum/wound.html#var/sound_effect">sound_effect</a></th><td>This sound will be played upon the wound being applied</td></tr>
+            <tr><th><a href="datum/wound.html#var/status_effect_type">status_effect_type</a></th><td>What status effect we assign on application</td></tr>
+            <tr><th><a href="datum/wound.html#var/threshold_minimum">threshold_minimum</a></th><td>The minimum we need to roll on <a href="obj/item/bodypart.html#proc/check_wounding" title="/obj/item/bodypart">/obj/item/bodypart/proc/check_wounding</a> to begin suffering this wound, see check_wounding_mods() for more</td></tr>
+            <tr><th><a href="datum/wound.html#var/threshold_penalty">threshold_penalty</a></th><td>How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage</td></tr>
+            <tr><th><a href="datum/wound.html#var/treat_text">treat_text</a></th><td>The basic treatment suggested by health analyzers</td></tr>
+            <tr><th><a href="datum/wound.html#var/treatable_by">treatable_by</a></th><td>Specific items such as bandages or sutures that can try directly treating this wound</td></tr>
+            <tr><th><a href="datum/wound.html#var/treatable_by_grabbed">treatable_by_grabbed</a></th><td>Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher</td></tr>
+            <tr><th><a href="datum/wound.html#var/treatable_tool">treatable_tool</a></th><td>Tools with the specified tool flag will also be able to try directly treating this wound</td></tr>
+            <tr><th><a href="datum/wound.html#var/viable_zones">viable_zones</a></th><td>What body zones can we affect</td></tr>
+            <tr><th><a href="datum/wound.html#var/victim">victim</a></th><td>Who owns the body part that we're wounding</td></tr>
+            <tr><th><a href="datum/wound.html#var/wound_flags">wound_flags</a></th><td>What flags apply to this wound</td></tr>
+            <tr><th><a href="datum/wound.html#var/wound_type">wound_type</a></th><td>The list of wounds it belongs in, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/wound.html#proc/apply_wound">apply_wound</a></th><td>apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.</td></tr>
+            <tr><th><a href="datum/wound.html#proc/check_grab_treatments">check_grab_treatments</a></th><td>Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in <a href="datum/wound.html#proc/try_handling" title="/datum/wound">/datum/wound/proc/try_handling</a>). Treatment is still is handled in <a href="datum/wound.html#proc/treat" title="/datum/wound">/datum/wound/proc/treat</a></td></tr>
+            <tr><th><a href="datum/wound.html#proc/drag_bleed_amount">drag_bleed_amount</a></th><td>Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood</td></tr>
+            <tr><th><a href="datum/wound.html#proc/get_bleed_rate_of_change">get_bleed_rate_of_change</a></th><td>get_bleed_rate_of_change() is used in <a href="mob/living/carbon.html#proc/bleed_warn" title="/mob/living/carbon">/mob/living/carbon/proc/bleed_warn</a> to gauge whether this wound (if bleeding) is becoming worse, better, or staying the same over time</td></tr>
+            <tr><th><a href="datum/wound.html#proc/get_examine_description">get_examine_description</a></th><td>get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.</td></tr>
+            <tr><th><a href="datum/wound.html#proc/handle_process">handle_process</a></th><td>If var/processing is TRUE, this is run on each life tick</td></tr>
+            <tr><th><a href="datum/wound.html#proc/on_stasis">on_stasis</a></th><td>Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them</td></tr>
+            <tr><th><a href="datum/wound.html#proc/on_synthflesh">on_synthflesh</a></th><td>When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future</td></tr>
+            <tr><th><a href="datum/wound.html#proc/on_xadone">on_xadone</a></th><td>Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh</td></tr>
+            <tr><th><a href="datum/wound.html#proc/receive_damage">receive_damage</a></th><td>When our parent bodypart is hurt</td></tr>
+            <tr><th><a href="datum/wound.html#proc/remove_wound">remove_wound</a></th><td>Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim</td></tr>
+            <tr><th><a href="datum/wound.html#proc/replace_wound">replace_wound</a></th><td>replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)</td></tr>
+            <tr><th><a href="datum/wound.html#proc/second_wind">second_wind</a></th><td>Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand</td></tr>
+            <tr><th><a href="datum/wound.html#proc/set_disabling">set_disabling</a></th><td>Proc called to change the variable <code>disabling</code> and react to the event.</td></tr>
+            <tr><th><a href="datum/wound.html#proc/set_limb">set_limb</a></th><td>Proc called to change the variable <code>limb</code> and react to the event.</td></tr>
+            <tr><th><a href="datum/wound.html#proc/still_exists">still_exists</a></th><td>For use in do_after callback checks</td></tr>
+            <tr><th><a href="datum/wound.html#proc/treat">treat</a></th><td>Someone is using something that might be used for treating the wound on this limb</td></tr>
+            <tr><th><a href="datum/wound.html#proc/try_handling">try_handling</a></th><td>Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures</td></tr>
+            <tr><th><a href="datum/wound.html#proc/try_treating">try_treating</a></th><td>try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.</td></tr>
+            <tr><th><a href="datum/wound.html#proc/wound_injury">wound_injury</a></th><td>The immediate negative effects faced as a result of the wound</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/a_or_from"><aside class="declaration">var </aside>a_or_from
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 28"/></a></h3>
+        <p>needed for &quot;your arm has a compound fracture&quot; vs &quot;your arm has some third degree burns&quot;</p><h3 id="var/already_scarred"><aside class="declaration">var </aside>already_scarred
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 84"/></a></h3>
+        <p>If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner</p><h3 id="var/attached_surgery"><aside class="declaration">var </aside>attached_surgery
+            <aside>&ndash; /<a href="datum.html">datum</a>/surgery</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L77">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 77"/></a></h3>
+        <p>If we're operating on this wound and it gets healed, we'll nix the surgery too</p><h3 id="var/base_treat_time"><aside class="declaration">var </aside>base_treat_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 53"/></a></h3>
+        <p>How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery</p><h3 id="var/blood_flow"><aside class="declaration">var </aside>blood_flow
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 62"/></a></h3>
+        <p>How much we're contributing to this limb's bleed_rate</p><h3 id="var/cryo_progress"><aside class="declaration">var </aside>cryo_progress
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L79">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 79"/></a></h3>
+        <p>if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power</p><h3 id="var/damage_mulitplier_penalty"><aside class="declaration">var </aside>damage_mulitplier_penalty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 58"/></a></h3>
+        <p>Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability (mostly burns).</p><h3 id="var/desc"><aside class="declaration">var </aside>desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 21"/></a></h3>
+        <p>The description shown on the scanners</p><h3 id="var/disabling"><aside class="declaration">var </aside>disabling
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 72"/></a></h3>
+        <p>If having this wound makes currently makes the parent bodypart unusable</p><h3 id="var/examine_desc"><aside class="declaration">var </aside>examine_desc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 25"/></a></h3>
+        <p>What the limb looks like on a cursory examine</p><h3 id="var/from_smite"><aside class="declaration">var </aside>from_smite
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 86"/></a></h3>
+        <p>If we forced this wound through badmin smite, we won't count it towards the round totals</p><h3 id="var/interaction_efficiency_penalty"><aside class="declaration">var </aside>interaction_efficiency_penalty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 56"/></a></h3>
+        <p>Using this limb in a do_after interaction will multiply the length by this duration (arms)</p><h3 id="var/limb"><aside class="declaration">var </aside>limb
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 44"/></a></h3>
+        <p>The bodypart we're parented to</p><h3 id="var/limp_slowdown"><aside class="declaration">var </aside>limp_slowdown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 60"/></a></h3>
+        <p>If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg</p><h3 id="var/name"><aside class="declaration">var </aside>name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 19"/></a></h3>
+        <p>What it's named</p><h3 id="var/occur_text"><aside class="declaration">var </aside>occur_text
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 30"/></a></h3>
+        <p>The visible message when this happens</p><h3 id="var/processes"><aside class="declaration">var </aside>processes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 69"/></a></h3>
+        <p>If we need to process each life tick</p><h3 id="var/scar_keyword"><aside class="declaration">var </aside>scar_keyword
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L82">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 82"/></a></h3>
+        <p>What kind of scars this wound will create description wise once healed</p><h3 id="var/severity"><aside class="declaration">var </aside>severity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 35"/></a></h3>
+        <p>Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)</p><h3 id="var/sound_effect"><aside class="declaration">var </aside>sound_effect
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 32"/></a></h3>
+        <p>This sound will be played upon the wound being applied</p><h3 id="var/status_effect_type"><aside class="declaration">var </aside>status_effect_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 75"/></a></h3>
+        <p>What status effect we assign on application</p><h3 id="var/threshold_minimum"><aside class="declaration">var </aside>threshold_minimum
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 65"/></a></h3>
+        <p>The minimum we need to roll on <a href="obj/item/bodypart.html#proc/check_wounding" title="/obj/item/bodypart">/obj/item/bodypart/proc/check_wounding</a> to begin suffering this wound, see check_wounding_mods() for more</p><h3 id="var/threshold_penalty"><aside class="declaration">var </aside>threshold_penalty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 67"/></a></h3>
+        <p>How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage</p><h3 id="var/treat_text"><aside class="declaration">var </aside>treat_text
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 23"/></a></h3>
+        <p>The basic treatment suggested by health analyzers</p><h3 id="var/treatable_by"><aside class="declaration">var </aside>treatable_by
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 47"/></a></h3>
+        <p>Specific items such as bandages or sutures that can try directly treating this wound</p><h3 id="var/treatable_by_grabbed"><aside class="declaration">var </aside>treatable_by_grabbed
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 49"/></a></h3>
+        <p>Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher</p><h3 id="var/treatable_tool"><aside class="declaration">var </aside>treatable_tool
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 51"/></a></h3>
+        <p>Tools with the specified tool flag will also be able to try directly treating this wound</p><h3 id="var/viable_zones"><aside class="declaration">var </aside>viable_zones
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 40"/></a></h3>
+        <p>What body zones can we affect</p><h3 id="var/victim"><aside class="declaration">var </aside>victim
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 42"/></a></h3>
+        <p>Who owns the body part that we're wounding</p><h3 id="var/wound_flags"><aside class="declaration">var </aside>wound_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 89"/></a></h3>
+        <p>What flags apply to this wound</p><h3 id="var/wound_type"><aside class="declaration">var </aside>wound_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 37"/></a></h3>
+        <p>The list of wounds it belongs in, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN</p><h2 id="proc">Proc Details</h2><h3 id="proc/apply_wound"><aside class="declaration">proc </aside>apply_wound<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/bodypart.html">bodypart</a>/L, silent, /<a href="datum.html">datum</a>/<a href="datum/wound.html">wound</a>/old_wound, smited) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 110"/></a></aside>
+        </h3>
+        <p>apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.</p>
+<p>Arguments:</p>
+<ul>
+<li>L: The bodypart we're wounding, we don't care about the person, we can get them through the limb</li>
+<li>silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly</li>
+<li>old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars</li>
+<li>smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)</li>
+</ul><h3 id="proc/check_grab_treatments"><aside class="declaration">proc </aside>check_grab_treatments<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L317">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 317"/></a></aside>
+        </h3>
+        <p>Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in <a href="datum/wound.html#proc/try_handling" title="/datum/wound">/datum/wound/proc/try_handling</a>). Treatment is still is handled in <a href="datum/wound.html#proc/treat" title="/datum/wound">/datum/wound/proc/treat</a></p><h3 id="proc/drag_bleed_amount"><aside class="declaration">proc </aside>drag_bleed_amount<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L355">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 355"/></a></aside>
+        </h3>
+        <p>Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood</p><h3 id="proc/get_bleed_rate_of_change"><aside class="declaration">proc </aside>get_bleed_rate_of_change<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L363">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 363"/></a></aside>
+        </h3>
+        <p>get_bleed_rate_of_change() is used in <a href="mob/living/carbon.html#proc/bleed_warn" title="/mob/living/carbon">/mob/living/carbon/proc/bleed_warn</a> to gauge whether this wound (if bleeding) is becoming worse, better, or staying the same over time</p>
+<p>Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin)</p><h3 id="proc/get_examine_description"><aside class="declaration">proc </aside>get_examine_description<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L376">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 376"/></a></aside>
+        </h3>
+        <p>get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.</p>
+<p>Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from</p>
+<p>Arguments:</p>
+<ul>
+<li>mob/user: The user examining the wound's owner, if that matters</li>
+</ul><h3 id="proc/handle_process"><aside class="declaration">proc </aside>handle_process<aside>(delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L329">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 329"/></a></aside>
+        </h3>
+        <p>If var/processing is TRUE, this is run on each life tick</p><h3 id="proc/on_stasis"><aside class="declaration">proc </aside>on_stasis<aside>(delta_time, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L351">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 351"/></a></aside>
+        </h3>
+        <p>Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them</p><h3 id="proc/on_synthflesh"><aside class="declaration">proc </aside>on_synthflesh<aside>(power) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L347">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 347"/></a></aside>
+        </h3>
+        <p>When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future</p><h3 id="proc/on_xadone"><aside class="declaration">proc </aside>on_xadone<aside>(power) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L341">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 341"/></a></aside>
+        </h3>
+        <p>Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh</p><h3 id="proc/receive_damage"><aside class="declaration">proc </aside>receive_damage<aside>(wounding_type, wounding_dmg, wound_bonus) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L337">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 337"/></a></aside>
+        </h3>
+        <p>When our parent bodypart is hurt</p><h3 id="proc/remove_wound"><aside class="declaration">proc </aside>remove_wound<aside>(ignore_limb, replaced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 173"/></a></aside>
+        </h3>
+        <p>Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim</p><h3 id="proc/replace_wound"><aside class="declaration">proc </aside>replace_wound<aside>(new_type, smited) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 198"/></a></aside>
+        </h3>
+        <p>replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)</p>
+<p>This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.</p>
+<p>Arguments:</p>
+<ul>
+<li>new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe</li>
+<li>smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)</li>
+</ul><h3 id="proc/second_wind"><aside class="declaration">proc </aside>second_wind<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L248">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 248"/></a></aside>
+        </h3>
+        <p>Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand</p><h3 id="proc/set_disabling"><aside class="declaration">proc </aside>set_disabling<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L231">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 231"/></a></aside>
+        </h3>
+        <p>Proc called to change the variable <code>disabling</code> and react to the event.</p><h3 id="proc/set_limb"><aside class="declaration">proc </aside>set_limb<aside>(new_value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L212">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 212"/></a></aside>
+        </h3>
+        <p>Proc called to change the variable <code>limb</code> and react to the event.</p><h3 id="proc/still_exists"><aside class="declaration">proc </aside>still_exists<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L333">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 333"/></a></aside>
+        </h3>
+        <p>For use in do_after callback checks</p><h3 id="proc/treat"><aside class="declaration">proc </aside>treat<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L325">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 325"/></a></aside>
+        </h3>
+        <p>Someone is using something that might be used for treating the wound on this limb</p><h3 id="proc/try_handling"><aside class="declaration">proc </aside>try_handling<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L321">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 321"/></a></aside>
+        </h3>
+        <p>Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures</p><h3 id="proc/try_treating"><aside class="declaration">proc </aside>try_treating<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L269">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 269"/></a></aside>
+        </h3>
+        <p>try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.</p>
+<p>This proc leads into <a href="datum/wound.html#proc/treat" title="/datum/wound">/datum/wound/proc/treat</a> and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
+with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().</p>
+<p>Arguments:</p>
+<ul>
+<li>I: The item we're trying to use</li>
+<li>user: The mob trying to use it on us</li>
+</ul><h3 id="proc/wound_injury"><aside class="declaration">proc </aside>wound_injury<aside>(/<a href="datum.html">datum</a>/<a href="datum/wound.html">wound</a>/old_wound) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/wounds/_wounds.dm#L207">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;wounds&#x2F;_wounds.dm 207"/></a></aside>
+        </h3>
+        <p>The immediate negative effects faced as a result of the wound</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

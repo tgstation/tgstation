@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;power&#x2F;apc - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/power/apc.html#proc">Proc Details</a></header>
+<main>
+<h1>apc <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/power/apc.html">power/apc</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/apc.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;apc.dm 106"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/power/apc.html#proc/autoset">autoset</a></th><td>Returns the new status value for an APC channel.</td></tr>
+            <tr><th><a href="obj/machinery/power/apc.html#proc/check_updates">check_updates</a></th><td>Checks for what icon updates we will need to handle</td></tr>
+            <tr><th><a href="obj/machinery/power/apc.html#proc/setsubsystem">setsubsystem</a></th><td>Used by external forces to set the APCs channel status's.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/autoset"><aside class="declaration">proc </aside>autoset<aside>(val, on) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/apc.dm#L1385">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;apc.dm 1385"/></a></aside>
+        </h3>
+        <p>Returns the new status value for an APC channel.</p>
+<p>// val 0=off, 1=off(auto) 2=on 3=on(auto)
+// on 0=off, 1=on, 2=autooff
+TODO: Make this use bitflags instead. It should take at most three lines, but it's out of scope for now.</p>
+<p>Arguments:</p>
+<ul>
+<li>val: The current status of the power channel.
+<ul>
+<li><a href="code/modules/power/apc.html#define/APC_CHANNEL_OFF" title="APC_CHANNEL_OFF">APC_CHANNEL_OFF</a>: The APCs channel has been manually set to off. This channel will not automatically change.</li>
+<li><a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_OFF" title="APC_CHANNEL_AUTO_OFF">APC_CHANNEL_AUTO_OFF</a>: The APCs channel is running on automatic and is currently off. Can be automatically set to <a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_ON" title="APC_CHANNEL_AUTO_ON">APC_CHANNEL_AUTO_ON</a>.</li>
+<li><a href="code/modules/power/apc.html#define/APC_CHANNEL_ON" title="APC_CHANNEL_ON">APC_CHANNEL_ON</a>: The APCs channel has been manually set to on. This will be automatically changed only if the APC runs completely out of power or is disabled.</li>
+<li><a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_ON" title="APC_CHANNEL_AUTO_ON">APC_CHANNEL_AUTO_ON</a>: The APCs channel is running on automatic and is currently on. Can be automatically set to <a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_OFF" title="APC_CHANNEL_AUTO_OFF">APC_CHANNEL_AUTO_OFF</a>.</li>
+</ul>
+</li>
+<li>on: An enum dictating how to change the channel's status.
+<ul>
+<li><a href="code/modules/power/apc.html#define/AUTOSET_FORCE_OFF" title="AUTOSET_FORCE_OFF">AUTOSET_FORCE_OFF</a>: The APC forces the channel to turn off. This includes manually set channels.</li>
+<li><a href="code/modules/power/apc.html#define/AUTOSET_ON" title="AUTOSET_ON">AUTOSET_ON</a>: The APC allows automatic channels to turn back on.</li>
+<li><a href="code/modules/power/apc.html#define/AUTOSET_OFF" title="AUTOSET_OFF">AUTOSET_OFF</a>: The APC turns automatic channels off.</li>
+</ul>
+</li>
+</ul><h3 id="proc/check_updates"><aside class="declaration">proc </aside>check_updates<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/apc.dm#L419">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;apc.dm 419"/></a></aside>
+        </h3>
+        <p>Checks for what icon updates we will need to handle</p><h3 id="proc/setsubsystem"><aside class="declaration">proc </aside>setsubsystem<aside>(val) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/power/apc.dm#L1408">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;power&#x2F;apc.dm 1408"/></a></aside>
+        </h3>
+        <p>Used by external forces to set the APCs channel status's.</p>
+<p>Arguments:</p>
+<ul>
+<li>val: The desired value of the subsystem:
+<ul>
+<li>1: Manually sets the APCs channel to be <a href="code/modules/power/apc.html#define/APC_CHANNEL_OFF" title="APC_CHANNEL_OFF">APC_CHANNEL_OFF</a>.</li>
+<li>2: Manually sets the APCs channel to be <a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_ON" title="APC_CHANNEL_AUTO_ON">APC_CHANNEL_AUTO_ON</a>. If the APC doesn't have any power this defaults to <a href="code/modules/power/apc.html#define/APC_CHANNEL_OFF" title="APC_CHANNEL_OFF">APC_CHANNEL_OFF</a> instead.</li>
+<li>3: Sets the APCs channel to be <a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_ON" title="APC_CHANNEL_AUTO_ON">APC_CHANNEL_AUTO_ON</a>. If the APC doesn't have enough power this defaults to <a href="code/modules/power/apc.html#define/APC_CHANNEL_AUTO_OFF" title="APC_CHANNEL_AUTO_OFF">APC_CHANNEL_AUTO_OFF</a> instead.</li>
+</ul>
+</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

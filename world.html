@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;world - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="world.html#proc">Proc Details</a></header>
+<main>
+<h1>World <aside>/<a href="world.html">world</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/world.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;world.dm 13"/></a></h1>
+
+<p>Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying. ~ Arthur C. Clarke</p>
+<p>The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visiblity</p>
+<p>The world /New() is the root of where a round itself begins</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="world.html#proc/ImmediateInvokeAsync">ImmediateInvokeAsync</a></th><td>Immediately Invoke proctocall on thingtocall, with waitfor set to false</td></tr>
+            <tr><th><a href="world.html#proc/New">New</a></th><td>World creation</td></tr>
+            <tr><th><a href="world.html#proc/jatum_deserialize">jatum_deserialize</a></th><td>Attempt to create a value from a JATUN JSON.</td></tr>
+            <tr><th><a href="world.html#proc/jatum_serialize">jatum_serialize</a></th><td>Attempt to serialize a given value to the JATUM format.</td></tr>
+            <tr><th><a href="world.html#proc/send_cross_comms">send_cross_comms</a></th><td>Sends a message to a given cross comms server by name (by name for security).</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/ImmediateInvokeAsync"><aside class="declaration">proc </aside>ImmediateInvokeAsync<aside>(thingtocall, proctocall, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/callback.dm#L86">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;callback.dm 86"/></a></aside>
+        </h3>
+        <p>Immediately Invoke proctocall on thingtocall, with waitfor set to false</p>
+<p>Arguments:</p>
+<ul>
+<li>thingtocall Object to call on</li>
+<li>proctocall Proc to call on that object</li>
+<li>... optional list of arguments to pass as arguments to the proc being called</li>
+</ul><h3 id="proc/New"><aside class="declaration">proc </aside>New<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/world.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;world.dm 31"/></a></aside>
+        </h3>
+        <p>World creation</p>
+<p>Here is where a round itself is actually begun and setup.</p>
+<ul>
+<li>db connection setup</li>
+<li>config loaded from files</li>
+<li>loads admins</li>
+<li>Sets up the dynamic menu system</li>
+<li>and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up</li>
+</ul>
+<p>Nothing happens until something moves. ~Albert Einstein</p>
+<p>For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.</p>
+<p>Initialization Pipeline:
+Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+world/New() (You are here)
+Once world/New() returns, client's can connect.
+1 second sleep
+Master Controller initialization.
+Subsystem initialization.
+Non-compiled-in maps are maploaded, all atoms are new()ed
+All atoms in both compiled and uncompiled maps are initialized()</p><h3 id="proc/jatum_deserialize"><aside class="declaration">proc </aside>jatum_deserialize<aside>(json) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/jatum.dm#L142">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;jatum.dm 142"/></a></aside>
+        </h3>
+        <p>Attempt to create a value from a JATUN JSON.</p>
+<ul>
+<li>json - The JSON to deserialize.</li>
+</ul><h3 id="proc/jatum_serialize"><aside class="declaration">proc </aside>jatum_serialize<aside>(value) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/jatum.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;jatum.dm 17"/></a></aside>
+        </h3>
+        <p>Attempt to serialize a given value to the JATUM format.</p>
+<ul>
+<li>value - The var to serialize.</li>
+</ul><h3 id="proc/send_cross_comms"><aside class="declaration">proc </aside>send_cross_comms<aside>(server_name, /list/message, auth) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/admin/verbs/adminhelp.dm#L622">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;adminhelp.dm 622"/></a></aside>
+        </h3>
+        <p>Sends a message to a given cross comms server by name (by name for security).</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

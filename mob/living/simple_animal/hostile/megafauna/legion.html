@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc">Proc Details</a></header>
+<main>
+<h1>legion <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/megafauna.html">megafauna</a>/<a href="mob/living/simple_animal/hostile/megafauna/legion.html">legion</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 19"/></a></h1>
+
+<p>LEGION</p>
+<p>Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL</p>
+<p>It has three attacks.
+Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
+Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
+CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.</p>
+<p>When Legion dies, it will split into three smaller skulls up to three times.
+If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.</p>
+<p>Difficulty: Medium</p>
+<p>SHITCODE AHEAD. BE ADVISED. Also comment extravaganza</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/AttackingTarget">AttackingTarget</a></th><td>In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/Split">Split</a></th><td>Splits legion into smaller skulls.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/adjustHealth">adjustHealth</a></th><td>This makes sure that the legion door opens on taking damage, so you can't cheese this boss.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/charge_target">charge_target</a></th><td>Attack proc. Gives legion some movespeed buffs and switches the AI to melee. At lower sizes, this also throws the skull at the player.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/create_legion_skull">create_legion_skull</a></th><td>Attack proc. Spawns a singular legion skull.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/create_legion_turrets">create_legion_turrets</a></th><td>Attack proc. Creates up to three legion turrets on suitable turfs nearby.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/death">death</a></th><td>Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/reset_charge">reset_charge</a></th><td>Resets the charge buffs.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/setVarsAfterSplit">setVarsAfterSplit</a></th><td>Sets the variables for new legion skulls. Usually called after splitting.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/throw_impact">throw_impact</a></th><td>Deals some extra damage on throw impact.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/hostile/megafauna/legion.html#proc/throw_thyself">throw_thyself</a></th><td>This is the proc that actually does the throwing. Charge only adds a timer for this.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/AttackingTarget">AttackingTarget<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L173">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 173"/></a></aside>
+        </h3>
+        <p>In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.</p><h3 id="proc/Split"><aside class="declaration">proc </aside>Split<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L215">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 215"/></a></aside>
+        </h3>
+        <p>Splits legion into smaller skulls.</p><h3 id="proc/adjustHealth"><aside class="parent"><a title="/mob/living/simple_animal" href="mob/living/simple_animal.html#proc/adjustHealth">&uarr;</a></aside>adjustHealth<aside>(amount, updating_health, forced) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 166"/></a></aside>
+        </h3>
+        <p>This makes sure that the legion door opens on taking damage, so you can't cheese this boss.</p><h3 id="proc/charge_target"><aside class="declaration">proc </aside>charge_target<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 119"/></a></aside>
+        </h3>
+        <p>Attack proc. Gives legion some movespeed buffs and switches the AI to melee. At lower sizes, this also throws the skull at the player.</p><h3 id="proc/create_legion_skull"><aside class="declaration">proc </aside>create_legion_skull<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 110"/></a></aside>
+        </h3>
+        <p>Attack proc. Spawns a singular legion skull.</p><h3 id="proc/create_legion_turrets"><aside class="declaration">proc </aside>create_legion_turrets<aside>(minimum, maximum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 148"/></a></aside>
+        </h3>
+        <p>Attack proc. Creates up to three legion turrets on suitable turfs nearby.</p><h3 id="proc/death"><aside class="parent"><a title="/mob/living/simple_animal/hostile" href="mob/living/simple_animal/hostile.html#proc/death">&uarr;</a></aside>death<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L193">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 193"/></a></aside>
+        </h3>
+        <p>Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.</p><h3 id="proc/reset_charge"><aside class="declaration">proc </aside>reset_charge<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L185">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 185"/></a></aside>
+        </h3>
+        <p>Resets the charge buffs.</p><h3 id="proc/setVarsAfterSplit"><aside class="declaration">proc </aside>setVarsAfterSplit<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/hostile.html">hostile</a>/<a href="mob/living/simple_animal/hostile/megafauna.html">megafauna</a>/<a href="mob/living/simple_animal/hostile/megafauna/legion.html">legion</a>/L) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L244">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 244"/></a></aside>
+        </h3>
+        <p>Sets the variables for new legion skulls. Usually called after splitting.</p><h3 id="proc/throw_impact"><aside class="parent"><a title="/mob/living/simple_animal/hostile" href="mob/living/simple_animal/hostile.html#proc/throw_impact">&uarr;</a></aside>throw_impact<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/hit_atom, /<a href="datum.html">datum</a>/<a href="datum/thrownthing.html">thrownthing</a>/throwingdatum) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 138"/></a></aside>
+        </h3>
+        <p>Deals some extra damage on throw impact.</p><h3 id="proc/throw_thyself"><aside class="declaration">proc </aside>throw_thyself<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 133"/></a></aside>
+        </h3>
+        <p>This is the proc that actually does the throwing. Charge only adds a timer for this.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

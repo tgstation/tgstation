@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;computer_file&#x2F;program&#x2F;supermatter_monitor - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/computer_file/program/supermatter_monitor.html#proc">Proc Details</a></header>
+<main>
+<h1>supermatter_monitor <aside>/<a href="datum.html">datum</a>/<a href="datum/computer_file/program.html">computer_file/program</a>/<a href="datum/computer_file/program/supermatter_monitor.html">supermatter_monitor</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/sm_monitor.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;sm_monitor.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/computer_file/program/supermatter_monitor.html#proc/clear_signals">clear_signals</a></th><td>Removes the signal listener for Supermatter delaminations from the selected supermatter.</td></tr>
+            <tr><th><a href="datum/computer_file/program/supermatter_monitor.html#proc/send_alert">send_alert</a></th><td>Sends an SM delam alert to the computer.</td></tr>
+            <tr><th><a href="datum/computer_file/program/supermatter_monitor.html#proc/send_start_alert">send_start_alert</a></th><td>Sends an SM delam start alert to the computer.</td></tr>
+            <tr><th><a href="datum/computer_file/program/supermatter_monitor.html#proc/set_signals">set_signals</a></th><td>Sets up the signal listener for Supermatter delaminations.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/clear_signals"><aside class="declaration">proc </aside>clear_signals<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/sm_monitor.dm#L80">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;sm_monitor.dm 80"/></a></aside>
+        </h3>
+        <p>Removes the signal listener for Supermatter delaminations from the selected supermatter.</p>
+<p>Pretty much does what it says.</p><h3 id="proc/send_alert"><aside class="declaration">proc </aside>send_alert<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/sm_monitor.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;sm_monitor.dm 93"/></a></aside>
+        </h3>
+        <p>Sends an SM delam alert to the computer.</p>
+<p>Triggered by a signal from the selected supermatter, this proc sends a notification
+to the computer if the program is either closed or minimized. We do not send these
+notifications to the comptuer if we're the active program, because engineers fixing
+the supermatter probably don't need constant beeping to distract them.</p><h3 id="proc/send_start_alert"><aside class="declaration">proc </aside>send_start_alert<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/sm_monitor.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;sm_monitor.dm 109"/></a></aside>
+        </h3>
+        <p>Sends an SM delam start alert to the computer.</p>
+<p>Triggered by a signal from the selected supermatter at the start of a delamination,
+this proc sends a notification to the computer if this program is the active one.
+We do this so that people carrying a tablet with NT CIMS open but with the NTOS window
+closed will still get one audio alert. This is not sent to computers with the program
+minimized or closed to avoid double-notifications.</p><h3 id="proc/set_signals"><aside class="declaration">proc </aside>set_signals<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/modular_computers/file_system/programs/sm_monitor.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;sm_monitor.dm 70"/></a></aside>
+        </h3>
+        <p>Sets up the signal listener for Supermatter delaminations.</p>
+<p>Unregisters any old listners for SM delams, and then registers one for the SM refered
+to in the <code>active</code> variable. This proc is also used with no active SM to simply clear
+the signal and exit.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;legionturret - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/legionturret.html#var">Var Details</a> - <a href="obj/structure/legionturret.html#proc">Proc Details</a></header>
+<main>
+<h1>legionturret <aside>/<a href="obj.html">obj</a>/<a href="obj/structure/legionturret.html">structure/legionturret</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L321">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 321"/></a></h1>
+
+<p>A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#var/faction">faction</a></th><td>Compared with the targeted mobs. If they have the faction, turret won't shoot.</td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#var/initial_firing_time">initial_firing_time</a></th><td>Time until the tracer gets shot</td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#var/projectile_type">projectile_type</a></th><td>What kind of projectile the actual damaging part should be.</td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#var/shot_delay">shot_delay</a></th><td>How long it takes between shooting the tracer and the projectile.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#proc/fire">fire</a></th><td>Called when attacking a target. Shoots a projectile at the turf underneath the target.</td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#proc/fire_beam">fire_beam</a></th><td>Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.</td></tr>
+            <tr><th><a href="obj/structure/legionturret.html#proc/set_up_shot">set_up_shot</a></th><td>Handles an extremely basic AI</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/faction"><aside class="declaration">var </aside>faction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L341">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 341"/></a></h3>
+        <p>Compared with the targeted mobs. If they have the faction, turret won't shoot.</p><h3 id="var/initial_firing_time"><aside class="declaration">var </aside>initial_firing_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L337">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 337"/></a></h3>
+        <p>Time until the tracer gets shot</p><h3 id="var/projectile_type"><aside class="declaration">var </aside>projectile_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L335">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 335"/></a></h3>
+        <p>What kind of projectile the actual damaging part should be.</p><h3 id="var/shot_delay"><aside class="declaration">var </aside>shot_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L339">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 339"/></a></h3>
+        <p>How long it takes between shooting the tracer and the projectile.</p><h2 id="proc">Proc Details</h2><h3 id="proc/fire"><aside class="declaration">proc </aside>fire<aside>(/<a href="atom.html">atom</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L359">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 359"/></a></aside>
+        </h3>
+        <p>Called when attacking a target. Shoots a projectile at the turf underneath the target.</p><h3 id="proc/fire_beam"><aside class="declaration">proc </aside>fire_beam<aside>(angle) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L372">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 372"/></a></aside>
+        </h3>
+        <p>Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.</p><h3 id="proc/set_up_shot"><aside class="declaration">proc </aside>set_up_shot<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/hostile/megafauna/legion.dm#L348">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;hostile&#x2F;megafauna&#x2F;legion.dm 348"/></a></aside>
+        </h3>
+        <p>Handles an extremely basic AI</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

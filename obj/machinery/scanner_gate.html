@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;scanner_gate - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/scanner_gate.html#var">Var Details</a></header>
+<main>
+<h1>scanner_gate <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/scanner_gate.html">scanner_gate</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 21"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/detect_nutrition">detect_nutrition</a></th><td>If scanning for nutrition, what level of nutrition will trigger the scanner?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/detect_species">detect_species</a></th><td>If scanning for a specific species, what species is it looking for?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/disease_threshold">disease_threshold</a></th><td>Is searching for a disease, what severity is enough to trigger the gate?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/ignore_signals">ignore_signals</a></th><td>Does the scanner ignore light_pass and light_fail for sending signals?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/light_fail">light_fail</a></th><td>Will the assembly on the pass wire activate if the scanner resolves red (fail) on crossing?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/light_pass">light_pass</a></th><td>Will the assembly on the pass wire activate if the scanner resolves green (Pass) on crossing?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/locked">locked</a></th><td>Bool to check if the scanner's controls are locked by an ID.</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/nanite_cloud">nanite_cloud</a></th><td>If scanning for a nanite strain, what cloud is it looking for?</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/next_beep">next_beep</a></th><td>Internal timer to prevent audio spam.</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/reverse">reverse</a></th><td>Flips all scan results for inverse scanning. Signals if scan returns false.</td></tr>
+            <tr><th><a href="obj/machinery/scanner_gate.html#var/scangate_mode">scangate_mode</a></th><td>Which setting is the scanner checking for? See defines in scan_gate.dm for the list.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/detect_nutrition"><aside class="declaration">var </aside>detect_nutrition
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 46"/></a></h3>
+        <p>If scanning for nutrition, what level of nutrition will trigger the scanner?</p><h3 id="var/detect_species"><aside class="declaration">var </aside>detect_species
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 42"/></a></h3>
+        <p>If scanning for a specific species, what species is it looking for?</p><h3 id="var/disease_threshold"><aside class="declaration">var </aside>disease_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 38"/></a></h3>
+        <p>Is searching for a disease, what severity is enough to trigger the gate?</p><h3 id="var/ignore_signals"><aside class="declaration">var </aside>ignore_signals
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 52"/></a></h3>
+        <p>Does the scanner ignore light_pass and light_fail for sending signals?</p><h3 id="var/light_fail"><aside class="declaration">var </aside>light_fail
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 50"/></a></h3>
+        <p>Will the assembly on the pass wire activate if the scanner resolves red (fail) on crossing?</p><h3 id="var/light_pass"><aside class="declaration">var </aside>light_pass
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 48"/></a></h3>
+        <p>Will the assembly on the pass wire activate if the scanner resolves green (Pass) on crossing?</p><h3 id="var/locked"><aside class="declaration">var </aside>locked
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 34"/></a></h3>
+        <p>Bool to check if the scanner's controls are locked by an ID.</p><h3 id="var/nanite_cloud"><aside class="declaration">var </aside>nanite_cloud
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 40"/></a></h3>
+        <p>If scanning for a nanite strain, what cloud is it looking for?</p><h3 id="var/next_beep"><aside class="declaration">var </aside>next_beep
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 32"/></a></h3>
+        <p>Internal timer to prevent audio spam.</p><h3 id="var/reverse"><aside class="declaration">var </aside>reverse
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 44"/></a></h3>
+        <p>Flips all scan results for inverse scanning. Signals if scan returns false.</p><h3 id="var/scangate_mode"><aside class="declaration">var </aside>scangate_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/machinery/scan_gate.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;scan_gate.dm 36"/></a></h3>
+        <p>Which setting is the scanner checking for? See defines in scan_gate.dm for the list.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

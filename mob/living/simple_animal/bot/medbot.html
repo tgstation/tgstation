@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/bot/medbot.html#var">Var Details</a> - <a href="mob/living/simple_animal/bot/medbot.html#proc">Proc Details</a></header>
+<main>
+<h1>medbot <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/bot.html">bot</a>/<a href="mob/living/simple_animal/bot/medbot.html">medbot</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 12"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/damagetype_healer">damagetype_healer</a></th><td>What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to &quot;all&quot; for it to heal any of the 4 base damage types</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/declare_cooldown">declare_cooldown</a></th><td>Prevents spam of critical patient alerts.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/declare_crit">declare_crit</a></th><td>If active, the bot will transmit a critical patient alert to MedHUD users.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/firstaid">firstaid</a></th><td>drop determining variable</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/heal_amount">heal_amount</a></th><td>How much healing do we do at a time?</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/heal_threshold">heal_threshold</a></th><td>Start healing when they have this much damage in a category</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/healthanalyzer">healthanalyzer</a></th><td>drop determining variable</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/last_newpatient_speak">last_newpatient_speak</a></th><td>Don't spam the &quot;HEY I'M COMING&quot; messages</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/last_tipping_action_voice">last_tipping_action_voice</a></th><td>The last time we were tipped/righted and said a voice line, to avoid spam</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/linked_techweb">linked_techweb</a></th><td>techweb linked to the medbot</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/shut_up">shut_up</a></th><td>silences the medbot if TRUE</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/skin">skin</a></th><td>based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be &quot;tox&quot;</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/stationary_mode">stationary_mode</a></th><td>If enabled, the Medibot will not move automatically.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/tending">tending</a></th><td>Is the medbot currently tending wounds</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/tipped_status">tipped_status</a></th><td>How panicked we are about being tipped over (why would you do this?)</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#var/tipper_name">tipper_name</a></th><td>The name we got when we were tipped</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/medbot.html#proc/handle_panic">handle_panic</a></th><td>if someone tipped us over, check whether we should ask for help or just right ourselves eventually</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/damagetype_healer"><aside class="declaration">var </aside>damagetype_healer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 53"/></a></h3>
+        <p>What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to &quot;all&quot; for it to heal any of the 4 base damage types</p><h3 id="var/declare_cooldown"><aside class="declaration">var </aside>declare_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 57"/></a></h3>
+        <p>Prevents spam of critical patient alerts.</p><h3 id="var/declare_crit"><aside class="declaration">var </aside>declare_crit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 55"/></a></h3>
+        <p>If active, the bot will transmit a critical patient alert to MedHUD users.</p><h3 id="var/firstaid"><aside class="declaration">var </aside>firstaid
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 39"/></a></h3>
+        <p>drop determining variable</p><h3 id="var/heal_amount"><aside class="declaration">var </aside>heal_amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 49"/></a></h3>
+        <p>How much healing do we do at a time?</p><h3 id="var/heal_threshold"><aside class="declaration">var </aside>heal_threshold
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 51"/></a></h3>
+        <p>Start healing when they have this much damage in a category</p><h3 id="var/healthanalyzer"><aside class="declaration">var </aside>healthanalyzer
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 37"/></a></h3>
+        <p>drop determining variable</p><h3 id="var/last_newpatient_speak"><aside class="declaration">var </aside>last_newpatient_speak
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 47"/></a></h3>
+        <p>Don't spam the &quot;HEY I'M COMING&quot; messages</p><h3 id="var/last_tipping_action_voice"><aside class="declaration">var </aside>last_tipping_action_voice
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L72">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 72"/></a></h3>
+        <p>The last time we were tipped/righted and said a voice line, to avoid spam</p><h3 id="var/linked_techweb"><aside class="declaration">var </aside>linked_techweb
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/techweb.html">techweb</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 64"/></a></h3>
+        <p>techweb linked to the medbot</p><h3 id="var/shut_up"><aside class="declaration">var </aside>shut_up
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L62">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 62"/></a></h3>
+        <p>silences the medbot if TRUE</p><h3 id="var/skin"><aside class="declaration">var </aside>skin
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 41"/></a></h3>
+        <p>based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be &quot;tox&quot;</p><h3 id="var/stationary_mode"><aside class="declaration">var </aside>stationary_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 59"/></a></h3>
+        <p>If enabled, the Medibot will not move automatically.</p><h3 id="var/tending"><aside class="declaration">var </aside>tending
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L66">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 66"/></a></h3>
+        <p>Is the medbot currently tending wounds</p><h3 id="var/tipped_status"><aside class="declaration">var </aside>tipped_status
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 68"/></a></h3>
+        <p>How panicked we are about being tipped over (why would you do this?)</p><h3 id="var/tipper_name"><aside class="declaration">var </aside>tipper_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 70"/></a></h3>
+        <p>The name we got when we were tipped</p><h2 id="proc">Proc Details</h2><h3 id="proc/handle_panic"><aside class="declaration">proc </aside>handle_panic<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/mob/living/simple_animal/bot/medbot.dm#L280">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;medbot.dm 280"/></a></aside>
+        </h3>
+        <p>if someone tipped us over, check whether we should ask for help or just right ourselves eventually</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum.html#var">Var Details</a> - <a href="datum.html#proc">Proc Details</a></header>
+<main>
+<h1>datum <aside>/<a href="datum.html">datum</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 11"/></a></h1>
+
+<p>The absolute base class for everything</p>
+<p>A datum instantiated has no physical world prescence, use an atom if you want something
+that actually lives in the world</p>
+<p>Be very mindful about adding variables to this class, they are inherited by every single
+thing in the entire game, and so you can easily cause memory usage to rise a lot with careless
+use of variables at this level</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum.html#var/active_timers">active_timers</a></th><td>Active timers with this datum as the target</td></tr>
+            <tr><th><a href="datum.html#var/comp_lookup">comp_lookup</a></th><td>Any datum registered to receive signals from this datum is in this list</td></tr>
+            <tr><th><a href="datum.html#var/datum_components">datum_components</a></th><td>Components attached to this datum</td></tr>
+            <tr><th><a href="datum.html#var/datum_flags">datum_flags</a></th><td>Datum level flags</td></tr>
+            <tr><th><a href="datum.html#var/gc_destroyed">gc_destroyed</a></th><td>Tick count time when this object was destroyed.</td></tr>
+            <tr><th><a href="datum.html#var/signal_procs">signal_procs</a></th><td>Lazy associated list in the structure of <code>signals:proctype</code> that are run when the datum receives that signal</td></tr>
+            <tr><th><a href="datum.html#var/status_traits">status_traits</a></th><td>Status traits attached to this datum</td></tr>
+            <tr><th><a href="datum.html#var/tgui_shared_states">tgui_shared_states</a></th><td>global</td></tr>
+            <tr><th><a href="datum.html#var/weak_reference">weak_reference</a></th><td>A weak reference to another datum</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum.html#proc/Destroy">Destroy</a></th><td>Default implementation of clean-up code.</td></tr>
+            <tr><th><a href="datum.html#proc/GetComponent">GetComponent</a></th><td>Return any component assigned to this datum of the given type</td></tr>
+            <tr><th><a href="datum.html#proc/GetComponents">GetComponents</a></th><td>Get all components of a given type that are attached to this datum</td></tr>
+            <tr><th><a href="datum.html#proc/GetExactComponent">GetExactComponent</a></th><td>Return any component assigned to this datum of the exact given type</td></tr>
+            <tr><th><a href="datum.html#proc/LoadComponent">LoadComponent</a></th><td>Get existing component of type, or create it and return a reference to it</td></tr>
+            <tr><th><a href="datum.html#proc/RegisterSignal">RegisterSignal</a></th><td>Register to listen for a signal from the passed in target</td></tr>
+            <tr><th><a href="datum.html#proc/TakeComponent">TakeComponent</a></th><td>Transfer this component to another parent</td></tr>
+            <tr><th><a href="datum.html#proc/Topic">Topic</a></th><td>Called when a href for this datum is clicked</td></tr>
+            <tr><th><a href="datum.html#proc/TransferComponents">TransferComponents</a></th><td>Transfer all components to target</td></tr>
+            <tr><th><a href="datum.html#proc/UnregisterSignal">UnregisterSignal</a></th><td>Stop listening to a given signal from target</td></tr>
+            <tr><th><a href="datum.html#proc/_AddComponent">_AddComponent</a></th><td>Creates an instance of <code>new_type</code> in the datum and attaches to it as parent</td></tr>
+            <tr><th><a href="datum.html#proc/_AddElement">_AddElement</a></th><td>Finds the singleton for the element type given and attaches it to src</td></tr>
+            <tr><th><a href="datum.html#proc/_RemoveElement">_RemoveElement</a></th><td>Finds the singleton for the element type given and detaches it from src
+You only need additional arguments beyond the type if you're using <a href="code/__DEFINES/dcs/flags.html#define/ELEMENT_BESPOKE" title="ELEMENT_BESPOKE">ELEMENT_BESPOKE</a></td></tr>
+            <tr><th><a href="datum.html#proc/_SendSignal">_SendSignal</a></th><td>Internal proc to handle most all of the signaling procedure</td></tr>
+            <tr><th><a href="datum.html#proc/deserialize_json">deserialize_json</a></th><td>Deserializes from JSON. Does not parse type.</td></tr>
+            <tr><th><a href="datum.html#proc/deserialize_list">deserialize_list</a></th><td>Accepts a LIST from deserialize_datum. Should return src or another datum.</td></tr>
+            <tr><th><a href="datum.html#proc/jatum_new_arglist">jatum_new_arglist</a></th><td>Gets the flat list that can be passed in a <code>new /type(argslist(retval))</code> expression to recreate the datum. Must only return a list containing values that can be JATUM serialized</td></tr>
+            <tr><th><a href="datum.html#proc/process">process</a></th><td>This proc is called on a datum on every &quot;cycle&quot; if it is being processed by a subsystem. The time between each cycle is determined by the subsystem's &quot;wait&quot; setting.
+You can start and stop processing a datum using the START_PROCESSING and STOP_PROCESSING defines.</td></tr>
+            <tr><th><a href="datum.html#proc/serialize_json">serialize_json</a></th><td>Serializes into JSON. Does not encode type.</td></tr>
+            <tr><th><a href="datum.html#proc/serialize_list">serialize_list</a></th><td>Return a LIST for serialize_datum to encode! Not the actual json!</td></tr>
+            <tr><th><a href="datum.html#proc/string_assoc_list">string_assoc_list</a></th><td>Caches associative lists with non-numeric stringify-able index keys and stringify-able values (text/typepath -&gt; text/path/number).</td></tr>
+            <tr><th><a href="datum.html#proc/ui_act">ui_act</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/ui_assets">ui_assets</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/ui_close">ui_close</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/ui_data">ui_data</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/ui_host">ui_host</a></th><td>private</td></tr>
+            <tr><th><a href="datum.html#proc/ui_interact">ui_interact</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/ui_state">ui_state</a></th><td>private</td></tr>
+            <tr><th><a href="datum.html#proc/ui_static_data">ui_static_data</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/ui_status">ui_status</a></th><td>public</td></tr>
+            <tr><th><a href="datum.html#proc/update_static_data">update_static_data</a></th><td>public</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active_timers"><aside class="declaration">var </aside>active_timers
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 21"/></a></h3>
+        <p>Active timers with this datum as the target</p><h3 id="var/comp_lookup"><aside class="declaration">var </aside>comp_lookup
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 36"/></a></h3>
+        <p>Any datum registered to receive signals from this datum is in this list</p>
+<p>Lazy associated list in the structure of <code>signal:registree/list of registrees</code></p><h3 id="var/datum_components"><aside class="declaration">var </aside>datum_components
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 30"/></a></h3>
+        <p>Components attached to this datum</p>
+<p>Lazy associated list in the structure of <code>type:component/list of components</code></p><h3 id="var/datum_flags"><aside class="declaration">var </aside>datum_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 41"/></a></h3>
+        <p>Datum level flags</p><h3 id="var/gc_destroyed"><aside class="declaration">var </aside>gc_destroyed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 18"/></a></h3>
+        <p>Tick count time when this object was destroyed.</p>
+<p>If this is non zero then the object has been garbage collected and is awaiting either
+a hard del by the GC subsystme, or to be autocollected (if it has no references)</p><h3 id="var/signal_procs"><aside class="declaration">var </aside>signal_procs
+            <aside>&ndash; /list/list/datum/callback</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 38"/></a></h3>
+        <p>Lazy associated list in the structure of <code>signals:proctype</code> that are run when the datum receives that signal</p><h3 id="var/status_traits"><aside class="declaration">var </aside>status_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 23"/></a></h3>
+        <p>Status traits attached to this datum</p><h3 id="var/tgui_shared_states"><aside class="declaration">var </aside>tgui_shared_states
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 119"/></a></h3>
+        <p>global</p>
+<p>Associative list of JSON-encoded shared states that were set by
+tgui clients.</p><h3 id="var/weak_reference"><aside class="declaration">var </aside>weak_reference
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 44"/></a></h3>
+        <p>A weak reference to another datum</p><h2 id="proc">Proc Details</h2><h3 id="proc/Destroy"><aside class="declaration">proc </aside>Destroy<aside>(force, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L88">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 88"/></a></aside>
+        </h3>
+        <p>Default implementation of clean-up code.</p>
+<p>This should be overridden to remove all references pointing to the object being destroyed, if
+you do override it, make sure to call the parent and return it's return value by default</p>
+<p>Return an appropriate <a href="code/__DEFINES/qdel.html#define/QDEL_HINT_QUEUE" title="QDEL_HINT_QUEUE">QDEL_HINT</a> to modify handling of your deletion;
+in most cases this is <a href="code/__DEFINES/qdel.html#define/QDEL_HINT_QUEUE" title="QDEL_HINT_QUEUE">QDEL_HINT_QUEUE</a>.</p>
+<p>The base case is responsible for doing the following</p>
+<ul>
+<li>Erasing timers pointing to this datum</li>
+<li>Erasing compenents on this datum</li>
+<li>Notifying datums listening to signals from this datum that we are going away</li>
+</ul>
+<p>Returns <a href="code/__DEFINES/qdel.html#define/QDEL_HINT_QUEUE" title="QDEL_HINT_QUEUE">QDEL_HINT_QUEUE</a></p><h3 id="proc/GetComponent"><aside class="declaration">proc </aside>GetComponent<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/c_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L335">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 335"/></a></aside>
+        </h3>
+        <p>Return any component assigned to this datum of the given type</p>
+<p>This will throw an error if it's possible to have more than one component of that type on the parent</p>
+<p>Arguments:</p>
+<ul>
+<li>datum/component/c_type The typepath of the component you want to get a reference to</li>
+</ul><h3 id="proc/GetComponents"><aside class="declaration">proc </aside>GetComponents<aside>(c_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L376">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 376"/></a></aside>
+        </h3>
+        <p>Get all components of a given type that are attached to this datum</p>
+<p>Arguments:</p>
+<ul>
+<li>c_type The component type path</li>
+</ul><h3 id="proc/GetExactComponent"><aside class="declaration">proc </aside>GetExactComponent<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/c_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L355">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 355"/></a></aside>
+        </h3>
+        <p>Return any component assigned to this datum of the exact given type</p>
+<p>This will throw an error if it's possible to have more than one component of that type on the parent</p>
+<p>Arguments:</p>
+<ul>
+<li>datum/component/c_type The typepath of the component you want to get a reference to</li>
+</ul><h3 id="proc/LoadComponent"><aside class="declaration">proc </aside>LoadComponent<aside>(component_type, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L470">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 470"/></a></aside>
+        </h3>
+        <p>Get existing component of type, or create it and return a reference to it</p>
+<p>Use this if the item needs to exist at the time of this call, but may not have been created before now</p>
+<p>Arguments:</p>
+<ul>
+<li>component_type The typepath of the component to create or return</li>
+<li>... additional arguments to be passed when creating the component if it does not exist</li>
+</ul><h3 id="proc/RegisterSignal"><aside class="declaration">proc </aside>RegisterSignal<aside>(/<a href="datum.html">datum</a>/target, sig_type_or_types, proctype, override) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 175"/></a></aside>
+        </h3>
+        <p>Register to listen for a signal from the passed in target</p>
+<p>This sets up a listening relationship such that when the target object emits a signal
+the source datum this proc is called upon, will receive a callback to the given proctype
+Return values from procs registered must be a bitfield</p>
+<p>Arguments:</p>
+<ul>
+<li>datum/target The target to listen for signals from</li>
+<li>sig_type_or_types Either a string signal name, or a list of signal names (strings)</li>
+<li>proctype The proc to call back when the signal is emitted</li>
+<li>override If a previous registration exists you must explicitly set this</li>
+</ul><h3 id="proc/TakeComponent"><aside class="declaration">proc </aside>TakeComponent<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L495">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 495"/></a></aside>
+        </h3>
+        <p>Transfer this component to another parent</p>
+<p>Component is taken from source datum</p>
+<p>Arguments:</p>
+<ul>
+<li>datum/component/target Target datum to transfer to</li>
+</ul><h3 id="proc/Topic"><aside class="declaration">proc </aside>Topic<aside>(href, /list/href_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L68">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 68"/></a></aside>
+        </h3>
+        <p>Called when a href for this datum is clicked</p>
+<p>Sends a <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_TOPIC" title="COMSIG_TOPIC">COMSIG_TOPIC</a> signal</p><h3 id="proc/TransferComponents"><aside class="declaration">proc </aside>TransferComponents<aside>(/<a href="datum.html">datum</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L519">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 519"/></a></aside>
+        </h3>
+        <p>Transfer all components to target</p>
+<p>All components from source datum are taken</p>
+<p>Arguments:</p>
+<ul>
+<li>/datum/target the target to move the components to</li>
+</ul><h3 id="proc/UnregisterSignal"><aside class="declaration">proc </aside>UnregisterSignal<aside>(/<a href="datum.html">datum</a>/target, sig_type_or_types) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 218"/></a></aside>
+        </h3>
+        <p>Stop listening to a given signal from target</p>
+<p>Breaks the relationship between target and source datum, removing the callback when the signal fires</p>
+<p>Doesn't care if a registration exists or not</p>
+<p>Arguments:</p>
+<ul>
+<li>datum/target Datum to stop listening to signals from</li>
+<li>sig_typeor_types Signal string key or list of signal keys to stop listening to specifically</li>
+</ul><h3 id="proc/_AddComponent"><aside class="declaration">proc </aside>_AddComponent<aside>(/list/raw_args) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L395">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 395"/></a></aside>
+        </h3>
+        <p>Creates an instance of <code>new_type</code> in the datum and attaches to it as parent</p>
+<p>Sends the <a href="code/__DEFINES/dcs/signals.html#define/COMSIG_COMPONENT_ADDED" title="COMSIG_COMPONENT_ADDED">COMSIG_COMPONENT_ADDED</a> signal to the datum</p>
+<p>Returns the component that was created. Or the old component in a dupe situation where <a href="code/__DEFINES/dcs/flags.html#define/COMPONENT_DUPE_UNIQUE" title="COMPONENT_DUPE_UNIQUE">COMPONENT_DUPE_UNIQUE</a> was set</p>
+<p>If this tries to add a component to an incompatible type, the component will be deleted and the result will be <code>null</code>. This is very unperformant, try not to do it</p>
+<p>Properly handles duplicate situations based on the <code>dupe_mode</code> var</p><h3 id="proc/_AddElement"><aside class="declaration">proc </aside>_AddElement<aside>(/list/arguments) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 45"/></a></aside>
+        </h3>
+        <p>Finds the singleton for the element type given and attaches it to src</p><h3 id="proc/_RemoveElement"><aside class="declaration">proc </aside>_RemoveElement<aside>(/list/arguments) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/elements/_element.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;elements&#x2F;_element.dm 55"/></a></aside>
+        </h3>
+        <p>Finds the singleton for the element type given and detaches it from src
+You only need additional arguments beyond the type if you're using <a href="code/__DEFINES/dcs/flags.html#define/ELEMENT_BESPOKE" title="ELEMENT_BESPOKE">ELEMENT_BESPOKE</a></p><h3 id="proc/_SendSignal"><aside class="declaration">proc </aside>_SendSignal<aside>(sigtype, /list/arguments) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/components/_component.dm#L310">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;_component.dm 310"/></a></aside>
+        </h3>
+        <p>Internal proc to handle most all of the signaling procedure</p>
+<p>Will runtime if used on datums with an empty component list</p>
+<p>Use the <a href="code/__DEFINES/dcs/helpers.html#define/SEND_SIGNAL" title="SEND_SIGNAL">SEND_SIGNAL</a> define instead</p><h3 id="proc/deserialize_json"><aside class="declaration">proc </aside>deserialize_json<aside>(/list/input, /list/options) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L180">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 180"/></a></aside>
+        </h3>
+        <p>Deserializes from JSON. Does not parse type.</p><h3 id="proc/deserialize_list"><aside class="declaration">proc </aside>deserialize_list<aside>(json, /list/options) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 168"/></a></aside>
+        </h3>
+        <p>Accepts a LIST from deserialize_datum. Should return src or another datum.</p><h3 id="proc/jatum_new_arglist"><aside class="declaration">proc </aside>jatum_new_arglist<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/jatum.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;jatum.dm 6"/></a></aside>
+        </h3>
+        <p>Gets the flat list that can be passed in a <code>new /type(argslist(retval))</code> expression to recreate the datum. Must only return a list containing values that can be JATUM serialized</p><h3 id="proc/process"><aside class="declaration">proc </aside>process<aside>(delta_time) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/controllers/subsystem/processing/processing.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;processing&#x2F;processing.dm 48"/></a></aside>
+        </h3>
+        <p>This proc is called on a datum on every &quot;cycle&quot; if it is being processed by a subsystem. The time between each cycle is determined by the subsystem's &quot;wait&quot; setting.
+You can start and stop processing a datum using the START_PROCESSING and STOP_PROCESSING defines.</p>
+<p>Since the wait setting of a subsystem can be changed at any time, it is important that any rate-of-change that you implement in this proc is multiplied by the delta_time that is sent as a parameter,
+Additionally, any &quot;prob&quot; you use in this proc should instead use the DT_PROB define to make sure that the final probability per second stays the same even if the subsystem's wait is altered.
+Examples where this must be considered:</p>
+<ul>
+<li>Implementing a cooldown timer, use <code>mytimer -= delta_time</code>, not <code>mytimer -= 1</code>. This way, <code>mytimer</code> will always have the unit of seconds</li>
+<li>Damaging a mob, do <code>L.adjustFireLoss(20 * delta_time)</code>, not <code>L.adjustFireLoss(20)</code>. This way, the damage per second stays constant even if the wait of the subsystem is changed</li>
+<li>Probability of something happening, do <code>if(DT_PROB(25, delta_time))</code>, not <code>if(prob(25))</code>. This way, if the subsystem wait is e.g. lowered, there won't be a higher chance of this event happening per second</li>
+</ul>
+<p>If you override this do not call parent, as it will return PROCESS_KILL. This is done to prevent objects that dont override process() from staying in the processing list</p><h3 id="proc/serialize_json"><aside class="declaration">proc </aside>serialize_json<aside>(/list/options) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 172"/></a></aside>
+        </h3>
+        <p>Serializes into JSON. Does not encode type.</p><h3 id="proc/serialize_list"><aside class="declaration">proc </aside>serialize_list<aside>(/list/options) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/datums/datum.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;datum.dm 164"/></a></aside>
+        </h3>
+        <p>Return a LIST for serialize_datum to encode! Not the actual json!</p><h3 id="proc/string_assoc_list"><aside class="declaration">proc </aside>string_assoc_list<aside>(/list/values) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/__HELPERS/string_assoc_lists.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__HELPERS&#x2F;string_assoc_lists.dm 6"/></a></aside>
+        </h3>
+        <p>Caches associative lists with non-numeric stringify-able index keys and stringify-able values (text/typepath -&gt; text/path/number).</p><h3 id="proc/ui_act"><aside class="declaration">proc </aside>ui_act<aside>(action, /list/params, /<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/ui, /<a href="datum.html">datum</a>/<a href="datum/ui_state.html">ui_state</a>/state) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L76">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 76"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Called on a UI when the UI receieves a href.
+Think of this as Topic().</p>
+<p>required action string The action/button that has been invoked by the user.
+required params list A list of parameters attached to the button.</p>
+<p>return bool If the user's input has been handled and the UI should update.</p><h3 id="proc/ui_assets"><aside class="declaration">proc </aside>ui_assets<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 91"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Called on an object when a tgui object is being created, allowing you to
+push various assets to tgui, for examples spritesheets.</p>
+<p>return list List of asset datums or file paths.</p><h3 id="proc/ui_close"><aside class="declaration">proc </aside>ui_close<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L148">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 148"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Called on a UI's object when the UI is closed, not to be confused with
+client/verb/uiclose(), which closes the ui window</p><h3 id="proc/ui_data"><aside class="declaration">proc </aside>ui_data<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 30"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Data to be sent to the UI.
+This must be implemented for a UI to work.</p>
+<p>required user mob The mob interacting with the UI.</p>
+<p>return list Data to be sent to the UI.</p><h3 id="proc/ui_host"><aside class="declaration">proc </aside>ui_host<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L101">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 101"/></a></aside>
+        </h3>
+        <p>private</p>
+<p>The UI's host object (usually src_object).
+This allows modules/datums to have the UI attached to them,
+and be a part of another object.</p><h3 id="proc/ui_interact"><aside class="declaration">proc </aside>ui_interact<aside>(/<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/ui) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 17"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Used to open and update UIs.
+If this proc is not implemented properly, the UI will not update correctly.</p>
+<p>required user mob The mob who opened/is using the UI.
+optional ui datum/tgui The UI to be updated, if it exists.</p><h3 id="proc/ui_state"><aside class="declaration">proc </aside>ui_state<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 110"/></a></aside>
+        </h3>
+        <p>private</p>
+<p>The UI's state controller to be used for created uis
+This is a proc over a var for memory reasons</p><h3 id="proc/ui_static_data"><aside class="declaration">proc </aside>ui_static_data<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 47"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Static Data to be sent to the UI.</p>
+<p>Static data differs from normal data in that it's large data that should be
+sent infrequently. This is implemented optionally for heavy uis that would
+be sending a lot of redundant data frequently. Gets squished into one
+object on the frontend side, but the static part is cached.</p>
+<p>required user mob The mob interacting with the UI.</p>
+<p>return list Statuic Data to be sent to the UI.</p><h3 id="proc/ui_status"><aside class="declaration">proc </aside>ui_status<aside>(/<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/ui_state.html">ui_state</a>/state) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/states.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;states.dm 19"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Checks the UI state for a mob.</p>
+<p>required user mob The mob who opened/is using the UI.
+required state datum/ui_state The state to check.</p>
+<p>return UI_state The state of the UI.</p><h3 id="proc/update_static_data"><aside class="declaration">proc </aside>update_static_data<aside>(/<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/ui) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/tgui/external.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;tgui&#x2F;external.dm 59"/></a></aside>
+        </h3>
+        <p>public</p>
+<p>Forces an update on static data. Should be done manually whenever something
+happens to change static data.</p>
+<p>required user the mob currently interacting with the ui
+optional ui ui to be updated</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

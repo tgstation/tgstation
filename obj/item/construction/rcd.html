@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;construction&#x2F;rcd - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/construction/rcd.html#var">Var Details</a> - <a href="obj/item/construction/rcd.html#proc">Proc Details</a></header>
+<main>
+<h1>rcd <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/construction.html">construction</a>/<a href="obj/item/construction/rcd.html">rcd</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L213">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 213"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#var/airlock_electronics">airlock_electronics</a></th><td>Integrated airlock electronics for setting access to a newly built airlocks</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/change_airlock_setting">change_airlock_setting</a></th><td>Customizes RCD's airlock settings based on user's choices</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/change_furnishing_type">change_furnishing_type</a></th><td>Radial menu for choosing the object you want to be created with the furnishing mode</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/set_window_type">set_window_type</a></th><td>Sets the window type to be created based on parameters</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/toggle_window_glass">toggle_window_glass</a></th><td>Toggles the usage of reinforced or normal glass</td></tr>
+            <tr><th><a href="obj/item/construction/rcd.html#proc/toggle_window_size">toggle_window_size</a></th><td>Toggles the usage of directional or full tile windows</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/airlock_electronics"><aside class="declaration">var </aside>airlock_electronics
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/electronics/airlock.html">electronics/airlock</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L243">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 243"/></a></h3>
+        <p>Integrated airlock electronics for setting access to a newly built airlocks</p><h2 id="proc">Proc Details</h2><h3 id="proc/change_airlock_setting"><aside class="declaration">proc </aside>change_airlock_setting<aside>(/<a href="mob.html">mob</a>/user, remote_anchor) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L367">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 367"/></a></aside>
+        </h3>
+        <p>Customizes RCD's airlock settings based on user's choices</p>
+<p>Arguments:</p>
+<ul>
+<li>user The mob that is choosing airlock settings</li>
+<li>remote_anchor The remote anchor for radial menus. If set, it will also remove proximity restrictions from the menus</li>
+</ul><h3 id="proc/change_furnishing_type"><aside class="declaration">proc </aside>change_furnishing_type<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L501">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 501"/></a></aside>
+        </h3>
+        <p>Radial menu for choosing the object you want to be created with the furnishing mode</p><h3 id="proc/set_window_type"><aside class="declaration">proc </aside>set_window_type<aside>(/<a href="mob.html">mob</a>/user, glass, size) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L303">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 303"/></a></aside>
+        </h3>
+        <p>Sets the window type to be created based on parameters</p><h3 id="proc/toggle_window_glass"><aside class="declaration">proc </aside>toggle_window_glass<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L289">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 289"/></a></aside>
+        </h3>
+        <p>Toggles the usage of reinforced or normal glass</p><h3 id="proc/toggle_window_size"><aside class="declaration">proc </aside>toggle_window_size<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/game/objects/items/RCD.dm#L296">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;objects&#x2F;items&#x2F;RCD.dm 296"/></a></aside>
+        </h3>
+        <p>Toggles the usage of directional or full tile windows</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>

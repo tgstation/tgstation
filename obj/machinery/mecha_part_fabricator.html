@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;mecha_part_fabricator - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/mecha_part_fabricator.html#var">Var Details</a> - <a href="obj/machinery/mecha_part_fabricator.html#proc">Proc Details</a></header>
+<main>
+<h1>mecha_part_fabricator <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/mecha_part_fabricator.html">mecha_part_fabricator</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/being_built">being_built</a></th><td>The current design datum that the machine is building.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/build_finish">build_finish</a></th><td>World time when the build will finish.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/build_materials">build_materials</a></th><td>Reference to all materials used in the creation of the item being_built.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/build_start">build_start</a></th><td>World time when the build started.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/component_coeff">component_coeff</a></th><td>Coefficient for the efficiency of material usage in item building. Based on the installed parts.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/link_on_init">link_on_init</a></th><td>Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/part_sets">part_sets</a></th><td>A list of categories that valid MECHFAB design datums will broadly categorise themselves under.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/process_queue">process_queue</a></th><td>Whether or not the machine is building the entire queue automagically.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/queue">queue</a></th><td>Current items in the build queue.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/rmat">rmat</a></th><td>Reference to a remote material inventory, such as an ore silo.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/stored_part">stored_part</a></th><td>Part currently stored in the Exofab.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/stored_research">stored_research</a></th><td>Reference to the techweb.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#var/time_coeff">time_coeff</a></th><td>Coefficient for the speed of item building. Based on the installed parts.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/add_part_set_to_queue">add_part_set_to_queue</a></th><td>Adds a list of datum designs to the build queue.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/add_to_queue">add_to_queue</a></th><td>Adds a datum design to the build queue.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/build_next_in_queue">build_next_in_queue</a></th><td>Attempts to build the next item in the build queue.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/build_part">build_part</a></th><td>Starts the build process for a given design datum.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/check_resources">check_resources</a></th><td>Checks if the Exofab has enough resources to print a given item.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/dispense_built_part">dispense_built_part</a></th><td>Dispenses a part to the tile infront of the Exosuit Fab.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/eject_sheets">eject_sheets</a></th><td>Eject material sheets.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/get_construction_time_w_coeff">get_construction_time_w_coeff</a></th><td>Calculates the coefficient-modified build time of a design.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/get_resource_cost_w_coeff">get_resource_cost_w_coeff</a></th><td>Calculates the coefficient-modified resource cost of a single material component of a design's recipe.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/get_resources_w_coeff">get_resources_w_coeff</a></th><td>Calculates resource/material costs for printing an item based on the machine's resource coefficient.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/list_queue">list_queue</a></th><td>Generates a list of parts formatted for tgui based on the current build queue.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/on_finish_printing">on_finish_printing</a></th><td>Intended to be called when the exofab has stopped working and is no longer printing items.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/on_start_printing">on_start_printing</a></th><td>Intended to be called when an item starts printing.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/output_available_resources">output_available_resources</a></th><td>Generates a list of resources / materials available to this Exosuit Fab</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/output_part_info">output_part_info</a></th><td>Generates an info list for a given part.</td></tr>
+            <tr><th><a href="obj/machinery/mecha_part_fabricator.html#proc/remove_from_queue">remove_from_queue</a></th><td>Removes datum design from the build queue based on index.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/being_built"><aside class="declaration">var </aside>being_built
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/design.html">design</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 22"/></a></h3>
+        <p>The current design datum that the machine is building.</p><h3 id="var/build_finish"><aside class="declaration">var </aside>build_finish
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 24"/></a></h3>
+        <p>World time when the build will finish.</p><h3 id="var/build_materials"><aside class="declaration">var </aside>build_materials
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 28"/></a></h3>
+        <p>Reference to all materials used in the creation of the item being_built.</p><h3 id="var/build_start"><aside class="declaration">var </aside>build_start
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 26"/></a></h3>
+        <p>World time when the build started.</p><h3 id="var/component_coeff"><aside class="declaration">var </aside>component_coeff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 35"/></a></h3>
+        <p>Coefficient for the efficiency of material usage in item building. Based on the installed parts.</p><h3 id="var/link_on_init"><aside class="declaration">var </aside>link_on_init
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 41"/></a></h3>
+        <p>Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.</p><h3 id="var/part_sets"><aside class="declaration">var </aside>part_sets
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 47"/></a></h3>
+        <p>A list of categories that valid MECHFAB design datums will broadly categorise themselves under.</p><h3 id="var/process_queue"><aside class="declaration">var </aside>process_queue
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 19"/></a></h3>
+        <p>Whether or not the machine is building the entire queue automagically.</p><h3 id="var/queue"><aside class="declaration">var </aside>queue
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 17"/></a></h3>
+        <p>Current items in the build queue.</p><h3 id="var/rmat"><aside class="declaration">var </aside>rmat
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/remote_materials.html">remote_materials</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 44"/></a></h3>
+        <p>Reference to a remote material inventory, such as an ore silo.</p><h3 id="var/stored_part"><aside class="declaration">var </aside>stored_part
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 30"/></a></h3>
+        <p>Part currently stored in the Exofab.</p><h3 id="var/stored_research"><aside class="declaration">var </aside>stored_research
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/techweb.html">techweb</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 38"/></a></h3>
+        <p>Reference to the techweb.</p><h3 id="var/time_coeff"><aside class="declaration">var </aside>time_coeff
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 33"/></a></h3>
+        <p>Coefficient for the speed of item building. Based on the installed parts.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_part_set_to_queue"><aside class="declaration">proc </aside>add_part_set_to_queue<aside>(/list/part_list) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L375">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 375"/></a></aside>
+        </h3>
+        <p>Adds a list of datum designs to the build queue.</p>
+<p>Will only add designs that are in this machine's stored techweb.
+Does final checks for datum IDs and makes sure this machine can build the designs.</p>
+<ul>
+<li>part_list - List of datum design ids for designs to add to the queue.</li>
+</ul><h3 id="proc/add_to_queue"><aside class="declaration">proc </aside>add_to_queue<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L387">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 387"/></a></aside>
+        </h3>
+        <p>Adds a datum design to the build queue.</p>
+<p>Returns TRUE if successful and FALSE if the design was not added to the queue.</p>
+<ul>
+<li>D - Datum design to add to the queue.</li>
+</ul><h3 id="proc/build_next_in_queue"><aside class="declaration">proc </aside>build_next_in_queue<aside>(verbose) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L266">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 266"/></a></aside>
+        </h3>
+        <p>Attempts to build the next item in the build queue.</p>
+<p>Returns FALSE if either there are no more parts to build or the next part is not buildable.
+Returns TRUE if the next part has started building.</p>
+<ul>
+<li>verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.</li>
+</ul><h3 id="proc/build_part"><aside class="declaration">proc </aside>build_part<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D, verbose) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L285">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 285"/></a></aside>
+        </h3>
+        <p>Starts the build process for a given design datum.</p>
+<p>Returns FALSE if the procedure fails. Returns TRUE when being_built is set.
+Uses materials.</p>
+<ul>
+<li>D - Design datum to attempt to print.</li>
+<li>verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.</li>
+</ul><h3 id="proc/check_resources"><aside class="declaration">proc </aside>check_resources<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L251">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 251"/></a></aside>
+        </h3>
+        <p>Checks if the Exofab has enough resources to print a given item.</p>
+<p>Returns FALSE if the design has no reagents used in its construction (?) or if there are insufficient resources.
+Returns TRUE if there are sufficient resources to print the item.</p>
+<ul>
+<li>D - Design datum to calculate the modified resource cost of.</li>
+</ul><h3 id="proc/dispense_built_part"><aside class="declaration">proc </aside>dispense_built_part<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L350">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 350"/></a></aside>
+        </h3>
+        <p>Dispenses a part to the tile infront of the Exosuit Fab.</p>
+<p>Returns FALSE is the machine cannot dispense the part on the appropriate turf.
+Return TRUE if the part was successfully dispensed.</p>
+<ul>
+<li>D - Design datum to attempt to dispense.</li>
+</ul><h3 id="proc/eject_sheets"><aside class="declaration">proc </aside>eject_sheets<aside>(eject_sheet, eject_amt) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L607">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 607"/></a></aside>
+        </h3>
+        <p>Eject material sheets.</p>
+<p>Returns the number of sheets successfully ejected.
+eject_sheet - Byond REF of the material to eject.
+eject_amt - Number of sheets to attempt to eject.</p><h3 id="proc/get_construction_time_w_coeff"><aside class="declaration">proc </aside>get_construction_time_w_coeff<aside>(construction_time, roundto) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L440">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 440"/></a></aside>
+        </h3>
+        <p>Calculates the coefficient-modified build time of a design.</p>
+<p>Returns coefficient-modified build time of a given design.</p>
+<ul>
+<li>D - Design datum to calculate the modified build time of.</li>
+<li>roundto - Rounding value for round() proc</li>
+</ul><h3 id="proc/get_resource_cost_w_coeff"><aside class="declaration">proc </aside>get_resource_cost_w_coeff<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D, /<a href="datum.html">datum</a>/<a href="datum/material.html">material</a>/resource, roundto) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L430">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 430"/></a></aside>
+        </h3>
+        <p>Calculates the coefficient-modified resource cost of a single material component of a design's recipe.</p>
+<p>Returns coefficient-modified resource cost for the given material component.</p>
+<ul>
+<li>D - Design datum to pull the resource cost from.</li>
+<li>resource - Material datum reference to the resource to calculate the cost of.</li>
+<li>roundto - Rounding value for round() proc</li>
+</ul><h3 id="proc/get_resources_w_coeff"><aside class="declaration">proc </aside>get_resources_w_coeff<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L237">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 237"/></a></aside>
+        </h3>
+        <p>Calculates resource/material costs for printing an item based on the machine's resource coefficient.</p>
+<p>Returns a list of k,v resources with their amounts.</p>
+<ul>
+<li>D - Design datum to calculate the modified resource cost of.</li>
+</ul><h3 id="proc/list_queue"><aside class="declaration">proc </aside>list_queue<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L412">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 412"/></a></aside>
+        </h3>
+        <p>Generates a list of parts formatted for tgui based on the current build queue.</p>
+<p>Returns a formatted list of lists containing formatted part information for every part in the build queue.</p><h3 id="proc/on_finish_printing"><aside class="declaration">proc </aside>on_finish_printing<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L225">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 225"/></a></aside>
+        </h3>
+        <p>Intended to be called when the exofab has stopped working and is no longer printing items.</p>
+<p>Removes the overlay to show the fab working and sets idle power usage settings. Additionally resets the description and turns off queue processing.</p><h3 id="proc/on_start_printing"><aside class="declaration">proc </aside>on_start_printing<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L216">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 216"/></a></aside>
+        </h3>
+        <p>Intended to be called when an item starts printing.</p>
+<p>Adds the overlay to show the fab working and sets active power usage settings.</p><h3 id="proc/output_available_resources"><aside class="declaration">proc </aside>output_available_resources<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L186">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 186"/></a></aside>
+        </h3>
+        <p>Generates a list of resources / materials available to this Exosuit Fab</p>
+<p>Returns null if there is no material container available.
+List format is list(material_name = list(amount = ..., ref = ..., etc.))</p><h3 id="proc/output_part_info"><aside class="declaration">proc </aside>output_part_info<aside>(/<a href="datum.html">datum</a>/<a href="datum/design.html">design</a>/D, categories) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 113"/></a></aside>
+        </h3>
+        <p>Generates an info list for a given part.</p>
+<p>Returns a list of part information.</p>
+<ul>
+<li>D - Design datum to get information on.</li>
+<li>categories - Boolean, whether or not to parse snowflake categories into the part information list.</li>
+</ul><h3 id="proc/remove_from_queue"><aside class="declaration">proc </aside>remove_from_queue<aside>(index) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/e069f96dc6ba16da30f8bbed0b2a3fb96f484268/code/modules/vehicles/mecha/mech_fabricator.dm#L401">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;vehicles&#x2F;mecha&#x2F;mech_fabricator.dm 401"/></a></aside>
+        </h3>
+        <p>Removes datum design from the build queue based on index.</p>
+<p>Returns TRUE if successful and FALSE if a design was not removed from the queue.</p>
+<ul>
+<li>index - Index in the build queue of the element to remove.</li>
+</ul></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/e069f96dc6ba16da30f8bbed0b2a3fb96f484268">e069f96</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/src/dmdoc/README.md">dmdoc 1.3.0</a></footer>
+</body>
+</html>
