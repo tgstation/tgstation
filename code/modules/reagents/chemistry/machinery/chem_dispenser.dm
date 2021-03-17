@@ -579,6 +579,8 @@
 	desc = "Creates and dispenses chemicals useful for botany."
 	flags_1 = NODECONSTRUCT_1
 
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
+
 	dispensable_reagents = list(
 		/datum/reagent/toxin/mutagen,
 		/datum/reagent/saltpetre,
@@ -594,25 +596,6 @@
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine)
 	upgrade_reagents = null
-
-/obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
-	. = ..()
-
-	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
-	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts.Copy()
-
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
-	component_parts += new /obj/item/stack/sheet/glass(src, 1)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
-
-	QDEL_LIST(old_parts)
-	RefreshParts()
 
 /obj/machinery/chem_dispenser/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Creates and dispenses chemicals. This model has had its safeties shorted out."
@@ -674,22 +657,3 @@
 		/datum/reagent/toxin/plasma,
 		/datum/reagent/uranium
 	)
-
-/obj/machinery/chem_dispenser/abductor/Initialize()
-	. = ..()
-
-	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
-	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts.Copy()
-
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
-	component_parts += new /obj/item/stack/sheet/glass(src, 1)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
-
-	QDEL_LIST(old_parts)
-	RefreshParts()
