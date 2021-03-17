@@ -1475,6 +1475,7 @@
 #include "code\modules\admin\ipintel.dm"
 #include "code\modules\admin\IsBanned.dm"
 #include "code\modules\admin\outfits.dm"
+#include "code\modules\admin\pain.dm"
 #include "code\modules\admin\permissionedit.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\poll_management.dm"
