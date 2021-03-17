@@ -1012,6 +1012,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	tilt(L)
 
+/obj/machinery/vending/attack_tk_grab(mob/user)
+	to_chat(user, "<span class='warning'>[src] seems to resist your mental grasp!</span>")
+
 ///Crush the mob that the vending machine got thrown at
 /obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(isliving(hit_atom))
