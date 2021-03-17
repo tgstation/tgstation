@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscdel: "Removes 9x19mm as an ammo type."
+  - balance: "PP-95's (the surplus gun for nukies) now use 9mm. They also have a .35 damage multiplier, resulting in standard 9mm doing only 10.5 (9x19mm did 10, so not really much of a difference)."
