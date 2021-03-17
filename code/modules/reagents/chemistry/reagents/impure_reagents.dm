@@ -51,6 +51,7 @@
 	ph = 1.5
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
+	glass_price = DRINK_PRICE_HIGH
 
 /*
 * Freezes the player in a block of ice, 1s = 1u
