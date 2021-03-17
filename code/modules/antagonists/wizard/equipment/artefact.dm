@@ -299,7 +299,7 @@
 	var/mob/living/carbon/human/target = null
 	var/list/mob/living/carbon/human/possible = list()
 	var/obj/item/voodoo_link = null
-	var/cooldown_time = 30 //3s
+	var/cooldown_time = 3 SECONDS
 	var/cooldown = 0
 	max_integrity = 10
 	resistance_flags = FLAMMABLE
@@ -309,10 +309,11 @@
 		if(I.get_temperature())
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
+			target.IgniteMob() //ignite them if they happen to already be flammable
 			GiveHint(target)
 		else if(I.get_sharpness() == SHARP_POINTY)
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Paralyze(40)
+			target.Knockdown(60) //:pensive:
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -321,7 +322,7 @@
 			if(ears)
 				ears.adjustEarDamage(0, 3)
 			GiveHint(target)
-		cooldown = world.time +cooldown_time
+		cooldown = world.time + cooldown_time
 		return
 
 	if(!voodoo_link)
@@ -353,26 +354,29 @@
 	if(target && cooldown < world.time)
 		switch(user.zone_selected)
 			if(BODY_ZONE_PRECISE_MOUTH)
-				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
-				target.say(wgw, forced = "voodoo doll")
-				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
+				target.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "voodoo doll (by [key_name(user)])") //skips the middleman
+				log_game("[key_name(user)] use a voodoo doll to make [key_name(target)] say a brain damage line.")
+				cooldown = world.time + cooldown_time
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)
-				addtimer(CALLBACK(src, .proc/reset, user), 10 SECONDS)
+				addtimer(CALLBACK(src, .proc/reset, user), 15 SECONDS) //no cooldown for the eyes function since it's a utility one
 			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(GLOB.cardinals))
+				var/turf/T = get_step(target,user.dir)
 				target.Move(T)
+				cooldown = world.time + (cooldown_time / 3) //So that you can make them run into stuff at a reasonable rate. I'd make the divisor here 6, but combo'ing that with the sharp object knockdown effect could prove to be pretty degenerate.
 			if(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM)
 				target.click_random_mob()
 				GiveHint(target)
+				cooldown = world.time + cooldown_time
 			if(BODY_ZONE_HEAD)
 				to_chat(user, "<span class='notice'>You smack the doll's head with your hand.</span>")
 				target.Dizzy(10)
 				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
 				GiveHint(target,user)
-		cooldown = world.time + cooldown_time
+				cooldown = world.time + cooldown_time
+		
 
 /obj/item/voodoo/proc/reset(mob/user)
 	if(QDELETED(user))
