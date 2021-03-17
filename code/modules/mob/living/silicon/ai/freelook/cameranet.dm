@@ -180,12 +180,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 			return 1
 	return 0
 
-/datum/cameranet/proc/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
-
-	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))
-
 /obj/effect/overlay/camera_static
 	name = "static"
 	icon = null
