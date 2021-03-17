@@ -14,7 +14,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 /obj/effect/statclick/Destroy()
 	target = null
-	. = ..()
+	return ..()
 
 /obj/effect/statclick/proc/cleanup()
 	SIGNAL_HANDLER
