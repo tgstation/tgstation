@@ -515,7 +515,7 @@
 	throwforce = 0
 
 /obj/item/food/chewable/lollipop/cyborg
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 1) //less omnizine than a normal lollipop
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/psicodine = 2) //psicodine instead of omnizine, because the latter was making coders freak out
 
 /obj/item/food/chewable/bubblegum
 	name = "bubblegum"
