@@ -1096,6 +1096,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/aurora_caelus_short.ogg')
 
 //Security
+///When adding a new area to the security areas, make sure to add it to /datum/bounty/item/security/paperwork as well!
 
 /area/security
 	name = "Security"
