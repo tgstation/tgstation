@@ -9,6 +9,11 @@
 	movedelay = 0.6
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_range = 8
+	light_power = 2
+	light_on = FALSE
+	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
@@ -16,9 +21,18 @@
 	var/cannonmode = FALSE
 	var/cannonbusy = FALSE
 
+/obj/vehicle/sealed/car/clowncar/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj,src)
+
+/obj/vehicle/sealed/car/clowncar/process()
+	if(light_on && (obj_flags & EMAGGED))
+		set_light_color(pick(headlight_colors))
+
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/thank, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
@@ -95,6 +109,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	STOP_PROCESSING(SSobj,src)
 	return ..()
 
 /obj/vehicle/sealed/car/clowncar/Move(newloc, dir)

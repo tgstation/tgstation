@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed juggernaut transformation option doing nothing."
+  - bugfix: "Fixed artificer transformation option doing nothing."
+  - bugfix: "Fixed adult slime transformation option doing nothing."

@@ -1,0 +1,5 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - qol: "IceBox's mining mech bay has moved to the east of the cargo warehouse"
+  - bugfix: "A number of anomalous floating decals and air alarms inside doors have been in the Icebox mining base"
