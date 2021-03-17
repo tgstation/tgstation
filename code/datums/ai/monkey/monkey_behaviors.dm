@@ -12,6 +12,7 @@
 		var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 
 		item_blacklist[target] = TRUE
+		controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_del)
 
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
