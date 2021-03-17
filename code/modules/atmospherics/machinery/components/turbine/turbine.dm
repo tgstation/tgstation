@@ -26,7 +26,7 @@
 
 /obj/machinery/atmospherics/components/unary/turbine_outlet/Initialize()
 	. = ..()
-	airs[1].volume = 700
+	airs[1].volume = 1000
 
 /obj/machinery/turbine_shaft
 	icon = 'icons/obj/atmospherics/components/turbine.dmi'
@@ -63,15 +63,20 @@
 	var/obj/machinery/atmospherics/components/unary/turbine_outlet/outlet
 	var/obj/machinery/turbine_shaft/shaft
 	var/list/turbine_mods = list()
-	var/datum/gas_mixture/entry_point
-	var/datum/gas_mixture/mid_point
-	var/datum/gas_mixture/exit_point
+	var/datum/gas_mixture/first_point
+	var/datum/gas_mixture/second_point
+	var/efficiency = 0.9
+	var/first_volume = 500
+	var/second_volume = 1000
+	var/rpm = 0
 
 /obj/machinery/turbine_controller/Initialize()
 	. = ..()
 	SSair.start_processing_machine(src)
-	mid_point = new
-	mid_point.volume = 600
+	first_point = new
+	first_point.volume = 500
+	second_point = new
+	second_point.volume = 1000
 
 /obj/machinery/turbine_controller/Destroy()
 	SSair.stop_processing_machine(src)
@@ -120,22 +125,43 @@
 		for(var/obj/machinery/turbine_mod/mod in turbine_mods)
 			mod.connected = TRUE
 
-/obj/machinery/turbine_controller/process()
+/obj/machinery/turbine_controller/process_atmos()
 	if(!connected)
 		return
-	var/datum/gas_mixture/input = inlet.airs[1]
+	var/datum/gas_mixture/input_remove = inlet.airs[1].remove(inlet.airs[1].total_moles())
 	var/datum/gas_mixture/output = outlet.airs[1]
-	var/input_pressure = input.return_pressure()
-	var/mid_point_pressure = mid_point.return_pressure()
-	var/mid_pressure_ratio = - (mid_point_pressure - input_pressure) / (mid_point_pressure + input_pressure)
-	input.pump_gas_to(mid_point, input_pressure * mid_pressure_ratio)
 
-	mid_point_pressure = mid_point.return_pressure()
-	var/exit_point_pressure = output.return_pressure()
-	var/exit_pressure_ratio = - (exit_point_pressure - mid_point_pressure) / (exit_point_pressure + mid_point_pressure)
-	mid_point.pump_gas_to(output, mid_point_pressure * exit_pressure_ratio)
+	first_point.volume = first_volume
+	second_point.volume = second_volume
+
+	first_point.merge(input_remove)
+	var/first_point_pressure = first_point.return_pressure()
+	var/first_point_temperature = first_point.return_temperature()
+	var/datum/gas_mixture/first_remove = first_point.remove(first_point.total_moles())
+
+	second_point.merge(first_remove)
+	var/second_point_pressure = second_point.return_pressure()
+
+	var/work_done = 0
+	if(first_remove.temperature > 1e3 || second_point_pressure > 1000)
+		work_done = efficiency * second_point.total_moles() * R_IDEAL_GAS_EQUATION * first_point_temperature * log((first_point_pressure / second_point_pressure)) - rpm
+
+	message_admins("[work_done] work_done")
+
+	rpm = (work_done ** 0.6) * 4
+
+	message_admins("[rpm] rpm")
+
+	efficiency = clamp(1 - log(10, max(second_point.temperature, 1e3)) * 0.1, 0, 1)
+
+	message_admins("[efficiency] efficiency")
+
+	var/heat_capacity = second_point.heat_capacity()
+	second_point.temperature = max((second_point.temperature * heat_capacity - work_done * second_point.total_moles() * 0.1) / heat_capacity, TCMB)
+
+	var/datum/gas_mixture/second_remove = second_point.remove(second_point.total_moles())
+
+	output.merge(second_remove)
 
 	inlet.update_parents()
 	outlet.update_parents()
-
-
