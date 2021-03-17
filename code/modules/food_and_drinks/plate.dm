@@ -3,7 +3,7 @@
 	desc = "Holds food, powerful. Good for morale when you're not eating your spaghetti off of a desk."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "plate"
-	w_class = WEIGHT_CLASS_HUGE //No backpack.
+	w_class = WEIGHT_CLASS_BULKY //No backpack.
 	///How many things fit on this plate?
 	var/max_items = 8
 	///The offset from side to side the food items can have on the plate
@@ -60,4 +60,3 @@
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	ItemRemovedFromPlate(moved_item)
-
