@@ -155,7 +155,7 @@
 	icon_state = "misosoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("miso" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | BREAKFAST
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/mushroom

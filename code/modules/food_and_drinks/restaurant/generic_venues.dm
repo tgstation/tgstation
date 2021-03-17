@@ -13,6 +13,7 @@
 		/datum/customer_data/japanese = 30,
 		/datum/customer_data/japanese/salaryman = 20,
 		/datum/customer_data/moth = 1,
+		/datum/customer_data/malfunction = 1,
 	)
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
@@ -51,7 +52,6 @@
 	var/obj/item/food/ordered_food = order_item
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	total_income += ordered_food.venue_value
 	customers_served += 1
 	qdel(ordered_food)
 
@@ -81,6 +81,7 @@
 		/datum/customer_data/mexican = 30,
 		/datum/customer_data/japanese = 30,
 		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/malfunction = 1,
 	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
