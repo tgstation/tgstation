@@ -72,9 +72,11 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
       {tab_main === 1 && (
         <>
           {!card && (
-            <NoticeBox>
-              Certain features require an ID card login.
-            </NoticeBox>
+            <Stack.Item>
+              <NoticeBox>
+                Certain features require an ID card login.
+              </NoticeBox>
+            </Stack.Item>
           )}
           <Stack.Item grow={1}>
             <Section fill scrollable>
