@@ -215,38 +215,46 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
+/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
 	var/flags = NONE
-	var/mov_name = A.name
+	var/list/falling_and_buckled_mobs = list(falling)
+	var/list/mov_names = list(falling.name)
+	for(var/mob/buckled_mob as anything in falling.buckled_mobs)
+		falling_and_buckled_mobs += buckled_mob
+		mov_names += buckled_mob.name
 	for(var/i in contents)
 		var/atom/thing = i
-		flags |= thing.intercept_zImpact(A, levels)
+		flags |= thing.intercept_zImpact(falling_and_buckled_mobs, levels)
 		if(flags & FALL_STOP_INTERCEPTING)
 			break
 	if(prev_turf && !(flags & FALL_NO_MESSAGE))
-		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
+		for(var/mov_name in mov_names)
+			prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
 	if(flags & FALL_INTERCEPTED)
 		return
-	if(zFall(A, levels + 1))
+	if(zFall(falling, levels + 1))
 		return FALSE
-	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
-	A.onZImpact(src, levels)
+	for(var/atom/movable/falling_mov as anything in falling_and_buckled_mobs)
+		falling_mov.visible_message("<span class='danger'>[falling_mov] crashes into [src]!</span>")
+		falling_mov.onZImpact(src, levels)
 	return TRUE
 
-/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
-	SHOULD_BE_PURE(TRUE)
-	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
-
-/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
+/turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, turf/oldloc)
 	var/turf/target = get_step_multiz(src, DOWN)
-	if(!target || (!isobj(A) && !ismob(A)))
+	if(!target || (!isobj(falling) && !ismob(falling)))
 		return FALSE
-	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
+	if(!force && !falling.can_z_move(src, target, DOWN, ZTRAVEL_FALL_CHECKS))
 		return FALSE
-	A.zfalling = TRUE
-	A.forceMove(target)
-	A.zfalling = FALSE
-	target.zImpact(A, levels, src)
+	if(levels == 1) //first iteration; bring whatever they're pulling down with them next.
+		for(var/mob/buckled_mob as anything in falling.buckled_mobs)
+			buckled_mob.currently_z_moving = TRUE // Prevents the buckled mob from falling before whatever they are buckled in.
+			buckled_mob.Move(src, get_dir(buckled_mob, src)) // this should move the items they are pulling to their previous location.
+			if(buckled_mob.pulling)
+				addtimer(CALLBACK(buckled_mob.pulling, /atom/movable/.proc/fallen_movable_conga_pull, buckled_mob.pulling.loc, src), 0.2 SECONDS)
+		if(falling.pulling) // Unlike objects pulled by buckled mobs, the object pulled by the falling movable will move after the fall has come to an end.
+			addtimer(CALLBACK(falling.pulling, /atom/movable/.proc/fallen_movable_conga_pull, oldloc, src), 0.2 SECONDS) // That's why we use oldloc, the previous loc of 'falling'.
+	falling.zMove(null, target, forced = TRUE, affect_pulling = FALSE)
+	target.zImpact(falling, levels, src)
 	return TRUE
 
 /turf/proc/handleRCL(obj/item/rcl/C, mob/user)
@@ -332,14 +340,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 
 /turf/open/Entered(atom/movable/AM)
-	..()
+	. = ..()
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
-	if(!AM.zfalling)
-		zFall(AM)
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)

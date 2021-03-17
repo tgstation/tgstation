@@ -94,24 +94,13 @@
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-//it uses setLoc not forceMove, talks to the sillycone and not the camera mob
-/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(ai, "<span class='warning'>There's nowhere to go in that direction!</span>")
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(ai, "<span class='warning'>You couldn't move there!</span>")
-		return FALSE
-	setLoc(target, TRUE)
-	return TRUE
+/mob/camera/ai_eye/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
+	. = ..()
+	if(.)
+		setLoc(loc, force_update = TRUE)
 
-/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
-	return TRUE
+/mob/camera/ai_eye/can_z_move(direction, turf/target, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
+	return TRUE //cameras do not respect these FLOORS you speak so much of
 
 /mob/camera/ai_eye/Move()
 	return

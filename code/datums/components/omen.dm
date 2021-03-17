@@ -71,10 +71,8 @@
 				qdel(src)
 			return
 
-	for(var/t in get_adjacent_open_turfs(living_guy))
-		var/turf/the_turf = t
-
-		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_zFall(the_turf))
+	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
+		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(the_turf, direction = DOWN, ztravel_check_flags = ZTRAVEL_FALL_CHECKS))
 			to_chat(living_guy, "<span class='warning'>A malevolent force guides you towards the edge...</span>")
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 			if(!permanent)

@@ -489,11 +489,11 @@
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
 
-	if(can_zFall(above_turf, 1, current_turf, DOWN)) //Will be fall down if we go up?
+	if(can_z_move(above_turf, current_turf, DOWN, ZTRAVEL_FALL_CHECKS)) //Will be fall down if we go up?
 		to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return
 
-	if(zMove(UP, TRUE))
+	if(zMove(UP, feedback = TRUE))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
 ///Moves a mob down a z level
@@ -501,29 +501,10 @@
 	set name = "Move Down"
 	set category = "IC"
 
-	if(zMove(DOWN, TRUE))
+	if(zMove(DOWN, feedback = TRUE))
 		to_chat(src, "<span class='notice'>You move down.</span>")
 
-///Move a mob between z levels, if it's valid to move z's on this turf
-/mob/proc/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
+/mob/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
+	if(buckled?.currently_z_moving) //so they don't fall twice.
 		return FALSE
-	if(incapacitated())
-		if(feedback)
-			to_chat(src, "<span class='warning'>You can't do that right now!</span>")
-			return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
-		return FALSE
-	forceMove(target)
-	return TRUE
-
-/// Can this mob move between z levels
-/mob/proc/canZMove(direction, turf/target)
-	return FALSE
+	return ..()

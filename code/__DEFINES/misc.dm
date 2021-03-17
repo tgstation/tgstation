@@ -507,10 +507,14 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define GOOD_ART 25
 #define GREAT_ART 50
 
-// possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
+/// possible bitflag return values of [atom/proc/intercept_zImpact(list/falling_movables, levels = 1)] calls
 #define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE (1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
 #define FALL_STOP_INTERCEPTING (1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
+
+/// flags for different checks done in [/atom/movable/proc/can_z_move(start, destination, direction, ztravel_check_flags)]
+#define ZTRAVEL_FALL_CHECKS (1<<0)
+#define ZTRAVEL_CAN_FLY_CHECKS (1<<1)
 
 //Religion
 

@@ -1015,8 +1015,8 @@
 	if(zMove(UP, TRUE))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
-/mob/living/silicon/ai/zMove(dir, feedback = FALSE)
-	. = eyeobj.zMove(dir, feedback)
+/mob/living/silicon/ai/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
+	return eyeobj.zMove(dir, feedback)
 
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].

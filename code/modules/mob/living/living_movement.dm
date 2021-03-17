@@ -51,10 +51,21 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-/mob/living/canZMove(dir, turf/target)
-	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
+/mob/living/can_z_move(dir, turf/target, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
+	if(ztravel_check_flags & ZTRAVEL_CAN_FLY_CHECKS && !(movement_type & FLYING | FLOATING))
+		return FALSE
+	if(ztravel_check_flags & ZTRAVEL_FALL_CHECKS && buckled?.movement_type & FLYING)
+		return FALSE
+	return ..()
 
 /mob/living/keybind_face_direction(direction)
 	if(stat > SOFT_CRIT)
 		return
+	return ..()
+
+/mob/living/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
+	if(!forced && incapacitated())
+		if(feedback)
+			to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+		return FALSE
 	return ..()

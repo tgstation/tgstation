@@ -36,6 +36,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency, FALSE)
+	AddElement(/datum/element/entered_open_space_fall)
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))

@@ -50,9 +50,9 @@
 	var/grab_state = 0
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
-	var/can_be_z_moved = TRUE
 
-	var/zfalling = FALSE
+	///is the mob currently ascending or descending through z levels?
+	var/currently_z_moving = FALSE
 
 	///Last location of the atom for demo recording purposes
 	var/atom/demo_last_loc
@@ -139,19 +139,6 @@
 				break
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
 
-/atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
-	if(!direction)
-		direction = DOWN
-	if(!source)
-		source = get_turf(src)
-		if(!source)
-			return FALSE
-	if(!target)
-		target = get_step_multiz(source, direction)
-		if(!target)
-			return FALSE
-	return !(movement_type & FLYING) && has_gravity(source) && !throwing
-
 /atom/movable/proc/onZImpact(turf/T, levels)
 	var/atom/highest = T
 	for(var/i in T.contents)
@@ -164,23 +151,62 @@
 	INVOKE_ASYNC(src, .proc/SpinAnimation, 5, 2)
 	return TRUE
 
+///Move a movable between z levels, to a target turf (skips can_z_move checks), or in an ascending or descending direction IF valid.
+/atom/movable/proc/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
+	if(!target)
+		if(dir == UP || dir == DOWN)
+			target = get_step_multiz(src, dir)
+		if(!target)
+			if(feedback)
+				to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+			return FALSE
+		if(!can_z_move(dir, target, !forced))
+			if(feedback)
+				to_chat(src, "<span class='warning'>You couldn't move there!</span>")
+			return FALSE
+	var/list/fallen_heroes = list(src)
+	if(affect_pulling && pulling)
+		fallen_heroes += pulling
+		if(pulling.buckled_mobs)
+			fallen_heroes += pulling.buckled_mobs
+	if(buckled_mobs)
+		fallen_heroes += buckled_mobs
+	for(var/atom/movable/falling_mov as anything in fallen_heroes)
+		falling_mov.currently_z_moving = TRUE
+		falling_mov.forceMove(target)
+		falling_mov.currently_z_moving = FALSE
+	return TRUE
+
 //For physical constraints to travelling up/down.
-/atom/movable/proc/can_zTravel(turf/destination, direction)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return FALSE
+/atom/movable/proc/can_z_move(turf/start, turf/destination, direction, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
+	if(!start)
+		start = get_turf(src)
+		if(!start)
+			return FALSE
 	if(!direction)
 		if(!destination)
 			return FALSE
-		direction = get_dir(T, destination)
+		direction = get_dir(start, destination)
 	if(direction != UP && direction != DOWN)
 		return FALSE
 	if(!destination)
-		destination = get_step_multiz(src, direction)
+		destination = get_step_multiz(start, direction)
 		if(!destination)
 			return FALSE
-	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, T)
+	if(ztravel_check_flags & ZTRAVEL_FALL_CHECKS && (throwing || movement_type & FLYING || !has_gravity(start)))
+		return FALSE
+	return start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)
 
+/*
+ * First, imagine a conga line ingame, with each mob holding the next one... Ok, then image the mob at the head of it
+ * slipping down below... you see where I'm going, right? movables falling one by one in rapid succession.
+ *
+ * The proc is invoked after a 1 deciseconds callback in [turf/zFall()]. It checks if the src is still located in 'oldloc'.
+ * If so, src is moved to 'newloc', probably an open space turf which will then drop it to the z level below.
+ */
+/atom/movable/proc/fallen_movable_conga_pull(turf/oldloc, turf/newloc)
+	if(loc == oldloc)
+		Move(newloc, get_dir(src, newloc))
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
@@ -462,18 +488,19 @@
 		return
 
 	if(.)
-		Moved(oldloc, direct)
-	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
-		if(pulling.anchored)
-			stop_pulling()
-		else
-			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position
-			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
-				pulling.moving_from_pull = src
-				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
-				pulling.moving_from_pull = null
-			check_pulling()
+		. |= Moved(oldloc, direct)
+		//we were pulling a thing and didn't lose it during our move.
+		if(pullee && (pulling == pullee || . & MOVABLE_MOVED_ZFELL_DOWN) && pullee != moving_from_pull)
+			if(pullee.anchored)
+				stop_pulling()
+			else
+				var/pull_dir = get_dir(src, pullee)
+				//puller and pullee more than one tile away or in diagonal position
+				if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+					pullee.moving_from_pull = src
+					pullee.Move(T, get_dir(pullee, T), glide_size) //the pullee tries to reach our previous position
+					pullee.moving_from_pull = null
+				check_pulling()
 
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
@@ -488,17 +515,15 @@
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
 
-//Called after a successful Move(). By this point, we've already moved
+/// Called after a successful Move(). By this point, we've already moved. Return value is a bitfield used to better manage final move() behaviors.
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
+	. = SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
-
-	return TRUE
 
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
@@ -585,7 +610,7 @@
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
 	if(destination)
-		if(pulledby)
+		if(pulledby && (!currently_z_moving || pulledby.loc != destination)) ///don't stop pulling items dragged through z levels.
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
 		var/same_loc = oldloc == destination
@@ -788,9 +813,8 @@
 		TT.tick()
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
-	for(var/m in buckled_mobs)
-		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct, glide_size_override))
+	for(var/mob/living/buckled_mob as anything in buckled_mobs)
+		if(buckled_mob.loc != newloc && !buckled_mob.Move(newloc, direct, glide_size_override))
 			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move

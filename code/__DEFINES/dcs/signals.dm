@@ -342,11 +342,12 @@
 
 // /atom/movable signals
 
-///from base of atom/movable/Moved(): (/atom)
+///from base of atom/movable/Move(): (/atom)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE (1<<0)
 ///from base of atom/movable/Moved(): (/atom, dir)
 #define COMSIG_MOVABLE_MOVED "movable_moved"
+	#define MOVABLE_MOVED_ZFELL_DOWN (2<<0) // Starts from here because Move() also uses bools for return value (Moved() is called only if the value is true/non-zero, so it won't screw things up)
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
 ///from base of atom/movable/Crossed(): (/atom/movable)

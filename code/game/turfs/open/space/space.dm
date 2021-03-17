@@ -159,11 +159,11 @@
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/space/Entered(atom/movable/A)
-	..()
+	. = ..()
 	if ((!(A) || src != A.loc))
 		return
 
-	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.can_be_z_moved))
+	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.currently_z_moving))
 		var/tx = destination_x
 		var/ty = destination_y
 		var/turf/DT = locate(tx, ty, destination_z)
@@ -182,21 +182,13 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/pulling = A.pulling
-		var/atom/movable/puller = A
-		A.forceMove(DT)
+		A.zMove(null, DT, forced = TRUE, affect_pulling = FALSE) //zMove itself doesn't handle conga lines of pulled movables
 
-		while (pulling != null)
-			var/next_pulling = pulling.pulling
-
-			var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
-			pulling.can_be_z_moved = FALSE
-			pulling.forceMove(T)
-			puller.start_pulling(pulling)
-			pulling.can_be_z_moved = TRUE
-
-			puller = pulling
-			pulling = next_pulling
+		var/atom/movable/current_pull = A.pulling
+		while (current_pull)
+			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
+			current_pull.zMove(null, target_turf, forced = TRUE)
+			current_pull = current_pull.pulling
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary
