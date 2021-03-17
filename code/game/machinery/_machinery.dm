@@ -376,8 +376,8 @@
 		return FALSE
 
 	if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
-		var/mob/living/carbon/carb_user = living_user
-		if(!istype(carb_user) || !carb_user.has_dna() || !carb_user.dna.check_mutation(TK))
+		var/mob/living/carbon/carbon_user = living_user
+		if(!istype(carbon_user) || !carbon_user.has_dna() || !carbon_user.dna.check_mutation(TK))
 			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
