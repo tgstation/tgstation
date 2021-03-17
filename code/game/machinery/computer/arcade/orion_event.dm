@@ -437,9 +437,9 @@
 		playsound(game.loc, 'sound/effects/supermatter.ogg', 100, TRUE)
 		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
 		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
-		var/S = new /obj/singularity/academy(gamer.loc)
-		addtimer(CALLBACK(game, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
-		QDEL_IN(S, 5 SECONDS)
+		var/black_hole = new /obj/singularity/academy(gamer.loc)
+		addtimer(CALLBACK(game, /atom/movable/proc/say, "[black_hole] winks out, just as suddenly as it appeared."), 50)
+		QDEL_IN(black_hole, 5 SECONDS)
 
 #define BUTTON_DOCK "Dock"
 
