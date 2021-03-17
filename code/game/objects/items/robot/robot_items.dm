@@ -812,7 +812,7 @@
 
 /obj/item/borg/apparatus/Exited(atom/A)
 	if(A == stored) //sanity check
-		UnregisterSignal(stored, COMSIG_ATOM_UPDATE_ICON)
+		UnregisterSignal(stored, COMSIG_ATOM_UPDATED_ICON)
 		stored = null
 	update_appearance()
 	. = ..()
@@ -846,7 +846,7 @@
 			var/obj/item/O = A
 			O.forceMove(src)
 			stored = O
-			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
 			update_appearance()
 			return
 	else
@@ -854,10 +854,16 @@
 		return
 	. = ..()
 
-/// Exists to eat signal args
-/obj/item/borg/apparatus/proc/on_update_icon(datum/source, updates)
+/**
+ * Updates the appearance of the apparatus when the stored object's icon gets updated.
+ *
+ * Returns NONE as we have not done anything to the stored object itself,
+ * which is where this signal that this handler intercepts is sent from.
+ */
+/obj/item/borg/apparatus/proc/on_stored_updated_icon(datum/source, updates)
 	SIGNAL_HANDLER
-	return on_update_icon(updates)
+	update_appearance()
+	return NONE
 
 /obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
 	if(stored)
@@ -879,7 +885,7 @@
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
 	update_appearance()
 
 /obj/item/borg/apparatus/beaker/Destroy()
@@ -939,7 +945,7 @@
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
 	update_appearance()
 
 /////////////////////
