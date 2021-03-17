@@ -15,8 +15,6 @@
 	var/active_power_use = 0
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
-	/// Whitelist of MOD themes that can use it
-	var/list/mod_blacklist = list()
 
 /obj/item/mod/module/Destroy()
 	..()

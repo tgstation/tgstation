@@ -132,10 +132,10 @@
 		active = !active
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
-			slowdown = slowdown_active
+			slowdown = theme.slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
-			slowdown = initial(slowdown)
+			slowdown = theme.slowdown_unactive
 		wearer.update_equipment_speed_mods()
 	activating = FALSE

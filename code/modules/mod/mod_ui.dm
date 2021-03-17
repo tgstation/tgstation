@@ -47,12 +47,14 @@
 		if("lock")
 			locked = !locked
 			to_chat(usr, "<span class='notice'>The suit has been [locked ? "unlocked" : "locked"].</span>")
+		if("update_access")
+			update_access()
 		if("activate")
 			toggle_activate(usr)
 		if("select")
 			var/obj/item/mod/module/thingy = locate(params["ref"]) in modules
-			if(thingy.selectable == MOD_USABLE)
+			thingy.active = !thingy.active
+			if(thingy.selectable == MOD_USABLE && thingy.active)
 				selected_module.active = FALSE
 				selected_module = thingy
-			thingy.active = !thingy.active
 	return TRUE

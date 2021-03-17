@@ -29,12 +29,16 @@ export const MODsuit = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Lock"
-              buttons={
-                <Button
+              buttons={<
+                Button
                   icon={data.locked ? "lock-open" : "lock"}
                   content={data.locked ? 'Unlock' : 'Lock'}
-                  onClick={() => act('lock')} />
-              } >
+                  onClick={() => act('lock')}
+                Button
+                  icon="id-card"
+                  content="Update Access"
+                  onClick={() => act('update_access')}
+                />} >
               {data.locked ? 'Locked' : 'Unlocked'}
             </LabeledList.Item>
             <LabeledList.Item label="Cover">
@@ -47,7 +51,7 @@ export const MODsuit = (props, context) => {
               {data.wearer_name}, {data.wearer_job}
             </LabeledList.Item>
             <LabeledList.Item label="Onboard AI">
-              {data.AI || "None"}
+              {data.AI || 'None'}
             </LabeledList.Item>
             <LabeledList.Item
               label="Cell Charge"

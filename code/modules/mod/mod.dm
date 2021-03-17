@@ -8,7 +8,7 @@
 
 /obj/item/mod/control
 	name = "MOD control module"
-	desc = "The control piece of a Modular Outerwear Device, a special powered suit that protects against various environments. Wear it on your back, deploy it and activate it."
+	desc = "The control piece of a Modular Outerwear Device, a special powered suit that protects against various environments. Wear it on your back, deploy it and activate it to learn the extend of technology."
 	icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -22,9 +22,9 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
 	/// The MOD's theme, decides on some stuff like armor and statistics
-	var/theme = "standard"
+	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD
-	var/skin
+	var/skin = "standard"
 	/// If the suit is deployed and turned on
 	var/active = FALSE
 	/// If the suit wire/module hatch is open
@@ -41,14 +41,12 @@
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If the suit interface is broken
 	var/interface_break = FALSE
-	/// Can the MOD swap out modules/parts
-	var/no_customization = FALSE
 	/// How much modules can this MOD carry without malfunctioning
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much modules this MOD is carrying
 	var/complexity = 0
-	/// How much battery power the MOD uses by just being on
-	var/cell_usage = 5
+	/// Power usage of the MOD.
+	var/cell_drain = 0
 	/// Slowdown when active
 	var/slowdown_active = 1
 	/// MOD cell
@@ -63,8 +61,6 @@
 	var/obj/item/clothing/shoes/mod/boots = /obj/item/clothing/shoes/mod
 	/// List of parts
 	var/list/mod_parts
-	/// Modules the MOD should spawn with
-	var/list/initial_modules = list()
 	/// Modules the MOD currently possesses
 	var/list/modules
 	/// Currently used module
@@ -81,11 +77,16 @@
 /obj/item/mod/control/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj,src)
-	name = "[theme] [initial(name)]"
-	skin = theme
-	icon_state = "[skin]-[icon_state]"
+	if(!ispath(theme))
+		CRASH("A MODsuit spawned without a proper theme.")
+	theme = GLOB.mod_themes[theme]
+	slowdown = theme.slowdown_unactive
+	complexity_max = theme.complexity_max
+	skin = theme.default_skin
+	req_access = theme.req_access.Copy()
+	cell_drain = theme.cell_usage
 	wires = new /datum/wires/mod(src)
-	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
+	if(!req_access.len)
 		locked = FALSE
 	if(ispath(cell))
 		cell = new cell(src)
@@ -106,19 +107,20 @@
 		boots.mod = src
 		LAZYADD(mod_parts, boots)
 	if(LAZYLEN(mod_parts))
-		for(var/obj/item/piece in mod_parts)
-			piece.name = "[theme] [piece.name]"
-			piece.desc = "It seems to be a part of [src]."
-			piece.armor = armor
-			piece.resistance_flags = resistance_flags
-			piece.max_heat_protection_temperature = max_heat_protection_temperature
-			piece.min_cold_protection_temperature = min_cold_protection_temperature
-			piece.gas_transfer_coefficient = gas_transfer_coefficient
-			piece.permeability_coefficient = permeability_coefficient
-			piece.siemens_coefficient = siemens_coefficient
+		var/all_parts = mod_parts.Copy() + src
+		for(var/obj/item/piece in all_parts)
+			piece.name = "[theme.name] [piece.name]"
+			piece.desc = "[piece.desc] [theme.desc]"
+			piece.armor = theme.armor
+			piece.resistance_flags = theme.resistance_flags
+			piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
+			piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
+			piece.gas_transfer_coefficient = theme.gas_transfer_coefficient
+			piece.permeability_coefficient = theme.permeability_coefficient
+			piece.siemens_coefficient = theme.siemens_coefficient
 			piece.icon_state = "[skin]-[piece.icon_state]"
-	if(initial_modules.len)
-		for(var/obj/item/mod/module/module in initial_modules)
+	if(theme.initial_modules.len)
+		for(var/obj/item/mod/module/module in theme.initial_modules)
 			module = new module(src)
 			install(module, TRUE)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
@@ -149,12 +151,10 @@
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
-	if(cell && cell.charge > 0 && active)
-		var/chargeremoved = cell_usage
-		for(var/obj/item/mod/module/thingy in modules)
-			chargeremoved += thingy.idle_power_use
-		if((cell.charge -= chargeremoved) < 0)
-			cell.charge = 0
+	if(!(cell && cell.charge > 0 && active && cell_drain))
+		return
+	if((cell.charge -= cell_drain) < 0)
+		cell.charge = 0
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
@@ -177,16 +177,16 @@
 		if(src == guy.back)
 			for(var/obj/item/part in mod_parts)
 				if(part.loc != src)
-					to_chat(guy, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
+					to_chat(guy, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
 					playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
 					return FALSE
 	return ..()
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
-	if(src == wearer.back && istype(over_object, /atom/movable/screen/inventory/hand))
+	if(src == wearer?.back && istype(over_object, /atom/movable/screen/inventory/hand))
 		for(var/obj/item/part in mod_parts)
 			if(part.loc != src)
-				to_chat(wearer, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
+				to_chat(wearer, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
 				return
 		if(!wearer.incapacitated())
@@ -237,13 +237,13 @@
 				uninstall(thingy)
 		I.play_tool_sound(src, 100)
 		return TRUE
-	to_chat(user, "<span class='warning'>There's no modules on [src]!</span>")
+	to_chat(user, "<span class='warning'>ERROR: There's no modules on [src]!</span>")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 	return FALSE
 
 /obj/item/mod/control/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/mod/module))
-		if(open && !active && !activating && !no_customization)
+		if(open && !active && !activating)
 			install(I, FALSE)
 			return TRUE
 		else
@@ -269,26 +269,21 @@
 	..()
 
 /obj/item/mod/control/proc/paint()
-	update_icon_state()
 	wearer.update_icons()
 
 /obj/item/mod/control/proc/shock(mob/living/user)
-	if(!istype(wearer) || cell.charge < 1)
+	if(!istype(user) || cell.charge < 1)
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	if(electrocute_mob(wearer, get_area(src), src, 0.7, check_range))
+	if(electrocute_mob(user, get_area(src), src, 0.7, check_range))
 		return TRUE
 	else
 		return FALSE
 
 /obj/item/mod/control/proc/install(module, starting_module = FALSE)
-	if(!starting_module && no_customization)
-		audible_message("<span class='warning'>[src] indicates that it cannot be modified.</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
 	var/obj/item/mod/module/thingy = module
-	if(thingy.mod_blacklist.Find(theme))
+	if(theme.module_blacklist.Find(thingy))
 		if(!starting_module)
 			audible_message("<span class='warning'>[src] indicates that it rejects the module.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
@@ -303,6 +298,7 @@
 	thingy.forceMove(src)
 	LAZYADD(modules, thingy)
 	complexity += thingy.complexity
+	cell_drain += thingy.idle_power_use
 	thingy.mod = src
 	thingy.on_install()
 	if(!starting_module)
@@ -310,10 +306,6 @@
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/uninstall(module)
-	if(no_customization)
-		audible_message("<span class='warning'>[src] indicates that it cannot be modified.</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
 	var/obj/item/mod/module/thingy = module
 	if(!thingy.removable)
 		audible_message("<span class='warning'>[src] indicates that the module cannot be removed.</span>")
@@ -322,11 +314,21 @@
 	thingy.forceMove(get_turf(src))
 	LAZYREMOVE(modules, thingy)
 	complexity -= thingy.complexity
+	cell_drain -= thingy.idle_power_use
 	thingy.on_uninstall()
 	thingy.mod = null
 
+/obj/item/mod/control/proc/update_access()
+	if(!allowed(wearer))
+		to_chat(wearer, "<span class='warning'>ERROR: Access denied.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
+	req_access = wearer.wear_id?.GetID()
+	to_chat(wearer, "<span class='notice'>Access levels updated.</span>")
+
 /obj/item/clothing/head/helmet/space/mod
 	name = "MOD helmet"
+	desc = "A helmet for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/mod.dmi'
@@ -350,6 +352,7 @@
 
 /obj/item/clothing/suit/armor/mod
 	name = "MOD chestplate"
+	desc = "A chestplate for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/mod.dmi'
@@ -374,6 +377,7 @@
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
+	desc = "A pair of gauntlets for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/mod.dmi'
@@ -399,6 +403,7 @@
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
+	desc = "A pair of boots for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "boots"
 	worn_icon = 'icons/mob/mod.dmi'
@@ -421,3 +426,6 @@
 		return
 	if(user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1))
 		overslot = null
+
+/obj/item/mod/control/engineering
+	theme = /datum/mod_theme/engineering
