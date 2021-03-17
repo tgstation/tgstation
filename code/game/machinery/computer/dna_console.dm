@@ -2151,6 +2151,7 @@
 		diskette.forceMove(drop_location())
 	diskette = null
 
+#undef ENZYME_COPY_BASE_COOLDOWN
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS
 #undef SCRAMBLE_TIMEOUT

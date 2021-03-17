@@ -1186,11 +1186,11 @@ const GeneticMakeupBuffers = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     diskHasMakeup,
+    geneticMakeupCooldown,
     hasDisk,
     isViableSubject,
     makeupCapacity = 3,
     makeupStorage,
-    geneticMakeupCooldown,
   } = data;
   const elements = [];
   for (let i = 1; i <= makeupCapacity; i++) {
