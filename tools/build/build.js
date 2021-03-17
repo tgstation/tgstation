@@ -93,8 +93,7 @@ const taskTgui = new Task('tgui')
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
 
-const taskDm = (...injectedDefines) => {
-   return new Task('dm')
+const taskDm = (...injectedDefines) => new Task('dm')
   .depends('_maps/map_files/generic/**')
   .depends('code/**')
   .depends('goon/**')
@@ -172,7 +171,6 @@ const taskDm = (...injectedDefines) => {
       await exec(dmPath, [`${DME_NAME}.dme`]);
     }
   });
-}
 
 // Frontend
 let tasksToRun = [];
