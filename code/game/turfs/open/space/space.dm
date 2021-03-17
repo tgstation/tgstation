@@ -163,7 +163,7 @@
 	if ((!(A) || src != A.loc))
 		return
 
-	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.currently_z_moving))
+	if(destination_z && destination_x && destination_y && !A.pulledby && !A.currently_z_moving)
 		var/tx = destination_x
 		var/ty = destination_y
 		var/turf/DT = locate(tx, ty, destination_z)
