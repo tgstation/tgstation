@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Food that should drop trash should now always drop that trash, including plates dropping from prepared food, food that you have to pull out of shells and gatfruits."

@@ -392,6 +392,10 @@
 					newmob.equipOutfit(posttransformoutfit)
 			if("slime")
 				M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
+			if("adultslime")
+				var/mob/living/simple_animal/slime/baby_slime = M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
+				baby_slime.amount_grown = SLIME_EVOLUTION_THRESHOLD
+				baby_slime.Evolve()
 			if("monkey")
 				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
