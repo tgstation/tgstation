@@ -350,7 +350,7 @@
 		if (user_as_animal.dextrous)
 			is_dextrous = TRUE
 
-	if(!(issilicon(user) || is_dextrous || user.can_hold_items()))
+	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
 		return FALSE //spiders gtfo
 	
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
