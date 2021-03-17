@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target || (!isobj(falling) && !ismob(falling)))
 		return FALSE
-	if(!force && !falling.can_z_move(src, target, DOWN, ZTRAVEL_FALL_CHECKS))
+	if(!force && !falling.can_z_move(DOWN, src, target, ZTRAVEL_FALL_CHECKS))
 		return FALSE
 	if(levels == 1) //first iteration; bring whatever they're pulling down with them next.
 		for(var/mob/buckled_mob as anything in falling.buckled_mobs)

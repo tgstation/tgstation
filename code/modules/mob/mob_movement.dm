@@ -489,7 +489,7 @@
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
 
-	if(can_z_move(above_turf, current_turf, DOWN, ZTRAVEL_FALL_CHECKS)) //Will be fall down if we go up?
+	if(can_z_move(DOWN, above_turf, current_turf, ZTRAVEL_FALL_CHECKS)) //Will be fall down if we go up?
 		to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return
 

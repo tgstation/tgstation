@@ -160,7 +160,7 @@
 			if(feedback)
 				to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 			return FALSE
-		if(!can_z_move(dir, target, !forced))
+		if(!can_z_move(dir, get_turf(src), target, forced ? NONE : ZTRAVEL_CAN_FLY_CHECKS))
 			if(feedback)
 				to_chat(src, "<span class='warning'>You couldn't move there!</span>")
 			return FALSE
@@ -178,7 +178,7 @@
 	return TRUE
 
 //For physical constraints to travelling up/down.
-/atom/movable/proc/can_z_move(turf/start, turf/destination, direction, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
+/atom/movable/proc/can_z_move(direction, turf/start, turf/destination, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
 	if(!start)
 		start = get_turf(src)
 		if(!start)

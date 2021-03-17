@@ -77,7 +77,7 @@
 	if(!checking.zPassIn(climber, UP, get_turf(src)))
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
-	if(istype(target) && !climber.can_z_move(target, null, DOWN, ZTRAVEL_FALL_CHECKS)) //Don't throw them into a tile that will just dump them back down.
+	if(istype(target) && !climber.can_z_move(DOWN, target, ztravel_check_flags = ZTRAVEL_FALL_CHECKS)) //Don't throw them into a tile that will just dump them back down.
 		climber.zMove(null, target, forced = TRUE)
 
 

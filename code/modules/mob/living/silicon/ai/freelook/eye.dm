@@ -99,7 +99,7 @@
 	if(.)
 		setLoc(loc, force_update = TRUE)
 
-/mob/camera/ai_eye/can_z_move(direction, turf/target, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
+/mob/camera/ai_eye/can_z_move(direction, turf/start, turf/destination, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
 	return TRUE //cameras do not respect these FLOORS you speak so much of
 
 /mob/camera/ai_eye/Move()

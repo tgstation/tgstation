@@ -1012,7 +1012,7 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
-	if(zMove(UP, TRUE))
+	if(zMove(UP, feedback = TRUE))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
 /mob/living/silicon/ai/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)

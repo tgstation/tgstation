@@ -51,7 +51,7 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-/mob/living/can_z_move(dir, turf/target, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
+/mob/living/can_z_move(direction, turf/start, turf/destination, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
 	if(ztravel_check_flags & ZTRAVEL_CAN_FLY_CHECKS && !(movement_type & FLYING | FLOATING))
 		return FALSE
 	if(ztravel_check_flags & ZTRAVEL_FALL_CHECKS && buckled?.movement_type & FLYING)
