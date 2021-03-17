@@ -433,7 +433,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// This is the version when the random security department was removed.
 	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
-	#ifdef SAVEFILE_VERSION_MIN > 40
+	#if SAVEFILE_VERSION_MIN > 40
 	#warn The prefered_security_department check in preferences_savefile.dm is no longer necessary.
 	#endif
 
