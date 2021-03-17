@@ -342,7 +342,7 @@
 	if(!isliving(user))
 		return FALSE //no ghosts in the machine allowed, sorry
 
-	var/mob/living/L = user
+	var/mob/living/living_user = user
 
 	var/is_dextrous = FALSE
 	if(isanimal(user))
@@ -362,13 +362,12 @@
 
 		return TRUE //silicons don't care about petty mortal concerns like needing to be next to a machine to use it
 
-	if(L.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
+	if(living_user.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
 		return FALSE
 
-	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT)
-		if(user.is_blind())
-			to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
-			return FALSE
+	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
+		to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
+		return FALSE
 
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		return FALSE
@@ -377,8 +376,8 @@
 		return FALSE
 
 	if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
-		var/mob/living/carbon/H = L
-		if(!istype(H) || !H.has_dna() || !H.dna.check_mutation(TK))
+		var/mob/living/carbon/carb_user = living_user
+		if(!istype(carb_user) || !carb_user.has_dna() || !carb_user.dna.check_mutation(TK))
 			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
