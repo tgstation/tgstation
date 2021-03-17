@@ -178,7 +178,7 @@
 	RefreshParts()
 	if(isliving(user))
 		var/mob/living/customer = user
-		account = customer?.get_bank_account()
+		account = customer.get_bank_account()
 
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
