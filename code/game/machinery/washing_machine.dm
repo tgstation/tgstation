@@ -336,16 +336,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
 	if(!user.canUseTopic(src, !issilicon(user)))
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(state_open)
 		to_chat(user, "<span class='warning'>Close the door first!</span>")
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(bloody_mess)
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	busy = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
