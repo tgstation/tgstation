@@ -22,7 +22,7 @@
 
 /obj/item/tank/jetpack/Destroy()
 	QDEL_NULL(ion_trail)
-	. = ..()
+	return ..()
 
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)

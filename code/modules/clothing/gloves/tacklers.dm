@@ -25,7 +25,7 @@
 
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
-	. = ..()
+	return ..()
 
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
 	. = ..()
