@@ -9,12 +9,13 @@
 
 /datum/outfit_manager
 	var/client/user
-	var/category = "headwear"
-	var/page = 2
+
+	var/datum/outfit/drip = /datum/outfit/job/miner/equipped/hardsuit
 	var/static/list/objects
 
 /datum/outfit_manager/New(_user)
 	user = CLIENT_FROM_VAR(_user)
+	/*
 	if(!objects)
 		objects = list()
 		objects["uniforms"] = typesof(/obj/item/clothing/under)
@@ -25,6 +26,7 @@
 		objects["glasses"] = typesof(/obj/item/clothing/glasses)
 		objects["masks"] = typesof(/obj/item/clothing/mask)
 		objects["ids"] = typesof(/obj/item/card/id)
+	*/
 
 /datum/outfit_manager/ui_state(mob/user)
 	return GLOB.admin_state
@@ -32,33 +34,37 @@
 /datum/outfit_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "BigPain", "Outfit Manager")
+		ui = new(user, src, "BigPain", "Outfit-O-Tron 9000")
 		ui.open()
 		ui.set_autoupdate(FALSE)
-
-
-/datum/outfit_manager/proc/entry(obj/item/I)
-	return list("name" = initial(I.name), "path" = initial(I), "icon" = icon2base64(initial(I.icon)))
-
-/datum/outfit_manager/proc/get_entries(list/L, amount=9)
-	. = list()
-	var/start = page*amount + 1 //lists in byond start at 1 .-.
-	if(start>L.len)
-		return
-	var/end = min(start + amount-1, L.len)
-	for(var/i in start to end)
-		. += list(entry(L[i]))
-
 
 
 /datum/outfit_manager/ui_data(mob/user)
 	var/list/data = list()
 
-	data["categories"] = assoc_list_strip_value(objects)
-	data["category"] = category
-	data["page"] = page
+	var/list/outfit_slots = list()
+	outfit_slots["head"] = drip.head
+	outfit_slots["glasses"] = drip.glasses
+	outfit_slots["ears"] = drip.ears
 
+	outfit_slots["neck"] = drip.neck
+	outfit_slots["mask"] = drip.mask
 
-	data["objects"] = get_entries(objects[category])
+	outfit_slots["uniform"] = drip.uniform
+	outfit_slots["suit"] = drip.suit
+	outfit_slots["gloves"] = drip.gloves
 
+	outfit_slots["suit_store"] = drip.suit_store
+	outfit_slots["belt"] = drip.belt
+	outfit_slots["id"] = drip.id
+
+	outfit_slots["l_hand"] = drip.l_hand
+	outfit_slots["back"] = drip.back
+	outfit_slots["r_hand"] = drip.r_hand
+
+	outfit_slots["l_pocket"] = drip.l_pocket
+	outfit_slots["shoes"] = drip.shoes
+	outfit_slots["r_pocket"] = drip.r_pocket
+
+	data["OutfitSlots"] = outfit_slots
 	return data
