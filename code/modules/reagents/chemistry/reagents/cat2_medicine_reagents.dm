@@ -8,7 +8,6 @@
 	purity = REAGENT_STANDARD_PUIRTY
 	inverse_chem_val = 0
 	inverse_chem = null
-	failed_chem = /datum/reagent/impurity/healing/medicine_failure
 	chemical_flags = REAGENT_SPLITRETAINVOL
 
 /******BRUTE******/

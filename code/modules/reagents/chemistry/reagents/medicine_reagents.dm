@@ -9,6 +9,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	taste_description = "bitterness"
+	failed_chem = /datum/reagent/impurity/healing/medicine_failure
 
 /datum/reagent/medicine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	current_cycle++
@@ -520,7 +521,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 4) //1.6 per 2 seconds
 	inverse_chem = /datum/reagent/inverse/corazone
-	inverse_chem_val = 0.35
+	inverse_chem_val = 0.4
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()

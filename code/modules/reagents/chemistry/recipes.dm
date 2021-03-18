@@ -350,7 +350,6 @@
  * * stun - How long the mob is stunned for
  * * range - the radius around the holder's atom that is banged
  */
-
 /datum/chemical_reaction/proc/explode_deafen(datum/reagents/holder, datum/equilibrium/equilibrium, power = 3, stun = 20, range = 2)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
@@ -378,7 +377,7 @@
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
 	if(!force_range)
-		force_range = sum_volume/5
+		force_range = (sum_volume/5) + 3
 	if(invert_reagents.reagent_list)
 		smoke.set_up(invert_reagents, force_range, holder.my_atom)
 		smoke.start()
@@ -389,7 +388,7 @@
 		clear_products(holder)
 
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
-/datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
+/datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
@@ -398,8 +397,10 @@
 		if((reagent.type in required_reagents) || (reagent.type in results))
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
+	if(!force_range)
+		force_range = (sum_volume/5) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(reagents, (sum_volume/5), holder.my_atom)
+		smoke.set_up(reagents, , holder.my_atom)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)

@@ -115,12 +115,14 @@
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/liver))
 		return
 	var/obj/item/organ/liver/this_liver = organ
 	this_liver.alcohol_tolerance *= 2
 
 /datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/liver))
 		return
 	var/obj/item/organ/liver/this_liver = organ
@@ -340,6 +342,7 @@
 	apply_lung_levels(lungs)
 
 /datum/reagent/inverse/healing/convermol/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/lungs))
 		return
 	var/obj/item/organ/lungs/lungs = organ
@@ -362,6 +365,7 @@
 	lungs.cold_level_3_threshold *= creation_purity * 0.5
 
 /datum/reagent/inverse/healing/convermol/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/lungs))
 		return
 	var/obj/item/organ/lungs/lungs = organ
@@ -549,6 +553,7 @@
 	color = "#CDCDFF"
 	addiction_types = list(/datum/addiction/medicine = 5)
 	ph = 12.4
+	liver_damage = 0
 	///The speech we're forcing on the owner
 	var/speech_option
 
@@ -573,24 +578,23 @@
 	color = "#DCDCAA"
 	ph = 13.4
 	addiction_types = list(/datum/addiction/medicine = 8)
-	metabolization_rate = 0.05 * REM
+	metabolization_rate = 0.025 * REM
+	tox_damage = 0
 	//The temporary trauma passed to the owner
 	var/datum/brain_trauma/temp_trauma
 
-/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/owner)
+/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	.=..()
 	if(temp_trauma)
 		return
-	if(!(prob(creation_purity)*10))
+	if(!(DT_PROB(creation_purity*10, delta_time)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
 	var/datum/brain_trauma/trauma = pick(traumalist)
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!(brain.can_gain_trauma(trauma) ) )
-		return
-	brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC)
-	temp_trauma = trauma
+	if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
+		temp_trauma = trauma
 
 /datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
 	.=..()
@@ -607,7 +611,9 @@
 	self_consuming = TRUE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	metabolization_rate = 0.075 * REM
+	metabolization_rate = 0.01 * REM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	tox_damage = 0
 	///The old heart we're swapping for
 	var/obj/item/organ/heart/original_heart
 	///The new heart that's temp added
@@ -629,10 +635,12 @@
 	//these last so instert doesn't call them
 	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	to_chat(owner, "<span class='warning'>You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!</spans>")
 	..()
 
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
 /datum/reagent/inverse/corazone/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/heart))
 		return
 	var/mob/living/carbon/carbon_mob = owner
@@ -646,6 +654,7 @@
 
 ///If we're ejecting out the organ - replace it with the original
 /datum/reagent/inverse/corazone/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!organ == manual_heart)
 		return
 	original_heart.forceMove(organ.loc)
@@ -666,6 +675,7 @@
 		original_heart.Insert(carbon_mob, special = TRUE)
 	manual_heart.forceMove(null) //so we can be sure this is removed
 	qdel(manual_heart)
+	to_chat(owner, "<span class='warning'>You feel your heart start beating normally again!</spans>")
 	..()
 
 /datum/reagent/inverse/antihol
@@ -675,10 +685,11 @@
 	chemical_flags = REAGENT_INVISIBLE
 	addiction_types = list(/datum/addiction/medicine = 4.5)
 	color = "#4C8000"
+	tox_damage = 0
 
-/datum/reagent/inverse/antihol_inverse/on_mob_life(mob/living/carbon/C)
+/datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
-		alcohol.boozepwr += 2
+		alcohol.boozepwr += delta_time
 	..()
 
 /datum/reagent/inverse/oculine
@@ -690,14 +701,24 @@
 	addiction_types = list(/datum/addiction/medicine = 3)
 	taste_description = "funky toxin"
 	ph = 13
+	tox_damage = 0
+	metabolization_rate = 0.2 * REM
+	///Did we get a headache?
+	var/headache = FALSE
 
-/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/C)
-	if(prob(100*(1-creation_purity)))
-		C.become_blind("oculine_impure")
+/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	if(headache)
+		return ..()
+	if(DT_PROB(100*(1-creation_purity), delta_time))
+		owner.become_blind("oculine_impure")
+		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxtuates</spans>")
+		headache = TRUE
 	..()
 
-/datum/reagent/inverse/oculine/on_mob_delete(mob/living/L)
-	L.cure_blind("oculine_impure")
+/datum/reagent/inverse/oculine/on_mob_delete(mob/living/owner)
+	owner.cure_blind("oculine_impure")
+	if(headache)
+		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
 	..()
 
 /datum/reagent/impurity/inacusiate
@@ -708,16 +729,22 @@
 	color = "#DDDDFF"
 	taste_description = "the heat evaporating from your mouth."
 	ph = 1
+	liver_damage = 0.1
+	metabolization_rate = 0.04 * REM
+	///The random span we start hearing in
 	var/randomSpan
 
-/datum/reagent/impurity/inacusiate/on_mob_add(mob/living/owner)
+/datum/reagent/impurity/inacusiate/on_mob_add(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	to_chat(owner, "<span class='notice'>Your hearing seems to be a bit off...!</spans>")
 	..()
 
 /datum/reagent/impurity/inacusiate/on_mob_delete(mob/living/owner)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	to_chat(owner, "<span class='notice'>You start hearing things normally again.</spans>")
 	..()
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
 	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
