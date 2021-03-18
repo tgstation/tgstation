@@ -96,7 +96,7 @@
 	suit_store = /obj/item/gun/energy/laser/redtag
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/storage/box=1,
+		/obj/item/storage/box = 1,
 )
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/red
@@ -308,7 +308,7 @@
 	suit = /obj/item/clothing/suit/wizrobe
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/storage/box/survival=1,
+		/obj/item/storage/box/survival = 1,
 )
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/wizard
