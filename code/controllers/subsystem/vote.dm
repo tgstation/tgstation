@@ -119,7 +119,10 @@ SUBSYSTEM_DEF(vote)
 					restart = TRUE
 			if("gamemode")
 				if(GLOB.master_mode != .)
-					if(!SSticker.HasRoundStarted())
+					SSticker.save_mode(.)
+					if(SSticker.HasRoundStarted())
+						restart = TRUE
+					else
 						GLOB.master_mode = .
 			if("map")
 				SSmapping.changemap(global.config.maplist[.])
@@ -141,7 +144,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(!mode)
 		return FALSE
-	if(CONFIG_GET(flag/no_dead_vote) && (usr.stat == DEAD && !isnewplayer(usr)) && !usr.client.holder && mode != "map")
+	if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 		return FALSE
 	if(!(vote && 1<=vote && vote<=choices.len))
 		return FALSE
