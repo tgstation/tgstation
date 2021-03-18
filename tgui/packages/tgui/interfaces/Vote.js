@@ -25,7 +25,7 @@ export const Vote = (props, context) => {
   return (
     <Window resizable title={windowTitle} width={400} height={500}>
       <Window.Content>
-        <Stack fill direction="column">
+        <Stack fill vertical>
           {!!lower_admin && (
             <Section title="Admin Options">
               <VoteOptions />
@@ -49,11 +49,11 @@ const VoteOptions = (props, context) => {
       <Collapsible title="Start a Vote">
         <Stack justify="space-between">
           <Stack.Item>
-            <Stack direction="column">
-              <Stack.Item mb={1}>
+            <Stack vertical>
+              <Stack.Item>
                 {!!upper_admin && (
                   <Button.Checkbox
-                    ml={1}
+                    mr={1}
                     color="red"
                     checked={avmap}
                     onClick={() => act("toggle_map")}
@@ -68,10 +68,10 @@ const VoteOptions = (props, context) => {
                   Map
                 </Button>
               </Stack.Item>
-              <Stack.Item mb={1}>
+              <Stack.Item>
                 {!!upper_admin && (
                   <Button.Checkbox
-                    ml={1}
+                    mr={1}
                     color="red"
                     checked={avr}
                     onClick={() => act("toggle_restart")}
@@ -89,7 +89,7 @@ const VoteOptions = (props, context) => {
               <Stack.Item>
                 {!!upper_admin && (
                   <Button.Checkbox
-                    ml={1}
+                    mr={1}
                     color="red"
                     checked={avm}
                     onClick={() => act("toggle_gamemode")}
@@ -125,11 +125,11 @@ const VotersList = (props, context) => {
   return (
     <Stack.Item>
       <Collapsible title={`View Voters: ${voting.length}`}>
-        <Box mt={2} width="100%" height={6} overflowY="scroll">
+        <Section height={8} fill scrollable>
           {voting.map(voter => {
             return <Box key={voter}>{voter}</Box>;
           })}
-        </Box>
+        </Section>
       </Collapsible>
     </Stack.Item>
   );
@@ -141,7 +141,7 @@ const ChoicesPanel = (props, context) => {
   const { choices, selectedChoice } = data;
 
   return (
-    <Stack.Item grow basis={0}>
+    <Stack.Item grow>
       <Section fill scrollable title="Choices">
         {choices.length !== 0 ? (
           <LabeledList>
