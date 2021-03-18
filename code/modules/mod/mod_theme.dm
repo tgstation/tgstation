@@ -3,6 +3,8 @@
 	var/name = "standard"
 	/// Description added to the MOD.
 	var/desc = "This one is standard themed, offering no special protections."
+	/// Theme used by the MOD TGUI.
+	var/ui_theme = "ntos"
 	/// Armor shared across the MOD pieces.
 	var/armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	/// Helmet for the MOD.
@@ -52,6 +54,7 @@
 /datum/mod_theme/syndicate
 	name = "syndicate"
 	desc = "This one is manufactured by the Gorlex Marauders, offering illegal armor protections."
+	ui_theme = "syndicate"
 	default_skin = "syndicate"
 	skins = list("syndicate")
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, RAD = 50, FIRE = 50, ACID = 90, WOUND = 25)

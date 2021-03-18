@@ -160,7 +160,9 @@
 	if(!cell?.charge && active && !activating)
 		power_off()
 		return PROCESS_KILL
-	cell.charge = max(0, cell.charge -= cell_drain)
+	cell.charge = max(0, cell.charge -= cell_drain*delta_time)
+	for(var/obj/item/mod/module/module in modules)
+		module.on_process(delta_time)
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
@@ -247,31 +249,33 @@
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 	return FALSE
 
-/obj/item/mod/control/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/mod/module))
+/obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/mod/module))
 		if(open && !active && !activating)
-			install(I, FALSE)
+			install(attacking_item, FALSE)
 			return TRUE
 		else
-			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
+			audible_message("<span class='warning'>[src] indicates that something prevents installing [attacking_item].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
-	else if(istype(I, /obj/item/stock_parts/cell))
+	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(open && !active && !activating && !cell)
-			I.forceMove(src)
-			cell = I
+			attacking_item.forceMove(src)
+			cell = attacking_item
 			audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			return TRUE
 		else
-			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
+			audible_message("<span class='warning'>[src] indicates that something prevents installing [attacking_item].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
-	else if(is_wire_tool(I) && open)
+	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
-	else if(istype(I, /obj/item/mod/paint) && paint(user, I))
-		to_chat(user, "<span class='notice'>You paint [src] with [I].</span>")
-		qdel(I)
+	else if(istype(attacking_item, /obj/item/mod/paint) && paint(user, attacking_item))
+		to_chat(user, "<span class='notice'>You paint [src] with [attacking_item].</span>")
+		qdel(attacking_item)
+	else if(open && attacking_item.GetID())
+		update_access(attacking_item)
 	..()
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
@@ -355,9 +359,9 @@
 	old_module.on_uninstall()
 	old_module.mod = null
 
-/obj/item/mod/control/proc/update_access()
-	var/obj/item/card/id/access_id = wearer.wear_id?.GetID()
-	if(!access_id || !allowed(wearer))
+/obj/item/mod/control/proc/update_access(card)
+	var/obj/item/card/id/access_id = card
+	if(!allowed(wearer))
 		to_chat(wearer, "<span class='warning'>ERROR: Access denied.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
@@ -429,6 +433,7 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/gloves/mod/Destroy()
+	..()
 	if(overslot && isliving(loc))
 		var/mob/guy = loc
 		guy.transferItemToLoc(src, mod, TRUE)
@@ -436,7 +441,6 @@
 	if(mod)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
-	..()
 
 /obj/item/clothing/gloves/mod/proc/show_overslot(mob/user)
 	if(!overslot)
@@ -456,6 +460,7 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/shoes/mod/Destroy()
+	..()
 	if(overslot && isliving(loc))
 		var/mob/guy = loc
 		guy.transferItemToLoc(src, mod, TRUE)
@@ -463,7 +468,6 @@
 	if(mod)
 		mod.boots = null
 		QDEL_NULL(mod)
-	..()
 
 /obj/item/clothing/shoes/mod/proc/show_overslot(mob/user)
 	if(!overslot)

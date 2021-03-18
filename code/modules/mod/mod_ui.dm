@@ -6,6 +6,7 @@
 
 /obj/item/mod/control/ui_data()
 	var/data = list()
+	data["ui_theme"] = theme.ui_theme
 	data["interface_break"] = interface_break
 	data["malfunctioning"] = malfunctioning
 	data["open"] = open
@@ -47,8 +48,6 @@
 		if("lock")
 			locked = !locked
 			to_chat(usr, "<span class='notice'>The suit has been [locked ? "unlocked" : "locked"].</span>")
-		if("update_access")
-			update_access()
 		if("activate")
 			toggle_activate(usr)
 		if("select")

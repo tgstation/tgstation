@@ -21,7 +21,7 @@ export const MODsuit = (props, context) => {
     <Window
       width={400}
       height={500}
-      theme="ntos"
+      theme={data.ui_theme}
       title="MOD Interface Panel"
       resizable>
       <Window.Content scrollable>
@@ -33,22 +33,16 @@ export const MODsuit = (props, context) => {
                 <Button
                   icon="power-off"
                   content={data.active ? 'Deactivate' : 'Activate'}
-                  onClick={() => act('activate')} />
-              } >
+                  onClick={() => act('activate')} />} >
               {data.malfunctioning ? 'Malfunctioning' : data.active ? 'Active' : 'Inactive'}
             </LabeledList.Item>
             <LabeledList.Item
               label="Lock"
-              buttons={(<Button
+              buttons={
+                <Button
                   icon={data.locked ? "lock-open" : "lock"}
                   content={data.locked ? 'Unlock' : 'Lock'}
-                  onClick={() => act('lock')} />
-                )}>
-                {(<Button
-                  icon="id-card"
-                  content="Update Access"
-                  onClick={() => act('update_access')}/>
-                )}
+                  onClick={() => act('lock')} />} >
               {data.locked ? 'Locked' : 'Unlocked'}
             </LabeledList.Item>
             <LabeledList.Item label="Cover">
@@ -75,7 +69,7 @@ export const MODsuit = (props, context) => {
                     average: [0.3, 0.6],
                     bad: [-Infinity, 0.3],
                   }} />
-              ) || 'None'}
+              ) || 'No Cell'}
             </LabeledList.Item>
           </LabeledList>
         </Section>

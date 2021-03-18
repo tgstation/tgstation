@@ -17,11 +17,15 @@
 	var/obj/item/mod/control/mod
 	/// What modules are we incompatible with?
 	var/list/incompatible_modules = list()
+	/// Cooldown after use
+	var/cooldown_time = 1 SECONDS
+	/// Timer for the cooldown
+	COOLDOWN_DECLARE(cooldown_timer)
 
 /obj/item/mod/module/Destroy()
-	..()
 	if(mod)
 		mod.uninstall(src)
+	..()
 
 /obj/item/mod/module/proc/on_install()
 	return
@@ -30,21 +34,24 @@
 	return
 
 /obj/item/mod/module/proc/on_select()
-	if(module_type == MODULE_TOGGLE || MODULE_ACTIVE)
+	if(!mod.active)
+		return
+	if(module_type != MODULE_USABLE)
 		if(active)
 			on_deactivation()
 		else
 			on_activation()
 	else
-		on_use()
+		on_use(mod.wearer)
 
 /obj/item/mod/module/proc/on_activation()
-	if(!mod.cell?.charge)
+	if(!mod.active || !mod.cell?.charge)
 		return FALSE
 	active = TRUE
 	if(module_type == MODULE_TOGGLE)
 		mod.cell_drain += active_power_use
 	if(module_type == MODULE_ACTIVE)
+		RegisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON), .proc/on_middleclick)
 		mod.selected_module.on_deactivation()
 		mod.selected_module = src
 	return TRUE
@@ -54,14 +61,28 @@
 	if(module_type == MODULE_TOGGLE)
 		mod.cell_drain -= active_power_use
 	if(module_type == MODULE_ACTIVE)
+		UnregisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON))
 		mod.selected_module = null
 	return TRUE
 
-/obj/item/mod/module/proc/on_use()
+/obj/item/mod/module/proc/on_use(mob/living/user, atom/A)
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		return FALSE
 	if(mod.cell?.charge < active_power_use)
 		return FALSE
 	mod.cell.charge = max(0, mod.cell.charge -= active_power_use)
+	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
+
+/obj/item/mod/module/proc/on_process(delta_time)
+	return
+
+/obj/item/mod/module/proc/on_middleclick(mob/living/user, atom/A)
+	SIGNAL_HANDLER
+
+	user.changeNext_move(CLICK_CD_MELEE)
+	on_use(user, A)
+	return COMSIG_MOB_CANCEL_CLICKON
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"

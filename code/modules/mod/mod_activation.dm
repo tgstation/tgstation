@@ -105,6 +105,7 @@
 			chestplate.clothing_flags |= chestplate.visor_flags
 			chestplate.flags_inv |= chestplate.visor_flags_inv
 		wearer.update_inv_wear_suit()
+		wearer.update_inv_w_uniform()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [helmet.name] hisses [active ? "open" : "closed"].</span>")
@@ -138,8 +139,9 @@
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_unactive
-			for(var/obj/item/mod/module/thingy in modules)
-				thingy.on_deactivation()
+			for(var/obj/item/mod/module/module in modules)
+				if(module.active)
+					module.on_deactivation()
 			STOP_PROCESSING(SSobj, src)
 		wearer.update_equipment_speed_mods()
 	activating = FALSE
