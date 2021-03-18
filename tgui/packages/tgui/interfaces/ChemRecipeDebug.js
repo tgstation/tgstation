@@ -153,32 +153,32 @@ export const ChemRecipeDebug = (props, context) => {
             </LabeledList.Item>
             {!!editRecipe && (
               <>
-              <LabeledList.Item label="is_cold_recipe">
-                <Button
-                  icon={editRecipeCold ? 'smile' : 'times'}
-                  color={editRecipeCold ? 'green' : 'red'}
-                  content={"Cold?"}
-                  onClick={() => act("updateVar", {
-                    type: entry.name,
-                    target: value,
-                  })} />
-              </LabeledList.Item>
-              {editRecipe.map(entry => (
-                <LabeledList.Item label={entry.name} key={entry.name}>
-                  <NumberInput
-                    width="65px"
-                    step={1}
-                    stepPixelSize={3}
-                    value={entry.var}
-                    minValue={-9999}
-                    maxValue={9999}
-                    onDrag={(e, value) => act("updateVar", {
+                <LabeledList.Item label="is_cold_recipe">
+                  <Button
+                    icon={editRecipeCold ? 'smile' : 'times'}
+                    color={editRecipeCold ? 'green' : 'red'}
+                    content={"Cold?"}
+                    onClick={() => act("updateVar", {
                       type: entry.name,
                       target: value,
                     })} />
                 </LabeledList.Item>
-              ))}
-            </>
+                {editRecipe.map(entry => (
+                  <LabeledList.Item label={entry.name} key={entry.name}>
+                    <NumberInput
+                      width="65px"
+                      step={1}
+                      stepPixelSize={3}
+                      value={entry.var}
+                      minValue={-9999}
+                      maxValue={9999}
+                      onDrag={(e, value) => act("updateVar", {
+                        type: entry.name,
+                        target: value,
+                      })} />
+                  </LabeledList.Item>
+                ))}
+              </>
             )}
             <LabeledList.Item label="Export">
               <Button
