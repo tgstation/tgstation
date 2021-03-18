@@ -359,7 +359,7 @@
 			edit_recipe = reaction[1]
 		if("updateVar")
 			var/target = params["target"]
-			vars[params["type"]] = target
+			edit_recipe.vars[params["type"]] = target
 		if("export")
 			var/export = {"[edit_recipe.type]
 [edit_recipe.is_cold_recipe ? "is_cold_recipe = TRUE" : ""]

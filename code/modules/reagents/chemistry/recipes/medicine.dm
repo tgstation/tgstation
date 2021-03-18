@@ -42,7 +42,7 @@
 	thermic_constant = 1
 	H_ion_release = 0.01
 	rate_up_lim = 14.5
-	purity_min = 0.35
+	purity_min = 0.3
 
 /datum/chemical_reaction/medicine/oculine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
@@ -246,11 +246,11 @@
 	thermic_constant = 87
 	H_ion_release = -0.05
 	rate_up_lim = 15
-	purity_min = 0.45
+	purity_min = 0.4
 
 /datum/chemical_reaction/medicine/neurine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	if(off_cooldown(holder, equilibrium, 10, "neurine"))
-		explode_invert_smoke(holder, equilibrium, lear_products = FALSE, clear_reactants = FALSE)
+		explode_invert_smoke(holder, equilibrium, clear_products = FALSE, clear_reactants = FALSE)
 		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/neurine, 10)
 		clear_products(holder, 5)
 

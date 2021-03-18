@@ -158,13 +158,15 @@ export const ChemRecipeDebug = (props, context) => {
                   icon={editRecipeCold ? 'smile' : 'times'}
                   color={editRecipeCold ? 'green' : 'red'}
                   content={"Cold?"}
-                  onClick={() => act('is_cold_recipe')} />
+                  onClick={() => act("updateVar", {
+                    type: entry.name,
+                    target: value,
+                  })} />
               </LabeledList.Item>
               {editRecipe.map(entry => (
                 <LabeledList.Item label={entry.name} key={entry.name}>
                   <NumberInput
                     width="65px"
-                    unit=""
                     step={1}
                     stepPixelSize={3}
                     value={entry.var}

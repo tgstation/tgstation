@@ -534,7 +534,7 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(10 - normalise_creation_purity(), delta_time) && iscarbon(M))
+	if(DT_PROB(10 - (4 * normalise_creation_purity()), delta_time) && iscarbon(M))
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
@@ -626,9 +626,10 @@
 	taste_description = "dull toxin"
 	purity = REAGENT_STANDARD_PUIRTY
 	ph = 10
+	impure_chem = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem = /datum/reagent/inverse/oculine
-	inverse_chem_val = 0.4
+	inverse_chem_val = 0.45
 	///The lighting alpha that the mob had on addition
 	var/delta_light
 
@@ -673,6 +674,8 @@
 	purity = REAGENT_STANDARD_PUIRTY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	impure_chem = /datum/reagent/impurity/inacusiate
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/impurity/inacusiate
 
 /datum/reagent/medicine/inacusiate/on_mob_add(mob/living/owner, amount)
 	. = ..()
@@ -681,6 +684,7 @@
 
 //Lets us hear whispers from far away!
 /datum/reagent/medicine/inacusiate/proc/owner_hear(datum/source, message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+	SIGNAL_HANDLER
 	if(!isliving(holder.my_atom))
 		return
 	var/mob/living/owner = holder.my_atom
@@ -834,6 +838,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	purity = REAGENT_STANDARD_PUIRTY
 	impure_chem = /datum/reagent/impurity/mannitol
+	inverse_chem_val = 0.45
+	impure_chem = /datum/reagent/impurity/mannitol
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * delta_time * normalise_creation_purity())
@@ -870,6 +876,7 @@
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#C0C0C0" //ditto
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
+	purity = REAGENT_STANDARD_PUIRTY
 	impure_chem = /datum/reagent/inverse/neurine //if people get grumpy, delete this line
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/neurine

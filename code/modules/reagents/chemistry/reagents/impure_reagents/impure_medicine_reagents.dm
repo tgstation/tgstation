@@ -549,7 +549,7 @@
 
 /datum/reagent/impurity/mannitol
 	name = "Mannitoil"
-	description = "Gives the patient a speech impediment."
+	description = "Gives the patient a temporary speech impediment."
 	color = "#CDCDFF"
 	addiction_types = list(/datum/addiction/medicine = 5)
 	ph = 12.4
@@ -605,7 +605,7 @@
 	owner.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
 
 /datum/reagent/inverse/corazone
-	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free.
+	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free. Also an omage to an older chem
 	description = "Interferes with the body's natural pacemaker, forcing the patient to manually beat their heart."
 	color = "#5F5F5F"
 	self_consuming = TRUE
@@ -694,7 +694,7 @@
 
 /datum/reagent/inverse/oculine
 	name = "Oculater"
-	description = "temporarily blinds the patient."
+	description = "Temporarily blinds the patient."
 	reagent_state = LIQUID
 	color = "#DDDDDD"
 	metabolization_rate = 0.1 * REM
@@ -711,7 +711,7 @@
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
 		owner.become_blind("oculine_impure")
-		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxtuates</spans>")
+		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates</spans>")
 		headache = TRUE
 	..()
 
@@ -722,8 +722,8 @@
 	..()
 
 /datum/reagent/impurity/inacusiate
-	name = "Tinyacusiate"
-	description = "Makes the patient's hearing temporarily funky', and slowly causes ear damage."
+	name = "Tinacusiate"
+	description = "Makes the patient's hearing temporarily funky."
 	reagent_state = LIQUID
 	addiction_types = list(/datum/addiction/medicine = 5.6)
 	color = "#DDDDFF"
